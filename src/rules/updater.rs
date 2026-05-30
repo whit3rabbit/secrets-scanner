@@ -74,10 +74,9 @@ pub fn sha256_hex(data: &[u8]) -> String {
     // process-based approach on the host.  For now we call out to `shasum`.
     // In production you'd want the sha2 crate.
     use std::process::Command;
-    use std::io::Write;
 
     // Write bytes to a temp file and hash it
-    let mut tmp = tempfile_path();
+    let tmp = tempfile_path();
     std::fs::write(&tmp, data).unwrap_or_default();
 
     let output = if cfg!(target_os = "macos") {
@@ -160,18 +159,36 @@ pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error
         });
     }
 
-    // Write to cache
     let rules_path = cached_rules_path().ok_or("Cannot determine data directory")?;
     let sha_path   = cached_sha_path().ok_or("Cannot determine data directory")?;
+
+    // Merge the downloaded upstream rules with local custom rules
+    let upstream_toml = String::from_utf8(body)?;
+
+    // Validate upstream rules before merging
+    if let Err(errors) = super::validation::validate_rules_toml(&upstream_toml) {
+        return Err(format!(
+            "Downloaded upstream rules are invalid:\n- {}",
+            errors.join("\n- ")
+        )
+        .into());
+    }
+
+    let local_toml = super::load_local_rules_for_merge();
+    let merged_toml = super::merge_toml_rules(&upstream_toml, &local_toml)?;
+
+    // Validate merged rules after merging
+    if let Err(errors) = super::validation::validate_rules_toml(&merged_toml) {
+        return Err(format!(
+            "Merged ruleset is invalid:\n- {}",
+            errors.join("\n- ")
+        )
+        .into());
+    }
 
     if let Some(parent) = rules_path.parent() {
         std::fs::create_dir_all(parent)?;
     }
-
-    // Merge the downloaded upstream rules with local custom rules
-    let upstream_toml = String::from_utf8(body)?;
-    let local_toml = super::load_local_rules_for_merge();
-    let merged_toml = super::merge_toml_rules(&upstream_toml, &local_toml)?;
 
     std::fs::write(&rules_path, &merged_toml)?;
     std::fs::write(&sha_path, &remote_sha)?;

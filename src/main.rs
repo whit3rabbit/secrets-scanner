@@ -56,6 +56,14 @@ enum Commands {
         #[arg(long)]
         check: bool,
     },
+
+    /// Validate one or more rules TOML files for structural and regex correctness.
+    #[command(name = "validate-rules", alias = "validate")]
+    ValidateRules {
+        /// Paths to the TOML rules files to validate. If empty, defaults to validating active local assets.
+        #[arg(default_values = &["assets/gitleaks.toml", "assets/local.toml", "assets/secrets-scanner.toml"])]
+        files: Vec<String>,
+    },
 }
 
 // ─────────────────────────────────────────────
@@ -65,11 +73,17 @@ enum Commands {
 fn main() {
     let cli = Cli::parse();
 
+    // Handle validate-rules subcommand
+    if let Some(Commands::ValidateRules { files }) = &cli.command {
+        handle_validate(files);
+        return;
+    }
+
     // Handle update-rules subcommand
     let check_only = match &cli.command {
         Some(Commands::UpdateRules { check }) => Some(*check),
         None if cli.update => Some(cli.check),
-        None => None,
+        _ => None,
     };
 
     if let Some(check_only) = check_only {
@@ -148,6 +162,36 @@ fn handle_update(check_only: bool) {
             eprintln!("❌ Update failed: {e}");
             std::process::exit(2);
         }
+    }
+}
+
+/// Handle the validate-rules subcommand.
+fn handle_validate(files: &[String]) {
+    let mut all_valid = true;
+    for file in files {
+        match std::fs::read_to_string(file) {
+            Ok(content) => {
+                match secrets_scanner::rules::validation::validate_rules_toml(&content) {
+                    Ok(()) => {
+                        println!("✅ {file} is valid");
+                    }
+                    Err(errors) => {
+                        all_valid = false;
+                        eprintln!("❌ {file} validation failed:");
+                        for err in errors {
+                            eprintln!("  - {err}");
+                        }
+                    }
+                }
+            }
+            Err(e) => {
+                all_valid = false;
+                eprintln!("❌ Failed to read {file}: {e}");
+            }
+        }
+    }
+    if !all_valid {
+        std::process::exit(1);
     }
 }
 

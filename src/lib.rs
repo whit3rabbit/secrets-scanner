@@ -36,4 +36,5 @@ pub mod rules;
 pub mod scanner;
 
 pub use scanner::{Finding, ScanConfig, Scanner};
-pub use rules::engine::{CompiledRule, RuleEngine, RulesetConfig};
+pub use rules::engine::{CompiledRule, RuleEngine};
+pub use rules::validation::{RulesetConfig, RuleConfig, AllowlistConfig, GlobalAllowlist};

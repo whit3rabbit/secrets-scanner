@@ -25,11 +25,12 @@ secrets-scanner/
 ├── scripts/
 │   └── update_rules.sh        # Shell script: download latest gitleaks rules
 ├── src/
-│   ├── main.rs                # CLI entry point; dispatches `update-rules` subcommand
+│   ├── main.rs                # CLI entry point; dispatches `update-rules` and `validate-rules` subcommands
 │   └── rules/
 │       ├── mod.rs             # load_rules() — three-tier rule loading
-│       └── updater.rs         # Runtime HTTP updater (feature-gated: `updater`)
-├── build.rs                   # Embeds assets/gitleaks.toml at compile time
+│       ├── updater.rs         # Runtime HTTP updater (feature-gated: `updater`)
+│       └── validation.rs      # Rule TOML and Regex validator
+├── build.rs                   # Validates rules and merges assets/gitleaks.toml + local.toml at compile time
 └── Makefile                   # Developer convenience targets
 ```
 
@@ -125,6 +126,41 @@ Custom rules live alongside the gitleaks rules in the same TOML format for compa
 The cached `secrets-scanner.toml` in the OS data directory is a combined ruleset containing both the downloaded upstream gitleaks rules and the local custom rules. Anyone can add new rules by editing the local custom rules file (`assets/local.toml` in the repository, or a `local.toml` file in the working directory or OS data directory).
 
 During startup or rule updates, the scanner automatically merges the two sets of rules. Custom rules take precedence over upstream rules with the same `id`.
+
+---
+
+## Rule Validation
+
+To ensure rules have valid TOML syntax and that their regular expressions are fully compilable (without syntax or size limit issues), the project includes a validation layer (`src/rules/validation.rs`).
+
+### Validation Checks
+- **TOML Structure**: Verifies the file parses into the expected `RulesetConfig` format.
+- **Rule IDs**: Ensures every rule has a non-empty, unique ID.
+- **Regex Compilation**: Escapes literal braces and increases compilation size limits (to 100MB) to strictly verify that all rule detection regexes, path filters, local allowlists, and global allowlists compile under Rust's `regex` engine.
+
+### Validation Environments
+
+#### 1. Compile-Time (`build.rs`)
+Runs automatically during `cargo build` or `cargo test`. It validates `assets/gitleaks.toml` and `assets/local.toml` before merging, and validates the combined `assets/secrets-scanner.toml` after merging. If any error is found, the build fails with a detailed panic message.
+
+#### 2. Update-Time (`src/rules/updater.rs`)
+Runs automatically during rule updates. It validates downloaded rules and the merged result before writing them to the cache, preventing corrupted rules from disabling the scanner on subsequent runs.
+
+#### 3. CLI Subcommand (`validate-rules`)
+Allows manual validation of any TOML rules file.
+```bash
+# Validate default assets
+secrets-scanner validate-rules
+
+# Validate specific rules files
+secrets-scanner validate-rules path/to/my-rules.toml
+```
+
+#### 4. Makefile Shortcut
+```bash
+make validate-rules
+```
+This is also run automatically after downloading rules with `make update-rules` and is part of the `make ci` suite.
 
 
 <!-- syntext-agent:claude:start -->

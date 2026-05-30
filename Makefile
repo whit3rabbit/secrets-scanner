@@ -80,11 +80,16 @@ check: ## Run cargo check (fast type-check, no binary output)
 update-rules: ## Download latest gitleaks rules into assets/ (commits-ready)
 	@chmod +x $(RULES_SCRIPT)
 	$(RULES_SCRIPT)
+	$(MAKE) validate-rules
 
 .PHONY: check-rules
 check-rules: ## Check if gitleaks rules are up to date (exit 1 = update available)
 	@chmod +x $(RULES_SCRIPT)
 	$(RULES_SCRIPT) --check
+
+.PHONY: validate-rules
+validate-rules: ## Validate rule TOML files in assets/
+	$(CARGO) run $(FEATURES_UPD) --bin $(BINARY) -- validate-rules assets/gitleaks.toml assets/local.toml assets/secrets-scanner.toml
 
 .PHONY: local-rules
 local-rules: ## Convert custom CSV rules to assets/local.toml
@@ -126,5 +131,5 @@ clean-rules: ## Remove the cached runtime rules from the OS data dir
 # CI — composite targets
 # ─────────────────────────────────────────────────────────────────────────────
 .PHONY: ci
-ci: fmt-check clippy test check-rules ## Run all CI checks (format, lint, test, rule freshness)
+ci: fmt-check clippy test check-rules validate-rules ## Run all CI checks (format, lint, test, rule freshness, rule validation)
 	@printf '$(GREEN)$(BOLD)All CI checks passed.$(RESET)\n'

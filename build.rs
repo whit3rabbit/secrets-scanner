@@ -7,6 +7,9 @@
 use std::path::Path;
 use std::collections::HashSet;
 
+#[path = "src/rules/validation.rs"]
+mod validation;
+
 fn main() {
     let gitleaks_path = Path::new("assets/gitleaks.toml");
     let local_path = Path::new("assets/local.toml");
@@ -33,8 +36,21 @@ fn main() {
     let gitleaks_content = std::fs::read_to_string(gitleaks_path).expect("Failed to read gitleaks.toml");
     let local_content = std::fs::read_to_string(local_path).expect("Failed to read local.toml");
 
+    // Validate rules before merging
+    if let Err(errors) = validation::validate_rules_toml(&gitleaks_content) {
+        panic!("assets/gitleaks.toml is invalid:\n- {}", errors.join("\n- "));
+    }
+    if let Err(errors) = validation::validate_rules_toml(&local_content) {
+        panic!("assets/local.toml is invalid:\n- {}", errors.join("\n- "));
+    }
+
     match merge_toml_rules(&gitleaks_content, &local_content) {
         Ok(combined_content) => {
+            // Validate combined rules after merging
+            if let Err(errors) = validation::validate_rules_toml(&combined_content) {
+                panic!("Merged assets/secrets-scanner.toml is invalid:\n- {}", errors.join("\n- "));
+            }
+
             std::fs::write(combined_path, combined_content).expect("Failed to write combined secrets-scanner.toml");
         }
         Err(e) => {

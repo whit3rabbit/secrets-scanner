@@ -9,6 +9,7 @@
 
 pub mod engine;
 pub mod updater;
+pub mod validation;
 
 /// The combined ruleset (gitleaks + local.toml) compiled into the binary.
 /// Rebuilt whenever `assets/secrets-scanner.toml` changes (see build.rs).

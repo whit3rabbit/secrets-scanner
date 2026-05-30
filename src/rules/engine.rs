@@ -16,111 +16,7 @@
 
 use aho_corasick::AhoCorasick;
 use regex::Regex;
-use serde::Deserialize;
-
-// ─────────────────────────────────────────────
-// TOML Deserialization Types (gitleaks-compatible)
-// ─────────────────────────────────────────────
-
-/// A per-rule allowlist entry from `[[rules.allowlists]]`.
-#[derive(Debug, Clone, Deserialize)]
-pub struct AllowlistConfig {
-    /// Human-readable description of this allowlist.
-    #[serde(default)]
-    pub description: Option<String>,
-
-    /// Regex patterns that, if matched, suppress the finding.
-    #[serde(default)]
-    pub regexes: Vec<String>,
-
-    /// What the allowlist regexes match against: `"match"` (the captured group)
-    /// or default (the entire line).
-    #[serde(default, rename = "regexTarget")]
-    pub regex_target: Option<String>,
-
-    /// Path patterns — if any match the file path, the rule is suppressed for that file.
-    #[serde(default)]
-    pub paths: Vec<String>,
-
-    /// Stopwords — if any appear in the matched text, the finding is suppressed.
-    #[serde(default)]
-    pub stopwords: Vec<String>,
-}
-
-/// The global `[allowlist]` section.
-#[derive(Debug, Clone, Deserialize)]
-pub struct GlobalAllowlist {
-    /// Human-readable description.
-    #[serde(default)]
-    pub description: Option<String>,
-
-    /// Path regexes — files matching any of these are skipped entirely.
-    #[serde(default)]
-    pub paths: Vec<String>,
-
-    /// Regex patterns applied to every finding's matched text.
-    #[serde(default)]
-    pub regexes: Vec<String>,
-
-    /// Stopwords applied globally.
-    #[serde(default)]
-    pub stopwords: Vec<String>,
-}
-
-/// A single `[[rules]]` entry from the TOML config.
-#[derive(Debug, Clone, Deserialize)]
-pub struct RuleConfig {
-    /// Unique rule identifier (e.g., `"aws-access-token"`).
-    pub id: String,
-
-    /// Human-readable description of what this rule detects.
-    #[serde(default)]
-    pub description: Option<String>,
-
-    /// The detection regex pattern (optional).
-    pub regex: Option<String>,
-
-    /// Minimum entropy threshold for this rule. If unset, uses the global default.
-    #[serde(default)]
-    pub entropy: Option<f64>,
-
-    /// Keywords that must appear in the file for this rule to fire.
-    /// Fed into the Aho-Corasick automaton for fast pre-filtering.
-    #[serde(default)]
-    pub keywords: Vec<String>,
-
-    /// Optional file path regex — rule only applies to files matching this pattern.
-    #[serde(default)]
-    pub path: Option<String>,
-
-    /// Per-rule allowlists.
-    #[serde(default)]
-    pub allowlists: Vec<AllowlistConfig>,
-
-    /// Optional capture group index for the secret.
-    #[serde(default, rename = "secretGroup")]
-    pub secret_group: Option<usize>,
-}
-
-/// Top-level TOML config structure (gitleaks-compatible).
-#[derive(Debug, Clone, Deserialize)]
-pub struct RulesetConfig {
-    /// Config title (e.g., `"gitleaks config"`).
-    #[serde(default)]
-    pub title: Option<String>,
-
-    /// Minimum gitleaks version (informational, we ignore it).
-    #[serde(default, rename = "minVersion")]
-    pub min_version: Option<String>,
-
-    /// Global allowlist applied to all rules.
-    #[serde(default)]
-    pub allowlist: Option<GlobalAllowlist>,
-
-    /// The list of detection rules.
-    #[serde(default)]
-    pub rules: Vec<RuleConfig>,
-}
+use crate::rules::validation::{RulesetConfig, GlobalAllowlist, compile_regex};
 
 // ─────────────────────────────────────────────
 // Compiled Rule Engine
@@ -227,7 +123,7 @@ impl RuleEngine {
         for rule_config in &config.rules {
             // Compile the detection regex if present — skip rules with invalid patterns
             let regex = if let Some(ref reg_str) = rule_config.regex {
-                match Regex::new(reg_str) {
+                match compile_regex(reg_str) {
                     Ok(re) => Some(re),
                     Err(e) => {
                         eprintln!(
@@ -244,7 +140,7 @@ impl RuleEngine {
 
             // Compile path filter
             let path_filter = rule_config.path.as_ref().and_then(|p| {
-                Regex::new(p)
+                compile_regex(p)
                     .map_err(|e| {
                         eprintln!(
                             "[engine] Warning: rule '{}' has invalid path regex: {}",
@@ -265,7 +161,7 @@ impl RuleEngine {
                     allowlist_match_target = true;
                 }
                 for pattern in &al.regexes {
-                    match Regex::new(pattern) {
+                    match compile_regex(pattern) {
                         Ok(re) => allowlist_regexes.push(re),
                         Err(e) => {
                             eprintln!(
@@ -355,7 +251,7 @@ impl RuleEngine {
             .paths
             .iter()
             .filter_map(|p| {
-                Regex::new(p)
+                compile_regex(p)
                     .map_err(|e| {
                         eprintln!("[engine] Warning: invalid global allowlist path regex: {e}");
                         e
@@ -368,7 +264,7 @@ impl RuleEngine {
             .regexes
             .iter()
             .filter_map(|r| {
-                Regex::new(r)
+                compile_regex(r)
                     .map_err(|e| {
                         eprintln!("[engine] Warning: invalid global allowlist regex: {e}");
                         e

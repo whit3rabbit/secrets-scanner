@@ -1,0 +1,44 @@
+[package]
+name = "secrets_scanner"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+name = "secrets_scanner"
+path = "src/lib.rs"
+
+# ── features ──────────────────────────────────────────────────────────────────
+# `updater` — enables the runtime rule-update mechanism (downloads via ureq).
+# Build with:  cargo build --features updater
+[features]
+updater = ["dep:ureq"]
+
+# ── dependencies ──────────────────────────────────────────────────────────────
+[dependencies]
+aho-corasick = "1.1"
+regex        = "1.10"
+memchr       = "2.7"        # SIMD byte search
+rayon        = "1.9"        # parallel file scanning
+walkdir      = "2.4"        # recursive directory walk
+clap         = { version = "4.5", features = ["derive"] }
+
+# Rule-set parsing (gitleaks TOML format)
+serde        = { version = "1", features = ["derive"] }
+toml         = "0.8"
+
+# Optional: runtime rule updater (HTTP download)
+ureq         = { version = "2", optional = true }
+
+[profile.release]
+opt-level     = 3
+lto           = true
+codegen-units = 1
+
+[build-dependencies]
+serde        = { version = "1", features = ["derive"] }
+toml         = "0.8"
+
+[[bin]]
+name = "secrets-scanner"
+path = "src/main.rs"

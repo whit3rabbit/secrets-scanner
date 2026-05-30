@@ -1,0 +1,1406 @@
+title = "local secrets-scanner"
+
+[[rules]]
+id = "aikido-api-client-secret"
+description = "Identified a potential Aikido API Client Secret, which could lead to unauthorized access to Aikido services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(aikido_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["aikido"]
+
+[[rules]]
+id = "aikido-ci-scanning-token"
+description = "Identified a potential Aikido CI Scanning Token, which could lead to unauthorized access to Aikido services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(aikido_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["aikido"]
+
+[[rules]]
+id = "aiven-auth-token"
+description = "Identified a potential Aiven Auth Token, which could lead to unauthorized access to Aiven services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(aiven_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["aiven"]
+
+[[rules]]
+id = "aiven-service-password"
+description = "Identified a potential Aiven Service Password, which could lead to unauthorized access to Aiven services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(aiven_password_[A-Za-z0-9]{20,96})(?![A-Za-z0-9_])'''
+keywords = ["aiven"]
+
+[[rules]]
+id = "apify-actor-run-api-token"
+description = "Identified a potential Apify Actor Run API Token, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?i)\b(?:APIFY_TOKEN|Authorization|token=|api\.apify\.com)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(apify_api_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "apify-actor-run-proxy-password"
+description = "Identified a potential Apify Actor Run Proxy Password, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(apify_proxy_[A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "apify-api-token"
+description = "Identified a potential Apify API Token, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?i)\b(?:APIFY_TOKEN|Authorization|token=|api\.apify\.com)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(apify_api_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "apify-integration-api-token"
+description = "Identified a potential Apify Integration API Token, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?i)\b(?:APIFY_TOKEN|Authorization|token=|api\.apify\.com)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(apify_api_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "apify-proxy-password"
+description = "Identified a potential Apify Proxy Password, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(apify_proxy_[A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "apify-ui-token"
+description = "Identified a potential Apify UI Token, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?i)\b(?:APIFY_TOKEN|Authorization|token=|api\.apify\.com)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(apify_api_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "apify-webhook-dispatch-api-token"
+description = "Identified a potential Apify Webhook Dispatch API Token, which could lead to unauthorized access to Apify services and sensitive data exposure."
+regex = '''(?i)\b(?:APIFY_TOKEN|Authorization|token=|api\.apify\.com)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(apify_api_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["apify"]
+
+[[rules]]
+id = "asaas-api-token"
+description = "Identified a potential Asaas API Token, which could lead to unauthorized access to Asaas services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(asaas_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["asaas"]
+
+[[rules]]
+id = "baiduai-api-key"
+description = "Identified a potential Baidu AI API Key, which could lead to unauthorized access to Baidu services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(baidu_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["baidu", "baiduai"]
+
+[[rules]]
+id = "baiducloud-api-accesskey"
+description = "Identified a potential Baidu Cloud API Access Key, which could lead to unauthorized access to Baidu services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(baidu_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["baidu", "baiducloud"]
+
+[[rules]]
+id = "bitrise-personal-access-token"
+description = "Identified a potential Bitrise Personal Access Token, which could lead to unauthorized access to Bitrise services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bitrise_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["bitrise"]
+
+[[rules]]
+id = "bitrise-workspace-api-token"
+description = "Identified a potential Bitrise Workspace API Token, which could lead to unauthorized access to Bitrise services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bitrise_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["bitrise"]
+
+[[rules]]
+id = "block-protocol-api-key"
+description = "Identified a potential Block Protocol API Key, which could lead to unauthorized access to Block Protocol services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bp_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["block"]
+
+[[rules]]
+id = "buildkite-agent-access-token"
+description = "Identified a potential Buildkite Agent Access Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-agent-job-token"
+description = "Identified a potential Buildkite Agent Job Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-agent-registration-token"
+description = "Identified a potential Buildkite Agent Registration Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-cluster-queue-token"
+description = "Identified a potential Buildkite Cluster Queue Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-cluster-token"
+description = "Identified a potential Buildkite Cluster Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-packages-registry-token"
+description = "Identified a potential Buildkite Packages Registry Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-packages-temporary-token"
+description = "Identified a potential Buildkite Packages Temporary Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-portal-secret"
+description = "Identified a potential Buildkite Portal Secret, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-portal-token"
+description = "Identified a potential Buildkite Portal Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "buildkite-user-access-token"
+description = "Identified a potential Buildkite User Access Token, which could lead to unauthorized access to Buildkite services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(bk(?:ua|aa|aj|ar|ct|pt|pl|ps)_[A-Za-z0-9]{20,400})(?![A-Za-z0-9_])'''
+keywords = ["buildkite"]
+
+[[rules]]
+id = "cds-canada-notify-api-key"
+description = "Identified a potential Canadian Digital Service Notify API Key, which could lead to unauthorized access to Canadian Digital Service services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(cds_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["canadian", "cds"]
+
+[[rules]]
+id = "canva-app-secret"
+description = "Identified a potential Canva App Secret, which could lead to unauthorized access to Canva services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(canva_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["canva"]
+
+[[rules]]
+id = "canva-connect-api-secret"
+description = "Identified a potential Canva Connect API Secret, which could lead to unauthorized access to Canva services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(canva_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["canva"]
+
+[[rules]]
+id = "canva-secret"
+description = "Identified a potential Canva Secret, which could lead to unauthorized access to Canva services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(canva_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["canva"]
+
+[[rules]]
+id = "cashfree-api-key"
+description = "Identified a potential Cashfree API Key, which could lead to unauthorized access to Cashfree services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(cashfree_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["cashfree"]
+
+[[rules]]
+id = "cfxre-server-key"
+description = "Identified a potential Cfx.re Server Key, which could lead to unauthorized access to Cfx.re services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(cr_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["cfx", "cfxre"]
+
+[[rules]]
+id = "checkout-production-secret-key"
+description = "Identified a potential Checkout.com Production Secret Key, which could lead to unauthorized access to Checkout.com services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sk_(?:sbox_)?[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["checkout"]
+
+[[rules]]
+id = "checkout-test-secret-key"
+description = "Identified a potential Checkout.com Test Secret Key, which could lead to unauthorized access to Checkout.com services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sk_(?:sbox_)?[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["checkout"]
+
+[[rules]]
+id = "chief-tools-token"
+description = "Identified a potential Chief Tools Token, which could lead to unauthorized access to Chief Tools services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ct_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["chief"]
+
+[[rules]]
+id = "circleci-bot-access-token"
+description = "Identified a potential CircleCI Bot API Token, which could lead to unauthorized access to CircleCI services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(CCI(?:PAT|PRJ)_[1-9A-HJ-NP-Za-km-z]{20,24}_[a-f0-9]{40})(?![A-Za-z0-9_])'''
+keywords = ["circleci"]
+
+[[rules]]
+id = "circleci-personal-access-token"
+description = "Identified a potential CircleCI Personal Access Token, which could lead to unauthorized access to CircleCI services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(CCI(?:PAT|PRJ)_[1-9A-HJ-NP-Za-km-z]{20,24}_[a-f0-9]{40})(?![A-Za-z0-9_])'''
+keywords = ["circleci"]
+
+[[rules]]
+id = "circleci-project-access-token"
+description = "Identified a potential CircleCI Project Access Token, which could lead to unauthorized access to CircleCI services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(CCI(?:PAT|PRJ)_[1-9A-HJ-NP-Za-km-z]{20,24}_[a-f0-9]{40})(?![A-Za-z0-9_])'''
+keywords = ["circleci"]
+
+[[rules]]
+id = "circleci-release-integration-token"
+description = "Identified a potential CircleCI Release API Token, which could lead to unauthorized access to CircleCI services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(CCI(?:PAT|PRJ)_[1-9A-HJ-NP-Za-km-z]{20,24}_[a-f0-9]{40})(?![A-Za-z0-9_])'''
+keywords = ["circleci"]
+
+[[rules]]
+id = "ccdb-api-key"
+description = "Identified a potential CockroachDB Cloud API Key, which could lead to unauthorized access to Cockroach Labs services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(cl_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["ccdb", "cockroach"]
+
+[[rules]]
+id = "contributed-systems-credentials"
+description = "Identified a potential Contributed Systems Credentials, which could lead to unauthorized access to Contributed Systems services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(cs_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["contributed"]
+
+[[rules]]
+id = "coveo-access-token"
+description = "Identified a potential Coveo Access Token, which could lead to unauthorized access to Coveo services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(coveo_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["coveo"]
+
+[[rules]]
+id = "coveo-api-key"
+description = "Identified a potential Coveo API Key, which could lead to unauthorized access to Coveo services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(coveo_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["coveo"]
+
+[[rules]]
+id = "cratesio-api-token"
+description = "Identified a potential Crates.io API Token, which could lead to unauthorized access to crates.io services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(cio[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["crates", "cratesio"]
+
+[[rules]]
+id = "databento-api-key"
+description = "Identified a potential Databento API Key, which could lead to unauthorized access to Databento services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(databento_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["databento"]
+
+[[rules]]
+id = "datastax-astracs-token"
+description = "Identified a potential Datastax AstraCS Tokens, which could lead to unauthorized access to Datastax services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_:])(AstraCS:[A-Za-z0-9_-]{20,256})(?![A-Za-z0-9_-])'''
+keywords = ["datastax"]
+
+[[rules]]
+id = "deepseek-api-key"
+description = "Identified a potential DeepSeek API Key, which could lead to unauthorized access to DeepSeek services and sensitive data exposure."
+regex = '''(?i)\b(?:DEEPSEEK_API_KEY|api\.deepseek\.com|deepseek)\b[^\r\n]{0,80}?\b(sk-[A-Za-z0-9]{20,128})\b|(?<![A-Za-z0-9_])(sk-DeepSeek[A-Za-z0-9]{16,96})(?![A-Za-z0-9_])'''
+keywords = ["deepseek"]
+
+[[rules]]
+id = "devcycle-client-api-key"
+description = "Identified a potential DevCycle Client API Key, which could lead to unauthorized access to DevCycle services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(devcycle_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["devcycle"]
+
+[[rules]]
+id = "devcycle-mobile-api-key"
+description = "Identified a potential DevCycle Mobile API Key, which could lead to unauthorized access to DevCycle services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(devcycle_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["devcycle"]
+
+[[rules]]
+id = "devcycle-server-api-key"
+description = "Identified a potential DevCycle Server API Key, which could lead to unauthorized access to DevCycle services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(devcycle_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["devcycle"]
+
+[[rules]]
+id = "docker-organization-access-token"
+description = "Identified a potential Docker Organization Access Token, which could lead to unauthorized access to Docker services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(dckr_(?:pat|oat)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["docker"]
+
+[[rules]]
+id = "docker-personal-access-token"
+description = "Identified a potential Docker Personal Access Token, which could lead to unauthorized access to Docker services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(dckr_(?:pat|oat)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["docker"]
+
+[[rules]]
+id = "docker-swarm-join-token"
+description = "Identified a potential Docker Swarm Join Token, which could lead to unauthorized access to Docker services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])(SWMTKN-\d-[A-Za-z0-9-]{20,256})(?![A-Za-z0-9_-])'''
+keywords = ["docker"]
+
+[[rules]]
+id = "docker-swarm-unlock-key"
+description = "Identified a potential Docker Swarm Unlock Key, which could lead to unauthorized access to Docker services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(docker-unlock-[A-Za-z0-9_-]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["docker"]
+
+[[rules]]
+id = "ebay-production-client-id-ebay-production-client-secret"
+description = "Identified a potential eBay Production Client ID (App ID), which could lead to unauthorized access to eBay services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ebay_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["ebay"]
+
+[[rules]]
+id = "ebay-sandbox-client-id-ebay-sandbox-client-secret"
+description = "Identified a potential eBay Sandbox Client ID (App ID), which could lead to unauthorized access to eBay services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ebay_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["ebay"]
+
+[[rules]]
+id = "elastic-cloud-api-key"
+description = "Identified a potential Elastic Cloud API Key, which could lead to unauthorized access to Elastic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(elastic_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["elastic"]
+
+[[rules]]
+id = "elastic-stack-api-key"
+description = "Identified a potential Elastic Stack API Key, which could lead to unauthorized access to Elastic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(elastic_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["elastic"]
+
+[[rules]]
+id = "fieldguide-api-token"
+description = "Identified a potential Fieldguide API Token, which could lead to unauthorized access to Fieldguide services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(fieldguide_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["fieldguide"]
+
+[[rules]]
+id = "figma-pat"
+description = "Identified a potential Figma Personal Access Token, which could lead to unauthorized access to Figma services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(fig(?:d|s)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["figma"]
+
+[[rules]]
+id = "figma-scim-token"
+description = "Identified a potential Figma SCIM API Token, which could lead to unauthorized access to Figma services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(fig(?:d|s)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["figma"]
+
+[[rules]]
+id = "firebase-cloud-messaging-server-key"
+description = "Identified a potential Firebase Cloud Messaging Server Key, which could lead to unauthorized access to Firebase services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(firebase_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["firebase"]
+
+[[rules]]
+id = "fullstory-api-key"
+description = "Identified a potential FullStory API Key, which could lead to unauthorized access to FullStory services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(fullstory_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["fullstory"]
+
+[[rules]]
+id = "groq-api-key"
+description = "Identified a potential Groq API Key, which could lead to unauthorized access to Groq services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(gsk_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["groq"]
+
+[[rules]]
+id = "guardsquare-appsweep-api-key"
+description = "Identified a potential GuardSquare AppSweep API Key, which could lead to unauthorized access to GuardSquare services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(guardsquare_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["guardsquare"]
+
+[[rules]]
+id = "guardsquare-cli-access-token"
+description = "Identified a potential GuardSquare CLI Access Token, which could lead to unauthorized access to GuardSquare services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(guardsquare_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["guardsquare"]
+
+[[rules]]
+id = "guardsquare-maven-token"
+description = "Identified a potential GuardSquare Maven Token, which could lead to unauthorized access to GuardSquare services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(guardsquare_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["guardsquare"]
+
+[[rules]]
+id = "hackclub-ai-api-key"
+description = "Identified a potential Hack Club AI Key, which could lead to unauthorized access to Hack Club services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(hc_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["hack", "hackclub"]
+
+[[rules]]
+id = "hcaptcha-siteverify-secret"
+description = "Identified a potential hCaptcha Siteverify Secret, which could lead to unauthorized access to hCaptcha services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(0x[a-f0-9]{32,128})(?![A-Za-z0-9_])'''
+keywords = ["hcaptcha"]
+
+[[rules]]
+id = "highnote-rk-live-key"
+description = "Identified a potential Highnote RK Live Key, which could lead to unauthorized access to Highnote services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])((?:rk|sk)_(?:live|test)_[A-Za-z0-9]{12,128})(?![A-Za-z0-9_])'''
+keywords = ["highnote"]
+
+[[rules]]
+id = "highnote-rk-test-key"
+description = "Identified a potential Highnote RK Test Key, which could lead to unauthorized access to Highnote services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])((?:rk|sk)_(?:live|test)_[A-Za-z0-9]{12,128})(?![A-Za-z0-9_])'''
+keywords = ["highnote"]
+
+[[rules]]
+id = "highnote-sk-live-key"
+description = "Identified a potential Highnote SK Live Key, which could lead to unauthorized access to Highnote services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])((?:rk|sk)_(?:live|test)_[A-Za-z0-9]{12,128})(?![A-Za-z0-9_])'''
+keywords = ["highnote"]
+
+[[rules]]
+id = "highnote-sk-test-key"
+description = "Identified a potential Highnote SK Test Key, which could lead to unauthorized access to Highnote services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])((?:rk|sk)_(?:live|test)_[A-Za-z0-9]{12,128})(?![A-Za-z0-9_])'''
+keywords = ["highnote"]
+
+[[rules]]
+id = "hop-bearer"
+description = "Identified a potential HOP Bearer, which could lead to unauthorized access to HOP services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(hop_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["hop"]
+
+[[rules]]
+id = "hop-pat"
+description = "Identified a potential HOP PAT, which could lead to unauthorized access to HOP services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(hop_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["hop"]
+
+[[rules]]
+id = "hop-ptk"
+description = "Identified a potential HOP PTK, which could lead to unauthorized access to HOP services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(hop_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["hop"]
+
+[[rules]]
+id = "ibm-cloud-iam-key"
+description = "Identified a potential IBM Cloud IAM Key, which could lead to unauthorized access to IBM services and sensitive data exposure."
+regex = '''(?i)\b(?:IBM_CLOUD_API_KEY|IAM_API_KEY|ibmcloud\s+login\s+--apikey|apikey)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(ibmcloud_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["ibm"]
+
+[[rules]]
+id = "ionic-personal-access-token"
+description = "Identified a potential Ionic Personal Access Token, which could lead to unauthorized access to Ionic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ionr?_[A-Za-z0-9]{24,96})(?![A-Za-z0-9_])'''
+keywords = ["ionic"]
+
+[[rules]]
+id = "ionic-refresh-token"
+description = "Identified a potential Ionic Refresh Token, which could lead to unauthorized access to Ionic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ionr?_[A-Za-z0-9]{24,96})(?![A-Za-z0-9_])'''
+keywords = ["ionic"]
+
+[[rules]]
+id = "iterative-dvc-studio-access-token"
+description = "Identified a potential DVC Studio Access Token, which could lead to unauthorized access to Iterative services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(iterative_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["iterative"]
+
+[[rules]]
+id = "langchain-api-personal-key"
+description = "Identified a potential LangSmith Personal Access Token, which could lead to unauthorized access to Langchain services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ls(?:v2_(?:pt|sk|scim)|lic)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["langchain"]
+
+[[rules]]
+id = "langchain-api-server-key"
+description = "Identified a potential LangSmith Service Key, which could lead to unauthorized access to Langchain services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ls(?:v2_(?:pt|sk|scim)|lic)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["langchain"]
+
+[[rules]]
+id = "langsmith-license-key"
+description = "Identified a potential LangSmith License Key, which could lead to unauthorized access to Langchain services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ls(?:v2_(?:pt|sk|scim)|lic)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["langchain", "langsmith"]
+
+[[rules]]
+id = "langsmith-scim-bearer-token"
+description = "Identified a potential LangSmith SCIM Bearer Token, which could lead to unauthorized access to Langchain services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ls(?:v2_(?:pt|sk|scim)|lic)_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["langchain", "langsmith"]
+
+[[rules]]
+id = "lark-apaas-client-secret"
+description = "Identified a potential Lark APaaS Client Secret, which could lead to unauthorized access to Lark services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lark_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["lark"]
+
+[[rules]]
+id = "lark-app-secret"
+description = "Identified a potential Lark Application Secret, which could lead to unauthorized access to Lark services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lark_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["lark"]
+
+[[rules]]
+id = "lark-mcp-grant-token"
+description = "Identified a potential Lark MCP Grant Token, which could lead to unauthorized access to Lark services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lark_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["lark"]
+
+[[rules]]
+id = "lark-meego-plugin-secret"
+description = "Identified a potential Lark Meego Plugin Secret, which could lead to unauthorized access to Lark services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lark_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["lark"]
+
+[[rules]]
+id = "lark-user-session"
+description = "Identified a potential Lark User Session, which could lead to unauthorized access to Lark services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lark_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["lark"]
+
+[[rules]]
+id = "lichess-oauth-access-token"
+description = "Identified a potential Lichess OAuth Access Token, which could lead to unauthorized access to Lichess services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lichess_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["lichess"]
+
+[[rules]]
+id = "lichess-personal-access-token"
+description = "Identified a potential Lichess Personal Access Token, which could lead to unauthorized access to Lichess services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lichess_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["lichess"]
+
+[[rules]]
+id = "lightspeed-xs-pat"
+description = "Identified a potential Lightspeed Personal Access Token, which could lead to unauthorized access to Lightspeed services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lightspeed_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["lightspeed"]
+
+[[rules]]
+id = "limbar-token"
+description = "Identified a potential Limbar Token, which could lead to unauthorized access to Limbar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(limbar_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["limbar"]
+
+[[rules]]
+id = "localstack-api-key"
+description = "Identified a potential Localstack API Key, which could lead to unauthorized access to Localstack services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(localstack_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["localstack"]
+
+[[rules]]
+id = "logicmonitor-bearer-token"
+description = "Identified a potential LogicMonitor Bearer Token, which could lead to unauthorized access to LogicMonitor services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(logicmonitor_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["logicmonitor"]
+
+[[rules]]
+id = "logicmonitor-lmv1-access-key"
+description = "Identified a potential LogicMonitor LMv1 Access Key, which could lead to unauthorized access to LogicMonitor services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(logicmonitor_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["logicmonitor"]
+
+[[rules]]
+id = "amazon-oauth-client-id-amazon-oauth-client-secret"
+description = "Identified a potential Login with Amazon OAuth Client ID, which could lead to unauthorized access to Login with Amazon services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(lwa_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["amazon", "login"]
+
+[[rules]]
+id = "mailersend-api-token"
+description = "Identified a potential Mailersend API Token, which could lead to unauthorized access to Mailersend services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mailersend_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["mailersend"]
+
+[[rules]]
+id = "mailersend-smtp-password"
+description = "Identified a potential Mailersend SMTP Password, which could lead to unauthorized access to Mailersend services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mailersend_password_[A-Za-z0-9]{20,96})(?![A-Za-z0-9_])'''
+keywords = ["mailersend"]
+
+[[rules]]
+id = "mailersend-smtp-username"
+description = "Identified a potential Mailersend SMTP Username, which could lead to unauthorized access to Mailersend services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mailersend_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["mailersend"]
+
+[[rules]]
+id = "mercury-non-production-api-token"
+description = "Identified a potential Mercury Non-Production API Token, which could lead to unauthorized access to Mercury services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mercury_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["mercury"]
+
+[[rules]]
+id = "mercury-production-api-token"
+description = "Identified a potential Mercury Production API Token, which could lead to unauthorized access to Mercury services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mercury_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["mercury"]
+
+[[rules]]
+id = "mergify-application-key"
+description = "Identified a potential Mergify Application Key, which could lead to unauthorized access to Mergify services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mergify_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["mergify"]
+
+[[rules]]
+id = "midtrans-production-server-key"
+description = "Identified a potential Midtrans Production Server Key, which could lead to unauthorized access to Midtrans services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])((?:SB-)?Mid-server-[A-Za-z0-9_-]{16,128})(?![A-Za-z0-9_-])'''
+keywords = ["midtrans"]
+
+[[rules]]
+id = "midtrans-sandbox-server-key"
+description = "Identified a potential Midtrans Sandbox Server Key, which could lead to unauthorized access to Midtrans services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])((?:SB-)?Mid-server-[A-Za-z0-9_-]{16,128})(?![A-Za-z0-9_-])'''
+keywords = ["midtrans"]
+
+[[rules]]
+id = "mistral-ai-api-key"
+description = "Identified a potential Mistral AI API Key, which could lead to unauthorized access to Mistral AI services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mistral_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["mistral"]
+
+[[rules]]
+id = "mongodb-atlas-db-uri-with-credentials"
+description = "Identified a potential MongoDB Atlas Database URI with credentials, which could lead to unauthorized access to MongoDB services and sensitive data exposure."
+regex = '''(?i)\bmongodb(?:\+srv)?://[^\s:/?#]+:[^\s@/]+@[^\s]+'''
+keywords = ["mongodb"]
+
+[[rules]]
+id = "mongodb-atlas-service-account-secret"
+description = "Identified a potential MongoDB Atlas Service Account Secret, which could lead to unauthorized access to MongoDB services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(mdb_svc_[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["mongodb"]
+
+[[rules]]
+id = "navercloud-gov-access-key"
+description = "Identified a potential Naver Cloud Gov Access Key ID, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-gov-access-key-secret"
+description = "Identified a potential Naver Cloud Gov Secret Key, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-gov-sts"
+description = "Identified a potential Naver Cloud Gov Secure Token Service, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-gov-sts-secret"
+description = "Identified a potential Naver Cloud Gov Secure Token Service Secret, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-pub-access-key"
+description = "Identified a potential Naver Cloud Access Key ID, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-pub-access-key-secret"
+description = "Identified a potential Naver Cloud Secret Key, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-pub-sts"
+description = "Identified a potential Naver Cloud Secure Token Service, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "navercloud-pub-sts-secret"
+description = "Identified a potential Naver Cloud Secure Token Service Secret, which could lead to unauthorized access to Naver Cloud services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nc_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["naver", "navercloud"]
+
+[[rules]]
+id = "neon-api-key"
+description = "Identified a potential Neon API Key, which could lead to unauthorized access to Neon services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(napi_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["neon"]
+
+[[rules]]
+id = "neon-connection-uri"
+description = "Identified a potential Neon Connection URI, which could lead to unauthorized access to Neon services and sensitive data exposure."
+regex = '''(?i)\bpostgres(?:ql)?://[^\s:/?#]+:[^\s@/]+@[^\s]*\.neon\.tech[^\s]*'''
+keywords = ["neon"]
+
+[[rules]]
+id = "netflix-netkey"
+description = "Identified a potential Netflix NetKey, which could lead to unauthorized access to Netflix services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(netflix_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["netflix"]
+
+[[rules]]
+id = "new-relic-insights-query-key"
+description = "Identified a potential New Relic Insights Query Key, which could lead to unauthorized access to New Relic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])(NRIQ-[A-Za-z0-9_-]{20,128})(?![A-Za-z0-9_-])'''
+keywords = ["new"]
+
+[[rules]]
+id = "new-relic-license-key"
+description = "Identified a potential New Relic License Key, which could lead to unauthorized access to New Relic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(nr_[A-Za-z0-9]{24,160})(?![A-Za-z0-9_])'''
+keywords = ["new"]
+
+[[rules]]
+id = "new-relic-personal-api-key"
+description = "Identified a potential New Relic Personal API Key, which could lead to unauthorized access to New Relic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])(NRAK-[A-Za-z0-9_-]{20,128})(?![A-Za-z0-9_-])'''
+keywords = ["new"]
+
+[[rules]]
+id = "new-relic-rest-api-key"
+description = "Identified a potential New Relic REST API Key, which could lead to unauthorized access to New Relic services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])(NR(?:AK|IQ|RA)-[A-Za-z0-9_-]{20,128})(?![A-Za-z0-9_-])'''
+keywords = ["new"]
+
+[[rules]]
+id = "oculus-access-token"
+description = "Identified a potential Oculus Access Token, which could lead to unauthorized access to Oculus services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(oculus_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["oculus"]
+
+[[rules]]
+id = "onechronos-api-key"
+description = "Identified a potential OneChronos API Token, which could lead to unauthorized access to OneChronos services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(onechronos_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["onechronos"]
+
+[[rules]]
+id = "onechronos-eb-api-key"
+description = "Identified a potential OneChronos Expressive Bidding API Key, which could lead to unauthorized access to OneChronos services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(onechronos_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["onechronos"]
+
+[[rules]]
+id = "onechronos-eb-encryption-key"
+description = "Identified a potential OneChronos Expressive Bidding Encryption Key, which could lead to unauthorized access to OneChronos services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(onechronos_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["onechronos"]
+
+[[rules]]
+id = "onechronos-oauth-token"
+description = "Identified a potential OneChronos OAuth Token, which could lead to unauthorized access to OneChronos services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(onechronos_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["onechronos"]
+
+[[rules]]
+id = "onechronos-refresh-token"
+description = "Identified a potential OneChronos Refresh Token, which could lead to unauthorized access to OneChronos services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(onechronos_refresh_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["onechronos"]
+
+[[rules]]
+id = "onesignal-rich-authentication-token"
+description = "Identified a potential OneSignal Rich API Key, which could lead to unauthorized access to OneSignal services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(onesignal_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["onesignal"]
+
+[[rules]]
+id = "onfido-live-api-token"
+description = "Identified a potential Onfido Live API Token, which could lead to unauthorized access to Onfido services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_.-])(api_(?:live|sandbox)\.[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_-])'''
+keywords = ["onfido"]
+
+[[rules]]
+id = "onfido-sandbox-api-token"
+description = "Identified a potential Onfido Sandbox API Token, which could lead to unauthorized access to Onfido services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_.-])(api_(?:live|sandbox)\.[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_-])'''
+keywords = ["onfido"]
+
+[[rules]]
+id = "openrouter-api-key"
+description = "Identified a potential OpenRouter API Key, which could lead to unauthorized access to OpenRouter services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sk-or-v1-[a-f0-9]{48,96})(?![A-Za-z0-9_])'''
+keywords = ["openrouter"]
+
+[[rules]]
+id = "openvsx-access-token"
+description = "Identified a potential OpenVSX Access Token, which could lead to unauthorized access to OpenVSX services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(openvsx_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["openvsx"]
+
+[[rules]]
+id = "openweather-api-key"
+description = "Identified a potential Openweather API Key, which could lead to unauthorized access to Openweather services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(openweather_[A-Za-z0-9]{24,160})(?![A-Za-z0-9_])'''
+keywords = ["openweather"]
+
+[[rules]]
+id = "oracle-api-key"
+description = "Identified a potential Oracle API Key, which could lead to unauthorized access to Oracle services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(oracle_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["oracle"]
+
+[[rules]]
+id = "orbit-api-token"
+description = "Identified a potential Orbit API Token, which could lead to unauthorized access to Orbit services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(orbit_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["orbit"]
+
+[[rules]]
+id = "paddle-api-key"
+description = "Identified a potential Paddle API Key, which could lead to unauthorized access to Paddle services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(paddle_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["paddle"]
+
+[[rules]]
+id = "paddle-sandbox-api-key"
+description = "Identified a potential Paddle Sandbox API Key, which could lead to unauthorized access to Paddle services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(paddle_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["paddle"]
+
+[[rules]]
+id = "pagerduty-oauth-secret"
+description = "Identified a potential PagerDuty OAuth Secret, which could lead to unauthorized access to PagerDuty services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pagerduty_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["pagerduty"]
+
+[[rules]]
+id = "pagerduty-oauth-token"
+description = "Identified a potential PagerDuty OAuth Token, which could lead to unauthorized access to PagerDuty services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pagerduty_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["pagerduty"]
+
+[[rules]]
+id = "palantir-jwt"
+description = "Identified a potential Palantir JSON Web Token, which could lead to unauthorized access to Palantir services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])(eyJ[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})(?![A-Za-z0-9_-])'''
+keywords = ["palantir"]
+
+[[rules]]
+id = "pangea-token"
+description = "Identified a potential Pangea Token, which could lead to unauthorized access to Pangea services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pangea_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["pangea"]
+
+[[rules]]
+id = "persona-production-api-key"
+description = "Identified a potential Persona Production Api Key, which could lead to unauthorized access to Persona  Identities services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pi_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["persona"]
+
+[[rules]]
+id = "persona-sandbox-api-key"
+description = "Identified a potential Persona Sandbox Api Key, which could lead to unauthorized access to Persona  Identities services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pi_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["persona"]
+
+[[rules]]
+id = "pineapple-technologies-incident-api-key"
+description = "Identified a potential Pineapple Technologies Incident API Key, which could lead to unauthorized access to Pineapple Technologies Limited services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ptl_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["pineapple"]
+
+[[rules]]
+id = "pinecone-api-key"
+description = "Identified a potential Pinecone API Key, which could lead to unauthorized access to Pinecone services and sensitive data exposure."
+regex = '''(?i)\b(?:PINECONE_API_KEY|Api-Key|pinecone)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(pcsk_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["pinecone"]
+
+[[rules]]
+id = "pinterest-access-token"
+description = "Identified a potential Pinterest Access Token, which could lead to unauthorized access to Pinterest services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pinterest_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["pinterest"]
+
+[[rules]]
+id = "pinterest-refresh-token"
+description = "Identified a potential Pinterest Refresh Token, which could lead to unauthorized access to Pinterest services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pinterest_refresh_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["pinterest"]
+
+[[rules]]
+id = "planning-center-oauth-access-token"
+description = "Identified a potential Planning Center OAuth Access Token, which could lead to unauthorized access to Planning Center services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pc_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["planning"]
+
+[[rules]]
+id = "planning-center-oauth-app-secret"
+description = "Identified a potential Planning Center OAuth Application Secret, which could lead to unauthorized access to Planning Center services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pc_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["planning"]
+
+[[rules]]
+id = "planning-center-personal-access-token"
+description = "Identified a potential Planning Center Personal Access Token, which could lead to unauthorized access to Planning Center services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(pc_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["planning"]
+
+[[rules]]
+id = "plivo-auth-id-plivo-auth-token"
+description = "Identified a potential Plivo Auth ID, which could lead to unauthorized access to Plivo services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(plivo_id_[A-Za-z0-9]{16,80})(?![A-Za-z0-9_])'''
+keywords = ["plivo"]
+
+[[rules]]
+id = "polar-access-token"
+description = "Identified a potential Polar Access Token, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-authorization-code"
+description = "Identified a potential Polar Authorization Code, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-client-registration-token"
+description = "Identified a potential Polar Client Registration Token, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-client-secret"
+description = "Identified a potential Polar Client Secret, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-customer-session-token"
+description = "Identified a potential Polar Customer Session Token, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-personal-access-token"
+description = "Identified a potential Polar Personal Access Token, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-refresh-token"
+description = "Identified a potential Polar Refresh Token, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_refresh_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "polar-user-session-token"
+description = "Identified a potential Polar User Session Token, which could lead to unauthorized access to Polar services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(polar_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["polar"]
+
+[[rules]]
+id = "posthog-feature-flags-secure-api-key"
+description = "Identified a potential PostHog Feature Flags Secure API Key, which could lead to unauthorized access to PostHog services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ph(?:x|s|a|r|c)_[A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["posthog"]
+
+[[rules]]
+id = "posthog-oauth-access-token"
+description = "Identified a potential PostHog OAuth Access Token, which could lead to unauthorized access to PostHog services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ph(?:x|s|a|r|c)_[A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["posthog"]
+
+[[rules]]
+id = "posthog-oauth-refresh-token"
+description = "Identified a potential PostHog OAuth Refresh Token, which could lead to unauthorized access to PostHog services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ph(?:x|s|a|r|c)_[A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["posthog"]
+
+[[rules]]
+id = "posthog-personal-api-key"
+description = "Identified a potential PostHog Personal API Key, which could lead to unauthorized access to PostHog services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ph(?:x|s|a|r|c)_[A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["posthog"]
+
+[[rules]]
+id = "proctorio-consumer-key"
+description = "Identified a potential Proctorio Consumer Key, which could lead to unauthorized access to Proctorio services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(proctorio_id_[A-Za-z0-9]{16,80})(?![A-Za-z0-9_])'''
+keywords = ["proctorio"]
+
+[[rules]]
+id = "proctorio-linkage-key"
+description = "Identified a potential Proctorio Linkage Key, which could lead to unauthorized access to Proctorio services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(proctorio_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["proctorio"]
+
+[[rules]]
+id = "proctorio-registration-key"
+description = "Identified a potential Proctorio Registration Key, which could lead to unauthorized access to Proctorio services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(proctorio_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["proctorio"]
+
+[[rules]]
+id = "proctorio-secret-key"
+description = "Identified a potential Proctorio Secret Key, which could lead to unauthorized access to Proctorio services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(proctorio_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["proctorio"]
+
+[[rules]]
+id = "proof-full-access-api-key"
+description = "Identified a potential Proof Full Access API Key, which could lead to unauthorized access to Proof services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(proof_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["proof"]
+
+[[rules]]
+id = "rainforest-api-key"
+description = "Identified a potential Rainforest API Key, which could lead to unauthorized access to Rainforest Pay services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(rp_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["rainforest"]
+
+[[rules]]
+id = "rainforest-sandbox-api-key"
+description = "Identified a potential Rainforest Sandbox API Key, which could lead to unauthorized access to Rainforest Pay services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(rp_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["rainforest"]
+
+[[rules]]
+id = "ramp-client-id"
+description = "Identified a potential Ramp OAuth Client ID, which could lead to unauthorized access to Ramp services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ramp_id_[A-Za-z0-9]{16,80})(?![A-Za-z0-9_])'''
+keywords = ["ramp"]
+
+[[rules]]
+id = "ramp-client-secret"
+description = "Identified a potential Ramp OAuth Client Secret, which could lead to unauthorized access to Ramp services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ramp_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["ramp"]
+
+[[rules]]
+id = "ramp-oauth-token"
+description = "Identified a potential Ramp OAuth Access or Refresh Token, which could lead to unauthorized access to Ramp services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(ramp_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["ramp"]
+
+[[rules]]
+id = "raycast-access-token"
+description = "Identified a potential Raycast Access Token, which could lead to unauthorized access to Raycast services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(raycast_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["raycast"]
+
+[[rules]]
+id = "redirect-pizza-api-token"
+description = "Identified a potential redirect.pizza API Token, which could lead to unauthorized access to redirect.pizza services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(rp_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["redirect"]
+
+[[rules]]
+id = "replicate-api-token"
+description = "Identified a potential Replicate API Token, which could lead to unauthorized access to Replicate services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(r8_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["replicate"]
+
+[[rules]]
+id = "rootly-api-key"
+description = "Identified a potential Rootly API Key, which could lead to unauthorized access to Rootly services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(rootly_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["rootly"]
+
+[[rules]]
+id = "runpod-api-key"
+description = "Identified a potential RunPod API Key, which could lead to unauthorized access to RunPod services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(rpa_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["runpod"]
+
+[[rules]]
+id = "salesforce-access-token"
+description = "Identified a potential Salesforce Access Token, which could lead to unauthorized access to Salesforce services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(salesforce_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["salesforce"]
+
+[[rules]]
+id = "salesforce-marketing-cloud-api-oauth2-token"
+description = "Identified a potential Salesforce Marketing Cloud API OAuth2 Token, which could lead to unauthorized access to Salesforce services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(salesforce_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["salesforce"]
+
+[[rules]]
+id = "salesforce-oauth2-consumer-key-salesforce-oauth2-consumer-secret"
+description = "Identified a potential Salesforce OAuth2 Consumer Key, which could lead to unauthorized access to Salesforce services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(salesforce_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["salesforce"]
+
+[[rules]]
+id = "salesforce-refresh-token"
+description = "Identified a potential Salesforce Refresh Token, which could lead to unauthorized access to Salesforce services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(salesforce_refresh_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["salesforce"]
+
+[[rules]]
+id = "samsara-api-token"
+description = "Identified a potential Samsara API Token, which could lead to unauthorized access to Samsara services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(samsara_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["samsara"]
+
+[[rules]]
+id = "samsara-oauth-access-token"
+description = "Identified a potential Samsara OAuth Access Token, which could lead to unauthorized access to Samsara services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(samsara_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["samsara"]
+
+[[rules]]
+id = "scalr-api-token"
+description = "Identified a potential Scalr API Token, which could lead to unauthorized access to Scalr services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(scalr_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["scalr"]
+
+[[rules]]
+id = "segment-public-api-token"
+description = "Identified a potential Segment Public API Token, which could lead to unauthorized access to Segment services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(segment_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["segment"]
+
+[[rules]]
+id = "shopee-open-platform-partner-key"
+description = "Identified a potential Shopee Open Platform Partner Key, which could lead to unauthorized access to Shopee services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(shopee_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["shopee"]
+
+[[rules]]
+id = "siemens-api-token"
+description = "Identified a potential Siemens API Token, which could lead to unauthorized access to Siemens services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(siemens_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["siemens"]
+
+[[rules]]
+id = "siemens-code-token"
+description = "Identified a potential Siemens Code Token, which could lead to unauthorized access to Siemens services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(siemens_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["siemens"]
+
+[[rules]]
+id = "sindri-api-key"
+description = "Identified a potential Sindri API Key, which could lead to unauthorized access to Sindri services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sindri_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["sindri"]
+
+[[rules]]
+id = "snowflake-postgres-connection-string"
+description = "Identified a potential SFPG Connection String, which could lead to unauthorized access to Snowflake services and sensitive data exposure."
+regex = '''(?i)\b(?:postgres(?:ql)?|snowflake)://[^\s:/?#]+:[^\s@/]+@[^\s]*snowflake[^\s]*'''
+keywords = ["snowflake"]
+
+[[rules]]
+id = "snowflake-postgres-host-snowflake-postgres-password"
+description = "Identified a potential SFPG Host, which could lead to unauthorized access to Snowflake services and sensitive data exposure."
+regex = '''(?i)\b([A-Za-z0-9.-]+\.snowflakecomputing\.com:[A-Za-z0-9._~:/+=-]{16,160})\b'''
+keywords = ["snowflake"]
+
+[[rules]]
+id = "snowflake-programmatic-access-token"
+description = "Identified a potential Snowflake Programmatic Access Token, which could lead to unauthorized access to Snowflake services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(snowpat_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["snowflake"]
+
+[[rules]]
+id = "sslmate-api-key"
+description = "Identified a potential SSLMate API Key, which could lead to unauthorized access to SSLMate services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sslmate_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["sslmate"]
+
+[[rules]]
+id = "sslmate-cluster-secret"
+description = "Identified a potential SSLMate Cluster Secret, which could lead to unauthorized access to SSLMate services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sslmate_secret_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["sslmate"]
+
+[[rules]]
+id = "supabase-personal-access-token"
+description = "Identified a potential Supabase Personal Access Token, which could lead to unauthorized access to Supabase services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sbp_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["supabase"]
+
+[[rules]]
+id = "supabase-secret-key"
+description = "Identified a potential Supabase Secret Key, which could lead to unauthorized access to Supabase services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sb_secret_[A-Za-z0-9_-]{16,180})(?![A-Za-z0-9_])'''
+keywords = ["supabase"]
+
+[[rules]]
+id = "supabase-service-key"
+description = "Identified a potential Supabase Service Key, which could lead to unauthorized access to Supabase services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_-])(eyJ[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})(?![A-Za-z0-9_-])'''
+keywords = ["supabase"]
+
+[[rules]]
+id = "tableau-personal-access-token"
+description = "Identified a potential Tableau Personal Access Token, which could lead to unauthorized access to Tableau services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(tableau_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["tableau"]
+
+[[rules]]
+id = "tailscale-api-key"
+description = "Identified a potential Tailscale API Key, which could lead to unauthorized access to Tailscale services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(tskey-(?:api|auth|client|scim|webhook)-[A-Za-z0-9-]{16,160})(?![A-Za-z0-9_])'''
+keywords = ["tailscale"]
+
+[[rules]]
+id = "telnyx-api-v2-key"
+description = "Identified a potential Telnyx API V2 Key, which could lead to unauthorized access to Telnyx services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(KEY[A-Za-z0-9]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["telnyx"]
+
+[[rules]]
+id = "temporal-cloud-api-key"
+description = "Identified a potential Temporal Cloud API Key, which could lead to unauthorized access to Temporal services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(temporal_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["temporal"]
+
+[[rules]]
+id = "tencent-cloud-intl-access-token"
+description = "Identified a potential Tencent Cloud International Access Token, which could lead to unauthorized access to Tencent services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(tencent_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["tencent"]
+
+[[rules]]
+id = "tencent-cloud-secret-id"
+description = "Identified a potential Tencent Cloud Secret ID, which could lead to unauthorized access to Tencent services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(AKID[A-Za-z0-9]{16,48})(?![A-Za-z0-9_])'''
+keywords = ["tencent"]
+
+[[rules]]
+id = "tencent-wechat-api-app-id"
+description = "Identified a potential Tencent WeChat API App ID, which could lead to unauthorized access to Tencent services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wx[a-f0-9]{14,32})(?![A-Za-z0-9_])'''
+keywords = ["tencent"]
+
+[[rules]]
+id = "tencent-wechat-pay-token"
+description = "Identified a potential Tencent WeChat Pay Token, which could lead to unauthorized access to Tencent services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(tencent_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["tencent"]
+
+[[rules]]
+id = "thunderstore-io-api-token"
+description = "Identified a potential Thunderstore IO API Token, which could lead to unauthorized access to Thunderstore services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(thunderstore_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["thunderstore"]
+
+[[rules]]
+id = "wiseflow-api-key"
+description = "Identified a potential WISEflow API Key, which could lead to unauthorized access to Uniwise services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(uniwise_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["uniwise", "wiseflow"]
+
+[[rules]]
+id = "unkey-root-key"
+description = "Identified a potential Unkey Root Key, which could lead to unauthorized access to Unkey services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(unkey_[A-Za-z0-9_]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["unkey"]
+
+[[rules]]
+id = "val-town-api-token"
+description = "Identified a potential Val Town API Token, which could lead to unauthorized access to Val Town services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vt_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["val"]
+
+[[rules]]
+id = "vercel-api-key"
+description = "Identified a potential Vercel API Key, which could lead to unauthorized access to Vercel services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vc(?:p|i|a|r|k)[_-][A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["vercel"]
+
+[[rules]]
+id = "vercel-app-refresh-token"
+description = "Identified a potential Vercel App Refresh Token, which could lead to unauthorized access to Vercel services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vc(?:p|i|a|r|k)[_-][A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["vercel"]
+
+[[rules]]
+id = "vercel-app-user-access-token"
+description = "Identified a potential Vercel App User Access Token, which could lead to unauthorized access to Vercel services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vc(?:p|i|a|r|k)[_-][A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["vercel"]
+
+[[rules]]
+id = "vercel-integration-access-token"
+description = "Identified a potential Vercel Integration Access Token, which could lead to unauthorized access to Vercel services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vc(?:p|i|a|r|k)[_-][A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["vercel"]
+
+[[rules]]
+id = "vercel-personal-access-token"
+description = "Identified a potential Vercel Personal Access Token, which could lead to unauthorized access to Vercel services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vc(?:p|i|a|r|k)[_-][A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["vercel"]
+
+[[rules]]
+id = "vercel-support-access-token"
+description = "Identified a potential Vercel Support Access Token, which could lead to unauthorized access to Vercel services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(vc(?:p|i|a|r|k)[_-][A-Za-z0-9]{16,128})(?![A-Za-z0-9_])'''
+keywords = ["vercel"]
+
+[[rules]]
+id = "volcengine-access-key-id"
+description = "Identified a potential VolcEngine Access Key ID, which could lead to unauthorized access to VolcEngine services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(volcengine_id_[A-Za-z0-9]{16,80})(?![A-Za-z0-9_])'''
+keywords = ["volcengine"]
+
+[[rules]]
+id = "volcengine-ark-api-key"
+description = "Identified a potential VolcEngine Ark API Key, which could lead to unauthorized access to VolcEngine services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(volcengine_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["volcengine"]
+
+[[rules]]
+id = "wakatime-api-key"
+description = "Identified a potential WakaTime API Key, which could lead to unauthorized access to Wakatime services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wakatime_[A-Za-z0-9]{24,160})(?![A-Za-z0-9_])'''
+keywords = ["wakatime"]
+
+[[rules]]
+id = "wakatime-app-secret"
+description = "Identified a potential WakaTime App Secret, which could lead to unauthorized access to Wakatime services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wakatime_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["wakatime"]
+
+[[rules]]
+id = "wakatime-oauth-access-token"
+description = "Identified a potential WakaTime OAuth Access Token, which could lead to unauthorized access to Wakatime services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wakatime_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["wakatime"]
+
+[[rules]]
+id = "wakatime-oauth-refresh-token"
+description = "Identified a potential WakaTime OAuth Refresh Token, which could lead to unauthorized access to Wakatime services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wakatime_[A-Za-z0-9]{20,128})(?![A-Za-z0-9_])'''
+keywords = ["wakatime"]
+
+[[rules]]
+id = "weatherstack-api-key"
+description = "Identified a potential Weatherstack API Key, which could lead to unauthorized access to Weatherstack services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(weatherstack_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["weatherstack"]
+
+[[rules]]
+id = "wandb-api-key"
+description = "Identified a potential Weights & Biases API Key, which could lead to unauthorized access to Weights & Biases services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wb_[A-Za-z0-9]{24,160})(?![A-Za-z0-9_])'''
+keywords = ["wandb", "weights"]
+
+[[rules]]
+id = "workato-developer-api-token"
+description = "Identified a potential Workato Developer API Token, which could lead to unauthorized access to Workato services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(workato_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["workato"]
+
+[[rules]]
+id = "workos-production-api-key"
+description = "Identified a potential WorkOS Production API Key, which could lead to unauthorized access to WorkOS services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sk_(?:live|test|example|prod|staging)_[A-Za-z0-9_]{12,160})(?![A-Za-z0-9_])'''
+keywords = ["workos"]
+
+[[rules]]
+id = "workos-staging-api-key"
+description = "Identified a potential WorkOS Staging API Key, which could lead to unauthorized access to WorkOS services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(sk_(?:live|test|example|prod|staging)_[A-Za-z0-9_]{12,160})(?![A-Za-z0-9_])'''
+keywords = ["workos"]
+
+[[rules]]
+id = "wso2-choreo-personal-access-token"
+description = "Identified a potential WSO2 Choreo Personal Access Token, which could lead to unauthorized access to WSO2 services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(wso2_access_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["wso2"]
+
+[[rules]]
+id = "xai-api-key"
+description = "Identified a potential xAI API Key, which could lead to unauthorized access to xAI services and sensitive data exposure."
+regex = '''(?i)\b(?:XAI_API_KEY|api\.x\.ai|xAI)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(xai_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+keywords = ["xai"]
+
+[[rules]]
+id = "zenhub-personal-api-key"
+description = "Identified a potential ZenHub Personal API Key, which could lead to unauthorized access to ZenHub services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(zenhub_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["zenhub"]
+
+[[rules]]
+id = "zuplo-consumer-api-key"
+description = "Identified a potential Zuplo Consumer API Key, which could lead to unauthorized access to Zuplo services and sensitive data exposure."
+regex = '''(?<![A-Za-z0-9_])(zuplo_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
+keywords = ["zuplo"]
+

@@ -1,0 +1,235 @@
+provider,supportedSecret,secretType,isPublic,hasPushProtection,hasValidityCheck,hasExtendedMetadata,base64Supported
+Aikido,Aikido API Client Secret,aikido_api_client_secret,False,True,False,False,False
+Aikido,Aikido CI Scanning Token,aikido_ci_scanning_token,False,True,False,False,False
+Aiven,Aiven Auth Token,aiven_auth_token,True,True,False,False,False
+Aiven,Aiven Service Password,aiven_service_password,True,True,False,False,False
+Apify,Apify Actor Run API Token,apify_actor_run_api_token,True,True,False,False,False
+Apify,Apify Actor Run Proxy Password,apify_actor_run_proxy_password,True,True,False,False,False
+Apify,Apify API Token,apify_api_token,True,True,True,{% ifversion ghes %}false{% else %}true{% endif %},False
+Apify,Apify Integration API Token,apify_integration_api_token,True,True,False,False,False
+Apify,Apify Proxy Password,apify_proxy_password,True,True,False,False,False
+Apify,Apify UI Token,apify_ui_token,True,True,False,False,False
+Apify,Apify Webhook Dispatch API Token,apify_webhook_dispatch_api_token,True,True,False,False,False
+Asaas,Asaas API Token,asaas_api_token,True,False,True,False,False
+Baidu,Baidu AI API Key,baiduai_api_key,True,False,False,False,False
+Baidu,Baidu Cloud API Access Key,baiducloud_api_accesskey,True,True,False,False,False
+Bitrise,Bitrise Personal Access Token,bitrise_personal_access_token,True,True,True,False,False
+Bitrise,Bitrise Workspace API Token,bitrise_workspace_api_token,True,True,True,False,False
+Block Protocol,Block Protocol API Key,block_protocol_api_key,False,True,True,False,False
+Buildkite,Buildkite Agent Access Token,buildkite_agent_access_token,True,True,False,False,False
+Buildkite,Buildkite Agent Job Token,buildkite_agent_job_token,True,True,False,False,False
+Buildkite,Buildkite Agent Registration Token,buildkite_agent_registration_token,True,True,False,False,False
+Buildkite,Buildkite Cluster Queue Token,buildkite_cluster_queue_token,True,True,False,False,False
+Buildkite,Buildkite Cluster Token,buildkite_cluster_token,True,True,False,False,False
+Buildkite,Buildkite Packages Registry Token,buildkite_packages_registry_token,True,True,False,False,False
+Buildkite,Buildkite Packages Temporary Token,buildkite_packages_temporary_token,True,True,False,False,False
+Buildkite,Buildkite Portal Secret,buildkite_portal_secret,True,True,False,False,False
+Buildkite,Buildkite Portal Token,buildkite_portal_token,True,True,False,False,False
+Buildkite,Buildkite User Access Token,buildkite_user_access_token,True,False,False,False,False
+Canadian Digital Service,Canadian Digital Service Notify API Key,cds_canada_notify_api_key,True,True,True,False,False
+Canva,Canva App Secret,canva_app_secret,True,True,False,False,False
+Canva,Canva Connect API Secret,canva_connect_api_secret,True,True,False,False,False
+Canva,Canva Secret,canva_secret,True,True,False,False,False
+Cashfree,Cashfree API Key,cashfree_api_key,True,True,False,False,False
+Cfx.re,Cfx.re Server Key,cfxre_server_key,True,False,False,False,False
+Checkout.com,Checkout.com Production Secret Key,checkout_production_secret_key,True,True,True,False,False
+Checkout.com,Checkout.com Test Secret Key,checkout_test_secret_key,True,True,True,False,False
+Chief Tools,Chief Tools Token,chief_tools_token,True,True,False,False,False
+CircleCI,CircleCI Bot API Token,circleci_bot_access_token,True,True,False,False,False
+CircleCI,CircleCI Personal Access Token,circleci_personal_access_token,True,True,True,False,False
+CircleCI,CircleCI Project Access Token,circleci_project_access_token,True,True,False,False,False
+CircleCI,CircleCI Release API Token,circleci_release_integration_token,True,True,False,False,False
+Cockroach Labs,CockroachDB Cloud API Key,ccdb_api_key,True,True,True,False,False
+Contributed Systems,Contributed Systems Credentials,contributed_systems_credentials,True,False,False,False,False
+Coveo,Coveo Access Token,coveo_access_token,True,False,False,False,False
+Coveo,Coveo API Key,coveo_api_key,True,False,False,False,False
+crates.io,Crates.io API Token,cratesio_api_token,True,True,False,False,False
+Databento,Databento API Key,databento_api_key,True,False,True,False,False
+Datastax,Datastax AstraCS Tokens,datastax_astracs_token,True,True,False,False,False
+DeepSeek,DeepSeek API Key,deepseek_api_key,False,False,True,False,False
+DevCycle,DevCycle Client API Key,devcycle_client_api_key,True,True,False,False,False
+DevCycle,DevCycle Mobile API Key,devcycle_mobile_api_key,True,True,False,False,False
+DevCycle,DevCycle Server API Key,devcycle_server_api_key,True,True,False,False,False
+Docker,Docker Organization Access Token,docker_organization_access_token,True,True,False,False,False
+Docker,Docker Personal Access Token,docker_personal_access_token,True,True,False,False,False
+Docker,Docker Swarm Join Token,docker_swarm_join_token,False,False,False,False,False
+Docker,Docker Swarm Unlock Key,docker_swarm_unlock_key,False,False,False,False,False
+eBay,eBay Production Client ID (App ID),"ebay_production_client_id, </br>ebay_production_client_secret",False,True,False,False,False
+eBay,eBay Sandbox Client ID (App ID),"ebay_sandbox_client_id, </br>ebay_sandbox_client_secret",False,True,False,False,False
+Elastic,Elastic Cloud API Key,elastic_cloud_api_key,False,True,False,False,False
+Elastic,Elastic Stack API Key,elastic_stack_api_key,False,True,False,False,True
+Fieldguide,Fieldguide API Token,fieldguide_api_token,True,False,False,False,False
+Figma,Figma Personal Access Token,figma_pat,True,True,True,{% ifversion ghes %}false{% else %}true{% endif %},False
+Figma,Figma SCIM API Token,figma_scim_token,True,True,False,False,False
+Firebase,Firebase Cloud Messaging Server Key,firebase_cloud_messaging_server_key,False,False,False,False,False
+FullStory,FullStory API Key,fullstory_api_key,True,True,True,False,False
+Groq,Groq API Key,groq_api_key,True,True,True,False,True
+GuardSquare,GuardSquare AppSweep API Key,guardsquare_appsweep_api_key,True,True,False,False,False
+GuardSquare,GuardSquare CLI Access Token,guardsquare_cli_access_token,True,True,False,False,False
+GuardSquare,GuardSquare Maven Token,guardsquare_maven_token,True,True,False,False,False
+Hack Club,Hack Club AI Key,hackclub_ai_api_key,False,True,False,False,False
+hCaptcha,hCaptcha Siteverify Secret,hcaptcha_siteverify_secret,False,True,False,False,False
+Highnote,Highnote RK Live Key,highnote_rk_live_key,True,True,False,False,False
+Highnote,Highnote RK Test Key,highnote_rk_test_key,True,True,False,False,False
+Highnote,Highnote SK Live Key,highnote_sk_live_key,True,True,True,False,False
+Highnote,Highnote SK Test Key,highnote_sk_test_key,True,True,True,False,False
+HOP,HOP Bearer,hop_bearer,True,True,False,False,False
+HOP,HOP PAT,hop_pat,True,True,False,False,False
+HOP,HOP PTK,hop_ptk,True,True,False,False,False
+IBM,IBM Cloud IAM Key,ibm_cloud_iam_key,True,False,False,False,False
+Ionic,Ionic Personal Access Token,ionic_personal_access_token,True,True,False,False,False
+Ionic,Ionic Refresh Token,ionic_refresh_token,True,True,False,False,False
+Iterative,DVC Studio Access Token,iterative_dvc_studio_access_token,True,False,False,False,False
+Langchain,LangSmith Personal Access Token,langchain_api_personal_key,False,True,False,False,False
+Langchain,LangSmith Service Key,langchain_api_server_key,False,True,False,False,False
+Langchain,LangSmith License Key,langsmith_license_key,False,True,False,False,False
+Langchain,LangSmith SCIM Bearer Token,langsmith_scim_bearer_token,False,True,False,False,False
+Lark,Lark APaaS Client Secret,lark_apaas_client_secret,True,True,False,False,False
+Lark,Lark Application Secret,lark_app_secret,True,False,False,False,False
+Lark,Lark MCP Grant Token,lark_mcp_grant_token,True,False,False,False,False
+Lark,Lark Meego Plugin Secret,lark_meego_plugin_secret,True,True,False,False,False
+Lark,Lark User Session,lark_user_session,True,True,False,False,False
+Lichess,Lichess OAuth Access Token,lichess_oauth_access_token,True,True,True,False,False
+Lichess,Lichess Personal Access Token,lichess_personal_access_token,True,True,True,False,False
+Lightspeed,Lightspeed Personal Access Token,lightspeed_xs_pat,False,True,False,False,False
+Limbar,Limbar Token,limbar_token,True,True,False,False,False
+Localstack,Localstack API Key,localstack_api_key,True,True,False,False,False
+LogicMonitor,LogicMonitor Bearer Token,logicmonitor_bearer_token,True,True,False,False,False
+LogicMonitor,LogicMonitor LMv1 Access Key,logicmonitor_lmv1_access_key,True,True,False,False,False
+Login with Amazon,Login with Amazon OAuth Client ID,"amazon_oauth_client_id, </br>amazon_oauth_client_secret",True,True,False,False,False
+Mailersend,Mailersend API Token,mailersend_api_token,True,False,False,False,False
+Mailersend,Mailersend SMTP Password,mailersend_smtp_password,True,False,False,False,False
+Mailersend,Mailersend SMTP Username,mailersend_smtp_username,True,False,False,False,False
+Mercury,Mercury Non-Production API Token,mercury_non_production_api_token,True,True,True,False,False
+Mercury,Mercury Production API Token,mercury_production_api_token,True,True,True,False,False
+Mergify,Mergify Application Key,mergify_application_key,True,True,False,False,False
+Midtrans,Midtrans Production Server Key,midtrans_production_server_key,False,True,True,False,False
+Midtrans,Midtrans Sandbox Server Key,midtrans_sandbox_server_key,False,False,True,False,False
+Mistral AI,Mistral AI API Key,mistral_ai_api_key,False,False,False,False,False
+MongoDB,MongoDB Atlas Database URI with credentials,mongodb_atlas_db_uri_with_credentials,True,False,True,False,False
+MongoDB,MongoDB Atlas Service Account Secret,mongodb_atlas_service_account_secret,True,True,False,False,False
+Naver Cloud,Naver Cloud Gov Access Key ID,navercloud_gov_access_key,True,True,False,False,False
+Naver Cloud,Naver Cloud Gov Secret Key,navercloud_gov_access_key_secret,True,True,False,False,False
+Naver Cloud,Naver Cloud Gov Secure Token Service,navercloud_gov_sts,True,True,False,False,False
+Naver Cloud,Naver Cloud Gov Secure Token Service Secret,navercloud_gov_sts_secret,True,True,False,False,False
+Naver Cloud,Naver Cloud Access Key ID,navercloud_pub_access_key,True,True,False,False,False
+Naver Cloud,Naver Cloud Secret Key,navercloud_pub_access_key_secret,True,True,False,False,False
+Naver Cloud,Naver Cloud Secure Token Service,navercloud_pub_sts,True,True,False,False,False
+Naver Cloud,Naver Cloud Secure Token Service Secret,navercloud_pub_sts_secret,True,True,False,False,False
+Neon,Neon API Key,neon_api_key,True,False,False,False,False
+Neon,Neon Connection URI,neon_connection_uri,True,False,False,False,False
+Netflix,Netflix NetKey,netflix_netkey,True,True,False,False,False
+New Relic,New Relic Insights Query Key,new_relic_insights_query_key,False,True,False,False,False
+New Relic,New Relic License Key,new_relic_license_key,False,False,False,False,False
+New Relic,New Relic Personal API Key,new_relic_personal_api_key,False,True,False,False,False
+New Relic,New Relic REST API Key,new_relic_rest_api_key,False,True,False,False,False
+Oculus,Oculus Access Token,oculus_access_token,False,True,False,False,False
+OneChronos,OneChronos API Token,onechronos_api_key,False,True,False,False,False
+OneChronos,OneChronos Expressive Bidding API Key,onechronos_eb_api_key,False,True,False,False,False
+OneChronos,OneChronos Expressive Bidding Encryption Key,onechronos_eb_encryption_key,False,True,False,False,False
+OneChronos,OneChronos OAuth Token,onechronos_oauth_token,False,True,False,False,False
+OneChronos,OneChronos Refresh Token,onechronos_refresh_token,False,True,False,False,False
+OneSignal,OneSignal Rich API Key,onesignal_rich_authentication_token,True,False,False,False,False
+Onfido,Onfido Live API Token,onfido_live_api_token,True,True,True,False,False
+Onfido,Onfido Sandbox API Token,onfido_sandbox_api_token,True,True,True,False,False
+OpenRouter,OpenRouter API Key,openrouter_api_key,True,True,True,False,False
+OpenVSX,OpenVSX Access Token,openvsx_access_token,False,True,False,False,False
+Openweather,Openweather API Key,openweather_api_key,False,True,False,False,False
+Oracle,Oracle API Key,oracle_api_key,True,False,False,False,False
+Orbit,Orbit API Token,orbit_api_token,False,True,False,False,False
+Paddle,Paddle API Key,paddle_api_key,True,True,False,False,False
+Paddle,Paddle Sandbox API Key,paddle_sandbox_api_key,True,True,False,False,False
+PagerDuty,PagerDuty OAuth Secret,pagerduty_oauth_secret,False,True,False,False,False
+PagerDuty,PagerDuty OAuth Token,pagerduty_oauth_token,False,True,False,False,False
+Palantir,Palantir JSON Web Token,palantir_jwt,True,True,False,False,False
+Pangea,Pangea Token,pangea_token,False,True,False,False,False
+Persona  Identities,Persona Production Api Key,persona_production_api_key,True,True,True,False,False
+Persona  Identities,Persona Sandbox Api Key,persona_sandbox_api_key,True,True,True,False,False
+Pineapple Technologies Limited,Pineapple Technologies Incident API Key,pineapple_technologies_incident_api_key,True,True,False,False,False
+Pinecone,Pinecone API Key,pinecone_api_key,False,True,True,False,False
+Pinterest,Pinterest Access Token,pinterest_access_token,True,True,False,False,False
+Pinterest,Pinterest Refresh Token,pinterest_refresh_token,True,True,False,False,False
+Planning Center,Planning Center OAuth Access Token,planning_center_oauth_access_token,True,True,True,False,False
+Planning Center,Planning Center OAuth Application Secret,planning_center_oauth_app_secret,True,True,False,False,False
+Planning Center,Planning Center Personal Access Token,planning_center_personal_access_token,True,True,False,False,False
+Plivo,Plivo Auth ID,"plivo_auth_id, </br>plivo_auth_token",True,True,False,False,False
+Polar,Polar Access Token,polar_access_token,True,True,True,False,False
+Polar,Polar Authorization Code,polar_authorization_code,True,True,False,False,False
+Polar,Polar Client Registration Token,polar_client_registration_token,True,True,False,False,False
+Polar,Polar Client Secret,polar_client_secret,True,True,False,False,False
+Polar,Polar Customer Session Token,polar_customer_session_token,True,True,False,False,False
+Polar,Polar Personal Access Token,polar_personal_access_token,True,True,False,False,False
+Polar,Polar Refresh Token,polar_refresh_token,True,True,False,False,False
+Polar,Polar User Session Token,polar_user_session_token,True,True,False,False,False
+PostHog,PostHog Feature Flags Secure API Key,posthog_feature_flags_secure_api_key,True,True,False,False,False
+PostHog,PostHog OAuth Access Token,posthog_oauth_access_token,True,False,False,False,False
+PostHog,PostHog OAuth Refresh Token,posthog_oauth_refresh_token,True,True,False,False,False
+PostHog,PostHog Personal API Key,posthog_personal_api_key,True,True,False,False,False
+Proctorio,Proctorio Consumer Key,proctorio_consumer_key,True,True,False,False,False
+Proctorio,Proctorio Linkage Key,proctorio_linkage_key,True,True,False,False,False
+Proctorio,Proctorio Registration Key,proctorio_registration_key,True,False,False,False,False
+Proctorio,Proctorio Secret Key,proctorio_secret_key,True,True,False,False,False
+Proof,Proof Full Access API Key,proof_full_access_api_key,True,True,False,False,False
+Rainforest Pay,Rainforest API Key,rainforest_api_key,True,True,False,False,False
+Rainforest Pay,Rainforest Sandbox API Key,rainforest_sandbox_api_key,True,True,False,False,False
+Ramp,Ramp OAuth Client ID,ramp_client_id,True,True,False,False,False
+Ramp,Ramp OAuth Client Secret,ramp_client_secret,True,True,False,False,False
+Ramp,Ramp OAuth Access or Refresh Token,ramp_oauth_token,True,True,False,False,False
+Raycast,Raycast Access Token,raycast_access_token,True,True,False,False,False
+redirect.pizza,redirect.pizza API Token,redirect_pizza_api_token,True,True,True,False,False
+Replicate,Replicate API Token,replicate_api_token,True,True,True,False,False
+Rootly,Rootly API Key,rootly_api_key,False,True,True,False,False
+RunPod,RunPod API Key,runpod_api_key,True,True,True,False,False
+Salesforce,Salesforce Access Token,salesforce_access_token,False,True,False,False,False
+Salesforce,Salesforce Marketing Cloud API OAuth2 Token,salesforce_marketing_cloud_api_oauth2_token,False,True,False,False,False
+Salesforce,Salesforce OAuth2 Consumer Key,"salesforce_oauth2_consumer_key, </br>salesforce_oauth2_consumer_secret",False,True,False,False,False
+Salesforce,Salesforce Refresh Token,salesforce_refresh_token,False,True,False,False,False
+Samsara,Samsara API Token,samsara_api_token,True,True,False,False,False
+Samsara,Samsara OAuth Access Token,samsara_oauth_access_token,True,True,False,False,False
+Scalr,Scalr API Token,scalr_api_token,True,True,True,False,False
+Segment,Segment Public API Token,segment_public_api_token,True,True,True,False,False
+Shopee,Shopee Open Platform Partner Key,shopee_open_platform_partner_key,True,True,False,False,False
+Siemens,Siemens API Token,siemens_api_token,True,True,True,False,False
+Siemens,Siemens Code Token,siemens_code_token,True,False,False,False,False
+Sindri,Sindri API Key,sindri_api_key,True,True,False,False,False
+Snowflake,SFPG Connection String,snowflake_postgres_connection_string,True,True,False,False,False
+Snowflake,SFPG Host,"snowflake_postgres_host, </br>snowflake_postgres_password",True,True,False,False,False
+Snowflake,Snowflake Programmatic Access Token,snowflake_programmatic_access_token,True,True,False,False,False
+SSLMate,SSLMate API Key,sslmate_api_key,True,True,True,False,False
+SSLMate,SSLMate Cluster Secret,sslmate_cluster_secret,True,True,False,False,False
+Supabase,Supabase Personal Access Token,supabase_personal_access_token,True,True,False,False,False
+Supabase,Supabase Secret Key,supabase_secret_key,True,True,False,False,False
+Supabase,Supabase Service Key,supabase_service_key,True,False,False,False,False
+Tableau,Tableau Personal Access Token,tableau_personal_access_token,False,True,False,False,False
+Tailscale,Tailscale API Key,tailscale_api_key,True,False,True,{% ifversion ghes %}false{% else %}true{% endif %},False
+Telnyx,Telnyx API V2 Key,telnyx_api_v2_key,True,True,True,False,False
+Temporal,Temporal Cloud API Key,temporal_cloud_api_key,True,True,False,False,False
+Tencent,Tencent Cloud International Access Token,tencent_cloud_intl_access_token,True,False,False,False,False
+Tencent,Tencent Cloud Secret ID,tencent_cloud_secret_id,True,True,False,False,False
+Tencent,Tencent WeChat API App ID,tencent_wechat_api_app_id,True,False,False,False,False
+Tencent,Tencent WeChat Pay Token,tencent_wechat_pay_token,False,False,False,False,False
+Thunderstore,Thunderstore IO API Token,thunderstore_io_api_token,False,True,False,False,False
+Uniwise,WISEflow API Key,wiseflow_api_key,True,True,True,False,False
+Unkey,Unkey Root Key,unkey_root_key,True,False,True,False,False
+Val Town,Val Town API Token,val_town_api_token,True,True,True,False,False
+Vercel,Vercel API Key,vercel_api_key,True,True,False,False,False
+Vercel,Vercel App Refresh Token,vercel_app_refresh_token,True,False,False,False,False
+Vercel,Vercel App User Access Token,vercel_app_user_access_token,True,False,False,False,False
+Vercel,Vercel Integration Access Token,vercel_integration_access_token,True,True,False,False,False
+Vercel,Vercel Personal Access Token,vercel_personal_access_token,True,True,False,False,False
+Vercel,Vercel Support Access Token,vercel_support_access_token,True,True,False,False,False
+VolcEngine,VolcEngine Access Key ID,volcengine_access_key_id,True,True,False,False,False
+VolcEngine,VolcEngine Ark API Key,volcengine_ark_api_key,True,False,False,False,False
+Wakatime,WakaTime API Key,wakatime_api_key,True,True,True,False,False
+Wakatime,WakaTime App Secret,wakatime_app_secret,True,True,False,False,False
+Wakatime,WakaTime OAuth Access Token,wakatime_oauth_access_token,True,True,True,False,False
+Wakatime,WakaTime OAuth Refresh Token,wakatime_oauth_refresh_token,True,True,False,False,False
+Weatherstack,Weatherstack API Key,weatherstack_api_key,False,False,False,False,False
+Weights & Biases,Weights & Biases API Key,wandb_api_key,False,True,False,False,False
+Workato,Workato Developer API Token,workato_developer_api_token,True,True,True,False,False
+WorkOS,WorkOS Production API Key,workos_production_api_key,True,True,False,False,False
+WorkOS,WorkOS Staging API Key,workos_staging_api_key,True,True,False,False,False
+WSO2,WSO2 Choreo Personal Access Token,wso2_choreo_personal_access_token,True,True,False,False,False
+xAI,xAI API Key,xai_api_key,True,True,True,False,False
+ZenHub,ZenHub Personal API Key,zenhub_personal_api_key,False,True,False,False,False
+Zuplo,Zuplo Consumer API Key,zuplo_consumer_api_key,True,True,True,False,False

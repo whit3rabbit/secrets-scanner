@@ -18,6 +18,8 @@ use log::{error, info};
 use secrets_scanner::{BinaryPolicy, Finding, ScanConfig, ScanStats, Scanner};
 
 mod format;
+#[path = "safe_display.rs"]
+mod safe_display;
 
 // ─────────────────────────────────────────────
 // CLI ARGUMENT DEFINITION
@@ -269,7 +271,9 @@ fn handle_scan(args: ScanArgs) {
         include_untracked: args.include_untracked,
         binary_policy: args.binary_policy.into(),
         max_files: args.max_files,
-        max_findings: args.max_findings,
+        // The CLI applies this after aggregating all input paths. Leaving it in
+        // the library config would cap each root separately and log twice.
+        max_findings: None,
         max_findings_per_file: args.max_findings_per_file,
     };
 

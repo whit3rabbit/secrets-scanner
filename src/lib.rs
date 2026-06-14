@@ -42,6 +42,8 @@ pub mod filters;
 /// Rules loading, parsing, validation, and update modules.
 pub mod rules;
 
+mod safe_display;
+
 /// High-performance parallel file scanner.
 pub mod scanner;
 

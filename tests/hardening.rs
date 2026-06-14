@@ -168,6 +168,24 @@ fn max_findings_per_file_caps_findings() {
     assert_eq!(findings.len(), 2, "per-file cap should truncate to 2");
 }
 
+#[test]
+fn max_findings_caps_total_scan_results() {
+    let dir = tempfile::tempdir().expect("dir");
+    std::fs::write(
+        dir.path().join("many.txt"),
+        "SECRET111111 SECRET222222 SECRET333333",
+    )
+    .expect("write");
+
+    let scanner = scanner(ScanConfig {
+        max_findings: Some(1),
+        ..Default::default()
+    });
+    let (findings, _) = scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+
+    assert_eq!(findings.len(), 1, "global cap should truncate to 1");
+}
+
 // ─────────────────────────────────────────────
 // Git diff-base & untracked
 // ─────────────────────────────────────────────

@@ -12,7 +12,7 @@
 
 use std::fs::File;
 use std::io::Read;
-use std::path::Path;
+use std::path::{Component, Path};
 use std::process::Command;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
@@ -20,6 +20,7 @@ use rayon::prelude::*;
 use walkdir::WalkDir;
 
 use crate::filters;
+use crate::safe_display::sanitize_display;
 use crate::scanner::{BinaryPolicy, Finding, ScanStats, Scanner};
 
 /// Thread-safe accumulator for scan statistics during the parallel walk.
@@ -74,10 +75,23 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
         }
     }
 
-    let findings = paths
+    let mut findings: Vec<Finding> = paths
         .par_iter()
         .flat_map(|path| scan_one_file(scanner, path, &stats))
         .collect();
+
+    // Global findings cap for library callers. Truncation is logged so it is
+    // never mistaken for complete coverage.
+    if let Some(cap) = scanner.config.max_findings {
+        if findings.len() > cap {
+            eprintln!(
+                "[scanner] Warning: finding count ({}) exceeds --max-findings ({cap}); \
+                 results truncated.",
+                findings.len()
+            );
+            findings.truncate(cap);
+        }
+    }
 
     (findings, stats.snapshot())
 }
@@ -124,10 +138,12 @@ fn scan_one_file(scanner: &Scanner, path: &str, stats: &StatsAcc) -> Vec<Finding
     // Per-file findings cap. Truncation is logged so it is never silent.
     if let Some(cap) = scanner.config.max_findings_per_file {
         if findings.len() > cap {
+            let safe_path = sanitize_display(path);
             eprintln!(
-                "[scanner] Warning: {} finding(s) in '{path}' truncated to \
+                "[scanner] Warning: {} finding(s) in '{}' truncated to \
                  --max-findings-per-file ({cap}).",
-                findings.len()
+                findings.len(),
+                safe_path,
             );
             findings.truncate(cap);
         }
@@ -267,14 +283,88 @@ fn run_git(root: &str, args: &[&str]) -> Option<Vec<u8>> {
 /// Absolute paths from git are dropped: tracked files are always repo-relative,
 /// so an absolute path would be a path-containment risk in a hostile repo.
 fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<String>) {
+    let root_canonical = match Path::new(root).canonicalize() {
+        Ok(path) => path,
+        Err(_) => return,
+    };
+
     for path in stdout.split(|&b| b == 0).filter(|p| !p.is_empty()) {
         let path = String::from_utf8_lossy(path);
         let candidate = Path::new(path.as_ref());
-        if candidate.is_absolute() {
-            eprintln!("[scanner] Warning: dropping absolute path from git output: {path}");
+        if candidate.is_absolute()
+            || candidate
+                .components()
+                .any(|component| matches!(component, Component::ParentDir))
+        {
+            eprintln!(
+                "[scanner] Warning: dropping unsafe path from git output: {}",
+                sanitize_display(&path)
+            );
             continue;
         }
         let trimmed = path.strip_prefix("./").unwrap_or(&path);
-        out.push(Path::new(root).join(trimmed).to_string_lossy().to_string());
+        let joined = Path::new(root).join(trimmed);
+        match joined.canonicalize() {
+            Ok(canonical) if canonical.starts_with(&root_canonical) => {
+                out.push(joined.to_string_lossy().to_string());
+            }
+            Ok(_) => {
+                eprintln!(
+                    "[scanner] Warning: dropping path outside scan root from git output: {}",
+                    sanitize_display(&path)
+                );
+            }
+            Err(_) => {}
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::append_git_paths;
+
+    #[test]
+    fn append_git_paths_rejects_parent_dir_components() {
+        let dir = tempfile::tempdir().expect("dir");
+        let safe = dir.path().join("safe.txt");
+        std::fs::write(&safe, "clean").expect("write safe");
+        let outside = dir.path().parent().expect("parent").join("outside.txt");
+        std::fs::write(&outside, "SECRET123456").expect("write outside");
+
+        let mut paths = Vec::new();
+        append_git_paths(
+            dir.path().to_str().expect("root"),
+            b"safe.txt\0../outside.txt\0",
+            &mut paths,
+        );
+
+        assert_eq!(paths.len(), 1, "safe git path should be kept");
+        assert!(paths[0].ends_with("safe.txt"));
+        assert!(
+            paths.iter().all(|path| !path.contains("outside.txt")),
+            "git paths containing parent components must be dropped"
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn append_git_paths_rejects_intermediate_symlink_escape() {
+        let dir = tempfile::tempdir().expect("dir");
+        let outside_dir = tempfile::tempdir().expect("outside");
+        let outside_file = outside_dir.path().join("secret.txt");
+        std::fs::write(&outside_file, "SECRET123456").expect("write outside");
+        std::os::unix::fs::symlink(outside_dir.path(), dir.path().join("link")).expect("symlink");
+
+        let mut paths = Vec::new();
+        append_git_paths(
+            dir.path().to_str().expect("root"),
+            b"link/secret.txt\0",
+            &mut paths,
+        );
+
+        assert!(
+            paths.is_empty(),
+            "git paths resolving outside the root through symlink directories must be dropped"
+        );
     }
 }

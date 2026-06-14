@@ -9,6 +9,7 @@ use std::io::{self, Write};
 
 use serde_json::json;
 
+use crate::safe_display::sanitize_display;
 use secrets_scanner::Finding;
 
 /// Human-readable text output. Control characters in `file`/`matched` are
@@ -45,21 +46,6 @@ pub fn write_text(w: &mut dyn Write, findings: &[Finding], show_context: bool) -
         }
     }
     Ok(())
-}
-
-/// Replace control characters (incl. ESC/`\r`/`\n`/`\t` and DEL) with a visible
-/// `\xNN` escape so hostile filenames cannot inject ANSI or CI workflow commands.
-fn sanitize_display(s: &str) -> String {
-    let mut out = String::with_capacity(s.len());
-    for c in s.chars() {
-        let code = c as u32;
-        if code < 0x20 || code == 0x7f {
-            out.push_str(&format!("\\x{code:02x}"));
-        } else {
-            out.push(c);
-        }
-    }
-    out
 }
 
 /// Minimal JSON serialisation of a finding without requiring serde derive on the wire shape.

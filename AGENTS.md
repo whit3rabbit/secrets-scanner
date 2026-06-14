@@ -190,6 +190,65 @@ To prevent regressions and verify that custom rules accurately match target secr
 
 ---
 
+## Scanning & Hardening
+
+The `scan` subcommand is hardened for hostile/attacker-controlled repository
+content (e.g. running as a GitHub Action). Key behaviors:
+
+- **Bounded reads** (`src/scanner/walk.rs`): owned read (not mmap) capped with
+  `Take`, closing the TOCTOU window if a file grows after the metadata check.
+- **Symlinks rejected**: `symlink_metadata` + `is_file()` skips symlinks (incl.
+  git-tracked), preventing reads outside the tree.
+- **Content-based binary detection** (`src/filters.rs::is_probably_binary`):
+  NUL-byte / control-byte ratio, independent of extension. `--binary-policy
+  auto|skip|scan` (default `auto`). `auto` skips binaries unless the path is
+  source/secret-bearing (`is_source_allowlisted`: `.env*`, `.pem`, `.key`,
+  `.json`, `.yaml`/`.yml`, `.toml`, `.properties`, `.npmrc`, `.pypirc`,
+  `Dockerfile`, `Makefile`); `skip` ignores the allowlist; `scan` never skips.
+- **Git path safety** (`src/scanner/walk.rs`): NUL-delimited output
+  (`-z`, `core.quotePath=false`), absolute paths from git are dropped (containment),
+  `--diff-base <ref>` scans `<base>...HEAD`, `--include-untracked` adds
+  `ls-files --others --exclude-standard`.
+- **Result caps**: `--max-files`, `--max-findings`, `--max-findings-per-file`.
+  Every cap that fires logs a truncation notice (never silent).
+- **Safe CI logging**: `--no-context` suppresses context lines; text output
+  escapes control chars in paths/matched (`format::sanitize_display`) to prevent
+  terminal/CI-log injection. A file-level summary (counts only, no secrets) is
+  logged to stderr via `ScanStats` (`Scanner::scan_path_with_stats`).
+- **SARIF** (`src/format.rs::write_sarif`, serde_json): `--output <file>`,
+  generic `message.text` (rule + entropy, never the matched value),
+  `partialFingerprints` (inline FNV-1a over `rule_id|uri|matched`),
+  `endLine`/`endColumn`, repo-relative `uri` + `uriBaseId: "SRCROOT"`,
+  driver metadata, `automationDetails`.
+
+### Exit codes
+
+| Code | Meaning |
+|---|---|
+| 0 | Completed; no findings (or `--no-fail`) |
+| 1 | Completed; findings present (unless `--no-fail`) |
+| 2 | Runtime error (I/O, baseline read/parse, output write) |
+| 3 | Invalid configuration/rules (rules file unreadable or uncompilable) |
+
+`--no-fail` writes output but always exits 0 on findings, so a workflow can
+upload SARIF and gate separately.
+
+### GitHub Action
+
+`action.yml` is a composite action: it downloads the pinned prebuilt release
+binary (target triple per `install.sh`; version from `inputs.version`, else the
+action ref, else latest) and runs `scan` with a safe-by-default posture
+(`--git --redact --no-context --format sarif --output <file>`). Inputs:
+`path`, `config`, `fail-on-findings`, `sarif`, `sarif-file`, `git`,
+`diff-base`, `max-file-size`, `binary-policy`, `version`, `extra-args`.
+
+Upload SARIF with `github/codeql-action/upload-sarif` (needs
+`security-events: write`; private repos also `actions: read` + `contents: read`).
+Use `if: always()` on the upload step (or `fail-on-findings: false` + a separate
+gate) so SARIF uploads even when findings are present.
+
+---
+
 ## Rule Validation
 
 To ensure rules have valid TOML syntax and that their regular expressions are fully compilable (without syntax or size limit issues), the project includes a validation layer (`src/rules/validation.rs`).

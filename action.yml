@@ -1,0 +1,116 @@
+name: "Secrets Scanner"
+description: "Scan repository content for committed secrets and emit SARIF for GitHub code scanning."
+author: "whit3rabbit"
+branding:
+  icon: "shield"
+  color: "red"
+
+inputs:
+  path:
+    description: "Path to scan."
+    default: "."
+  config:
+    description: "Optional path to a custom TOML rules file."
+    required: false
+  fail-on-findings:
+    description: "Fail the job when findings are detected. Set false to upload SARIF then gate separately."
+    default: "true"
+  sarif:
+    description: "Write SARIF output."
+    default: "true"
+  sarif-file:
+    description: "SARIF output path."
+    default: "secrets-scanner.sarif"
+  git:
+    description: "Scan only files tracked by git."
+    default: "true"
+  diff-base:
+    description: "Optional base ref for diff scanning (e.g. origin/main). Implies diff mode."
+    required: false
+  max-file-size:
+    description: "Maximum file size in bytes."
+    default: "2097152"
+  binary-policy:
+    description: "Binary-file handling: auto | skip | scan."
+    default: "auto"
+  version:
+    description: "Release version to install (e.g. v0.2.0). Defaults to the action ref, else latest."
+    required: false
+  extra-args:
+    description: "Additional raw arguments passed to `secrets-scanner scan`."
+    required: false
+
+outputs:
+  sarif-file:
+    description: "Path to the written SARIF file (empty when sarif=false)."
+    value: ${{ steps.scan.outputs.sarif-file }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install secrets-scanner (prebuilt binary)
+      shell: bash
+      env:
+        REPO: "whit3rabbit/secrets-scanner"
+        INPUT_VERSION: ${{ inputs.version }}
+        ACTION_REF: ${{ github.action_ref }}
+      run: |
+        set -euo pipefail
+        os="$(uname -s)"; arch="$(uname -m)"
+        case "$os" in
+          Linux)  [ "$arch" = "x86_64" ] && target="x86_64-unknown-linux-musl" || { echo "::error::unsupported Linux arch $arch"; exit 1; } ;;
+          Darwin) { [ "$arch" = "arm64" ] || [ "$arch" = "aarch64" ]; } && target="aarch64-apple-darwin" || target="x86_64-apple-darwin" ;;
+          *) echo "::error::unsupported OS $os (use a Linux or macOS runner)"; exit 1 ;;
+        esac
+
+        version="${INPUT_VERSION:-}"
+        if [ -z "$version" ] && [[ "${ACTION_REF:-}" == v*.*.* ]]; then version="$ACTION_REF"; fi
+        if [ -z "$version" ]; then
+          version="$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/${REPO}/releases/latest" \
+            | grep '"tag_name":' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')"
+        fi
+        [ -n "$version" ] || { echo "::error::could not resolve a release version"; exit 1; }
+        case "$version" in v*) tag="$version"; ver="${version#v}" ;; *) tag="v$version"; ver="$version" ;; esac
+
+        dest="${RUNNER_TEMP}/secrets-scanner-bin"
+        mkdir -p "$dest"
+        url="https://github.com/${REPO}/releases/download/${tag}/secrets-scanner-${ver}-${target}"
+        echo "Downloading $url"
+        curl -fsSL "$url" -o "${dest}/secrets-scanner"
+        chmod +x "${dest}/secrets-scanner"
+        echo "$dest" >> "$GITHUB_PATH"
+
+    - name: Run secrets-scanner
+      id: scan
+      shell: bash
+      env:
+        IN_PATH: ${{ inputs.path }}
+        IN_CONFIG: ${{ inputs.config }}
+        IN_FAIL: ${{ inputs.fail-on-findings }}
+        IN_SARIF: ${{ inputs.sarif }}
+        IN_SARIF_FILE: ${{ inputs.sarif-file }}
+        IN_GIT: ${{ inputs.git }}
+        IN_DIFF_BASE: ${{ inputs.diff-base }}
+        IN_MAX_FILE_SIZE: ${{ inputs.max-file-size }}
+        IN_BINARY_POLICY: ${{ inputs.binary-policy }}
+        IN_EXTRA: ${{ inputs.extra-args }}
+      run: |
+        set -euo pipefail
+        # Safe-by-default posture: redaction on, no context lines in CI logs,
+        # bounded reads, deterministic exit. SARIF is uploaded by a later step.
+        args=(scan "$IN_PATH" --redact --no-context --max-file-size "$IN_MAX_FILE_SIZE" --binary-policy "$IN_BINARY_POLICY")
+        [ "$IN_GIT" = "true" ] && args+=(--git)
+        [ -n "$IN_DIFF_BASE" ] && args+=(--diff-base "$IN_DIFF_BASE")
+        [ -n "$IN_CONFIG" ] && args+=(--rules "$IN_CONFIG")
+        if [ "$IN_SARIF" = "true" ]; then
+          args+=(--format sarif --output "$IN_SARIF_FILE")
+          echo "sarif-file=$IN_SARIF_FILE" >> "$GITHUB_OUTPUT"
+        else
+          echo "sarif-file=" >> "$GITHUB_OUTPUT"
+        fi
+        # When not failing on findings, never let exit 1 fail the step.
+        [ "$IN_FAIL" = "true" ] || args+=(--no-fail)
+        # shellcheck disable=SC2206
+        [ -n "$IN_EXTRA" ] && args+=($IN_EXTRA)
+        secrets-scanner "${args[@]}"

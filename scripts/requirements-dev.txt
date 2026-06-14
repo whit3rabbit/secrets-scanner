@@ -1,0 +1,6 @@
+# Development-only Python dependencies for the rule tooling scripts.
+#   pip install -r scripts/requirements-dev.txt
+#
+# Only scripts/find_duplicate_rules.py needs a third-party package, and only for
+# fuzzy vendor-stem merging; without it the script falls back to exact stems.
+rapidfuzz>=3.0

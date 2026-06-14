@@ -29,6 +29,18 @@ rustc-ice-*.txt
 .DS_Store
 .AppleDouble
 .LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.Spotlight-V100
+.Trashes
+VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.fseventsd
+
+# Python tooling caches
+__pycache__/
+*.pyc
 
 # Syn
 .syntext/

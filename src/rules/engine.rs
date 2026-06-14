@@ -1,26 +1,25 @@
-/// rules/engine.rs — Parse gitleaks-compatible TOML rules into a compiled scan engine.
-///
-/// The engine deserializes the TOML ruleset into typed structs, compiles all
-/// regexes once at startup, and builds a single Aho-Corasick automaton from
-/// the union of all rule keywords. This enables O(n) scanning of file content
-/// regardless of how many rules exist.
-///
-/// # Architecture
-///
-/// ```text
-/// TOML string → RulesetConfig (serde) → RuleEngine (compiled)
-///                                          ├── AhoCorasick (all keywords)
-///                                          ├── keyword_map[ac_idx] → rule_idx
-///                                          └── Vec<CompiledRule> (regex + metadata)
-/// ```
+//! rules/engine.rs — Parse gitleaks-compatible TOML rules into a compiled scan engine.
+//!
+//! The engine deserializes the TOML ruleset into typed structs, compiles all
+//! regexes once at startup, and builds a single Aho-Corasick automaton from
+//! the union of all rule keywords. This enables O(n) scanning of file content
+//! regardless of how many rules exist.
+//!
+//! # Architecture
+//!
+//! ```text
+//! TOML string → RulesetConfig (serde) → RuleEngine (compiled)
+//!                                          ├── AhoCorasick (all keywords)
+//!                                          ├── keyword_map[ac_idx] → rule_idx
+//!                                          └── Vec<CompiledRule> (regex + metadata)
+//! ```
 
+use crate::rules::validation::{compile_bytes_regex, compile_regex, RulesetConfig};
 use aho_corasick::AhoCorasick;
+use log::{debug, info, warn};
 use regex::Regex;
-use crate::rules::validation::{RulesetConfig, GlobalAllowlist, compile_regex};
 
-// ─────────────────────────────────────────────
-// Compiled Rule Engine
-// ─────────────────────────────────────────────
+pub use crate::rules::allowlist::CompiledAllowlist;
 
 /// A compiled rule ready for scanning. All regexes are pre-compiled.
 #[derive(Debug)]
@@ -32,7 +31,7 @@ pub struct CompiledRule {
     pub description: String,
 
     /// Compiled detection regex.
-    pub regex: Option<Regex>,
+    pub regex: Option<regex::bytes::Regex>,
 
     /// Minimum entropy threshold (from rule config, or `None` to use global default).
     pub entropy_threshold: Option<f64>,
@@ -43,31 +42,11 @@ pub struct CompiledRule {
     /// Compiled file-path filter regex (if the rule has a `path` field).
     pub path_filter: Option<Regex>,
 
-    /// Compiled per-rule allowlist regexes.
-    pub allowlist_regexes: Vec<Regex>,
-
-    /// Per-rule allowlist regex target: `true` if regexes match against
-    /// the full match line, `false` (default) if against the captured group.
-    pub allowlist_match_target: bool,
-
-    /// Per-rule stopwords (lowercase).
-    pub stopwords: Vec<String>,
+    /// Per-rule allowlists.
+    pub allowlists: Vec<CompiledAllowlist>,
 
     /// Optional capture group index for the secret.
     pub secret_group: Option<usize>,
-}
-
-/// Compiled global allowlist.
-#[derive(Debug)]
-pub struct CompiledGlobalAllowlist {
-    /// Compiled path regexes — files matching any are skipped.
-    pub path_regexes: Vec<Regex>,
-
-    /// Compiled content regexes — findings matching any are suppressed.
-    pub content_regexes: Vec<Regex>,
-
-    /// Global stopwords (lowercase).
-    pub stopwords: Vec<String>,
 }
 
 /// The compiled rule engine. Owns the Aho-Corasick automaton and all compiled rules.
@@ -82,17 +61,20 @@ pub struct CompiledGlobalAllowlist {
 /// println!("Loaded {} rules with {} keywords", engine.rule_count(), engine.keyword_count());
 /// ```
 pub struct RuleEngine {
-    /// Aho-Corasick automaton built from ALL keywords across all rules.
+    /// Aho-Corasick automaton built from ALL keywords across all rules that have keywords.
     ac: AhoCorasick,
 
-    /// Maps AC pattern index → rule index. Multiple keywords can map to the same rule.
-    keyword_to_rule: Vec<usize>,
+    /// Maps AC pattern index → list of rule indices. Multiple keywords map to different rules.
+    keyword_to_rules: Vec<Vec<usize>>,
 
-    /// All compiled rules.
-    rules: Vec<CompiledRule>,
+    /// Compiled rules that have keywords.
+    keyworded_rules: Vec<CompiledRule>,
 
-    /// Compiled global allowlist.
-    global_allowlist: CompiledGlobalAllowlist,
+    /// Compiled rules that do NOT have keywords.
+    unkeyworded_rules: Vec<CompiledRule>,
+
+    /// Compiled global allowlists.
+    global_allowlists: Vec<CompiledAllowlist>,
 
     /// Pre-computed set of unique first bytes from all keywords,
     /// used for the memchr SIMD pre-filter.
@@ -115,18 +97,20 @@ impl RuleEngine {
     pub fn from_toml(toml_str: &str) -> Result<Self, Box<dyn std::error::Error>> {
         let config: RulesetConfig = toml::from_str(toml_str)?;
 
-        let mut compiled_rules = Vec::with_capacity(config.rules.len());
-        let mut all_keywords: Vec<String> = Vec::new();
-        let mut keyword_to_rule: Vec<usize> = Vec::new();
+        let mut keyworded_rules = Vec::new();
+        let mut unkeyworded_rules = Vec::new();
+        let mut unique_keywords: Vec<String> = Vec::new();
+        let mut keyword_to_rules: Vec<Vec<usize>> = Vec::new();
+        let mut keyword_map = std::collections::HashMap::new();
         let mut skipped = 0usize;
 
         for rule_config in &config.rules {
             // Compile the detection regex if present — skip rules with invalid patterns
             let regex = if let Some(ref reg_str) = rule_config.regex {
-                match compile_regex(reg_str) {
+                match compile_bytes_regex(reg_str) {
                     Ok(re) => Some(re),
                     Err(e) => {
-                        eprintln!(
+                        warn!(
                             "[engine] Warning: skipping rule '{}' — invalid regex: {}",
                             rule_config.id, e
                         );
@@ -138,11 +122,23 @@ impl RuleEngine {
                 None
             };
 
+            // Validate that secret_group index is within bounds of the regex's capture groups
+            let mut secret_group = rule_config.secret_group;
+            if let (Some(ref re), Some(g)) = (&regex, secret_group) {
+                if g >= re.captures_len() {
+                    warn!(
+                        "[engine] Warning: rule '{}' has secret_group {} but regex only has {} capture groups. Falling back to default group selection.",
+                        rule_config.id, g, re.captures_len()
+                    );
+                    secret_group = None;
+                }
+            }
+
             // Compile path filter
             let path_filter = rule_config.path.as_ref().and_then(|p| {
                 compile_regex(p)
                     .map_err(|e| {
-                        eprintln!(
+                        warn!(
                             "[engine] Warning: rule '{}' has invalid path regex: {}",
                             rule_config.id, e
                         );
@@ -151,135 +147,95 @@ impl RuleEngine {
                     .ok()
             });
 
-            // Compile per-rule allowlist regexes
-            let mut allowlist_regexes = Vec::new();
-            let mut allowlist_match_target = false;
-            let mut stopwords = Vec::new();
-
+            // Compile per-rule allowlists
+            let mut allowlists = Vec::new();
             for al in &rule_config.allowlists {
-                if al.regex_target.as_deref() == Some("match") {
-                    allowlist_match_target = true;
-                }
-                for pattern in &al.regexes {
-                    match compile_regex(pattern) {
-                        Ok(re) => allowlist_regexes.push(re),
-                        Err(e) => {
-                            eprintln!(
-                                "[engine] Warning: rule '{}' has invalid allowlist regex: {}",
-                                rule_config.id, e
-                            );
-                        }
-                    }
-                }
-                for sw in &al.stopwords {
-                    stopwords.push(sw.to_lowercase());
-                }
+                allowlists.push(CompiledAllowlist::compile_rule_allowlist(
+                    al,
+                    &rule_config.id,
+                ));
             }
 
-            let rule_idx = compiled_rules.len();
-
-            // Register keywords for the AC automaton
-            for kw in &rule_config.keywords {
-                all_keywords.push(kw.to_lowercase());
-                keyword_to_rule.push(rule_idx);
-            }
-
-            compiled_rules.push(CompiledRule {
+            let compiled_rule = CompiledRule {
                 id: rule_config.id.clone(),
-                description: rule_config
-                    .description
-                    .clone()
-                    .unwrap_or_default(),
+                description: rule_config.description.clone().unwrap_or_default(),
                 regex,
                 entropy_threshold: rule_config.entropy,
-                keywords: rule_config.keywords.iter().map(|k| k.to_lowercase()).collect(),
+                keywords: rule_config
+                    .keywords
+                    .iter()
+                    .map(|k| k.to_lowercase())
+                    .collect(),
                 path_filter,
-                allowlist_regexes,
-                allowlist_match_target,
-                stopwords,
-                secret_group: rule_config.secret_group,
-            });
+                allowlists,
+                secret_group,
+            };
+
+            if rule_config.keywords.is_empty() {
+                unkeyworded_rules.push(compiled_rule);
+            } else {
+                let rule_idx = keyworded_rules.len();
+                for kw in &rule_config.keywords {
+                    let kw_lower = kw.to_lowercase();
+                    let idx = *keyword_map.entry(kw_lower.clone()).or_insert_with(|| {
+                        unique_keywords.push(kw_lower);
+                        keyword_to_rules.push(Vec::new());
+                        unique_keywords.len() - 1
+                    });
+                    keyword_to_rules[idx].push(rule_idx);
+                }
+                keyworded_rules.push(compiled_rule);
+            }
         }
 
         if skipped > 0 {
-            eprintln!("[engine] Skipped {skipped} rules with invalid regex patterns");
+            warn!("[engine] Skipped {skipped} rules with invalid regex patterns");
         }
 
         // Compute unique first bytes for memchr pre-filter
-        let mut first_bytes: Vec<u8> = all_keywords
+        let mut first_bytes: Vec<u8> = unique_keywords
             .iter()
             .filter_map(|kw| kw.as_bytes().first().copied())
             .collect();
         first_bytes.sort_unstable();
         first_bytes.dedup();
 
-        // Build Aho-Corasick automaton (case-insensitive for keywords)
+        // Build Aho-Corasick automaton (case-insensitive for keywords, DFA for speed)
         let ac = AhoCorasick::builder()
             .ascii_case_insensitive(true)
-            .build(&all_keywords)?;
+            .kind(Some(aho_corasick::AhoCorasickKind::DFA))
+            .build(&unique_keywords)?;
+        debug!(
+            "[engine] Aho-Corasick DFA built for {} unique keywords",
+            unique_keywords.len()
+        );
 
-        // Compile global allowlist
-        let global_allowlist = Self::compile_global_allowlist(&config.allowlist);
+        // Compile global allowlists
+        let mut global_allowlists = Vec::new();
+        if let Some(ref al) = config.allowlist {
+            global_allowlists.push(CompiledAllowlist::compile_global_allowlist(al));
+        }
+        for al in &config.allowlists {
+            global_allowlists.push(CompiledAllowlist::compile_global_allowlist(al));
+        }
 
-        eprintln!(
-            "[engine] Loaded {} rules ({} keywords, {} first-bytes for memchr)",
-            compiled_rules.len(),
-            all_keywords.len(),
+        info!(
+            "[engine] Loaded {} rules ({} keyworded, {} unkeyworded, {} unique keywords, {} first-bytes for memchr)",
+            keyworded_rules.len() + unkeyworded_rules.len(),
+            keyworded_rules.len(),
+            unkeyworded_rules.len(),
+            unique_keywords.len(),
             first_bytes.len(),
         );
 
         Ok(Self {
             ac,
-            keyword_to_rule,
-            rules: compiled_rules,
-            global_allowlist,
+            keyword_to_rules,
+            keyworded_rules,
+            unkeyworded_rules,
+            global_allowlists,
             keyword_first_bytes: first_bytes,
         })
-    }
-
-    /// Compile the global allowlist section.
-    fn compile_global_allowlist(allowlist: &Option<GlobalAllowlist>) -> CompiledGlobalAllowlist {
-        let Some(al) = allowlist else {
-            return CompiledGlobalAllowlist {
-                path_regexes: Vec::new(),
-                content_regexes: Vec::new(),
-                stopwords: Vec::new(),
-            };
-        };
-
-        let path_regexes = al
-            .paths
-            .iter()
-            .filter_map(|p| {
-                compile_regex(p)
-                    .map_err(|e| {
-                        eprintln!("[engine] Warning: invalid global allowlist path regex: {e}");
-                        e
-                    })
-                    .ok()
-            })
-            .collect();
-
-        let content_regexes = al
-            .regexes
-            .iter()
-            .filter_map(|r| {
-                compile_regex(r)
-                    .map_err(|e| {
-                        eprintln!("[engine] Warning: invalid global allowlist regex: {e}");
-                        e
-                    })
-                    .ok()
-            })
-            .collect();
-
-        let stopwords = al.stopwords.iter().map(|s| s.to_lowercase()).collect();
-
-        CompiledGlobalAllowlist {
-            path_regexes,
-            content_regexes,
-            stopwords,
-        }
     }
 
     /// Returns a reference to the Aho-Corasick automaton.
@@ -287,19 +243,32 @@ impl RuleEngine {
         &self.ac
     }
 
-    /// Returns the compiled rules.
-    pub fn rules(&self) -> &[CompiledRule] {
-        &self.rules
+    /// Returns a list of references to all compiled rules (both keyworded and unkeyworded).
+    pub fn rules(&self) -> Vec<&CompiledRule> {
+        self.keyworded_rules
+            .iter()
+            .chain(self.unkeyworded_rules.iter())
+            .collect()
     }
 
-    /// Look up which rule index a keyword AC match belongs to.
-    pub fn rule_for_keyword(&self, ac_pattern_index: usize) -> usize {
-        self.keyword_to_rule[ac_pattern_index]
+    /// Returns the compiled rules that have keywords.
+    pub fn keyworded_rules(&self) -> &[CompiledRule] {
+        &self.keyworded_rules
     }
 
-    /// Returns the global allowlist.
-    pub fn global_allowlist(&self) -> &CompiledGlobalAllowlist {
-        &self.global_allowlist
+    /// Returns the compiled rules that do NOT have keywords.
+    pub fn unkeyworded_rules(&self) -> &[CompiledRule] {
+        &self.unkeyworded_rules
+    }
+
+    /// Look up which rule indices a keyword AC match belongs to.
+    pub fn rules_for_keyword(&self, ac_pattern_index: usize) -> &[usize] {
+        &self.keyword_to_rules[ac_pattern_index]
+    }
+
+    /// Returns the global allowlists.
+    pub fn global_allowlists(&self) -> &[CompiledAllowlist] {
+        &self.global_allowlists
     }
 
     /// The set of unique first bytes from all keywords (for memchr pre-filter).
@@ -309,165 +278,56 @@ impl RuleEngine {
 
     /// Total number of compiled rules.
     pub fn rule_count(&self) -> usize {
-        self.rules.len()
+        self.keyworded_rules.len() + self.unkeyworded_rules.len()
     }
 
-    /// Total number of keywords in the AC automaton.
+    /// Total number of unique keywords in the AC automaton.
     pub fn keyword_count(&self) -> usize {
-        self.keyword_to_rule.len()
+        self.keyword_to_rules.len()
     }
 
     /// Check if a file path is globally allowlisted (should be skipped).
     pub fn is_path_globally_allowlisted(&self, path: &str) -> bool {
-        self.global_allowlist
-            .path_regexes
-            .iter()
-            .any(|re| re.is_match(path))
+        crate::rules::allowlist::is_path_globally_allowlisted(&self.global_allowlists, path)
     }
 
-    /// Check if a matched string is globally allowlisted.
-    pub fn is_match_globally_allowlisted(&self, matched: &str) -> bool {
-        let lower = matched.to_lowercase();
-
-        // Check stopwords
-        if self
-            .global_allowlist
-            .stopwords
-            .iter()
-            .any(|sw| lower.contains(sw.as_str()))
-        {
-            return true;
-        }
-
-        // Check content regexes
-        self.global_allowlist
-            .content_regexes
-            .iter()
-            .any(|re| re.is_match(matched))
+    /// Check if a matched byte slice is globally allowlisted.
+    pub fn is_match_globally_allowlisted(
+        &self,
+        rule_id: &str,
+        file_path: &str,
+        line_bytes: &[u8],
+        matched_bytes: &[u8],
+        secret_bytes: &[u8],
+    ) -> bool {
+        crate::rules::allowlist::is_match_globally_allowlisted(
+            &self.global_allowlists,
+            rule_id,
+            file_path,
+            line_bytes,
+            matched_bytes,
+            secret_bytes,
+        )
     }
 
     /// Check if a finding is suppressed by a specific rule's allowlist.
-    pub fn is_rule_allowlisted(rule: &CompiledRule, matched: &str, _file_path: &str) -> bool {
-        // Check per-rule stopwords
-        let lower = matched.to_lowercase();
-        if rule.stopwords.iter().any(|sw| lower.contains(sw.as_str())) {
-            return true;
-        }
-
-        // Check per-rule allowlist regexes
-        if rule.allowlist_regexes.iter().any(|re| re.is_match(matched)) {
-            return true;
-        }
-
-        // Check per-rule path allowlists (inside allowlist entries)
-        // Note: path filtering is handled separately via path_filter
-        false
+    pub fn is_rule_allowlisted(
+        rule: &CompiledRule,
+        file_path: &str,
+        line_bytes: &[u8],
+        matched_bytes: &[u8],
+        secret_bytes: &[u8],
+    ) -> bool {
+        crate::rules::allowlist::is_rule_allowlisted(
+            rule,
+            file_path,
+            line_bytes,
+            matched_bytes,
+            secret_bytes,
+        )
     }
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    const MINIMAL_TOML: &str = r#"
-title = "test config"
-
-[allowlist]
-description = "global allow"
-paths = ['\.test$']
-regexes = ['^test_value$']
-stopwords = ["placeholder"]
-
-[[rules]]
-id = "aws-access-token"
-description = "AWS access key"
-regex = '\b((?:AKIA|ASIA)[A-Z2-7]{16})\b'
-entropy = 3.0
-keywords = ["akia", "asia"]
-
-[[rules]]
-id = "github-pat"
-description = "GitHub personal access token"
-regex = 'ghp_[A-Za-z0-9_]{36,}'
-keywords = ["ghp_"]
-"#;
-
-    #[test]
-    fn parses_minimal_toml() {
-        let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
-        assert_eq!(engine.rule_count(), 2);
-        assert_eq!(engine.keyword_count(), 3); // akia, asia, ghp_
-    }
-
-    #[test]
-    fn maps_keywords_to_rules() {
-        let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
-        // First two keywords (akia, asia) map to rule 0
-        assert_eq!(engine.rule_for_keyword(0), 0);
-        assert_eq!(engine.rule_for_keyword(1), 0);
-        // Third keyword (ghp_) maps to rule 1
-        assert_eq!(engine.rule_for_keyword(2), 1);
-    }
-
-    #[test]
-    fn compiles_global_allowlist() {
-        let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
-        assert!(engine.is_path_globally_allowlisted("file.test"));
-        assert!(!engine.is_path_globally_allowlisted("file.rs"));
-    }
-
-    #[test]
-    fn checks_global_match_allowlist() {
-        let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
-        assert!(engine.is_match_globally_allowlisted("test_value"));
-        assert!(engine.is_match_globally_allowlisted("some placeholder text"));
-        assert!(!engine.is_match_globally_allowlisted("AKIAIOSFODNN7EXAMPLEX"));
-    }
-
-    #[test]
-    fn has_keyword_first_bytes() {
-        let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
-        let bytes = engine.keyword_first_bytes();
-        assert!(!bytes.is_empty());
-        // 'a' for akia/asia, 'g' for ghp_
-        assert!(bytes.contains(&b'a'));
-        assert!(bytes.contains(&b'g'));
-    }
-
-    #[test]
-    fn skips_rules_with_invalid_regex() {
-        let bad_toml = r#"
-title = "bad"
-[[rules]]
-id = "bad-rule"
-regex = '[invalid('
-keywords = ["bad"]
-
-[[rules]]
-id = "good-rule"
-description = "valid"
-regex = 'good_[a-z]+'
-keywords = ["good"]
-"#;
-        let engine = RuleEngine::from_toml(bad_toml).expect("should parse despite bad regex");
-        assert_eq!(engine.rule_count(), 1);
-        assert_eq!(engine.rules()[0].id, "good-rule");
-    }
-
-    #[test]
-    fn loads_bundled_rules() {
-        // This tests against the actual bundled rules to ensure they parse
-        let toml_str = include_str!("../../assets/secrets-scanner.toml");
-        let engine = RuleEngine::from_toml(toml_str).expect("bundled rules should parse");
-        assert!(
-            engine.rule_count() > 100,
-            "expected >100 rules, got {}",
-            engine.rule_count()
-        );
-        assert!(
-            engine.keyword_count() > 100,
-            "expected >100 keywords, got {}",
-            engine.keyword_count()
-        );
-    }
-}
+#[path = "engine/tests.rs"]
+mod tests;

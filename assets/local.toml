@@ -1,3 +1,29 @@
+# ╔══════════════════════════════════════════════════════════════════════════╗
+# ║  assets/local.toml — Custom secrets-scanner rules                       ║
+# ║                                                                          ║
+# ║  These rules are merged with assets/gitleaks.toml at build time.         ║
+# ║  Local rules take precedence over upstream rules with the same ID.       ║
+# ║                                                                          ║
+# ║  Rule format (gitleaks-compatible TOML):                                 ║
+# ║                                                                          ║
+# ║  [[rules]]                                                               ║
+# ║  id          = "my-rule"           # unique, kebab-case                  ║
+# ║  description = "Human-readable description of what this detects"         ║
+# ║  regex       = 'MY_PREFIX_[A-Za-z0-9]{32,64}'  # Rust regex crate       ║
+# ║  keywords    = ["my_prefix_"]      # lowercase, for Aho-Corasick         ║
+# ║  entropy     = 3.5                 # optional: min Shannon bits/byte     ║
+# ║  path        = '\.env$'            # optional: only scan matching files  ║
+# ║  secretGroup = 1                   # optional: capture group index       ║
+# ║                                                                          ║
+# ║  [[rules.allowlists]]                                                    ║
+# ║  description = "Ignore test fixtures"                                    ║
+# ║  paths       = ['test_fixtures/', '_test\.go$']                          ║
+# ║  stopwords   = ["example", "placeholder"]                                ║
+# ║  regexes     = ['^MY_PREFIX_0{32}']                                      ║
+# ║                                                                          ║
+# ║  See README.md for full documentation.                                   ║
+# ╚══════════════════════════════════════════════════════════════════════════╝
+
 title = "local secrets-scanner"
 
 [[rules]]
@@ -285,8 +311,8 @@ keywords = ["datastax"]
 [[rules]]
 id = "deepseek-api-key"
 description = "Identified a potential DeepSeek API Key, which could lead to unauthorized access to DeepSeek services and sensitive data exposure."
-regex = '''(?i)\b(?:DEEPSEEK_API_KEY|api\.deepseek\.com|deepseek)\b[^\r\n]{0,80}?\b(sk-[A-Za-z0-9]{20,128})\b|(?<![A-Za-z0-9_])(sk-DeepSeek[A-Za-z0-9]{16,96})(?![A-Za-z0-9_])'''
-keywords = ["deepseek"]
+regex = '''(?i)\b(?:DEEPSEEK_API_KEY|api\.deepseek\.com|deepseek)\b[^\r\n]{0,80}?\b(sk-[A-Za-z0-9]{20,128})\b|\b(sk-DeepSeek[A-Za-z0-9]{16,96})\b'''
+keywords = ["deepseek", "sk-deepseek"]
 
 [[rules]]
 id = "devcycle-client-api-key"
@@ -639,8 +665,8 @@ keywords = ["midtrans"]
 [[rules]]
 id = "mistral-ai-api-key"
 description = "Identified a potential Mistral AI API Key, which could lead to unauthorized access to Mistral AI services and sensitive data exposure."
-regex = '''(?<![A-Za-z0-9_])(mistral_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
-keywords = ["mistral"]
+regex = '''\b(mistral_[A-Za-z0-9_-]{20,160})\b'''
+keywords = ["mistral", "mistral_"]
 
 [[rules]]
 id = "mongodb-atlas-db-uri-with-credentials"
@@ -801,8 +827,8 @@ keywords = ["onfido"]
 [[rules]]
 id = "openrouter-api-key"
 description = "Identified a potential OpenRouter API Key, which could lead to unauthorized access to OpenRouter services and sensitive data exposure."
-regex = '''(?<![A-Za-z0-9_])(sk-or-v1-[a-f0-9]{48,96})(?![A-Za-z0-9_])'''
-keywords = ["openrouter"]
+regex = '''\b(sk-or-v1-[a-f0-9]{64})\b'''
+keywords = ["openrouter", "sk-or-v1-"]
 
 [[rules]]
 id = "openvsx-access-token"
@@ -1389,7 +1415,7 @@ keywords = ["wso2"]
 [[rules]]
 id = "xai-api-key"
 description = "Identified a potential xAI API Key, which could lead to unauthorized access to xAI services and sensitive data exposure."
-regex = '''(?i)\b(?:XAI_API_KEY|api\.x\.ai|xAI)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|(?<![A-Za-z0-9_])(xai_[A-Za-z0-9_-]{20,160})(?![A-Za-z0-9_])'''
+regex = '''(?i)\b(?:XAI_API_KEY|api\.x\.ai|xAI)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b|\b(xai[-_][A-Za-z0-9_-]{20,160})\b'''
 keywords = ["xai"]
 
 [[rules]]
@@ -1404,3 +1430,38 @@ description = "Identified a potential Zuplo Consumer API Key, which could lead t
 regex = '''(?<![A-Za-z0-9_])(zuplo_[A-Za-z0-9]{24,128})(?![A-Za-z0-9_])'''
 keywords = ["zuplo"]
 
+[[rules]]
+id = "brave-search-api-key"
+description = "Identified a potential Brave Search API Key, which could lead to unauthorized access to Brave Search services and sensitive data exposure."
+regex = '''\b(BSA[A-Za-z0-9_-]{24,40})\b'''
+keywords = ["brave", "bsa"]
+
+[[rules]]
+id = "clipdrop-api-key"
+description = "Identified a potential Clipdrop API Key, which could lead to unauthorized access to Clipdrop services and sensitive data exposure."
+regex = '''(?i)\b(?:clipdrop)\b[^\r\n]{0,80}?\b([A-Za-z0-9_-]{24,128})\b'''
+keywords = ["clipdrop"]
+
+[[rules]]
+id = "firecrawl-api-key"
+description = "Identified a potential Firecrawl API Key, which could lead to unauthorized access to Firecrawl services and sensitive data exposure."
+regex = '''\b(fc-[a-fA-F0-9]{32})\b'''
+keywords = ["firecrawl", "fc-"]
+
+[[rules]]
+id = "openai-api-key"
+description = "Identified a potential OpenAI API Key, which could lead to unauthorized access to OpenAI services and sensitive data exposure."
+regex = '''\b(sk-(?:proj|svcacct|admin)-[A-Za-z0-9_-]{40,120}T3BlbkFJ[A-Za-z0-9_-]{40,120})\b|\b(sk-[A-Za-z0-9]{20}T3BlbkFJ[A-Za-z0-9]{20})\b'''
+keywords = ["t3blbkfj", "openai"]
+
+[[rules]]
+id = "perplexity-api-key"
+description = "Identified a potential Perplexity API Key, which could lead to unauthorized access to Perplexity AI services and sensitive data exposure."
+regex = '''\b(pplx-[A-Za-z0-9]{48})\b'''
+keywords = ["pplx-", "perplexity"]
+
+[[rules]]
+id = "vapi-api-key"
+description = "Identified a potential Vapi API Key or Token, which could lead to unauthorized access to Vapi services and sensitive data exposure."
+regex = '''(?i)\b(?:vapi|vapi_private_key|vapi_web_token)\b[^\r\n]{0,80}?\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b|\b(vapi_private_key_[A-Za-z0-9]{20,128})\b'''
+keywords = ["vapi"]

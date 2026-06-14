@@ -1,7 +1,7 @@
-/// Shannon entropy calculation for secret detection.
-///
-/// High-entropy strings (> ~3.5 bits/byte) are likely real secrets.
-/// Low-entropy strings like `password = "changeme"` are filtered out.
+//! Shannon entropy calculation for secret detection.
+//!
+//! High-entropy strings (> ~3.5 bits/byte) are likely real secrets.
+//! Low-entropy strings like `password = "changeme"` are filtered out.
 
 /// Default minimum entropy threshold when a rule does not specify one.
 pub const DEFAULT_MIN_ENTROPY: f64 = 3.2;
@@ -62,8 +62,6 @@ mod tests {
     fn high_entropy_accepts_real_secrets() {
         // Real AWS-style key material
         assert!(shannon_entropy("IOSFODNN7EXAMPLE") > 3.0);
-        assert!(
-            shannon_entropy("wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY") > DEFAULT_MIN_ENTROPY
-        );
+        assert!(shannon_entropy("wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY") > DEFAULT_MIN_ENTROPY);
     }
 }

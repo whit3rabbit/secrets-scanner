@@ -1,4 +1,4 @@
-/// rules/updater.rs — Runtime update mechanism for gitleaks rules.
+//! rules/updater.rs — Runtime update mechanism for gitleaks rules.
 //
 // Usage from your CLI:
 //
@@ -11,6 +11,9 @@
 // flag `"updater"` declared in Cargo.toml.
 
 use std::path::PathBuf;
+
+#[cfg(feature = "updater")]
+use log::info;
 
 /// URL of the upstream gitleaks ruleset.
 pub const UPSTREAM_URL: &str =
@@ -64,38 +67,27 @@ pub fn cached_sha_path() -> Option<PathBuf> {
     data_dir().map(|d| d.join(VERSION_FILE))
 }
 
-// ── SHA-256 helper (no external deps) ────────────────────────────────────────
+// ── SHA-256 helper ────────────────────────────────────────────────────────────
 
-/// Compute SHA-256 of a byte slice using only `std`.
-/// We implement a minimal SHA-256 to avoid a compile-time dependency on ring/sha2
-/// for a non-critical path.  If the project already uses `sha2`, replace this.
+/// Compute the SHA-256 digest of `data` and return it as a lowercase hex string.
+///
+/// When built with the `updater` feature this uses the `sha2` crate (pure Rust).
+/// Without the feature an error will be raised at the call site because the
+/// feature-gated `update_rules` function will not compile.
+#[cfg(feature = "updater")]
 pub fn sha256_hex(data: &[u8]) -> String {
-    // Use sha2 crate if available (feature-gated); else fall back to a simple
-    // process-based approach on the host.  For now we call out to `shasum`.
-    // In production you'd want the sha2 crate.
-    use std::process::Command;
-
-    // Write bytes to a temp file and hash it
-    let tmp = tempfile_path();
-    std::fs::write(&tmp, data).unwrap_or_default();
-
-    let output = if cfg!(target_os = "macos") {
-        Command::new("shasum").args(["-a", "256"]).arg(&tmp).output()
-    } else {
-        Command::new("sha256sum").arg(&tmp).output()
-    };
-
-    let _ = std::fs::remove_file(&tmp);
-
-    output
-        .ok()
-        .and_then(|o| String::from_utf8(o.stdout).ok())
-        .and_then(|s| s.split_whitespace().next().map(|h| h.to_string()))
-        .unwrap_or_else(|| "unknown".to_string())
+    use sha2::{Digest, Sha256};
+    let digest = Sha256::digest(data);
+    hex::encode(digest)
 }
 
-fn tempfile_path() -> PathBuf {
-    std::env::temp_dir().join(format!("ss_rules_{}.tmp", std::process::id()))
+/// Fallback stub used when the `updater` feature is disabled.
+///
+/// This should never be called at runtime in a non-updater build, but it
+/// allows the symbol to exist so downstream code that references it compiles.
+#[cfg(not(feature = "updater"))]
+pub fn sha256_hex(_data: &[u8]) -> String {
+    String::from("updater-feature-disabled")
 }
 
 // ── HTTP fetch (ureq, feature-gated) ─────────────────────────────────────────
@@ -104,35 +96,54 @@ fn tempfile_path() -> PathBuf {
 #[derive(Debug)]
 pub enum UpdateResult {
     /// Rules were already up to date.
-    AlreadyCurrent { sha256: String },
+    AlreadyCurrent {
+        /// SHA-256 hex digest of the current (unchanged) ruleset.
+        sha256: String,
+    },
     /// Rules were updated to a new version.
-    Updated { sha256: String },
+    Updated {
+        /// SHA-256 hex digest of the newly downloaded ruleset.
+        sha256: String,
+    },
     /// Only a check was performed; an update is available.
-    UpdateAvailable { local_sha: String, remote_sha: String },
+    UpdateAvailable {
+        /// SHA-256 of the locally cached ruleset.
+        local_sha: String,
+        /// SHA-256 of the remote (upstream) ruleset.
+        remote_sha: String,
+    },
     /// Only a check was performed; rules are current.
-    CheckedCurrent { sha256: String },
+    CheckedCurrent {
+        /// SHA-256 hex digest of the current ruleset.
+        sha256: String,
+    },
 }
 
 /// Download the latest rules and save them to the user data directory.
 ///
 /// * `check_only` — if `true`, report whether an update is available but do
 ///   not write anything to disk.
+/// * `custom_url` — if `Some`, pull rules from this URL instead of the default.
 ///
 /// This function is synchronous and has no async runtime requirement.
 /// It requires the `updater` feature to be enabled in `Cargo.toml` so that
 /// the `ureq` dependency is compiled in.
 #[cfg(feature = "updater")]
-pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error::Error>> {
+pub fn update_rules(
+    check_only: bool,
+    custom_url: Option<&str>,
+) -> Result<UpdateResult, Box<dyn std::error::Error>> {
     use std::io::Read;
 
-    eprintln!("[updater] Fetching rules from {UPSTREAM_URL}");
+    let url = custom_url.unwrap_or(UPSTREAM_URL);
+    info!("[updater] Fetching rules from {url}");
 
-    let response = ureq::get(UPSTREAM_URL).call()?;
+    let response = ureq::get(url).call()?;
     let mut body = Vec::new();
     response.into_reader().read_to_end(&mut body)?;
 
     let remote_sha = sha256_hex(&body);
-    eprintln!("[updater] Remote SHA-256: {remote_sha}");
+    info!("[updater] Remote SHA-256: {remote_sha}");
 
     // Read local SHA if cached
     let local_sha = cached_sha_path()
@@ -141,7 +152,7 @@ pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error
         .unwrap_or_default();
 
     if !local_sha.is_empty() {
-        eprintln!("[updater] Local  SHA-256: {local_sha}");
+        info!("[updater] Local  SHA-256: {local_sha}");
     }
 
     if remote_sha == local_sha {
@@ -160,7 +171,7 @@ pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error
     }
 
     let rules_path = cached_rules_path().ok_or("Cannot determine data directory")?;
-    let sha_path   = cached_sha_path().ok_or("Cannot determine data directory")?;
+    let sha_path = cached_sha_path().ok_or("Cannot determine data directory")?;
 
     // Merge the downloaded upstream rules with local custom rules
     let upstream_toml = String::from_utf8(body)?;
@@ -175,15 +186,11 @@ pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error
     }
 
     let local_toml = super::load_local_rules_for_merge();
-    let merged_toml = super::merge_toml_rules(&upstream_toml, &local_toml)?;
+    let merged_toml = super::merge::merge_toml_rules(&upstream_toml, &local_toml)?;
 
     // Validate merged rules after merging
     if let Err(errors) = super::validation::validate_rules_toml(&merged_toml) {
-        return Err(format!(
-            "Merged ruleset is invalid:\n- {}",
-            errors.join("\n- ")
-        )
-        .into());
+        return Err(format!("Merged ruleset is invalid:\n- {}", errors.join("\n- ")).into());
     }
 
     if let Some(parent) = rules_path.parent() {
@@ -191,9 +198,12 @@ pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error
     }
 
     std::fs::write(&rules_path, &merged_toml)?;
+    // Record the UPSTREAM body's SHA (not the merged SHA): the staleness check
+    // compares this against a freshly fetched upstream SHA, so it must be the
+    // same quantity or the "already current" path becomes unreachable.
     std::fs::write(&sha_path, &remote_sha)?;
 
-    eprintln!("[updater] Combined rules saved to {}", rules_path.display());
+    info!("[updater] Combined rules saved to {}", rules_path.display());
     Ok(UpdateResult::Updated { sha256: remote_sha })
 }
 
@@ -201,7 +211,10 @@ pub fn update_rules(check_only: bool) -> Result<UpdateResult, Box<dyn std::error
 /// message directing the user to rebuild with the feature enabled or use
 /// the shell script.
 #[cfg(not(feature = "updater"))]
-pub fn update_rules(_check_only: bool) -> Result<UpdateResult, Box<dyn std::error::Error>> {
+pub fn update_rules(
+    _check_only: bool,
+    _custom_url: Option<&str>,
+) -> Result<UpdateResult, Box<dyn std::error::Error>> {
     Err("Built without the `updater` feature. \
          Rebuild with `cargo build --features updater` or run \
          `./scripts/update_rules.sh` manually."

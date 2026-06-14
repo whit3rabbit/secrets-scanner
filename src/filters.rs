@@ -1,17 +1,14 @@
-/// File filtering and secret redaction utilities.
-///
-/// Provides path-based filtering to skip binary files and noisy directories,
-/// plus a redaction function for safe secret display.
+//! File filtering and secret redaction utilities.
+//!
+//! Provides path-based filtering to skip binary files and noisy directories,
+//! plus a redaction function for safe secret display.
 
 /// Binary file extensions that should never be scanned.
 const SKIP_EXTENSIONS: &[&str] = &[
-    ".png", ".jpg", ".jpeg", ".gif", ".ico", ".webp", ".bmp", ".tiff",
-    ".woff", ".woff2", ".ttf", ".eot", ".otf",
-    ".pdf", ".zip", ".tar", ".gz", ".bz2", ".xz", ".7z", ".zst",
-    ".exe", ".dll", ".so", ".dylib", ".bin", ".o", ".a",
-    ".pyc", ".pyo", ".class", ".jar", ".war",
-    ".mp3", ".mp4", ".avi", ".mov", ".mkv", ".flv",
-    ".sqlite", ".db",
+    ".png", ".jpg", ".jpeg", ".gif", ".ico", ".webp", ".bmp", ".tiff", ".woff", ".woff2", ".ttf",
+    ".eot", ".otf", ".pdf", ".zip", ".tar", ".gz", ".bz2", ".xz", ".7z", ".zst", ".exe", ".dll",
+    ".so", ".dylib", ".bin", ".o", ".a", ".pyc", ".pyo", ".class", ".jar", ".war", ".mp3", ".mp4",
+    ".avi", ".mov", ".mkv", ".flv", ".sqlite", ".db",
 ];
 
 /// Directories that produce noisy or irrelevant scan results.

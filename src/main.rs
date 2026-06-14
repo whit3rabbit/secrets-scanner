@@ -1,21 +1,21 @@
-/// CLI entry point for secrets-scanner.
-///
-/// This is a thin shell over the `secrets_scanner` library. It handles:
-/// - CLI argument parsing (clap)
-/// - Dispatching to the `update-rules` subcommand
-/// - Running the scan pipeline and printing results
-///
-/// All scanning logic lives in the library crate (`src/lib.rs`).
+//! CLI entry point for secrets-scanner.
+//!
+//! This is a thin shell over the `secrets_scanner` library. It handles:
+//! - CLI argument parsing (clap derive macros)
+//! - Dispatching to the `scan`, `update-rules`, `validate-rules`, and `list-rules` subcommands
+//! - Output formatting (`text`, `json`, `jsonl`, `sarif`)
+//! - Exit codes: `0` = no findings, `1` = findings found, `2` = error
+//!
+//! All scanning logic lives in the library crate (`src/lib.rs`).
 
-use clap::{Parser, Subcommand};
-use secrets_scanner::{Scanner, ScanConfig};
+use std::collections::HashSet;
 
-mod rules_cli {
-    // Re-export the rules module for the update-rules subcommand.
-    // The library crate's `rules` module handles loading; this just
-    // needs the updater.
-    pub use secrets_scanner::rules::updater;
-}
+use clap::{CommandFactory, Parser, Subcommand, ValueEnum};
+use clap_complete::Shell;
+use log::{error, info};
+use secrets_scanner::{ScanConfig, Scanner};
+
+mod format;
 
 // ─────────────────────────────────────────────
 // CLI ARGUMENT DEFINITION
@@ -23,47 +23,145 @@ mod rules_cli {
 
 /// A high-performance secrets scanner powered by Aho-Corasick and regex.
 #[derive(Parser)]
-#[command(name = "secrets-scanner", version, about = "A Rust secrets scanner")]
+#[command(
+    name = "secrets-scanner",
+    version,
+    about = "Scan repositories and files for leaked secrets",
+    long_about = "A multi-layer secrets scanner (memchr → Aho-Corasick → entropy → regex).\n\
+                  Exit codes: 0 = clean, 1 = findings, 2 = error."
+)]
 struct Cli {
-    /// Optional subcommand to execute.
+    /// Subcommand to run.
     #[command(subcommand)]
-    command: Option<Commands>,
-
-    /// Path to the directory to scan.
-    #[arg(default_value = ".")]
-    path: String,
-
-    /// Update the rules from upstream.
-    #[arg(long)]
-    update: bool,
-
-    /// Only check for updates without downloading (used with --update).
-    #[arg(long, requires = "update")]
-    check: bool,
-
-    /// Disable secret redaction in output (show raw matches).
-    #[arg(long)]
-    no_redact: bool,
+    command: Commands,
 }
 
 /// Available subcommands.
 #[derive(Subcommand)]
 enum Commands {
-    /// Update the scanning rules from upstream.
+    /// Scan one or more files or directories for secrets.
+    #[command(name = "scan")]
+    Scan(ScanArgs),
+
+    /// Update the scanning rules from upstream gitleaks.
     #[command(name = "update-rules", alias = "update")]
     UpdateRules {
-        /// Only check for updates without downloading.
+        /// Only check for an update without downloading.
+        #[arg(long)]
+        check: bool,
+
+        /// Override the upstream URL to pull rules from.
+        #[arg(long, value_name = "URL")]
+        url: Option<String>,
+    },
+
+    /// Validate one or more TOML rules files for structural and regex correctness.
+    #[command(name = "validate-rules", alias = "validate")]
+    ValidateRules {
+        /// Paths to the TOML rules files to validate.
+        /// Defaults to the three standard asset files.
+        #[arg(
+            default_values = &["assets/gitleaks.toml", "assets/local.toml", "assets/secrets-scanner.toml"]
+        )]
+        files: Vec<String>,
+    },
+
+    /// Merge all manifest sources into a single deterministic ruleset.
+    #[command(name = "merge-rules")]
+    MergeRules {
+        /// Path to the source manifest.
+        #[arg(long, default_value = "assets/sources.toml")]
+        manifest: String,
+
+        /// Include sources with `embed = false` (e.g. secrets-patterns-db).
+        #[arg(long)]
+        all: bool,
+
+        /// Output path for the merged ruleset.
+        #[arg(long, default_value = "assets/secrets-scanner.toml")]
+        out: String,
+
+        /// Optional path to write the JSON merge report (dedup details).
+        #[arg(long, value_name = "PATH")]
+        report: Option<String>,
+
+        /// Validate and report only; do not write the output file.
         #[arg(long)]
         check: bool,
     },
 
-    /// Validate one or more rules TOML files for structural and regex correctness.
-    #[command(name = "validate-rules", alias = "validate")]
-    ValidateRules {
-        /// Paths to the TOML rules files to validate. If empty, defaults to validating active local assets.
-        #[arg(default_values = &["assets/gitleaks.toml", "assets/local.toml", "assets/secrets-scanner.toml"])]
-        files: Vec<String>,
+    /// List all loaded rules with their IDs, descriptions, and keyword counts.
+    #[command(name = "list-rules")]
+    ListRules {
+        /// Path to a custom TOML rules file to list rules from.
+        #[arg(long, value_name = "PATH")]
+        rules: Option<String>,
     },
+
+    /// Generate shell completions.
+    #[command(name = "completions")]
+    Completions {
+        /// The shell to generate completions for.
+        #[arg(value_enum)]
+        shell: Shell,
+    },
+}
+
+/// Arguments for the `scan` subcommand.
+#[derive(Parser)]
+struct ScanArgs {
+    /// Paths to scan (files or directories). Defaults to current directory.
+    #[arg(default_value = ".")]
+    paths: Vec<String>,
+
+    /// Output format.
+    #[arg(long, value_enum, default_value_t = OutputFormat::Text)]
+    format: OutputFormat,
+
+    /// Disable secret redaction in output (shows raw matched text).
+    #[arg(long)]
+    no_redact: bool,
+
+    /// Path to a custom TOML rules file. Overrides the three-tier rule loading.
+    #[arg(long, value_name = "PATH")]
+    rules: Option<String>,
+
+    /// Suppress a specific rule by ID. May be specified multiple times.
+    #[arg(long = "ignore-rule", value_name = "ID")]
+    ignore_rules: Vec<String>,
+
+    /// Override the global minimum entropy floor.
+    #[arg(long, value_name = "FLOAT")]
+    min_entropy: Option<f64>,
+
+    /// Maximum file size in bytes (files larger than this are skipped).
+    #[arg(long, value_name = "BYTES", default_value_t = 2 * 1024 * 1024)]
+    max_file_size: u64,
+
+    /// Path to a previous JSON output file to suppress known findings.
+    #[arg(long, value_name = "FILE")]
+    baseline: Option<String>,
+
+    /// Only scan files tracked by git (`git ls-files`).
+    #[arg(long)]
+    git: bool,
+
+    /// Only scan files changed since the last commit (`git diff --name-only HEAD`).
+    #[arg(long)]
+    git_diff: bool,
+}
+
+/// Output format for the `scan` subcommand.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+enum OutputFormat {
+    /// Human-readable text (default).
+    Text,
+    /// JSON array of findings.
+    Json,
+    /// Newline-delimited JSON (one object per line).
+    Jsonl,
+    /// SARIF 2.1.0 (for GitHub Code Scanning).
+    Sarif,
 }
 
 // ─────────────────────────────────────────────
@@ -71,81 +169,158 @@ enum Commands {
 // ─────────────────────────────────────────────
 
 fn main() {
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info"))
+        .format_target(false)
+        .format_module_path(false)
+        .init();
+
     let cli = Cli::parse();
 
-    // Handle validate-rules subcommand
-    if let Some(Commands::ValidateRules { files }) = &cli.command {
-        handle_validate(files);
-        return;
+    match cli.command {
+        Commands::Scan(args) => handle_scan(args),
+        Commands::UpdateRules { check, url } => handle_update(check, url),
+        Commands::ValidateRules { files } => handle_validate(&files),
+        Commands::MergeRules {
+            manifest,
+            all,
+            out,
+            report,
+            check,
+        } => handle_merge_rules(&manifest, all, &out, report.as_deref(), check),
+        Commands::ListRules { rules } => handle_list_rules(rules.as_deref()),
+        Commands::Completions { shell } => handle_completions(shell),
     }
+}
 
-    // Handle update-rules subcommand
-    let check_only = match &cli.command {
-        Some(Commands::UpdateRules { check }) => Some(*check),
-        None if cli.update => Some(cli.check),
-        _ => None,
-    };
+// ─────────────────────────────────────────────
+// SCAN HANDLER
+// ─────────────────────────────────────────────
 
-    if let Some(check_only) = check_only {
-        handle_update(check_only);
-        return;
-    }
-
-    // Scan mode
+/// Handle the `scan` subcommand.
+fn handle_scan(args: ScanArgs) {
     let config = ScanConfig {
-        redact: !cli.no_redact,
-        ..Default::default()
+        redact: !args.no_redact,
+        min_entropy_override: args.min_entropy,
+        max_file_size: args.max_file_size,
+        git: args.git,
+        git_diff: args.git_diff,
     };
 
-    let scanner = match Scanner::new() {
-        Ok(s) => s.with_config(config),
-        Err(e) => {
-            eprintln!("❌ Failed to load rules: {e}");
-            std::process::exit(2);
+    // Build scanner from explicit rules file or three-tier loading.
+    let scanner = if let Some(ref rules_path) = args.rules {
+        match Scanner::from_file(rules_path) {
+            Ok(s) => s.with_config(config),
+            Err(e) => {
+                error!("Failed to load rules from {rules_path}: {e}");
+                std::process::exit(2);
+            }
+        }
+    } else {
+        match Scanner::new() {
+            Ok(s) => s.with_config(config),
+            Err(e) => {
+                error!("Failed to load rules: {e}");
+                std::process::exit(2);
+            }
         }
     };
 
-    eprintln!(
+    info!(
         "[scanner] Loaded {} rules ({} keywords)",
         scanner.engine().rule_count(),
         scanner.engine().keyword_count(),
     );
 
-    println!("🔍 Scanning: {}\n", cli.path);
+    // Scan all provided paths.
     let start = std::time::Instant::now();
+    let mut all_findings = Vec::new();
 
-    let findings = scanner.scan_path(&cli.path);
+    for path in &args.paths {
+        let mut findings = scanner.scan_path(path);
+        // Apply --ignore-rule filtering.
+        if !args.ignore_rules.is_empty() {
+            findings.retain(|f| !args.ignore_rules.contains(&f.rule_id));
+        }
+        all_findings.extend(findings);
+    }
 
-    let elapsed = start.elapsed();
-
-    if findings.is_empty() {
-        println!("✅ No secrets found.");
-    } else {
-        println!("🚨 Found {} potential secret(s):\n", findings.len());
-        for f in &findings {
-            println!(
-                "  {}:{} | rule={} entropy={:.2} | {}",
-                f.file, f.line, f.rule_id, f.entropy, f.matched
-            );
-            if !f.rule_description.is_empty() {
-                println!("    └─ {}", f.rule_description);
+    // Apply --baseline filtering: suppress findings that existed in a prior scan.
+    if let Some(ref baseline_path) = args.baseline {
+        match std::fs::read_to_string(baseline_path) {
+            Ok(content) => {
+                // Treat an unparseable baseline as a hard error (exit 2), the same
+                // as an unreadable one, rather than silently suppressing nothing.
+                let baseline: Vec<secrets_scanner::Finding> = match serde_json::from_str(&content) {
+                    Ok(b) => b,
+                    Err(e) => {
+                        error!("Failed to parse baseline JSON '{baseline_path}': {e}");
+                        std::process::exit(2);
+                    }
+                };
+                let known: HashSet<(String, usize, String)> = baseline
+                    .into_iter()
+                    .map(|f| (f.file, f.line, f.rule_id))
+                    .collect();
+                let before = all_findings.len();
+                all_findings
+                    .retain(|f| !known.contains(&(f.file.clone(), f.line, f.rule_id.clone())));
+                let suppressed = before - all_findings.len();
+                if suppressed > 0 {
+                    info!("[scanner] Baseline suppressed {suppressed} known finding(s)");
+                }
+            }
+            Err(e) => {
+                error!("Failed to read baseline file '{baseline_path}': {e}");
+                std::process::exit(2);
             }
         }
     }
 
-    println!("\n⏱  Scanned in {:.2?}", elapsed);
+    let elapsed = start.elapsed();
+
+    info!(
+        "[scanner] Scanned {} path(s) in {:.2?} — {} finding(s)",
+        args.paths.len(),
+        elapsed,
+        all_findings.len()
+    );
+
+    let unkeyworded_time = std::time::Duration::from_nanos(scanner.unkeyworded_scan_time_ns());
+    if unkeyworded_time.as_nanos() > 0 {
+        info!(
+            "[scanner] Unkeyworded regex rules evaluation time: {:.2?}",
+            unkeyworded_time
+        );
+    }
+
+    // Output findings in the requested format.
+    match args.format {
+        OutputFormat::Text => format::print_text(&all_findings),
+        OutputFormat::Json => format::print_json(&all_findings),
+        OutputFormat::Jsonl => format::print_jsonl(&all_findings),
+        OutputFormat::Sarif => format::print_sarif(&all_findings),
+    }
+
+    // Exit code: 1 = findings, 0 = clean.
+    if !all_findings.is_empty() {
+        std::process::exit(1);
+    }
 }
 
-/// Handle the update-rules subcommand.
-fn handle_update(check_only: bool) {
-    match rules_cli::updater::update_rules(check_only) {
-        Ok(rules_cli::updater::UpdateResult::AlreadyCurrent { sha256 }) => {
+// ─────────────────────────────────────────────
+// UPDATE HANDLER
+// ─────────────────────────────────────────────
+
+/// Handle the `update-rules` subcommand.
+fn handle_update(check_only: bool, url: Option<String>) {
+    match secrets_scanner::rules::updater::update_rules(check_only, url.as_deref()) {
+        Ok(secrets_scanner::rules::updater::UpdateResult::AlreadyCurrent { sha256 }) => {
             println!("✅ Rules already up to date (SHA-256: {sha256})");
         }
-        Ok(rules_cli::updater::UpdateResult::Updated { sha256 }) => {
+        Ok(secrets_scanner::rules::updater::UpdateResult::Updated { sha256 }) => {
             println!("✅ Rules updated (SHA-256: {sha256})");
         }
-        Ok(rules_cli::updater::UpdateResult::UpdateAvailable {
+        Ok(secrets_scanner::rules::updater::UpdateResult::UpdateAvailable {
             local_sha,
             remote_sha,
         }) => {
@@ -155,17 +330,21 @@ fn handle_update(check_only: bool) {
             println!("   Run without --check to apply.");
             std::process::exit(1);
         }
-        Ok(rules_cli::updater::UpdateResult::CheckedCurrent { sha256 }) => {
+        Ok(secrets_scanner::rules::updater::UpdateResult::CheckedCurrent { sha256 }) => {
             println!("✅ Rules are current (SHA-256: {sha256})");
         }
         Err(e) => {
-            eprintln!("❌ Update failed: {e}");
+            error!("Update failed: {e}");
             std::process::exit(2);
         }
     }
 }
 
-/// Handle the validate-rules subcommand.
+// ─────────────────────────────────────────────
+// VALIDATE HANDLER
+// ─────────────────────────────────────────────
+
+/// Handle the `validate-rules` subcommand.
 fn handle_validate(files: &[String]) {
     let mut all_valid = true;
     for file in files {
@@ -177,16 +356,16 @@ fn handle_validate(files: &[String]) {
                     }
                     Err(errors) => {
                         all_valid = false;
-                        eprintln!("❌ {file} validation failed:");
+                        error!("{file} validation failed:");
                         for err in errors {
-                            eprintln!("  - {err}");
+                            error!("  - {err}");
                         }
                     }
                 }
             }
             Err(e) => {
                 all_valid = false;
-                eprintln!("❌ Failed to read {file}: {e}");
+                error!("Failed to read {file}: {e}");
             }
         }
     }
@@ -196,11 +375,211 @@ fn handle_validate(files: &[String]) {
 }
 
 // ─────────────────────────────────────────────
+// MERGE-RULES HANDLER
+// ─────────────────────────────────────────────
+
+/// Handle the `merge-rules` subcommand: read the manifest, merge the selected
+/// sources via the shared core, validate, and write the combined ruleset.
+///
+/// This uses the SAME `merge_sources` core as `build.rs`, so a lean `merge-rules`
+/// run and a default `cargo build` produce byte-identical output (the basis of
+/// the CI drift check). Exit codes: `0` = success, `2` = error.
+fn handle_merge_rules(
+    manifest_path: &str,
+    all: bool,
+    out: &str,
+    report_path: Option<&str>,
+    check: bool,
+) {
+    use secrets_scanner::rules::{manifest, merge, validation};
+
+    let manifest_src = match std::fs::read_to_string(manifest_path) {
+        Ok(s) => s,
+        Err(e) => {
+            error!("Failed to read manifest {manifest_path}: {e}");
+            std::process::exit(2);
+        }
+    };
+    let parsed = match manifest::parse_manifest(&manifest_src) {
+        Ok(m) => m,
+        Err(e) => {
+            error!("Failed to parse manifest {manifest_path}: {e}");
+            std::process::exit(2);
+        }
+    };
+
+    let selected = manifest::select_sources(
+        &parsed,
+        &manifest::SelectOptions {
+            include_embed_false: all,
+        },
+    );
+
+    let mut inputs = Vec::new();
+    for src in &selected {
+        // Sources without a TOML converter (e.g. kingfisher YAML) are skipped.
+        if !src.file.ends_with(".toml") {
+            info!(
+                "[merge] skipping non-TOML source '{}' ({})",
+                src.name, src.file
+            );
+            continue;
+        }
+        let content = match std::fs::read_to_string(&src.file) {
+            Ok(c) => c,
+            Err(e) if src.embed => {
+                error!(
+                    "Embedded source '{}' unreadable ({}): {e}",
+                    src.name, src.file
+                );
+                std::process::exit(2);
+            }
+            Err(e) => {
+                info!(
+                    "[merge] optional source '{}' unreadable ({}): {e}",
+                    src.name, e
+                );
+                continue;
+            }
+        };
+        if let Err(errors) = validation::validate_rules_toml(&content) {
+            error!("Source '{}' is invalid:", src.name);
+            for err in errors {
+                error!("  - {err}");
+            }
+            std::process::exit(2);
+        }
+        inputs.push(merge::MergeSource {
+            name: src.name.clone(),
+            priority: src.priority,
+            toml: content,
+        });
+    }
+
+    let (combined, report) = match merge::merge_sources(inputs) {
+        Ok(pair) => pair,
+        Err(e) => {
+            error!("Merge failed: {e}");
+            std::process::exit(2);
+        }
+    };
+    if let Err(errors) = validation::validate_rules_toml(&combined) {
+        error!("Merged ruleset is invalid:");
+        for err in errors {
+            error!("  - {err}");
+        }
+        std::process::exit(2);
+    }
+
+    // Summary of what the merge did.
+    let dropped_exact = report.exact_regex_dups.iter().filter(|d| d.dropped).count();
+    let conflict_exact = report.exact_regex_dups.len() - dropped_exact;
+    println!(
+        "Merged {} source(s): {} input rules -> {} output rules",
+        report.sources.len(),
+        report.total_input_rules,
+        report.output_rules
+    );
+    println!(
+        "  dropped: {} id collision(s), {} exact-regex duplicate(s)",
+        report.id_collisions.len(),
+        dropped_exact
+    );
+    println!(
+        "  flagged for review: {} same-regex conflict(s), {} normalized near-dup(s)",
+        conflict_exact,
+        report.near_dups.len()
+    );
+
+    if let Some(path) = report_path {
+        match serde_json::to_string_pretty(&report) {
+            Ok(json) => {
+                if let Some(parent) = std::path::Path::new(path).parent() {
+                    let _ = std::fs::create_dir_all(parent);
+                }
+                if let Err(e) = std::fs::write(path, json) {
+                    error!("Failed to write report {path}: {e}");
+                    std::process::exit(2);
+                }
+                println!("Wrote merge report to {path}");
+            }
+            Err(e) => {
+                error!("Failed to serialize report: {e}");
+                std::process::exit(2);
+            }
+        }
+    }
+
+    if check {
+        println!("Check mode: not writing {out}");
+        return;
+    }
+    if let Err(e) = std::fs::write(out, &combined) {
+        error!("Failed to write {out}: {e}");
+        std::process::exit(2);
+    }
+    println!("Wrote merged ruleset to {out}");
+}
+
+// ─────────────────────────────────────────────
+// LIST-RULES HANDLER
+// ─────────────────────────────────────────────
+
+/// Handle the `list-rules` subcommand.
+fn handle_list_rules(rules_path: Option<&str>) {
+    let scanner = if let Some(path) = rules_path {
+        match Scanner::from_file(path) {
+            Ok(s) => s,
+            Err(e) => {
+                error!("Failed to load rules from {path}: {e}");
+                std::process::exit(2);
+            }
+        }
+    } else {
+        match Scanner::new() {
+            Ok(s) => s,
+            Err(e) => {
+                error!("Failed to load rules: {e}");
+                std::process::exit(2);
+            }
+        }
+    };
+
+    let rules = scanner.engine().rules();
+    println!("{:<40} {:<8} DESCRIPTION", "RULE ID", "KEYWORDS");
+    println!("{}", "-".repeat(90));
+    for rule in &rules {
+        println!(
+            "{:<40} {:<8} {}",
+            &rule.id,
+            rule.keywords.len(),
+            if rule.description.is_empty() {
+                "(no description)"
+            } else {
+                &rule.description
+            }
+        );
+    }
+    println!("\n{} rule(s) loaded.", rules.len());
+}
+
+// ─────────────────────────────────────────────
+// COMPLETIONS HANDLER
+// ─────────────────────────────────────────────
+
+/// Handle the `completions` subcommand.
+fn handle_completions(shell: Shell) {
+    let mut cmd = Cli::command();
+    let name = cmd.get_name().to_string();
+    clap_complete::generate(shell, &mut cmd, name, &mut std::io::stdout());
+}
+
+// ─────────────────────────────────────────────
 // TESTS
 // ─────────────────────────────────────────────
 #[cfg(test)]
 mod tests {
-    use secrets_scanner::{Scanner, ScanConfig};
+    use secrets_scanner::{ScanConfig, Scanner};
 
     #[test]
     fn scanner_loads_from_bundled() {
@@ -221,5 +600,16 @@ mod tests {
         let findings = scanner.scan_content("deploy.sh", content);
         assert!(!findings.is_empty(), "should detect GitHub PAT");
         assert_eq!(findings[0].rule_id, "github-pat");
+    }
+
+    #[test]
+    fn json_string_escapes_special_chars() {
+        assert_eq!(super::format::json_string("hello"), "\"hello\"");
+        assert_eq!(
+            super::format::json_string("say \"hi\""),
+            "\"say \\\"hi\\\"\""
+        );
+        assert_eq!(super::format::json_string("new\nline"), "\"new\\nline\"");
+        assert_eq!(super::format::json_string("tab\there"), "\"tab\\there\"");
     }
 }

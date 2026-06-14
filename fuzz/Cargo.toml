@@ -1,0 +1,24 @@
+[package]
+name = "secrets-scanner-fuzz"
+version = "0.0.1"
+edition = "2021"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+secrets_scanner = { path = "..", default-features = false }
+
+[[bin]]
+name = "fuzz_scan_bytes"
+path = "fuzz_targets/fuzz_scan_bytes.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_scan_content"
+path = "fuzz_targets/fuzz_scan_content.rs"
+test = false
+doc = false

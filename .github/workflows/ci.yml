@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  ci:
+    name: CI (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache Cargo registry and build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Clippy (default features)
+        run: cargo clippy -- -D warnings
+
+      - name: Clippy (updater feature)
+        run: cargo clippy --features updater -- -D warnings
+
+      - name: Run tests (default features)
+        run: cargo test
+
+      - name: Run tests (updater feature)
+        run: cargo test --features updater
+
+      - name: Check rules are up to date
+        if: runner.os != 'Windows'
+        run: ./scripts/update_rules.sh --check
+        continue-on-error: true   # advisory only; don't fail CI on rule drift
+
+      - name: Validate bundled rules
+        run: cargo run -- validate-rules assets/gitleaks.toml assets/local.toml assets/secrets-scanner.toml

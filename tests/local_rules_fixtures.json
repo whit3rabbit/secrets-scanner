@@ -1,0 +1,962 @@
+{
+  "aikido-api-client-secret": {
+    "secret": "aikido_secret_YYskGbAo1JZi4wXlxixJLiXdDJSkoPO2",
+    "test_content": "aikido = aikido_secret_YYskGbAo1JZi4wXlxixJLiXdDJSkoPO2"
+  },
+  "aikido-ci-scanning-token": {
+    "secret": "aikido_oRYCJ83fDA0TgQXqRUz8DrFmh8WU9xkZ",
+    "test_content": "aikido = aikido_oRYCJ83fDA0TgQXqRUz8DrFmh8WU9xkZ"
+  },
+  "aiven-auth-token": {
+    "secret": "aiven_7bgxwTszgb1zsYnMwGAJLEoniqwrlp4j",
+    "test_content": "aiven = aiven_7bgxwTszgb1zsYnMwGAJLEoniqwrlp4j"
+  },
+  "aiven-service-password": {
+    "secret": "aiven_password_4zMEvF35yf0p8w7H7MK5VaDxn7MSw11N",
+    "test_content": "aiven = aiven_password_4zMEvF35yf0p8w7H7MK5VaDxn7MSw11N"
+  },
+  "apify-actor-run-api-token": {
+    "secret": "apify_api_60l7HncQQWbMfWBDboUbazkVXBlytKxM",
+    "test_content": "apify = apify_api_60l7HncQQWbMfWBDboUbazkVXBlytKxM"
+  },
+  "apify-actor-run-proxy-password": {
+    "secret": "apify_proxy_3TOclj9ADLK06jbyDrPLJToPJB8lOWUs",
+    "test_content": "apify = apify_proxy_3TOclj9ADLK06jbyDrPLJToPJB8lOWUs"
+  },
+  "apify-api-token": {
+    "secret": "apify_api_wLVmJbvjWCPeypK48uqFXOHAeCsQdyd0",
+    "test_content": "apify = apify_api_wLVmJbvjWCPeypK48uqFXOHAeCsQdyd0"
+  },
+  "apify-integration-api-token": {
+    "secret": "apify_api_bGIdL2dP4hJ9KCId2M0PdrVyhhAPQ7Kc",
+    "test_content": "apify = apify_api_bGIdL2dP4hJ9KCId2M0PdrVyhhAPQ7Kc"
+  },
+  "apify-proxy-password": {
+    "secret": "apify_proxy_Yf9einDWORBehDgvUuUMpdQN40EeBDhK",
+    "test_content": "apify = apify_proxy_Yf9einDWORBehDgvUuUMpdQN40EeBDhK"
+  },
+  "apify-ui-token": {
+    "secret": "apify_api_VJ979QtWpQjqk3n9JNNCVV8lXdQ7hvnl",
+    "test_content": "apify = apify_api_VJ979QtWpQjqk3n9JNNCVV8lXdQ7hvnl"
+  },
+  "apify-webhook-dispatch-api-token": {
+    "secret": "apify_api_8RrsalsIvnfjU2ZiJpS3HPfnCN9QKsB9",
+    "test_content": "apify = apify_api_8RrsalsIvnfjU2ZiJpS3HPfnCN9QKsB9"
+  },
+  "asaas-api-token": {
+    "secret": "asaas_ivfvQR0DDGaYjPtlhkOiEDmfL8BOVEcE",
+    "test_content": "asaas = asaas_ivfvQR0DDGaYjPtlhkOiEDmfL8BOVEcE"
+  },
+  "baiduai-api-key": {
+    "secret": "baidu_cA1koB01DZyY3Q4ZA5IMu8JMB866ynoY",
+    "test_content": "baidu = baidu_cA1koB01DZyY3Q4ZA5IMu8JMB866ynoY"
+  },
+  "baiducloud-api-accesskey": {
+    "secret": "baidu_jN6sSrm5UffPwUhjJuD0QfwBp27JQiZf",
+    "test_content": "baidu = baidu_jN6sSrm5UffPwUhjJuD0QfwBp27JQiZf"
+  },
+  "bitrise-personal-access-token": {
+    "secret": "bitrise_access_Q1U_6zOzDB2uVZjy4Qow3Wd2K_GWRxi1",
+    "test_content": "bitrise = bitrise_access_Q1U_6zOzDB2uVZjy4Qow3Wd2K_GWRxi1"
+  },
+  "bitrise-workspace-api-token": {
+    "secret": "bitrise_UtCL9nIJD0MKFrz1pVwY6iOs7EtvLstF",
+    "test_content": "bitrise = bitrise_UtCL9nIJD0MKFrz1pVwY6iOs7EtvLstF"
+  },
+  "block-protocol-api-key": {
+    "secret": "bp_Ao20OjZzRag8MDqJpVvZsLnmJdBhVMMr",
+    "test_content": "block = bp_Ao20OjZzRag8MDqJpVvZsLnmJdBhVMMr"
+  },
+  "buildkite-agent-access-token": {
+    "secret": "bkaa_EVI3mv4iDejHLTp5Vq7kNGWFSSvdqNnu",
+    "test_content": "buildkite = bkaa_EVI3mv4iDejHLTp5Vq7kNGWFSSvdqNnu"
+  },
+  "buildkite-agent-job-token": {
+    "secret": "bkaj_Hw3QNjb518Mh7uF0SBDpLWcgd6fjkGBM",
+    "test_content": "buildkite = bkaj_Hw3QNjb518Mh7uF0SBDpLWcgd6fjkGBM"
+  },
+  "buildkite-agent-registration-token": {
+    "secret": "bkua_o8QLFRF247WObchnoCLVGMW0TTks0yga",
+    "test_content": "buildkite = bkua_o8QLFRF247WObchnoCLVGMW0TTks0yga"
+  },
+  "buildkite-cluster-queue-token": {
+    "secret": "bkaa_O88gVot7futvTLv6tOBfg7uOH6nWJJ2s",
+    "test_content": "buildkite = bkaa_O88gVot7futvTLv6tOBfg7uOH6nWJJ2s"
+  },
+  "buildkite-cluster-token": {
+    "secret": "bkpt_4u0NgMYemM6WGNBjc8VzcEoNOSfdbuhW",
+    "test_content": "buildkite = bkpt_4u0NgMYemM6WGNBjc8VzcEoNOSfdbuhW"
+  },
+  "buildkite-packages-registry-token": {
+    "secret": "bkpt_Qm7KyP09ItK4xVOQ678wuvV2LlCqHyuF",
+    "test_content": "buildkite = bkpt_Qm7KyP09ItK4xVOQ678wuvV2LlCqHyuF"
+  },
+  "buildkite-packages-temporary-token": {
+    "secret": "bkua_wZJ5MyzIhH4wuTzIMHE6tiDYDW3YjCtj",
+    "test_content": "buildkite = bkua_wZJ5MyzIhH4wuTzIMHE6tiDYDW3YjCtj"
+  },
+  "buildkite-portal-secret": {
+    "secret": "bkar_FzA5HGDAAQKCYpwzATqvjHOgTSXwaKZe",
+    "test_content": "buildkite = bkar_FzA5HGDAAQKCYpwzATqvjHOgTSXwaKZe"
+  },
+  "buildkite-portal-token": {
+    "secret": "bkpt_p8EbfC4LriBaLadZoJ86cNm9jPTxKXpp",
+    "test_content": "buildkite = bkpt_p8EbfC4LriBaLadZoJ86cNm9jPTxKXpp"
+  },
+  "buildkite-user-access-token": {
+    "secret": "bkpl_Keu2jTfWfkoU6tL8slEla8aFIluyzjcs",
+    "test_content": "buildkite = bkpl_Keu2jTfWfkoU6tL8slEla8aFIluyzjcs"
+  },
+  "cds-canada-notify-api-key": {
+    "secret": "cds_nUQj66DhORlg0xZ3P8HIfJFFcR6SvQPF",
+    "test_content": "canadian = cds_nUQj66DhORlg0xZ3P8HIfJFFcR6SvQPF"
+  },
+  "canva-app-secret": {
+    "secret": "canva_secret_CRjzXqswhq54BoKB1DEBZBUzhtcr3jpo",
+    "test_content": "canva = canva_secret_CRjzXqswhq54BoKB1DEBZBUzhtcr3jpo"
+  },
+  "canva-connect-api-secret": {
+    "secret": "canva_secret_rKiKTwc8ec6aB6w4tzxui5MfjySnSq3T",
+    "test_content": "canva = canva_secret_rKiKTwc8ec6aB6w4tzxui5MfjySnSq3T"
+  },
+  "canva-secret": {
+    "secret": "canva_secret_LRiWm9PWLdbJZYZClDzo1WNuvFt0MJes",
+    "test_content": "canva = canva_secret_LRiWm9PWLdbJZYZClDzo1WNuvFt0MJes"
+  },
+  "cashfree-api-key": {
+    "secret": "cashfree_nR4xT3tnjXnNVBIvm6SlQhMespKOJ77J",
+    "test_content": "cashfree = cashfree_nR4xT3tnjXnNVBIvm6SlQhMespKOJ77J"
+  },
+  "cfxre-server-key": {
+    "secret": "cr_unFthtSf8TKHuqpItJtjdBoc4FYPQMJf",
+    "test_content": "cfx = cr_unFthtSf8TKHuqpItJtjdBoc4FYPQMJf"
+  },
+  "checkout-production-secret-key": {
+    "secret": "sk_sbox_LvOsXD3tKKxRLiniAuy694gYXdGmpRLn",
+    "test_content": "checkout = sk_sbox_LvOsXD3tKKxRLiniAuy694gYXdGmpRLn"
+  },
+  "checkout-test-secret-key": {
+    "secret": "sk_sbox_8Bku3M9IByCslHfX7WjDpSuPq8g3kxHH",
+    "test_content": "checkout = sk_sbox_8Bku3M9IByCslHfX7WjDpSuPq8g3kxHH"
+  },
+  "chief-tools-token": {
+    "secret": "ct_IcNgUdVhvXapgOjyf009Ogc5uvPPLhDT",
+    "test_content": "chief = ct_IcNgUdVhvXapgOjyf009Ogc5uvPPLhDT"
+  },
+  "circleci-bot-access-token": {
+    "secret": "CCIPAT_tG7c9PXhD2HjESXJSwJNsgUS_7a0b87ca144c51a672ac744f7f3ebb1e80fd8a57",
+    "test_content": "circleci = CCIPAT_tG7c9PXhD2HjESXJSwJNsgUS_7a0b87ca144c51a672ac744f7f3ebb1e80fd8a57"
+  },
+  "circleci-personal-access-token": {
+    "secret": "CCIPAT_H6mhT5UTwceftp4itH3HnLam_1d43efe4b8c8391bc648aac989b3bc4196614c82",
+    "test_content": "circleci = CCIPAT_H6mhT5UTwceftp4itH3HnLam_1d43efe4b8c8391bc648aac989b3bc4196614c82"
+  },
+  "circleci-project-access-token": {
+    "secret": "CCIPAT_svVm7c3gPqUgvqrjPd398smP_a0e5567a79e5c3cfcf62fafb8710f7925de172a3",
+    "test_content": "circleci = CCIPAT_svVm7c3gPqUgvqrjPd398smP_a0e5567a79e5c3cfcf62fafb8710f7925de172a3"
+  },
+  "circleci-release-integration-token": {
+    "secret": "CCIPAT_wqW6DQX677Vv8euirddKrKMk_9c19c396206f6d5d1b0ee1fd321548ffe4ca7fdd",
+    "test_content": "circleci = CCIPAT_wqW6DQX677Vv8euirddKrKMk_9c19c396206f6d5d1b0ee1fd321548ffe4ca7fdd"
+  },
+  "ccdb-api-key": {
+    "secret": "cl_pjztcRXdozMES7ngM1lCpqgv3KX3KeA8",
+    "test_content": "ccdb = cl_pjztcRXdozMES7ngM1lCpqgv3KX3KeA8"
+  },
+  "contributed-systems-credentials": {
+    "secret": "cs_RGuS2RuFLdkqOiwonvkEDOa2PCQkAnFC",
+    "test_content": "contributed = cs_RGuS2RuFLdkqOiwonvkEDOa2PCQkAnFC"
+  },
+  "coveo-access-token": {
+    "secret": "coveo_access_DcQsD2Hp8kYi3JRaJX9xJ2B3wkoB-7Tt",
+    "test_content": "coveo = coveo_access_DcQsD2Hp8kYi3JRaJX9xJ2B3wkoB-7Tt"
+  },
+  "coveo-api-key": {
+    "secret": "coveo_JdCQ35UlyVnUgFga7vO2bwhzzXuqiSrA",
+    "test_content": "coveo = coveo_JdCQ35UlyVnUgFga7vO2bwhzzXuqiSrA"
+  },
+  "cratesio-api-token": {
+    "secret": "cioVn6TUUI2qV6tHbCLLV33L1J8WchHcpxd",
+    "test_content": "crates = cioVn6TUUI2qV6tHbCLLV33L1J8WchHcpxd"
+  },
+  "databento-api-key": {
+    "secret": "databento_LgG6Kxyt9whc6TEDyAXAxZiRZFE8ZbwU",
+    "test_content": "databento = databento_LgG6Kxyt9whc6TEDyAXAxZiRZFE8ZbwU"
+  },
+  "datastax-astracs-token": {
+    "secret": "AstraCS:R9vGWeF-bN_d1P2qXgpe0HGL5MNMhg5_",
+    "test_content": "datastax = AstraCS:R9vGWeF-bN_d1P2qXgpe0HGL5MNMhg5_"
+  },
+  "deepseek-api-key": {
+    "secret": "sk-DeepSeekp2FZmS3ZWoySIvXaJy1apOo3fNqVw5TY",
+    "test_content": "deepseek = sk-DeepSeekp2FZmS3ZWoySIvXaJy1apOo3fNqVw5TY"
+  },
+  "devcycle-client-api-key": {
+    "secret": "devcycle_jpglAgGkWMG3cBDv2Nk9BbR15I8o6cv6",
+    "test_content": "devcycle = devcycle_jpglAgGkWMG3cBDv2Nk9BbR15I8o6cv6"
+  },
+  "devcycle-mobile-api-key": {
+    "secret": "devcycle_ILwqxr8aabq1DmD0gGfW9QQ1LYeLcgU3",
+    "test_content": "devcycle = devcycle_ILwqxr8aabq1DmD0gGfW9QQ1LYeLcgU3"
+  },
+  "devcycle-server-api-key": {
+    "secret": "devcycle_oHX8dQI5JIsldbPcvdXquznuyIAFxerW",
+    "test_content": "devcycle = devcycle_oHX8dQI5JIsldbPcvdXquznuyIAFxerW"
+  },
+  "docker-organization-access-token": {
+    "secret": "dckr_pat_TYJCmUX8GPql8NFdkk2E8g7HfMBRiJfv",
+    "test_content": "docker = dckr_pat_TYJCmUX8GPql8NFdkk2E8g7HfMBRiJfv"
+  },
+  "docker-personal-access-token": {
+    "secret": "dckr_pat_kLI5n3cxSjQyHXyKvbuwt17H7naz3OoQ",
+    "test_content": "docker = dckr_pat_kLI5n3cxSjQyHXyKvbuwt17H7naz3OoQ"
+  },
+  "docker-swarm-join-token": {
+    "secret": "SWMTKN-0-G7EhXgmcxuU0C66kb1EFTwtjiJIY6P1Q",
+    "test_content": "docker = SWMTKN-0-G7EhXgmcxuU0C66kb1EFTwtjiJIY6P1Q"
+  },
+  "docker-swarm-unlock-key": {
+    "secret": "docker-unlock-RLjQ-GVT6PyxPcO2DVofomaZHmqK-euP",
+    "test_content": "docker = docker-unlock-RLjQ-GVT6PyxPcO2DVofomaZHmqK-euP"
+  },
+  "ebay-production-client-id-ebay-production-client-secret": {
+    "secret": "ebay_secret_SkgWImvDIgL28ddFOftHgv7zKLmC4fZi",
+    "test_content": "ebay = ebay_secret_SkgWImvDIgL28ddFOftHgv7zKLmC4fZi"
+  },
+  "ebay-sandbox-client-id-ebay-sandbox-client-secret": {
+    "secret": "ebay_secret_xmvwUvT4A41X5mtDyt0A1gv7OJ4InsdF",
+    "test_content": "ebay = ebay_secret_xmvwUvT4A41X5mtDyt0A1gv7OJ4InsdF"
+  },
+  "elastic-cloud-api-key": {
+    "secret": "elastic_ioLf2zOTcbMCWLwMqKzaKJjYzAvxz2t5",
+    "test_content": "elastic = elastic_ioLf2zOTcbMCWLwMqKzaKJjYzAvxz2t5"
+  },
+  "elastic-stack-api-key": {
+    "secret": "elastic_j9VFq8jHnSHAKZJoYJjB1ifHbIodqvdg",
+    "test_content": "elastic = elastic_j9VFq8jHnSHAKZJoYJjB1ifHbIodqvdg"
+  },
+  "fieldguide-api-token": {
+    "secret": "fieldguide_yOBAkRrPFn42RjkeEPxH62lOrYOjbRGf",
+    "test_content": "fieldguide = fieldguide_yOBAkRrPFn42RjkeEPxH62lOrYOjbRGf"
+  },
+  "figma-pat": {
+    "secret": "figs_tKRvwSNIvYJNgEH9ZM7txnCBMSAnTBpl",
+    "test_content": "figma = figs_tKRvwSNIvYJNgEH9ZM7txnCBMSAnTBpl"
+  },
+  "figma-scim-token": {
+    "secret": "figs_pMC1Tworpo7uTPpZgjh5SLy3TZFO5mJS",
+    "test_content": "figma = figs_pMC1Tworpo7uTPpZgjh5SLy3TZFO5mJS"
+  },
+  "firebase-cloud-messaging-server-key": {
+    "secret": "firebase_3gyMQ2OBlTDV3TbEev6Qq9jRucMLrvv7",
+    "test_content": "firebase = firebase_3gyMQ2OBlTDV3TbEev6Qq9jRucMLrvv7"
+  },
+  "fullstory-api-key": {
+    "secret": "fullstory_f1QyhJCPprJCMAHld7XpoqF6A1kVjcDm",
+    "test_content": "fullstory = fullstory_f1QyhJCPprJCMAHld7XpoqF6A1kVjcDm"
+  },
+  "groq-api-key": {
+    "secret": "gsk_djrDqooTTddXqeoxR14avIFJz6ARGJUw",
+    "test_content": "groq = gsk_djrDqooTTddXqeoxR14avIFJz6ARGJUw"
+  },
+  "guardsquare-appsweep-api-key": {
+    "secret": "guardsquare_vLipjTVhgA2vSCHHIxYD4R6QUkwfOHaS",
+    "test_content": "guardsquare = guardsquare_vLipjTVhgA2vSCHHIxYD4R6QUkwfOHaS"
+  },
+  "guardsquare-cli-access-token": {
+    "secret": "guardsquare_access_7ThrvvlBAtXNWzV8peYr5mhjTLZrX8l2",
+    "test_content": "guardsquare = guardsquare_access_7ThrvvlBAtXNWzV8peYr5mhjTLZrX8l2"
+  },
+  "guardsquare-maven-token": {
+    "secret": "guardsquare_30qadeUyreSGC6CrN8dMyWbDakQsTxdm",
+    "test_content": "guardsquare = guardsquare_30qadeUyreSGC6CrN8dMyWbDakQsTxdm"
+  },
+  "hackclub-ai-api-key": {
+    "secret": "hc_Dc8y7RMM77kBBdiLMjGMmnQf9Axdnsoa",
+    "test_content": "hack = hc_Dc8y7RMM77kBBdiLMjGMmnQf9Axdnsoa"
+  },
+  "hcaptcha-siteverify-secret": {
+    "secret": "0xda3f42089f7fbc9a3070cf2e0b0b068e",
+    "test_content": "hcaptcha = 0xda3f42089f7fbc9a3070cf2e0b0b068e"
+  },
+  "highnote-rk-live-key": {
+    "secret": "rk_live_wkSp2yFEjK1IIUiPO3AwswrJYitKOaoJ",
+    "test_content": "highnote = rk_live_wkSp2yFEjK1IIUiPO3AwswrJYitKOaoJ"
+  },
+  "highnote-rk-test-key": {
+    "secret": "sk_live_4K8fOdE9581kklhOyoPoypm7RqjCkoc2",
+    "test_content": "highnote = sk_live_4K8fOdE9581kklhOyoPoypm7RqjCkoc2"
+  },
+  "highnote-sk-live-key": {
+    "secret": "sk_live_pGvnbqP7sEMb12hzeItjxvHLLiu1XxFv",
+    "test_content": "highnote = sk_live_pGvnbqP7sEMb12hzeItjxvHLLiu1XxFv"
+  },
+  "highnote-sk-test-key": {
+    "secret": "sk_live_Npc5cojosWwc8S9Q4vMTzxWsjP2rzZGD",
+    "test_content": "highnote = sk_live_Npc5cojosWwc8S9Q4vMTzxWsjP2rzZGD"
+  },
+  "hop-bearer": {
+    "secret": "hop_B3LlhYuTNFgHCpRRbGgaaDF7S1UmBhCC",
+    "test_content": "hop = hop_B3LlhYuTNFgHCpRRbGgaaDF7S1UmBhCC"
+  },
+  "hop-pat": {
+    "secret": "hop_OPkFTiPmduBJ8E0NwCuzS7xzJP9iWNHd",
+    "test_content": "hop = hop_OPkFTiPmduBJ8E0NwCuzS7xzJP9iWNHd"
+  },
+  "hop-ptk": {
+    "secret": "hop_Tf11T8qwY0sn8x3MnBH4KeDIpy93lMcF",
+    "test_content": "hop = hop_Tf11T8qwY0sn8x3MnBH4KeDIpy93lMcF"
+  },
+  "ibm-cloud-iam-key": {
+    "secret": "IAM_API_KEY-r7ZX19m0sN3lbmqgkxKp8WN8YKliFQT",
+    "test_content": "ibm = IAM_API_KEY-r7ZX19m0sN3lbmqgkxKp8WN8YKliFQT"
+  },
+  "ionic-personal-access-token": {
+    "secret": "ionr_JJg2z7NFrRyqdk5Ygp6ndzWkajQAKTZA",
+    "test_content": "ionic = ionr_JJg2z7NFrRyqdk5Ygp6ndzWkajQAKTZA"
+  },
+  "ionic-refresh-token": {
+    "secret": "ionr_JRpCV5L35bAWdwqmshTJvV74CbXTYP1V",
+    "test_content": "ionic = ionr_JRpCV5L35bAWdwqmshTJvV74CbXTYP1V"
+  },
+  "iterative-dvc-studio-access-token": {
+    "secret": "iterative_access_RDQXCFcuUC5uyKIegjHE1_EAHnReC8xN",
+    "test_content": "iterative = iterative_access_RDQXCFcuUC5uyKIegjHE1_EAHnReC8xN"
+  },
+  "langchain-api-personal-key": {
+    "secret": "lslic_6BhESdg13NPuicNRocPSbP1D2gtgHHcq",
+    "test_content": "langchain = lslic_6BhESdg13NPuicNRocPSbP1D2gtgHHcq"
+  },
+  "langchain-api-server-key": {
+    "secret": "lslic_02PLJinAhpbOOviW5OwKNy1wHXSPliFM",
+    "test_content": "langchain = lslic_02PLJinAhpbOOviW5OwKNy1wHXSPliFM"
+  },
+  "langsmith-license-key": {
+    "secret": "lsv2_sk_QmggwPKTBfbSnli5sbhu9K2G4356asjo",
+    "test_content": "langchain = lsv2_sk_QmggwPKTBfbSnli5sbhu9K2G4356asjo"
+  },
+  "langsmith-scim-bearer-token": {
+    "secret": "lslic_tp4V721Fxe6BBHLTUJZ1crIEQTxcUNPi",
+    "test_content": "langchain = lslic_tp4V721Fxe6BBHLTUJZ1crIEQTxcUNPi"
+  },
+  "lark-apaas-client-secret": {
+    "secret": "lark_secret_kUSNn5rMSobCK4XfHkyHFKp1eUOxV04q",
+    "test_content": "lark = lark_secret_kUSNn5rMSobCK4XfHkyHFKp1eUOxV04q"
+  },
+  "lark-app-secret": {
+    "secret": "lark_secret_SzaIx9zfHqdNDWdMsRT9ZVDAj9GQ1i8p",
+    "test_content": "lark = lark_secret_SzaIx9zfHqdNDWdMsRT9ZVDAj9GQ1i8p"
+  },
+  "lark-mcp-grant-token": {
+    "secret": "lark_Lz7DfbBgHxfl9Blkr60BixFl53ciToz6",
+    "test_content": "lark = lark_Lz7DfbBgHxfl9Blkr60BixFl53ciToz6"
+  },
+  "lark-meego-plugin-secret": {
+    "secret": "lark_secret_cSVroker3bYHSLTJ2RIFTqOmJ9D4IINR",
+    "test_content": "lark = lark_secret_cSVroker3bYHSLTJ2RIFTqOmJ9D4IINR"
+  },
+  "lark-user-session": {
+    "secret": "lark_Dg75bjrr71F98JEz54phYDsc1ESsaS0T",
+    "test_content": "lark = lark_Dg75bjrr71F98JEz54phYDsc1ESsaS0T"
+  },
+  "lichess-oauth-access-token": {
+    "secret": "lichess_access_IBPAo0H6vUzcm3nABOfTO3yuJJF7D2hX",
+    "test_content": "lichess = lichess_access_IBPAo0H6vUzcm3nABOfTO3yuJJF7D2hX"
+  },
+  "lichess-personal-access-token": {
+    "secret": "lichess_access_RuRM27gA44yaWgmLR_pb6-f_-2TRZ9-q",
+    "test_content": "lichess = lichess_access_RuRM27gA44yaWgmLR_pb6-f_-2TRZ9-q"
+  },
+  "lightspeed-xs-pat": {
+    "secret": "lightspeed_zCFapryTkQmjzhS4VquZP0oO9VjRmVKA",
+    "test_content": "lightspeed = lightspeed_zCFapryTkQmjzhS4VquZP0oO9VjRmVKA"
+  },
+  "limbar-token": {
+    "secret": "limbar_sXYed7fi8QngpCp21AdppaV4QQ6qVslx",
+    "test_content": "limbar = limbar_sXYed7fi8QngpCp21AdppaV4QQ6qVslx"
+  },
+  "localstack-api-key": {
+    "secret": "localstack_Xhd7kzHJFH9Rhq4ZEteBEP5QxWzYkE91",
+    "test_content": "localstack = localstack_Xhd7kzHJFH9Rhq4ZEteBEP5QxWzYkE91"
+  },
+  "logicmonitor-bearer-token": {
+    "secret": "logicmonitor_7kanJsWlOhrrMBbUZS80dszuCff6eNVG",
+    "test_content": "logicmonitor = logicmonitor_7kanJsWlOhrrMBbUZS80dszuCff6eNVG"
+  },
+  "logicmonitor-lmv1-access-key": {
+    "secret": "logicmonitor_Za77s0nw6WIbmLzfNbcnlmqp5VPd2F5a",
+    "test_content": "logicmonitor = logicmonitor_Za77s0nw6WIbmLzfNbcnlmqp5VPd2F5a"
+  },
+  "amazon-oauth-client-id-amazon-oauth-client-secret": {
+    "secret": "lwa_access_6gm47ASxRHviEKeqLAJzRmRPAwc40HRc",
+    "test_content": "amazon = lwa_access_6gm47ASxRHviEKeqLAJzRmRPAwc40HRc"
+  },
+  "mailersend-api-token": {
+    "secret": "mailersend_UsvVFGXsoW2hPs9uVCZrOACxjGcTwtGC",
+    "test_content": "mailersend = mailersend_UsvVFGXsoW2hPs9uVCZrOACxjGcTwtGC"
+  },
+  "mailersend-smtp-password": {
+    "secret": "mailersend_password_HPne7iX7MV9oxWpkhq4Qp5FNfVQUO6ub",
+    "test_content": "mailersend = mailersend_password_HPne7iX7MV9oxWpkhq4Qp5FNfVQUO6ub"
+  },
+  "mailersend-smtp-username": {
+    "secret": "mailersend_fIiSEEddkOpkYPWGhFbO9V11IPMgukNY",
+    "test_content": "mailersend = mailersend_fIiSEEddkOpkYPWGhFbO9V11IPMgukNY"
+  },
+  "mercury-non-production-api-token": {
+    "secret": "mercury_z1lEU0E4LnRaUaAC5pVAoTWv1XtBNTCl",
+    "test_content": "mercury = mercury_z1lEU0E4LnRaUaAC5pVAoTWv1XtBNTCl"
+  },
+  "mercury-production-api-token": {
+    "secret": "mercury_m4QI9EFFGsFCegL9AnMEpfXr3YnldTA0",
+    "test_content": "mercury = mercury_m4QI9EFFGsFCegL9AnMEpfXr3YnldTA0"
+  },
+  "mergify-application-key": {
+    "secret": "mergify_4ujAs4cZSCnOextR2FHQ5g7kAl1RID4p",
+    "test_content": "mergify = mergify_4ujAs4cZSCnOextR2FHQ5g7kAl1RID4p"
+  },
+  "midtrans-production-server-key": {
+    "secret": "SB-Mid-server-WQt4GZJcpsEwToyOdS43aL2NGAGMPAR4",
+    "test_content": "midtrans = SB-Mid-server-WQt4GZJcpsEwToyOdS43aL2NGAGMPAR4"
+  },
+  "midtrans-sandbox-server-key": {
+    "secret": "SB-Mid-server-7H8xhrudkzEZjTFPcCp8Y2PpvHs1-0og",
+    "test_content": "midtrans = SB-Mid-server-7H8xhrudkzEZjTFPcCp8Y2PpvHs1-0og"
+  },
+  "mistral-ai-api-key": {
+    "secret": "mistral_clP0pfMfcIlLDEgHMPSosAPu18sn7SGP",
+    "test_content": "mistral = mistral_clP0pfMfcIlLDEgHMPSosAPu18sn7SGP"
+  },
+  "mongodb-atlas-db-uri-with-credentials": {
+    "secret": "mongodb+srv://f7XCMytlTNps0o2g9RH3Er6PvyW4o6tc:aAhL1jhOYPApDV4NzHwArBZelEz7RT01@NAugX7QDdXeWuEf1wCcPsmEIWi4i9PeI",
+    "test_content": "mongodb = mongodb+srv://f7XCMytlTNps0o2g9RH3Er6PvyW4o6tc:aAhL1jhOYPApDV4NzHwArBZelEz7RT01@NAugX7QDdXeWuEf1wCcPsmEIWi4i9PeI"
+  },
+  "mongodb-atlas-service-account-secret": {
+    "secret": "mdb_svc_04iJuwQb0HTS9d0aIAF2kiA4KojlERmK",
+    "test_content": "mongodb = mdb_svc_04iJuwQb0HTS9d0aIAF2kiA4KojlERmK"
+  },
+  "navercloud-gov-access-key": {
+    "secret": "nc_0MJNdanK8Jt3qwbPVQhsI7MGOKejqiIG",
+    "test_content": "naver = nc_0MJNdanK8Jt3qwbPVQhsI7MGOKejqiIG"
+  },
+  "navercloud-gov-access-key-secret": {
+    "secret": "nc_secret_HlQhZNKTcmfQjNQhY9iWvwFPFwjSy8gp",
+    "test_content": "naver = nc_secret_HlQhZNKTcmfQjNQhY9iWvwFPFwjSy8gp"
+  },
+  "navercloud-gov-sts": {
+    "secret": "nc_O5m0odQmmQvQWzDXmPWGjhlhGGPINl7K",
+    "test_content": "naver = nc_O5m0odQmmQvQWzDXmPWGjhlhGGPINl7K"
+  },
+  "navercloud-gov-sts-secret": {
+    "secret": "nc_secret_BMTS6McoDu3mu4FVCcGlrUtE3TQCIBwU",
+    "test_content": "naver = nc_secret_BMTS6McoDu3mu4FVCcGlrUtE3TQCIBwU"
+  },
+  "navercloud-pub-access-key": {
+    "secret": "nc_Cj1jEI4GZda9FZDgfLI4ApoQmqq8SY4H",
+    "test_content": "naver = nc_Cj1jEI4GZda9FZDgfLI4ApoQmqq8SY4H"
+  },
+  "navercloud-pub-access-key-secret": {
+    "secret": "nc_secret_4XFT6revVdwTva1NmIhbApGro7GaErUM",
+    "test_content": "naver = nc_secret_4XFT6revVdwTva1NmIhbApGro7GaErUM"
+  },
+  "navercloud-pub-sts": {
+    "secret": "nc_ogr4TYXaxkZMJLD78weUk7Bj1Ylif9ro",
+    "test_content": "naver = nc_ogr4TYXaxkZMJLD78weUk7Bj1Ylif9ro"
+  },
+  "navercloud-pub-sts-secret": {
+    "secret": "nc_secret_aBdPQWax5Q6jUR1jUFgET2Or9Bq4KTau",
+    "test_content": "naver = nc_secret_aBdPQWax5Q6jUR1jUFgET2Or9Bq4KTau"
+  },
+  "neon-api-key": {
+    "secret": "napi_X0ZpvC0DbCIf_hk2HTeM9CEgKG9CgM7x",
+    "test_content": "neon = napi_X0ZpvC0DbCIf_hk2HTeM9CEgKG9CgM7x"
+  },
+  "neon-connection-uri": {
+    "secret": "postgresql://qrlEVrfvUaXcUosHWc3JLGMTPzEzToaj:PhLuYh5y5S0B5KdZda86ae0rUCvv7gvd@nTPt3BLfuBKHkPO6aMSjcYUHNQ0FeXYV.neon.techzGC2LnXhYj8qc1knaAx3eyjBqjrF8GvZ",
+    "test_content": "neon = postgresql://qrlEVrfvUaXcUosHWc3JLGMTPzEzToaj:PhLuYh5y5S0B5KdZda86ae0rUCvv7gvd@nTPt3BLfuBKHkPO6aMSjcYUHNQ0FeXYV.neon.techzGC2LnXhYj8qc1knaAx3eyjBqjrF8GvZ"
+  },
+  "netflix-netkey": {
+    "secret": "netflix_l62mzLYDTM4UlwnmtPhwbVHSJNUiwQrA",
+    "test_content": "netflix = netflix_l62mzLYDTM4UlwnmtPhwbVHSJNUiwQrA"
+  },
+  "new-relic-insights-query-key": {
+    "secret": "NRIQ-4yWC3sSupixoY4WUD2jdvD5loaD6wG8y",
+    "test_content": "new = NRIQ-4yWC3sSupixoY4WUD2jdvD5loaD6wG8y"
+  },
+  "new-relic-license-key": {
+    "secret": "nr_DKKyTe2RcnUwbhM0x8r61qQ45VktClAf",
+    "test_content": "new = nr_DKKyTe2RcnUwbhM0x8r61qQ45VktClAf"
+  },
+  "new-relic-personal-api-key": {
+    "secret": "NRAK-ahNo2kVnFE7UhdhtxTPEjVD8s8QzBA09",
+    "test_content": "new = NRAK-ahNo2kVnFE7UhdhtxTPEjVD8s8QzBA09"
+  },
+  "new-relic-rest-api-key": {
+    "secret": "NRRA-aiLKCSgv7fz02GuwN8gBVCBo3htkOueD",
+    "test_content": "new = NRRA-aiLKCSgv7fz02GuwN8gBVCBo3htkOueD"
+  },
+  "oculus-access-token": {
+    "secret": "oculus_access_Df40jFqiDjcJ8IvhesAipLFst_ufRIg_",
+    "test_content": "oculus = oculus_access_Df40jFqiDjcJ8IvhesAipLFst_ufRIg_"
+  },
+  "onechronos-api-key": {
+    "secret": "onechronos_qNfa9PN2iDPYff9wOMKQxmG7O5teamPs",
+    "test_content": "onechronos = onechronos_qNfa9PN2iDPYff9wOMKQxmG7O5teamPs"
+  },
+  "onechronos-eb-api-key": {
+    "secret": "onechronos_EpLgpWAOpzUEdFJzNbSYcHZ6cNoyXPIq",
+    "test_content": "onechronos = onechronos_EpLgpWAOpzUEdFJzNbSYcHZ6cNoyXPIq"
+  },
+  "onechronos-eb-encryption-key": {
+    "secret": "onechronos_QpNJloX6eNA2rhFmCdGFvshrcKLjO1KC",
+    "test_content": "onechronos = onechronos_QpNJloX6eNA2rhFmCdGFvshrcKLjO1KC"
+  },
+  "onechronos-oauth-token": {
+    "secret": "onechronos_access_KtEERnKGGR4XzHCaLY6LuhsAkesyvzUV",
+    "test_content": "onechronos = onechronos_access_KtEERnKGGR4XzHCaLY6LuhsAkesyvzUV"
+  },
+  "onechronos-refresh-token": {
+    "secret": "onechronos_refresh_Ew7A1JBuTj4vhFm-eJXlBO3u9_-dDjB7",
+    "test_content": "onechronos = onechronos_refresh_Ew7A1JBuTj4vhFm-eJXlBO3u9_-dDjB7"
+  },
+  "onesignal-rich-authentication-token": {
+    "secret": "onesignal_kAbhvYWHOlCIYjX3Hv8mnyOXah6IEeLq",
+    "test_content": "onesignal = onesignal_kAbhvYWHOlCIYjX3Hv8mnyOXah6IEeLq"
+  },
+  "onfido-live-api-token": {
+    "secret": "api_sandbox.AFHYnC_nRMwnieQXB7OvHD6gUEkFwy9Y",
+    "test_content": "onfido = api_sandbox.AFHYnC_nRMwnieQXB7OvHD6gUEkFwy9Y"
+  },
+  "onfido-sandbox-api-token": {
+    "secret": "api_live.btjZ_csl9BMGoMyjO4tfC4IYDih7gnKM",
+    "test_content": "onfido = api_live.btjZ_csl9BMGoMyjO4tfC4IYDih7gnKM"
+  },
+  "openrouter-api-key": {
+    "secret": "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",
+    "test_content": "openrouter = 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"
+  },
+  "openvsx-access-token": {
+    "secret": "openvsx_access_UMNqPAU2hmQA7T4eNtu8TJQWD3K9b1Dj",
+    "test_content": "openvsx = openvsx_access_UMNqPAU2hmQA7T4eNtu8TJQWD3K9b1Dj"
+  },
+  "openweather-api-key": {
+    "secret": "openweather_r9UMsJ4YhywbPXmwBPgkSWXoJF4LNeLs",
+    "test_content": "openweather = openweather_r9UMsJ4YhywbPXmwBPgkSWXoJF4LNeLs"
+  },
+  "oracle-api-key": {
+    "secret": "oracle_PXza5vtI6ROIY5dMEunKbjZABg17KtWs",
+    "test_content": "oracle = oracle_PXza5vtI6ROIY5dMEunKbjZABg17KtWs"
+  },
+  "orbit-api-token": {
+    "secret": "orbit_pBbzqjtuN2BuP5SDap1fW3k0NByxY1fI",
+    "test_content": "orbit = orbit_pBbzqjtuN2BuP5SDap1fW3k0NByxY1fI"
+  },
+  "paddle-api-key": {
+    "secret": "paddle_Yz8Oz6untW5XgRxAyAtIEJUioeeCeQ8c",
+    "test_content": "paddle = paddle_Yz8Oz6untW5XgRxAyAtIEJUioeeCeQ8c"
+  },
+  "paddle-sandbox-api-key": {
+    "secret": "paddle_3pm2ygkzFJrWyBkvLrQ04ZwAKD4r8CbJ",
+    "test_content": "paddle = paddle_3pm2ygkzFJrWyBkvLrQ04ZwAKD4r8CbJ"
+  },
+  "pagerduty-oauth-secret": {
+    "secret": "pagerduty_access_Wv7fnxUacGEIgRS6lmXWyte5sECiXJ5S",
+    "test_content": "pagerduty = pagerduty_access_Wv7fnxUacGEIgRS6lmXWyte5sECiXJ5S"
+  },
+  "pagerduty-oauth-token": {
+    "secret": "pagerduty_access_3bSv4h18mAgd_HDdoicFDlJn9SmL8fJJ",
+    "test_content": "pagerduty = pagerduty_access_3bSv4h18mAgd_HDdoicFDlJn9SmL8fJJ"
+  },
+  "palantir-jwt": {
+    "secret": "eyJi9fZcGnZk2tQquz2IrZFZ9ziMnmpsaDt.YVYSl9yZquKnQgVdjTddNlbcNKt3py3w.Orz6R5Tmw3waXBPz5ukKqTr26SNo7une",
+    "test_content": "palantir = eyJi9fZcGnZk2tQquz2IrZFZ9ziMnmpsaDt.YVYSl9yZquKnQgVdjTddNlbcNKt3py3w.Orz6R5Tmw3waXBPz5ukKqTr26SNo7une"
+  },
+  "pangea-token": {
+    "secret": "pangea_JhmxbZu3jlFhkXyaCbKbpb0TarQ40DAI",
+    "test_content": "pangea = pangea_JhmxbZu3jlFhkXyaCbKbpb0TarQ40DAI"
+  },
+  "persona-production-api-key": {
+    "secret": "pi_VIihu1KGqZhwJSfIenSfIIuG5xgVRrjo",
+    "test_content": "persona = pi_VIihu1KGqZhwJSfIenSfIIuG5xgVRrjo"
+  },
+  "persona-sandbox-api-key": {
+    "secret": "pi_fCMgx6oC8b3mRmWPOcRNUHofWqnANVjy",
+    "test_content": "persona = pi_fCMgx6oC8b3mRmWPOcRNUHofWqnANVjy"
+  },
+  "pineapple-technologies-incident-api-key": {
+    "secret": "ptl_uXkT25X2NTz73Gg5fqAzBvSkeLiP68IY",
+    "test_content": "pineapple = ptl_uXkT25X2NTz73Gg5fqAzBvSkeLiP68IY"
+  },
+  "pinecone-api-key": {
+    "secret": "pcsk_w34Qser6HEQ8eBfD3NM8hHvVbMdzCRo7",
+    "test_content": "pinecone = pcsk_w34Qser6HEQ8eBfD3NM8hHvVbMdzCRo7"
+  },
+  "pinterest-access-token": {
+    "secret": "pinterest_access_rw5w9IW8zCfa3RZXmGs2M96lyRwOnXdR",
+    "test_content": "pinterest = pinterest_access_rw5w9IW8zCfa3RZXmGs2M96lyRwOnXdR"
+  },
+  "pinterest-refresh-token": {
+    "secret": "pinterest_refresh_zBIA5QgszhGtoWqE0jUKjhREo18nn65c",
+    "test_content": "pinterest = pinterest_refresh_zBIA5QgszhGtoWqE0jUKjhREo18nn65c"
+  },
+  "planning-center-oauth-access-token": {
+    "secret": "pc_access_MsprzWUXymi-Zob28oJxokbI-Q1psCbK",
+    "test_content": "planning = pc_access_MsprzWUXymi-Zob28oJxokbI-Q1psCbK"
+  },
+  "planning-center-oauth-app-secret": {
+    "secret": "pc_access_vuDZAM8KC3yZEsWY59VTfziXa4c58WYW",
+    "test_content": "planning = pc_access_vuDZAM8KC3yZEsWY59VTfziXa4c58WYW"
+  },
+  "planning-center-personal-access-token": {
+    "secret": "pc_access_U36dp8zRFIMifXzLaaToF1dStDm8NjI2",
+    "test_content": "planning = pc_access_U36dp8zRFIMifXzLaaToF1dStDm8NjI2"
+  },
+  "plivo-auth-id-plivo-auth-token": {
+    "secret": "plivo_id_8TNsFFgXEfRtn6gPZ2dYjlWlk8UfaxBE",
+    "test_content": "plivo = plivo_id_8TNsFFgXEfRtn6gPZ2dYjlWlk8UfaxBE"
+  },
+  "polar-access-token": {
+    "secret": "polar_access_nQrv-EjPcaNx9frLPySyXPb8qe8r6cZa",
+    "test_content": "polar = polar_access_nQrv-EjPcaNx9frLPySyXPb8qe8r6cZa"
+  },
+  "polar-authorization-code": {
+    "secret": "polar_bZZdYFVTDP7gLU7PCPH49hnkdUTxq7ph",
+    "test_content": "polar = polar_bZZdYFVTDP7gLU7PCPH49hnkdUTxq7ph"
+  },
+  "polar-client-registration-token": {
+    "secret": "polar_qqN6U9mooUgGMGQz4151dApMf9CvavIv",
+    "test_content": "polar = polar_qqN6U9mooUgGMGQz4151dApMf9CvavIv"
+  },
+  "polar-client-secret": {
+    "secret": "polar_secret_Ugf4DaTeq23sMIfYSwMO4hwAZQ5QdP8M",
+    "test_content": "polar = polar_secret_Ugf4DaTeq23sMIfYSwMO4hwAZQ5QdP8M"
+  },
+  "polar-customer-session-token": {
+    "secret": "polar_SajKD1cE43IXSNGGGnZd1dYBSxfEI0jx",
+    "test_content": "polar = polar_SajKD1cE43IXSNGGGnZd1dYBSxfEI0jx"
+  },
+  "polar-personal-access-token": {
+    "secret": "polar_access_ahe023j0SuD1n5hbKPrfwkBvou8zFTM5",
+    "test_content": "polar = polar_access_ahe023j0SuD1n5hbKPrfwkBvou8zFTM5"
+  },
+  "polar-refresh-token": {
+    "secret": "polar_refresh_36SDgQ89BMts_IIhLAzCjjx0qMmzBJyf",
+    "test_content": "polar = polar_refresh_36SDgQ89BMts_IIhLAzCjjx0qMmzBJyf"
+  },
+  "polar-user-session-token": {
+    "secret": "polar_CvhnBsLNeMsPqdcaa3InrTdxuzimprmE",
+    "test_content": "polar = polar_CvhnBsLNeMsPqdcaa3InrTdxuzimprmE"
+  },
+  "posthog-feature-flags-secure-api-key": {
+    "secret": "phc_YygGQhJDeq9nRE0ppoCx9xHjwvpm9u9d",
+    "test_content": "posthog = phc_YygGQhJDeq9nRE0ppoCx9xHjwvpm9u9d"
+  },
+  "posthog-oauth-access-token": {
+    "secret": "phc_raA7JcWtnW9aRZnWU6FnczbvH81UK4hq",
+    "test_content": "posthog = phc_raA7JcWtnW9aRZnWU6FnczbvH81UK4hq"
+  },
+  "posthog-oauth-refresh-token": {
+    "secret": "phs_irIqUZOEH9s2rIEiPO0LQKAGVUCBB2lb",
+    "test_content": "posthog = phs_irIqUZOEH9s2rIEiPO0LQKAGVUCBB2lb"
+  },
+  "posthog-personal-api-key": {
+    "secret": "phs_I7XPOmJC5Cutdpa3gLOCJY2gmpuzxQA3",
+    "test_content": "posthog = phs_I7XPOmJC5Cutdpa3gLOCJY2gmpuzxQA3"
+  },
+  "proctorio-consumer-key": {
+    "secret": "proctorio_id_VgcDZl8myi7VuTAp4YorrtTEa6VqRhUL",
+    "test_content": "proctorio = proctorio_id_VgcDZl8myi7VuTAp4YorrtTEa6VqRhUL"
+  },
+  "proctorio-linkage-key": {
+    "secret": "proctorio_aG2bZWJTZqzpT9N2hd8CvyjhfFsbnrqo",
+    "test_content": "proctorio = proctorio_aG2bZWJTZqzpT9N2hd8CvyjhfFsbnrqo"
+  },
+  "proctorio-registration-key": {
+    "secret": "proctorio_aWPQr2sgHavthNBpInvA9h5CbYIQn7iT",
+    "test_content": "proctorio = proctorio_aWPQr2sgHavthNBpInvA9h5CbYIQn7iT"
+  },
+  "proctorio-secret-key": {
+    "secret": "proctorio_secret_WhAgS0qdB8rOFvT962YWJUEJ4osMDJog",
+    "test_content": "proctorio = proctorio_secret_WhAgS0qdB8rOFvT962YWJUEJ4osMDJog"
+  },
+  "proof-full-access-api-key": {
+    "secret": "proof_kWvewenhdMs3UczagDco3ZguZJQQLO0A",
+    "test_content": "proof = proof_kWvewenhdMs3UczagDco3ZguZJQQLO0A"
+  },
+  "rainforest-api-key": {
+    "secret": "rp_7C9X46dEFTaAruMkCEtivf0Y3EnPlnM4",
+    "test_content": "rainforest = rp_7C9X46dEFTaAruMkCEtivf0Y3EnPlnM4"
+  },
+  "rainforest-sandbox-api-key": {
+    "secret": "rp_m2As7eHc1t8VqguQpzPWMP0jfj1HYJnN",
+    "test_content": "rainforest = rp_m2As7eHc1t8VqguQpzPWMP0jfj1HYJnN"
+  },
+  "ramp-client-id": {
+    "secret": "ramp_id_NzDESZTxVykldFb07827kKAATpax9zuk",
+    "test_content": "ramp = ramp_id_NzDESZTxVykldFb07827kKAATpax9zuk"
+  },
+  "ramp-client-secret": {
+    "secret": "ramp_secret_ATGqa4yiDx8rLo2vor2CWOWt1vY2ydcR",
+    "test_content": "ramp = ramp_secret_ATGqa4yiDx8rLo2vor2CWOWt1vY2ydcR"
+  },
+  "ramp-oauth-token": {
+    "secret": "ramp_access_nNr_u3N8ZCPKnIvs40nulKx4AxujwmEz",
+    "test_content": "ramp = ramp_access_nNr_u3N8ZCPKnIvs40nulKx4AxujwmEz"
+  },
+  "raycast-access-token": {
+    "secret": "raycast_access_Q6iaOdEj0HgHaFmQTVg-5q6SfmrDnI5B",
+    "test_content": "raycast = raycast_access_Q6iaOdEj0HgHaFmQTVg-5q6SfmrDnI5B"
+  },
+  "redirect-pizza-api-token": {
+    "secret": "rp_Bv6jPYDoLnAAK34MoE2lRQL1mHNs6Pa4",
+    "test_content": "redirect = rp_Bv6jPYDoLnAAK34MoE2lRQL1mHNs6Pa4"
+  },
+  "replicate-api-token": {
+    "secret": "r8_-nsr4rPyG_PKxX8UE3Te0md9hdAHQ1sG",
+    "test_content": "replicate = r8_-nsr4rPyG_PKxX8UE3Te0md9hdAHQ1sG"
+  },
+  "rootly-api-key": {
+    "secret": "rootly_FG3C6XqbUP581FLq6IxdeouT8QxZANhY",
+    "test_content": "rootly = rootly_FG3C6XqbUP581FLq6IxdeouT8QxZANhY"
+  },
+  "runpod-api-key": {
+    "secret": "rpa_Z1dK_jRGnUcucoP45NEAH8b5uhrLeex8",
+    "test_content": "runpod = rpa_Z1dK_jRGnUcucoP45NEAH8b5uhrLeex8"
+  },
+  "salesforce-access-token": {
+    "secret": "salesforce_access_ltMAqlMDkyhJf84dFm1KBSBvKDmxuL_m",
+    "test_content": "salesforce = salesforce_access_ltMAqlMDkyhJf84dFm1KBSBvKDmxuL_m"
+  },
+  "salesforce-marketing-cloud-api-oauth2-token": {
+    "secret": "salesforce_access_nwj2ocJ8qQ1_mH_pycdYWCqRm25ZNoEz",
+    "test_content": "salesforce = salesforce_access_nwj2ocJ8qQ1_mH_pycdYWCqRm25ZNoEz"
+  },
+  "salesforce-oauth2-consumer-key-salesforce-oauth2-consumer-secret": {
+    "secret": "salesforce_access_PtRiYIrAwmjRYOYyctgQIs2lbkmIc79w",
+    "test_content": "salesforce = salesforce_access_PtRiYIrAwmjRYOYyctgQIs2lbkmIc79w"
+  },
+  "salesforce-refresh-token": {
+    "secret": "salesforce_refresh_6VV5cougcYFt8AEYIsZD0OMFp6PUWohy",
+    "test_content": "salesforce = salesforce_refresh_6VV5cougcYFt8AEYIsZD0OMFp6PUWohy"
+  },
+  "samsara-api-token": {
+    "secret": "samsara_HEgV9n3q3gdyMAWq3ryQfNR2kIN3BCeV",
+    "test_content": "samsara = samsara_HEgV9n3q3gdyMAWq3ryQfNR2kIN3BCeV"
+  },
+  "samsara-oauth-access-token": {
+    "secret": "samsara_access_UXTxXIWzHzIwC3UBPtg1cRa-H4BJu-mx",
+    "test_content": "samsara = samsara_access_UXTxXIWzHzIwC3UBPtg1cRa-H4BJu-mx"
+  },
+  "scalr-api-token": {
+    "secret": "scalr_9KA3aBcs6E50iZcchrgX7US5BLmzdQdf",
+    "test_content": "scalr = scalr_9KA3aBcs6E50iZcchrgX7US5BLmzdQdf"
+  },
+  "segment-public-api-token": {
+    "secret": "segment_15QByyJL2enqHoLC3P3XBrlXUnv18MDW",
+    "test_content": "segment = segment_15QByyJL2enqHoLC3P3XBrlXUnv18MDW"
+  },
+  "shopee-open-platform-partner-key": {
+    "secret": "shopee_FT1U4ZgpatQBlDlvIQeRFyYRy2nQEiQj",
+    "test_content": "shopee = shopee_FT1U4ZgpatQBlDlvIQeRFyYRy2nQEiQj"
+  },
+  "siemens-api-token": {
+    "secret": "siemens_i1tDB9QfFlehKHSrTnxdo9ZX7ewwbL9z",
+    "test_content": "siemens = siemens_i1tDB9QfFlehKHSrTnxdo9ZX7ewwbL9z"
+  },
+  "siemens-code-token": {
+    "secret": "siemens_BShst2uIVmMPL7Q5kZ2tsbILqpjHFMnb",
+    "test_content": "siemens = siemens_BShst2uIVmMPL7Q5kZ2tsbILqpjHFMnb"
+  },
+  "sindri-api-key": {
+    "secret": "sindri_6uNRHzGoaL0rBdxeyN3Pho0Rf1dLTWQ5",
+    "test_content": "sindri = sindri_6uNRHzGoaL0rBdxeyN3Pho0Rf1dLTWQ5"
+  },
+  "snowflake-postgres-connection-string": {
+    "secret": "postgresql://BQEoJi8lZsTykMlhJk2SitfxBiMKJ7bq:EYzLQnTC4mkrEYcaALBzF0NSZn5MSVVd@jlMNmpqKlmKpjEw6Hcc7gMRoSpfOrKrFsnowflakeQygsKgX3pdLlGNXMelLGl3Y1rnCtfybW",
+    "test_content": "snowflake = postgresql://BQEoJi8lZsTykMlhJk2SitfxBiMKJ7bq:EYzLQnTC4mkrEYcaALBzF0NSZn5MSVVd@jlMNmpqKlmKpjEw6Hcc7gMRoSpfOrKrFsnowflakeQygsKgX3pdLlGNXMelLGl3Y1rnCtfybW"
+  },
+  "snowflake-postgres-host-snowflake-postgres-password": {
+    "secret": "2B3ahRnr8rUZj2xwWrO6PuBRCO4zlO5o.snowflakecomputing.com:nsWYxYt8szWoxZ9fgG7SuZbn71hR2dQp",
+    "test_content": "snowflake = 2B3ahRnr8rUZj2xwWrO6PuBRCO4zlO5o.snowflakecomputing.com:nsWYxYt8szWoxZ9fgG7SuZbn71hR2dQp"
+  },
+  "snowflake-programmatic-access-token": {
+    "secret": "snowpat_0Bv6sFNw6aW0XCzqwXaSI6wri6VTEgR1",
+    "test_content": "snowflake = snowpat_0Bv6sFNw6aW0XCzqwXaSI6wri6VTEgR1"
+  },
+  "sslmate-api-key": {
+    "secret": "sslmate_JzQcrJl3jHdAfzyDot08ltBrmdDo8Mho",
+    "test_content": "sslmate = sslmate_JzQcrJl3jHdAfzyDot08ltBrmdDo8Mho"
+  },
+  "sslmate-cluster-secret": {
+    "secret": "sslmate_secret_u7noD0Ves6qF95JAwI7jVNj90eEQbx3I",
+    "test_content": "sslmate = sslmate_secret_u7noD0Ves6qF95JAwI7jVNj90eEQbx3I"
+  },
+  "supabase-personal-access-token": {
+    "secret": "sbp_2rUP7FlNlRsAGQpBJUhYYsf6OhbjEfsl",
+    "test_content": "supabase = sbp_2rUP7FlNlRsAGQpBJUhYYsf6OhbjEfsl"
+  },
+  "supabase-secret-key": {
+    "secret": "sb_secret_83Qm2EZyFEpYiHk18AfPNsS71JE9ijYy",
+    "test_content": "supabase = sb_secret_83Qm2EZyFEpYiHk18AfPNsS71JE9ijYy"
+  },
+  "supabase-service-key": {
+    "secret": "eyJLg0sEMYF3oYqqMaODKqxKDn5fR1i9zWY.Q7Rkf5VGK2lpH9ACPOTmg1Atd6gWHfBG.xkGqzoBikPdn1Fn-PRICZrTXPMnr_owh",
+    "test_content": "supabase = eyJLg0sEMYF3oYqqMaODKqxKDn5fR1i9zWY.Q7Rkf5VGK2lpH9ACPOTmg1Atd6gWHfBG.xkGqzoBikPdn1Fn-PRICZrTXPMnr_owh"
+  },
+  "tableau-personal-access-token": {
+    "secret": "tableau_access_3mkFV2CfQeqFP5D5OY96JJoW8txvlZWf",
+    "test_content": "tableau = tableau_access_3mkFV2CfQeqFP5D5OY96JJoW8txvlZWf"
+  },
+  "tailscale-api-key": {
+    "secret": "tskey-auth-ctUKUhCwp1efCzMNic6nHmdllTjXxFk6",
+    "test_content": "tailscale = tskey-auth-ctUKUhCwp1efCzMNic6nHmdllTjXxFk6"
+  },
+  "telnyx-api-v2-key": {
+    "secret": "KEYsYUauztSygoMYHYeE7nTjNUlRiSKt1JJ",
+    "test_content": "telnyx = KEYsYUauztSygoMYHYeE7nTjNUlRiSKt1JJ"
+  },
+  "temporal-cloud-api-key": {
+    "secret": "temporal_luhnldOiePVGggJwuuqKdrHpmyfTPdF5",
+    "test_content": "temporal = temporal_luhnldOiePVGggJwuuqKdrHpmyfTPdF5"
+  },
+  "tencent-cloud-intl-access-token": {
+    "secret": "tencent_cNwC2Q2FAD5l5CShUeBd64HTqLdIJIaY",
+    "test_content": "tencent = tencent_cNwC2Q2FAD5l5CShUeBd64HTqLdIJIaY"
+  },
+  "tencent-cloud-secret-id": {
+    "secret": "AKIDo3MkRlSxpgzjh3dM4CWjUdfq0P8auM6u",
+    "test_content": "tencent = AKIDo3MkRlSxpgzjh3dM4CWjUdfq0P8auM6u"
+  },
+  "tencent-wechat-api-app-id": {
+    "secret": "wx75048373e1ea9851dc89f09f33a6ac84",
+    "test_content": "tencent = wx75048373e1ea9851dc89f09f33a6ac84"
+  },
+  "tencent-wechat-pay-token": {
+    "secret": "tencent_HvTv9FKeRqUBN4o6whpOcINwBaHtdDLC",
+    "test_content": "tencent = tencent_HvTv9FKeRqUBN4o6whpOcINwBaHtdDLC"
+  },
+  "thunderstore-io-api-token": {
+    "secret": "thunderstore_cdCx4IK0F8hrv0tCTH6cnt1x7mHrQtp9",
+    "test_content": "thunderstore = thunderstore_cdCx4IK0F8hrv0tCTH6cnt1x7mHrQtp9"
+  },
+  "wiseflow-api-key": {
+    "secret": "uniwise_EGNBOOqlLimvPRXY6aQ8heubFRFVyLgW",
+    "test_content": "uniwise = uniwise_EGNBOOqlLimvPRXY6aQ8heubFRFVyLgW"
+  },
+  "unkey-root-key": {
+    "secret": "unkey_w9QKPDREQOfVsMcWC8ii09rDI9qPtE5t",
+    "test_content": "unkey = unkey_w9QKPDREQOfVsMcWC8ii09rDI9qPtE5t"
+  },
+  "val-town-api-token": {
+    "secret": "vt_01mdzNyyA4EOZRtJjnhYJtEpAxVPyjH6",
+    "test_content": "val = vt_01mdzNyyA4EOZRtJjnhYJtEpAxVPyjH6"
+  },
+  "vercel-api-key": {
+    "secret": "vci_wxeWCtZaVhOi3cNnL7KZ3lEiV7mxHanB",
+    "test_content": "vercel = vci_wxeWCtZaVhOi3cNnL7KZ3lEiV7mxHanB"
+  },
+  "vercel-app-refresh-token": {
+    "secret": "vca-sFbo5XJixxyxSxkC68vtKtrQ47bU3852",
+    "test_content": "vercel = vca-sFbo5XJixxyxSxkC68vtKtrQ47bU3852"
+  },
+  "vercel-app-user-access-token": {
+    "secret": "vcp_7AXwOBWY7onhnQx5gazrFcqqGrYlQFLn",
+    "test_content": "vercel = vcp_7AXwOBWY7onhnQx5gazrFcqqGrYlQFLn"
+  },
+  "vercel-integration-access-token": {
+    "secret": "vcp-xDc1ZjsO1a4iZTiaZtylFoQKLv1TYlDV",
+    "test_content": "vercel = vcp-xDc1ZjsO1a4iZTiaZtylFoQKLv1TYlDV"
+  },
+  "vercel-personal-access-token": {
+    "secret": "vck_UMa8c4Vn3BeZNurxhueHyV90G2KzK3ZB",
+    "test_content": "vercel = vck_UMa8c4Vn3BeZNurxhueHyV90G2KzK3ZB"
+  },
+  "vercel-support-access-token": {
+    "secret": "vcr_wjr4stNotBaLGw6B5G18TGKcezcijlAt",
+    "test_content": "vercel = vcr_wjr4stNotBaLGw6B5G18TGKcezcijlAt"
+  },
+  "volcengine-access-key-id": {
+    "secret": "volcengine_id_joIOFvOV4YtKPlsTbVemLY4tHDLH8Eyk",
+    "test_content": "volcengine = volcengine_id_joIOFvOV4YtKPlsTbVemLY4tHDLH8Eyk"
+  },
+  "volcengine-ark-api-key": {
+    "secret": "volcengine_Sdc6YeVgDYE7BhEmf7h52XjBtarrezzA",
+    "test_content": "volcengine = volcengine_Sdc6YeVgDYE7BhEmf7h52XjBtarrezzA"
+  },
+  "wakatime-api-key": {
+    "secret": "wakatime_M6t0r0lhXno1rCCrn6uNH3oZ8T0lRSLi",
+    "test_content": "wakatime = wakatime_M6t0r0lhXno1rCCrn6uNH3oZ8T0lRSLi"
+  },
+  "wakatime-app-secret": {
+    "secret": "wakatime_ZJzpodhqUeBFXkqaeMATy6uP3kPyp8Le",
+    "test_content": "wakatime = wakatime_ZJzpodhqUeBFXkqaeMATy6uP3kPyp8Le"
+  },
+  "wakatime-oauth-access-token": {
+    "secret": "wakatime_0eNJpKc7D6M9IjMa5tvIjWCWFBfuQb1K",
+    "test_content": "wakatime = wakatime_0eNJpKc7D6M9IjMa5tvIjWCWFBfuQb1K"
+  },
+  "wakatime-oauth-refresh-token": {
+    "secret": "wakatime_zEAKsF0rDFIdZteVAZhc4MkyZe9atsvn",
+    "test_content": "wakatime = wakatime_zEAKsF0rDFIdZteVAZhc4MkyZe9atsvn"
+  },
+  "weatherstack-api-key": {
+    "secret": "weatherstack_aA7zsYXpiT98MhVUuPeRRXJUjtDCVVTl",
+    "test_content": "weatherstack = weatherstack_aA7zsYXpiT98MhVUuPeRRXJUjtDCVVTl"
+  },
+  "wandb-api-key": {
+    "secret": "wb_XQYTxByuheAyCwec8BREXERvS5TSgYrK",
+    "test_content": "wandb = wb_XQYTxByuheAyCwec8BREXERvS5TSgYrK"
+  },
+  "workato-developer-api-token": {
+    "secret": "workato_VD1L0LyrwWSStQiOCeul7xkwIBywf9Rn",
+    "test_content": "workato = workato_VD1L0LyrwWSStQiOCeul7xkwIBywf9Rn"
+  },
+  "workos-production-api-key": {
+    "secret": "sk_test_YKDZuXKZmGbDhjWsTX7iJiiErzQQQrnY",
+    "test_content": "workos = sk_test_YKDZuXKZmGbDhjWsTX7iJiiErzQQQrnY"
+  },
+  "workos-staging-api-key": {
+    "secret": "sk_test_N75O57UyFf4ONhcPL_w_J4x51jJjAZCw",
+    "test_content": "workos = sk_test_N75O57UyFf4ONhcPL_w_J4x51jJjAZCw"
+  },
+  "wso2-choreo-personal-access-token": {
+    "secret": "wso2_access_H1BvKL1wUIii8izA5vTqpgSJqE6cc2SI",
+    "test_content": "wso2 = wso2_access_H1BvKL1wUIii8izA5vTqpgSJqE6cc2SI"
+  },
+  "xai-api-key": {
+    "secret": "XAI_API_KEYrnSJ871fyN4svi1Ah__Q_Gphzz4BVINR",
+    "test_content": "xai = XAI_API_KEYrnSJ871fyN4svi1Ah__Q_Gphzz4BVINR"
+  },
+  "zenhub-personal-api-key": {
+    "secret": "zenhub_FrK7rEqoarCJNwECGFavLvKJjQYpLcSP",
+    "test_content": "zenhub = zenhub_FrK7rEqoarCJNwECGFavLvKJjQYpLcSP"
+  },
+  "zuplo-consumer-api-key": {
+    "secret": "zuplo_yZjPOgqqQWsBogz2VNF7RFdzrDjgOcFt",
+    "test_content": "zuplo = zuplo_yZjPOgqqQWsBogz2VNF7RFdzrDjgOcFt"
+  },
+  "brave-search-api-key": {
+    "secret": "BSAc2YP_Uo3lCxIY0hiQ-3RWcVI-sAVVf1T",
+    "test_content": "brave = BSAc2YP_Uo3lCxIY0hiQ-3RWcVI-sAVVf1T"
+  },
+  "clipdrop-api-key": {
+    "secret": "clipdrop-1k6WjYLfP1LGTsC4Tqn9f5KfAFRT6_U",
+    "test_content": "clipdrop = clipdrop-1k6WjYLfP1LGTsC4Tqn9f5KfAFRT6_U"
+  },
+  "firecrawl-api-key": {
+    "secret": "fc-C3d6EB7B43E704b16718996dB84BA7bE",
+    "test_content": "firecrawl = fc-C3d6EB7B43E704b16718996dB84BA7bE"
+  },
+  "openai-api-key": {
+    "secret": "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",
+    "test_content": "t3blbkfj = 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"
+  },
+  "perplexity-api-key": {
+    "secret": "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",
+    "test_content": "pplx- = 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"
+  },
+  "vapi-api-key": {
+    "secret": "vapi_private_key_vsXs2OB3EvmKUPpABdH9J5mFj4RPIziu",
+    "test_content": "vapi = vapi_private_key_vsXs2OB3EvmKUPpABdH9J5mFj4RPIziu"
+  }
+}

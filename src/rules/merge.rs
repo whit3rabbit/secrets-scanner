@@ -106,16 +106,18 @@ fn keyword_set(rule: &toml::Value) -> BTreeSet<String> {
         .unwrap_or_default()
 }
 
-/// Whether two rules detect identically, so dropping one cannot cause a missed
+/// Whether two rules behave identically, so dropping one cannot cause a missed
 /// secret. Requires equal regex (checked by the caller) plus equal keywords,
-/// `path`, `secretGroup`, and `entropy`. Keywords feed the Aho-Corasick
-/// pre-filter and `path`/`entropy` gate matches, so a difference in any of these
-/// means the two rules fire in different situations and BOTH must be kept.
+/// `path`, `secretGroup`, `entropy`, and per-rule allowlists. Keywords feed the
+/// Aho-Corasick pre-filter, `path`/`entropy` gate matches, and allowlists
+/// suppress matches, so a difference in any of these means both rules must be
+/// kept.
 fn detection_equivalent(a: &toml::Value, b: &toml::Value) -> bool {
     keyword_set(a) == keyword_set(b)
         && a.get("path") == b.get("path")
         && a.get("secretGroup") == b.get("secretGroup")
         && a.get("entropy") == b.get("entropy")
+        && a.get("allowlists") == b.get("allowlists")
 }
 
 // ── N-source merge core ───────────────────────────────────────────────────────
@@ -157,7 +159,7 @@ pub fn merge_sources(
     let mut result = toml::Table::new();
     let mut merged_rules: Vec<toml::Value> = Vec::new();
     let mut seen_ids: HashMap<String, String> = HashMap::new(); // id   -> source
-    let mut seen_exact: HashMap<String, usize> = HashMap::new(); // regex -> merged_rules index
+    let mut seen_exact: HashMap<String, Vec<usize>> = HashMap::new(); // regex -> merged_rules indices
     let mut seen_norm: HashMap<String, String> = HashMap::new(); // norm  -> kept id
 
     // Rules + top-level scalar keys: iterate highest priority first.
@@ -201,18 +203,22 @@ pub fn merge_sources(
 
             // L2/L3: regex-based dedup (only when the rule has a regex).
             if let Some(ref rx) = regex {
-                if let Some(&idx) = seen_exact.get(rx) {
-                    // Same regex as an already-kept rule. Only safe to DROP when
-                    // the two are detection-equivalent (same keywords/path/entropy/
-                    // secretGroup); otherwise both must survive so we keep the
-                    // rule and only flag the conflict for review.
-                    let kept = &merged_rules[idx];
+                if let Some(indices) = seen_exact.get(rx) {
+                    // Same regex as already-kept rules. Only safe to DROP when
+                    // this rule is behavior-equivalent to one kept variant;
+                    // otherwise it must survive and become another representative.
+                    let equivalent_idx = indices
+                        .iter()
+                        .copied()
+                        .find(|&idx| detection_equivalent(&merged_rules[idx], rule));
+                    let report_idx = equivalent_idx.unwrap_or(indices[0]);
+                    let kept = &merged_rules[report_idx];
                     let kept_id = kept
                         .get("id")
                         .and_then(|i| i.as_str())
                         .unwrap_or_default()
                         .to_string();
-                    let equivalent = detection_equivalent(kept, rule);
+                    let equivalent = equivalent_idx.is_some();
                     report.exact_regex_dups.push(DupRecord {
                         kind: DupKind::ExactRegex,
                         kept_source: seen_ids.get(&kept_id).cloned().unwrap_or_default(),
@@ -225,8 +231,8 @@ pub fn merge_sources(
                     if equivalent {
                         continue;
                     }
-                    // Conflicting same-regex rule: keep it; its regex/norm are
-                    // already registered, so fall through without re-registering.
+                    // Conflicting same-regex rule: keep it and register this
+                    // variant after insertion.
                 } else {
                     let norm = normalize_regex(rx);
                     if let Some(kept_id) = seen_norm.get(&norm) {
@@ -241,13 +247,17 @@ pub fn merge_sources(
                             regex: regex.clone(),
                         });
                     }
-                    // Map this regex to the index it is about to occupy.
-                    seen_exact.insert(rx.clone(), merged_rules.len());
                     seen_norm.entry(norm).or_insert_with(|| id.clone());
                 }
             }
 
             seen_ids.insert(id, name.clone());
+            if let Some(ref rx) = regex {
+                seen_exact
+                    .entry(rx.clone())
+                    .or_default()
+                    .push(merged_rules.len());
+            }
             merged_rules.push(rule.clone());
         }
     }

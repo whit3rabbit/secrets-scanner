@@ -81,6 +81,19 @@ keywords = ["bad"]
 }
 
 #[test]
+fn test_unsupported_detection_regex_is_invalid() {
+    let bad_regex = r#"
+[[rules]]
+id = "lookahead-rule"
+regex = 'foo(?=bar)'
+keywords = ["foo"]
+"#;
+    let res = validate_rules_toml(bad_regex);
+    assert!(res.is_err());
+    assert!(res.unwrap_err()[0].contains("has invalid detection regex"));
+}
+
+#[test]
 fn test_invalid_regex_in_allowlist() {
     let bad_regex = r#"
 [[rules]]
@@ -94,6 +107,38 @@ allowlists = [
     let res = validate_rules_toml(bad_regex);
     assert!(res.is_err());
     assert!(res.unwrap_err()[0].contains("allowlist at index 0 has invalid regex"));
+}
+
+#[test]
+fn test_unsupported_rule_allowlist_regex_is_invalid() {
+    let bad_regex = r#"
+[[rules]]
+id = "bad-rule"
+regex = 'good'
+keywords = ["good"]
+allowlists = [
+    { regexes = ['foo(?=bar)'] }
+]
+"#;
+    let res = validate_rules_toml(bad_regex);
+    assert!(res.is_err());
+    assert!(res.unwrap_err()[0].contains("allowlist at index 0 has invalid regex"));
+}
+
+#[test]
+fn test_unsupported_global_allowlist_regex_is_invalid() {
+    let bad_regex = r#"
+[allowlist]
+regexes = ['foo(?=bar)']
+
+[[rules]]
+id = "good-rule"
+regex = 'good'
+keywords = ["good"]
+"#;
+    let res = validate_rules_toml(bad_regex);
+    assert!(res.is_err());
+    assert!(res.unwrap_err()[0].contains("regex pattern at index 0 is invalid"));
 }
 
 #[test]

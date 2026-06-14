@@ -127,7 +127,7 @@ The committed `assets/secrets-scanner.toml` is a lockfile-style artifact (the le
 ```bash
 make merge-rules        # regenerate committed assets/secrets-scanner.toml (lean) + target/merge-report.json
 make merge-rules-full   # merge incl. embed=false sources → target/secrets-scanner.full.toml
-make merge-rules-check  # CI drift: regenerate then fail if the committed file is stale
+make merge-rules-check  # CI drift: compare without rewriting committed assets/secrets-scanner.toml
 make build-full         # cargo build --features full-ruleset
 secrets-scanner merge-rules --manifest assets/sources.toml --out <path> [--all] [--report <path>] [--check]
 ```
@@ -222,6 +222,31 @@ secrets-scanner validate-rules path/to/my-rules.toml
 make validate-rules
 ```
 This is also run automatically after downloading rules with `make update-rules` and is part of the `make ci` suite.
+
+---
+
+## Release
+
+Release is CI-only. Do not publish from a local machine except for dry-run validation.
+
+Pre-release:
+- Make the GitHub repo public before pushing the release tag if Homebrew install should work. A private repo can still publish crates.io and GitHub Release artifacts, but normal Homebrew installs cannot fetch private release asset URLs.
+- Update `Cargo.toml` `[package].version` and `CHANGELOG.md` for the same `vX.Y.Z`.
+- Run `make ci`. For packaging changes, also run `cargo publish --dry-run --locked` from the clean release commit.
+- Commit and push the release prep to `main`.
+
+Publish:
+```bash
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin vX.Y.Z
+```
+
+The tag must match `Cargo.toml`; `.github/workflows/release.yml` fails otherwise. The release workflow builds updater-enabled binaries, creates the GitHub Release, publishes the `secrets_scanner` crate with `CARGO_REGISTRY_TOKEN`, and updates `whit3rabbit/homebrew-tap/Casks/secrets-scanner.rb` with `HOMEBREW_TAP_TOKEN` when the repo is public.
+
+Post-release:
+- Watch the GitHub Actions `Release` run to completion.
+- Verify `gh release view vX.Y.Z`, `cargo search secrets_scanner --limit 3`, and `gh api 'repos/whit3rabbit/homebrew-tap/contents/Casks/secrets-scanner.rb?ref=main'`.
+- Run `git fetch origin main --tags` before trusting local release state.
 
 
 <!-- syntext-agent:claude:start -->

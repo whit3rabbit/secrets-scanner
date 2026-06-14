@@ -54,60 +54,35 @@ pub fn validate_rules_toml(toml_str: &str) -> Result<(), Vec<String>> {
             errors.push(format!("Duplicate rule ID found: '{}'", rule.id));
         }
 
-        // Validate detection regex
-        //
-        // Note: warnings here use `eprintln!` rather than `log::warn!` on purpose.
-        // This validator also runs from `build.rs` at compile time, where no `log`
-        // subscriber is initialized; `log::warn!` would be silently dropped and the
-        // unsupported-regex warnings would vanish from the build output.
+        // Detection regexes run on raw bytes at scan time, so validation must
+        // use the same regex engine and reject anything runtime would skip.
         if let Some(ref regex_str) = rule.regex {
-            if let Err(e) = compile_regex(regex_str) {
-                if is_unsupported_regex_error(&e) {
-                    eprintln!(
-                        "[validation] Warning: {} has regex with look-around which is not supported by Rust: {}",
-                        rule_label, e
-                    );
-                } else {
-                    errors.push(format!(
-                        "{} has invalid detection regex '{}': {}",
-                        rule_label, regex_str, e
-                    ));
-                }
+            if let Err(e) = compile_bytes_regex(regex_str) {
+                errors.push(format!(
+                    "{} has invalid detection regex '{}': {}",
+                    rule_label, regex_str, e
+                ));
             }
         }
 
         // Validate path filter regex
         if let Some(ref path_str) = rule.path {
             if let Err(e) = compile_regex(path_str) {
-                if is_unsupported_regex_error(&e) {
-                    eprintln!(
-                        "[validation] Warning: {} has path regex with look-around which is not supported by Rust: {}",
-                        rule_label, e
-                    );
-                } else {
-                    errors.push(format!(
-                        "{} has invalid path regex '{}': {}",
-                        rule_label, path_str, e
-                    ));
-                }
+                errors.push(format!(
+                    "{} has invalid path regex '{}': {}",
+                    rule_label, path_str, e
+                ));
             }
         }
 
         // Validate allowlists
         for (al_idx, allowlist) in rule.allowlists.iter().enumerate() {
             for (reg_idx, regex_str) in allowlist.regexes.iter().enumerate() {
-                if let Err(e) = compile_regex(regex_str) {
-                    if is_unsupported_regex_error(&e) {
-                        eprintln!(
-                            "[validation] Warning: {} allowlist at index {} has regex with look-around which is not supported by Rust: {}",
-                            rule_label, al_idx, e
-                        );
-                    } else {
-                        errors.push(format!(
-                            "{} allowlist at index {} has invalid regex '{}' (pattern index {}): {}",
-                            rule_label, al_idx, regex_str, reg_idx, e
-                        ));
-                    }
+                if let Err(e) = compile_bytes_regex(regex_str) {
+                    errors.push(format!(
+                        "{} allowlist at index {} has invalid regex '{}' (pattern index {}): {}",
+                        rule_label, al_idx, regex_str, reg_idx, e
+                    ));
                 }
             }
             // Path patterns are also regexes and are compiled at load time, so
@@ -115,17 +90,10 @@ pub fn validate_rules_toml(toml_str: &str) -> Result<(), Vec<String>> {
             // the allowlist's file-suppression at runtime).
             for (path_idx, path_str) in allowlist.paths.iter().enumerate() {
                 if let Err(e) = compile_regex(path_str) {
-                    if is_unsupported_regex_error(&e) {
-                        eprintln!(
-                            "[validation] Warning: {} allowlist at index {} has path regex with look-around which is not supported by Rust: {}",
-                            rule_label, al_idx, e
-                        );
-                    } else {
-                        errors.push(format!(
-                            "{} allowlist at index {} has invalid path regex '{}' (pattern index {}): {}",
-                            rule_label, al_idx, path_str, path_idx, e
-                        ));
-                    }
+                    errors.push(format!(
+                        "{} allowlist at index {} has invalid path regex '{}' (pattern index {}): {}",
+                        rule_label, al_idx, path_str, path_idx, e
+                    ));
                 }
             }
         }
@@ -149,32 +117,18 @@ pub fn validate_rules_toml(toml_str: &str) -> Result<(), Vec<String>> {
 
         for (idx, path_str) in global_al.paths.iter().enumerate() {
             if let Err(e) = compile_regex(path_str) {
-                if is_unsupported_regex_error(&e) {
-                    eprintln!(
-                        "[validation] Warning: {} path pattern at index {} has regex with look-around which is not supported by Rust: {}",
-                        al_label, idx, e
-                    );
-                } else {
-                    errors.push(format!(
-                        "{} path pattern at index {} is invalid '{}': {}",
-                        al_label, idx, path_str, e
-                    ));
-                }
+                errors.push(format!(
+                    "{} path pattern at index {} is invalid '{}': {}",
+                    al_label, idx, path_str, e
+                ));
             }
         }
         for (idx, regex_str) in global_al.regexes.iter().enumerate() {
-            if let Err(e) = compile_regex(regex_str) {
-                if is_unsupported_regex_error(&e) {
-                    eprintln!(
-                        "[validation] Warning: {} regex pattern at index {} has regex with look-around which is not supported by Rust: {}",
-                        al_label, idx, e
-                    );
-                } else {
-                    errors.push(format!(
-                        "{} regex pattern at index {} is invalid '{}': {}",
-                        al_label, idx, regex_str, e
-                    ));
-                }
+            if let Err(e) = compile_bytes_regex(regex_str) {
+                errors.push(format!(
+                    "{} regex pattern at index {} is invalid '{}': {}",
+                    al_label, idx, regex_str, e
+                ));
             }
         }
     }

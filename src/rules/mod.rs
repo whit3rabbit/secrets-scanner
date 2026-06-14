@@ -72,31 +72,109 @@ pub fn load_rules() -> String {
     // 2. Cached file written by the updater
     if let Some(cache_path) = updater::cached_rules_path() {
         if let Ok(content) = std::fs::read_to_string(&cache_path) {
-            info!(
-                "[rules] Using cached combined rules from {}",
-                cache_path.display()
-            );
+            match validation::validate_rules_toml(&content) {
+                Ok(()) => {
+                    info!(
+                        "[rules] Using cached combined rules from {}",
+                        cache_path.display()
+                    );
 
-            // Check staleness — warn if cached rules are > 7 days old
-            if let Ok(metadata) = std::fs::metadata(&cache_path) {
-                if let Ok(modified) = metadata.modified() {
-                    if let Ok(elapsed) = modified.elapsed() {
-                        let days = elapsed.as_secs() / 86400;
-                        if days > 7 {
-                            info!(
-                                "[rules] Cached rules are {days} days old. \
-                                 Run `secrets-scanner update-rules` to refresh."
-                            );
+                    // Check staleness — warn if cached rules are > 7 days old
+                    if let Ok(metadata) = std::fs::metadata(&cache_path) {
+                        if let Ok(modified) = metadata.modified() {
+                            if let Ok(elapsed) = modified.elapsed() {
+                                let days = elapsed.as_secs() / 86400;
+                                if days > 7 {
+                                    info!(
+                                        "[rules] Cached rules are {days} days old. \
+                                         Run `secrets-scanner update-rules` to refresh."
+                                    );
+                                }
+                            }
                         }
                     }
+
+                    return content;
+                }
+                Err(errors) => {
+                    warn!(
+                        "[rules] Cached combined rules at {} are invalid; falling back to bundled rules:\n- {}",
+                        cache_path.display(),
+                        errors.join("\n- ")
+                    );
                 }
             }
-
-            return content;
         } // else fall through to bundled default
     }
 
     // 3. Bundled default (pre-merged at build time)
     info!("[rules] Using bundled default combined rules (run `secrets-scanner update-rules` to refresh)");
     BUNDLED_RULES.to_string()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::ffi::OsString;
+    use std::sync::{Mutex, OnceLock};
+
+    fn env_lock() -> &'static Mutex<()> {
+        static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
+        LOCK.get_or_init(|| Mutex::new(()))
+    }
+
+    struct EnvGuard {
+        home: Option<OsString>,
+        rules: Option<OsString>,
+    }
+
+    impl EnvGuard {
+        fn capture() -> Self {
+            Self {
+                home: std::env::var_os("HOME"),
+                rules: std::env::var_os("SECRETS_SCANNER_RULES"),
+            }
+        }
+    }
+
+    impl Drop for EnvGuard {
+        fn drop(&mut self) {
+            match &self.home {
+                Some(home) => std::env::set_var("HOME", home),
+                None => std::env::remove_var("HOME"),
+            }
+            match &self.rules {
+                Some(rules) => std::env::set_var("SECRETS_SCANNER_RULES", rules),
+                None => std::env::remove_var("SECRETS_SCANNER_RULES"),
+            }
+        }
+    }
+
+    #[test]
+    fn invalid_cached_rules_fall_back_to_bundled_rules() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let temp_home = tempfile::tempdir().expect("temp home");
+        std::env::set_var("HOME", temp_home.path());
+        std::env::remove_var("SECRETS_SCANNER_RULES");
+
+        let cache_path = updater::cached_rules_path().expect("cache path");
+        std::fs::create_dir_all(cache_path.parent().expect("cache parent")).expect("cache dir");
+        std::fs::write(&cache_path, "not valid toml = [").expect("write invalid cache");
+
+        assert_eq!(load_rules(), BUNDLED_RULES);
+    }
+
+    #[test]
+    fn explicit_invalid_rules_override_still_errors() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let temp_home = tempfile::tempdir().expect("temp home");
+        let temp_rules = tempfile::NamedTempFile::new().expect("temp rules");
+        std::env::set_var("HOME", temp_home.path());
+        std::fs::write(temp_rules.path(), "not valid toml = [").expect("write invalid rules");
+        std::env::set_var("SECRETS_SCANNER_RULES", temp_rules.path());
+
+        assert!(crate::Scanner::new().is_err());
+    }
 }

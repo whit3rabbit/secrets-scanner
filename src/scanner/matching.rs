@@ -1,6 +1,6 @@
 //! Rule match evaluation for scanner content.
 
-use std::collections::HashSet;
+use std::collections::{BTreeSet, HashMap, HashSet};
 
 use crate::rules::engine::{CompiledRule, RuleEngine};
 use crate::{entropy, filters};
@@ -13,6 +13,9 @@ const MIN_TOKEN_LEN: usize = 8;
 
 /// Number of context lines captured on each side of a matched line.
 const CONTEXT_LINES: usize = 2;
+
+/// Marker used when redacting secrets from display context.
+const CONTEXT_REDACTION_MARKER: &str = "[REDACTED_SECRET]";
 
 /// Evaluates a single compiled rule regex over the content and populates findings.
 ///
@@ -56,17 +59,18 @@ pub(super) fn check_rule_match(
             continue;
         }
 
-        let secret_group_idx =
-            rule.secret_group
-                .unwrap_or_else(|| if regex_re.captures_len() > 1 { 1 } else { 0 });
+        let secret_match = match rule.secret_group {
+            Some(secret_group_idx) => captures
+                .get(secret_group_idx)
+                .filter(|group| group.start() < group.end())
+                .unwrap_or(m),
+            None => m,
+        };
+        let secret_part = secret_match.as_bytes();
+        let secret_start_in_file = secret_match.start();
+        let secret_end_in_file = secret_match.end();
 
-        let secret_part = captures
-            .get(secret_group_idx)
-            .map(|g| g.as_bytes())
-            .unwrap_or(matched_bytes);
-
-        let secret_part_str = String::from_utf8_lossy(secret_part);
-        let ent = entropy::shannon_entropy(&secret_part_str);
+        let ent = entropy::shannon_entropy_bytes(secret_part);
         if let Some(rule_threshold) = rule.entropy_threshold {
             let threshold = scanner
                 .config
@@ -110,6 +114,19 @@ pub(super) fn check_rule_match(
             + 1;
         // 1-based byte column of the match within its line.
         let col = match_start_in_file - line_start + 1;
+        // End position of the full match. `end_col` is exclusive (SARIF-style):
+        // it points just past the last matched byte on `end_line`.
+        let newlines_before_end = content[..match_end_in_file]
+            .iter()
+            .filter(|&&b| b == b'\n')
+            .count();
+        let end_line = newlines_before_end + 1;
+        let end_line_start = content[..match_end_in_file]
+            .iter()
+            .rposition(|&b| b == b'\n')
+            .map(|pos| pos + 1)
+            .unwrap_or(0);
+        let end_col = match_end_in_file - end_line_start + 1;
         let context_lines = context_lines(content, line_start, line_end);
 
         let matched_str = String::from_utf8_lossy(matched_bytes);
@@ -123,14 +140,58 @@ pub(super) fn check_rule_match(
             file: path.to_string(),
             line,
             col,
+            end_line,
+            end_col,
             rule_id: rule.id.clone(),
             rule_description: rule.description.clone(),
             matched: display_match,
             entropy: ent,
             start_offset: match_start_in_file,
             end_offset: match_end_in_file,
+            secret_start_offset: secret_start_in_file,
+            secret_end_offset: secret_end_in_file,
             context_lines,
         });
+    }
+}
+
+/// Redact every finding's context with all secret byte ranges from this file.
+pub(super) fn redact_context_lines(content: &[u8], findings: &mut [Finding]) {
+    if findings.is_empty() {
+        return;
+    }
+
+    let secret_ranges = merged_secret_ranges(findings, content.len());
+    if secret_ranges.is_empty() {
+        return;
+    }
+
+    let line_ranges = line_ranges(content);
+    let context_line_nums: BTreeSet<usize> = findings
+        .iter()
+        .flat_map(|finding| finding.context_lines.iter().map(|(line_num, _)| *line_num))
+        .collect();
+    let mut redacted_by_line = HashMap::with_capacity(context_line_nums.len());
+    let mut range_idx = 0;
+    for line_num in context_line_nums {
+        let Some((line_start, line_end)) = line_ranges.get(line_num.saturating_sub(1)) else {
+            continue;
+        };
+        while range_idx < secret_ranges.len() && secret_ranges[range_idx].1 <= *line_start {
+            range_idx += 1;
+        }
+        redacted_by_line.insert(
+            line_num,
+            redact_line(content, *line_start, *line_end, &secret_ranges[range_idx..]),
+        );
+    }
+
+    for finding in findings {
+        for (line_num, line_text) in &mut finding.context_lines {
+            if let Some(redacted) = redacted_by_line.get(line_num) {
+                *line_text = redacted.clone();
+            }
+        }
     }
 }
 
@@ -177,4 +238,78 @@ fn context_lines(content: &[u8], line_start: usize, line_end: usize) -> Vec<(usi
     }
 
     context_lines
+}
+
+fn merged_secret_ranges(findings: &[Finding], content_len: usize) -> Vec<(usize, usize)> {
+    let mut ranges: Vec<(usize, usize)> = findings
+        .iter()
+        .filter_map(|finding| {
+            let start = finding.secret_start_offset;
+            let end = finding.secret_end_offset;
+            if start < end && end <= content_len {
+                Some((start, end))
+            } else {
+                None
+            }
+        })
+        .collect();
+
+    ranges.sort_unstable_by_key(|&(start, end)| (start, end));
+
+    let mut merged: Vec<(usize, usize)> = Vec::new();
+    for (start, end) in ranges {
+        match merged.last_mut() {
+            Some((_, current_end)) if start <= *current_end => {
+                *current_end = (*current_end).max(end);
+            }
+            _ => merged.push((start, end)),
+        }
+    }
+    merged
+}
+
+fn line_ranges(content: &[u8]) -> Vec<(usize, usize)> {
+    let mut ranges = Vec::new();
+    let mut start = 0;
+    for (idx, &b) in content.iter().enumerate() {
+        if b == b'\n' {
+            ranges.push((start, idx));
+            start = idx + 1;
+        }
+    }
+    ranges.push((start, content.len()));
+    ranges
+}
+
+fn redact_line(
+    content: &[u8],
+    line_start: usize,
+    line_end: usize,
+    secret_ranges: &[(usize, usize)],
+) -> String {
+    let mut redacted = String::new();
+    let mut cursor = line_start;
+    for &(secret_start, secret_end) in secret_ranges {
+        if secret_start >= line_end {
+            break;
+        }
+        if secret_end <= line_start {
+            continue;
+        }
+
+        let start = secret_start.max(line_start);
+        let end = secret_end.min(line_end);
+        if start > cursor {
+            redacted.push_str(&String::from_utf8_lossy(&content[cursor..start]));
+        }
+        if end > cursor {
+            redacted.push_str(CONTEXT_REDACTION_MARKER);
+            cursor = end;
+        }
+    }
+
+    if cursor < line_end {
+        redacted.push_str(&String::from_utf8_lossy(&content[cursor..line_end]));
+    }
+    redacted.trim_end().to_string()
 }

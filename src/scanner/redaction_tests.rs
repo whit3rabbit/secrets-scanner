@@ -115,6 +115,55 @@ fn scan_and_redact_bytes_replaces_secret_bytes() {
 }
 
 #[test]
+fn scan_and_redact_content_uses_secret_group_range() {
+    let toml = r#"
+title = "secret-group-redact"
+
+[[rules]]
+id = "pat-with-prefix"
+regex = 'KEY=(ghp_[A-Za-z0-9_]{36,})'
+secretGroup = 1
+keywords = ["key="]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let secret = "ghp_n0tArEaLsEcReTgHuBpAt1234567890AbCde";
+    let content = format!("KEY={secret}");
+
+    let output = scanner.scan_and_redact_content("tokens.env", &content);
+
+    assert_eq!(output.findings.len(), 1);
+    assert_eq!(output.redacted, "KEY=[REDACTED_SECRET]");
+    assert_eq!(output.findings[0].start_offset, 0);
+    assert_eq!(output.findings[0].end_offset, content.len());
+    assert_eq!(output.findings[0].secret_start_offset, "KEY=".len());
+    assert_eq!(output.findings[0].secret_end_offset, content.len());
+}
+
+#[test]
+fn scan_and_redact_content_falls_back_when_secret_group_is_empty() {
+    let toml = r#"
+title = "empty-secret-group-redact"
+
+[[rules]]
+id = "pat-with-empty-group"
+regex = 'TOKEN=(ghp_[A-Za-z0-9_]{36,})()'
+secretGroup = 2
+keywords = ["token="]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let secret = "ghp_n0tArEaLsEcReTgHuBpAt1234567890AbCde";
+    let content = format!("TOKEN={secret}");
+
+    let output = scanner.scan_and_redact_content("tokens.env", &content);
+
+    assert_eq!(output.findings.len(), 1);
+    assert_eq!(output.redacted, "[REDACTED_SECRET]");
+    assert!(!output.redacted.contains(secret));
+    assert_eq!(output.findings[0].secret_start_offset, 0);
+    assert_eq!(output.findings[0].secret_end_offset, content.len());
+}
+
+#[test]
 fn scan_and_redact_content_keeps_findings_redacted_by_default() {
     let scanner = test_scanner();
     let secret = "ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop";

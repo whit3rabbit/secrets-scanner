@@ -33,7 +33,7 @@ pub struct CompiledRule {
     /// Compiled detection regex.
     pub regex: Option<regex::bytes::Regex>,
 
-    /// Minimum entropy threshold (from rule config, or `None` to use global default).
+    /// Minimum entropy threshold. `None` disables entropy gating for this rule.
     pub entropy_threshold: Option<f64>,
 
     /// Keywords (lowercase) for this rule.

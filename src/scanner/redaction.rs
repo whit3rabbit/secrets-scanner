@@ -5,7 +5,7 @@ use super::Finding;
 /// Replacement text used by proxy-oriented redaction helpers.
 const REDACTION_MARKER: &[u8] = b"[REDACTED_SECRET]";
 
-/// Redact matched byte ranges in content.
+/// Redact detected secret byte ranges in content.
 pub(super) fn redact_content_bytes(content: &[u8], findings: &[Finding]) -> Vec<u8> {
     let ranges = merged_redaction_ranges(findings, content.len());
     if ranges.is_empty() {
@@ -23,13 +23,13 @@ pub(super) fn redact_content_bytes(content: &[u8], findings: &[Finding]) -> Vec<
     redacted
 }
 
-/// Return sorted, merged byte ranges that are safe to redact.
+/// Return sorted, merged secret byte ranges that are safe to redact.
 fn merged_redaction_ranges(findings: &[Finding], content_len: usize) -> Vec<(usize, usize)> {
     let mut ranges: Vec<(usize, usize)> = findings
         .iter()
         .filter_map(|finding| {
-            let start = finding.start_offset;
-            let end = finding.end_offset;
+            let start = finding.secret_start_offset;
+            let end = finding.secret_end_offset;
             if start < end && end <= content_len {
                 Some((start, end))
             } else {

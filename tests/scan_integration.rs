@@ -20,6 +20,16 @@ fn scanner_from_toml(toml: &str) -> Scanner {
     Scanner::from_toml(toml).expect("inline TOML should parse")
 }
 
+fn git(repo: &std::path::Path, args: &[&str]) {
+    let status = std::process::Command::new("git")
+        .arg("-C")
+        .arg(repo)
+        .args(args)
+        .status()
+        .expect("run git");
+    assert!(status.success(), "git {:?} failed", args);
+}
+
 // ─────────────────────────────────────────────
 // Bundled-ruleset smoke tests
 // ─────────────────────────────────────────────
@@ -516,5 +526,92 @@ keywords = ["akia"]
     assert!(
         !findings.is_empty(),
         "Code line with key should NOT be allowlisted"
+    );
+}
+
+#[test]
+fn git_mode_handles_paths_containing_newlines() {
+    let toml = r#"
+title = "git-nul-path-test"
+
+[[rules]]
+id = "secret"
+regex = 'SECRET[0-9]{6}'
+keywords = ["secret"]
+"#;
+    let scanner = scanner_from_toml(toml).with_config(ScanConfig {
+        git: true,
+        ..Default::default()
+    });
+    let repo = tempfile::tempdir().expect("repo");
+    git(repo.path(), &["init", "-q"]);
+    std::fs::write(repo.path().join("line\nbreak.txt"), "SECRET123456").expect("write secret");
+    git(repo.path(), &["add", "."]);
+
+    let findings = scanner.scan_path(repo.path().to_str().expect("repo path"));
+
+    assert_eq!(findings.len(), 1);
+    assert_eq!(findings[0].rule_id, "secret");
+}
+
+#[test]
+fn git_diff_mode_preserves_tracked_only_scope() {
+    let toml = r#"
+title = "git-diff-scope-test"
+
+[[rules]]
+id = "secret"
+regex = 'SECRET[0-9]{6}'
+keywords = ["secret"]
+"#;
+    let scanner = scanner_from_toml(toml).with_config(ScanConfig {
+        git_diff: true,
+        ..Default::default()
+    });
+    let repo = tempfile::tempdir().expect("repo");
+    git(repo.path(), &["init", "-q"]);
+    git(repo.path(), &["config", "user.email", "test@example.com"]);
+    git(repo.path(), &["config", "user.name", "Test User"]);
+    std::fs::write(repo.path().join("tracked.txt"), "clean").expect("write tracked");
+    git(repo.path(), &["add", "tracked.txt"]);
+    git(repo.path(), &["commit", "-q", "-m", "initial"]);
+    std::fs::write(repo.path().join("tracked.txt"), "SECRET123456").expect("modify tracked");
+    std::fs::write(repo.path().join("untracked.txt"), "SECRET654321").expect("write untracked");
+
+    let findings = scanner.scan_path(repo.path().to_str().expect("repo path"));
+
+    assert_eq!(findings.len(), 1);
+    assert!(findings[0].file.ends_with("tracked.txt"));
+}
+
+#[cfg(unix)]
+#[test]
+fn git_mode_skips_tracked_symlink_targets() {
+    let toml = r#"
+title = "git-symlink-test"
+
+[[rules]]
+id = "secret"
+regex = 'SECRET[0-9]{6}'
+keywords = ["secret"]
+"#;
+    let scanner = scanner_from_toml(toml).with_config(ScanConfig {
+        git: true,
+        ..Default::default()
+    });
+    let temp = tempfile::tempdir().expect("temp");
+    let repo = temp.path().join("repo");
+    std::fs::create_dir(&repo).expect("repo dir");
+    git(&repo, &["init", "-q"]);
+    let outside = temp.path().join("outside.txt");
+    std::fs::write(&outside, "SECRET654321").expect("outside secret");
+    std::os::unix::fs::symlink(&outside, repo.join("link.txt")).expect("symlink");
+    git(&repo, &["add", "link.txt"]);
+
+    let findings = scanner.scan_path(repo.to_str().expect("repo path"));
+
+    assert!(
+        findings.is_empty(),
+        "git mode must not follow tracked symlinks"
     );
 }

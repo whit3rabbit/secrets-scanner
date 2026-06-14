@@ -91,6 +91,7 @@ fn get_quantifier_len(slice: &[char]) -> Option<usize> {
 }
 
 /// Check if a regex compilation error is due to an unsupported feature in Rust's regex engine (e.g. look-around).
+#[allow(dead_code)]
 pub fn is_unsupported_regex_error(e: &regex::Error) -> bool {
     let msg = e.to_string();
     msg.contains("look-around") || msg.contains("look-ahead") || msg.contains("look-behind")

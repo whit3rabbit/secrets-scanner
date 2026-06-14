@@ -197,14 +197,46 @@ pub fn update_rules(
         std::fs::create_dir_all(parent)?;
     }
 
-    std::fs::write(&rules_path, &merged_toml)?;
     // Record the UPSTREAM body's SHA (not the merged SHA): the staleness check
     // compares this against a freshly fetched upstream SHA, so it must be the
     // same quantity or the "already current" path becomes unreachable.
-    std::fs::write(&sha_path, &remote_sha)?;
+    write_pair_atomically(&rules_path, &merged_toml, &sha_path, &remote_sha)?;
 
     info!("[updater] Combined rules saved to {}", rules_path.display());
     Ok(UpdateResult::Updated { sha256: remote_sha })
+}
+
+#[cfg(feature = "updater")]
+fn write_pair_atomically(
+    rules_path: &std::path::Path,
+    rules_content: &str,
+    sha_path: &std::path::Path,
+    sha_content: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let rules_tmp = temp_path_for(rules_path);
+    let sha_tmp = temp_path_for(sha_path);
+
+    std::fs::write(&rules_tmp, rules_content)?;
+    std::fs::write(&sha_tmp, sha_content)?;
+
+    std::fs::rename(&rules_tmp, rules_path)?;
+    if let Err(e) = std::fs::rename(&sha_tmp, sha_path) {
+        let _ = std::fs::remove_file(&sha_tmp);
+        return Err(e.into());
+    }
+
+    Ok(())
+}
+
+#[cfg(feature = "updater")]
+fn temp_path_for(path: &std::path::Path) -> PathBuf {
+    let mut tmp = path.to_path_buf();
+    let file_name = path
+        .file_name()
+        .and_then(|name| name.to_str())
+        .unwrap_or("secrets-scanner.tmp");
+    tmp.set_file_name(format!("{file_name}.tmp.{}", std::process::id()));
+    tmp
 }
 
 /// Stub used when the `updater` feature is disabled.  Returns an error
@@ -219,4 +251,30 @@ pub fn update_rules(
          Rebuild with `cargo build --features updater` or run \
          `./scripts/update_rules.sh` manually."
         .into())
+}
+
+#[cfg(all(test, feature = "updater"))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn atomic_pair_write_writes_rules_before_sha_content() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let rules_path = dir.path().join("secrets-scanner.toml");
+        let sha_path = dir.path().join("secrets-scanner.toml.sha256");
+
+        write_pair_atomically(&rules_path, "rules-v1", &sha_path, "remote-sha")
+            .expect("atomic write");
+
+        assert_eq!(
+            std::fs::read_to_string(&rules_path).expect("rules"),
+            "rules-v1"
+        );
+        assert_eq!(
+            std::fs::read_to_string(&sha_path).expect("sha"),
+            "remote-sha"
+        );
+        assert!(!temp_path_for(&rules_path).exists());
+        assert!(!temp_path_for(&sha_path).exists());
+    }
 }

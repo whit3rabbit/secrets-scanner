@@ -47,4 +47,4 @@ pub mod scanner;
 
 pub use rules::engine::{CompiledRule, RuleEngine};
 pub use rules::validation::{AllowlistConfig, GlobalAllowlist, RuleConfig, RulesetConfig};
-pub use scanner::{Finding, ScanConfig, ScanOutput, Scanner};
+pub use scanner::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanStats, Scanner};

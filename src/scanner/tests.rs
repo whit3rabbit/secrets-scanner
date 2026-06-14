@@ -201,7 +201,7 @@ description = "PEM private key"
 regex = '-----BEGIN (RSA |EC )?PRIVATE KEY-----'
 keywords = ["-----begin"]
 "#;
-    // A high global --min-entropy floor must NOT impose entropy gating on a rule
+    // A high --min-entropy override must NOT impose entropy gating on a rule
     // that defines no threshold (otherwise real private keys would be missed).
     let scanner = Scanner::from_toml(toml)
         .expect("build")
@@ -213,7 +213,7 @@ keywords = ["-----begin"]
     let findings = scanner.scan_content("id_rsa", content);
     assert!(
         !findings.is_empty(),
-        "structural rule (no entropy threshold) must survive a high --min-entropy floor"
+        "structural rule (no entropy threshold) must survive a high --min-entropy override"
     );
     assert_eq!(findings[0].rule_id, "pem-private-key");
 }
@@ -249,6 +249,54 @@ keywords = ["key"]
 }
 
 #[test]
+fn overlapping_keywords_make_both_rules_candidates() {
+    let toml = r#"
+title = "overlapping-keywords"
+
+[[rules]]
+id = "rule-a"
+regex = 'abc-secret-[0-9]+'
+keywords = ["abc"]
+
+[[rules]]
+id = "rule-b"
+regex = 'bc-secret-[0-9]+'
+keywords = ["bc"]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let findings = scanner.scan_content("test.env", "abc-secret-123");
+    let ids: std::collections::HashSet<&str> =
+        findings.iter().map(|f| f.rule_id.as_str()).collect();
+
+    assert!(ids.contains("rule-a"), "rule-a should report");
+    assert!(
+        ids.contains("rule-b"),
+        "rule-b should report even though its keyword overlaps rule-a's keyword"
+    );
+}
+
+#[test]
+fn absent_secret_group_uses_full_match_for_entropy() {
+    let toml = r#"
+title = "implicit-secret-group"
+
+[[rules]]
+id = "implicit-group"
+regex = '(api|token)=([A-Za-z0-9]{32})'
+entropy = 3.0
+keywords = ["api="]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let content = "api=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456";
+    let findings = scanner.scan_content("test.env", content);
+
+    assert_eq!(findings.len(), 1);
+    assert_eq!(findings[0].rule_id, "implicit-group");
+    assert_eq!(findings[0].secret_start_offset, 0);
+    assert_eq!(findings[0].secret_end_offset, content.len());
+}
+
+#[test]
 fn context_lines_span_two_lines_each_side() {
     let toml = r#"
 title = "ctx"
@@ -272,4 +320,37 @@ keywords = ["ghp_"]
         vec![1, 2, 3, 4, 5],
         "context should span 2 lines on each side of the match"
     );
+}
+
+#[test]
+fn redacted_context_lines_do_not_leak_any_secret_in_context_window() {
+    let toml = r#"
+title = "ctx-redaction"
+
+[[rules]]
+id = "github-pat"
+regex = 'ghp_[A-Za-z0-9_]{36,}'
+keywords = ["ghp_"]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let first_secret = "ghp_n0tArEaLsEcReTgHuBpAt1234567890AbCde";
+    let second_secret = "ghp_Z9y8X7w6V5u4T3s2R1q0P9o8N7m6L5k4J3i2";
+    let content = format!("line1\nFIRST={first_secret}\nSECOND={second_secret}\nline4");
+
+    let findings = scanner.scan_content("c.txt", &content);
+
+    assert_eq!(findings.len(), 2);
+    for finding in &findings {
+        assert!(!finding.matched.contains(first_secret));
+        assert!(!finding.matched.contains(second_secret));
+        let context = finding
+            .context_lines
+            .iter()
+            .map(|(_, text)| text.as_str())
+            .collect::<Vec<_>>()
+            .join("\n");
+        assert!(!context.contains(first_secret));
+        assert!(!context.contains(second_secret));
+        assert!(context.contains("[REDACTED_SECRET]"));
+    }
 }

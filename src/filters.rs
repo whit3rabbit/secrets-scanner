@@ -13,18 +13,96 @@ const SKIP_EXTENSIONS: &[&str] = &[
 
 /// Directories that produce noisy or irrelevant scan results.
 const SKIP_DIRECTORIES: &[&str] = &[
-    "node_modules/",
-    ".git/",
-    "target/",
-    "dist/",
-    "vendor/",
-    ".cache/",
-    "__pycache__/",
-    ".venv/",
-    "venv/",
-    ".tox/",
-    "build/",
+    "node_modules",
+    ".git",
+    "target",
+    "dist",
+    "vendor",
+    ".cache",
+    "__pycache__",
+    ".venv",
+    "venv",
+    ".tox",
+    "build",
 ];
+
+/// Number of leading bytes inspected by the binary-content heuristic.
+pub const BINARY_SNIFF_LEN: usize = 8192;
+
+/// Returns `true` if `prefix` looks like binary (non-text) content.
+///
+/// Heuristic, independent of file extension so it catches extensionless or
+/// mislabelled binaries in hostile repositories:
+/// * any NUL byte ⇒ binary;
+/// * otherwise binary if more than 30% of the inspected bytes are control bytes
+///   (outside `\t \n \r` and the printable range).
+///
+/// An empty prefix is treated as text (never binary).
+///
+/// # Examples
+///
+/// ```
+/// use secrets_scanner::filters::is_probably_binary;
+///
+/// assert!(is_probably_binary(b"\x00\x01\x02"));
+/// assert!(!is_probably_binary(b"export TOKEN=abc"));
+/// assert!(!is_probably_binary(b""));
+/// ```
+pub fn is_probably_binary(prefix: &[u8]) -> bool {
+    if prefix.is_empty() {
+        return false;
+    }
+    if prefix.contains(&0) {
+        return true;
+    }
+    let suspicious = prefix
+        .iter()
+        .filter(|&&b| b < 0x09 || (b > 0x0D && b < 0x20))
+        .count();
+    suspicious * 100 / prefix.len() > 30
+}
+
+/// Returns `true` if `path` is a source-like or secret-bearing file that should
+/// be content-scanned even when the binary heuristic flags it (`BinaryPolicy::Auto`).
+///
+/// Covers common config/secret files (`.env*`, `.pem`, `.key`, `.json`,
+/// `.yaml`/`.yml`, `.toml`, `.properties`, `.npmrc`, `.pypirc`) and the
+/// `Dockerfile`/`Makefile` family by name.
+///
+/// # Examples
+///
+/// ```
+/// use secrets_scanner::filters::is_source_allowlisted;
+///
+/// assert!(is_source_allowlisted("config/.env.production"));
+/// assert!(is_source_allowlisted("deploy/private.pem"));
+/// assert!(is_source_allowlisted("Dockerfile"));
+/// assert!(!is_source_allowlisted("logo.png"));
+/// ```
+pub fn is_source_allowlisted(path: &str) -> bool {
+    let normalized = path.replace('\\', "/").to_lowercase();
+    let filename = normalized.rsplit('/').next().unwrap_or(normalized.as_str());
+
+    const ALLOWLIST_EXTENSIONS: &[&str] = &[
+        ".pem",
+        ".key",
+        ".json",
+        ".yaml",
+        ".yml",
+        ".toml",
+        ".properties",
+    ];
+    if ALLOWLIST_EXTENSIONS.iter().any(|e| filename.ends_with(e)) {
+        return true;
+    }
+
+    filename.starts_with(".env")
+        || filename == ".npmrc"
+        || filename == ".pypirc"
+        || filename == "dockerfile"
+        || filename.starts_with("dockerfile.")
+        || filename == "makefile"
+}
 
 /// Returns `true` if the file at `path` should be scanned.
 ///
@@ -41,10 +119,14 @@ const SKIP_DIRECTORIES: &[&str] = &[
 /// assert!(!should_scan("node_modules/lodash/index.js"));
 /// ```
 pub fn should_scan(path: &str) -> bool {
-    if SKIP_EXTENSIONS.iter().any(|e| path.ends_with(e)) {
+    let normalized = path.replace('\\', "/").to_lowercase();
+    if SKIP_EXTENSIONS.iter().any(|e| normalized.ends_with(e)) {
         return false;
     }
-    if SKIP_DIRECTORIES.iter().any(|d| path.contains(d)) {
+    if normalized
+        .split('/')
+        .any(|component| SKIP_DIRECTORIES.contains(&component))
+    {
         return false;
     }
     true
@@ -68,16 +150,21 @@ pub fn should_scan(path: &str) -> bool {
 /// assert_eq!(short, "*****");
 /// ```
 pub fn redact(s: &str) -> String {
-    if s.len() <= 12 {
-        return "*".repeat(s.len());
+    let char_count = s.chars().count();
+    if char_count <= 12 {
+        return "*".repeat(char_count);
     }
     let keep = 4;
-    format!(
-        "{}{}{}",
-        &s[..keep],
-        "*".repeat(s.len() - keep * 2),
-        &s[s.len() - keep..]
-    )
+    let prefix: String = s.chars().take(keep).collect();
+    let suffix: String = s
+        .chars()
+        .rev()
+        .take(keep)
+        .collect::<Vec<_>>()
+        .into_iter()
+        .rev()
+        .collect();
+    format!("{}{}{}", prefix, "*".repeat(char_count - keep * 2), suffix,)
 }
 
 #[cfg(test)]
@@ -87,6 +174,7 @@ mod tests {
     #[test]
     fn skips_binary_extensions() {
         assert!(!should_scan("image.png"));
+        assert!(!should_scan("IMAGE.PNG"));
         assert!(!should_scan("archive.tar.gz"));
         assert!(!should_scan("data.sqlite"));
     }
@@ -94,8 +182,10 @@ mod tests {
     #[test]
     fn skips_noisy_directories() {
         assert!(!should_scan("node_modules/lodash/index.js"));
+        assert!(!should_scan(r"node_modules\lodash\index.js"));
         assert!(!should_scan("project/.git/config"));
         assert!(!should_scan("project/target/debug/binary"));
+        assert!(should_scan("src/mytarget/file.rs"));
     }
 
     #[test]
@@ -119,5 +209,13 @@ mod tests {
     fn redacts_short_secrets_fully() {
         assert_eq!(redact("short"), "*****");
         assert_eq!(redact("exactly12ch"), "***********");
+    }
+
+    #[test]
+    fn redacts_unicode_without_byte_boundary_panic() {
+        let redacted = redact("秘密秘密秘密秘密秘密秘密秘密");
+        assert!(redacted.starts_with("秘密秘密"));
+        assert!(redacted.ends_with("秘密秘密"));
+        assert!(redacted.contains('*'));
     }
 }

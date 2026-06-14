@@ -4,16 +4,18 @@
 //! - CLI argument parsing (clap derive macros)
 //! - Dispatching to the `scan`, `update-rules`, `validate-rules`, and `list-rules` subcommands
 //! - Output formatting (`text`, `json`, `jsonl`, `sarif`)
-//! - Exit codes: `0` = no findings, `1` = findings found, `2` = error
+//! - Exit codes: `0` = no findings, `1` = findings found, `2` = runtime error,
+//!   `3` = invalid configuration/rules
 //!
 //! All scanning logic lives in the library crate (`src/lib.rs`).
 
 use std::collections::HashSet;
+use std::io::{self, Write};
 
 use clap::{CommandFactory, Parser, Subcommand, ValueEnum};
 use clap_complete::Shell;
 use log::{error, info};
-use secrets_scanner::{ScanConfig, Scanner};
+use secrets_scanner::{BinaryPolicy, Finding, ScanConfig, ScanStats, Scanner};
 
 mod format;
 
@@ -85,7 +87,7 @@ enum Commands {
         #[arg(long, value_name = "PATH")]
         report: Option<String>,
 
-        /// Validate and report only; do not write the output file.
+        /// Validate and compare with `--out`; do not write the merged ruleset.
         #[arg(long)]
         check: bool,
     },
@@ -130,7 +132,7 @@ struct ScanArgs {
     #[arg(long = "ignore-rule", value_name = "ID")]
     ignore_rules: Vec<String>,
 
-    /// Override the global minimum entropy floor.
+    /// Override entropy thresholds for rules that define one.
     #[arg(long, value_name = "FLOAT")]
     min_entropy: Option<f64>,
 
@@ -149,6 +151,63 @@ struct ScanArgs {
     /// Only scan files changed since the last commit (`git diff --name-only HEAD`).
     #[arg(long)]
     git_diff: bool,
+
+    /// Base ref for diff scanning (e.g. origin/main); scans `<base>...HEAD`. Implies --git-diff.
+    #[arg(long, value_name = "REF")]
+    diff_base: Option<String>,
+
+    /// In git mode, also scan untracked (but not ignored) files.
+    #[arg(long)]
+    include_untracked: bool,
+
+    /// How to treat files detected as binary by content inspection.
+    #[arg(long, value_enum, default_value_t = BinaryPolicyArg::Auto)]
+    binary_policy: BinaryPolicyArg,
+
+    /// Cap the number of files scanned (excess files are not scanned).
+    #[arg(long, value_name = "N")]
+    max_files: Option<usize>,
+
+    /// Cap total findings reported across the scan.
+    #[arg(long, value_name = "N")]
+    max_findings: Option<usize>,
+
+    /// Cap findings reported per file.
+    #[arg(long, value_name = "N")]
+    max_findings_per_file: Option<usize>,
+
+    /// Do not print surrounding context lines (safe default for CI logs).
+    #[arg(long)]
+    no_context: bool,
+
+    /// Write output to a file instead of stdout.
+    #[arg(long, value_name = "FILE")]
+    output: Option<String>,
+
+    /// Do not exit non-zero when findings are present (still writes output).
+    #[arg(long)]
+    no_fail: bool,
+}
+
+/// Binary-file handling policy for the `scan` subcommand.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+enum BinaryPolicyArg {
+    /// Skip binary-looking files unless they are source/secret-bearing.
+    Auto,
+    /// Always skip binary-looking files.
+    Skip,
+    /// Scan every file regardless of binary detection.
+    Scan,
+}
+
+impl From<BinaryPolicyArg> for BinaryPolicy {
+    fn from(p: BinaryPolicyArg) -> Self {
+        match p {
+            BinaryPolicyArg::Auto => BinaryPolicy::Auto,
+            BinaryPolicyArg::Skip => BinaryPolicy::Skip,
+            BinaryPolicyArg::Scan => BinaryPolicy::Scan,
+        }
+    }
 }
 
 /// Output format for the `scan` subcommand.
@@ -198,21 +257,30 @@ fn main() {
 
 /// Handle the `scan` subcommand.
 fn handle_scan(args: ScanArgs) {
+    // A diff base implies diff scanning even without an explicit --git-diff.
+    let git_diff = args.git_diff || args.diff_base.is_some();
     let config = ScanConfig {
         redact: !args.no_redact,
         min_entropy_override: args.min_entropy,
         max_file_size: args.max_file_size,
         git: args.git,
-        git_diff: args.git_diff,
+        git_diff,
+        diff_base: args.diff_base.clone(),
+        include_untracked: args.include_untracked,
+        binary_policy: args.binary_policy.into(),
+        max_files: args.max_files,
+        max_findings: args.max_findings,
+        max_findings_per_file: args.max_findings_per_file,
     };
 
-    // Build scanner from explicit rules file or three-tier loading.
+    // Build scanner from explicit rules file or three-tier loading. A bad rules
+    // file or unparseable ruleset is an invalid-config error: exit 3.
     let scanner = if let Some(ref rules_path) = args.rules {
         match Scanner::from_file(rules_path) {
             Ok(s) => s.with_config(config),
             Err(e) => {
                 error!("Failed to load rules from {rules_path}: {e}");
-                std::process::exit(2);
+                std::process::exit(3);
             }
         }
     } else {
@@ -220,7 +288,7 @@ fn handle_scan(args: ScanArgs) {
             Ok(s) => s.with_config(config),
             Err(e) => {
                 error!("Failed to load rules: {e}");
-                std::process::exit(2);
+                std::process::exit(3);
             }
         }
     };
@@ -231,12 +299,17 @@ fn handle_scan(args: ScanArgs) {
         scanner.engine().keyword_count(),
     );
 
-    // Scan all provided paths.
+    // Scan all provided paths, accumulating file-level stats for the summary.
     let start = std::time::Instant::now();
     let mut all_findings = Vec::new();
+    let mut stats = ScanStats::default();
 
     for path in &args.paths {
-        let mut findings = scanner.scan_path(path);
+        let (mut findings, s) = scanner.scan_path_with_stats(path);
+        stats.files_scanned += s.files_scanned;
+        stats.binary_skipped += s.binary_skipped;
+        stats.oversized_skipped += s.oversized_skipped;
+        stats.files_over_cap += s.files_over_cap;
         // Apply --ignore-rule filtering.
         if !args.ignore_rules.is_empty() {
             findings.retain(|f| !args.ignore_rules.contains(&f.rule_id));
@@ -250,7 +323,7 @@ fn handle_scan(args: ScanArgs) {
             Ok(content) => {
                 // Treat an unparseable baseline as a hard error (exit 2), the same
                 // as an unreadable one, rather than silently suppressing nothing.
-                let baseline: Vec<secrets_scanner::Finding> = match serde_json::from_str(&content) {
+                let baseline: Vec<Finding> = match serde_json::from_str(&content) {
                     Ok(b) => b,
                     Err(e) => {
                         error!("Failed to parse baseline JSON '{baseline_path}': {e}");
@@ -276,14 +349,20 @@ fn handle_scan(args: ScanArgs) {
         }
     }
 
-    let elapsed = start.elapsed();
+    // Global findings cap. Truncation is logged so it never reads as full coverage.
+    let mut findings_truncated = false;
+    if let Some(cap) = args.max_findings {
+        if all_findings.len() > cap {
+            info!(
+                "[scanner] Findings ({}) exceed --max-findings ({cap}); results truncated.",
+                all_findings.len()
+            );
+            all_findings.truncate(cap);
+            findings_truncated = true;
+        }
+    }
 
-    info!(
-        "[scanner] Scanned {} path(s) in {:.2?} — {} finding(s)",
-        args.paths.len(),
-        elapsed,
-        all_findings.len()
-    );
+    let elapsed = start.elapsed();
 
     let unkeyworded_time = std::time::Duration::from_nanos(scanner.unkeyworded_scan_time_ns());
     if unkeyworded_time.as_nanos() > 0 {
@@ -293,17 +372,71 @@ fn handle_scan(args: ScanArgs) {
         );
     }
 
-    // Output findings in the requested format.
-    match args.format {
-        OutputFormat::Text => format::print_text(&all_findings),
-        OutputFormat::Json => format::print_json(&all_findings),
-        OutputFormat::Jsonl => format::print_jsonl(&all_findings),
-        OutputFormat::Sarif => format::print_sarif(&all_findings),
+    // Output to a file or stdout. An output write failure is a runtime error: exit 2.
+    let base = args.paths.first().map(String::as_str).unwrap_or(".");
+    let show_context = !args.no_context;
+    if let Err(e) = write_output(&args, &all_findings, base, show_context) {
+        error!("Failed to write output: {e}");
+        std::process::exit(2);
     }
 
-    // Exit code: 1 = findings, 0 = clean.
-    if !all_findings.is_empty() {
+    // Safe summary to stderr (file-level counts only — never echoes secrets).
+    info!(
+        "[scanner] Scanned {} path(s) in {:.2?} — {} file(s), {} finding(s); \
+         skipped {} binary, {} oversized; {} over file-cap{}",
+        args.paths.len(),
+        elapsed,
+        stats.files_scanned,
+        all_findings.len(),
+        stats.binary_skipped,
+        stats.oversized_skipped,
+        stats.files_over_cap,
+        if findings_truncated {
+            " (findings truncated)"
+        } else {
+            ""
+        },
+    );
+
+    // Exit code: 1 = findings (unless --no-fail), 0 = clean.
+    if !all_findings.is_empty() && !args.no_fail {
         std::process::exit(1);
+    }
+}
+
+/// Write findings in the requested format to a file (`--output`) or stdout.
+fn write_output(
+    args: &ScanArgs,
+    findings: &[Finding],
+    base: &str,
+    show_context: bool,
+) -> io::Result<()> {
+    match &args.output {
+        Some(path) => {
+            let mut f = std::fs::File::create(path)?;
+            dispatch_format(&mut f, args.format, findings, base, show_context)
+        }
+        None => {
+            let stdout = io::stdout();
+            let mut lock = stdout.lock();
+            dispatch_format(&mut lock, args.format, findings, base, show_context)
+        }
+    }
+}
+
+/// Dispatch to the format writer matching `format`.
+fn dispatch_format(
+    w: &mut dyn Write,
+    format: OutputFormat,
+    findings: &[Finding],
+    base: &str,
+    show_context: bool,
+) -> io::Result<()> {
+    match format {
+        OutputFormat::Text => format::write_text(w, findings, show_context),
+        OutputFormat::Json => format::write_json(w, findings, show_context),
+        OutputFormat::Jsonl => format::write_jsonl(w, findings, show_context),
+        OutputFormat::Sarif => format::write_sarif(w, findings, base),
     }
 }
 
@@ -379,11 +512,12 @@ fn handle_validate(files: &[String]) {
 // ─────────────────────────────────────────────
 
 /// Handle the `merge-rules` subcommand: read the manifest, merge the selected
-/// sources via the shared core, validate, and write the combined ruleset.
+/// sources via the shared core, validate, and write or check the combined ruleset.
 ///
 /// This uses the SAME `merge_sources` core as `build.rs`, so a lean `merge-rules`
 /// run and a default `cargo build` produce byte-identical output (the basis of
-/// the CI drift check). Exit codes: `0` = success, `2` = error.
+/// the CI drift check). Exit codes: `0` = success, `1` = stale in check mode,
+/// `2` = error.
 fn handle_merge_rules(
     manifest_path: &str,
     all: bool,
@@ -511,14 +645,44 @@ fn handle_merge_rules(
     }
 
     if check {
-        println!("Check mode: not writing {out}");
-        return;
+        match check_ruleset_current(std::path::Path::new(out), &combined) {
+            Ok(RulesetCheckStatus::Current) => {
+                println!("Check mode: {out} is current");
+                return;
+            }
+            Ok(RulesetCheckStatus::Stale) => {
+                error!("{out} is stale - run \"make merge-rules\" and commit.");
+                std::process::exit(1);
+            }
+            Err(e) => {
+                error!("Failed to read {out}: {e}");
+                std::process::exit(2);
+            }
+        }
     }
     if let Err(e) = std::fs::write(out, &combined) {
         error!("Failed to write {out}: {e}");
         std::process::exit(2);
     }
     println!("Wrote merged ruleset to {out}");
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum RulesetCheckStatus {
+    Current,
+    Stale,
+}
+
+fn check_ruleset_current(
+    path: &std::path::Path,
+    expected: &str,
+) -> Result<RulesetCheckStatus, std::io::Error> {
+    match std::fs::read(path) {
+        Ok(existing) if existing == expected.as_bytes() => Ok(RulesetCheckStatus::Current),
+        Ok(_) => Ok(RulesetCheckStatus::Stale),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(RulesetCheckStatus::Stale),
+        Err(e) => Err(e),
+    }
 }
 
 // ─────────────────────────────────────────────
@@ -611,5 +775,35 @@ mod tests {
         );
         assert_eq!(super::format::json_string("new\nline"), "\"new\\nline\"");
         assert_eq!(super::format::json_string("tab\there"), "\"tab\\there\"");
+    }
+
+    #[test]
+    fn ruleset_check_reports_current_for_matching_file() {
+        let tmp = tempfile::NamedTempFile::new().expect("tmpfile");
+        std::fs::write(tmp.path(), "merged rules").expect("write ruleset");
+
+        let status = super::check_ruleset_current(tmp.path(), "merged rules").expect("check");
+
+        assert_eq!(status, super::RulesetCheckStatus::Current);
+    }
+
+    #[test]
+    fn ruleset_check_reports_stale_for_different_file() {
+        let tmp = tempfile::NamedTempFile::new().expect("tmpfile");
+        std::fs::write(tmp.path(), "old rules").expect("write ruleset");
+
+        let status = super::check_ruleset_current(tmp.path(), "merged rules").expect("check");
+
+        assert_eq!(status, super::RulesetCheckStatus::Stale);
+    }
+
+    #[test]
+    fn ruleset_check_reports_stale_for_missing_file() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let missing = dir.path().join("missing.toml");
+
+        let status = super::check_ruleset_current(&missing, "merged rules").expect("check");
+
+        assert_eq!(status, super::RulesetCheckStatus::Stale);
     }
 }

@@ -30,7 +30,7 @@ mod matching;
 mod redaction;
 mod types;
 mod walk;
-pub use types::{Finding, ScanConfig, ScanOutput};
+pub use types::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanStats};
 
 /// The scanner. Owns a compiled `RuleEngine` and scan configuration.
 ///
@@ -125,6 +125,13 @@ impl Scanner {
     /// Files are filtered by extension, directory, size, and global path allowlist
     /// before scanning. The scan uses all available CPU cores via rayon's work-stealing.
     pub fn scan_path(&self, root: &str) -> Vec<Finding> {
+        self.scan_path_with_stats(root).0
+    }
+
+    /// Like [`scan_path`](Self::scan_path) but also returns file-level
+    /// [`ScanStats`] (files scanned, binary/oversized skipped, capped) so a
+    /// caller can print a safe summary without echoing secret material.
+    pub fn scan_path_with_stats(&self, root: &str) -> (Vec<Finding>, ScanStats) {
         walk::scan_path(self, root)
     }
 
@@ -186,12 +193,16 @@ impl Scanner {
                             file: path.to_string(),
                             line: 1,
                             col: 1,
+                            end_line: 1,
+                            end_col: 1,
                             rule_id: rule.id.clone(),
                             rule_description: rule.description.clone(),
                             matched: format!("File path matches pattern: {}", path),
                             entropy: 0.0,
                             start_offset: 0,
                             end_offset: 0,
+                            secret_start_offset: 0,
+                            secret_end_offset: 0,
                             context_lines: Vec::new(),
                         });
                     }
@@ -204,7 +215,7 @@ impl Scanner {
         // rules still run below.
         let mut candidate_rules = vec![false; self.engine.keyworded_rules().len()];
         if self.has_keyword_first_byte(content) {
-            for mat in self.engine.ac().find_iter(content) {
+            for mat in self.engine.ac().find_overlapping_iter(content) {
                 for &rule_idx in self.engine.rules_for_keyword(mat.pattern().as_usize()) {
                     candidate_rules[rule_idx] = true;
                 }
@@ -251,12 +262,16 @@ impl Scanner {
             std::sync::atomic::Ordering::Relaxed,
         );
 
+        if self.config.redact {
+            matching::redact_context_lines(content, &mut findings);
+        }
+
         findings
     }
 
     /// Scan bytes and return both findings and redacted bytes.
     ///
-    /// Matched byte spans are replaced with `[REDACTED_SECRET]`. Path-only and
+    /// Secret byte spans are replaced with `[REDACTED_SECRET]`. Path-only and
     /// zero-length findings are reported but do not mutate the returned bytes.
     pub fn scan_and_redact_bytes(&self, path: &str, content: &[u8]) -> ScanOutput<Vec<u8>> {
         let findings = self.scan_bytes(path, content);

@@ -9,6 +9,7 @@ RULES_SCRIPT  := ./scripts/update_rules.sh
 IMPORT_SCRIPT := ./scripts/import_secrets_patterns_db.py
 KINGFISHER_DOWNLOAD := ./scripts/update_kingfisher_rules.py
 KINGFISHER_CONVERT  := ./scripts/convert_kingfisher_rules.py
+RULESET_DOCS_SCRIPT := ./scripts/generate_ruleset_docs.py
 
 # ── colours ───────────────────────────────────────────────────────────────────
 BOLD  := \033[1m
@@ -88,6 +89,7 @@ update-rules: ## Download latest gitleaks rules into assets/ (commits-ready)
 	@chmod +x $(RULES_SCRIPT)
 	$(RULES_SCRIPT)
 	$(MAKE) validate-rules
+	$(MAKE) ruleset-docs
 
 .PHONY: check-rules
 check-rules: ## Check if gitleaks rules are up to date (exit 1 = update available)
@@ -102,6 +104,7 @@ validate-rules: ## Validate rule TOML files in assets/
 import-spdb: ## Download & deduplicate secrets-patterns-db rules → assets/secrets-patterns-db.toml
 	python3 $(IMPORT_SCRIPT)
 	$(MAKE) validate-rules
+	$(MAKE) ruleset-docs
 
 .PHONY: import-spdb-check
 import-spdb-check: ## Dry-run import: report duplicate stats without writing files
@@ -111,11 +114,13 @@ import-spdb-check: ## Dry-run import: report duplicate stats without writing fil
 import-spdb-merge: ## Download, dedup, and append new rules into assets/local.toml
 	python3 $(IMPORT_SCRIPT) --merge
 	$(MAKE) validate-rules
+	$(MAKE) ruleset-docs
 
 .PHONY: convert-kingfisher
 convert-kingfisher: ## Convert assets/kingfisher-rules.yml → assets/kingfisher-rules.toml (dedup + validate)
 	python3 $(KINGFISHER_CONVERT)
 	$(MAKE) validate-rules
+	$(MAKE) ruleset-docs
 
 .PHONY: convert-kingfisher-check
 convert-kingfisher-check: ## Dry-run convert: report the count breakdown without writing files
@@ -132,6 +137,7 @@ merge-rules: ## Regenerate assets/secrets-scanner.toml (lean) from the manifest
 		--manifest assets/sources.toml \
 		--out assets/secrets-scanner.toml \
 		--report target/merge-report.json
+	$(MAKE) ruleset-docs
 
 .PHONY: merge-rules-full
 merge-rules-full: ## Merge including embed=false sources (spdb, …) to a scratch file
@@ -141,9 +147,12 @@ merge-rules-full: ## Merge including embed=false sources (spdb, …) to a scratc
 		--report target/merge-report.full.json
 
 .PHONY: merge-rules-check
-merge-rules-check: merge-rules ## CI drift: regenerate then fail if committed file is stale
-	@git diff --exit-code -- assets/secrets-scanner.toml \
-	  || { printf 'secrets-scanner.toml is stale — run "make merge-rules" and commit.\n'; exit 1; }
+merge-rules-check: ## CI drift: compare committed file against the lean merge
+	$(CARGO) run --bin $(BINARY) -- merge-rules \
+		--manifest assets/sources.toml \
+		--out assets/secrets-scanner.toml \
+		--report target/merge-report.json \
+		--check
 
 .PHONY: find-dups
 find-dups: ## Advisory: surface duplicate rules across sources (needs: pip install rapidfuzz)
@@ -154,6 +163,15 @@ find-dups: ## Advisory: surface duplicate rules across sources (needs: pip insta
 .PHONY: local-rules
 local-rules: ## Convert custom CSV rules to assets/local.toml
 	python3 ./scripts/convert_csv_to_toml.py
+	$(MAKE) ruleset-docs
+
+.PHONY: ruleset-docs
+ruleset-docs: ## Regenerate docs/rulesets/*.md from manifest rule sources
+	python3 $(RULESET_DOCS_SCRIPT)
+
+.PHONY: ruleset-docs-check
+ruleset-docs-check: ## CI drift: compare generated ruleset docs without rewriting
+	python3 $(RULESET_DOCS_SCRIPT) --check
 
 .PHONY: generate-fixtures
 generate-fixtures: ## Generate positive test fixtures for custom rules

@@ -142,6 +142,74 @@ keywords = ["supabase"]
 }
 
 #[test]
+fn level2_same_regex_different_allowlists_keeps_both() {
+    let low = r#"
+[[rules]]
+id = "unsuppressed"
+regex = 'SECRET[0-9]{6}'
+keywords = ["secret"]
+"#;
+    let high = r#"
+[[rules]]
+id = "allowlisted"
+regex = 'SECRET[0-9]{6}'
+keywords = ["secret"]
+allowlists = [
+    { paths = ['allowed/'] }
+]
+"#;
+    let (merged, report) =
+        merge_sources(vec![src("low", 10, low), src("high", 100, high)]).expect("merge");
+    let val: toml::Value = toml::from_str(&merged).expect("parse");
+    let rules = val["rules"].as_array().expect("rules");
+
+    assert_eq!(
+        rules.len(),
+        2,
+        "different allowlists change suppression behavior"
+    );
+    assert_eq!(report.exact_regex_dups.len(), 1);
+    assert!(!report.exact_regex_dups[0].dropped);
+}
+
+#[test]
+fn level2_same_regex_compares_against_all_kept_variants() {
+    let highest = r#"
+[[rules]]
+id = "variant-a"
+regex = 'SECRET[0-9]{6}'
+keywords = ["a"]
+"#;
+    let middle = r#"
+[[rules]]
+id = "variant-b"
+regex = 'SECRET[0-9]{6}'
+keywords = ["b"]
+"#;
+    let lowest = r#"
+[[rules]]
+id = "variant-b-copy"
+regex = 'SECRET[0-9]{6}'
+keywords = ["b"]
+"#;
+    let (merged, report) = merge_sources(vec![
+        src("lowest", 10, lowest),
+        src("middle", 50, middle),
+        src("highest", 100, highest),
+    ])
+    .expect("merge");
+    let val: toml::Value = toml::from_str(&merged).expect("parse");
+    let rules = val["rules"].as_array().expect("rules");
+
+    assert_eq!(rules.len(), 2);
+    assert_eq!(report.exact_regex_dups.len(), 2);
+    assert!(report
+        .exact_regex_dups
+        .iter()
+        .any(|record| record.dropped_id == "variant-b-copy" && record.dropped));
+}
+
+#[test]
 fn level3_normalized_near_dup_kept_but_recorded() {
     // Differ only by inline flag + anchors + word boundary.
     let low = r#"

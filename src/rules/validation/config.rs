@@ -109,7 +109,7 @@ pub struct RuleConfig {
     /// The detection regex pattern (optional).
     pub regex: Option<String>,
 
-    /// Minimum entropy threshold for this rule. If unset, uses the global default.
+    /// Minimum entropy threshold for this rule. If unset, entropy gating is disabled.
     #[serde(default)]
     pub entropy: Option<f64>,
 

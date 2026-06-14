@@ -7,6 +7,8 @@ CARGO        := cargo
 FEATURES_UPD := --features updater
 RULES_SCRIPT  := ./scripts/update_rules.sh
 IMPORT_SCRIPT := ./scripts/import_secrets_patterns_db.py
+KINGFISHER_DOWNLOAD := ./scripts/update_kingfisher_rules.py
+KINGFISHER_CONVERT  := ./scripts/convert_kingfisher_rules.py
 
 # ── colours ───────────────────────────────────────────────────────────────────
 BOLD  := \033[1m
@@ -109,6 +111,20 @@ import-spdb-check: ## Dry-run import: report duplicate stats without writing fil
 import-spdb-merge: ## Download, dedup, and append new rules into assets/local.toml
 	python3 $(IMPORT_SCRIPT) --merge
 	$(MAKE) validate-rules
+
+.PHONY: convert-kingfisher
+convert-kingfisher: ## Convert assets/kingfisher-rules.yml → assets/kingfisher-rules.toml (dedup + validate)
+	python3 $(KINGFISHER_CONVERT)
+	$(MAKE) validate-rules
+
+.PHONY: convert-kingfisher-check
+convert-kingfisher-check: ## Dry-run convert: report the count breakdown without writing files
+	python3 $(KINGFISHER_CONVERT) --check
+
+.PHONY: update-kingfisher
+update-kingfisher: ## Download latest Kingfisher YAML, then re-convert to TOML
+	python3 $(KINGFISHER_DOWNLOAD)
+	$(MAKE) convert-kingfisher
 
 .PHONY: merge-rules
 merge-rules: ## Regenerate assets/secrets-scanner.toml (lean) from the manifest

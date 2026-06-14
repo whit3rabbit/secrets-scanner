@@ -28,10 +28,10 @@ fn scanner_from_toml(toml: &str) -> Scanner {
 // are added/removed; a DROP signals accidental rule deletion (TODO Testing item 12).
 // A simple `> 100` threshold would not catch deleting, say, 100 rules.
 // Lean bundled ruleset after manifest-driven merge + detection-equivalent dedup
-// (gitleaks + local; 462 raw rules -> 382 after dedup -> 233 compile under Rust's
-// regex engine, the rest using unsupported look-around).
-const EXPECTED_RULE_COUNT: usize = 233;
-const EXPECTED_KEYWORD_COUNT: usize = 262;
+// (gitleaks + local + kingfisher; 1217 raw rules -> 1136 after dedup -> 987 compile
+// under Rust's regex engine, the rest using unsupported look-around).
+const EXPECTED_RULE_COUNT: usize = 987;
+const EXPECTED_KEYWORD_COUNT: usize = 750;
 
 #[test]
 fn bundled_rules_match_snapshot_counts() {

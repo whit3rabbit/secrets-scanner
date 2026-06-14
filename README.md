@@ -9,7 +9,7 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 ## Features
 
 - **Multi-layer pipeline**: memchr SIMD → Aho-Corasick → Shannon entropy → Regex
-- **200+ rules** based on [gitleaks](https://github.com/gitleaks/gitleaks), plus custom rules
+- **~990 active rules** by default (gitleaks + custom + [Kingfisher](https://github.com/mongodb/kingfisher)); more via `--features full-ruleset`
 - **Parallel scanning** via rayon (uses all CPU cores)
 - **Flexible output**: text, JSON, JSONL, SARIF (GitHub Code Scanning)
 - **CI-ready exit codes**: `0` = clean, `1` = findings, `2` = error
@@ -136,6 +136,37 @@ File bytes
    ▼
 Finding { file, line, rule_id, matched (redacted), entropy }
 ```
+
+---
+
+## Rulesets
+
+Rules are declared in a manifest (`assets/sources.toml`) and merged at build time by
+priority (higher wins id/regex collisions). The default lean build embeds **local +
+gitleaks + kingfisher**; `secrets-patterns-db` is opt-in via `--features full-ruleset`.
+Counts are raw `[[rules]]` entries; many are disabled at load because they use
+look-around, which Rust's `regex` engine rejects (see "active" below).
+
+| Ruleset | Upstream | Raw rules | Size | Priority | Default build |
+|---|---|--:|--:|--:|:--:|
+| `local` | hand-curated (`assets/local.toml`) | 240 | 76 KB | 100 | ✅ embedded |
+| `gitleaks` | [gitleaks](https://github.com/gitleaks/gitleaks) | 222 | 96 KB | 10 | ✅ embedded |
+| `kingfisher` | [MongoDB Kingfisher](https://github.com/mongodb/kingfisher) | 755¹ | 240 KB | 7 | ✅ embedded |
+| `secrets-patterns-db` | [mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db) | 1599 | 360 KB | 5 | ⬚ `--features full-ruleset` |
+
+¹ Kingfisher is converted from 951 YAML rules to TOML by `scripts/convert_kingfisher_rules.py`:
+`visible:false` helper rules are skipped, rules already covered by gitleaks/local are removed by
+behavioral dedup, and patterns the Rust engine can't compile are dropped.
+
+**Merged totals** (after id-collision + detection-equivalent dedup, then look-around disabling):
+
+| Build | Sources | Merged | Active (compiled) |
+|---|---|--:|--:|
+| lean default | local + gitleaks + kingfisher | 1136 | 987 |
+| `--features full-ruleset` | + secrets-patterns-db | 2735 | 2586 |
+
+Regenerate the merged ruleset with `make merge-rules`; inspect cross-source duplicates with
+`make find-dups`.
 
 ---
 

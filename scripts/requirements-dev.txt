@@ -1,6 +1,9 @@
 # Development-only Python dependencies for the rule tooling scripts.
 #   pip install -r scripts/requirements-dev.txt
 #
-# Only scripts/find_duplicate_rules.py needs a third-party package, and only for
-# fuzzy vendor-stem merging; without it the script falls back to exact stems.
+# scripts/find_duplicate_rules.py uses rapidfuzz for fuzzy vendor-stem merging;
+# without it the script falls back to exact stems.
+# scripts/convert_kingfisher_rules.py uses PyYAML to parse the nested Kingfisher
+# rule YAML (multi-line block scalars, nested validation maps) reliably.
 rapidfuzz>=3.0
+PyYAML>=6.0

@@ -1,0 +1,263 @@
+{
+  "counts": {
+    "raw": 954,
+    "invisible": 141,
+    "deduped": 48,
+    "invalid": 10,
+    "kept": 755
+  },
+  "behavioral_dedup": [
+    {
+      "id": "kingfisher.age.2",
+      "matched_id": "age-secret-key",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.artifactory.3",
+      "matched_id": "artifactory-reference-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.azure.6",
+      "matched_id": "azure-ad-client-secret",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.brave.1",
+      "matched_id": "brave-search-api-key",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.clickhouse.1",
+      "matched_id": "clickhouse-cloud-api-secret-key",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.clojars.2",
+      "matched_id": "clojars-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.databricks.2",
+      "matched_id": "databricks-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.datastax.1",
+      "matched_id": "datastax-astracs-token",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.digitalocean.1",
+      "matched_id": "digitalocean-pat",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.digitalocean.2",
+      "matched_id": "digitalocean-refresh-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.firecrawl.1",
+      "matched_id": "firecrawl-api-key",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.freemius.1",
+      "matched_id": "freemius-secret-key",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.github.2",
+      "matched_id": "github-pat",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.github.3",
+      "matched_id": "github-oauth",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.github.4",
+      "matched_id": "github-app-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.5",
+      "matched_id": "gitlab-cicd-job-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.6",
+      "matched_id": "gitlab-deploy-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.7",
+      "matched_id": "gitlab-feature-flag-client-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.8",
+      "matched_id": "gitlab-feed-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.9",
+      "matched_id": "gitlab-incoming-mail-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.10",
+      "matched_id": "gitlab-kubernetes-agent-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.11",
+      "matched_id": "gitlab-oauth-app-secret",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.12",
+      "matched_id": "gitlab-runner-authentication-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.13",
+      "matched_id": "gitlab-runner-authentication-token-routable",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.gitlab.14",
+      "matched_id": "gitlab-scim-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.grafana.3",
+      "matched_id": "grafana-service-account-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.infracost.1",
+      "matched_id": "infracost-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.maxmind.1",
+      "matched_id": "maxmind-license-key",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.mongodb.3",
+      "matched_id": "mongodb-atlas-db-uri-with-credentials",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.notion.2",
+      "matched_id": "notion-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.npm.1",
+      "matched_id": "npm-access-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.octopusdeploy.2",
+      "matched_id": "octopus-deploy-api-key",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.onfido.1",
+      "matched_id": "onfido-live-api-token",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.openrouter.1",
+      "matched_id": "openrouter-api-key",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.perplexity.1",
+      "matched_id": "perplexity-api-key",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.prefect.1",
+      "matched_id": "prefect-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.pulumi.1",
+      "matched_id": "pulumi-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.readme.1",
+      "matched_id": "readme-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.sentry.3",
+      "matched_id": "sentry-user-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.settlemint.1",
+      "matched_id": "settlemint-personal-access-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.settlemint.2",
+      "matched_id": "settlemint-application-access-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.settlemint.3",
+      "matched_id": "settlemint-service-access-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.shippo.1",
+      "matched_id": "shippo-api-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.shopify.1",
+      "matched_id": "shopify-access-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.square.2",
+      "matched_id": "square-access-token",
+      "matched_source": "gitleaks"
+    },
+    {
+      "id": "kingfisher.stripe.2",
+      "matched_id": "highnote-rk-live-key",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.supabase.2",
+      "matched_id": "supabase-secret-key",
+      "matched_source": "local"
+    },
+    {
+      "id": "kingfisher.unkey.1",
+      "matched_id": "unkey-root-key",
+      "matched_source": "local"
+    }
+  ],
+  "invalid_regex": [
+    "kingfisher.generic.5",
+    "kingfisher.jwt.1",
+    "kingfisher.pem.2",
+    "kingfisher.psexec.1",
+    "kingfisher.reactapp.1",
+    "kingfisher.reactapp.2",
+    "kingfisher.redis.2",
+    "kingfisher.teamcity.1",
+    "kingfisher.temporal.1",
+    "kingfisher.vmware.1"
+  ]
+}

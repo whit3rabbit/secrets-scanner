@@ -89,7 +89,7 @@ pub(super) fn scan_one_staged(
     entry: &StagedEntry,
     stats: &StatsAcc,
 ) -> Vec<Finding> {
-    let spec = format!(":{}", entry.rel);
+    let spec = format!(":./{}", entry.rel);
 
     let size = run_git_quiet(root, &["cat-file", "-s", &spec])
         .and_then(|out| std::str::from_utf8(&out).ok().map(str::to_owned))

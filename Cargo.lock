@@ -1134,6 +1134,7 @@ dependencies = [
  "criterion",
  "env_logger",
  "hex",
+ "libc",
  "log",
  "memchr",
  "proptest",

@@ -76,6 +76,14 @@ pub fn load_rules() -> String {
         if let Ok(content) = std::fs::read_to_string(&cache_path) {
             match validation::validate_rules_toml(&content) {
                 Ok(()) => {
+                    if let Err(e) = updater::verify_cached_rules_content(&content) {
+                        warn!(
+                            "[rules] Cached combined rules at {} failed integrity check; falling back to bundled rules: {e}",
+                            cache_path.display()
+                        );
+                        return BUNDLED_RULES.to_string();
+                    }
+
                     info!(
                         "[rules] Using cached combined rules from {}",
                         cache_path.display()
@@ -139,6 +147,16 @@ mod tests {
     use std::ffi::OsString;
     use std::sync::{Mutex, OnceLock};
 
+    const VALID_CACHE_RULES: &str = r#"
+title = "cache"
+
+[[rules]]
+id = "cache-secret"
+description = "Cache secret"
+regex = 'CACHESECRET[0-9]+'
+keywords = ["cachesecret"]
+"#;
+
     fn env_lock() -> &'static Mutex<()> {
         static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
         LOCK.get_or_init(|| Mutex::new(()))
@@ -171,28 +189,91 @@ mod tests {
         }
     }
 
+    fn use_temp_home() -> tempfile::TempDir {
+        let temp_home = tempfile::tempdir().expect("temp home");
+        std::env::set_var("HOME", temp_home.path());
+        std::env::remove_var("SECRETS_SCANNER_RULES");
+        temp_home
+    }
+
+    fn write_cache(content: &str, content_sha: Option<&str>) {
+        let cache_path = updater::cached_rules_path().expect("cache path");
+        std::fs::create_dir_all(cache_path.parent().expect("cache parent")).expect("cache dir");
+        std::fs::write(&cache_path, content).expect("write cache");
+        if let Some(content_sha) = content_sha {
+            let sha_path = updater::cached_content_sha_path().expect("cache sha path");
+            std::fs::write(&sha_path, content_sha).expect("write cache sha");
+        }
+    }
+
     #[test]
     fn invalid_cached_rules_fall_back_to_bundled_rules() {
         let _lock = env_lock().lock().expect("env lock");
         let _guard = EnvGuard::capture();
-        let temp_home = tempfile::tempdir().expect("temp home");
-        std::env::set_var("HOME", temp_home.path());
-        std::env::remove_var("SECRETS_SCANNER_RULES");
+        let _temp_home = use_temp_home();
 
-        let cache_path = updater::cached_rules_path().expect("cache path");
-        std::fs::create_dir_all(cache_path.parent().expect("cache parent")).expect("cache dir");
-        std::fs::write(&cache_path, "not valid toml = [").expect("write invalid cache");
+        write_cache("not valid toml = [", None);
 
         assert_eq!(load_rules(), BUNDLED_RULES);
+    }
+
+    #[test]
+    fn cached_rules_with_matching_content_sha_are_used() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let _temp_home = use_temp_home();
+
+        let cache_sha = updater::sha256_hex(VALID_CACHE_RULES.as_bytes());
+        write_cache(VALID_CACHE_RULES, Some(&cache_sha));
+
+        assert_eq!(load_rules(), VALID_CACHE_RULES);
+    }
+
+    #[test]
+    fn cached_rules_without_content_sha_fall_back_to_bundled_rules() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let _temp_home = use_temp_home();
+
+        write_cache(VALID_CACHE_RULES, None);
+
+        assert_eq!(load_rules(), BUNDLED_RULES);
+    }
+
+    #[test]
+    fn cached_rules_with_mismatched_content_sha_fall_back_to_bundled_rules() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let _temp_home = use_temp_home();
+
+        write_cache(VALID_CACHE_RULES, Some("definitely-not-the-cache-digest"));
+
+        assert_eq!(load_rules(), BUNDLED_RULES);
+    }
+
+    #[test]
+    fn explicit_rules_override_bypasses_unverified_cache() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let _temp_home = use_temp_home();
+        let temp_rules = tempfile::NamedTempFile::new().expect("temp rules");
+        write_cache(VALID_CACHE_RULES, Some("definitely-not-the-cache-digest"));
+        std::fs::write(temp_rules.path(), VALID_CACHE_RULES).expect("write override rules");
+        std::env::set_var("SECRETS_SCANNER_RULES", temp_rules.path());
+
+        assert_eq!(
+            load_rules_for_scanner().expect("override"),
+            VALID_CACHE_RULES
+        );
     }
 
     #[test]
     fn explicit_invalid_rules_override_still_errors() {
         let _lock = env_lock().lock().expect("env lock");
         let _guard = EnvGuard::capture();
-        let temp_home = tempfile::tempdir().expect("temp home");
+        let _temp_home = tempfile::tempdir().expect("temp home");
         let temp_rules = tempfile::NamedTempFile::new().expect("temp rules");
-        std::env::set_var("HOME", temp_home.path());
+        std::env::set_var("HOME", _temp_home.path());
         std::fs::write(temp_rules.path(), "not valid toml = [").expect("write invalid rules");
         std::env::set_var("SECRETS_SCANNER_RULES", temp_rules.path());
 
@@ -203,9 +284,9 @@ mod tests {
     fn explicit_unsupported_regex_override_errors_before_scanning() {
         let _lock = env_lock().lock().expect("env lock");
         let _guard = EnvGuard::capture();
-        let temp_home = tempfile::tempdir().expect("temp home");
+        let _temp_home = tempfile::tempdir().expect("temp home");
         let temp_rules = tempfile::NamedTempFile::new().expect("temp rules");
-        std::env::set_var("HOME", temp_home.path());
+        std::env::set_var("HOME", _temp_home.path());
         std::fs::write(
             temp_rules.path(),
             r#"

@@ -19,9 +19,11 @@ use log::info;
 pub const UPSTREAM_URL: &str =
     "https://raw.githubusercontent.com/gitleaks/gitleaks/refs/heads/master/config/gitleaks.toml";
 
-/// Version file stored alongside the cached rules to record the SHA-256 and
-/// download timestamp.
+/// Version file stored alongside the cached rules to record the upstream SHA-256.
 const VERSION_FILE: &str = "secrets-scanner.toml.sha256";
+
+/// Integrity file for the actual merged cached rules content.
+const CACHE_SHA_FILE: &str = "secrets-scanner.toml.cache.sha256";
 
 // ── OS data directory ─────────────────────────────────────────────────────────
 
@@ -68,27 +70,35 @@ pub fn cached_sha_path() -> Option<PathBuf> {
     data_dir().map(|d| d.join(VERSION_FILE))
 }
 
+/// Full path to the cached rules content SHA-256 sidecar file.
+pub fn cached_content_sha_path() -> Option<PathBuf> {
+    data_dir().map(|d| d.join(CACHE_SHA_FILE))
+}
+
 // ── SHA-256 helper ────────────────────────────────────────────────────────────
 
 /// Compute the SHA-256 digest of `data` and return it as a lowercase hex string.
-///
-/// When built with the `updater` feature this uses the `sha2` crate (pure Rust).
-/// Without the feature an error will be raised at the call site because the
-/// feature-gated `update_rules` function will not compile.
-#[cfg(feature = "updater")]
 pub fn sha256_hex(data: &[u8]) -> String {
     use sha2::{Digest, Sha256};
     let digest = Sha256::digest(data);
     hex::encode(digest)
 }
 
-/// Fallback stub used when the `updater` feature is disabled.
-///
-/// This should never be called at runtime in a non-updater build, but it
-/// allows the symbol to exist so downstream code that references it compiles.
-#[cfg(not(feature = "updater"))]
-pub fn sha256_hex(_data: &[u8]) -> String {
-    String::from("updater-feature-disabled")
+/// Verify that `content` matches the cached rules content SHA-256 sidecar.
+pub fn verify_cached_rules_content(content: &str) -> Result<(), String> {
+    let sha_path =
+        cached_content_sha_path().ok_or_else(|| "cannot determine data directory".to_string())?;
+    let expected = std::fs::read_to_string(&sha_path)
+        .map_err(|e| format!("could not read {}: {e}", sha_path.display()))?;
+    let expected = expected.trim();
+    let actual = sha256_hex(content.as_bytes());
+    if expected == actual {
+        Ok(())
+    } else {
+        Err(format!(
+            "SHA-256 mismatch: expected {expected}, actual {actual}"
+        ))
+    }
 }
 
 // ── HTTP fetch (ureq, feature-gated) ─────────────────────────────────────────
@@ -137,6 +147,7 @@ pub fn update_rules(
     use std::io::Read;
 
     let url = custom_url.unwrap_or(UPSTREAM_URL);
+    validate_update_url(url)?;
     info!("[updater] Fetching rules from {url}");
 
     let response = ureq::get(url).call()?;
@@ -156,7 +167,7 @@ pub fn update_rules(
         info!("[updater] Local  SHA-256: {local_sha}");
     }
 
-    if remote_sha == local_sha {
+    if remote_sha == local_sha && cached_rules_content_is_verified() {
         return Ok(if check_only {
             UpdateResult::CheckedCurrent { sha256: remote_sha }
         } else {
@@ -173,6 +184,7 @@ pub fn update_rules(
 
     let rules_path = cached_rules_path().ok_or("Cannot determine data directory")?;
     let sha_path = cached_sha_path().ok_or("Cannot determine data directory")?;
+    let cache_sha_path = cached_content_sha_path().ok_or("Cannot determine data directory")?;
 
     // Merge the downloaded upstream rules with local custom rules
     let upstream_toml = String::from_utf8(body)?;
@@ -201,28 +213,65 @@ pub fn update_rules(
     // Record the UPSTREAM body's SHA (not the merged SHA): the staleness check
     // compares this against a freshly fetched upstream SHA, so it must be the
     // same quantity or the "already current" path becomes unreachable.
-    write_pair_atomically(&rules_path, &merged_toml, &sha_path, &remote_sha)?;
+    let cache_sha = sha256_hex(merged_toml.as_bytes());
+    write_cache_atomically(
+        &rules_path,
+        &merged_toml,
+        &sha_path,
+        &remote_sha,
+        &cache_sha_path,
+        &cache_sha,
+    )?;
 
     info!("[updater] Combined rules saved to {}", rules_path.display());
     Ok(UpdateResult::Updated { sha256: remote_sha })
 }
 
 #[cfg(feature = "updater")]
-fn write_pair_atomically(
+fn validate_update_url(url: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let is_https = url
+        .get(..8)
+        .map(|prefix| prefix.eq_ignore_ascii_case("https://"))
+        .unwrap_or(false);
+    if is_https {
+        Ok(())
+    } else {
+        Err("rule update URL must use https://".into())
+    }
+}
+
+#[cfg(feature = "updater")]
+fn cached_rules_content_is_verified() -> bool {
+    cached_rules_path()
+        .and_then(|path| std::fs::read_to_string(path).ok())
+        .is_some_and(|content| verify_cached_rules_content(&content).is_ok())
+}
+
+#[cfg(feature = "updater")]
+fn write_cache_atomically(
     rules_path: &std::path::Path,
     rules_content: &str,
     sha_path: &std::path::Path,
     sha_content: &str,
+    cache_sha_path: &std::path::Path,
+    cache_sha_content: &str,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let rules_tmp = temp_path_for(rules_path);
     let sha_tmp = temp_path_for(sha_path);
+    let cache_sha_tmp = temp_path_for(cache_sha_path);
 
     std::fs::write(&rules_tmp, rules_content)?;
     std::fs::write(&sha_tmp, sha_content)?;
+    std::fs::write(&cache_sha_tmp, cache_sha_content)?;
 
     std::fs::rename(&rules_tmp, rules_path)?;
     if let Err(e) = std::fs::rename(&sha_tmp, sha_path) {
         let _ = std::fs::remove_file(&sha_tmp);
+        let _ = std::fs::remove_file(&cache_sha_tmp);
+        return Err(e.into());
+    }
+    if let Err(e) = std::fs::rename(&cache_sha_tmp, cache_sha_path) {
+        let _ = std::fs::remove_file(&cache_sha_tmp);
         return Err(e.into());
     }
 
@@ -259,13 +308,21 @@ mod tests {
     use super::*;
 
     #[test]
-    fn atomic_pair_write_writes_rules_before_sha_content() {
+    fn atomic_cache_write_writes_rules_and_sha_content() {
         let dir = tempfile::tempdir().expect("tempdir");
         let rules_path = dir.path().join("secrets-scanner.toml");
         let sha_path = dir.path().join("secrets-scanner.toml.sha256");
+        let cache_sha_path = dir.path().join("secrets-scanner.toml.cache.sha256");
 
-        write_pair_atomically(&rules_path, "rules-v1", &sha_path, "remote-sha")
-            .expect("atomic write");
+        write_cache_atomically(
+            &rules_path,
+            "rules-v1",
+            &sha_path,
+            "remote-sha",
+            &cache_sha_path,
+            "cache-sha",
+        )
+        .expect("atomic write");
 
         assert_eq!(
             std::fs::read_to_string(&rules_path).expect("rules"),
@@ -275,7 +332,22 @@ mod tests {
             std::fs::read_to_string(&sha_path).expect("sha"),
             "remote-sha"
         );
+        assert_eq!(
+            std::fs::read_to_string(&cache_sha_path).expect("cache sha"),
+            "cache-sha"
+        );
         assert!(!temp_path_for(&rules_path).exists());
         assert!(!temp_path_for(&sha_path).exists());
+        assert!(!temp_path_for(&cache_sha_path).exists());
+    }
+
+    #[test]
+    fn update_url_validation_accepts_https() {
+        validate_update_url("https://example.com/rules.toml").expect("https is allowed");
+    }
+
+    #[test]
+    fn update_url_validation_rejects_http() {
+        assert!(validate_update_url("http://example.com/rules.toml").is_err());
     }
 }

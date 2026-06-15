@@ -10,7 +10,6 @@
 //! rejected, git output is NUL-delimited and absolute paths from git are dropped,
 //! and binary content is detected by inspection rather than extension alone.
 
-use std::fs::File;
 use std::io::Read;
 use std::path::{Component, Path};
 use std::process::{Command, Stdio};
@@ -170,7 +169,7 @@ fn scan_one_file(scanner: &Scanner, path: &str, stats: &StatsAcc) -> Vec<Finding
     // process mid-scan would SIGBUS, which is uncatchable. The `take` bound also
     // closes the TOCTOU window — a file that grew after the metadata check above
     // still cannot be read past `max_file_size`.
-    let bytes = match read_bounded(path, scanner.config.max_file_size) {
+    let bytes = match read_bounded(path, scanner.config.max_file_size, metadata.len()) {
         Ok(Some(b)) => b,
         // None = grew past the cap between stat and read; count as oversized.
         Ok(None) => {
@@ -219,15 +218,31 @@ fn is_binary_skipped(policy: BinaryPolicy, path: &str, bytes: &[u8]) -> bool {
 
 /// Bounded read: returns `Ok(None)` if the file exceeds `max` bytes (read with
 /// a one-byte overshoot so an over-limit file is detected, not silently cut).
-fn read_bounded(path: &str, max: u64) -> std::io::Result<Option<Vec<u8>>> {
-    let file = File::open(path)?;
+fn read_bounded(path: &str, max: u64, expected_len: u64) -> std::io::Result<Option<Vec<u8>>> {
+    let file = open_no_follow(path)?;
     let mut reader = file.take(max.saturating_add(1));
-    let mut bytes = Vec::new();
+    let cap = expected_len.saturating_add(1).min(max.saturating_add(1));
+    let mut bytes = Vec::with_capacity(usize::try_from(cap).unwrap_or(usize::MAX));
     reader.read_to_end(&mut bytes)?;
     if bytes.len() as u64 > max {
         return Ok(None);
     }
     Ok(Some(bytes))
+}
+
+#[cfg(unix)]
+fn open_no_follow(path: &str) -> std::io::Result<std::fs::File> {
+    use std::os::unix::fs::OpenOptionsExt;
+
+    std::fs::OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_NOFOLLOW)
+        .open(path)
+}
+
+#[cfg(not(unix))]
+fn open_no_follow(path: &str) -> std::io::Result<std::fs::File> {
+    std::fs::File::open(path)
 }
 
 /// Collect paths via recursive directory walk, applying filters.
@@ -293,10 +308,10 @@ fn collect_git_paths(root: &str, config: &crate::scanner::ScanConfig) -> Option<
     if config.git_diff {
         // diff against the configured base (e.g. origin/main) or HEAD.
         let range = match &config.diff_base {
-            Some(base) => format!("{base}...HEAD"),
+            Some(base) => format!("{}...HEAD", resolve_diff_base(root, base)?),
             None => "HEAD".to_string(),
         };
-        let out = run_git(root, &["diff", "--name-only", "-z", &range])?;
+        let out = run_git(root, &["diff", "--name-only", "-z", &range, "--"])?;
         append_git_paths(root, &out, &mut paths);
     } else {
         let out = run_git(root, &["ls-files", "-z"])?;
@@ -310,6 +325,38 @@ fn collect_git_paths(root: &str, config: &crate::scanner::ScanConfig) -> Option<
     }
 
     Some(paths)
+}
+
+fn resolve_diff_base(root: &str, base: &str) -> Option<String> {
+    let base = base.trim();
+    if base.is_empty() || base.starts_with('-') {
+        warn!(
+            "[scanner] Warning: invalid --diff-base '{}'. Falling back to directory walk.",
+            sanitize_display(base)
+        );
+        return None;
+    }
+
+    let rev = format!("{base}^{{commit}}");
+    let out = run_git_quiet(
+        root,
+        &["rev-parse", "--verify", "--quiet", "--end-of-options", &rev],
+    );
+    let resolved = out
+        .as_deref()
+        .and_then(|bytes| std::str::from_utf8(bytes).ok())
+        .map(str::trim)
+        .filter(|commit| !commit.is_empty());
+    match resolved {
+        Some(commit) => Some(commit.to_string()),
+        None => {
+            warn!(
+                "[scanner] Warning: --diff-base '{}' did not resolve to a commit. Falling back to directory walk.",
+                sanitize_display(base)
+            );
+            None
+        }
+    }
 }
 
 /// Run a git command rooted at `root` with path-quoting disabled. Returns the

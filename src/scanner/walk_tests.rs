@@ -57,7 +57,7 @@ fn read_bounded_returns_none_for_oversized_file() {
 
     // Cap below the file size: the one-byte overshoot detects it as oversized.
     assert!(
-        read_bounded(path, 50).expect("read").is_none(),
+        read_bounded(path, 50, 100).expect("read").is_none(),
         "a file larger than the cap must read as None"
     );
 }
@@ -68,8 +68,23 @@ fn read_bounded_accepts_file_at_exact_cap() {
     std::fs::write(file.path(), vec![b'a'; 64]).expect("write");
     let path = file.path().to_str().expect("path");
 
-    let bytes = read_bounded(path, 64).expect("read").expect("some");
+    let bytes = read_bounded(path, 64, 64).expect("read").expect("some");
     assert_eq!(bytes.len(), 64, "a file at exactly the cap must be read");
+}
+
+#[cfg(unix)]
+#[test]
+fn read_bounded_rejects_symlink() {
+    let dir = tempfile::tempdir().expect("dir");
+    let target = dir.path().join("target.txt");
+    let link = dir.path().join("link.txt");
+    std::fs::write(&target, "SECRET123456").expect("write");
+    std::os::unix::fs::symlink(&target, &link).expect("symlink");
+
+    assert!(
+        read_bounded(link.to_str().expect("link"), 100, 12).is_err(),
+        "O_NOFOLLOW must reject symlinks even if the caller raced after stat"
+    );
 }
 
 #[test]

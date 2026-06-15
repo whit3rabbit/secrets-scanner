@@ -60,7 +60,7 @@ secrets-scanner/
 │       ├── updater.rs         # Runtime HTTP updater (feature-gated: `updater`)
 │       └── validation.rs      # Rule TOML and Regex validator
 ├── bindings/
-│   └── node/                  # NAPI-RS Node bindings (@secrets-scanner/core); see bindings/node/CLAUDE.md
+│   └── node/                  # NAPI-RS Node bindings (@whit3rabbit/rsecrets-scanner); see bindings/node/CLAUDE.md
 ├── plugins/
 │   └── secrets-scanner/       # Claude Code plugin: skill + install/uninstall/pre-commit scripts
 ├── .claude-plugin/            # Plugin marketplace manifest (marketplace.json lists plugins/secrets-scanner)
@@ -313,11 +313,24 @@ content (e.g. running as a GitHub Action). Key behaviors:
   multi-line matches (e.g. PEM keys) the marker is honored on the match's first
   line only.
 - **Result caps**: `--max-files`, `--max-findings`, `--max-findings-per-file`.
-  Every cap that fires logs a truncation notice (never silent).
+  Every cap that fires logs a truncation notice (never silent). `--max-findings`
+  conflicts with `--generate-baseline` (enforced by clap): a capped baseline
+  would silently under-suppress later scans, so the combination is rejected
+  rather than dropping the cap quietly. `--max-findings` still works with
+  `--baseline` (the cap applies after suppression).
+- **Redaction style**: `--redaction partial|full` controls the `matched` field
+  when redaction is on (default `partial` keeps the first/last 4 chars via
+  `filters::redact`; `full` replaces it with the fixed `[REDACTED]` marker via
+  `filters::redact_full`, hiding even the length). Orthogonal to `--no-redact`
+  (raw text), which it conflicts with. Carried on `ScanConfig::redaction_mode`
+  (`RedactionMode`); the proxy preset stays `Partial`.
 - **Honest coverage**: `ScanStats.errored` counts files that could not be
   stat'd/read (distinct from intentional binary/oversized skips) and the CLI
   summary reports `N unreadable`, so an errored file never looks like a
-  scanned-and-clean one.
+  scanned-and-clean one. `--error-on-unreadable` (off by default) turns a
+  non-zero `errored` count into **exit 2** (incomplete coverage) after output is
+  written; it takes precedence over the findings exit 1, is independent of
+  `--no-fail`, and does not apply to `--generate-baseline`.
 - **Entropy floor**: `--min-entropy` (`min_entropy_override`) only *raises* a
   rule's threshold (`max(override, rule_threshold)`); a low value can never
   weaken a stricter rule.
@@ -334,6 +347,12 @@ content (e.g. running as a GitHub Action). Key behaviors:
   force-redacted even under `--no-redact` (suppression keys on the fingerprint,
   not the text), so a committed/uploaded baseline never carries raw secrets.
   Baselines from older FNV-fingerprint builds should be regenerated once.
+  Setting `SECRETS_SCANNER_FINGERPRINT_KEY` switches every fingerprint to a keyed
+  HMAC-SHA256 (`hmac-sha256:` prefix instead of `sha256:`), which removes the
+  offline-guessing target for low-entropy secrets and makes baselines unlinkable
+  across keys. The key is read once per process. A keyed baseline only suppresses
+  when scanned with the same key; changing or unsetting the key requires
+  regenerating the baseline. `suppress_baseline` accepts both prefixes.
 - **SARIF** (`src/format.rs::write_sarif`, serde_json): `--output <file>`,
   generic `message.text` (rule + entropy, never the matched value),
   `partialFingerprints` (the finding's pre-redaction fingerprint, falling back to

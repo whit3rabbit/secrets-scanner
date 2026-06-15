@@ -28,7 +28,7 @@ keywords = ["secret"]
 const SECRET = "tok_ABCDEFGHIJKL";
 const OTHER_SECRET = "tok_MNOPQRSTUVWX";
 
-describe("@secrets-scanner/core", () => {
+describe("@whit3rabbit/rsecrets-scanner", () => {
   it("constructs from bundled rules", () => {
     expect(() => Scanner.bundled()).not.toThrow();
   });

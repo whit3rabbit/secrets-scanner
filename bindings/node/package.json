@@ -1,5 +1,5 @@
 {
-  "name": "@secrets-scanner/core",
+  "name": "@whit3rabbit/rsecrets-scanner",
   "version": "0.1.0",
   "description": "Native Node.js bindings for secrets-scanner.",
   "license": "MIT",

@@ -1,4 +1,4 @@
-# @secrets-scanner/core
+# @whit3rabbit/rsecrets-scanner
 
 Native Node.js bindings for the Rust `secrets-scanner` engine.
 
@@ -6,7 +6,7 @@ This package is the core binding only. MCP server packaging is intentionally a
 follow-up layer over this API.
 
 ```js
-const { Scanner } = require("@secrets-scanner/core");
+const { Scanner } = require("@whit3rabbit/rsecrets-scanner");
 
 const scanner = Scanner.bundled();
 const result = scanner.scanAndRedactContent(

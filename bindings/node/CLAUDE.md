@@ -1,4 +1,4 @@
-# @secrets-scanner/core (Node bindings)
+# @whit3rabbit/rsecrets-scanner (Node bindings)
 
 Native Node.js bindings (NAPI-RS) over the Rust `secrets_scanner` crate (`../..`).
 Core binding only; MCP server packaging is a planned follow-up layer.

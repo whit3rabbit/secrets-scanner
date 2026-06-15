@@ -1,0 +1,46 @@
+name: Publish Node Bindings to NPM
+
+on:
+  push:
+    tags:
+      - "v[0-9]*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # Required for NPM provenance publishing
+
+jobs:
+  publish:
+    name: Build & Publish to NPM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install Node dependencies
+        working-directory: bindings/node
+        run: npm ci
+
+      - name: Build Native Binding
+        working-directory: bindings/node
+        run: npm run build
+
+      - name: Run Bindings Tests
+        working-directory: bindings/node
+        run: npm test
+
+      - name: Publish Package to NPM with Provenance
+        working-directory: bindings/node
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

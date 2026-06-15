@@ -64,7 +64,7 @@ fn redact_for_proxy(input: &[u8]) -> Result<Vec<u8>, ProxyError> {
 Node:
 
 ```js
-const { Scanner } = require("@secrets-scanner/core");
+const { Scanner } = require("@whit3rabbit/rsecrets-scanner");
 
 const scanner = Scanner.proxy({ maxFileSize: 1024 * 1024 });
 const result = await scanner.scanProxyAsync(Buffer.from(input));

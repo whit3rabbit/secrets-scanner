@@ -24,7 +24,7 @@
 //! The scanner owns a compiled `RuleEngine` and a `ScanConfig`.
 //! It is `Send + Sync` and safe to share across threads.
 
-use crate::error::ScannerError;
+use crate::error::{ProxyError, ScannerError};
 use crate::rules::engine::RuleEngine;
 
 mod matching;
@@ -180,6 +180,26 @@ impl Scanner {
         }
     }
 
+    /// Hardened entry point for scanning untrusted in-memory content (e.g. an
+    /// LLM redaction proxy).
+    ///
+    /// Unlike [`scan_and_redact_bytes`](Self::scan_and_redact_bytes), this
+    /// **fails closed**: if `content` exceeds `max_file_size` it returns
+    /// [`ProxyError::InputTooLarge`] and produces no output, so an oversized
+    /// payload can never be forwarded unscanned. Pair with
+    /// [`ScanConfig::proxy`](crate::ScanConfig::proxy), which also disables
+    /// attacker-controlled allow markers, skips context capture, and caps
+    /// findings and `matched` length.
+    pub fn scan_proxy(&self, content: &[u8]) -> Result<ScanOutput<Vec<u8>>, ProxyError> {
+        if content.len() as u64 > self.config.max_file_size {
+            return Err(ProxyError::InputTooLarge {
+                size: content.len(),
+                max: self.config.max_file_size,
+            });
+        }
+        Ok(self.scan_and_redact_bytes("<proxy>", content))
+    }
+
     /// Scan a byte slice against all rules.
     ///
     /// This operates directly on raw bytes to avoid heap allocations.
@@ -270,7 +290,22 @@ impl Scanner {
             std::sync::atomic::Ordering::Relaxed,
         );
 
-        if self.config.redact {
+        // Per-content finding cap. Enforced here (not only in the directory
+        // walk) so every caller of `scan_bytes` — including the in-memory proxy
+        // path — is bounded and cannot be starved by a match-spam payload.
+        if let Some(cap) = self.config.max_findings_per_file {
+            if findings.len() > cap {
+                log::warn!(
+                    "[scanner] Warning: {} finding(s) in '{}' truncated to \
+                     --max-findings-per-file ({cap}).",
+                    findings.len(),
+                    crate::safe_display::sanitize_display(path),
+                );
+                findings.truncate(cap);
+            }
+        }
+
+        if self.config.redact && self.config.capture_context {
             matching::redact_context_lines(content, &mut findings);
         }
 

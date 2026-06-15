@@ -18,6 +18,7 @@ pub(super) fn handle(args: ScanArgs) {
     let git_diff = resolve_git_diff(&args);
     let config = ScanConfig {
         redact: !args.no_redact,
+        capture_context: !args.no_context && !matches!(args.format, OutputFormat::Sarif),
         min_entropy_override: args.min_entropy,
         max_file_size: args.max_file_size,
         git: args.git,
@@ -31,6 +32,8 @@ pub(super) fn handle(args: ScanArgs) {
         // the library config would cap each root separately and log twice.
         max_findings: None,
         max_findings_per_file: args.max_findings_per_file,
+        honor_allow_markers: true,
+        max_matched_len: None,
     };
 
     let scanner = if let Some(ref rules_path) = args.rules {

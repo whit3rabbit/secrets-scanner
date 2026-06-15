@@ -172,8 +172,10 @@ pub(super) fn check_rule_match(
         // Inline suppression: a trailing `# gitleaks:allow` (or
         // `secrets-scanner:allow`) on the match's first line skips the finding.
         // Multi-line matches (e.g. PEM keys) honor the marker on the start line
-        // only, matching gitleaks behavior.
-        if line_has_allow_marker(line_bytes) {
+        // only, matching gitleaks behavior. Disabled in proxy mode
+        // (`honor_allow_markers = false`): an attacker controlling the content
+        // could otherwise append the marker to forward a secret in the clear.
+        if scanner.config.honor_allow_markers && line_has_allow_marker(line_bytes) {
             continue;
         }
 
@@ -192,13 +194,29 @@ pub(super) fn check_rule_match(
         }
 
         let end = line_cursor.locate(content, match_end_in_file);
-        let context_lines = context_lines(content, start.line, start.line_start, start.line_end);
-
-        let matched_str = String::from_utf8_lossy(matched_bytes);
-        let display_match = if scanner.config.redact {
-            filters::redact(&matched_str)
+        let context_lines = if scanner.config.capture_context {
+            context_lines(content, start.line, start.line_start, start.line_end)
         } else {
-            matched_str.to_string()
+            Vec::new()
+        };
+
+        // Bound the `matched` field for very long matches (e.g. a JWT/PEM/base64
+        // body spanning the whole payload). Substituting a fixed marker carrying
+        // no secret content also skips the `from_utf8_lossy` + `redact`
+        // allocations, closing the asterisk-amplification memory vector in proxy
+        // mode. The fingerprint below is still computed over the raw secret.
+        let display_match = match scanner.config.max_matched_len {
+            Some(cap) if matched_bytes.len() > cap => {
+                format!("[MATCH OMITTED: {} bytes]", matched_bytes.len())
+            }
+            _ => {
+                let matched_str = String::from_utf8_lossy(matched_bytes);
+                if scanner.config.redact {
+                    filters::redact(&matched_str)
+                } else {
+                    matched_str.to_string()
+                }
+            }
         };
 
         // Fingerprint over the RAW secret (before redaction) so it is stable

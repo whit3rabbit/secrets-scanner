@@ -275,6 +275,39 @@ content (e.g. running as a GitHub Action). Key behaviors:
   scans relativize against the current directory), driver metadata,
   `automationDetails`.
 
+### Proxy / untrusted content
+
+The file-walk path is hardened for hostile repos; the **in-memory content APIs**
+(`scan_content`, `scan_and_redact_bytes`) are not, on their own. For a redaction
+proxy filtering attacker-controlled LLM traffic, use the dedicated entry point:
+
+- **`Scanner::scan_proxy(content) -> Result<ScanOutput<Vec<u8>>, ProxyError>`**
+  (`src/scanner.rs`): **fails closed** — input over `max_file_size` returns
+  `ProxyError::InputTooLarge` and produces no output, so oversized content is
+  never forwarded unscanned. Pair with **`ScanConfig::proxy()`**
+  (`src/scanner/types.rs`), which: redacts; sets `honor_allow_markers = false`
+  (an attacker can't append `secrets-scanner:allow` to forward a secret in the
+  clear); sets `capture_context = false` (no whole-payload context blowup on
+  newline-free input); caps `max_findings_per_file` (enforced inside
+  `scan_bytes`, not just the walk) and `max_matched_len` (a match longer than the
+  cap is reported as `[MATCH OMITTED: N bytes]` instead of a payload-length
+  redaction string). Forwarded content always uses the fixed `[REDACTED_SECRET]`
+  marker.
+
+Deployment caveats (not enforced in code):
+
+- **Encoded/obfuscated/split secrets evade detection** (base64/hex/zero-width/
+  line-fragmented) — same limitation as below; this redactor catches literal,
+  recognizable secrets only.
+- **Redaction is not injection sanitization.** Non-secret bytes (shell/SQL/XSS/
+  prompt-injection payloads) pass through untouched; do not treat post-redaction
+  output as safe to hand to a shell/renderer.
+- **Findings carry raw attacker bytes** (`matched`, `context_lines` may contain
+  control/ANSI chars). Library callers must sanitize at the logging boundary
+  (the CLI does this via `safe_display::sanitize_display`).
+- Audit the active ruleset for `regexTarget = line|match` allowlists: in proxy
+  mode the attacker controls the haystack those allowlists run against.
+
 ### Known limitations
 
 Detection runs on raw file bytes, so it does not see secrets that are

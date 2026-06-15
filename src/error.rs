@@ -24,3 +24,23 @@ pub enum ScannerError {
     #[error("failed to build keyword automaton: {0}")]
     AhoCorasick(#[from] aho_corasick::BuildError),
 }
+
+/// Errors from the hardened proxy entry point ([`Scanner::scan_proxy`]).
+///
+/// Distinct from [`ScannerError`] (a setup/rule-loading failure): these are
+/// per-request rejections of untrusted input. The proxy fails closed, so a
+/// caller must treat an `Err` as "do not forward this content".
+///
+/// [`Scanner::scan_proxy`]: crate::Scanner::scan_proxy
+#[derive(Debug, thiserror::Error)]
+pub enum ProxyError {
+    /// Input exceeded the configured `max_file_size`. The content was neither
+    /// scanned nor redacted, so it must not be forwarded.
+    #[error("input too large: {size} bytes exceeds max {max}")]
+    InputTooLarge {
+        /// Size of the rejected input in bytes.
+        size: usize,
+        /// The configured maximum (`ScanConfig::max_file_size`) in bytes.
+        max: u64,
+    },
+}

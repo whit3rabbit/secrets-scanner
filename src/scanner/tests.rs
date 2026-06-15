@@ -219,6 +219,25 @@ regex = 'https://hooks\.slack\.com/services/[T|B][A-Za-z0-9_]{8}/[A-Za-z0-9_]{8}
     assert_eq!(findings[0].rule_id, "slack-webhook");
 }
 
+#[test]
+fn detects_path_only_rule_without_scanning_all_rules_for_paths() {
+    let toml = r#"
+title = "path-only-test"
+
+[[rules]]
+id = "path-only-secret"
+description = "Path-only secret file"
+path = 'secret\.env$'
+"#;
+    let scanner = Scanner::from_toml(toml).expect("should build test scanner");
+
+    let findings = scanner.scan_content("secret.env", "clean content");
+
+    assert_eq!(findings.len(), 1);
+    assert_eq!(findings[0].rule_id, "path-only-secret");
+    assert!(scanner.scan_content("safe.env", "clean content").is_empty());
+}
+
 #[cfg(feature = "bench")]
 #[test]
 fn unkeyworded_scan_time_is_benchmarked() {
@@ -425,6 +444,32 @@ keywords = ["ghp_"]
         vec![1, 2, 3, 4, 5],
         "context should span 2 lines on each side of the match"
     );
+}
+
+#[test]
+fn capture_context_false_keeps_locations_without_context_lines() {
+    let toml = r#"
+title = "ctx-off"
+
+[[rules]]
+id = "github-pat"
+regex = 'ghp_[A-Za-z0-9_]{36,}'
+keywords = ["ghp_"]
+"#;
+    let scanner = Scanner::from_toml(toml)
+        .expect("build")
+        .with_config(ScanConfig {
+            capture_context: false,
+            ..Default::default()
+        });
+    let content = "line1\nTOKEN=ghp_n0tArEaLsEcReTgHuBpAt1234567890AbCde\nline3";
+
+    let findings = scanner.scan_content("c.txt", content);
+
+    assert_eq!(findings.len(), 1);
+    assert_eq!(findings[0].line, 2);
+    assert!(findings[0].matched.contains('*'));
+    assert!(findings[0].context_lines.is_empty());
 }
 
 #[test]

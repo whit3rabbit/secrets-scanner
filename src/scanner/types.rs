@@ -4,6 +4,15 @@
 /// as they're unlikely to contain secrets and would slow scanning.
 pub const DEFAULT_MAX_FILE_SIZE: u64 = 2 * 1024 * 1024;
 
+/// Default per-content finding cap for the hardened proxy preset. Bounds the
+/// `findings` vector so a match-spam payload cannot exhaust memory.
+pub const DEFAULT_PROXY_MAX_FINDINGS: usize = 1000;
+
+/// Default `matched`-field length cap (in bytes) for the proxy preset. A match
+/// longer than this is reported with a fixed summary marker instead of a
+/// payload-length redaction string (closes the asterisk-amplification vector).
+pub const DEFAULT_PROXY_MAX_MATCHED_LEN: usize = 256;
+
 /// How to treat files that look like binary content.
 ///
 /// Binary detection is content-based (NUL bytes / control-byte ratio), not just
@@ -65,8 +74,26 @@ pub struct ScanConfig {
     /// Cap on total findings reported across the whole scan. `None` means unlimited.
     pub max_findings: Option<usize>,
 
-    /// Cap on findings reported per file. `None` means unlimited.
+    /// Cap on findings reported per file (per call to `scan_bytes`). `None`
+    /// means unlimited.
     pub max_findings_per_file: Option<usize>,
+
+    /// Whether inline allow markers (`secrets-scanner:allow` / `gitleaks:allow`)
+    /// suppress a finding. `true` (default) matches gitleaks. Set `false` when
+    /// scanning attacker-controlled content (e.g. a redaction proxy), where an
+    /// attacker could otherwise append the marker to forward a secret in clear.
+    pub honor_allow_markers: bool,
+
+    /// Whether to capture surrounding context lines for each finding. `true`
+    /// (default) populates `Finding::context_lines`. Set `false` in proxy mode:
+    /// on newline-free input the whole payload is one line, so capture is an
+    /// O(findings x payload) memory amplifier and is never forwarded anyway.
+    pub capture_context: bool,
+
+    /// Cap on the byte length of a finding's `matched` field. When set and a
+    /// match exceeds it, `matched` becomes a fixed summary marker carrying no
+    /// secret content. `None` (default) preserves the full redacted/raw match.
+    pub max_matched_len: Option<usize>,
 }
 
 impl Default for ScanConfig {
@@ -84,6 +111,28 @@ impl Default for ScanConfig {
             max_files: None,
             max_findings: None,
             max_findings_per_file: None,
+            honor_allow_markers: true,
+            capture_context: true,
+            max_matched_len: None,
+        }
+    }
+}
+
+impl ScanConfig {
+    /// Hardened preset for untrusted in-memory content (e.g. an LLM redaction
+    /// proxy). It redacts, ignores attacker-supplied inline allow markers, skips
+    /// context capture, and caps both finding count and `matched` length. Input
+    /// size is bounded by `max_file_size` and enforced fail-closed by
+    /// [`Scanner::scan_proxy`](crate::Scanner::scan_proxy). Raise any cap via
+    /// [`Scanner::with_config`](crate::Scanner::with_config) when needed.
+    pub fn proxy() -> Self {
+        Self {
+            redact: true,
+            honor_allow_markers: false,
+            capture_context: false,
+            max_findings_per_file: Some(DEFAULT_PROXY_MAX_FINDINGS),
+            max_matched_len: Some(DEFAULT_PROXY_MAX_MATCHED_LEN),
+            ..Self::default()
         }
     }
 }

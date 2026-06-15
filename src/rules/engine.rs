@@ -14,7 +14,9 @@
 //!                                          └── Vec<CompiledRule> (regex + metadata)
 //! ```
 
-use crate::rules::validation::{compile_bytes_regex, compile_regex, RulesetConfig};
+use crate::rules::validation::{
+    compile_bytes_regex, compile_bytes_regex_set, compile_regex, RulesetConfig,
+};
 use aho_corasick::AhoCorasick;
 use log::{debug, info, warn};
 use regex::Regex;
@@ -49,6 +51,12 @@ pub struct CompiledRule {
     pub secret_group: Option<usize>,
 }
 
+#[derive(Clone, Copy)]
+enum RuleRef {
+    Keyworded(usize),
+    Unkeyworded(usize),
+}
+
 /// The compiled rule engine. Owns the Aho-Corasick automaton and all compiled rules.
 ///
 /// # Usage
@@ -72,6 +80,15 @@ pub struct RuleEngine {
 
     /// Compiled rules that do NOT have keywords.
     unkeyworded_rules: Vec<CompiledRule>,
+
+    /// RegexSet prefilter over unkeyworded rules that have content regexes.
+    unkeyworded_regex_set: Option<regex::bytes::RegexSet>,
+
+    /// Maps RegexSet match indices back to `unkeyworded_rules` indices.
+    unkeyworded_set_rule_indices: Vec<usize>,
+
+    /// Rules with only a path filter and no content regex.
+    path_only_rules: Vec<RuleRef>,
 
     /// Compiled global allowlists.
     global_allowlists: Vec<CompiledAllowlist>,
@@ -123,6 +140,9 @@ impl RuleEngine {
 
         let mut keyworded_rules = Vec::new();
         let mut unkeyworded_rules = Vec::new();
+        let mut unkeyworded_set_patterns = Vec::new();
+        let mut unkeyworded_set_rule_indices = Vec::new();
+        let mut path_only_rules = Vec::new();
         let mut unique_keywords: Vec<String> = Vec::new();
         let mut keyword_to_rules: Vec<Vec<usize>> = Vec::new();
         let mut keyword_map = std::collections::HashMap::new();
@@ -227,10 +247,22 @@ impl RuleEngine {
                 secret_group,
             };
 
+            let is_path_only = compiled_rule.regex.is_none() && compiled_rule.path_filter.is_some();
+
             if rule_config.keywords.is_empty() {
+                let rule_idx = unkeyworded_rules.len();
+                if is_path_only {
+                    path_only_rules.push(RuleRef::Unkeyworded(rule_idx));
+                } else if let Some(ref reg_str) = rule_config.regex {
+                    unkeyworded_set_patterns.push(reg_str.clone());
+                    unkeyworded_set_rule_indices.push(rule_idx);
+                }
                 unkeyworded_rules.push(compiled_rule);
             } else {
                 let rule_idx = keyworded_rules.len();
+                if is_path_only {
+                    path_only_rules.push(RuleRef::Keyworded(rule_idx));
+                }
                 for kw in &rule_config.keywords {
                     let kw_lower = kw.to_lowercase();
                     let idx = *keyword_map.entry(kw_lower.clone()).or_insert_with(|| {
@@ -247,6 +279,21 @@ impl RuleEngine {
         if skipped > 0 {
             warn!("[engine] Skipped {skipped} rules with invalid regex patterns");
         }
+
+        let unkeyworded_regex_set = if unkeyworded_set_patterns.is_empty() {
+            None
+        } else {
+            match compile_bytes_regex_set(&unkeyworded_set_patterns) {
+                Ok(set) => Some(set),
+                Err(e) => {
+                    warn!(
+                        "[engine] Warning: unkeyworded RegexSet prefilter disabled; falling back to per-rule scans: {e}"
+                    );
+                    unkeyworded_set_rule_indices.clear();
+                    None
+                }
+            }
+        };
 
         // Compute unique first bytes for memchr pre-filter
         let mut first_bytes: Vec<u8> = unique_keywords
@@ -299,6 +346,9 @@ impl RuleEngine {
                 keyword_to_rules,
                 keyworded_rules,
                 unkeyworded_rules,
+                unkeyworded_regex_set,
+                unkeyworded_set_rule_indices,
+                path_only_rules,
                 global_allowlists,
                 keyword_first_bytes: first_bytes,
             },
@@ -327,6 +377,24 @@ impl RuleEngine {
     /// Returns the compiled rules that do NOT have keywords.
     pub fn unkeyworded_rules(&self) -> &[CompiledRule] {
         &self.unkeyworded_rules
+    }
+
+    /// Returns the optional RegexSet prefilter for unkeyworded content rules.
+    pub fn unkeyworded_regex_set(&self) -> Option<&regex::bytes::RegexSet> {
+        self.unkeyworded_regex_set.as_ref()
+    }
+
+    /// Maps RegexSet match indices back to [`Self::unkeyworded_rules`] indices.
+    pub fn unkeyworded_regex_set_rule_indices(&self) -> &[usize] {
+        &self.unkeyworded_set_rule_indices
+    }
+
+    /// Returns rules that match only on file path.
+    pub fn path_only_rules(&self) -> impl Iterator<Item = &CompiledRule> {
+        self.path_only_rules.iter().map(|rule_ref| match *rule_ref {
+            RuleRef::Keyworded(idx) => &self.keyworded_rules[idx],
+            RuleRef::Unkeyworded(idx) => &self.unkeyworded_rules[idx],
+        })
     }
 
     /// Look up which rule indices a keyword AC match belongs to.

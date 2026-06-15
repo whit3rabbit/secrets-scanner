@@ -10,7 +10,8 @@ pub use config::{
 };
 #[allow(unused_imports)]
 pub use helpers::{
-    compile_bytes_regex, compile_regex, escape_literal_braces, is_unsupported_regex_error,
+    compile_bytes_regex, compile_bytes_regex_set, compile_regex, escape_literal_braces,
+    is_unsupported_regex_error,
 };
 
 use std::collections::HashSet;

@@ -191,42 +191,34 @@ impl Scanner {
 
         let mut findings = Vec::new();
 
-        // Check path-only rules (rules with no content regex but having a path filter).
-        // Iterate the two rule slices directly to avoid allocating a Vec per file.
-        for rule in self
-            .engine
-            .keyworded_rules()
-            .iter()
-            .chain(self.engine.unkeyworded_rules().iter())
-        {
-            if rule.regex.is_none() {
-                if let Some(ref path_re) = rule.path_filter {
-                    if path_re.is_match(path) {
-                        findings.push(Finding {
-                            file: path.to_string(),
-                            line: 1,
-                            col: 1,
-                            end_line: 1,
-                            end_col: 1,
-                            col_utf16: 1,
-                            end_col_utf16: 1,
-                            rule_id: rule.id.clone(),
-                            rule_description: rule.description.clone(),
-                            matched: format!("File path matches pattern: {}", path),
-                            entropy: 0.0,
-                            start_offset: 0,
-                            end_offset: 0,
-                            secret_start_offset: 0,
-                            secret_end_offset: 0,
-                            // Path-only rule: fingerprint over (rule, path) — no secret span.
-                            fingerprint: crate::fingerprint::finding_fingerprint(
-                                &rule.id,
-                                path,
-                                path.as_bytes(),
-                            ),
-                            context_lines: Vec::new(),
-                        });
-                    }
+        // Check path-only rules without walking the whole ruleset per file.
+        for rule in self.engine.path_only_rules() {
+            if let Some(ref path_re) = rule.path_filter {
+                if path_re.is_match(path) {
+                    findings.push(Finding {
+                        file: path.to_string(),
+                        line: 1,
+                        col: 1,
+                        end_line: 1,
+                        end_col: 1,
+                        col_utf16: 1,
+                        end_col_utf16: 1,
+                        rule_id: rule.id.clone(),
+                        rule_description: rule.description.clone(),
+                        matched: format!("File path matches pattern: {}", path),
+                        entropy: 0.0,
+                        start_offset: 0,
+                        end_offset: 0,
+                        secret_start_offset: 0,
+                        secret_end_offset: 0,
+                        // Path-only rule: fingerprint over (rule, path) — no secret span.
+                        fingerprint: crate::fingerprint::finding_fingerprint(
+                            &rule.id,
+                            path,
+                            path.as_bytes(),
+                        ),
+                        context_lines: Vec::new(),
+                    });
                 }
             }
         }
@@ -248,6 +240,9 @@ impl Scanner {
             if !candidate_rules[rule_idx] {
                 continue;
             }
+            if rule.regex.is_none() {
+                continue;
+            }
 
             matching::check_rule_match(self, rule, path, content, &mut findings);
         }
@@ -255,8 +250,19 @@ impl Scanner {
         // 3. Evaluate unkeyworded regex rules and benchmark their cost.
         #[cfg(feature = "bench")]
         let unkeyworded_start = std::time::Instant::now();
-        for rule in self.engine.unkeyworded_rules().iter() {
-            matching::check_rule_match(self, rule, path, content, &mut findings);
+        if let Some(regex_set) = self.engine.unkeyworded_regex_set() {
+            let rule_indices = self.engine.unkeyworded_regex_set_rule_indices();
+            for set_idx in regex_set.matches(content).iter() {
+                let rule_idx = rule_indices[set_idx];
+                let rule = &self.engine.unkeyworded_rules()[rule_idx];
+                matching::check_rule_match(self, rule, path, content, &mut findings);
+            }
+        } else {
+            for rule in self.engine.unkeyworded_rules().iter() {
+                if rule.regex.is_some() {
+                    matching::check_rule_match(self, rule, path, content, &mut findings);
+                }
+            }
         }
         #[cfg(feature = "bench")]
         self.unkeyworded_scan_time_ns.fetch_add(

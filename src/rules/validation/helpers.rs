@@ -23,6 +23,24 @@ pub fn compile_bytes_regex(pattern: &str) -> Result<regex::bytes::Regex, regex::
     builder.build()
 }
 
+/// Helper to preprocess and compile a regex set for matching raw byte slices.
+///
+/// This uses the same literal-brace escaping and size limit as
+/// [`compile_bytes_regex`], so the set prefilter has the same compilation
+/// posture as individual detection regexes.
+#[allow(dead_code)]
+pub fn compile_bytes_regex_set(
+    patterns: &[String],
+) -> Result<regex::bytes::RegexSet, regex::Error> {
+    let escaped: Vec<String> = patterns
+        .iter()
+        .map(|pattern| escape_literal_braces(pattern))
+        .collect();
+    let mut builder = regex::bytes::RegexSetBuilder::new(escaped);
+    builder.size_limit(100 * 1024 * 1024);
+    builder.build()
+}
+
 /// Escapes unescaped `{` and `}` characters that are not part of valid repetition quantifiers (e.g. `{n}`, `{n,}`, `{n,m}`).
 pub fn escape_literal_braces(pattern: &str) -> String {
     let mut result = String::new();

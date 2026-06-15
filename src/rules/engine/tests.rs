@@ -249,6 +249,28 @@ regex = 'nokw-[0-9]+'
 }
 
 #[test]
+fn builds_unkeyworded_regex_set_for_content_rules() {
+    let toml = r#"
+title = "test unkeyworded set"
+
+[[rules]]
+id = "unkeyworded-content"
+regex = 'nokw-[0-9]+'
+
+[[rules]]
+id = "path-only"
+path = 'secret\.env$'
+"#;
+    let engine = RuleEngine::from_toml(toml).expect("should parse");
+
+    assert!(engine.unkeyworded_regex_set().is_some());
+    assert_eq!(engine.unkeyworded_regex_set_rule_indices(), &[0]);
+    let path_only: Vec<&CompiledRule> = engine.path_only_rules().collect();
+    assert_eq!(path_only.len(), 1);
+    assert_eq!(path_only[0].id, "path-only");
+}
+
+#[test]
 fn loads_bundled_rules() {
     // This tests against the actual bundled rules to ensure they parse
     let toml_str = include_str!("../../../assets/secrets-scanner.toml");

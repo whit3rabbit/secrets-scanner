@@ -93,21 +93,22 @@ impl Scanner {
 
     /// Create a scanner from a TOML string.
     ///
-    /// Two intentional passes with different jobs: [`validate_rules_toml`] is the
-    /// strict gate (it also checks rule-id uniqueness/non-emptiness and *rejects*
-    /// any uncompilable regex), while `RuleEngine::from_toml` is the lenient build
-    /// that *skips* uncompilable rules. Running validate first is what makes an
-    /// explicit `--rules`/`from_file` ruleset fail loudly instead of silently
-    /// scanning with a reduced rule set (see `new`/`from_bundled`, which take the
-    /// lenient path for the build-validated bundled/cached tiers). The extra parse
-    /// is a one-time, construction-only cost.
+    /// Strict gate for explicit `--rules`/`from_file` rulesets: it fails loudly
+    /// (rather than silently scanning with a reduced rule set) if the ruleset has
+    /// any uncompilable regex, empty ID, or duplicate ID. `new`/`from_bundled`
+    /// take the lenient [`RuleEngine::from_toml`] path because their
+    /// bundled/cached tiers are validated at build/update time.
     ///
-    /// [`validate_rules_toml`]: crate::rules::validation::validate_rules_toml
+    /// A single parse+compile pass does both jobs: [`RuleEngine::from_toml_reporting`]
+    /// builds the engine and reports everything it had to drop or that is
+    /// structurally invalid, so this no longer re-parses the TOML and re-compiles
+    /// every regex in a separate validation pass.
     pub fn from_toml(toml_str: &str) -> Result<Self, ScannerError> {
-        if let Err(errors) = crate::rules::validation::validate_rules_toml(toml_str) {
-            return Err(ScannerError::InvalidRules(errors));
+        let (engine, issues) = RuleEngine::from_toml_reporting(toml_str)?;
+        if !issues.is_empty() {
+            return Err(ScannerError::InvalidRules(issues));
         }
-        Ok(Self::from_engine(RuleEngine::from_toml(toml_str)?))
+        Ok(Self::from_engine(engine))
     }
 
     /// Create a scanner with a custom config.

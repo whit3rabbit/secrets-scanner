@@ -62,6 +62,31 @@ fn from_file_rejects_invalid_custom_regex() {
 }
 
 #[test]
+fn from_toml_rejects_duplicate_ids() {
+    // The single-pass constructor still enforces id uniqueness (previously the
+    // job of the separate validate pass).
+    let toml = r#"
+title = "dup"
+[[rules]]
+id = "same"
+regex = 'a[0-9]+'
+keywords = ["a"]
+
+[[rules]]
+id = "same"
+regex = 'b[0-9]+'
+keywords = ["b"]
+"#;
+    assert!(
+        matches!(
+            Scanner::from_toml(toml),
+            Err(crate::error::ScannerError::InvalidRules(_))
+        ),
+        "scanner constructors must reject duplicate rule IDs"
+    );
+}
+
+#[test]
 fn detects_aws_key() {
     let scanner = test_scanner();
     // A fake AWS key with high entropy: AKIA + exactly 16 chars in [A-Z2-7].

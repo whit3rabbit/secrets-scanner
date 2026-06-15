@@ -256,6 +256,14 @@ mod tests {
     }
 
     #[test]
+    fn json_string_escapes_special_chars() {
+        assert_eq!(json_string("hello"), "\"hello\"");
+        assert_eq!(json_string("say \"hi\""), "\"say \\\"hi\\\"\"");
+        assert_eq!(json_string("new\nline"), "\"new\\nline\"");
+        assert_eq!(json_string("tab\there"), "\"tab\\there\"");
+    }
+
+    #[test]
     fn relativize_strips_base_and_normalizes_separators() {
         assert_eq!(relativize("./src/a.rs", "."), "src/a.rs");
         assert_eq!(relativize("repo/src/a.rs", "repo"), "src/a.rs");

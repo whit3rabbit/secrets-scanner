@@ -95,6 +95,30 @@ impl RuleEngine {
     /// Returns an error if the TOML is malformed or if the Aho-Corasick
     /// automaton cannot be built.
     pub fn from_toml(toml_str: &str) -> Result<Self, crate::error::ScannerError> {
+        Ok(Self::from_toml_reporting(toml_str)?.0)
+    }
+
+    /// Like [`from_toml`], but also returns a list of human-readable issues
+    /// describing everything the lenient build had to drop or that is
+    /// structurally invalid: rules with an uncompilable detection regex,
+    /// invalid path/allowlist/global-allowlist regexes, and empty/duplicate
+    /// rule IDs. An empty `Vec` means the ruleset compiled cleanly with nothing
+    /// skipped.
+    ///
+    /// This lets a strict caller (`Scanner::from_toml`) fail loudly on an
+    /// explicit `--rules` file using the *same single* parse+compile pass that
+    /// builds the engine, instead of paying for a separate full validation pass
+    /// that re-parses the TOML and re-compiles every regex.
+    ///
+    /// [`from_toml`]: RuleEngine::from_toml
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the TOML is malformed or if the Aho-Corasick
+    /// automaton cannot be built.
+    pub fn from_toml_reporting(
+        toml_str: &str,
+    ) -> Result<(Self, Vec<String>), crate::error::ScannerError> {
         let config: RulesetConfig = toml::from_str(toml_str)?;
 
         let mut keyworded_rules = Vec::new();
@@ -103,6 +127,20 @@ impl RuleEngine {
         let mut keyword_to_rules: Vec<Vec<usize>> = Vec::new();
         let mut keyword_map = std::collections::HashMap::new();
         let mut skipped = 0usize;
+        // Strict-validation report. Collected alongside the lenient build so a
+        // strict caller can reject without a second pass; the build itself is
+        // unaffected by what lands here.
+        let mut issues: Vec<String> = Vec::new();
+
+        // Structural ID checks (cheap, no regex) — mirror `validate_rules_toml`.
+        let mut seen_ids = std::collections::HashSet::new();
+        for rule_config in &config.rules {
+            if rule_config.id.trim().is_empty() {
+                issues.push("a rule has an empty ID".to_string());
+            } else if !seen_ids.insert(rule_config.id.as_str()) {
+                issues.push(format!("duplicate rule ID: '{}'", rule_config.id));
+            }
+        }
 
         for rule_config in &config.rules {
             // Compile the detection regex if present — skip rules with invalid patterns
@@ -114,6 +152,10 @@ impl RuleEngine {
                             "[engine] Warning: skipping rule '{}' — invalid regex: {}",
                             rule_config.id, e
                         );
+                        issues.push(format!(
+                            "rule '{}' has an invalid detection regex: {}",
+                            rule_config.id, e
+                        ));
                         skipped += 1;
                         continue;
                     }
@@ -135,25 +177,39 @@ impl RuleEngine {
             }
 
             // Compile path filter
-            let path_filter = rule_config.path.as_ref().and_then(|p| {
-                compile_regex(p)
-                    .map_err(|e| {
+            let path_filter = match &rule_config.path {
+                Some(p) => match compile_regex(p) {
+                    Ok(re) => Some(re),
+                    Err(e) => {
                         warn!(
                             "[engine] Warning: rule '{}' has invalid path regex: {}",
                             rule_config.id, e
                         );
-                        e
-                    })
-                    .ok()
-            });
+                        issues.push(format!(
+                            "rule '{}' has an invalid path regex: {}",
+                            rule_config.id, e
+                        ));
+                        None
+                    }
+                },
+                None => None,
+            };
 
-            // Compile per-rule allowlists
+            // Compile per-rule allowlists. A compiled allowlist that ends up with
+            // fewer paths/regexes than the source had means one failed to compile
+            // (logged inside the compile fn); surface it in the strict report.
             let mut allowlists = Vec::new();
             for al in &rule_config.allowlists {
-                allowlists.push(CompiledAllowlist::compile_rule_allowlist(
-                    al,
-                    &rule_config.id,
-                ));
+                let compiled = CompiledAllowlist::compile_rule_allowlist(al, &rule_config.id);
+                if compiled.paths.len() < al.paths.len()
+                    || compiled.regexes.len() < al.regexes.len()
+                {
+                    issues.push(format!(
+                        "rule '{}' has an invalid allowlist regex",
+                        rule_config.id
+                    ));
+                }
+                allowlists.push(compiled);
             }
 
             let compiled_rule = CompiledRule {
@@ -210,13 +266,22 @@ impl RuleEngine {
             unique_keywords.len()
         );
 
-        // Compile global allowlists
+        // Compile global allowlists (same drop-detection as per-rule allowlists).
         let mut global_allowlists = Vec::new();
         if let Some(ref al) = config.allowlist {
-            global_allowlists.push(CompiledAllowlist::compile_global_allowlist(al));
+            let compiled = CompiledAllowlist::compile_global_allowlist(al);
+            if compiled.paths.len() < al.paths.len() || compiled.regexes.len() < al.regexes.len() {
+                issues.push("global allowlist has an invalid regex".to_string());
+            }
+            global_allowlists.push(compiled);
         }
         for al in &config.allowlists {
-            global_allowlists.push(CompiledAllowlist::compile_global_allowlist(al));
+            let compiled = CompiledAllowlist::compile_global_allowlist(al);
+            if compiled.paths.len() < al.paths.len() || compiled.regexes.len() < al.regexes.len() {
+                let label = al.id.as_deref().unwrap_or("(unnamed)");
+                issues.push(format!("global allowlist '{label}' has an invalid regex"));
+            }
+            global_allowlists.push(compiled);
         }
 
         info!(
@@ -228,14 +293,17 @@ impl RuleEngine {
             first_bytes.len(),
         );
 
-        Ok(Self {
-            ac,
-            keyword_to_rules,
-            keyworded_rules,
-            unkeyworded_rules,
-            global_allowlists,
-            keyword_first_bytes: first_bytes,
-        })
+        Ok((
+            Self {
+                ac,
+                keyword_to_rules,
+                keyworded_rules,
+                unkeyworded_rules,
+                global_allowlists,
+                keyword_first_bytes: first_bytes,
+            },
+            issues,
+        ))
     }
 
     /// Returns a reference to the Aho-Corasick automaton.

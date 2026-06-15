@@ -15,6 +15,9 @@
   lean release build).
 - Fuzz target `fuzz_rule_parsing` over `validate_rules_toml` / `Scanner::from_toml`.
 - `ScannerError` typed error enum and `fingerprint` module (public).
+- `RuleEngine::from_toml_reporting` — builds the engine and returns the list of
+  rules/regexes it had to drop plus structural ID issues, so a strict caller can
+  reject without a second validation pass.
 - Direct tests for `sanitize_display`, SARIF region/columns, `walk.rs` internals,
   and a property test asserting redacted output never contains the verbatim secret.
 
@@ -37,6 +40,10 @@
 - A custom `--rules` file is now all-or-nothing: if any rule fails to compile the
   whole file is rejected (exit 3) rather than silently scanning with fewer rules.
   Run `validate-rules <file>` to find the offending rule.
+- `Scanner::from_toml` now does the strict-validation and the engine build in a
+  single parse+compile pass (via `RuleEngine::from_toml_reporting`) instead of
+  parsing the TOML twice and compiling every regex twice. Behavior is unchanged;
+  the same invalid regex / empty ID / duplicate ID still rejects the ruleset.
 
 ### Fixed
 - `--staged` previously scanned working-tree bytes of staged paths, so a secret

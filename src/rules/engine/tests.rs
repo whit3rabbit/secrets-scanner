@@ -113,6 +113,120 @@ keywords = ["good"]
 }
 
 #[test]
+fn from_toml_reporting_clean_ruleset_has_no_issues() {
+    let (engine, issues) = RuleEngine::from_toml_reporting(MINIMAL_TOML).expect("should parse");
+    assert_eq!(engine.rule_count(), 2);
+    assert!(issues.is_empty(), "unexpected issues: {issues:?}");
+}
+
+#[test]
+fn from_toml_reporting_flags_invalid_detection_regex() {
+    let bad_toml = r#"
+title = "bad"
+[[rules]]
+id = "bad-rule"
+regex = '[invalid('
+keywords = ["bad"]
+
+[[rules]]
+id = "good-rule"
+regex = 'good_[a-z]+'
+keywords = ["good"]
+"#;
+    let (engine, issues) = RuleEngine::from_toml_reporting(bad_toml).expect("should parse");
+    // The engine still builds leniently (good rule survives)...
+    assert_eq!(engine.rule_count(), 1);
+    assert_eq!(engine.rules()[0].id, "good-rule");
+    // ...but the report names the dropped rule so strict callers can reject.
+    assert!(
+        issues.iter().any(|i| i.contains("bad-rule")),
+        "issues should name the dropped rule: {issues:?}"
+    );
+}
+
+#[test]
+fn from_toml_reporting_flags_duplicate_and_empty_ids() {
+    let toml = r#"
+title = "ids"
+[[rules]]
+id = "dup"
+regex = 'a[0-9]+'
+keywords = ["a"]
+
+[[rules]]
+id = "dup"
+regex = 'b[0-9]+'
+keywords = ["b"]
+
+[[rules]]
+id = "   "
+regex = 'c[0-9]+'
+keywords = ["c"]
+"#;
+    let (_engine, issues) = RuleEngine::from_toml_reporting(toml).expect("should parse");
+    assert!(
+        issues
+            .iter()
+            .any(|i| i.to_lowercase().contains("duplicate")),
+        "expected a duplicate-id issue: {issues:?}"
+    );
+    assert!(
+        issues.iter().any(|i| i.to_lowercase().contains("empty")),
+        "expected an empty-id issue: {issues:?}"
+    );
+}
+
+#[test]
+fn from_toml_reporting_flags_invalid_path_and_allowlist_regex() {
+    let toml = r#"
+title = "filters"
+[[rules]]
+id = "bad-path"
+regex = 'a[0-9]+'
+path = '[invalid('
+keywords = ["a"]
+
+[[rules]]
+id = "bad-allowlist"
+regex = 'b[0-9]+'
+keywords = ["b"]
+allowlists = [ { regexes = ['[invalid('] } ]
+"#;
+    let (_engine, issues) = RuleEngine::from_toml_reporting(toml).expect("should parse");
+    assert!(
+        issues
+            .iter()
+            .any(|i| i.contains("bad-path") && i.contains("path")),
+        "expected an invalid path-regex issue: {issues:?}"
+    );
+    assert!(
+        issues
+            .iter()
+            .any(|i| i.contains("bad-allowlist") && i.contains("allowlist")),
+        "expected an invalid allowlist-regex issue: {issues:?}"
+    );
+}
+
+#[test]
+fn from_toml_reporting_flags_invalid_global_allowlist_regex() {
+    let toml = r#"
+title = "global"
+[allowlist]
+regexes = ['[invalid(']
+
+[[rules]]
+id = "r"
+regex = 'a[0-9]+'
+keywords = ["a"]
+"#;
+    let (_engine, issues) = RuleEngine::from_toml_reporting(toml).expect("should parse");
+    assert!(
+        issues.iter().any(|i| i.contains("global allowlist")),
+        "expected an invalid global-allowlist issue: {issues:?}"
+    );
+}
+
+#[test]
 fn partitions_keyworded_and_unkeyworded_rules() {
     let toml = r#"
 title = "test partition"

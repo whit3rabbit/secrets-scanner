@@ -19,7 +19,10 @@ use crate::filters;
 use crate::safe_display::sanitize_display;
 use crate::scanner::{Finding, Scanner};
 
-use super::{apply_max_findings_per_file, is_binary_skipped, run_git, run_git_quiet, StatsAcc};
+use super::{
+    apply_max_findings_per_file, is_binary_skipped, run_git, run_git_blob_bounded, run_git_quiet,
+    BlobRead, StatsAcc,
+};
 
 /// A staged file: its repo-relative index path (for the `:path` pathspec) and
 /// the joined display path used as the finding's `file` (matching other git
@@ -108,9 +111,16 @@ pub(super) fn scan_one_staged(
         return Vec::new();
     }
 
-    let bytes = match run_git_quiet(root, &["cat-file", "blob", &spec]) {
-        Some(b) => b,
-        None => {
+    // Bounded read: re-checks the cap as the blob is read, closing the TOCTOU
+    // window where the index entry could grow between the size check above and
+    // this read (e.g. a concurrent `git add`).
+    let bytes = match run_git_blob_bounded(root, &spec, scanner.config.max_file_size) {
+        BlobRead::Ok(b) => b,
+        BlobRead::Oversized => {
+            stats.oversized_skipped.fetch_add(1, Ordering::Relaxed);
+            return Vec::new();
+        }
+        BlobRead::Error => {
             stats.errored.fetch_add(1, Ordering::Relaxed);
             return Vec::new();
         }

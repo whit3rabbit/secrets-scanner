@@ -150,9 +150,9 @@ pub(super) struct ScanArgs {
 
     /// Scan only the content staged in the git index (`git cat-file`). Intended
     /// for pre-commit hooks: it scans the index blobs (what will be committed),
-    /// not the working-tree files. Implies git mode and is mutually exclusive
-    /// with `--git-diff`/`--diff-base`/`--include-untracked`.
-    #[arg(long, conflicts_with_all = ["git_diff", "diff_base", "include_untracked"])]
+    /// not the working-tree files. Is its own git mode, so it is mutually
+    /// exclusive with `--git`/`--git-diff`/`--diff-base`/`--include-untracked`.
+    #[arg(long, conflicts_with_all = ["git", "git_diff", "diff_base", "include_untracked"])]
     pub(super) staged: bool,
 
     /// In git mode, also scan untracked (but not ignored) files.
@@ -220,4 +220,50 @@ pub(super) enum OutputFormat {
     Jsonl,
     /// SARIF 2.1.0 (for GitHub Code Scanning).
     Sarif,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Cli, Commands, ScanArgs};
+    use clap::Parser;
+
+    /// Parse argv and return the `scan` args, panicking on any other command.
+    fn scan_args(argv: &[&str]) -> ScanArgs {
+        match Cli::try_parse_from(argv)
+            .expect("args should parse")
+            .command
+        {
+            Commands::Scan(args) => args,
+            _ => panic!("expected scan subcommand"),
+        }
+    }
+
+    #[test]
+    fn diff_base_alone_implies_git_diff() {
+        // Regression: clap does not auto-imply, so `--diff-base` passed without
+        // `--git-diff` must still derive git-diff mode rather than silently
+        // falling back to a full directory walk that discards the base ref.
+        let args = scan_args(&["secrets-scanner", "scan", ".", "--diff-base", "origin/main"]);
+        assert!(!args.git_diff, "only --diff-base was passed");
+        assert_eq!(args.diff_base.as_deref(), Some("origin/main"));
+        assert!(
+            super::super::scan::resolve_git_diff(&args),
+            "--diff-base must imply git-diff mode"
+        );
+    }
+
+    #[test]
+    fn staged_conflicts_with_git() {
+        // `--staged` is its own git mode; combined with `--git` (which would
+        // otherwise silently win at runtime) it must be a parse error.
+        assert!(
+            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--staged", "--git"]).is_err(),
+            "--staged --git must conflict"
+        );
+    }
+
+    #[test]
+    fn staged_alone_parses() {
+        assert!(scan_args(&["secrets-scanner", "scan", ".", "--staged"]).staged);
+    }
 }

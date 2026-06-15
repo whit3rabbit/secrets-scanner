@@ -266,13 +266,16 @@ pub fn merge_sources(
     result.insert("rules".to_string(), toml::Value::Array(merged_rules));
 
     // Allowlists: fold in ASCENDING priority order to preserve the legacy
-    // semantics (lowest source's singular `[allowlist]` is kept untouched; every
+    // semantics. The singular `[allowlist]` is seeded from the lowest-priority
+    // source THAT HAS one (not necessarily the absolute lowest source); every
     // other source's allowlists are appended as `[[allowlists]]` entries, with an
-    // id collision replacing the matching base entry).
+    // id collision replacing the matching base entry. For the real manifest the
+    // lowest source carrying an `[allowlist]` is gitleaks, so this seeds gitleaks
+    // as intended.
     let mut allowlist_acc = toml::Table::new();
     for (_, _, table) in parsed.iter().rev() {
         if allowlist_acc.is_empty() {
-            // Seed from the lowest-priority source so its `[allowlist]` is preserved.
+            // Seed from the first source (ascending priority) that has one.
             if let Some(al) = table.get("allowlist") {
                 allowlist_acc.insert("allowlist".to_string(), al.clone());
             }

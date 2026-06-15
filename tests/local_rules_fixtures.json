@@ -1,58 +1,58 @@
 {
   "deepseek-api-key": {
-    "secret": "sk-DeepSeekEc1vZBWq5wGySzUQMd8T1jx6Q27lX3CY",
-    "test_content": "deepseek = sk-DeepSeekEc1vZBWq5wGySzUQMd8T1jx6Q27lX3CY"
+    "secret": "sk-DeepSeekHxvi4H4iUNTuEUmxmFw2gKANcJ0Rtn9t",
+    "test_content": "deepseek = sk-DeepSeekHxvi4H4iUNTuEUmxmFw2gKANcJ0Rtn9t"
   },
   "mistral-ai-api-key": {
-    "secret": "mistral_tiXa_vxrDI7SF0JNy_ht2iyX7KcVv2uK",
-    "test_content": "mistral = mistral_tiXa_vxrDI7SF0JNy_ht2iyX7KcVv2uK"
+    "secret": "mistral_j-zA7qx0AuMPTyaNPbvB0DRf6LtaJywx",
+    "test_content": "mistral = mistral_j-zA7qx0AuMPTyaNPbvB0DRf6LtaJywx"
   },
   "mongodb-atlas-db-uri-with-credentials": {
-    "secret": "mongodb+srv://L62bBnen9fyLZkyGnRbLAfDzaCI6ydCF:eGZGd9J78gdf6fsOS2H3jNrYFgJZPrAB@KF8CcLmD3ht856Au4b7LQ6igniCliwiH",
-    "test_content": "mongodb = mongodb+srv://L62bBnen9fyLZkyGnRbLAfDzaCI6ydCF:eGZGd9J78gdf6fsOS2H3jNrYFgJZPrAB@KF8CcLmD3ht856Au4b7LQ6igniCliwiH"
+    "secret": "mongodb+srv://sTlxlc9QqPkuaU9G9x7xnKOjfRYLEXBu:Wmz7kpzrFbhRrnfTVPRIMTyemDx0ombJ@44M9fEF1PseTNXCpqemIB0MiQblUMwaY",
+    "test_content": "mongodb = mongodb+srv://sTlxlc9QqPkuaU9G9x7xnKOjfRYLEXBu:Wmz7kpzrFbhRrnfTVPRIMTyemDx0ombJ@44M9fEF1PseTNXCpqemIB0MiQblUMwaY"
   },
   "neon-connection-uri": {
-    "secret": "postgresql://OtpnkHlHoLSbgZfYwwGT0CHw2o1DyGez:Adl2vkD94WbnqHQDbV7Sy53ipwDqXdwR@MIDnhNLSUun2sR6hDUJFQUX44nGfbWrf.neon.tech4hRwtsgVQ13T3XGtpJSlnemLzAKkdSLf",
-    "test_content": "neon = postgresql://OtpnkHlHoLSbgZfYwwGT0CHw2o1DyGez:Adl2vkD94WbnqHQDbV7Sy53ipwDqXdwR@MIDnhNLSUun2sR6hDUJFQUX44nGfbWrf.neon.tech4hRwtsgVQ13T3XGtpJSlnemLzAKkdSLf"
+    "secret": "postgresql://37QFaUynxQShTX7FuesfqVLoTjvOHP8r:vgxAI0WldAjFgcUAD7x5aZi2Z3FTFnSv@vjZ54kTRRvmVlCpDUaDktL447CyKzGqm.neon.techTJ5meMqDESXY1jllJnelIvSgGuXSOBNl",
+    "test_content": "neon = postgresql://37QFaUynxQShTX7FuesfqVLoTjvOHP8r:vgxAI0WldAjFgcUAD7x5aZi2Z3FTFnSv@vjZ54kTRRvmVlCpDUaDktL447CyKzGqm.neon.techTJ5meMqDESXY1jllJnelIvSgGuXSOBNl"
   },
   "openrouter-api-key": {
-    "secret": "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",
-    "test_content": "openrouter = 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"
+    "secret": "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",
+    "test_content": "openrouter = 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"
   },
   "snowflake-postgres-connection-string": {
-    "secret": "snowflake://ixX9jsMYnmfAhBQ0hldubzqtFyLo0Q5x:xk4CI18LFby1iTdycASnJFwWt2jpN1ey@NZWGiuWqMaFXmzjk2odxwgVAL0J31fITsnowflakeOUfxhHz8kx0i9Gn0GDeez7UoaKigY1zL",
-    "test_content": "snowflake = snowflake://ixX9jsMYnmfAhBQ0hldubzqtFyLo0Q5x:xk4CI18LFby1iTdycASnJFwWt2jpN1ey@NZWGiuWqMaFXmzjk2odxwgVAL0J31fITsnowflakeOUfxhHz8kx0i9Gn0GDeez7UoaKigY1zL"
+    "secret": "snowflake://xiecLamAFhL771jvfMZReCoMzhffRLaT:7HOjndovCoKIoMo6NUbmsJZjp7F9LIkj@qXVd423vqV8Imqg3DT7pjuAsBY6h4Y67snowflake1y9FzTacFuI3Vc2ZLWiGPS7TXUsfLI5V",
+    "test_content": "snowflake = snowflake://xiecLamAFhL771jvfMZReCoMzhffRLaT:7HOjndovCoKIoMo6NUbmsJZjp7F9LIkj@qXVd423vqV8Imqg3DT7pjuAsBY6h4Y67snowflake1y9FzTacFuI3Vc2ZLWiGPS7TXUsfLI5V"
   },
   "snowflake-postgres-host-snowflake-postgres-password": {
-    "secret": "E-QCO4pL.IRX-4S1oCgUjfr1N5NNaNoi.snowflakecomputing.com:pmEFYGpb:PQz7vyG5uLQUaxdehmTQsOg",
-    "test_content": "snowflake = E-QCO4pL.IRX-4S1oCgUjfr1N5NNaNoi.snowflakecomputing.com:pmEFYGpb:PQz7vyG5uLQUaxdehmTQsOg"
+    "secret": "pdRYv0rXISvDNzqgPFio1XR.iFJQUfUf.snowflakecomputing.com:QDFQjacaD1vytaf4DGI.noLwKhgSABpz",
+    "test_content": "snowflake = pdRYv0rXISvDNzqgPFio1XR.iFJQUfUf.snowflakecomputing.com:QDFQjacaD1vytaf4DGI.noLwKhgSABpz"
   },
   "xai-api-key": {
-    "secret": "xai-b1UMtDyMCmVNcqOLIyN48RePJKEzpLje",
-    "test_content": "xai = xai-b1UMtDyMCmVNcqOLIyN48RePJKEzpLje"
+    "secret": "xai-27loYUq5ZWIzNlkn1UbLWkz-o_G_nz4M",
+    "test_content": "xai = xai-27loYUq5ZWIzNlkn1UbLWkz-o_G_nz4M"
   },
   "brave-search-api-key": {
-    "secret": "BSALdsXOqsIV3DQdr7-GsuWO1hvdr3aDqHi",
-    "test_content": "brave = BSALdsXOqsIV3DQdr7-GsuWO1hvdr3aDqHi"
+    "secret": "BSAPwGhzDw34iIfkxC_EoXwHky2NGVj1d20",
+    "test_content": "brave = BSAPwGhzDw34iIfkxC_EoXwHky2NGVj1d20"
   },
   "clipdrop-api-key": {
-    "secret": "clipdrop-qVuEA4vf6Avc-oO5kZ-A9S2Ovik8HMV",
-    "test_content": "clipdrop = clipdrop-qVuEA4vf6Avc-oO5kZ-A9S2Ovik8HMV"
+    "secret": "clipdrop-qLzy-z9Se369ot3DkZIv_1NvAtsHdtE",
+    "test_content": "clipdrop = clipdrop-qLzy-z9Se369ot3DkZIv_1NvAtsHdtE"
   },
   "firecrawl-api-key": {
-    "secret": "fc-D9Dc719f0e7C3936B7A46593dACbdCEd",
-    "test_content": "firecrawl = fc-D9Dc719f0e7C3936B7A46593dACbdCEd"
+    "secret": "fc-aBb4D4D7aDCeBcE3D7b91E4d2BCdF1Cb",
+    "test_content": "firecrawl = fc-aBb4D4D7aDCeBcE3D7b91E4d2BCdF1Cb"
   },
   "openai-api-key": {
-    "secret": "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",
-    "test_content": "t3blbkfj = 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"
+    "secret": "sk-svcacct-TuRKDVkd9QSd5sfQjLW6sfhUMjtP1jhQJIAhDbWrT3BlbkFJjc_VG3-eLM0UiYWMaDMC9fb61wcgztIF4fzdZTMo",
+    "test_content": "t3blbkfj = sk-svcacct-TuRKDVkd9QSd5sfQjLW6sfhUMjtP1jhQJIAhDbWrT3BlbkFJjc_VG3-eLM0UiYWMaDMC9fb61wcgztIF4fzdZTMo"
   },
   "perplexity-api-key": {
-    "secret": "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",
-    "test_content": "pplx- = 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"
+    "secret": "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",
+    "test_content": "pplx- = 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"
   },
   "vapi-api-key": {
-    "secret": "vapi_private_key_4BTeHywmpTVX4vdS6NwcQRadtyZOqgAV",
-    "test_content": "vapi = vapi_private_key_4BTeHywmpTVX4vdS6NwcQRadtyZOqgAV"
+    "secret": "vapi_private_key_H598S9vxoPocqkX6yBV9bIFYKQlObtXR",
+    "test_content": "vapi = vapi_private_key_H598S9vxoPocqkX6yBV9bIFYKQlObtXR"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022",
+    "types": ["node"]
+  },
+  "include": ["public.d.ts", "test/types.ts"]
+}

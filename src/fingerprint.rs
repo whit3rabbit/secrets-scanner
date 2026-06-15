@@ -9,6 +9,17 @@
 
 /// Compute a hex-encoded 64-bit FNV-1a hash over `parts`, inserting a NUL byte
 /// between adjacent parts so `["a", "bc"]` and `["ab", "c"]` hash differently.
+///
+/// The bare-NUL separator is unambiguous ONLY because no non-final part contains
+/// a NUL: a NUL in the last part cannot shift bytes across an earlier boundary,
+/// but `["a\0b"]` would otherwise collide with `["a", "b"]`. Both call sites hold
+/// to this: `finding_fingerprint`'s only NUL-capable part is the trailing
+/// `secret`, and `location_fingerprint` hashes only NUL-free strings. A new
+/// caller passing a NUL-bearing non-final part must length-prefix instead.
+///
+/// Do NOT change this scheme casually: its output is persisted in baseline files
+/// and SARIF `partialFingerprints`, so any change invalidates every committed
+/// baseline (findings re-surface as "new") and breaks fingerprint continuity.
 pub fn fnv1a_hex(parts: &[&[u8]]) -> String {
     let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
     for (idx, part) in parts.iter().enumerate() {

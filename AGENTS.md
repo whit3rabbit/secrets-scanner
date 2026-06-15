@@ -21,6 +21,20 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 
 ---
 
+## Commands
+
+| Command | Purpose |
+|---|---|
+| `make ci` | Full local gate: fmt, clippy, tests, rule drift/validation, merge drift, full build |
+| `make test-updater` | Run tests with the runtime updater feature enabled |
+| `make merge-rules-check` | Verify committed `assets/secrets-scanner.toml` matches the lean manifest merge |
+| `make build-full` | Build with `--features full-ruleset` |
+| `cargo test --bin secrets-scanner --features updater` | Fast focused check for binary/CLI refactors |
+| `cargo run -- scan <path> --git` | Run a scan locally (safe-default git mode) |
+| `cargo run -- completions <shell>` | Generate shell completions (bash/zsh/fish/...) |
+
+---
+
 ## Project Structure
 
 ```
@@ -31,12 +45,16 @@ secrets-scanner/
 │   ├── update_rules.sh        # Shell script: download latest gitleaks rules
 │   └── generate_fixtures.py   # Python script: generate positive test cases matching custom rules
 ├── src/
-│   ├── main.rs                # CLI entry point; dispatches `update-rules` and `validate-rules` subcommands
+│   ├── lib.rs                 # Public scanner library API
+│   ├── main.rs                # Thin binary entrypoint; delegates to `cli::run()`
+│   ├── cli/                   # Clap args, dispatch, scan/rules/completions handlers
+│   ├── scanner.rs             # Scanner facade; submodules handle walk/matching/redaction/types
+│   ├── format.rs              # CLI text/JSON/JSONL/SARIF writers
 │   └── rules/
 │       ├── mod.rs             # load_rules() — three-tier rule loading
 │       ├── updater.rs         # Runtime HTTP updater (feature-gated: `updater`)
 │       └── validation.rs      # Rule TOML and Regex validator
-├── build.rs                   # Validates rules and merges assets/gitleaks.toml + local.toml at compile time
+├── build.rs                   # Validates and merges manifest-selected rule sources at compile time
 └── Makefile                   # Developer convenience targets
 ```
 
@@ -50,7 +68,7 @@ secrets-scanner/
 |---|---|---|
 | 1 (highest) | `$SECRETS_SCANNER_RULES` env var | Any time the var is set |
 | 2 | Cached file in OS data dir | After a successful `update-rules` run |
-| 3 (default) | `assets/gitleaks.toml` embedded in binary | Always (compile-time fallback) |
+| 3 (default) | Bundled manifest-merged ruleset embedded in binary | Always (compile-time fallback) |
 
 **Gotchas:**
 - Runtime loading is three-tier: `scan`/`list-rules` read the OS data-dir cache *before* the embedded rules, so they don't reflect the bundled set. To test embedded rules, set `SECRETS_SCANNER_RULES=<file>` or run `make clean-rules`.

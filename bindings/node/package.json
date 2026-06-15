@@ -1,0 +1,30 @@
+{
+  "name": "@secrets-scanner/core",
+  "version": "0.1.0",
+  "description": "Native Node.js bindings for secrets-scanner.",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "types": "public.d.ts",
+  "files": [
+    "index.js",
+    "public.d.ts",
+    "*.node",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "napi build --release",
+    "build:debug": "napi build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "napi": {
+    "binaryName": "secrets_scanner_core"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "3.7.2",
+    "@types/node": "25.9.3",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8"
+  }
+}

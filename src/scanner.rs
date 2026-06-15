@@ -190,11 +190,6 @@ impl Scanner {
         }
 
         let mut findings = Vec::new();
-        // Dedup key is (rule_seq, start, end): a given rule should not report the
-        // same span twice, but two DIFFERENT rules matching the same span are both
-        // kept (keying on position alone would drop the second rule's finding).
-        let mut seen_positions: std::collections::HashSet<(usize, usize, usize)> =
-            std::collections::HashSet::new();
 
         // Check path-only rules (rules with no content regex but having a path filter).
         // Iterate the two rule slices directly to avoid allocating a Vec per file.
@@ -249,39 +244,19 @@ impl Scanner {
         }
 
         // 2. Second pass: run candidate keyworded rule regexes across the content.
-        //    rule_seq is the keyworded rule index.
         for (rule_idx, rule) in self.engine.keyworded_rules().iter().enumerate() {
             if !candidate_rules[rule_idx] {
                 continue;
             }
 
-            matching::check_rule_match(
-                self,
-                rule_idx,
-                rule,
-                path,
-                content,
-                &mut seen_positions,
-                &mut findings,
-            );
+            matching::check_rule_match(self, rule, path, content, &mut findings);
         }
 
         // 3. Evaluate unkeyworded regex rules and benchmark their cost.
-        //    rule_seq continues past the keyworded range so the spaces never collide.
-        let keyworded_count = self.engine.keyworded_rules().len();
         #[cfg(feature = "bench")]
         let unkeyworded_start = std::time::Instant::now();
-        for (idx, rule) in self.engine.unkeyworded_rules().iter().enumerate() {
-            let rule_seq = keyworded_count + idx;
-            matching::check_rule_match(
-                self,
-                rule_seq,
-                rule,
-                path,
-                content,
-                &mut seen_positions,
-                &mut findings,
-            );
+        for rule in self.engine.unkeyworded_rules().iter() {
+            matching::check_rule_match(self, rule, path, content, &mut findings);
         }
         #[cfg(feature = "bench")]
         self.unkeyworded_scan_time_ns.fetch_add(

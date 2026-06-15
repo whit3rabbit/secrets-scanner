@@ -9,47 +9,83 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 ## Features
 
 - **Fast multi-stage scanning**
+  <details>
+  <summary>Details</summary>
+
   - Uses a `memchr` first-byte prefilter, case-insensitive Aho-Corasick keyword matching, entropy gating, and Rust `regex` validation to reduce unnecessary regex work.
   - Separates keyworded and unkeyworded rules so broad rules still run while keyworded rules stay fast.
+  </details>
 
 - **Gitleaks-compatible TOML rules**
+  <details>
+  <summary>Details</summary>
+
   - Loads rules from a gitleaks-style TOML configuration.
   - Supports rule IDs, descriptions, keywords, entropy thresholds, path filters, `secretGroup`, and global/per-rule allowlists.
   - Supports custom rules via `--rules <path>` or `SECRETS_SCANNER_RULES`.
+  </details>
 
 - **Manifest-driven bundled rules**
+  <details>
+  <summary>Details</summary>
+
   - Builds an embedded ruleset at compile time from manifest-declared sources.
   - Validates selected rule sources before embedding.
   - Supports deterministic merge reports and duplicate-rule review tooling.
+  </details>
 
 - **Safe-by-default scanning**
+  <details>
+  <summary>Details</summary>
+
   - Redacts matched secrets by default.
   - Uses bounded owned file reads with a configurable `--max-file-size`; does not rely on memory mapping.
   - Rejects symlinks and non-regular files.
   - Uses content-based binary detection with `--binary-policy auto|skip|scan`.
+  </details>
 
 - **Git-aware scanning**
+  <details>
+  <summary>Details</summary>
+
   - Scan all files/directories recursively, only git-tracked files with `--git`, or changed files with `--git-diff` / `--diff-base`.
   - Supports untracked-but-not-ignored files with `--include-untracked`.
   - Uses NUL-delimited git output and path containment checks for safer CI execution.
+  </details>
 
 - **CI-friendly output**
+  <details>
+  <summary>Details</summary>
+
   - Output formats: human-readable text, JSON, JSONL, and SARIF 2.1.0.
   - SARIF messages avoid including matched secret values.
   - `--no-context` suppresses context lines for safer logs.
   - `--max-files`, `--max-findings`, and `--max-findings-per-file` cap scan scope and report truncation.
+  </details>
 
 - **CLI and automation**
+  <details>
+  <summary>Details</summary>
+
   - Subcommands: `scan`, `update-rules`, `validate-rules`, `merge-rules`, `list-rules`, and `completions`.
   - Exit codes are designed for CI: clean, findings, runtime error, and invalid scan configuration/rules.
   - Includes a GitHub Action, pre-commit hook configuration, Dockerfile, install scripts, and Homebrew cask packaging.
+  </details>
 
 - **Optional runtime rule updates**
+  <details>
+  <summary>Details</summary>
+
   - When built with `--features updater`, `secrets-scanner update-rules` can download updated rules into the OS user-data directory for the next scan.
   - Default/non-updater builds use the embedded ruleset; Docker images should be rebuilt to refresh embedded rules.
+  </details>
 
 - **Developer tooling**
+  <details>
+  <summary>Details</summary>
+
   - Rule validation, merge checks, duplicate-rule reports, fixture generation, ruleset docs generation, CI checks, benchmarks, and fuzz targets.
+  </details>
 
 ---
 

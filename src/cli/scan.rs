@@ -6,9 +6,16 @@ use secrets_scanner::{Finding, ScanConfig, ScanStats, Scanner};
 
 use super::args::{OutputFormat, ScanArgs};
 
+/// Whether to run in git-diff mode. `--diff-base` implies it: clap does not
+/// auto-imply, so a base ref passed alone must still scan `<base>...HEAD` rather
+/// than silently falling back to a full directory walk.
+pub(super) fn resolve_git_diff(args: &ScanArgs) -> bool {
+    args.git_diff || args.diff_base.is_some()
+}
+
 /// Handle the `scan` subcommand.
 pub(super) fn handle(args: ScanArgs) {
-    let git_diff = args.git_diff || args.diff_base.is_some();
+    let git_diff = resolve_git_diff(&args);
     let config = ScanConfig {
         redact: !args.no_redact,
         min_entropy_override: args.min_entropy,

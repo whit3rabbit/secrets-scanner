@@ -1,0 +1,17 @@
+[package]
+name = "secrets_scanner_node"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/lib.rs"
+
+[dependencies]
+napi = { version = "3", features = ["napi8"] }
+napi-derive = "3"
+secrets_scanner = { path = "../.." }
+
+[build-dependencies]
+napi-build = "2"

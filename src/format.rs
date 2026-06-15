@@ -21,6 +21,8 @@ pub fn write_text(w: &mut dyn Write, findings: &[Finding], show_context: bool) -
     }
     writeln!(w, "🚨 Found {} potential secret(s):\n", findings.len())?;
     for f in findings {
+        // Text output reports the byte column (`f.col`) to match `grep`/editor
+        // byte offsets; SARIF emits UTF-16 columns (`col_utf16`) for GitHub.
         writeln!(
             w,
             "  {}:{}:{} | rule={} entropy={:.2} | {}",

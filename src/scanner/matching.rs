@@ -1,6 +1,6 @@
 //! Rule match evaluation for scanner content.
 
-use std::collections::{BTreeSet, HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap};
 
 use crate::rules::engine::{CompiledRule, RuleEngine};
 use crate::{entropy, filters};
@@ -104,15 +104,15 @@ fn next_line_end(content: &[u8], line_start: usize) -> usize {
 
 /// Evaluates a single compiled rule regex over the content and populates findings.
 ///
-/// `rule_seq` is a per-scan unique id for the rule; it is part of the dedup
-/// key so that distinct rules matching the same span are both reported.
+/// `captures_iter` yields non-overlapping leftmost matches, so one rule never
+/// produces the same span twice; distinct rules matching the same span are each
+/// reported on purpose (they fire in different situations). No cross-match dedup
+/// is needed here.
 pub(super) fn check_rule_match(
     scanner: &Scanner,
-    rule_seq: usize,
     rule: &CompiledRule,
     path: &str,
     content: &[u8],
-    seen_positions: &mut HashSet<(usize, usize, usize)>,
     findings: &mut Vec<Finding>,
 ) {
     let regex_re = match &rule.regex {
@@ -139,10 +139,6 @@ pub(super) fn check_rule_match(
         let match_end_in_file = m.end();
 
         if match_start_in_file == match_end_in_file {
-            continue;
-        }
-
-        if !seen_positions.insert((rule_seq, match_start_in_file, match_end_in_file)) {
             continue;
         }
 
@@ -325,7 +321,13 @@ fn context_lines(
     context_lines
 }
 
-fn merged_secret_ranges(findings: &[Finding], content_len: usize) -> Vec<(usize, usize)> {
+/// Sorted, merged secret byte ranges (`secret_start_offset..secret_end_offset`)
+/// across `findings`, clamped to `content_len`. Shared by context-line redaction
+/// here and full-content redaction in [`super::redaction`].
+pub(super) fn merged_secret_ranges(
+    findings: &[Finding],
+    content_len: usize,
+) -> Vec<(usize, usize)> {
     let mut ranges: Vec<(usize, usize)> = findings
         .iter()
         .filter_map(|finding| {

@@ -208,7 +208,11 @@ mod tests {
     #[test]
     fn redacts_short_secrets_fully() {
         assert_eq!(redact("short"), "*****");
-        assert_eq!(redact("exactly12ch"), "***********");
+        // Boundary: `char_count <= 12` is fully starred. 12 chars hits the edge;
+        // 13 chars crosses into prefix/suffix partial redaction.
+        assert_eq!(redact("twelvechars!").chars().count(), 12);
+        assert_eq!(redact("twelvechars!"), "************");
+        assert_eq!(redact("thirteenchars"), "thir*****hars");
     }
 
     #[test]

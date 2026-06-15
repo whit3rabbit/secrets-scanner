@@ -2,7 +2,17 @@
 
 ## Unreleased
 
+## v0.1.0 (2026-06-15)
+
+Initial release.
+
 ### Added
+- Claude Code plugin and marketplace (`plugins/secrets-scanner/`,
+  `.claude-plugin/marketplace.json`): a bundled skill that installs/uninstalls
+  the scanner, sets up a native `scan --staged` git pre-commit hook, or runs
+  scans on demand. Install with
+  `/plugin marketplace add whit3rabbit/secrets-scanner` then
+  `/plugin install secrets-scanner@whit3rabbit`.
 - Inline suppression: a line containing `secrets-scanner:allow` or
   `gitleaks:allow` skips that finding (first line only for multi-line matches).
 - `--staged` scan mode for pre-commit hooks: scans the **index blob content**
@@ -63,10 +73,6 @@
   GitHub code scanning cannot resolve.
 - SARIF `startLine` is clamped to `>= 1`, so a `line == 0` finding cannot emit an
   invalid region.
-
-## v0.1.0 (2026-06-14)
-
-Initial release.
 
 ### Core scanning
 - Multi-layer scan pipeline: memchr SIMD pre-filter, Aho-Corasick keyword matching, Shannon entropy gating, regex capture

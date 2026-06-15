@@ -3,18 +3,33 @@
   "version": "0.1.0",
   "description": "Native Node.js bindings for secrets-scanner.",
   "license": "MIT",
-  "private": true,
-  "main": "index.js",
-  "types": "public.d.ts",
+  "type": "commonjs",
+  "main": "./index.js",
+  "types": "./public.d.ts",
+  "exports": {
+    ".": {
+      "types": "./public.d.ts",
+      "require": "./index.js",
+      "default": "./index.js"
+    }
+  },
   "files": [
     "index.js",
     "public.d.ts",
     "*.node",
     "README.md"
   ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "napi build --release",
     "build:debug": "napi build",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm test && npm run typecheck",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },

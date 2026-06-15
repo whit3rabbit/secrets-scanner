@@ -20,7 +20,10 @@ if (result.hasFindings) {
 ```
 
 Redaction is enabled by default for findings. The `scanAndRedact*` methods
-always return redacted content suitable for forwarding.
+always return redacted content suitable for forwarding. Redaction uses the full
+pre-cap finding set, so `findingsTruncated: true` means only the returned
+finding list was capped; the redacted payload still covers every detected
+secret.
 
 For attacker-controlled in-memory content, use the hardened proxy preset and
 `scanProxy()`. It fails closed when input exceeds `maxFileSize`, ignores inline
@@ -35,3 +38,17 @@ if (result.hasFindings) {
   // Forward safePayload instead of the original input.
 }
 ```
+
+Plain in-memory scans also enforce `maxFileSize` in this binding. Use
+`scanContentDetailed()` / `scanBytesDetailed()` when callers need
+`findingsTruncated`, and use the `*Async()` variants in Node servers to avoid
+blocking the event loop on large payloads.
+
+`scanFile()` and `scanPath()` return findings plus coverage stats. Treat
+`result.incomplete` as a coverage warning: unreadable files, `maxFiles`, git
+fallback, or git failure mean the scan did not fully cover the requested scope.
+
+The public wrapper is strict about argument types. Paths, TOML, and string
+content must be strings; byte content must be a `Uint8Array`. Bad values throw
+with `error.code` set to `INVALID_ARGUMENT` or `INVALID_CONFIG` instead of being
+coerced with `String(...)`.

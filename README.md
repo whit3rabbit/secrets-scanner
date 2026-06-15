@@ -610,20 +610,28 @@ This scans all staged files for secrets before each commit.
 
 ---
 
-## Claude Code Plugin
+## Agent Skills and Plugins
 
-This repo doubles as a [Claude Code](https://claude.com/claude-code) plugin marketplace.
-Install the plugin and Claude can install/uninstall the scanner, set up a git pre-commit
-hook, or run scans on request:
+This repository bundles compatible agent skills and `SOUL.md` personality core rules for multiple AI agent runtimes to prevent secrets from being leaked during agent-assisted development:
+
+### Claude Code Plugin
+This repo doubles as a [Claude Code](https://claude.com/claude-code) plugin marketplace. Install the plugin and Claude can install/uninstall the scanner, set up a git pre-commit hook, or run scans on request:
 
 ```
 /plugin marketplace add whit3rabbit/secrets-scanner
 /plugin install secrets-scanner@whit3rabbit
 ```
 
-The plugin bundles a skill (`plugins/secrets-scanner/`) with helper scripts for
-install/uninstall and managing a native `scan --staged` pre-commit hook. It does not
-replace the binary install above; it drives the same CLI on your behalf.
+The plugin bundles a skill (`plugins/secrets-scanner/`) with helper scripts for install/uninstall and managing a native `scan --staged` pre-commit hook. It does not replace the binary install above; it drives the same CLI on your behalf.
+
+### OpenClaw, Hermes Agent, and Codex Skills
+We provide compatible skill directories and `SOUL.md` identity files for other agent ecosystems. Each skill guides the respective agent to drive the same CLI on your behalf and setup pre-commit hooks:
+
+- **OpenClaw:** Configured under `.openclaw/` (loaded from `.openclaw/skills/secrets-scanner/` and [.openclaw/SOUL.md](.openclaw/SOUL.md)).
+- **Hermes Agent:** Configured under `.hermes/` (loaded from `.hermes/skills/secrets-scanner/` and [.hermes/SOUL.md](.hermes/SOUL.md)).
+- **Codex Agent:** Configured under `.codex/` (loaded from `.codex/skills/secrets-scanner/` and [.codex/SOUL.md](.codex/SOUL.md)).
+
+The bundled `SOUL.md` files define the agent's core values, character, and behavioral boundaries, instructing it to always check for credentials, verify pre-commit setups, and strictly redact raw keys from any console outputs or file edits.
 
 ---
 

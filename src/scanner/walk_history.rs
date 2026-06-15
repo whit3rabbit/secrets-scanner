@@ -52,22 +52,15 @@ use super::{is_binary_skipped, is_unsafe_rel_path, should_collect_path, StatsAcc
 /// scan. A directory-walk fallback is deliberately not offered (it cannot
 /// approximate history).
 pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec<Finding> {
+    if scanner.config.max_findings == Some(0) {
+        return scan_history_zero_cap(scanner, root, stats);
+    }
+
     let mut cmd = Command::new("git");
     cmd.arg("-c").arg("core.quotePath=false");
     cmd.arg("-C").arg(root);
     cmd.args(["log", "-p", "-U0", "--no-color", "--no-ext-diff"]);
-    if scanner.config.history_full {
-        cmd.arg("--full-history");
-    }
-    if scanner.config.history_all {
-        cmd.arg("--all");
-    }
-    // Each operator-supplied option is one argv entry verbatim (no whitespace
-    // re-tokenization), so a value containing spaces (e.g. `--since=2 weeks ago`)
-    // reaches git intact.
-    for opt in &scanner.config.history_log_opts {
-        cmd.arg(opt);
-    }
+    append_history_options(&mut cmd, scanner);
     // Terminate options so an operator-supplied value cannot be reinterpreted as
     // a pathspec beyond git's own option parsing.
     cmd.arg("--");
@@ -143,6 +136,49 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
         }
     }
     parser.into_findings()
+}
+
+fn scan_history_zero_cap(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec<Finding> {
+    let mut cmd = Command::new("git");
+    cmd.arg("-c").arg("core.quotePath=false");
+    cmd.arg("-C").arg(root);
+    cmd.arg("log");
+    append_history_options(&mut cmd, scanner);
+    cmd.arg("--max-count=0");
+    cmd.arg("--");
+    cmd.stdout(Stdio::null());
+    cmd.stderr(Stdio::null());
+
+    match cmd.status() {
+        Ok(status) if status.success() => {
+            stats.findings_truncated.store(true, Ordering::Relaxed);
+            warn!("[scanner] Warning: --max-findings is 0; no history scanned.");
+        }
+        Ok(_) => {
+            warn!("[scanner] git-history mode: `git log` failed (not a repository?).");
+            stats.git_failed.store(true, Ordering::Relaxed);
+        }
+        Err(e) => {
+            warn!("[scanner] git-history mode could not run git: {e}.");
+            stats.git_failed.store(true, Ordering::Relaxed);
+        }
+    }
+    Vec::new()
+}
+
+fn append_history_options(cmd: &mut Command, scanner: &Scanner) {
+    if scanner.config.history_full {
+        cmd.arg("--full-history");
+    }
+    if scanner.config.history_all {
+        cmd.arg("--all");
+    }
+    // Each operator-supplied option is one argv entry verbatim (no whitespace
+    // re-tokenization), so a value containing spaces (e.g. `--since=2 weeks ago`)
+    // reaches git intact.
+    for opt in &scanner.config.history_log_opts {
+        cmd.arg(opt);
+    }
 }
 
 /// Accumulated added lines for the current file diff (all hunks of one file in
@@ -386,9 +422,13 @@ impl<'a> Parser<'a> {
         self.files_scanned += 1;
         self.stats.files_scanned.fetch_add(1, Ordering::Relaxed);
 
-        // `scan_bytes` enforces `max_findings_per_file` (per file diff) and logs
-        // its own truncation, exactly like the working-tree/staged leaves.
-        let mut found = self.scanner.scan_bytes(&diff.path, &diff.buf);
+        // `scan_bytes_detailed` enforces `max_findings_per_file` (per file diff)
+        // and logs its own truncation, exactly like working-tree/staged leaves.
+        let scan_result = self.scanner.scan_bytes_detailed(&diff.path, &diff.buf);
+        if scan_result.findings_truncated {
+            self.stats.findings_truncated.store(true, Ordering::Relaxed);
+        }
+        let mut found = scan_result.findings;
         for f in &mut found {
             remap_finding(f, &diff.line_map);
             f.commit = self.current_commit.clone();
@@ -400,10 +440,12 @@ impl<'a> Parser<'a> {
             let remaining = cap.saturating_sub(self.findings.len());
             if found.len() > remaining {
                 found.truncate(remaining);
+                self.stats.findings_truncated.store(true, Ordering::Relaxed);
             }
             self.findings.extend(found);
             if self.findings.len() >= cap && !self.cap_warned {
                 self.cap_warned = true;
+                self.stats.findings_truncated.store(true, Ordering::Relaxed);
                 warn!(
                     "[scanner] Warning: reached --max-findings ({cap}); history scan \
                      stopped early."

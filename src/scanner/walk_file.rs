@@ -50,7 +50,11 @@ pub(super) fn scan_one_file(scanner: &Scanner, path: &str, stats: &StatsAcc) -> 
     }
 
     stats.files_scanned.fetch_add(1, Ordering::Relaxed);
-    scanner.scan_bytes(path, &bytes)
+    let result = scanner.scan_bytes_detailed(path, &bytes);
+    if result.findings_truncated {
+        stats.findings_truncated.store(true, Ordering::Relaxed);
+    }
+    result.findings
 }
 
 /// Decide whether `bytes` should be skipped as binary under `policy`.

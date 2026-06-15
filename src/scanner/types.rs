@@ -226,6 +226,27 @@ pub struct ScanStats {
     /// an unscannable git request must not look like a clean scan. Mutually
     /// exclusive with `git_fallback` per scanned path.
     pub git_failed: bool,
+
+    /// True when a finding cap dropped one or more finding entries from the
+    /// returned result set. Redaction still uses the full pre-cap finding set.
+    pub findings_truncated: bool,
+}
+
+/// Findings from one content scan plus whether a finding cap truncated them.
+#[derive(Debug, Clone)]
+pub struct ScanResult {
+    /// Findings returned to the caller after configured caps are applied.
+    pub findings: Vec<Finding>,
+
+    /// True when a finding cap dropped one or more finding entries.
+    pub findings_truncated: bool,
+}
+
+impl ScanResult {
+    /// Returns true when the scan produced at least one returned finding.
+    pub fn has_findings(&self) -> bool {
+        !self.findings.is_empty()
+    }
 }
 
 /// Scanner output that pairs findings with redacted content.
@@ -236,6 +257,11 @@ pub struct ScanOutput<T> {
 
     /// Content with matched secret byte ranges replaced by a redaction marker.
     pub redacted: T,
+
+    /// True when a finding cap dropped one or more finding entries from
+    /// `findings`. The redacted content was still built from the full pre-cap
+    /// finding set.
+    pub findings_truncated: bool,
 }
 
 impl<T> ScanOutput<T> {

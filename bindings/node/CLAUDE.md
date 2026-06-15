@@ -32,26 +32,36 @@ with the `#[napi]` surface in `src/lib.rs`.
 
 `src/lib.rs` (`NativeScanner`, `#[napi]`) → `index.js` (`Scanner` wrapper) →
 `public.d.ts` (types). The wrapper exists on purpose: it normalizes errors to a
-stable `error.code`, coerces args (`String(...)`, `Uint8Array`-only buffers),
-and maps both camelCase and snake_case field names from the native result.
+stable `error.code`, validates public arguments, accepts `Uint8Array`-only
+buffers, and maps both camelCase and snake_case field names from the native
+result. Do not reintroduce `String(...)` coercion: bad paths, TOML, or content
+must fail as `INVALID_ARGUMENT`.
 
 ## Error-code contract (tested, keep stable)
 
 Native side emits messages prefixed `CODE: message`; `index.js`
 (`normalizeNativeError`) parses the prefix back into `error.code`. Codes:
 `ENGINE_BUILD`, `INPUT_TOO_LARGE`, `NOT_HARDENED`, `POSITION_OVERFLOW`,
-`INVALID_CONFIG`, `INVALID_RULES`, `INVALID_RULES_TOML`, `IO`, plus
-`NATIVE_ERROR` fallback. `core.test.ts` asserts on these — renaming one is a
-breaking change.
+`INVALID_CONFIG`, `INVALID_RULES`, `INVALID_RULES_TOML`, `IO`,
+`INVALID_ARGUMENT`, plus `NATIVE_ERROR` fallback. `core.test.ts` asserts on
+these — renaming one is a breaking change. Safe native details are encoded after
+`details=` in the native message and parsed by `index.js`; never put matched
+secret bytes in those details.
 
 ## Fail-closed behaviors (mirror the Rust core)
 
 - `scanProxy()` requires a hardened scanner (`Scanner.proxy()` / `{ proxy: true }`)
   or throws `NOT_HARDENED`; oversize input throws `INPUT_TOO_LARGE`. Do not
   loosen these to "scan anyway".
+- All in-memory public scan methods enforce `maxFileSize`, not only
+  `scanProxy()`.
 - Finding positions are `usize` → `f64`; a value above JS `MAX_SAFE_INTEGER`
   throws `POSITION_OVERFLOW` rather than silently clamping.
-- Config numbers are validated (finite, non-negative, integer) → `INVALID_CONFIG`.
+- Config numbers are validated (finite, non-negative, integer, JS safe integer)
+  → `INVALID_CONFIG`.
+- `Scanner.proxy(config)` accepts only `minEntropy`, `maxFileSize`,
+  `maxFindingsPerFile`, and `maxMatchedLen`; reject fields that could weaken or
+  confuse proxy posture.
 
 ## Constructors (factories)
 
@@ -60,6 +70,26 @@ breaking change.
 data-dir cache first (same three-tier loading as the CLI; see root `AGENTS.md`).
 `Scanner.proxy(config)` = `bundled({ ...config, proxy: true })`.
 Also `fromRulesFile(path)`, `fromToml(toml)`.
+
+## Result shapes
+
+`scanContent()` and `scanBytes()` stay compatibility-first and return
+`Finding[]`. Use `scanContentDetailed()` / `scanBytesDetailed()` for
+`{ findings, hasFindings, findingsTruncated }`. Redaction results also expose
+`findingsTruncated`; the redacted payload is still built from the full pre-cap
+finding set. `scanFile()` / `scanPath()` return `PathScanResult` with safe
+coverage `stats` and `incomplete`.
+
+Async methods mirror the sync names with an `Async` suffix and return Promises.
+They use NAPI-RS `Task`/`AsyncTask`; JS buffers are copied into owned `Vec<u8>`
+before worker execution.
+
+## Packaging
+
+`package.json` is publishable and includes an `exports` map, `engines.node`, and
+prepack/prepublish checks. This package still ships the built host `.node`
+artifact only; per-platform optional package publishing is a separate release
+task.
 
 ## Cargo notes
 

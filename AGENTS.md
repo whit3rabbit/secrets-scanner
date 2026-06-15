@@ -60,9 +60,33 @@ secrets-scanner/
 │       └── validation.rs      # Rule TOML and Regex validator
 ├── bindings/
 │   └── node/                  # NAPI-RS Node bindings (@secrets-scanner/core); see bindings/node/CLAUDE.md
+├── plugins/
+│   └── secrets-scanner/       # Claude Code plugin definition
+├── .claude/                   # Claude Code local config and symlinked skill
+├── .openclaw/                 # OpenClaw agent local config, skills, and SOUL.md
+├── .hermes/                   # Hermes Agent local config, skills, and SOUL.md
+├── .codex/                    # Codex Agent local config, skills, and SOUL.md
 ├── build.rs                   # Validates and merges manifest-selected rule sources at compile time
 └── Makefile                   # Developer convenience targets
 ```
+
+---
+
+## Agent Skills and Plugins
+
+To prevent secrets from being leaked during agent-assisted development, this repository bundles compatible agent skills and `SOUL.md` personality core rules for multiple AI agent runtimes:
+
+- **Claude Code:** Configured under `.claude/` and `plugins/secrets-scanner/`. Auto-triggers for Claude Code prompts requesting installation or execution.
+- **OpenClaw:** Configured under `.openclaw/` and loaded from `.openclaw/skills/secrets-scanner/` and `.openclaw/SOUL.md`.
+- **Hermes Agent:** Configured under `.hermes/` and loaded from `.hermes/skills/secrets-scanner/` and `.hermes/SOUL.md`.
+- **Codex Agent:** Configured under `.codex/` and loaded from `.codex/skills/secrets-scanner/` and `.codex/SOUL.md`.
+
+Each skill contains instructions guiding the respective agent on how to:
+1. Install `secrets-scanner` locally.
+2. Configure git pre-commit hooks to block commits containing secrets.
+3. Perform on-demand scans of staged files or full history.
+
+The corresponding `SOUL.md` files inject a cognitive identity policy into the agent's system prompt, instructing it to always check for credentials and strictly redact raw keys from output/files.
 
 ---
 

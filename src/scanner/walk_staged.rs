@@ -189,7 +189,11 @@ pub(super) fn scan_one_staged(
     }
 
     stats.files_scanned.fetch_add(1, Ordering::Relaxed);
-    // `scan_bytes` already enforces `max_findings_per_file` (and logs the
-    // truncation), so no second cap pass is needed here.
-    scanner.scan_bytes(&entry.display, &bytes)
+    // `scan_bytes_detailed` already enforces `max_findings_per_file` (and logs
+    // the truncation), so no second cap pass is needed here.
+    let result = scanner.scan_bytes_detailed(&entry.display, &bytes);
+    if result.findings_truncated {
+        stats.findings_truncated.store(true, Ordering::Relaxed);
+    }
+    result.findings
 }

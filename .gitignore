@@ -52,7 +52,23 @@ __pycache__/
 !.claude/skills/
 .claude/skills/*
 !.claude/skills/secrets-scanner
-.codex/
+.codex/*
+!.codex/skills/
+.codex/skills/*
+!.codex/skills/secrets-scanner
+!.codex/SOUL.md
+
+.openclaw/*
+!.openclaw/skills/
+.openclaw/skills/*
+!.openclaw/skills/secrets-scanner
+!.openclaw/SOUL.md
+
+.hermes/*
+!.hermes/skills/
+.hermes/skills/*
+!.hermes/skills/secrets-scanner
+!.hermes/SOUL.md
 
 # Logs
 test_*

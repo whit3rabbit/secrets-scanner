@@ -146,6 +146,60 @@ fn redaction_covers_secrets_past_the_finding_cap() {
 }
 
 #[test]
+fn detailed_scan_reports_per_content_truncation() {
+    let content = "tok_AAAAAAAAAA tok_BBBBBBBBBB";
+    let config = ScanConfig {
+        max_findings_per_file: Some(1),
+        ..ScanConfig::proxy()
+    };
+    let scanner = proxy_scanner(config);
+
+    let detailed = scanner.scan_content_detailed("input.env", content);
+    assert!(detailed.has_findings());
+    assert_eq!(detailed.findings.len(), 1);
+    assert!(detailed.findings_truncated);
+
+    let redacted = scanner.scan_and_redact_content("input.env", content);
+    assert_eq!(redacted.findings.len(), 1);
+    assert!(redacted.findings_truncated);
+    assert!(!redacted.redacted.contains("tok_AAAAAAAAAA"));
+    assert!(!redacted.redacted.contains("tok_BBBBBBBBBB"));
+}
+
+#[test]
+fn path_stats_report_finding_truncation() {
+    let dir = tempfile::tempdir().expect("dir");
+    let file = dir.path().join("input.env");
+    std::fs::write(&file, "tok_AAAAAAAAAA tok_BBBBBBBBBB").expect("write");
+    let config = ScanConfig {
+        max_findings_per_file: Some(1),
+        ..Default::default()
+    };
+    let scanner = proxy_scanner(config);
+
+    let (findings, stats) = scanner.scan_file_with_stats(file.to_str().expect("path"));
+    assert_eq!(stats.files_scanned, 1);
+    assert_eq!(findings.len(), 1);
+    assert!(stats.findings_truncated);
+}
+
+#[test]
+fn path_stats_report_total_finding_cap_truncation() {
+    let dir = tempfile::tempdir().expect("dir");
+    std::fs::write(dir.path().join("a.env"), "tok_AAAAAAAAAA").expect("write a");
+    std::fs::write(dir.path().join("b.env"), "tok_BBBBBBBBBB").expect("write b");
+    let config = ScanConfig {
+        max_findings: Some(1),
+        ..Default::default()
+    };
+    let scanner = proxy_scanner(config);
+
+    let (findings, stats) = scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1);
+    assert!(stats.findings_truncated);
+}
+
+#[test]
 fn long_match_is_omitted_not_amplified() {
     // One match longer than the proxy `max_matched_len` (256).
     let token = format!("tok_{}", "A".repeat(400));

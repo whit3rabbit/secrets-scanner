@@ -20,6 +20,7 @@ use super::{scan_one_file, staged, StatsAcc};
 fn scan_capped<T: Sync>(
     scanner: &Scanner,
     items: &[T],
+    stats: &StatsAcc,
     noun: &str,
     scan_label: &str,
     scan_one: impl Fn(&T) -> Vec<Finding> + Sync,
@@ -30,6 +31,7 @@ fn scan_capped<T: Sync>(
 
     if cap == 0 {
         if !items.is_empty() {
+            stats.findings_truncated.store(true, Ordering::Relaxed);
             warn!("[scanner] Warning: --max-findings is 0; no {noun} scanned.");
         }
         return Vec::new();
@@ -45,6 +47,7 @@ fn scan_capped<T: Sync>(
 
         if findings.len() >= cap {
             if truncated_current || idx + 1 < items.len() {
+                stats.findings_truncated.store(true, Ordering::Relaxed);
                 warn!(
                     "[scanner] Warning: reached --max-findings ({cap}); {scan_label} stopped early."
                 );
@@ -60,7 +63,7 @@ pub(super) fn scan_file_paths(
     paths: &[String],
     stats: &StatsAcc,
 ) -> Vec<Finding> {
-    scan_capped(scanner, paths, "files", "scan", |path| {
+    scan_capped(scanner, paths, stats, "files", "scan", |path| {
         scan_one_file(scanner, path, stats)
     })
 }
@@ -71,9 +74,14 @@ pub(super) fn scan_staged_entries(
     entries: &[staged::StagedEntry],
     stats: &StatsAcc,
 ) -> Vec<Finding> {
-    scan_capped(scanner, entries, "staged files", "staged scan", |entry| {
-        staged::scan_one_staged(scanner, root, entry, stats)
-    })
+    scan_capped(
+        scanner,
+        entries,
+        stats,
+        "staged files",
+        "staged scan",
+        |entry| staged::scan_one_staged(scanner, root, entry, stats),
+    )
 }
 
 pub(super) fn sort_findings(findings: &mut [Finding]) {

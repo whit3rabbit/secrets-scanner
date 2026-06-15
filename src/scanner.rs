@@ -28,10 +28,11 @@ use crate::error::{ProxyError, ScannerError};
 use crate::rules::engine::RuleEngine;
 
 mod matching;
+mod output;
 mod redaction;
 mod types;
 mod walk;
-pub use types::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanStats};
+pub use types::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanResult, ScanStats};
 
 /// The scanner. Owns a compiled `RuleEngine` and scan configuration.
 ///
@@ -153,6 +154,15 @@ impl Scanner {
         walk::scan_path(self, root)
     }
 
+    /// Scan a single file and return findings plus file-level [`ScanStats`].
+    ///
+    /// This uses the same hardened file-read path as directory walks: symlinks
+    /// are rejected, reads are bounded by `max_file_size`, and binary content is
+    /// skipped according to the configured [`BinaryPolicy`].
+    pub fn scan_file_with_stats(&self, path: &str) -> (Vec<Finding>, ScanStats) {
+        walk::scan_file(self, path)
+    }
+
     /// Scan a single file's content against all rules.
     ///
     /// This is the core scan function. It runs the Aho-Corasick automaton,
@@ -161,23 +171,6 @@ impl Scanner {
     /// Useful for scanning in-memory content (e.g., LLM pipeline proxy).
     pub fn scan_content(&self, path: &str, content: &str) -> Vec<Finding> {
         self.scan_bytes(path, content.as_bytes())
-    }
-
-    /// Scan string content and return both findings and redacted content.
-    ///
-    /// This is intended for proxy-style use cases where callers need a safe
-    /// payload to forward after inspecting the findings.
-    pub fn scan_and_redact_content(&self, path: &str, content: &str) -> ScanOutput<String> {
-        let output = self.scan_and_redact_bytes(path, content.as_bytes());
-        let redacted = match String::from_utf8(output.redacted) {
-            Ok(s) => s,
-            Err(e) => String::from_utf8_lossy(e.as_bytes()).into_owned(),
-        };
-
-        ScanOutput {
-            findings: output.findings,
-            redacted,
-        }
     }
 
     /// Hardened entry point for scanning untrusted in-memory content (e.g. an
@@ -218,9 +211,7 @@ impl Scanner {
     ///
     /// This operates directly on raw bytes to avoid heap allocations.
     pub fn scan_bytes(&self, path: &str, content: &[u8]) -> Vec<Finding> {
-        let mut findings = self.scan_bytes_uncapped(path, content);
-        self.apply_findings_cap(path, &mut findings);
-        findings
+        self.scan_bytes_detailed(path, content).findings
     }
 
     /// Scan a byte slice and return every finding WITHOUT applying the per-file
@@ -340,7 +331,7 @@ impl Scanner {
     /// be starved by a match-spam payload. Callers that redact a payload from the
     /// finding set must do so on the pre-cap findings (see `scan_bytes_uncapped`)
     /// and call this only afterwards.
-    fn apply_findings_cap(&self, path: &str, findings: &mut Vec<Finding>) {
+    fn apply_findings_cap(&self, path: &str, findings: &mut Vec<Finding>) -> bool {
         if let Some(cap) = self.config.max_findings_per_file {
             if findings.len() > cap {
                 log::warn!(
@@ -350,25 +341,10 @@ impl Scanner {
                     crate::safe_display::sanitize_display(path),
                 );
                 findings.truncate(cap);
+                return true;
             }
         }
-    }
-
-    /// Scan bytes and return both findings and redacted bytes.
-    ///
-    /// Secret byte spans are replaced with `[REDACTED_SECRET]`. Path-only and
-    /// zero-length findings are reported but do not mutate the returned bytes.
-    ///
-    /// Redaction runs against the **full pre-cap** finding set so a payload with
-    /// more than `max_findings_per_file` distinct secrets still has every secret
-    /// redacted; only the returned `findings` list is then truncated to the cap.
-    /// Redacting off the post-cap list would forward secrets past the cap in the
-    /// clear — the fail-open hazard this ordering closes.
-    pub fn scan_and_redact_bytes(&self, path: &str, content: &[u8]) -> ScanOutput<Vec<u8>> {
-        let mut findings = self.scan_bytes_uncapped(path, content);
-        let redacted = redaction::redact_content_bytes(content, &findings);
-        self.apply_findings_cap(path, &mut findings);
-        ScanOutput { findings, redacted }
+        false
     }
 
     /// Returns true if content contains a possible first byte for any keyword.

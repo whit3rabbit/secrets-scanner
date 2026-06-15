@@ -49,6 +49,7 @@ struct StatsAcc {
     errored: AtomicUsize,
     git_fallback: AtomicBool,
     git_failed: AtomicBool,
+    findings_truncated: AtomicBool,
 }
 
 impl StatsAcc {
@@ -61,6 +62,7 @@ impl StatsAcc {
             errored: self.errored.load(Ordering::Relaxed),
             git_fallback: self.git_fallback.load(Ordering::Relaxed),
             git_failed: self.git_failed.load(Ordering::Relaxed),
+            findings_truncated: self.findings_truncated.load(Ordering::Relaxed),
         }
     }
 }
@@ -127,6 +129,17 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
     let mut findings = scan_file_paths(scanner, &paths, &stats);
     sort_findings(&mut findings);
 
+    (findings, stats.snapshot())
+}
+
+/// Scan exactly one file through the hardened file-read path.
+pub fn scan_file(scanner: &Scanner, path: &str) -> (Vec<Finding>, ScanStats) {
+    let stats = StatsAcc::default();
+    if !should_collect_path(scanner, path) || scanner.engine.is_path_globally_allowlisted(path) {
+        return (Vec::new(), stats.snapshot());
+    }
+    let mut findings = scan_one_file(scanner, path, &stats);
+    sort_findings(&mut findings);
     (findings, stats.snapshot())
 }
 

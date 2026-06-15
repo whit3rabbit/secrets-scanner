@@ -119,6 +119,20 @@ pub(super) fn handle(args: ScanArgs) {
         }
     }
 
+    // Fail closed: an explicit git mode could not run and the caller did not opt
+    // into `--git-fallback=walk`, so nothing was scanned. Exit 2 (runtime error)
+    // before writing any normal output or baseline that could be mistaken for a
+    // clean scan. This takes precedence over the findings exit and ignores
+    // `--no-fail` (which only governs the findings-present case, not a scan that
+    // never happened).
+    if stats.git_failed {
+        error!(
+            "[scanner] git mode failed and --git-fallback=walk was not set; \
+             refusing to silently scan the working tree (nothing was scanned)."
+        );
+        std::process::exit(2);
+    }
+
     if let Some(ref out_path) = args.generate_baseline {
         write_baseline_or_exit(out_path, args.no_redact, &all_findings);
         return;
@@ -190,19 +204,6 @@ pub(super) fn handle(args: ScanArgs) {
             "[scanner] git path discovery failed for one or more paths; scanned the \
              working tree instead (scope may include untracked/ignored files)."
         );
-    }
-
-    // Fail closed: an explicit git mode could not run and the caller did not opt
-    // into `--git-fallback=walk`, so nothing was scanned. Exit 2 (runtime error)
-    // rather than letting an empty result look like a clean scan. This takes
-    // precedence over the findings exit and ignores `--no-fail` (which only
-    // governs the findings-present case, not a scan that never happened).
-    if stats.git_failed {
-        error!(
-            "[scanner] git mode failed and --git-fallback=walk was not set; \
-             refusing to silently scan the working tree (nothing was scanned)."
-        );
-        std::process::exit(2);
     }
 
     if !all_findings.is_empty() && !args.no_fail {

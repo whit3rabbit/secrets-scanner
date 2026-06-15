@@ -916,6 +916,25 @@ fn history_mode_outside_repo_fails_closed() {
     assert!(findings.is_empty(), "history mode must not walk the tree");
 }
 
+#[test]
+fn history_mode_zero_finding_cap_outside_repo_still_fails_closed() {
+    let dir = tempfile::tempdir().expect("dir");
+    std::fs::write(dir.path().join("leak.txt"), "SECRET123456").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        git_history: true,
+        max_findings: Some(0),
+        ..Default::default()
+    });
+    let (findings, stats) = scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+
+    assert!(
+        stats.git_failed,
+        "zero finding cap must still validate git-history mode"
+    );
+    assert!(findings.is_empty(), "history mode must not walk the tree");
+}
+
 // ─────────────────────────────────────────────
 // CLI: git modes fail closed (exit 2)
 // ─────────────────────────────────────────────
@@ -930,29 +949,63 @@ fn cli_git_mode_failure_exits_2() {
     let d = dir.path().to_str().expect("dir");
     let r = rules.to_str().expect("rules");
 
-    let code = |args: &[&str]| {
-        Command::new(BIN)
-            .args(args)
-            .status()
-            .expect("run")
-            .code()
-            .expect("code")
+    let run = |args: &[&str]| Command::new(BIN).args(args).output().expect("run");
+    let assert_git_failed = |args: &[&str]| {
+        let output = run(args);
+        assert_eq!(
+            output.status.code().expect("code"),
+            2,
+            "git failure must fail closed with exit 2"
+        );
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        assert!(
+            !stdout.contains("No secrets found"),
+            "fatal git failure must not emit clean output: {stdout}"
+        );
+        output
     };
 
-    assert_eq!(
-        code(&["scan", d, "--rules", r, "--git-tracked"]),
-        2,
-        "git failure must fail closed with exit 2"
-    );
+    assert_git_failed(&["scan", d, "--rules", r, "--git-tracked"]);
     // Even --no-fail does not mask a fail-closed git error.
+    assert_git_failed(&["scan", d, "--rules", r, "--git-tracked", "--no-fail"]);
+
+    let out_file = dir.path().join("findings.json");
+    std::fs::write(&out_file, "sentinel").expect("write sentinel");
+    assert_git_failed(&[
+        "scan",
+        d,
+        "--rules",
+        r,
+        "--git-tracked",
+        "--format",
+        "json",
+        "--output",
+        out_file.to_str().expect("out"),
+    ]);
     assert_eq!(
-        code(&["scan", d, "--rules", r, "--git-tracked", "--no-fail"]),
-        2,
-        "--no-fail does not downgrade a fail-closed git error"
+        std::fs::read_to_string(&out_file).expect("read output"),
+        "sentinel",
+        "fatal git failure must not truncate/write normal output artifacts"
     );
-    // Opting into the walk fallback restores scanning (finds the PAT → exit 1).
+
+    let baseline = dir.path().join("baseline.json");
+    assert_git_failed(&[
+        "scan",
+        d,
+        "--rules",
+        r,
+        "--git-tracked",
+        "--generate-baseline",
+        baseline.to_str().expect("baseline"),
+    ]);
+    assert!(
+        !baseline.exists(),
+        "fatal git failure must not write an empty baseline"
+    );
+
+    // Opting into the walk fallback restores scanning (finds the PAT -> exit 1).
     assert_eq!(
-        code(&[
+        run(&[
             "scan",
             d,
             "--rules",
@@ -960,9 +1013,42 @@ fn cli_git_mode_failure_exits_2() {
             "--git-tracked",
             "--git-fallback",
             "walk"
-        ]),
+        ])
+        .status
+        .code()
+        .expect("code"),
         1,
         "--git-fallback=walk restores the directory walk"
+    );
+}
+
+#[test]
+fn cli_history_zero_cap_outside_repo_fails_closed() {
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+    std::fs::write(dir.path().join("app.txt"), format!("TOKEN={PAT}")).expect("write");
+    let output = Command::new(BIN)
+        .args([
+            "scan",
+            dir.path().to_str().expect("dir"),
+            "--rules",
+            rules.to_str().expect("rules"),
+            "--git-history",
+            "--max-findings",
+            "0",
+        ])
+        .output()
+        .expect("run");
+
+    assert_eq!(
+        output.status.code().expect("code"),
+        2,
+        "git-history with zero cap must still fail closed outside a repo"
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(
+        !stdout.contains("No secrets found"),
+        "fatal git-history failure must not emit clean output: {stdout}"
     );
 }
 

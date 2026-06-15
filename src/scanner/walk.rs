@@ -16,12 +16,21 @@ use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 
 use log::warn;
-use rayon::prelude::*;
 use walkdir::WalkDir;
 
 use crate::filters;
 use crate::safe_display::sanitize_display;
 use crate::scanner::{BinaryPolicy, Finding, ScanStats, Scanner};
+
+#[path = "walk_caps.rs"]
+mod caps;
+use caps::{apply_max_files, scan_file_paths, scan_staged_entries, sort_findings};
+
+#[path = "walk_file.rs"]
+mod file;
+#[cfg(test)]
+use file::read_bounded;
+use file::{is_binary_skipped, scan_one_file};
 
 /// Thread-safe accumulator for scan statistics during the parallel walk.
 #[derive(Default)]
@@ -57,12 +66,10 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
     // files, so the bytes examined are exactly what is about to be committed.
     if scanner.config.git_staged {
         if let Some(mut entries) = staged::collect_staged_paths(scanner, root) {
+            staged::sort_entries(&mut entries);
             apply_max_files(&mut entries, scanner, &stats);
-            let mut findings: Vec<Finding> = entries
-                .par_iter()
-                .flat_map(|entry| staged::scan_one_staged(scanner, root, entry, &stats))
-                .collect();
-            apply_max_findings(&mut findings, scanner);
+            let mut findings = scan_staged_entries(scanner, root, &entries, &stats);
+            sort_findings(&mut findings);
             return (findings, stats.snapshot());
         }
         // Git unavailable / not a repo: fall back to a directory walk below.
@@ -86,163 +93,13 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
         collect_walkdir_paths(scanner, root, &stats)
     };
 
+    paths.sort_unstable();
     apply_max_files(&mut paths, scanner, &stats);
 
-    let mut findings: Vec<Finding> = paths
-        .par_iter()
-        .flat_map(|path| scan_one_file(scanner, path, &stats))
-        .collect();
-
-    apply_max_findings(&mut findings, scanner);
+    let mut findings = scan_file_paths(scanner, &paths, &stats);
+    sort_findings(&mut findings);
 
     (findings, stats.snapshot())
-}
-
-/// Apply the `--max-files` cap, recording the drop so the summary cannot read as
-/// full coverage. Generic so working-tree paths and staged entries share it.
-fn apply_max_files<T>(items: &mut Vec<T>, scanner: &Scanner, stats: &StatsAcc) {
-    if let Some(cap) = scanner.config.max_files {
-        if items.len() > cap {
-            let dropped = items.len() - cap;
-            stats.files_over_cap.store(dropped, Ordering::Relaxed);
-            warn!(
-                "[scanner] Warning: file count ({}) exceeds --max-files ({cap}); \
-                 {dropped} file(s) not scanned.",
-                items.len()
-            );
-            items.truncate(cap);
-        }
-    }
-}
-
-/// Apply the global `--max-findings` cap, logging truncation so it stays visible.
-fn apply_max_findings(findings: &mut Vec<Finding>, scanner: &Scanner) {
-    if let Some(cap) = scanner.config.max_findings {
-        if findings.len() > cap {
-            warn!(
-                "[scanner] Warning: finding count ({}) exceeds --max-findings ({cap}); \
-                 results truncated.",
-                findings.len()
-            );
-            findings.truncate(cap);
-        }
-    }
-}
-
-/// Apply the per-file `--max-findings-per-file` cap, logging the truncation.
-fn apply_max_findings_per_file(findings: &mut Vec<Finding>, scanner: &Scanner, path: &str) {
-    if let Some(cap) = scanner.config.max_findings_per_file {
-        if findings.len() > cap {
-            warn!(
-                "[scanner] Warning: {} finding(s) in '{}' truncated to \
-                 --max-findings-per-file ({cap}).",
-                findings.len(),
-                sanitize_display(path),
-            );
-            findings.truncate(cap);
-        }
-    }
-}
-
-/// Read and scan a single file after applying metadata, size, and binary filters.
-fn scan_one_file(scanner: &Scanner, path: &str, stats: &StatsAcc) -> Vec<Finding> {
-    let metadata = match std::fs::symlink_metadata(path) {
-        Ok(m) => m,
-        // Could not stat the file: count it as errored (incomplete coverage),
-        // not as a silent skip.
-        Err(_) => {
-            stats.errored.fetch_add(1, Ordering::Relaxed);
-            return vec![];
-        }
-    };
-    // Reject symlinks (incl. git-tracked ones) and non-regular files: a symlink's
-    // file_type is not `is_file()`, so this also prevents reads outside the tree.
-    if !metadata.file_type().is_file() || metadata.len() == 0 {
-        return vec![];
-    }
-    if metadata.len() > scanner.config.max_file_size {
-        stats.oversized_skipped.fetch_add(1, Ordering::Relaxed);
-        return vec![];
-    }
-
-    // Bounded owned read (not mmap): a memory-mapped file truncated by another
-    // process mid-scan would SIGBUS, which is uncatchable. The `take` bound also
-    // closes the TOCTOU window — a file that grew after the metadata check above
-    // still cannot be read past `max_file_size`.
-    let bytes = match read_bounded(path, scanner.config.max_file_size, metadata.len()) {
-        Ok(Some(b)) => b,
-        // None = grew past the cap between stat and read; count as oversized.
-        Ok(None) => {
-            stats.oversized_skipped.fetch_add(1, Ordering::Relaxed);
-            return vec![];
-        }
-        // Read failed after the stat succeeded (perms, race, I/O): errored, not
-        // a clean scan — surface it so coverage is not silently overstated.
-        Err(_) => {
-            stats.errored.fetch_add(1, Ordering::Relaxed);
-            return vec![];
-        }
-    };
-
-    // Content-based binary gate (independent of extension).
-    if is_binary_skipped(scanner.config.binary_policy, path, &bytes) {
-        stats.binary_skipped.fetch_add(1, Ordering::Relaxed);
-        return vec![];
-    }
-
-    stats.files_scanned.fetch_add(1, Ordering::Relaxed);
-    let mut findings = scanner.scan_bytes(path, &bytes);
-    apply_max_findings_per_file(&mut findings, scanner, path);
-    findings
-}
-
-/// Decide whether `bytes` should be skipped as binary under `policy`.
-///
-/// * `Scan` — never skip.
-/// * `Auto` — skip if binary, unless the path is source/secret-bearing.
-/// * `Skip` — skip if binary, with no allowlist exception (strictest).
-fn is_binary_skipped(policy: BinaryPolicy, path: &str, bytes: &[u8]) -> bool {
-    if policy == BinaryPolicy::Scan {
-        return false;
-    }
-    let sniff = &bytes[..bytes.len().min(filters::BINARY_SNIFF_LEN)];
-    if !filters::is_probably_binary(sniff) {
-        return false;
-    }
-    match policy {
-        BinaryPolicy::Auto => !filters::is_source_allowlisted(path),
-        BinaryPolicy::Skip => true,
-        BinaryPolicy::Scan => false,
-    }
-}
-
-/// Bounded read: returns `Ok(None)` if the file exceeds `max` bytes (read with
-/// a one-byte overshoot so an over-limit file is detected, not silently cut).
-fn read_bounded(path: &str, max: u64, expected_len: u64) -> std::io::Result<Option<Vec<u8>>> {
-    let file = open_no_follow(path)?;
-    let mut reader = file.take(max.saturating_add(1));
-    let cap = expected_len.saturating_add(1).min(max.saturating_add(1));
-    let mut bytes = Vec::with_capacity(usize::try_from(cap).unwrap_or(usize::MAX));
-    reader.read_to_end(&mut bytes)?;
-    if bytes.len() as u64 > max {
-        return Ok(None);
-    }
-    Ok(Some(bytes))
-}
-
-#[cfg(unix)]
-fn open_no_follow(path: &str) -> std::io::Result<std::fs::File> {
-    use std::os::unix::fs::OpenOptionsExt;
-
-    std::fs::OpenOptions::new()
-        .read(true)
-        .custom_flags(libc::O_NOFOLLOW)
-        .open(path)
-}
-
-#[cfg(not(unix))]
-fn open_no_follow(path: &str) -> std::io::Result<std::fs::File> {
-    std::fs::File::open(path)
 }
 
 /// Collect paths via recursive directory walk, applying filters.
@@ -263,8 +120,9 @@ fn collect_walkdir_paths(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec
         .filter(|e| e.file_type().is_file())
         .filter(|e| {
             let path_str = e.path().to_str().unwrap_or("");
-            // Basic extension/directory filter
-            if !filters::should_scan(path_str) {
+            // Basic extension/directory filter. `BinaryPolicy::Scan` widens only
+            // the extension side of this filter; noisy directories stay skipped.
+            if !should_collect_path(scanner, path_str) {
                 return false;
             }
             // Size filter (also rechecked in scan_one_file for git-collected paths).
@@ -290,8 +148,17 @@ fn collect_walkdir_paths(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec
 fn filter_git_paths(scanner: &Scanner, paths: Vec<String>) -> Vec<String> {
     paths
         .into_iter()
-        .filter(|p| filters::should_scan(p) && !scanner.engine.is_path_globally_allowlisted(p))
+        .filter(|p| {
+            should_collect_path(scanner, p) && !scanner.engine.is_path_globally_allowlisted(p)
+        })
         .collect()
+}
+
+fn should_collect_path(scanner: &Scanner, path: &str) -> bool {
+    filters::should_scan_with_extension_filter(
+        path,
+        scanner.config.binary_policy != BinaryPolicy::Scan,
+    )
 }
 
 /// Collect paths via git commands (`git ls-files` / `git diff --name-only`,

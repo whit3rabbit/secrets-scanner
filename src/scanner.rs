@@ -190,7 +190,27 @@ impl Scanner {
     /// [`ScanConfig::proxy`](crate::ScanConfig::proxy), which also disables
     /// attacker-controlled allow markers, skips context capture, and caps
     /// findings and `matched` length.
+    ///
+    /// This is enforced, not advisory: if the scanner's config is not hardened
+    /// (redact off, allow markers honored, context captured, or caps unset) it
+    /// returns [`ProxyError::NotHardened`] without scanning, so the untrusted
+    /// path cannot be used un-hardened by accident.
     pub fn scan_proxy(&self, content: &[u8]) -> Result<ScanOutput<Vec<u8>>, ProxyError> {
+        // Refuse to scan untrusted content with a soft config. `scan_bytes` and
+        // `check_rule_match` read `self.config` directly, so the only way to keep
+        // this entry point safe-by-construction (rather than relying on the caller
+        // to remember `ScanConfig::proxy()`) is to fail closed when the posture is
+        // not hardened. Caps are checked for presence, not exact value, so a caller
+        // may raise them via `with_config` and still pass.
+        let cfg = &self.config;
+        let hardened = cfg.redact
+            && !cfg.honor_allow_markers
+            && !cfg.capture_context
+            && cfg.max_findings_per_file.is_some()
+            && cfg.max_matched_len.is_some();
+        if !hardened {
+            return Err(ProxyError::NotHardened);
+        }
         if content.len() as u64 > self.config.max_file_size {
             return Err(ProxyError::InputTooLarge {
                 size: content.len(),
@@ -290,6 +310,17 @@ impl Scanner {
             std::sync::atomic::Ordering::Relaxed,
         );
 
+        // Redact secrets out of every finding's context window BEFORE the
+        // per-file cap. `redact_context_lines` builds its secret ranges from the
+        // finding set it is handed, so if the cap dropped a finding first, a
+        // surviving finding's context could still contain the dropped secret's
+        // raw bytes (two secrets within a few lines of each other). Redacting the
+        // full set first means truncation only removes finding entries, never
+        // redaction coverage.
+        if self.config.redact && self.config.capture_context {
+            matching::redact_context_lines(content, &mut findings);
+        }
+
         // Per-content finding cap. Enforced here (not only in the directory
         // walk) so every caller of `scan_bytes` — including the in-memory proxy
         // path — is bounded and cannot be starved by a match-spam payload.
@@ -303,10 +334,6 @@ impl Scanner {
                 );
                 findings.truncate(cap);
             }
-        }
-
-        if self.config.redact && self.config.capture_context {
-            matching::redact_context_lines(content, &mut findings);
         }
 
         findings

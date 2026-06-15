@@ -26,7 +26,8 @@ pub enum BinaryPolicy {
     Auto,
     /// Always skip files that look binary (no allowlist override).
     Skip,
-    /// Never skip on binary detection; scan every file that passes other filters.
+    /// Never skip on binary detection or skipped extensions; noisy directories,
+    /// global allowlists, size caps, and symlink/file-type guards still apply.
     Scan,
 }
 
@@ -244,9 +245,9 @@ pub struct Finding {
     #[serde(default)]
     pub secret_end_offset: usize,
 
-    /// Line-tolerant fingerprint identifying the same secret across line moves
-    /// (rule id + file + raw secret). Used for baseline suppression. Empty for
-    /// findings deserialized from a pre-fingerprint baseline.
+    /// Line-tolerant SHA-256 fingerprint identifying the same secret across line
+    /// moves (rule id + file + raw secret). Used for baseline suppression. Empty
+    /// for findings deserialized from a pre-fingerprint baseline.
     #[serde(default)]
     pub fingerprint: String,
 

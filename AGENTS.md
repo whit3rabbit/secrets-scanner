@@ -257,13 +257,14 @@ content (e.g. running as a GitHub Action). Key behaviors:
   prevent terminal/CI-log injection. A file-level summary (counts only, no
   secrets) is logged to stderr via `ScanStats` (`Scanner::scan_path_with_stats`).
 - **Baseline** (`--baseline`/`--generate-baseline`): suppression matches on a
-  line-tolerant fingerprint (`fingerprint::finding_fingerprint` over
+  line-tolerant SHA-256 v2 fingerprint (`fingerprint::finding_fingerprint` over
   rule id + file + raw secret, computed pre-redaction so it is redact-agnostic),
   with a fallback to the legacy `(file, line, rule)` tuple for baselines written
   before fingerprints existed. `--generate-baseline <file>` writes the current
   findings as JSON (includes fingerprints) and exits 0. The `matched` field is
   force-redacted even under `--no-redact` (suppression keys on the fingerprint,
   not the text), so a committed/uploaded baseline never carries raw secrets.
+  Baselines from older FNV-fingerprint builds should be regenerated once.
 - **SARIF** (`src/format.rs::write_sarif`, serde_json): `--output <file>`,
   generic `message.text` (rule + entropy, never the matched value),
   `partialFingerprints` (the finding's pre-redaction fingerprint, falling back to
@@ -284,8 +285,13 @@ proxy filtering attacker-controlled LLM traffic, use the dedicated entry point:
 - **`Scanner::scan_proxy(content) -> Result<ScanOutput<Vec<u8>>, ProxyError>`**
   (`src/scanner.rs`): **fails closed** — input over `max_file_size` returns
   `ProxyError::InputTooLarge` and produces no output, so oversized content is
-  never forwarded unscanned. Pair with **`ScanConfig::proxy()`**
-  (`src/scanner/types.rs`), which: redacts; sets `honor_allow_markers = false`
+  never forwarded unscanned. The hardened posture is **enforced, not advisory**:
+  if the scanner's config is not hardened (redact off, allow markers honored,
+  context captured, or finding/`matched` caps unset) `scan_proxy` returns
+  `ProxyError::NotHardened` without scanning, so the untrusted path cannot be used
+  un-hardened by accident (e.g. `Scanner::from_bundled()?.scan_proxy(...)`). Pair
+  with **`ScanConfig::proxy()`** (`src/scanner/types.rs`), which: redacts; sets
+  `honor_allow_markers = false`
   (an attacker can't append `secrets-scanner:allow` to forward a secret in the
   clear); sets `capture_context = false` (no whole-payload context blowup on
   newline-free input); caps `max_findings_per_file` (enforced inside
@@ -357,7 +363,7 @@ no `updater` feature) → `alpine:3` runtime with `git` + `ca-certificates`.
 safe-default `--git` mode shells out to it. Rules are embedded at compile time
 (no runtime `update-rules`), so rebuild the image to refresh them.
 `.dockerignore` excludes `target/`/`.git/` but **not** `assets/` (build.rs reads
-it). Not auto-published — `make`/`release.yml` are untouched.
+it). Auto-published to Docker Hub on release tags.
 `docker run --rm -v "$PWD:/repo" <image> scan /repo --git`.
 
 ---
@@ -404,7 +410,7 @@ Release is CI-only. Do not publish from a local machine except for dry-run valid
 
 Pre-release:
 - Make the GitHub repo public before pushing the release tag if Homebrew install should work. A private repo can still publish crates.io and GitHub Release artifacts, but normal Homebrew installs cannot fetch private release asset URLs.
-- Update `Cargo.toml` `[package].version` and `CHANGELOG.md` for the same `vX.Y.Z`.
+- Update `Cargo.toml` `[package].version`, `Dockerfile` `LABEL version`, and `CHANGELOG.md` for the same `vX.Y.Z`.
 - Run `make ci`. For packaging changes, also run `cargo publish --dry-run --locked` from the clean release commit.
 - Commit and push the release prep to `main`.
 
@@ -414,7 +420,7 @@ git tag -a vX.Y.Z -m "Release vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
-The tag must match `Cargo.toml`; `.github/workflows/release.yml` fails otherwise. The release workflow builds updater-enabled binaries, creates the GitHub Release, publishes the `secrets_scanner` crate with `CARGO_REGISTRY_TOKEN`, and updates `whit3rabbit/homebrew-tap/Casks/secrets-scanner.rb` with `HOMEBREW_TAP_TOKEN` when the repo is public.
+The tag must match `Cargo.toml` and the `Dockerfile` version; `.github/workflows/release.yml` fails otherwise. The release workflow builds updater-enabled binaries, creates the GitHub Release, publishes the `secrets_scanner` crate with `CARGO_REGISTRY_TOKEN`, publishes the Docker image to Docker Hub, and updates `whit3rabbit/homebrew-tap/Casks/secrets-scanner.rb` with `HOMEBREW_TAP_TOKEN` when the repo is public.
 
 Post-release:
 - Watch the GitHub Actions `Release` run to completion.

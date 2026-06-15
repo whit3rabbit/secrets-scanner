@@ -31,6 +31,57 @@ fn scan_and_redact_content_replaces_one_secret() {
 }
 
 #[test]
+fn per_file_cap_does_not_leave_dropped_secret_in_survivor_context() {
+    // Two secrets on adjacent lines: each falls inside the other's context
+    // window. With the per-file cap dropping one finding, the survivor's context
+    // must still have the dropped secret redacted (context redaction runs over
+    // the full finding set BEFORE the cap truncates). Regression for the cap
+    // ordering bug that left the dropped secret raw in the survivor's context.
+    let scanner = test_scanner().with_config(ScanConfig {
+        redact: true,
+        capture_context: true,
+        max_findings_per_file: Some(1),
+        ..Default::default()
+    });
+    let secret_a = "ghp_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    let secret_b = "ghp_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+    let content = format!("A={secret_a}\nB={secret_b}");
+
+    let findings = scanner.scan_content("dense.env", &content);
+    assert_eq!(findings.len(), 1, "cap should keep exactly one finding");
+
+    for (_, line_text) in &findings[0].context_lines {
+        assert!(
+            !line_text.contains(secret_a) && !line_text.contains(secret_b),
+            "no raw secret may survive in the kept finding's context: {line_text}"
+        );
+    }
+}
+
+#[test]
+fn context_redaction_expands_to_utf8_boundaries() {
+    let toml = r#"
+title = "utf8-boundary"
+
+[[rules]]
+id = "single-byte-secret"
+regex = 'KEY=(.)'
+secretGroup = 1
+keywords = ["key="]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let findings = scanner.scan_content("unicode.env", "KEY=é");
+
+    assert_eq!(findings.len(), 1);
+    let line = &findings[0].context_lines[0].1;
+    assert_eq!(line, "KEY=[REDACTED_SECRET]");
+    assert!(
+        !line.contains('\u{fffd}'),
+        "context redaction must not bisect UTF-8: {line}"
+    );
+}
+
+#[test]
 fn scan_and_redact_content_replaces_multiple_secrets() {
     let toml = r#"
 title = "multi-redact"

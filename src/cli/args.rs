@@ -125,14 +125,17 @@ pub(super) struct ScanArgs {
     #[arg(long, value_name = "BYTES", default_value_t = 2 * 1024 * 1024)]
     pub(super) max_file_size: u64,
 
-    /// Path to a previous JSON output file to suppress known findings.
-    /// Matching is fingerprint-based (survives line moves), with a fallback to
-    /// (file, line, rule) for baselines written before fingerprints existed.
+    /// Path to a previous JSON output or generated baseline file to suppress
+    /// known findings. Matching uses SHA-256 v2 fingerprints (survives line
+    /// moves), with a fallback to (file, line, rule) for baselines written before
+    /// fingerprints existed. Regenerate older FNV-fingerprint baselines once.
     #[arg(long, value_name = "FILE")]
     pub(super) baseline: Option<String>,
 
     /// Write the current findings to FILE as a baseline (JSON) and exit 0
     /// without failing on findings. Use as the input to a later `--baseline`.
+    /// This output is safer to commit/upload than normal JSON scan output because
+    /// it drops context and force-redacts `matched` even under `--no-redact`.
     #[arg(long, value_name = "FILE", conflicts_with = "baseline")]
     pub(super) generate_baseline: Option<String>,
 
@@ -195,7 +198,7 @@ pub(super) enum BinaryPolicyArg {
     Auto,
     /// Always skip binary-looking files.
     Skip,
-    /// Scan every file regardless of binary detection.
+    /// Scan skipped extensions too, and never skip based on binary detection.
     Scan,
 }
 

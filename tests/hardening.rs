@@ -78,6 +78,52 @@ fn binary_scan_policy_scans_binary_file() {
 }
 
 #[test]
+fn binary_scan_policy_scans_text_in_skipped_extension() {
+    let dir = tempfile::tempdir().expect("dir");
+    std::fs::write(dir.path().join("archive.zip"), b"SECRET123456").expect("write");
+
+    let default_scanner = scanner(ScanConfig::default());
+    let (default_findings, default_stats) =
+        default_scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+    assert!(
+        default_findings.is_empty(),
+        "default policy should still skip configured extensions"
+    );
+    assert_eq!(default_stats.files_scanned, 0);
+
+    let scan_scanner = scanner(ScanConfig {
+        binary_policy: BinaryPolicy::Scan,
+        ..Default::default()
+    });
+    let (scan_findings, scan_stats) =
+        scan_scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+
+    assert_eq!(
+        scan_findings.len(),
+        1,
+        "Scan policy must bypass extension skips"
+    );
+    assert_eq!(scan_stats.files_scanned, 1);
+}
+
+#[test]
+fn binary_scan_policy_still_skips_noisy_directories() {
+    let dir = tempfile::tempdir().expect("dir");
+    let nested = dir.path().join("node_modules/pkg");
+    std::fs::create_dir_all(&nested).expect("mkdir");
+    std::fs::write(nested.join("archive.zip"), b"SECRET123456").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        binary_policy: BinaryPolicy::Scan,
+        ..Default::default()
+    });
+    let (findings, stats) = scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+
+    assert!(findings.is_empty(), "noisy directories must stay skipped");
+    assert_eq!(stats.files_scanned, 0);
+}
+
+#[test]
 fn binary_auto_scans_source_allowlisted_file() {
     let dir = tempfile::tempdir().expect("dir");
     // `.pem` is on the source/secret-bearing allowlist, so Auto scans it even
@@ -658,6 +704,11 @@ fn cli_baseline_is_line_tolerant_and_reports_new_secrets() {
         .expect("run");
     assert!(gen.status.success(), "generate-baseline should exit 0");
     assert!(baseline.exists(), "baseline file should be written");
+    let baseline_json = std::fs::read_to_string(&baseline).expect("read baseline");
+    assert!(
+        baseline_json.contains("\"fingerprint\": \"sha256:"),
+        "new baselines must store SHA v2 fingerprints: {baseline_json}"
+    );
 
     // Move the known secret down a line and add a brand-new one above it.
     let new_pat = "ghp_BRAND0New0Secret0Token0123456789abcd";
@@ -686,4 +737,45 @@ fn cli_baseline_is_line_tolerant_and_reports_new_secrets() {
         !stdout.contains(PAT),
         "the moved, baselined secret must stay suppressed: {stdout}"
     );
+}
+
+#[test]
+fn cli_json_output_can_be_used_as_line_tolerant_baseline() {
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+    let app = dir.path().join("app.txt");
+    std::fs::write(&app, format!("TOKEN={PAT}\n")).expect("write");
+    let baseline = dir.path().join("findings.json");
+
+    let write_json = Command::new(BIN)
+        .args(["scan", app.to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--format", "json", "--no-context", "--no-fail"])
+        .args(["--output", baseline.to_str().expect("baseline")])
+        .output()
+        .expect("run");
+    assert!(write_json.status.success(), "json output should be written");
+
+    let baseline_json = std::fs::read_to_string(&baseline).expect("baseline");
+    assert!(
+        baseline_json.contains("\"fingerprint\""),
+        "normal JSON output must carry fingerprint metadata"
+    );
+
+    std::fs::write(&app, format!("\nTOKEN={PAT}\n")).expect("move secret");
+
+    let scan = Command::new(BIN)
+        .args(["scan", app.to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--baseline", baseline.to_str().expect("baseline")])
+        .args(["--format", "json", "--no-redact", "--no-context"])
+        .output()
+        .expect("run");
+    let stdout = String::from_utf8_lossy(&scan.stdout);
+
+    assert!(
+        !stdout.contains(PAT),
+        "the moved finding from normal JSON output must be suppressed: {stdout}"
+    );
+    assert_eq!(stdout.trim(), "[]");
 }

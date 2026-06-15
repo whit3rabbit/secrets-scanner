@@ -6,6 +6,8 @@ const path = require("node:path");
 const ERROR_MESSAGES = {
   ENGINE_BUILD: "scanner engine could not be built",
   INPUT_TOO_LARGE: "proxy input exceeds configured maxFileSize",
+  NOT_HARDENED: "scanner is not hardened for proxy use",
+  POSITION_OVERFLOW: "native finding position exceeds JavaScript number precision",
   INVALID_CONFIG: "scan config is invalid",
   INVALID_RULES: "scanner rules are invalid",
   INVALID_RULES_TOML: "scanner rules TOML is invalid",
@@ -215,7 +217,7 @@ function normalizeNativeError(error) {
 
   const message = error && error.message ? String(error.message) : String(error);
   const match =
-    /^(ENGINE_BUILD|INPUT_TOO_LARGE|INVALID_CONFIG|INVALID_RULES_TOML|INVALID_RULES|IO):/.exec(
+    /^(ENGINE_BUILD|INPUT_TOO_LARGE|NOT_HARDENED|POSITION_OVERFLOW|INVALID_CONFIG|INVALID_RULES_TOML|INVALID_RULES|IO):/.exec(
       message
     );
   const code = match ? match[1] : "NATIVE_ERROR";

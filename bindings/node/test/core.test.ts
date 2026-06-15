@@ -117,6 +117,17 @@ describe("@secrets-scanner/core", () => {
     );
   });
 
+  it("refuses scanProxy on a non-hardened scanner", () => {
+    // A scanner without the proxy config must fail closed: scanning untrusted
+    // content with the soft posture would honor attacker allow markers, capture
+    // whole-payload context, and leave findings/matched uncapped.
+    const scanner = Scanner.fromToml(RULES);
+
+    expect(() => scanner.scanProxy(Buffer.from(SECRET, "utf8"))).toThrowError(
+      expect.objectContaining({ code: "NOT_HARDENED" })
+    );
+  });
+
   it("returns numeric position fields for unicode input", () => {
     const scanner = Scanner.fromToml(RULES);
     const findings = scanner.scanContent("unicode.env", `snowman=☃\nkey=${SECRET}`);

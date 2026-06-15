@@ -43,4 +43,17 @@ pub enum ProxyError {
         /// The configured maximum (`ScanConfig::max_file_size`) in bytes.
         max: u64,
     },
+
+    /// The scanner's config is not hardened for untrusted input, so the proxy
+    /// path refuses to run rather than scan attacker-controlled content with a
+    /// soft posture (honoring inline allow markers, capturing whole-payload
+    /// context, or leaving findings/`matched` uncapped). Build the scanner with
+    /// [`ScanConfig::proxy`](crate::ScanConfig::proxy) (caps may be raised via
+    /// [`Scanner::with_config`](crate::Scanner::with_config)).
+    #[error(
+        "scanner is not hardened for proxy use: configure it with ScanConfig::proxy() \
+         (require redact=true, honor_allow_markers=false, capture_context=false, \
+         and max_findings_per_file/max_matched_len set)"
+    )]
+    NotHardened,
 }

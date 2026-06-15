@@ -273,8 +273,8 @@ path = 'secret\.env$'
 #[test]
 fn loads_bundled_rules() {
     // This tests against the actual bundled rules to ensure they parse
-    let toml_str = include_str!("../../../assets/secrets-scanner.toml");
-    let engine = RuleEngine::from_toml(toml_str).expect("bundled rules should parse");
+    let engine =
+        RuleEngine::from_toml(crate::rules::BUNDLED_RULES).expect("bundled rules should parse");
     assert!(
         engine.rule_count() > 100,
         "expected >100 rules, got {}",

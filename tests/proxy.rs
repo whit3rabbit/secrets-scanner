@@ -52,6 +52,31 @@ fn allow_marker_honored_by_default_but_ignored_in_proxy() {
 }
 
 #[test]
+fn scan_proxy_fails_closed_on_unhardened_config() {
+    // A scanner left on the default (soft) config must not be usable as a proxy:
+    // it would honor attacker allow markers, capture whole-payload context, and
+    // leave findings/`matched` uncapped. scan_proxy rejects it before scanning.
+    let scanner = Scanner::from_toml(TOML).expect("parse"); // default config
+    match scanner.scan_proxy(b"tok_ABCDEFGHIJKLMNOPQRST") {
+        Err(ProxyError::NotHardened) => {}
+        other => panic!("expected NotHardened, got {other:?}"),
+    }
+
+    // The hardened preset is accepted. Raising a cap via with_config still passes
+    // (presence, not exact value, is what is required).
+    let raised = ScanConfig {
+        max_matched_len: Some(4096),
+        ..ScanConfig::proxy()
+    };
+    assert!(
+        proxy_scanner(raised)
+            .scan_proxy(b"tok_ABCDEFGHIJKLMNOPQRST")
+            .is_ok(),
+        "a hardened config with a raised cap must still be accepted"
+    );
+}
+
+#[test]
 fn scan_proxy_fails_closed_on_oversize() {
     let config = ScanConfig {
         max_file_size: 8,

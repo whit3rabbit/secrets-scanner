@@ -23,7 +23,7 @@ def generate_from_ast(node_list):
             res.append(chr(args))
         elif op == sre_parse.SUBPATTERN:
             res.append(generate_from_ast(args[3]))
-        elif op == sre_parse.MAX_REPEAT:
+        elif op in (sre_parse.MAX_REPEAT, sre_parse.MIN_REPEAT):
             min_val, max_val, child = args
             count = max(min_val, min(max_val, 32))
             for _ in range(count):
@@ -73,9 +73,17 @@ def generate_from_in(choices):
                 flat_choices.extend(list(string.digits))
     
     if negate:
-        candidates = [c for c in string.ascii_letters + string.digits if c not in flat_choices]
+        pool = string.ascii_letters + string.digits + " =:_\"'\t"
+        candidates = [c for c in pool if c not in flat_choices]
         if candidates:
-            return random.choice(candidates)
+            word_chars = [c for c in candidates if c.isalnum() or c == "_"]
+            non_word_chars = [c for c in candidates if not (c.isalnum() or c == "_")]
+            if non_word_chars and random.random() < 0.5:
+                return random.choice(non_word_chars)
+            elif word_chars:
+                return random.choice(word_chars)
+            else:
+                return random.choice(candidates)
         else:
             return "A"
     else:

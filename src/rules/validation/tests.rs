@@ -35,6 +35,28 @@ fn test_valid_ruleset() {
 }
 
 #[test]
+fn compile_helpers_preserve_valid_brace_syntax() {
+    assert!(compile_bytes_regex(r"\p{L}{2,}").is_ok());
+    assert!(compile_bytes_regex(r"\x{7F}").is_ok());
+    assert!(compile_bytes_regex(r"[{}]").is_ok());
+}
+
+#[test]
+fn compile_helpers_repair_loose_literal_braces() {
+    let regex = compile_bytes_regex("token_{name}").expect("loose braces should be repaired");
+    assert!(regex.is_match(b"token_{name}"));
+}
+
+#[test]
+fn regex_set_repair_preserves_other_valid_brace_patterns() {
+    let patterns = vec![r"\p{L}{2,}".to_string(), "token_{name}".to_string()];
+    let set = compile_bytes_regex_set(&patterns).expect("set should repair only loose braces");
+
+    assert!(set.is_match(b"az"));
+    assert!(set.is_match(b"token_{name}"));
+}
+
+#[test]
 fn test_invalid_toml() {
     let invalid = "this is not TOML";
     let res = validate_rules_toml(invalid);

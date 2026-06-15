@@ -7,21 +7,19 @@
 //! `git cat-file` and scans those bytes.
 //!
 //! It is a child module of `walk`, so it reuses walk's private helpers
-//! (`run_git`, `run_git_quiet`, `is_binary_skipped`, `apply_max_findings_per_file`,
-//! `StatsAcc`) through `super::`.
+//! (`run_git`, `run_git_quiet`, `is_binary_skipped`, `StatsAcc`) through `super::`.
 
 use std::path::{Component, Path};
 use std::sync::atomic::Ordering;
 
 use log::warn;
 
-use crate::filters;
 use crate::safe_display::sanitize_display;
 use crate::scanner::{Finding, Scanner};
 
 use super::{
-    apply_max_findings_per_file, is_binary_skipped, run_git, run_git_blob_bounded, run_git_quiet,
-    BlobRead, StatsAcc,
+    is_binary_skipped, run_git, run_git_blob_bounded, run_git_quiet, should_collect_path, BlobRead,
+    StatsAcc,
 };
 
 /// A staged file: its repo-relative index path (for the `:path` pathspec) and
@@ -30,6 +28,10 @@ use super::{
 pub(super) struct StagedEntry {
     rel: String,
     display: String,
+}
+
+pub(super) fn sort_entries(entries: &mut [StagedEntry]) {
+    entries.sort_unstable_by(|a, b| a.display.cmp(&b.display).then_with(|| a.rel.cmp(&b.rel)));
 }
 
 /// Collect staged (index) paths, applying the same extension/allowlist filters
@@ -70,7 +72,8 @@ pub(super) fn collect_staged_paths(scanner: &Scanner, root: &str) -> Option<Vec<
         }
 
         let rel = rel.strip_prefix("./").unwrap_or(&rel).to_string();
-        if !filters::should_scan(&rel) || scanner.engine.is_path_globally_allowlisted(&rel) {
+        if !should_collect_path(scanner, &rel) || scanner.engine.is_path_globally_allowlisted(&rel)
+        {
             continue;
         }
 
@@ -132,7 +135,7 @@ pub(super) fn scan_one_staged(
     }
 
     stats.files_scanned.fetch_add(1, Ordering::Relaxed);
-    let mut findings = scanner.scan_bytes(&entry.display, &bytes);
-    apply_max_findings_per_file(&mut findings, scanner, &entry.display);
-    findings
+    // `scan_bytes` already enforces `max_findings_per_file` (and logs the
+    // truncation), so no second cap pass is needed here.
+    scanner.scan_bytes(&entry.display, &bytes)
 }

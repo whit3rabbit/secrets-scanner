@@ -25,6 +25,17 @@ const VERSION_FILE: &str = "secrets-scanner.toml.sha256";
 /// Integrity file for the actual merged cached rules content.
 const CACHE_SHA_FILE: &str = "secrets-scanner.toml.cache.sha256";
 
+#[cfg(feature = "updater")]
+const UPDATE_CONNECT_TIMEOUT_SECS: u64 = 10;
+#[cfg(feature = "updater")]
+const UPDATE_READ_TIMEOUT_SECS: u64 = 30;
+#[cfg(feature = "updater")]
+const UPDATE_WRITE_TIMEOUT_SECS: u64 = 10;
+#[cfg(feature = "updater")]
+const UPDATE_TOTAL_TIMEOUT_SECS: u64 = 60;
+#[cfg(feature = "updater")]
+const MAX_RULES_DOWNLOAD_BYTES: u64 = 20 * 1024 * 1024;
+
 // ── OS data directory ─────────────────────────────────────────────────────────
 
 /// Returns the platform-appropriate user data directory for this application.
@@ -144,15 +155,11 @@ pub fn update_rules(
     check_only: bool,
     custom_url: Option<&str>,
 ) -> Result<UpdateResult, Box<dyn std::error::Error>> {
-    use std::io::Read;
-
     let url = custom_url.unwrap_or(UPSTREAM_URL);
     validate_update_url(url)?;
     info!("[updater] Fetching rules from {url}");
 
-    let response = ureq::get(url).call()?;
-    let mut body = Vec::new();
-    response.into_reader().read_to_end(&mut body)?;
+    let body = fetch_rules_body(url)?;
 
     let remote_sha = sha256_hex(&body);
     info!("[updater] Remote SHA-256: {remote_sha}");
@@ -225,6 +232,56 @@ pub fn update_rules(
 
     info!("[updater] Combined rules saved to {}", rules_path.display());
     Ok(UpdateResult::Updated { sha256: remote_sha })
+}
+
+#[cfg(feature = "updater")]
+fn fetch_rules_body(url: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    use std::time::Duration;
+
+    let agent = ureq::AgentBuilder::new()
+        .https_only(true)
+        .timeout_connect(Duration::from_secs(UPDATE_CONNECT_TIMEOUT_SECS))
+        .timeout_read(Duration::from_secs(UPDATE_READ_TIMEOUT_SECS))
+        .timeout_write(Duration::from_secs(UPDATE_WRITE_TIMEOUT_SECS))
+        .timeout(Duration::from_secs(UPDATE_TOTAL_TIMEOUT_SECS))
+        .build();
+    let response = agent.get(url).call()?;
+    reject_large_content_length(response.header("Content-Length"), MAX_RULES_DOWNLOAD_BYTES)?;
+    read_capped_body(response.into_reader(), MAX_RULES_DOWNLOAD_BYTES)
+}
+
+#[cfg(feature = "updater")]
+fn reject_large_content_length(
+    content_length: Option<&str>,
+    max: u64,
+) -> Result<(), Box<dyn std::error::Error>> {
+    if let Some(value) = content_length {
+        if let Ok(length) = value.trim().parse::<u64>() {
+            if length > max {
+                return Err(format!(
+                    "rules download is too large: Content-Length {length} exceeds {max} bytes"
+                )
+                .into());
+            }
+        }
+    }
+    Ok(())
+}
+
+#[cfg(feature = "updater")]
+fn read_capped_body<R: std::io::Read>(
+    reader: R,
+    max: u64,
+) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    use std::io::Read;
+
+    let mut body = Vec::new();
+    let mut limited = reader.take(max.saturating_add(1));
+    limited.read_to_end(&mut body)?;
+    if body.len() as u64 > max {
+        return Err(format!("rules download is too large: body exceeds {max} bytes").into());
+    }
+    Ok(body)
 }
 
 #[cfg(feature = "updater")]
@@ -349,5 +406,24 @@ mod tests {
     #[test]
     fn update_url_validation_rejects_http() {
         assert!(validate_update_url("http://example.com/rules.toml").is_err());
+    }
+
+    #[test]
+    fn content_length_over_cap_is_rejected() {
+        let max = 5;
+        let err = reject_large_content_length(Some("6"), max).expect_err("over cap");
+        assert!(err.to_string().contains("Content-Length 6 exceeds 5"));
+    }
+
+    #[test]
+    fn capped_body_reader_rejects_stream_over_cap() {
+        let err = read_capped_body(std::io::Cursor::new(vec![b'a'; 6]), 5).expect_err("over cap");
+        assert!(err.to_string().contains("body exceeds 5 bytes"));
+    }
+
+    #[test]
+    fn capped_body_reader_accepts_stream_at_cap() {
+        let body = read_capped_body(std::io::Cursor::new(vec![b'a'; 5]), 5).expect("at cap");
+        assert_eq!(body, b"aaaaa");
     }
 }

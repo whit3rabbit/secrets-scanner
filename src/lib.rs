@@ -39,7 +39,7 @@ pub mod entropy;
 /// Typed errors for library entry points.
 pub mod error;
 
-/// Stable FNV-1a fingerprints for findings (baseline + SARIF).
+/// Stable fingerprints for findings (baseline + SARIF).
 pub mod fingerprint;
 
 /// File filtering and secret redaction utilities.

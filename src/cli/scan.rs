@@ -16,6 +16,14 @@ pub(super) fn resolve_git_diff(args: &ScanArgs) -> bool {
 /// Handle the `scan` subcommand.
 pub(super) fn handle(args: ScanArgs) {
     let git_diff = resolve_git_diff(&args);
+    let early_max_findings = if args.generate_baseline.is_none()
+        && args.baseline.is_none()
+        && args.ignore_rules.is_empty()
+    {
+        args.max_findings
+    } else {
+        None
+    };
     let config = ScanConfig {
         redact: !args.no_redact,
         capture_context: !args.no_context && !matches!(args.format, OutputFormat::Sarif),
@@ -28,9 +36,7 @@ pub(super) fn handle(args: ScanArgs) {
         include_untracked: args.include_untracked,
         binary_policy: args.binary_policy.into(),
         max_files: args.max_files,
-        // The CLI applies this after aggregating all input paths. Leaving it in
-        // the library config would cap each root separately and log twice.
-        max_findings: None,
+        max_findings: early_max_findings,
         max_findings_per_file: args.max_findings_per_file,
         honor_allow_markers: true,
         max_matched_len: None,
@@ -63,8 +69,9 @@ pub(super) fn handle(args: ScanArgs) {
     let start = std::time::Instant::now();
     let mut all_findings = Vec::new();
     let mut stats = ScanStats::default();
+    let mut findings_truncated = false;
 
-    for path in &args.paths {
+    for (idx, path) in args.paths.iter().enumerate() {
         let (mut findings, s) = scanner.scan_path_with_stats(path);
         stats.files_scanned += s.files_scanned;
         stats.binary_skipped += s.binary_skipped;
@@ -75,7 +82,31 @@ pub(super) fn handle(args: ScanArgs) {
         if !args.ignore_rules.is_empty() {
             findings.retain(|f| !args.ignore_rules.contains(&f.rule_id));
         }
+
+        if let Some(cap) = early_max_findings {
+            let remaining = cap.saturating_sub(all_findings.len());
+            if remaining == 0 {
+                findings_truncated = true;
+                break;
+            }
+            if findings.len() > remaining {
+                findings.truncate(remaining);
+                findings_truncated = true;
+            }
+        }
         all_findings.extend(findings);
+
+        if let Some(cap) = early_max_findings {
+            if all_findings.len() >= cap {
+                if idx + 1 < args.paths.len() {
+                    findings_truncated = true;
+                    info!(
+                        "[scanner] Reached --max-findings ({cap}); remaining input paths were not scanned."
+                    );
+                }
+                break;
+            }
+        }
     }
 
     if let Some(ref out_path) = args.generate_baseline {
@@ -87,15 +118,16 @@ pub(super) fn handle(args: ScanArgs) {
         apply_baseline_or_exit(baseline_path, &mut all_findings);
     }
 
-    let mut findings_truncated = false;
-    if let Some(cap) = args.max_findings {
-        if all_findings.len() > cap {
-            info!(
-                "[scanner] Findings ({}) exceed --max-findings ({cap}); results truncated.",
-                all_findings.len()
-            );
-            all_findings.truncate(cap);
-            findings_truncated = true;
+    if early_max_findings.is_none() {
+        if let Some(cap) = args.max_findings {
+            if all_findings.len() > cap {
+                info!(
+                    "[scanner] Findings ({}) exceed --max-findings ({cap}); results truncated.",
+                    all_findings.len()
+                );
+                all_findings.truncate(cap);
+                findings_truncated = true;
+            }
         }
     }
 
@@ -155,19 +187,30 @@ pub(super) fn handle(args: ScanArgs) {
     }
 }
 
-fn write_baseline_or_exit(out_path: &str, no_redact: bool, all_findings: &[Finding]) {
-    let baseline_findings: Vec<Finding> = if no_redact {
-        all_findings
-            .iter()
-            .map(|f| {
-                let mut f = f.clone();
+/// Build the findings to serialize into a `--generate-baseline` file.
+///
+/// Strips `context_lines` from every finding (baselines suppress on
+/// `fingerprint`, or the legacy (file,line,rule) tuple, never on context) and
+/// force-redacts `matched` under `--no-redact`. Both guard the same hazard: a
+/// committed/uploaded baseline must never carry raw secret material. Under
+/// `--no-redact`, `scan_bytes` redacts neither `matched` nor the context, so
+/// without this the surrounding source (including the secret) would leak.
+fn baseline_findings(no_redact: bool, all_findings: &[Finding]) -> Vec<Finding> {
+    all_findings
+        .iter()
+        .map(|f| {
+            let mut f = f.clone();
+            f.context_lines = Vec::new();
+            if no_redact {
                 f.matched = secrets_scanner::filters::redact(&f.matched);
-                f
-            })
-            .collect()
-    } else {
-        all_findings.to_vec()
-    };
+            }
+            f
+        })
+        .collect()
+}
+
+fn write_baseline_or_exit(out_path: &str, no_redact: bool, all_findings: &[Finding]) {
+    let baseline_findings = baseline_findings(no_redact, all_findings);
     match serde_json::to_string_pretty(&baseline_findings) {
         Ok(json) => {
             if let Err(e) = write_private_file(out_path, json.as_bytes()) {
@@ -290,7 +333,44 @@ fn dispatch_format(
 
 #[cfg(test)]
 mod tests {
-    use secrets_scanner::{ScanConfig, Scanner};
+    use secrets_scanner::{Finding, ScanConfig, Scanner};
+
+    /// A finding with raw `matched` and a context line that also contains the
+    /// raw secret (the shape `scan_bytes` produces under `--no-redact`).
+    fn finding_with_raw_context() -> Finding {
+        serde_json::from_value(serde_json::json!({
+            "file": "app.env", "line": 2, "end_line": 2, "col": 5, "end_col": 28,
+            "rule_id": "test-token", "description": "Test token",
+            "matched": "tok_RAWSECRETVALUE", "entropy": 4.2,
+            "fingerprint": "fp-abc",
+            "context_lines": [[1, "# config"], [2, "API=tok_RAWSECRETVALUE"]]
+        }))
+        .expect("finding")
+    }
+
+    #[test]
+    fn baseline_drops_context_and_redacts_under_no_redact() {
+        let findings = vec![finding_with_raw_context()];
+        let out = super::baseline_findings(true, &findings);
+        let json = serde_json::to_string(&out).expect("serialize");
+
+        assert!(out[0].context_lines.is_empty(), "context must be dropped");
+        assert!(
+            !json.contains("tok_RAWSECRETVALUE"),
+            "no raw secret may survive in the baseline JSON: {json}"
+        );
+        // Fingerprint (the suppression key) is preserved.
+        assert_eq!(out[0].fingerprint, "fp-abc");
+    }
+
+    #[test]
+    fn baseline_drops_context_when_redacted() {
+        // Even with redaction on, context is dropped (it is never a suppression
+        // key, so carrying it only risks leaking redaction-marker-adjacent data).
+        let findings = vec![finding_with_raw_context()];
+        let out = super::baseline_findings(false, &findings);
+        assert!(out[0].context_lines.is_empty());
+    }
 
     #[test]
     fn scanner_loads_from_bundled() {

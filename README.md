@@ -8,84 +8,15 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 
 ## Features
 
-- **Fast multi-stage scanning**
-  <details>
-  <summary>Details</summary>
-
-  - Uses a `memchr` first-byte prefilter, case-insensitive Aho-Corasick keyword matching, entropy gating, and Rust `regex` validation to reduce unnecessary regex work.
-  - Separates keyworded and unkeyworded rules so broad rules still run while keyworded rules stay fast.
-  </details>
-
-- **Gitleaks-compatible TOML rules**
-  <details>
-  <summary>Details</summary>
-
-  - Loads rules from a gitleaks-style TOML configuration.
-  - Supports rule IDs, descriptions, keywords, entropy thresholds, path filters, `secretGroup`, and global/per-rule allowlists.
-  - Supports custom rules via `--rules <path>` or `SECRETS_SCANNER_RULES`.
-  </details>
-
-- **Manifest-driven bundled rules**
-  <details>
-  <summary>Details</summary>
-
-  - Builds an embedded ruleset at compile time from manifest-declared sources.
-  - Validates selected rule sources before embedding.
-  - Supports deterministic merge reports and duplicate-rule review tooling.
-  </details>
-
-- **Safe-by-default scanning**
-  <details>
-  <summary>Details</summary>
-
-  - Redacts matched secrets by default.
-  - Uses bounded owned file reads with a configurable `--max-file-size`; does not rely on memory mapping.
-  - Rejects symlinks and non-regular files.
-  - Uses content-based binary detection with `--binary-policy auto|skip|scan`.
-  </details>
-
-- **Git-aware scanning**
-  <details>
-  <summary>Details</summary>
-
-  - Scan all files/directories recursively, only git-tracked files with `--git`, or changed files with `--git-diff` / `--diff-base`.
-  - Supports untracked-but-not-ignored files with `--include-untracked`.
-  - Uses NUL-delimited git output and path containment checks for safer CI execution.
-  </details>
-
-- **CI-friendly output**
-  <details>
-  <summary>Details</summary>
-
-  - Output formats: human-readable text, JSON, JSONL, and SARIF 2.1.0.
-  - SARIF messages avoid including matched secret values.
-  - `--no-context` suppresses context lines for safer logs.
-  - `--max-files`, `--max-findings`, and `--max-findings-per-file` cap scan scope and report truncation.
-  </details>
-
-- **CLI and automation**
-  <details>
-  <summary>Details</summary>
-
-  - Subcommands: `scan`, `update-rules`, `validate-rules`, `merge-rules`, `list-rules`, and `completions`.
-  - Exit codes are designed for CI: clean, findings, runtime error, and invalid scan configuration/rules.
-  - Includes a GitHub Action, pre-commit hook configuration, Dockerfile, install scripts, and Homebrew cask packaging.
-  </details>
-
-- **Optional runtime rule updates**
-  <details>
-  <summary>Details</summary>
-
-  - When built with `--features updater`, `secrets-scanner update-rules` can download updated rules into the OS user-data directory for the next scan.
-  - Default/non-updater builds use the embedded ruleset; Docker images should be rebuilt to refresh embedded rules.
-  </details>
-
-- **Developer tooling**
-  <details>
-  <summary>Details</summary>
-
-  - Rule validation, merge checks, duplicate-rule reports, fixture generation, ruleset docs generation, CI checks, benchmarks, and fuzz targets.
-  </details>
+- **Fast multi-stage scanning**: Uses a `memchr` prefilter, case-insensitive Aho-Corasick matching, entropy gating, and Rust `regex` validation to minimize CPU overhead.
+- **Gitleaks-compatible TOML rules**: Loads rules from a gitleaks-style TOML configuration. Supports custom rules via `--rules` or `SECRETS_SCANNER_RULES`.
+- **Manifest-driven bundled rules**: Combines local, gitleaks, and kingfisher rulesets at compile time, validated and deduped by priority.
+- **Safe-by-default scanning**: Redacts matched secrets, rejects symlinks, uses bounded file reads, and automatically skips binary files.
+- **Git-aware scanning**: Scan git-tracked files (`--git`), local diffs (`--git-diff` / `--diff-base`), or untracked files (`--include-untracked`).
+- **CI-friendly output**: Exports to text, JSON, JSONL, and SARIF formats. Supports suppressions, baselines, and scan scope limits.
+- **CLI and automation**: Complete CLI toolset with completions, GitHub Action, pre-commit hook, Docker image, and Homebrew cask packaging.
+- **Optional runtime updates**: Download and update rule configurations dynamically to the OS user-data directory via the `--features updater` build.
+- **Developer tooling**: Includes built-in rule validation, merge check validation, duplicate-rule detectors, benchmarks, and fuzz targets.
 
 ---
 
@@ -127,25 +58,71 @@ secrets-scanner scan --format sarif . > results.sarif
 
 To integrate `secrets-scanner` into your Rust codebase, add it to your `Cargo.toml`:
 
+```toml
+[dependencies]
+secrets-scanner = "0.1.0"
+```
+
+#### Parallel Directory Scanning
+Scan a directory tree in parallel using default rules:
+
 ```rust
-use secrets_scanner::{Finding, ScanConfig, ScanOutput, Scanner};
+use secrets_scanner::Scanner;
 
-// Load rules (three-tier priority: env var -> cached -> bundled)
-let scanner = Scanner::new()?;
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Load rules (priority: SECRETS_SCANNER_RULES env -> cached in user-data -> bundled fallback)
+    let scanner = Scanner::new()?;
 
-// Scan a directory tree (parallel)
-let findings = scanner.scan_path("./src");
+    // Scan a directory tree
+    let findings = scanner.scan_path("./src");
 
-// Or scan in-memory content (e.g. in an LLM pipeline proxy)
-let content = "export TOKEN=ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh1234567";
-let output = scanner.scan_and_redact_content("deploy.sh", content);
-
-if output.has_findings() {
-    // Decide whether to block, audit, or forward output.redacted.
+    for f in &findings {
+        println!("{}:{} [{}] {}", f.file, f.line, f.rule_id, f.matched);
+    }
+    Ok(())
 }
+```
 
-for f in &output.findings {
-    println!("{}:{} [{}] {}", f.file, f.line, f.rule_id, f.matched);
+#### In-Memory Scan & Redaction
+Check for secrets and redact them from a string or file content:
+
+```rust
+use secrets_scanner::Scanner;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let scanner = Scanner::new()?;
+    let content = "export STRIPE_KEY=sk_live_51234567890abcdefghijklmnopqrstuvwxyz";
+
+    let output = scanner.scan_and_redact_content("config.env", content);
+    if output.has_findings() {
+        println!("Redacted content:\n{}", output.redacted);
+    }
+    Ok(())
+}
+```
+
+#### Hardened LLM / Proxy Integration
+For untrusted inputs (e.g. proxying user prompts or LLM generated payloads), use the hardened `scan_proxy` interface. This API is **fail-closed** (returns an error on oversized input) and enforces a hardened `ScanConfig::proxy()` setup (enforces redaction, disables allow markers, caps maximum findings, and limits matched length to prevent memory amplification/bypass attacks).
+
+```rust
+use secrets_scanner::{Scanner, ScanConfig, ProxyError};
+
+fn handle_untrusted_input(payload: &[u8]) -> Result<Vec<u8>, ProxyError> {
+    // Create a scanner configured for proxy hardened mode
+    let config = ScanConfig::proxy();
+    let scanner = Scanner::with_config(config).map_err(|_| ProxyError::NotHardened)?;
+
+    // scan_proxy returns Err(ProxyError::InputTooLarge) if input exceeds config.max_file_size
+    // It also fails with Err(ProxyError::NotHardened) if the config is not secure.
+    let output = scanner.scan_proxy(payload)?;
+
+    // If findings were detected, the output contains redacted bytes
+    if output.has_findings() {
+        eprintln!("Detected and redacted {} secret(s).", output.findings.len());
+    }
+
+    // Return the safe, redacted payload
+    Ok(output.redacted)
 }
 ```
 
@@ -153,9 +130,10 @@ for f in &output.findings {
 
 ## Installation Options
 
-### Automated Installer Scripts
+<details>
+<summary>Automated Installer Scripts (macOS, Linux, Windows)</summary>
 
-#### macOS / Linux
+### macOS / Linux
 ```bash
 curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | bash
 ```
@@ -169,7 +147,7 @@ This script detects your OS/Architecture and installs in order of preference:
 curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | VERSION=0.1.0 bash
 ```
 
-#### Windows
+### Windows
 ```powershell
 irm https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.ps1 | iex
 ```
@@ -181,6 +159,7 @@ This script installs in order of preference:
 ```powershell
 $env:VERSION="0.1.0"; irm https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.ps1 | iex
 ```
+</details>
 
 ### Homebrew Tap (macOS)
 To install using Homebrew directly:
@@ -237,7 +216,7 @@ scan options:
   --ignore-rule <ID>        Suppress a specific rule (repeatable)
   --min-entropy <FLOAT>     Override per-rule entropy thresholds
   --max-file-size <BYTES>   Skip files larger than this (default: 2MB)
-  --baseline <FILE>         Suppress findings present in a prior JSON output
+  --baseline <FILE>         Suppress findings present in a generated baseline
   --git                     Only scan files tracked by git
   --git-diff                Only scan files changed since the last commit
 
@@ -249,6 +228,10 @@ validate-rules [FILES...]   Validate TOML rules (default: bundled assets)
 list-rules [--rules <PATH>] List all rules from a TOML file or default rules
 completions <SHELL>         Generate shell completions (bash/zsh/fish/powershell/elvish)
 ```
+
+Generated baselines use SHA-256 v2 fingerprints over rule id, file path, and the
+raw secret bytes. Baselines generated by older FNV-based builds should be
+regenerated once; old fingerprints will not suppress new findings.
 
 ---
 
@@ -304,9 +287,9 @@ behavioral dedup, and patterns the Rust engine can't compile are dropped.
 Regenerate the merged ruleset with `make merge-rules`; inspect cross-source duplicates with
 `make find-dups`.
 
-Raw provider files live under `assets/`; `assets/sources.toml` declares source
+Raw provider files live under [`assets/`](assets/); [`assets/sources.toml`](assets/sources.toml) declares source
 metadata, merge priority, and default-build inclusion. The committed
-`assets/secrets-scanner.toml` file is the lean merged artifact generated by
+[`assets/secrets-scanner.toml`](assets/secrets-scanner.toml) file is the lean merged artifact generated by
 `make merge-rules` for review and drift checks.
 
 The per-ruleset documentation pages in [`docs/rulesets/`](docs/rulesets/) are generated with `make ruleset-docs`, referencing the actual rules defined in the `*.toml` files under `assets/`:

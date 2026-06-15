@@ -119,12 +119,18 @@ pub fn is_source_allowlisted(path: &str) -> bool {
 /// assert!(!should_scan("node_modules/lodash/index.js"));
 /// ```
 pub fn should_scan(path: &str) -> bool {
+    should_scan_with_extension_filter(path, true)
+}
+
+pub(crate) fn should_scan_with_extension_filter(path: &str, skip_extensions: bool) -> bool {
     let normalized = path.replace('\\', "/").to_lowercase();
-    if SKIP_EXTENSIONS.iter().any(|e| normalized.ends_with(e)) {
+    if skip_extensions && SKIP_EXTENSIONS.iter().any(|e| normalized.ends_with(e)) {
         return false;
     }
     if normalized
         .split('/')
+        .rev()
+        .skip(1)
         .any(|component| SKIP_DIRECTORIES.contains(&component))
     {
         return false;
@@ -194,6 +200,21 @@ mod tests {
         assert!(should_scan(".env.production"));
         assert!(should_scan("docker-compose.yml"));
         assert!(should_scan("Makefile"));
+    }
+
+    #[test]
+    fn allows_files_named_like_noisy_directories() {
+        for name in ["build", "dist", "vendor", "venv", "target"] {
+            assert!(should_scan(name), "root file named {name} should scan");
+            assert!(
+                should_scan(&format!("scripts/{name}")),
+                "leaf file named {name} should scan"
+            );
+            assert!(
+                !should_scan(&format!("{name}/secret.txt")),
+                "directory named {name} should stay skipped"
+            );
+        }
     }
 
     #[test]

@@ -1,44 +1,68 @@
 //! rules/validation/helpers.rs — Regex compilation and escaping helpers.
 
-/// Helper to preprocess and compile a regex pattern using the scanner's standard builder.
+const REGEX_SIZE_LIMIT: usize = 100 * 1024 * 1024;
+
+/// Helper to compile a regex pattern using the scanner's standard builder.
 ///
-/// This automatically escapes unescaped braces that are not valid repetition quantifiers,
-/// and configures a larger compilation size limit (100MB) to support complex rulesets.
+/// Valid Rust regex syntax is compiled unchanged. For compatibility with loose
+/// upstream rules, this falls back to escaping unescaped literal braces only when
+/// the original compile error is brace-related.
 pub fn compile_regex(pattern: &str) -> Result<regex::Regex, regex::Error> {
-    let escaped = escape_literal_braces(pattern);
-    let mut builder = regex::RegexBuilder::new(&escaped);
-    builder.size_limit(100 * 1024 * 1024);
-    builder.build()
+    match build_regex(pattern) {
+        Ok(regex) => Ok(regex),
+        Err(original) => {
+            let escaped = escape_literal_braces(pattern);
+            if escaped == pattern || !is_literal_brace_compile_error(&original) {
+                return Err(original);
+            }
+            build_regex(&escaped)
+        }
+    }
 }
 
-/// Helper to preprocess and compile a regex pattern for matching raw byte slices.
+/// Helper to compile a regex pattern for matching raw byte slices.
 ///
-/// This automatically escapes unescaped braces that are not valid repetition quantifiers,
-/// and configures a larger compilation size limit (100MB) to support complex rulesets.
+/// Valid Rust regex syntax is compiled unchanged. For compatibility with loose
+/// upstream rules, this falls back to escaping unescaped literal braces only when
+/// the original compile error is brace-related.
 #[allow(dead_code)]
 pub fn compile_bytes_regex(pattern: &str) -> Result<regex::bytes::Regex, regex::Error> {
-    let escaped = escape_literal_braces(pattern);
-    let mut builder = regex::bytes::RegexBuilder::new(&escaped);
-    builder.size_limit(100 * 1024 * 1024);
-    builder.build()
+    match build_bytes_regex(pattern) {
+        Ok(regex) => Ok(regex),
+        Err(original) => {
+            let escaped = escape_literal_braces(pattern);
+            if escaped == pattern || !is_literal_brace_compile_error(&original) {
+                return Err(original);
+            }
+            build_bytes_regex(&escaped)
+        }
+    }
 }
 
 /// Helper to preprocess and compile a regex set for matching raw byte slices.
 ///
-/// This uses the same literal-brace escaping and size limit as
-/// [`compile_bytes_regex`], so the set prefilter has the same compilation
-/// posture as individual detection regexes.
+/// This uses the same valid-first, literal-brace fallback posture as
+/// [`compile_bytes_regex`].
 #[allow(dead_code)]
 pub fn compile_bytes_regex_set(
     patterns: &[String],
 ) -> Result<regex::bytes::RegexSet, regex::Error> {
-    let escaped: Vec<String> = patterns
-        .iter()
-        .map(|pattern| escape_literal_braces(pattern))
-        .collect();
-    let mut builder = regex::bytes::RegexSetBuilder::new(escaped);
-    builder.size_limit(100 * 1024 * 1024);
-    builder.build()
+    match build_bytes_regex_set(patterns) {
+        Ok(set) => Ok(set),
+        Err(original) => {
+            if !is_literal_brace_compile_error(&original) {
+                return Err(original);
+            }
+            let repaired: Vec<String> = patterns
+                .iter()
+                .map(|pattern| repair_literal_braces_for_set(pattern))
+                .collect();
+            if repaired.iter().zip(patterns).all(|(a, b)| a == b) {
+                return Err(original);
+            }
+            build_bytes_regex_set(&repaired)
+        }
+    }
 }
 
 /// Escapes unescaped `{` and `}` characters that are not part of valid repetition quantifiers (e.g. `{n}`, `{n,}`, `{n,m}`).
@@ -105,6 +129,46 @@ fn get_quantifier_len(slice: &[char]) -> Option<usize> {
         Some(idx + 1)
     } else {
         None
+    }
+}
+
+fn build_regex(pattern: &str) -> Result<regex::Regex, regex::Error> {
+    let mut builder = regex::RegexBuilder::new(pattern);
+    builder.size_limit(REGEX_SIZE_LIMIT);
+    builder.build()
+}
+
+fn build_bytes_regex(pattern: &str) -> Result<regex::bytes::Regex, regex::Error> {
+    let mut builder = regex::bytes::RegexBuilder::new(pattern);
+    builder.size_limit(REGEX_SIZE_LIMIT);
+    builder.build()
+}
+
+fn build_bytes_regex_set(patterns: &[String]) -> Result<regex::bytes::RegexSet, regex::Error> {
+    let mut builder = regex::bytes::RegexSetBuilder::new(patterns);
+    builder.size_limit(REGEX_SIZE_LIMIT);
+    builder.build()
+}
+
+fn is_literal_brace_compile_error(e: &regex::Error) -> bool {
+    let msg = e.to_string();
+    msg.contains("repetition")
+        || msg.contains("counted repetition")
+        || msg.contains("invalid decimal digit")
+}
+
+fn repair_literal_braces_for_set(pattern: &str) -> String {
+    match build_bytes_regex(pattern) {
+        Ok(_) => pattern.to_string(),
+        Err(e) if is_literal_brace_compile_error(&e) => {
+            let escaped = escape_literal_braces(pattern);
+            if escaped == pattern {
+                pattern.to_string()
+            } else {
+                escaped
+            }
+        }
+        Err(_) => pattern.to_string(),
     }
 }
 

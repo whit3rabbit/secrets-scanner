@@ -245,3 +245,15 @@ fn normalize_regex_matches_python_normalizer() {
     );
     assert_eq!(normalize_regex(r"(?-i) A B "), "ab");
 }
+
+#[test]
+fn normalize_regex_strips_escaped_anchors_for_parity() {
+    // The strip pattern's `\^`/`\$` alternatives match the anchor char even when
+    // it is backslash-escaped (a literal caret/dollar), leaving a dangling `\`.
+    // This is a known quirk shared with the Python normalizer; normalize_regex
+    // only feeds advisory near-dup detection (never drops a rule), so the
+    // behavior is harmless. Pin it so the two implementations cannot drift apart
+    // unnoticed: if this ever changes, the Python side must change in lockstep.
+    assert_eq!(normalize_regex(r"foo\^bar"), r"foo\bar");
+    assert_eq!(normalize_regex(r"foo\$bar"), r"foo\bar");
+}

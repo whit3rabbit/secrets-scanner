@@ -31,6 +31,23 @@ jobs:
           fi
           echo "OK: ${TAG} matches Cargo.toml v${CARGO_VER}"
 
+      - name: Check tag == Dockerfile version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          DOCKER_VER=$(grep -i 'LABEL version=' Dockerfile | sed -nE 's/.*version="([^"]+)".*/\1/p')
+          if [ -z "${DOCKER_VER}" ]; then
+            echo "::error::No version label found in Dockerfile (expected LABEL version=\"X.Y.Z\")"
+            exit 1
+          fi
+          if [ "v${DOCKER_VER}" != "${TAG}" ]; then
+            echo "::error::tag ${TAG} does not match Dockerfile version v${DOCKER_VER}"
+            echo "Bump LABEL version in Dockerfile to match the release tag."
+            exit 1
+          fi
+          echo "OK: ${TAG} matches Dockerfile v${DOCKER_VER}"
+
+
   build:
     name: Build ${{ matrix.target }}
     needs: [check-version]
@@ -126,6 +143,9 @@ jobs:
         with:
           files: artifacts/*
           generate_release_notes: true
+          draft: false
+          prerelease: false
+
 
   publish-crate:
     name: Publish to crates.io
@@ -230,3 +250,45 @@ jobs:
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "Update secrets-scanner cask to ${{ steps.ver.outputs.VER }}"
           git push origin main
+
+  publish-docker:
+    name: Publish Docker Image
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKEBUB_TOKEN || secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: followthewhit3rabbit/secrets-scanner
+          tags: |
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+

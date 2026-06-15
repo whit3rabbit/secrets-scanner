@@ -1,9 +1,9 @@
 //! CLI output formatting module.
 //!
 //! All writers take a `&mut dyn Write` so output can go to stdout or a file
-//! (`--output`). Text output sanitizes control characters in paths and matched
-//! values to prevent terminal / CI-log injection from hostile filenames; the
-//! structured JSON/SARIF formats rely on JSON escaping instead.
+//! (`--output`). Text output sanitizes control/bidi characters in paths and
+//! matched values to prevent terminal / CI-log injection from hostile filenames;
+//! the structured JSON/SARIF formats rely on JSON escaping instead.
 
 use std::io::{self, Write};
 
@@ -12,8 +12,8 @@ use serde_json::json;
 use crate::safe_display::sanitize_display;
 use secrets_scanner::Finding;
 
-/// Human-readable text output. Control characters in `file`/`matched` are
-/// escaped so a hostile filename cannot inject terminal/CI-log control sequences.
+/// Human-readable text output. Control/bidi characters in `file`/`matched` are
+/// escaped so a hostile filename cannot spoof terminal/CI-log output.
 pub fn write_text(w: &mut dyn Write, findings: &[Finding], show_context: bool) -> io::Result<()> {
     if findings.is_empty() {
         writeln!(w, "✅ No secrets found.")?;
@@ -50,7 +50,8 @@ pub fn write_text(w: &mut dyn Write, findings: &[Finding], show_context: bool) -
     Ok(())
 }
 
-/// Minimal JSON serialisation of a finding without requiring serde derive on the wire shape.
+/// JSON serialization of a finding that keeps the existing wire names and
+/// context shape while including baseline/SARIF location metadata.
 fn finding_to_json(f: &Finding, show_context: bool) -> String {
     let context_json: String = if !show_context || f.context_lines.is_empty() {
         String::new()
@@ -63,14 +64,23 @@ fn finding_to_json(f: &Finding, show_context: bool) -> String {
         format!(r#","context":[{}]"#, items.join(","))
     };
     format!(
-        r#"{{"rule_id":{},"description":{},"file":{},"line":{},"col":{},"matched":{},"entropy":{:.6}{}}}"#,
+        r#"{{"rule_id":{},"description":{},"file":{},"line":{},"col":{},"end_line":{},"end_col":{},"col_utf16":{},"end_col_utf16":{},"matched":{},"entropy":{:.6},"start_offset":{},"end_offset":{},"secret_start_offset":{},"secret_end_offset":{},"fingerprint":{}{}}}"#,
         json_string(&f.rule_id),
         json_string(&f.rule_description),
         json_string(&f.file),
         f.line,
         f.col,
+        f.end_line,
+        f.end_col,
+        f.col_utf16,
+        f.end_col_utf16,
         json_string(&f.matched),
         f.entropy,
+        f.start_offset,
+        f.end_offset,
+        f.secret_start_offset,
+        f.secret_end_offset,
+        json_string(&f.fingerprint),
         context_json,
     )
 }
@@ -201,8 +211,12 @@ fn relativize(file: &str, base: &str) -> String {
     let base_norm = base.replace('\\', "/");
     let base_norm = base_norm.trim_end_matches('/');
     if !base_norm.is_empty() && base_norm != "." {
-        if let Some(rest) = f.strip_prefix(base_norm) {
-            return rest.trim_start_matches('/').to_string();
+        // Require a path-separator boundary so a sibling whose name merely shares
+        // a prefix with the scan root (e.g. base "src" vs file "src2/foo.rs") is
+        // not corrupted into "2/foo.rs". Strip "<base>/", not just "<base>".
+        let prefix = format!("{base_norm}/");
+        if let Some(rest) = f.strip_prefix(&prefix) {
+            return rest.to_string();
         }
     }
     f.to_string()
@@ -266,10 +280,47 @@ mod tests {
     }
 
     #[test]
+    fn json_output_includes_baseline_metadata() {
+        let f = finding(json!({
+            "file": "a", "line": 2, "end_line": 2,
+            "col": 5, "end_col": 21, "col_utf16": 5, "end_col_utf16": 21,
+            "rule_id": "r", "description": "d", "matched": "[redacted]",
+            "entropy": 4.0, "start_offset": 10, "end_offset": 26,
+            "secret_start_offset": 14, "secret_end_offset": 26,
+            "fingerprint": "stable-fp",
+            "context_lines": [[2, "k=[REDACTED_SECRET]"]]
+        }));
+
+        let mut out = Vec::new();
+        write_json(&mut out, &[f], true).expect("json");
+        let parsed: Vec<Finding> = serde_json::from_slice(&out).expect("finding json");
+
+        assert_eq!(parsed[0].fingerprint, "stable-fp");
+        assert_eq!(parsed[0].start_offset, 10);
+        assert_eq!(parsed[0].end_offset, 26);
+        assert_eq!(parsed[0].secret_start_offset, 14);
+        assert_eq!(parsed[0].secret_end_offset, 26);
+    }
+
+    #[test]
     fn relativize_strips_base_and_normalizes_separators() {
         assert_eq!(relativize("./src/a.rs", "."), "src/a.rs");
         assert_eq!(relativize("repo/src/a.rs", "repo"), "src/a.rs");
         assert_eq!(relativize("a\\b.rs", "."), "a/b.rs");
+    }
+
+    #[test]
+    fn relativize_requires_separator_boundary() {
+        // A sibling sharing a prefix with the base must not be truncated: base
+        // "src" against "src2/foo.rs" stays whole (regression for the prefix bug
+        // that produced "2/foo.rs" and corrupted SARIF artifactLocation.uri).
+        assert_eq!(relativize("src2/foo.rs", "src"), "src2/foo.rs");
+        assert_eq!(
+            relativize("/home/u/project-other/x.rs", "/home/u/project"),
+            "/home/u/project-other/x.rs"
+        );
+        // Exact match (base == file) does not strip to empty; the full path is kept.
+        assert_eq!(relativize("src/a.rs", "src/a.rs"), "src/a.rs");
     }
 
     #[test]

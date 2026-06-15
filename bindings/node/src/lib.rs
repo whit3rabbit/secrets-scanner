@@ -17,27 +17,27 @@ pub struct NativeScanConfig {
 
 #[napi(object)]
 pub struct NativeContextLine {
-    pub line: u32,
+    pub line: f64,
     pub content: String,
 }
 
 #[napi(object)]
 pub struct NativeFinding {
     pub file: String,
-    pub line: u32,
-    pub col: u32,
-    pub end_line: u32,
-    pub end_col: u32,
-    pub col_utf16: u32,
-    pub end_col_utf16: u32,
+    pub line: f64,
+    pub col: f64,
+    pub end_line: f64,
+    pub end_col: f64,
+    pub col_utf16: f64,
+    pub end_col_utf16: f64,
     pub rule_id: String,
     pub description: String,
     pub matched: String,
     pub entropy: f64,
-    pub start_offset: u32,
-    pub end_offset: u32,
-    pub secret_start_offset: u32,
-    pub secret_end_offset: u32,
+    pub start_offset: f64,
+    pub end_offset: f64,
+    pub secret_start_offset: f64,
+    pub secret_end_offset: f64,
     pub fingerprint: String,
     pub context_lines: Vec<NativeContextLine>,
 }
@@ -100,12 +100,8 @@ impl NativeScanner {
     }
 
     #[napi]
-    pub fn scan_content(&self, path: String, content: String) -> Vec<NativeFinding> {
-        self.inner
-            .scan_content(&path, &content)
-            .into_iter()
-            .map(finding_to_native)
-            .collect()
+    pub fn scan_content(&self, path: String, content: String) -> Result<Vec<NativeFinding>> {
+        findings_to_native(self.inner.scan_content(&path, &content))
     }
 
     #[napi]
@@ -113,24 +109,20 @@ impl NativeScanner {
         &self,
         path: String,
         content: String,
-    ) -> NativeStringRedactionResult {
+    ) -> Result<NativeStringRedactionResult> {
         let output = self.inner.scan_and_redact_content(&path, &content);
         let has_findings = output.has_findings();
 
-        NativeStringRedactionResult {
-            findings: output.findings.into_iter().map(finding_to_native).collect(),
+        Ok(NativeStringRedactionResult {
+            findings: findings_to_native(output.findings)?,
             redacted: output.redacted,
             has_findings,
-        }
+        })
     }
 
     #[napi]
-    pub fn scan_bytes(&self, path: String, content: Buffer) -> Vec<NativeFinding> {
-        self.inner
-            .scan_bytes(&path, &content)
-            .into_iter()
-            .map(finding_to_native)
-            .collect()
+    pub fn scan_bytes(&self, path: String, content: Buffer) -> Result<Vec<NativeFinding>> {
+        findings_to_native(self.inner.scan_bytes(&path, &content))
     }
 
     #[napi]
@@ -138,15 +130,15 @@ impl NativeScanner {
         &self,
         path: String,
         content: Buffer,
-    ) -> NativeByteRedactionResult {
+    ) -> Result<NativeByteRedactionResult> {
         let output = self.inner.scan_and_redact_bytes(&path, &content);
         let has_findings = output.has_findings();
 
-        NativeByteRedactionResult {
-            findings: output.findings.into_iter().map(finding_to_native).collect(),
+        Ok(NativeByteRedactionResult {
+            findings: findings_to_native(output.findings)?,
             redacted: output.redacted.into(),
             has_findings,
-        }
+        })
     }
 
     #[napi]
@@ -158,7 +150,7 @@ impl NativeScanner {
         let has_findings = output.has_findings();
 
         Ok(NativeByteRedactionResult {
-            findings: output.findings.into_iter().map(finding_to_native).collect(),
+            findings: findings_to_native(output.findings)?,
             redacted: output.redacted.into(),
             has_findings,
         })
@@ -207,40 +199,50 @@ fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig> {
     Ok(rust)
 }
 
-fn finding_to_native(finding: Finding) -> NativeFinding {
-    NativeFinding {
+fn findings_to_native(findings: Vec<Finding>) -> Result<Vec<NativeFinding>> {
+    findings.into_iter().map(finding_to_native).collect()
+}
+
+fn finding_to_native(finding: Finding) -> Result<NativeFinding> {
+    Ok(NativeFinding {
         file: finding.file,
-        line: to_u32(finding.line),
-        col: to_u32(finding.col),
-        end_line: to_u32(finding.end_line),
-        end_col: to_u32(finding.end_col),
-        col_utf16: to_u32(finding.col_utf16),
-        end_col_utf16: to_u32(finding.end_col_utf16),
+        line: to_js_number("line", finding.line)?,
+        col: to_js_number("col", finding.col)?,
+        end_line: to_js_number("endLine", finding.end_line)?,
+        end_col: to_js_number("endCol", finding.end_col)?,
+        col_utf16: to_js_number("colUtf16", finding.col_utf16)?,
+        end_col_utf16: to_js_number("endColUtf16", finding.end_col_utf16)?,
         rule_id: finding.rule_id,
         description: finding.rule_description,
         matched: finding.matched,
         entropy: finding.entropy,
-        start_offset: to_u32(finding.start_offset),
-        end_offset: to_u32(finding.end_offset),
-        secret_start_offset: to_u32(finding.secret_start_offset),
-        secret_end_offset: to_u32(finding.secret_end_offset),
+        start_offset: to_js_number("startOffset", finding.start_offset)?,
+        end_offset: to_js_number("endOffset", finding.end_offset)?,
+        secret_start_offset: to_js_number("secretStartOffset", finding.secret_start_offset)?,
+        secret_end_offset: to_js_number("secretEndOffset", finding.secret_end_offset)?,
         fingerprint: finding.fingerprint,
         context_lines: finding
             .context_lines
             .into_iter()
-            .map(|(line, content)| NativeContextLine {
-                line: to_u32(line),
+            .map(|(line, content)| {
+                Ok(NativeContextLine {
+                    line: to_js_number("contextLine.line", line)?,
                 content,
+                })
             })
-            .collect(),
-    }
+            .collect::<Result<Vec<_>>>()?,
+    })
 }
 
-fn to_u32(value: usize) -> u32 {
-    match u32::try_from(value) {
-        Ok(value) => value,
-        Err(_) => u32::MAX,
+fn to_js_number(field: &str, value: usize) -> Result<f64> {
+    const MAX_SAFE_INTEGER: usize = 9_007_199_254_740_991;
+    if value > MAX_SAFE_INTEGER {
+        return Err(napi_error(
+            "POSITION_OVERFLOW",
+            &format!("{field} exceeds JavaScript's max safe integer"),
+        ));
     }
+    Ok(value as f64)
 }
 
 fn to_napi_error(error: ScannerError) -> Error {
@@ -254,11 +256,38 @@ fn to_napi_error(error: ScannerError) -> Error {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::to_js_number;
+
+    #[test]
+    fn converts_positions_above_u32_without_clamping() {
+        let value = u32::MAX as usize + 1;
+        assert_eq!(to_js_number("startOffset", value).expect("number"), value as f64);
+    }
+
+    #[test]
+    fn rejects_positions_above_js_safe_integer() {
+        let err = to_js_number("startOffset", 9_007_199_254_740_992)
+            .expect_err("overflow should error");
+        assert_eq!(err.status, napi::Status::GenericFailure);
+        assert!(
+            err.reason.contains("max safe integer"),
+            "unexpected error: {err:?}"
+        );
+    }
+}
+
 fn to_napi_proxy_error(error: ProxyError) -> Error {
     match error {
         ProxyError::InputTooLarge { .. } => napi_error(
             "INPUT_TOO_LARGE",
             "proxy input exceeds configured maxFileSize",
+        ),
+        ProxyError::NotHardened => napi_error(
+            "NOT_HARDENED",
+            "scanner is not hardened for proxy use; build it with the proxy config \
+             (e.g. Scanner.proxy())",
         ),
     }
 }

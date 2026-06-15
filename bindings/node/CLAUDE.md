@@ -43,10 +43,10 @@ Native side emits messages prefixed `CODE: message`; `index.js`
 (`normalizeNativeError`) parses the prefix back into `error.code`. Codes:
 `ENGINE_BUILD`, `INPUT_TOO_LARGE`, `NOT_HARDENED`, `POSITION_OVERFLOW`,
 `INVALID_CONFIG`, `INVALID_RULES`, `INVALID_RULES_TOML`, `IO`,
-`INVALID_ARGUMENT`, plus `NATIVE_ERROR` fallback. `core.test.ts` asserts on
-these — renaming one is a breaking change. Safe native details are encoded after
-`details=` in the native message and parsed by `index.js`; never put matched
-secret bytes in those details.
+`INCOMPLETE_SCAN`, `INVALID_ARGUMENT`, plus `NATIVE_ERROR` fallback.
+`core.test.ts` asserts on these — renaming one is a breaking change. Safe native
+details are encoded after `details=` in the native message and parsed by
+`index.js`; never put matched secret bytes in those details.
 
 ## Fail-closed behaviors (mirror the Rust core)
 
@@ -62,6 +62,11 @@ secret bytes in those details.
 - `Scanner.proxy(config)` accepts only `minEntropy`, `maxFileSize`,
   `maxFindingsPerFile`, and `maxMatchedLen`; reject fields that could weaken or
   confuse proxy posture.
+- Direct `{ proxy: true }` configs on `bundled`/`fromToml`/`fromRulesFile` follow
+  the same safe override rule. Reject `redact`, path/git fields, binary policy,
+  and result caps there too.
+- `gitHistory: true` implies full-history traversal to match the CLI. Do not
+  make Node callers remember `historyFull: true` for safe defaults.
 
 ## Constructors (factories)
 
@@ -78,11 +83,15 @@ Also `fromRulesFile(path)`, `fromToml(toml)`.
 `{ findings, hasFindings, findingsTruncated }`. Redaction results also expose
 `findingsTruncated`; the redacted payload is still built from the full pre-cap
 finding set. `scanFile()` / `scanPath()` return `PathScanResult` with safe
-coverage `stats` and `incomplete`.
+coverage `stats` and `incomplete`. Strict variants (`scanFileStrict()`,
+`scanPathStrict()`, and async forms) throw `INCOMPLETE_SCAN` with safe `stats`
+details when coverage is incomplete.
 
 Async methods mirror the sync names with an `Async` suffix and return Promises.
 They use NAPI-RS `Task`/`AsyncTask`; JS buffers are copied into owned `Vec<u8>`
-before worker execution.
+before worker execution. The public JS wrapper also copies `Uint8Array` inputs
+with `Buffer.from(content)` before sync native calls so callers cannot share a
+mutable view across the binding boundary.
 
 ## Packaging
 

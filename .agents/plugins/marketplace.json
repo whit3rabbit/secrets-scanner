@@ -1,0 +1,20 @@
+{
+  "name": "whit3rabbit",
+  "interface": {
+    "displayName": "Whit3rabbit"
+  },
+  "plugins": [
+    {
+      "name": "secrets-scanner",
+      "source": {
+        "source": "local",
+        "path": "./plugins/secrets-scanner"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
+    }
+  ]
+}

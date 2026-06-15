@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -181,6 +181,16 @@ describe("@secrets-scanner/core", () => {
     expect(() => Scanner.proxy({ gitHistory: true } as never)).toThrowError(
       expect.objectContaining({ code: "INVALID_CONFIG" })
     );
+    expect(() => Scanner.fromToml(RULES, { proxy: true, redact: false } as never)).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
+    expect(() => Scanner.fromToml(RULES, { proxy: true, gitHistory: true } as never)).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
+    expect(() => Scanner.fromToml(RULES, { proxy: true, maxFiles: 1 } as never)).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
+    expect(() => Scanner.fromToml(RULES, { proxy: true, maxFileSize: 1024 })).not.toThrow();
   });
 
   it("rejects string coercion for public arguments", () => {
@@ -266,10 +276,130 @@ describe("@secrets-scanner/core", () => {
       expect(fileResult.stats.findingsTruncated).toBe(true);
       expect(fileResult.incomplete).toBe(false);
 
+      const strictFileResult = scanner.scanFileStrict(file);
+      expect(strictFileResult.incomplete).toBe(false);
+
       const pathResult = await scanner.scanPathAsync(dir);
       expect(pathResult.hasFindings).toBe(true);
       expect(pathResult.stats.filesScanned).toBe(1);
+
+      const strictPathResult = await scanner.scanPathStrictAsync(dir);
+      expect(strictPathResult.incomplete).toBe(false);
     } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("throws from strict path scans when maxFiles truncates coverage", () => {
+    const dir = mkdtempSync(join(tmpdir(), "secrets-scanner-node-"));
+    try {
+      writeFileSync(join(dir, "a.env"), `A=${SECRET}`);
+      writeFileSync(join(dir, "b.env"), `B=${OTHER_SECRET}`);
+      const scanner = Scanner.fromToml(RULES, { maxFiles: 1 });
+
+      const result = scanner.scanPath(dir);
+      expect(result.incomplete).toBe(true);
+      expect(result.stats.filesOverCap).toBeGreaterThan(0);
+      expect(() => scanner.scanPathStrict(dir)).toThrowError(
+        expect.objectContaining({
+          code: "INCOMPLETE_SCAN",
+          details: {
+            stats: expect.objectContaining({ filesOverCap: expect.any(Number) }),
+          },
+        })
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("throws from strict path scans when git path discovery fails", () => {
+    const dir = mkdtempSync(join(tmpdir(), "secrets-scanner-node-"));
+    try {
+      writeFileSync(join(dir, "input.env"), `A=${SECRET}`);
+      const scanner = Scanner.fromToml(RULES, { gitTracked: true });
+
+      const result = scanner.scanPath(dir);
+      expect(result.incomplete).toBe(true);
+      expect(result.stats.gitFailed).toBe(true);
+      expect(result.findings).toHaveLength(0);
+      expect(() => scanner.scanPathStrict(dir)).toThrowError(
+        expect.objectContaining({
+          code: "INCOMPLETE_SCAN",
+          details: {
+            stats: expect.objectContaining({ gitFailed: true }),
+          },
+        })
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("throws from strict path scans when git fallback changes coverage", () => {
+    const dir = mkdtempSync(join(tmpdir(), "secrets-scanner-node-"));
+    try {
+      writeFileSync(join(dir, "input.env"), `A=${SECRET}`);
+      const scanner = Scanner.fromToml(RULES, {
+        gitTracked: true,
+        gitFallbackWalk: true,
+      });
+
+      const result = scanner.scanPath(dir);
+      expect(result.incomplete).toBe(true);
+      expect(result.stats.gitFallback).toBe(true);
+      expect(result.hasFindings).toBe(true);
+      expect(() => scanner.scanPathStrict(dir)).toThrowError(
+        expect.objectContaining({
+          code: "INCOMPLETE_SCAN",
+          details: {
+            stats: expect.objectContaining({ gitFallback: true }),
+          },
+        })
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("throws from strict path scans when filesystem errors leave coverage incomplete", () => {
+    if (process.platform === "win32" || (typeof process.getuid === "function" && process.getuid() === 0)) {
+      return;
+    }
+
+    const dir = mkdtempSync(join(tmpdir(), "secrets-scanner-node-"));
+    const unreadableFile = join(dir, "blocked.env");
+    const unreadableDir = join(dir, "blocked-dir");
+    try {
+      writeFileSync(join(dir, "input.env"), `A=${SECRET}`);
+      writeFileSync(unreadableFile, `B=${OTHER_SECRET}`);
+      mkdirSync(unreadableDir);
+      writeFileSync(join(unreadableDir, "nested.env"), `C=${OTHER_SECRET}`);
+      chmodSync(unreadableFile, 0);
+      chmodSync(unreadableDir, 0);
+
+      const scanner = Scanner.fromToml(RULES);
+      const result = scanner.scanPath(dir);
+
+      expect(result.incomplete).toBe(true);
+      expect(result.stats.errored).toBeGreaterThan(0);
+      expect(() => scanner.scanPathStrict(dir)).toThrowError(
+        expect.objectContaining({
+          code: "INCOMPLETE_SCAN",
+          details: {
+            stats: expect.objectContaining({ errored: expect.any(Number) }),
+          },
+        })
+      );
+    } finally {
+      try {
+        chmodSync(unreadableFile, 0o600);
+      } catch {
+      }
+      try {
+        chmodSync(unreadableDir, 0o700);
+      } catch {
+      }
       rmSync(dir, { recursive: true, force: true });
     }
   });

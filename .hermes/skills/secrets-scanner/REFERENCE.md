@@ -44,6 +44,37 @@ the working copy (or staged via `git add -p`) is still caught. Findings exit 1 â
 - `secrets-scanner list-rules` / `validate-rules [file...]` â€” inspect/validate rules.
 - Custom rules: drop a `local.toml` (gitleaks TOML format) in the working dir or OS data dir; same-id rules override upstream.
 
+## Proxy integration
+
+Skills can guide setup, but they do not transparently intercept every agent or gateway message.
+For untrusted in-memory payloads, wire the scanner into the application path:
+
+Rust:
+
+```rust
+use secrets_scanner::{ProxyError, ScanConfig, Scanner};
+
+fn redact_for_proxy(input: &[u8]) -> Result<Vec<u8>, ProxyError> {
+    let scanner = Scanner::with_config(ScanConfig::proxy())
+        .map_err(|_| ProxyError::NotHardened)?;
+    Ok(scanner.scan_proxy(input)?.redacted)
+}
+```
+
+Node:
+
+```js
+const { Scanner } = require("@secrets-scanner/core");
+
+const scanner = Scanner.proxy({ maxFileSize: 1024 * 1024 });
+const result = await scanner.scanProxyAsync(Buffer.from(input));
+const safePayload = Buffer.from(result.redacted);
+```
+
+Proxy mode fails closed on oversized input, enforces redaction, ignores inline allow markers,
+skips context capture, and caps matched output length. It is for literal recognizable secrets;
+it is not a general prompt-injection, shell, SQL, or XSS sanitizer.
+
 ## Install locations
 
 - Prebuilt download (install.sh fallback): `~/.secrets-scanner/bin/secrets-scanner` (add to PATH).

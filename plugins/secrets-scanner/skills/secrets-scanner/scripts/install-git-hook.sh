@@ -26,21 +26,14 @@ cat > "$HOOK" <<EOF
 $MARKER
 # Blocks commits containing secrets. Scans the staged index blobs (--staged),
 # so a secret staged then removed from the working tree is still caught.
-# Set SECRETS_SCANNER_REQUIRED=1 to fail the commit when the binary is missing
-# (default: warn and allow, so teammates without it can still commit).
 if ! command -v secrets-scanner >/dev/null 2>&1; then
-  if [ "\${SECRETS_SCANNER_REQUIRED:-0}" = "1" ]; then
-    echo "secrets-scanner not installed; blocking commit (SECRETS_SCANNER_REQUIRED=1)" >&2
-    exit 1
-  fi
-  echo "secrets-scanner not installed; skipping secret scan" >&2
+  echo "secrets-scanner not installed; blocking commit" >&2
   echo "install: https://github.com/whit3rabbit/secrets-scanner" >&2
-  exit 0
+  exit 1
 fi
-exec secrets-scanner scan --staged --redact --no-context
+exec secrets-scanner scan . --staged --redact --no-context
 EOF
 
 chmod +x "$HOOK"
 info "installed pre-commit hook at $HOOK"
-info "it runs: secrets-scanner scan --staged --redact --no-context"
-info "bypass a single commit with: git commit --no-verify"
+info "it runs: secrets-scanner scan . --staged --redact --no-context"

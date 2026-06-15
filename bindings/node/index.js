@@ -12,6 +12,7 @@ const ERROR_MESSAGES = {
   INVALID_RULES: "scanner rules are invalid",
   INVALID_RULES_TOML: "scanner rules TOML is invalid",
   IO: "scanner rules could not be read",
+  INCOMPLETE_SCAN: "path scan did not fully cover the requested scope",
   NATIVE_ERROR: "native scanner call failed",
   NATIVE_BINDING_NOT_FOUND: "native binding not found",
   INVALID_ARGUMENT: "scanner argument is invalid",
@@ -56,6 +57,9 @@ const PROXY_FORBIDDEN_FIELDS = [
   "includeUntracked",
   "gitFallbackWalk",
 ];
+const DIRECT_PROXY_FORBIDDEN_FIELDS = PROXY_FORBIDDEN_FIELDS.filter(
+  (field) => field !== "proxy"
+);
 
 const native = loadNative();
 
@@ -167,10 +171,18 @@ class Scanner {
     );
   }
 
+  scanFileStrict(filePath) {
+    return requireCompleteScan(this.scanFile(filePath));
+  }
+
   scanPath(scanPath) {
     return wrapNative(() =>
       mapPathScanResult(this.nativeScanner.scanPath(requireString("path", scanPath)))
     );
+  }
+
+  scanPathStrict(scanPath) {
+    return requireCompleteScan(this.scanPath(scanPath));
   }
 
   scanContentAsync(filePath, content) {
@@ -245,10 +257,18 @@ class Scanner {
     );
   }
 
+  async scanFileStrictAsync(filePath) {
+    return requireCompleteScan(await this.scanFileAsync(filePath));
+  }
+
   scanPathAsync(scanPath) {
     return wrapNativeAsync(async () =>
       mapPathScanResult(await this.nativeScanner.scanPathAsync(requireString("path", scanPath)))
     );
+  }
+
+  async scanPathStrictAsync(scanPath) {
+    return requireCompleteScan(await this.scanPathAsync(scanPath));
   }
 }
 
@@ -286,9 +306,13 @@ function toNativeConfig(config) {
   }
   requirePlainObject("config", config);
   rejectUnknownConfigFields(config);
+  const proxy = optionalBoolean(config, "proxy");
+  if (proxy === true) {
+    validateDirectProxyConfig(config);
+  }
 
   return {
-    proxy: optionalBoolean(config, "proxy"),
+    proxy,
     redact: optionalBoolean(config, "redact"),
     minEntropy: optionalNumber(config, "minEntropy"),
     maxFileSize: optionalNumber(config, "maxFileSize"),
@@ -308,6 +332,14 @@ function toNativeConfig(config) {
     includeUntracked: optionalBoolean(config, "includeUntracked"),
     gitFallbackWalk: optionalBoolean(config, "gitFallbackWalk"),
   };
+}
+
+function validateDirectProxyConfig(config) {
+  for (const field of DIRECT_PROXY_FORBIDDEN_FIELDS) {
+    if (Object.prototype.hasOwnProperty.call(config, field)) {
+      throw invalidConfig(`proxy scan config does not accept ${field}`);
+    }
+  }
 }
 
 function validateProxyConfig(config) {
@@ -373,6 +405,17 @@ function mapPathScanResult(result) {
       result.findingsTruncated ?? result.findings_truncated
     ),
   };
+}
+
+function requireCompleteScan(result) {
+  if (!result.incomplete) {
+    return result;
+  }
+
+  const error = new Error(ERROR_MESSAGES.INCOMPLETE_SCAN);
+  error.code = "INCOMPLETE_SCAN";
+  error.details = { stats: result.stats };
+  throw error;
 }
 
 function mapStats(stats) {
@@ -490,7 +533,7 @@ function toBuffer(content) {
     throw invalidArgument("content", "must be a Uint8Array");
   }
 
-  return Buffer.from(content.buffer, content.byteOffset, content.byteLength);
+  return Buffer.from(content);
 }
 
 function invalidArgument(name, message) {
@@ -533,7 +576,7 @@ function normalizeNativeError(error) {
 
   const message = error && error.message ? String(error.message) : String(error);
   const match =
-    /^(ENGINE_BUILD|INPUT_TOO_LARGE|NOT_HARDENED|POSITION_OVERFLOW|INVALID_CONFIG|INVALID_RULES_TOML|INVALID_RULES|IO):\s*([\s\S]*?)(?:;\s*details=([\s\S]+))?$/.exec(
+    /^(ENGINE_BUILD|INPUT_TOO_LARGE|NOT_HARDENED|POSITION_OVERFLOW|INVALID_CONFIG|INVALID_RULES_TOML|INVALID_RULES|IO|INCOMPLETE_SCAN):\s*([\s\S]*?)(?:;\s*details=([\s\S]+))?$/.exec(
       message
     );
   const code = match ? match[1] : "NATIVE_ERROR";

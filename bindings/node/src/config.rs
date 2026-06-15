@@ -6,6 +6,7 @@ use crate::errors::napi_error;
 
 const JS_MAX_SAFE_INTEGER_F64: f64 = 9_007_199_254_740_991.0;
 
+#[derive(Default)]
 #[napi(object)]
 pub struct NativeScanConfig {
     pub proxy: Option<bool>,
@@ -33,6 +34,7 @@ pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig
     let Some(config) = config else {
         return Ok(RustScanConfig::default());
     };
+    validate_proxy_config(&config)?;
     validate_git_mode_config(&config)?;
 
     let mut rust = if config.proxy.unwrap_or(false) {
@@ -90,13 +92,47 @@ pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig
     }
     rust.git_history = config.git_history.unwrap_or(false);
     rust.history_all = config.history_all.unwrap_or(false);
-    rust.history_full = config.history_full.unwrap_or(false);
+    rust.history_full = rust.git_history || config.history_full.unwrap_or(false);
     rust.history_log_opts = config.history_log_opts.unwrap_or_default();
     rust.git_staged = config.git_staged.unwrap_or(false);
     rust.include_untracked = config.include_untracked.unwrap_or(false);
     rust.git_fallback_walk = config.git_fallback_walk.unwrap_or(false);
 
     Ok(rust)
+}
+
+fn validate_proxy_config(config: &NativeScanConfig) -> Result<()> {
+    if !config.proxy.unwrap_or(false) {
+        return Ok(());
+    }
+
+    let forbidden = [
+        ("redact", config.redact.is_some()),
+        ("binaryPolicy", config.binary_policy.is_some()),
+        ("maxFiles", config.max_files.is_some()),
+        ("maxFindings", config.max_findings.is_some()),
+        ("gitTracked", config.git_tracked.is_some()),
+        ("changedFiles", config.changed_files.is_some()),
+        ("base", config.base.is_some()),
+        ("gitHistory", config.git_history.is_some()),
+        ("historyAll", config.history_all.is_some()),
+        ("historyFull", config.history_full.is_some()),
+        ("historyLogOpts", config.history_log_opts.is_some()),
+        ("gitStaged", config.git_staged.is_some()),
+        ("includeUntracked", config.include_untracked.is_some()),
+        ("gitFallbackWalk", config.git_fallback_walk.is_some()),
+    ];
+
+    for (field, present) in forbidden {
+        if present {
+            return Err(napi_error(
+                "INVALID_CONFIG",
+                &format!("proxy scan config does not accept {field}"),
+            ));
+        }
+    }
+
+    Ok(())
 }
 
 fn validate_git_mode_config(config: &NativeScanConfig) -> Result<()> {
@@ -173,7 +209,7 @@ fn is_safe_integer(value: f64) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{number_to_u64, number_to_usize};
+    use super::{config_to_rust, number_to_u64, number_to_usize, NativeScanConfig};
 
     #[test]
     fn rejects_config_values_above_js_safe_integer() {
@@ -188,5 +224,66 @@ mod tests {
             assert!(number_to_u64("maxFileSize", value).is_err());
             assert!(number_to_usize("maxFindings", value).is_err());
         }
+    }
+
+    #[test]
+    fn git_history_implies_full_history() {
+        let config = NativeScanConfig {
+            git_history: Some(true),
+            ..NativeScanConfig::default()
+        };
+
+        let rust = config_to_rust(Some(config)).expect("config should convert");
+
+        assert!(rust.git_history);
+        assert!(rust.history_full);
+    }
+
+    #[test]
+    fn proxy_config_rejects_forbidden_fields() {
+        for config in [
+            NativeScanConfig {
+                proxy: Some(true),
+                redact: Some(false),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                proxy: Some(true),
+                binary_policy: Some("scan".to_string()),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                proxy: Some(true),
+                max_files: Some(1.0),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                proxy: Some(true),
+                git_history: Some(true),
+                ..NativeScanConfig::default()
+            },
+        ] {
+            assert!(config_to_rust(Some(config)).is_err());
+        }
+    }
+
+    #[test]
+    fn proxy_config_accepts_hardening_caps() {
+        let config = NativeScanConfig {
+            proxy: Some(true),
+            min_entropy: Some(4.0),
+            max_file_size: Some(1024.0),
+            max_findings_per_file: Some(10.0),
+            max_matched_len: Some(128.0),
+            ..NativeScanConfig::default()
+        };
+
+        let rust = config_to_rust(Some(config)).expect("proxy config should convert");
+
+        assert!(rust.is_hardened());
+        assert_eq!(rust.max_file_size, 1024);
+        assert_eq!(rust.min_entropy_override, Some(4.0));
+        assert_eq!(rust.max_findings_per_file, Some(10));
+        assert_eq!(rust.max_matched_len, Some(128));
     }
 }

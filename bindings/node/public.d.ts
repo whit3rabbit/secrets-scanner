@@ -7,6 +7,7 @@ export type ScannerErrorCode =
   | "INVALID_RULES"
   | "INVALID_RULES_TOML"
   | "IO"
+  | "INCOMPLETE_SCAN"
   | "NATIVE_ERROR"
   | "NATIVE_BINDING_NOT_FOUND"
   | "INVALID_ARGUMENT";
@@ -20,13 +21,8 @@ export interface ScannerError extends Error {
 
 export type BinaryPolicy = "auto" | "skip" | "scan";
 
-export interface ScanConfig {
-  /**
-   * Use the hardened proxy preset: redaction enabled, inline allow markers
-   * ignored, context capture disabled, and proxy-safe caps applied.
-   */
-  proxy?: boolean;
-
+export interface NormalScanConfig {
+  proxy?: false;
   redact?: boolean;
   minEntropy?: number;
   maxFileSize?: number;
@@ -46,6 +42,34 @@ export interface ScanConfig {
   includeUntracked?: boolean;
   gitFallbackWalk?: boolean;
 }
+
+export interface DirectProxyScanConfig {
+  /**
+   * Use the hardened proxy preset: redaction enabled, inline allow markers
+   * ignored, context capture disabled, and proxy-safe caps applied.
+   */
+  proxy: true;
+  minEntropy?: number;
+  maxFileSize?: number;
+  maxFindingsPerFile?: number;
+  maxMatchedLen?: number;
+  redact?: never;
+  binaryPolicy?: never;
+  maxFiles?: never;
+  maxFindings?: never;
+  gitTracked?: never;
+  changedFiles?: never;
+  base?: never;
+  gitHistory?: never;
+  historyAll?: never;
+  historyFull?: never;
+  historyLogOpts?: never;
+  gitStaged?: never;
+  includeUntracked?: never;
+  gitFallbackWalk?: never;
+}
+
+export type ScanConfig = NormalScanConfig | DirectProxyScanConfig;
 
 export interface ProxyScanConfig {
   minEntropy?: number;
@@ -141,7 +165,9 @@ export class Scanner {
   scanAndRedactBytes(path: string, content: Uint8Array): BytesRedactionResult;
   scanProxy(content: Uint8Array): BytesRedactionResult;
   scanFile(path: string): PathScanResult;
+  scanFileStrict(path: string): PathScanResult;
   scanPath(path: string): PathScanResult;
+  scanPathStrict(path: string): PathScanResult;
 
   scanContentAsync(path: string, content: string): Promise<Finding[]>;
   scanContentDetailedAsync(path: string, content: string): Promise<ScanResult>;
@@ -157,5 +183,7 @@ export class Scanner {
   ): Promise<BytesRedactionResult>;
   scanProxyAsync(content: Uint8Array): Promise<BytesRedactionResult>;
   scanFileAsync(path: string): Promise<PathScanResult>;
+  scanFileStrictAsync(path: string): Promise<PathScanResult>;
   scanPathAsync(path: string): Promise<PathScanResult>;
+  scanPathStrictAsync(path: string): Promise<PathScanResult>;
 }

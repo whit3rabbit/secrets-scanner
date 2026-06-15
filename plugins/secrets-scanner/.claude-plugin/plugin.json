@@ -10,5 +10,6 @@
   "homepage": "https://github.com/whit3rabbit/secrets-scanner",
   "repository": "https://github.com/whit3rabbit/secrets-scanner",
   "license": "MIT",
-  "keywords": ["secrets", "security", "gitleaks", "pre-commit", "scanner", "credentials"]
+  "keywords": ["secrets", "security", "gitleaks", "pre-commit", "scanner", "credentials"],
+  "skills": "./skills/"
 }

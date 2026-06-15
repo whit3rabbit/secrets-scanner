@@ -606,7 +606,9 @@ repos:
       - id: secrets-scanner
 ```
 
-This scans all staged files for secrets before each commit.
+This runs `secrets-scanner scan . --staged --redact --no-context` before each commit.
+The hook scans staged index blobs, not working-tree filenames, so a secret staged
+then removed from the working tree is still caught.
 
 ---
 
@@ -615,23 +617,42 @@ This scans all staged files for secrets before each commit.
 This repository bundles compatible agent skills and `SOUL.md` personality core rules for multiple AI agent runtimes to prevent secrets from being leaked during agent-assisted development:
 
 ### Claude Code Plugin
-This repo doubles as a [Claude Code](https://claude.com/claude-code) plugin marketplace. Install the plugin and Claude can install/uninstall the scanner, set up a git pre-commit hook, or run scans on request:
+This repo doubles as a [Claude Code](https://claude.com/claude-code) plugin marketplace. Install the plugin and Claude can install/uninstall the scanner, set up a fail-closed git pre-commit hook, or run scans on request:
 
 ```
 /plugin marketplace add whit3rabbit/secrets-scanner
 /plugin install secrets-scanner@whit3rabbit
 ```
 
-The plugin bundles a skill (`plugins/secrets-scanner/`) with helper scripts for install/uninstall and managing a native `scan --staged` pre-commit hook. It does not replace the binary install above; it drives the same CLI on your behalf.
+The plugin bundles a skill (`plugins/secrets-scanner/`) with helper scripts for install/uninstall and managing a native `scan . --staged --redact --no-context` pre-commit hook. It does not replace the binary install above; it drives the same CLI on your behalf.
 
-### OpenClaw, Hermes Agent, and Codex Skills
-We provide compatible skill directories and `SOUL.md` identity files for other agent ecosystems. Each skill guides the respective agent to drive the same CLI on your behalf and setup pre-commit hooks:
+### Codex Plugin
+This repo also carries a repo-local Codex marketplace at `.agents/plugins/marketplace.json` and a Codex plugin manifest at `plugins/secrets-scanner/.codex-plugin/plugin.json`:
+
+```bash
+codex plugin marketplace add .agents/plugins
+codex plugin add secrets-scanner@whit3rabbit
+```
+
+The Codex plugin exposes the same install, uninstall, staged hook, scan, and proxy-integration guidance as the Claude plugin.
+
+### Hermes Agent and OpenClaw Skills
+Hermes and OpenClaw consume skill directories directly. From a checkout of this repo:
+
+```bash
+hermes skills install whit3rabbit/secrets-scanner/plugins/secrets-scanner/skills/secrets-scanner
+openclaw skills install ./plugins/secrets-scanner/skills/secrets-scanner
+```
+
+The repo also includes project-scoped copies and `SOUL.md` identity files for local development:
 
 - **OpenClaw:** Configured under `.openclaw/` (loaded from `.openclaw/skills/secrets-scanner/` and [.openclaw/SOUL.md](.openclaw/SOUL.md)).
 - **Hermes Agent:** Configured under `.hermes/` (loaded from `.hermes/skills/secrets-scanner/` and [.hermes/SOUL.md](.hermes/SOUL.md)).
 - **Codex Agent:** Configured under `.codex/` (loaded from `.codex/skills/secrets-scanner/` and [.codex/SOUL.md](.codex/SOUL.md)).
 
 The bundled `SOUL.md` files define the agent's core values, character, and behavioral boundaries, instructing it to always check for credentials, verify pre-commit setups, and strictly redact raw keys from any console outputs or file edits.
+
+For proxy-style LLM or gateway integrations, use the Rust `Scanner::scan_proxy` API or the Node binding's `Scanner.proxy().scanProxyAsync(...)`. Agent skills can document and call those APIs, but they do not transparently intercept all Hermes/OpenClaw traffic without a separate runtime integration.
 
 ---
 

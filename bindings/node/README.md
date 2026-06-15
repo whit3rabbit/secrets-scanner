@@ -28,6 +28,9 @@ secret.
 For attacker-controlled in-memory content, use the hardened proxy preset and
 `scanProxy()`. It fails closed when input exceeds `maxFileSize`, ignores inline
 allow markers, skips context capture, and returns redacted bytes for forwarding.
+Custom-rule constructors may also use `{ proxy: true }`; that direct proxy
+config accepts only `minEntropy`, `maxFileSize`, `maxFindingsPerFile`, and
+`maxMatchedLen`.
 
 ```js
 const scanner = Scanner.proxy({ maxFileSize: 1024 * 1024 });
@@ -47,8 +50,15 @@ blocking the event loop on large payloads.
 `scanFile()` and `scanPath()` return findings plus coverage stats. Treat
 `result.incomplete` as a coverage warning: unreadable files, `maxFiles`, git
 fallback, or git failure mean the scan did not fully cover the requested scope.
+For CI-style consumers that should never ignore partial coverage, use
+`scanFileStrict()` / `scanPathStrict()` or their async variants; they throw
+`INCOMPLETE_SCAN` with safe `stats` details when coverage is incomplete.
 
 The public wrapper is strict about argument types. Paths, TOML, and string
 content must be strings; byte content must be a `Uint8Array`. Bad values throw
 with `error.code` set to `INVALID_ARGUMENT` or `INVALID_CONFIG` instead of being
 coerced with `String(...)`.
+
+This package still ships the built host `.node` artifact only. Broad npm
+distribution needs a separate per-platform prebuild or optional-package release
+matrix.

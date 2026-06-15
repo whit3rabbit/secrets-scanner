@@ -10,9 +10,10 @@
 
 - id: secrets-scanner
   name: Scan for secrets
-  description: Scan staged files for leaked secrets, API keys, and credentials
+  description: Scan staged index blobs for leaked secrets, API keys, and credentials
   entry: secrets-scanner scan
   language: rust
-  types: [file]
-  args: ["--format", "json"]
+  args: [".", "--staged", "--redact", "--no-context"]
+  pass_filenames: false
+  always_run: true
   minimum_pre_commit_version: "2.9.2"

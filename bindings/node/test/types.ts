@@ -30,6 +30,10 @@ const proxyConfig: ProxyScanConfig = {
 Scanner.proxy({ redact: false });
 // @ts-expect-error proxy scans do not accept path scan options.
 Scanner.proxy({ gitHistory: true });
+// @ts-expect-error direct proxy scans always redact.
+Scanner.fromToml("title = \"empty\"\n", { proxy: true, redact: false });
+// @ts-expect-error direct proxy scans do not accept path scan options.
+Scanner.fromToml("title = \"empty\"\n", { proxy: true, gitHistory: true });
 
 const scanner = Scanner.fromToml("title = \"empty\"\n", config);
 const proxyScanner = Scanner.proxy(proxyConfig);
@@ -61,6 +65,8 @@ const proxyResult: BytesRedactionResult = proxyScanner.scanProxy(
 );
 const stats: ScanStats = scanner.scanPath(".").stats;
 const pathResult: PathScanResult = scanner.scanFile("input.txt");
+const strictFileResult: PathScanResult = scanner.scanFileStrict("input.txt");
+const strictPathResult: PathScanResult = scanner.scanPathStrict(".");
 const asyncFindings: Promise<Finding[]> = scanner.scanContentAsync("input.txt", "content");
 const asyncDetailed: Promise<ScanResult> = scanner.scanBytesDetailedAsync(
   "input.bin",
@@ -72,6 +78,8 @@ const asyncProxy: Promise<BytesRedactionResult> = proxyScanner.scanProxyAsync(
   new Uint8Array([1, 2, 3])
 );
 const asyncPath: Promise<PathScanResult> = scanner.scanPathAsync(".");
+const asyncStrictFile: Promise<PathScanResult> = scanner.scanFileStrictAsync("input.txt");
+const asyncStrictPath: Promise<PathScanResult> = scanner.scanPathStrictAsync(".");
 const scannerError = new Error("x") as ScannerError;
 const scannerErrorCode: string = scannerError.code;
 
@@ -84,10 +92,14 @@ void redactedBytes;
 void proxyResult;
 void stats;
 void pathResult;
+void strictFileResult;
+void strictPathResult;
 void asyncFindings;
 void asyncDetailed;
 void asyncRedacted;
 void asyncProxy;
 void asyncPath;
+void asyncStrictFile;
+void asyncStrictPath;
 void scannerErrorCode;
 void customProxyScanner;

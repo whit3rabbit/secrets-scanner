@@ -11,6 +11,7 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 
 - Safety first, speed second
 - `CLAUDE.md` is a symlink to `AGENTS.md` — edit `AGENTS.md` (the `Write` tool refuses symlinks).
+- `.claude/skills/secrets-scanner` is a committed symlink to `plugins/secrets-scanner/skills/secrets-scanner` (canonical skill home, also distributed via the plugin marketplace in `.claude-plugin/marketplace.json`). `.gitignore` deliberately re-includes only that path under the otherwise-ignored `.claude/` — don't drop the exception or the project skill stops being tracked. The skill is pinned to `model: haiku`.
 - Files included by `build.rs` via `#[path]` (`merge.rs`, `validation.rs`, `manifest.rs`) must stay crate-independent: no `crate::`/`super::`, only std + `[build-dependencies]` (serde/toml/regex/log).
 - A `#[cfg(test)] mod tests;` in any file that `build.rs` `#[path]`-includes needs an explicit `#[path = "..."]`, or `cargo fmt` fails to resolve the submodule.
 - Keep source files ≤ 400 lines; split tests into a dedicated `tests/` module when a file exceeds this. When *non-test* code exceeds 400 lines, extract a cohesive concern into a sibling file declared `#[path = "x.rs"] mod x;` — a child module reuses the parent's private items (structs, fns, fields) via `super::` (e.g. `walk_staged.rs` inside `walk.rs`).
@@ -61,7 +62,8 @@ secrets-scanner/
 ├── bindings/
 │   └── node/                  # NAPI-RS Node bindings (@secrets-scanner/core); see bindings/node/CLAUDE.md
 ├── plugins/
-│   └── secrets-scanner/       # Claude Code plugin definition
+│   └── secrets-scanner/       # Claude Code plugin: skill + install/uninstall/pre-commit scripts
+├── .claude-plugin/            # Plugin marketplace manifest (marketplace.json lists plugins/secrets-scanner)
 ├── .claude/                   # Claude Code local config and symlinked skill
 ├── .openclaw/                 # OpenClaw agent local config, skills, and SOUL.md
 ├── .hermes/                   # Hermes Agent local config, skills, and SOUL.md

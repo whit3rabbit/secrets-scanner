@@ -46,7 +46,10 @@ __pycache__/
 .synrepo/
 
 # AI related
-.agents/
+.agents/*
+!.agents/plugins/
+.agents/plugins/*
+!.agents/plugins/marketplace.json
 .claude/*
 # Track only the committed project skill (symlink into plugins/); keep local settings ignored.
 !.claude/skills/

@@ -47,7 +47,11 @@ __pycache__/
 
 # AI related
 .agents/
-.claude/
+.claude/*
+# Track only the committed project skill (symlink into plugins/); keep local settings ignored.
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/secrets-scanner
 .codex/
 
 # Logs

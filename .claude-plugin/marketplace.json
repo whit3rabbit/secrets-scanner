@@ -1,0 +1,16 @@
+{
+  "name": "whit3rabbit",
+  "owner": {
+    "name": "whit3rabbit",
+    "url": "https://github.com/whit3rabbit"
+  },
+  "plugins": [
+    {
+      "name": "secrets-scanner",
+      "source": "./plugins/secrets-scanner",
+      "description": "Install, uninstall, add a pre-commit hook for, or run the secrets-scanner CLI that detects leaked secrets, API keys, and credentials.",
+      "version": "0.1.0",
+      "keywords": ["secrets", "security", "gitleaks", "pre-commit"]
+    }
+  ]
+}

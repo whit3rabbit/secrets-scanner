@@ -1,0 +1,14 @@
+{
+  "name": "secrets-scanner",
+  "displayName": "Secrets Scanner",
+  "version": "0.1.0",
+  "description": "Install, uninstall, add a pre-commit hook for, or run the secrets-scanner CLI that detects leaked secrets, API keys, and credentials.",
+  "author": {
+    "name": "whit3rabbit",
+    "url": "https://github.com/whit3rabbit"
+  },
+  "homepage": "https://github.com/whit3rabbit/secrets-scanner",
+  "repository": "https://github.com/whit3rabbit/secrets-scanner",
+  "license": "MIT",
+  "keywords": ["secrets", "security", "gitleaks", "pre-commit", "scanner", "credentials"]
+}

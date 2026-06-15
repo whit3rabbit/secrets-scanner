@@ -610,6 +610,23 @@ This scans all staged files for secrets before each commit.
 
 ---
 
+## Claude Code Plugin
+
+This repo doubles as a [Claude Code](https://claude.com/claude-code) plugin marketplace.
+Install the plugin and Claude can install/uninstall the scanner, set up a git pre-commit
+hook, or run scans on request:
+
+```
+/plugin marketplace add whit3rabbit/secrets-scanner
+/plugin install secrets-scanner@whit3rabbit
+```
+
+The plugin bundles a skill (`plugins/secrets-scanner/`) with helper scripts for
+install/uninstall and managing a native `scan --staged` pre-commit hook. It does not
+replace the binary install above; it drives the same CLI on your behalf.
+
+---
+
 ## Development
 
 ### Building from Source

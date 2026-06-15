@@ -24,7 +24,10 @@ pub enum BinaryPolicy {
 /// Configuration for a scan operation.
 #[derive(Debug, Clone)]
 pub struct ScanConfig {
-    /// Entropy override for rules that define an entropy threshold.
+    /// Entropy floor for rules that define an entropy threshold. When set, a
+    /// rule's effective threshold becomes `max(override, rule_threshold)`: the
+    /// override can only *raise* a threshold (reducing false positives), never
+    /// lower it (which would silently weaken stricter rules).
     pub min_entropy_override: Option<f64>,
 
     /// Maximum file size in bytes. Files larger than this are skipped.
@@ -42,6 +45,11 @@ pub struct ScanConfig {
     /// Base ref for diff scanning. When set (and `git_diff` is true), scans
     /// `git diff --name-only <diff_base>...HEAD` instead of `HEAD`.
     pub diff_base: Option<String>,
+
+    /// If true, scan only files staged in the git index (`git diff --cached
+    /// --name-only`). Intended for pre-commit hooks. Takes precedence over
+    /// `git_diff`/`git` path selection.
+    pub git_staged: bool,
 
     /// If true, also scan untracked-but-not-ignored files in git mode
     /// (`git ls-files --others --exclude-standard`).
@@ -70,6 +78,7 @@ impl Default for ScanConfig {
             git: false,
             git_diff: false,
             diff_base: None,
+            git_staged: false,
             include_untracked: false,
             binary_policy: BinaryPolicy::default(),
             max_files: None,
@@ -96,6 +105,17 @@ pub struct ScanStats {
 
     /// Files dropped because the `max_files` cap was reached.
     pub files_over_cap: usize,
+
+    /// Files that could not be read (stat or read I/O error). These are NOT
+    /// scanned, so a non-zero count means coverage is incomplete: a security
+    /// summary must surface it rather than letting an unreadable file look the
+    /// same as a scanned-and-clean one.
+    pub errored: usize,
+
+    /// True if git path discovery failed and the scan fell back to a recursive
+    /// directory walk. The fallback changes scope (it can pick up untracked or
+    /// ignored files), so the summary flags it distinctly.
+    pub git_fallback: bool,
 }
 
 /// Scanner output that pairs findings with redacted content.
@@ -136,6 +156,16 @@ pub struct Finding {
     #[serde(default)]
     pub end_col: usize,
 
+    /// 1-based start column in UTF-16 code units (SARIF's default `columnKind`,
+    /// which GitHub code scanning assumes). Equals `col` for ASCII lines.
+    #[serde(default)]
+    pub col_utf16: usize,
+
+    /// 1-based exclusive end column in UTF-16 code units. Equals `end_col` for
+    /// ASCII lines.
+    #[serde(default)]
+    pub end_col_utf16: usize,
+
     /// The rule ID that matched (e.g., `"aws-access-token"`).
     pub rule_id: String,
 
@@ -164,6 +194,12 @@ pub struct Finding {
     /// Byte offset of the detected secret end in the file.
     #[serde(default)]
     pub secret_end_offset: usize,
+
+    /// Line-tolerant fingerprint identifying the same secret across line moves
+    /// (rule id + file + raw secret). Used for baseline suppression. Empty for
+    /// findings deserialized from a pre-fingerprint baseline.
+    #[serde(default)]
+    pub fingerprint: String,
 
     /// Surrounding lines of context (±2 lines) as (line_number, content) pairs.
     /// Sorted in ascending line order. Always includes the matched line.

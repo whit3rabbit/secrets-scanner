@@ -142,7 +142,8 @@ pub fn write_sarif(w: &mut dyn Write, findings: &[Finding], base: &str) -> io::R
         .iter()
         .map(|f| {
             let uri = relativize(&f.file, base);
-            let (end_line, end_col) = safe_region_end(f);
+            let (start_line, start_col, end_line, end_col) = sarif_region(f);
+            let fingerprint = sarif_fingerprint(f, &uri);
             json!({
                 "ruleId": f.rule_id,
                 "ruleIndex": rule_index[f.rule_id.as_str()],
@@ -154,14 +155,14 @@ pub fn write_sarif(w: &mut dyn Write, findings: &[Finding], base: &str) -> io::R
                     )
                 },
                 "partialFingerprints": {
-                    "secretsScanner/v1": fingerprint(&f.rule_id, &uri, &f.matched)
+                    "secretsScanner/v1": fingerprint
                 },
                 "locations": [{
                     "physicalLocation": {
                         "artifactLocation": { "uri": uri, "uriBaseId": "SRCROOT" },
                         "region": {
-                            "startLine": f.line,
-                            "startColumn": f.col.max(1),
+                            "startLine": start_line,
+                            "startColumn": start_col,
                             "endLine": end_line,
                             "endColumn": end_col,
                         }
@@ -205,30 +206,139 @@ fn relativize(file: &str, base: &str) -> String {
     f.to_string()
 }
 
-/// SARIF requires a non-empty region. Path-only / zero-width findings would
-/// otherwise emit `endColumn == startColumn`; widen them by one column.
-fn safe_region_end(f: &Finding) -> (usize, usize) {
+/// SARIF tracking fingerprint. Prefer the scanner-computed fingerprint, which
+/// is derived before redaction, so SARIF alert identity does not change when
+/// users toggle redaction. Older/deserialized findings without that field fall
+/// back to non-secret location metadata.
+fn sarif_fingerprint(f: &Finding, uri: &str) -> String {
+    if !f.fingerprint.is_empty() {
+        return f.fingerprint.clone();
+    }
+    secrets_scanner::location_fingerprint(&f.rule_id, uri, f.start_offset, f.end_offset)
+}
+
+/// SARIF region in UTF-16 code units (SARIF's default `columnKind`, which GitHub
+/// code scanning assumes) with a 1-based, non-empty guarantee.
+///
+/// Returns `(startLine, startColumn, endLine, endColumn)`, every field clamped
+/// to `>= 1` so a `line == 0` finding (e.g. a hand-built or deserialized one)
+/// never emits an invalid SARIF region. Columns fall back to byte columns when
+/// the UTF-16 ones are unset (0) — e.g. path-only findings or a pre-UTF-16
+/// baseline. Path-only / zero-width regions are widened by one column so SARIF
+/// never sees `endColumn == startColumn`.
+fn sarif_region(f: &Finding) -> (usize, usize, usize, usize) {
     let start_line = f.line.max(1);
-    let start_col = f.col.max(1);
+    let start_col = nonzero_or(f.col_utf16, f.col).max(1);
     let end_line = f.end_line.max(start_line);
-    let mut end_col = f.end_col.max(1);
+    let mut end_col = nonzero_or(f.end_col_utf16, f.end_col).max(1);
     if end_line == start_line && end_col <= start_col {
         end_col = start_col + 1;
     }
-    (end_line, end_col)
+    (start_line, start_col, end_line, end_col)
 }
 
-/// Stable 64-bit FNV-1a fingerprint over `rule_id|uri|matched`, hex-encoded.
-///
-/// Used for SARIF `partialFingerprints` to track logically-identical alerts
-/// across line moves. Inlined (no `sha2`) so it works in the lean default build.
-fn fingerprint(rule_id: &str, uri: &str, matched: &str) -> String {
-    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
-    for part in [rule_id, "\u{0}", uri, "\u{0}", matched] {
-        for &b in part.as_bytes() {
-            hash ^= b as u64;
-            hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
-        }
+/// `primary` if non-zero, otherwise `fallback`.
+fn nonzero_or(primary: usize, fallback: usize) -> usize {
+    if primary > 0 {
+        primary
+    } else {
+        fallback
     }
-    format!("{hash:016x}")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Build a `Finding` from a JSON value (serde defaults fill optional fields).
+    fn finding(v: serde_json::Value) -> Finding {
+        serde_json::from_value(v).expect("finding")
+    }
+
+    #[test]
+    fn relativize_strips_base_and_normalizes_separators() {
+        assert_eq!(relativize("./src/a.rs", "."), "src/a.rs");
+        assert_eq!(relativize("repo/src/a.rs", "repo"), "src/a.rs");
+        assert_eq!(relativize("a\\b.rs", "."), "a/b.rs");
+    }
+
+    #[test]
+    fn nonzero_or_prefers_nonzero_primary() {
+        assert_eq!(nonzero_or(5, 9), 5);
+        assert_eq!(nonzero_or(0, 9), 9);
+    }
+
+    #[test]
+    fn sarif_region_uses_utf16_columns_when_present() {
+        // Byte columns (10/18) differ from UTF-16 columns (6/14): SARIF must use
+        // the UTF-16 ones so a multibyte-prefixed line highlights correctly.
+        let f = finding(json!({
+            "file": "a", "line": 3, "end_line": 3,
+            "col": 10, "end_col": 18, "col_utf16": 6, "end_col_utf16": 14,
+            "rule_id": "r", "description": "d", "matched": "m", "entropy": 0.0
+        }));
+        let (_start_line, start_col, end_line, end_col) = sarif_region(&f);
+        assert_eq!(start_col, 6);
+        assert_eq!(end_col, 14);
+        assert_eq!(end_line, 3);
+    }
+
+    #[test]
+    fn sarif_region_clamps_zero_line_to_one() {
+        // A finding with line == 0 (hand-built / deserialized) must not emit an
+        // invalid SARIF startLine of 0.
+        let f = finding(json!({
+            "file": "a", "line": 0, "end_line": 0, "col": 1, "end_col": 5,
+            "rule_id": "r", "description": "d", "matched": "m", "entropy": 0.0
+        }));
+        let (start_line, _start_col, end_line, _end_col) = sarif_region(&f);
+        assert_eq!(start_line, 1, "startLine must be clamped to >= 1");
+        assert!(end_line >= start_line);
+    }
+
+    #[test]
+    fn sarif_region_falls_back_to_byte_columns() {
+        let f = finding(json!({
+            "file": "a", "line": 1, "end_line": 1, "col": 4, "end_col": 9,
+            "rule_id": "r", "description": "d", "matched": "m", "entropy": 0.0
+        }));
+        let (_start_line, start_col, _end_line, end_col) = sarif_region(&f);
+        assert_eq!(start_col, 4, "utf16 unset -> byte column fallback");
+        assert_eq!(end_col, 9);
+    }
+
+    #[test]
+    fn sarif_region_widens_zero_width_region() {
+        let f = finding(json!({
+            "file": "a", "line": 1, "end_line": 1,
+            "col": 1, "end_col": 1, "col_utf16": 1, "end_col_utf16": 1,
+            "rule_id": "r", "description": "d", "matched": "m", "entropy": 0.0
+        }));
+        let (_start_line, start_col, _end_line, end_col) = sarif_region(&f);
+        assert!(end_col > start_col, "zero-width region must be widened");
+    }
+
+    #[test]
+    fn sarif_fingerprint_uses_finding_fingerprint_not_display_match() {
+        let a = finding(json!({
+            "file": "a", "line": 1, "end_line": 1, "col": 1, "end_col": 7,
+            "rule_id": "r", "description": "d", "matched": "[redacted]",
+            "entropy": 0.0, "fingerprint": "stable-raw-fingerprint"
+        }));
+        let mut b = a.clone();
+        b.matched = "raw-secret-value".to_string();
+
+        let mut out_a = Vec::new();
+        let mut out_b = Vec::new();
+        write_sarif(&mut out_a, &[a], ".").expect("sarif a");
+        write_sarif(&mut out_b, &[b], ".").expect("sarif b");
+
+        let doc_a: serde_json::Value = serde_json::from_slice(&out_a).expect("json a");
+        let doc_b: serde_json::Value = serde_json::from_slice(&out_b).expect("json b");
+        let fp_a = &doc_a["runs"][0]["results"][0]["partialFingerprints"]["secretsScanner/v1"];
+        let fp_b = &doc_b["runs"][0]["results"][0]["partialFingerprints"]["secretsScanner/v1"];
+
+        assert_eq!(fp_a, "stable-raw-fingerprint");
+        assert_eq!(fp_a, fp_b);
+    }
 }

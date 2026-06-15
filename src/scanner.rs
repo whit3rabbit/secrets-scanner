@@ -24,6 +24,7 @@
 //! The scanner owns a compiled `RuleEngine` and a `ScanConfig`.
 //! It is `Send + Sync` and safe to share across threads.
 
+use crate::error::ScannerError;
 use crate::rules::engine::RuleEngine;
 
 mod matching;
@@ -48,53 +49,65 @@ pub use types::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanStats};
 pub struct Scanner {
     engine: RuleEngine,
     config: ScanConfig,
+    /// Per-scan timing accumulator for the unkeyworded-rule pass. Compiled in
+    /// only under the `bench` feature so the release build never pays for the
+    /// `Instant::now()` calls in `scan_bytes`.
+    #[cfg(feature = "bench")]
     unkeyworded_scan_time_ns: std::sync::atomic::AtomicU64,
 }
 
 impl Scanner {
+    /// Build a scanner from a compiled engine with the default config. Single
+    /// funnel for all constructors so the (feature-gated) bench field is
+    /// initialised in exactly one place.
+    fn from_engine(engine: RuleEngine) -> Self {
+        Self {
+            engine,
+            config: ScanConfig::default(),
+            #[cfg(feature = "bench")]
+            unkeyworded_scan_time_ns: std::sync::atomic::AtomicU64::new(0),
+        }
+    }
+
     /// Create a scanner using the three-tier rule loading priority:
     /// 1. `$SECRETS_SCANNER_RULES` env var
     /// 2. Cached rules in OS data dir
     /// 3. Bundled default (compiled into binary)
-    pub fn new() -> Result<Self, Box<dyn std::error::Error>> {
-        let toml_str = crate::rules::load_rules();
-        let engine = RuleEngine::from_toml(&toml_str)?;
-        Ok(Self {
-            engine,
-            config: ScanConfig::default(),
-            unkeyworded_scan_time_ns: std::sync::atomic::AtomicU64::new(0),
-        })
+    pub fn new() -> Result<Self, ScannerError> {
+        let toml_str = crate::rules::load_rules_for_scanner()?;
+        Ok(Self::from_engine(RuleEngine::from_toml(&toml_str)?))
     }
 
     /// Create a scanner from the bundled (compiled-in) ruleset only.
-    pub fn from_bundled() -> Result<Self, Box<dyn std::error::Error>> {
-        let engine = RuleEngine::from_toml(crate::rules::BUNDLED_RULES)?;
-        Ok(Self {
-            engine,
-            config: ScanConfig::default(),
-            unkeyworded_scan_time_ns: std::sync::atomic::AtomicU64::new(0),
-        })
+    pub fn from_bundled() -> Result<Self, ScannerError> {
+        Ok(Self::from_engine(RuleEngine::from_toml(
+            crate::rules::BUNDLED_RULES,
+        )?))
     }
 
     /// Create a scanner from a specific TOML file path.
-    pub fn from_file(path: &str) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn from_file(path: &str) -> Result<Self, ScannerError> {
         let toml_str = std::fs::read_to_string(path)?;
-        let engine = RuleEngine::from_toml(&toml_str)?;
-        Ok(Self {
-            engine,
-            config: ScanConfig::default(),
-            unkeyworded_scan_time_ns: std::sync::atomic::AtomicU64::new(0),
-        })
+        Self::from_toml(&toml_str)
     }
 
     /// Create a scanner from a TOML string.
-    pub fn from_toml(toml_str: &str) -> Result<Self, Box<dyn std::error::Error>> {
-        let engine = RuleEngine::from_toml(toml_str)?;
-        Ok(Self {
-            engine,
-            config: ScanConfig::default(),
-            unkeyworded_scan_time_ns: std::sync::atomic::AtomicU64::new(0),
-        })
+    ///
+    /// Two intentional passes with different jobs: [`validate_rules_toml`] is the
+    /// strict gate (it also checks rule-id uniqueness/non-emptiness and *rejects*
+    /// any uncompilable regex), while `RuleEngine::from_toml` is the lenient build
+    /// that *skips* uncompilable rules. Running validate first is what makes an
+    /// explicit `--rules`/`from_file` ruleset fail loudly instead of silently
+    /// scanning with a reduced rule set (see `new`/`from_bundled`, which take the
+    /// lenient path for the build-validated bundled/cached tiers). The extra parse
+    /// is a one-time, construction-only cost.
+    ///
+    /// [`validate_rules_toml`]: crate::rules::validation::validate_rules_toml
+    pub fn from_toml(toml_str: &str) -> Result<Self, ScannerError> {
+        if let Err(errors) = crate::rules::validation::validate_rules_toml(toml_str) {
+            return Err(ScannerError::InvalidRules(errors));
+        }
+        Ok(Self::from_engine(RuleEngine::from_toml(toml_str)?))
     }
 
     /// Create a scanner with a custom config.
@@ -109,12 +122,16 @@ impl Scanner {
     }
 
     /// Returns the accumulated time spent on unkeyworded scans in nanoseconds.
+    /// Only available under the `bench` feature.
+    #[cfg(feature = "bench")]
     pub fn unkeyworded_scan_time_ns(&self) -> u64 {
         self.unkeyworded_scan_time_ns
             .load(std::sync::atomic::Ordering::Relaxed)
     }
 
     /// Resets the unkeyworded scan time benchmark to 0.
+    /// Only available under the `bench` feature.
+    #[cfg(feature = "bench")]
     pub fn reset_unkeyworded_scan_time(&self) {
         self.unkeyworded_scan_time_ns
             .store(0, std::sync::atomic::Ordering::Relaxed);
@@ -195,6 +212,8 @@ impl Scanner {
                             col: 1,
                             end_line: 1,
                             end_col: 1,
+                            col_utf16: 1,
+                            end_col_utf16: 1,
                             rule_id: rule.id.clone(),
                             rule_description: rule.description.clone(),
                             matched: format!("File path matches pattern: {}", path),
@@ -203,6 +222,12 @@ impl Scanner {
                             end_offset: 0,
                             secret_start_offset: 0,
                             secret_end_offset: 0,
+                            // Path-only rule: fingerprint over (rule, path) — no secret span.
+                            fingerprint: crate::fingerprint::finding_fingerprint(
+                                &rule.id,
+                                path,
+                                path.as_bytes(),
+                            ),
                             context_lines: Vec::new(),
                         });
                     }
@@ -243,6 +268,7 @@ impl Scanner {
         // 3. Evaluate unkeyworded regex rules and benchmark their cost.
         //    rule_seq continues past the keyworded range so the spaces never collide.
         let keyworded_count = self.engine.keyworded_rules().len();
+        #[cfg(feature = "bench")]
         let unkeyworded_start = std::time::Instant::now();
         for (idx, rule) in self.engine.unkeyworded_rules().iter().enumerate() {
             let rule_seq = keyworded_count + idx;
@@ -256,9 +282,9 @@ impl Scanner {
                 &mut findings,
             );
         }
-        let elapsed = unkeyworded_start.elapsed();
+        #[cfg(feature = "bench")]
         self.unkeyworded_scan_time_ns.fetch_add(
-            elapsed.as_nanos() as u64,
+            unkeyworded_start.elapsed().as_nanos() as u64,
             std::sync::atomic::Ordering::Relaxed,
         );
 

@@ -9,6 +9,8 @@
 
 use log::{info, warn};
 
+use crate::error::ScannerError;
+
 /// Core compiled rule engine (Aho-Corasick automaton + compiled regexes).
 pub mod engine;
 
@@ -112,6 +114,25 @@ pub fn load_rules() -> String {
     BUNDLED_RULES.to_string()
 }
 
+/// Return the active TOML rule content for scanner construction.
+///
+/// Explicit user overrides are strict: an unreadable or invalid
+/// `SECRETS_SCANNER_RULES` file is an error instead of falling back to cached or
+/// bundled rules and silently reducing coverage. Cached updater rules remain
+/// best-effort and fall back to bundled rules when invalid.
+pub fn load_rules_for_scanner() -> Result<String, ScannerError> {
+    if let Ok(path) = std::env::var("SECRETS_SCANNER_RULES") {
+        let content = std::fs::read_to_string(&path)?;
+        info!("[rules] Using override from SECRETS_SCANNER_RULES={path}");
+        if let Err(errors) = validation::validate_rules_toml(&content) {
+            return Err(ScannerError::InvalidRules(errors));
+        }
+        return Ok(content);
+    }
+
+    Ok(load_rules())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -176,5 +197,32 @@ mod tests {
         std::env::set_var("SECRETS_SCANNER_RULES", temp_rules.path());
 
         assert!(crate::Scanner::new().is_err());
+    }
+
+    #[test]
+    fn explicit_unsupported_regex_override_errors_before_scanning() {
+        let _lock = env_lock().lock().expect("env lock");
+        let _guard = EnvGuard::capture();
+        let temp_home = tempfile::tempdir().expect("temp home");
+        let temp_rules = tempfile::NamedTempFile::new().expect("temp rules");
+        std::env::set_var("HOME", temp_home.path());
+        std::fs::write(
+            temp_rules.path(),
+            r#"
+title = "invalid"
+
+[[rules]]
+id = "lookahead"
+regex = '(?=SECRET)SECRET[0-9]+'
+keywords = ["secret"]
+"#,
+        )
+        .expect("write invalid rules");
+        std::env::set_var("SECRETS_SCANNER_RULES", temp_rules.path());
+
+        assert!(matches!(
+            crate::Scanner::new(),
+            Err(crate::error::ScannerError::InvalidRules(_))
+        ));
     }
 }

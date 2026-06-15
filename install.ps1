@@ -102,7 +102,9 @@ function Download-Binary {
 
     # Construct download URL
     $AssetName = "secrets-scanner-$VerRaw-$Target.exe"
-    $DownloadUrl = "https://github.com/$Repo/releases/download/$Tag/$AssetName"
+    $BaseUrl = "https://github.com/$Repo/releases/download/$Tag"
+    $DownloadUrl = "$BaseUrl/$AssetName"
+    $ChecksumsUrl = "$BaseUrl/SHA256SUMS"
 
     Write-Info "Downloading secrets-scanner version $Tag ($Target)..."
 
@@ -113,14 +115,41 @@ function Download-Binary {
 
     $DestPath = Join-Path $InstallDir $BinaryName
     $TempDestPath = "$DestPath.tmp"
+    $TempSumsPath = "$DestPath.SHA256SUMS.tmp"
 
     try {
         Invoke-WebRequest -Uri $DownloadUrl -OutFile $TempDestPath -UseBasicParsing
+        Invoke-WebRequest -Uri $ChecksumsUrl -OutFile $TempSumsPath -UseBasicParsing
     } catch {
+        Remove-Item -Path $TempDestPath, $TempSumsPath -Force -ErrorAction SilentlyContinue
         Write-ErrorMsg "Failed to download binary from $DownloadUrl"
+        Write-ErrorMsg "or checksums from $ChecksumsUrl"
         Write-ErrorMsg "Please check the version and target combination."
         exit 1
     }
+
+    $ExpectedSha = $null
+    foreach ($Line in Get-Content $TempSumsPath) {
+        if ($Line -match '^([A-Fa-f0-9]{64})\s+(.+)$' -and $Matches[2] -eq $AssetName) {
+            $ExpectedSha = $Matches[1].ToLowerInvariant()
+            break
+        }
+    }
+    if ([string]::IsNullOrEmpty($ExpectedSha)) {
+        Remove-Item -Path $TempDestPath, $TempSumsPath -Force -ErrorAction SilentlyContinue
+        Write-ErrorMsg "SHA256SUMS does not contain $AssetName"
+        exit 1
+    }
+
+    $ActualSha = (Get-FileHash -Algorithm SHA256 -Path $TempDestPath).Hash.ToLowerInvariant()
+    if ($ExpectedSha -ne $ActualSha) {
+        Remove-Item -Path $TempDestPath, $TempSumsPath -Force -ErrorAction SilentlyContinue
+        Write-ErrorMsg "Checksum mismatch for $AssetName"
+        Write-ErrorMsg "Expected: $ExpectedSha"
+        Write-ErrorMsg "Actual:   $ActualSha"
+        exit 1
+    }
+    Remove-Item -Path $TempSumsPath -Force -ErrorAction SilentlyContinue
 
     if (Test-Path $TempDestPath) {
         Move-Item -Path $TempDestPath -Destination $DestPath -Force

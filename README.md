@@ -8,42 +8,88 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 
 ## Features
 
-- **Multi-layer pipeline**: memchr SIMD → Aho-Corasick → Shannon entropy → Regex
-- **~990 active rules** by default (gitleaks + custom + [Kingfisher](https://github.com/mongodb/kingfisher)); more via `--features full-ruleset`
-- **Parallel scanning** via rayon (uses all CPU cores)
-- **Flexible output**: text, JSON, JSONL, SARIF (GitHub Code Scanning)
-- **CI-ready exit codes**: `0` = clean, `1` = findings, `2` = error
-- **Runtime rule updates** without recompiling (optional `updater` feature)
-- **Custom rules** in the same TOML format as gitleaks
-- **Git-aware scanning**: `--git` (tracked files) or `--git-diff` (changed files)
-- **Baseline suppression**: `--baseline` to suppress known findings from prior scans
-- **Context lines**: `context_lines` field in findings with surrounding lines (±2)
-- **Shell completions**: `completions bash|zsh|fish|...
+- **Fast multi-stage scanning**
+  - Uses a `memchr` first-byte prefilter, case-insensitive Aho-Corasick keyword matching, entropy gating, and Rust `regex` validation to reduce unnecessary regex work.
+  - Separates keyworded and unkeyworded rules so broad rules still run while keyworded rules stay fast.
+
+- **Gitleaks-compatible TOML rules**
+  - Loads rules from a gitleaks-style TOML configuration.
+  - Supports rule IDs, descriptions, keywords, entropy thresholds, path filters, `secretGroup`, and global/per-rule allowlists.
+  - Supports custom rules via `--rules <path>` or `SECRETS_SCANNER_RULES`.
+
+- **Manifest-driven bundled rules**
+  - Builds an embedded ruleset at compile time from manifest-declared sources.
+  - Validates selected rule sources before embedding.
+  - Supports deterministic merge reports and duplicate-rule review tooling.
+
+- **Safe-by-default scanning**
+  - Redacts matched secrets by default.
+  - Uses bounded owned file reads with a configurable `--max-file-size`; does not rely on memory mapping.
+  - Rejects symlinks and non-regular files.
+  - Uses content-based binary detection with `--binary-policy auto|skip|scan`.
+
+- **Git-aware scanning**
+  - Scan all files/directories recursively, only git-tracked files with `--git`, or changed files with `--git-diff` / `--diff-base`.
+  - Supports untracked-but-not-ignored files with `--include-untracked`.
+  - Uses NUL-delimited git output and path containment checks for safer CI execution.
+
+- **CI-friendly output**
+  - Output formats: human-readable text, JSON, JSONL, and SARIF 2.1.0.
+  - SARIF messages avoid including matched secret values.
+  - `--no-context` suppresses context lines for safer logs.
+  - `--max-files`, `--max-findings`, and `--max-findings-per-file` cap scan scope and report truncation.
+
+- **CLI and automation**
+  - Subcommands: `scan`, `update-rules`, `validate-rules`, `merge-rules`, `list-rules`, and `completions`.
+  - Exit codes are designed for CI: clean, findings, runtime error, and invalid scan configuration/rules.
+  - Includes a GitHub Action, pre-commit hook configuration, Dockerfile, install scripts, and Homebrew cask packaging.
+
+- **Optional runtime rule updates**
+  - When built with `--features updater`, `secrets-scanner update-rules` can download updated rules into the OS user-data directory for the next scan.
+  - Default/non-updater builds use the embedded ruleset; Docker images should be rebuilt to refresh embedded rules.
+
+- **Developer tooling**
+  - Rule validation, merge checks, duplicate-rule reports, fixture generation, ruleset docs generation, CI checks, benchmarks, and fuzz targets.
 
 ---
 
 ## Quick Start
 
-### Binary (CLI)
+### 1. Install
 
+#### macOS / Linux (Shell)
 ```bash
-# Build (lean release binary, no runtime updater)
-cargo build --release
-
-# Scan the current directory
-./target/release/secrets-scanner scan .
-
-# Scan specific paths
-./target/release/secrets-scanner scan src/ config/ .env
-
-# Output as JSON
-./target/release/secrets-scanner scan --format json . > findings.json
-
-# Output as SARIF for GitHub Code Scanning
-./target/release/secrets-scanner scan --format sarif . > results.sarif
+curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | bash
 ```
 
-### Library
+#### Windows (PowerShell)
+```powershell
+irm https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.ps1 | iex
+```
+
+*(For other installation methods like Homebrew tap or Cargo, see [Installation Options](#installation-options) below).*
+
+### 2. Run a Scan
+
+Once installed and in your `PATH`, run `secrets-scanner` directly:
+
+```bash
+# Scan the current directory
+secrets-scanner scan .
+
+# Scan specific paths
+secrets-scanner scan src/ config/ .env
+
+# Output as JSON
+secrets-scanner scan --format json . > findings.json
+
+# Output as SARIF for GitHub Code Scanning
+secrets-scanner scan --format sarif . > results.sarif
+```
+
+### 3. Use as a Library
+
+To integrate `secrets-scanner` into your Rust codebase, add it to your `Cargo.toml`:
 
 ```rust
 use secrets_scanner::{Finding, ScanConfig, ScanOutput, Scanner};
@@ -69,54 +115,69 @@ for f in &output.findings {
 
 ---
 
-## Installation
+## Installation Options
 
-### Shell Script (macOS / Linux)
+### Automated Installer Scripts
 
-You can install `secrets-scanner` automatically using the installation script:
-
+#### macOS / Linux
 ```bash
 curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | bash
 ```
+This script detects your OS/Architecture and installs in order of preference:
+1. **Homebrew Cask**: If `brew` is installed, runs `brew install --cask whit3rabbit/tap/secrets-scanner`.
+2. **Cargo / cargo-binstall**: If `cargo` is installed, uses `cargo-binstall` (if present) or `cargo install secrets_scanner`.
+3. **GitHub Release Binary**: Downloads the pre-built release binary, installs to `~/.secrets-scanner/bin`, and prompts you to update your `PATH`.
 
-The script will automatically detect your operating system and architecture and attempt the following installation methods in order:
-1. **Homebrew Cask** (macOS only): If `brew` is installed, it runs `brew install --cask whit3rabbit/tap/secrets-scanner`.
-2. **Cargo / cargo-binstall**: If `cargo` is installed, it uses `cargo-binstall` if present, or falls back to compiling from source via `cargo install secrets_scanner`.
-3. **GitHub Release Binary**: Downloads the pre-built release binary for your OS and architecture, installs it to `~/.secrets-scanner/bin`, and provides instructions to update your `PATH`.
-
-*Note: If the repository is currently private or no releases have been published yet, you can force the installation of a specific version by running:*
+*Note: For private or pre-release setups, force download a specific version using the `VERSION` env variable:*
 ```bash
 curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | VERSION=0.1.0 bash
 ```
 
-### PowerShell (Windows)
-
-For Windows, run the following command in PowerShell:
-
+#### Windows
 ```powershell
 irm https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.ps1 | iex
 ```
+This script installs in order of preference:
+1. **Cargo / cargo-binstall**: Detects and uses `cargo` / `cargo-binstall` if available.
+2. **GitHub Release Binary**: Downloads the Windows binary, places it in `$HOME\.secrets-scanner\bin`, and appends the directory to your User `PATH` persistently.
 
-This script will:
-1. **Cargo / cargo-binstall**: Detect and use `cargo` / `cargo-binstall` if available to build or fetch the tool.
-2. **GitHub Release Binary**: Fall back to downloading the Windows `x86_64` executable from GitHub Releases, placing it in `$HOME\.secrets-scanner\bin` and appending it to your User `PATH` environment variable.
-
-*Note: You can force a specific version to download by setting the `VERSION` environment variable beforehand:*
+*Note: Force a specific version using `$env:VERSION`:*
 ```powershell
 $env:VERSION="0.1.0"; irm https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.ps1 | iex
 ```
 
-### From Source
-
-You can also install directly from source using Cargo:
-
+### Homebrew Tap (macOS)
+To install using Homebrew directly:
 ```bash
-# Install the default lean binary
+# Add the tap
+brew tap whit3rabbit/tap
+
+# Install formula
+brew install secrets-scanner
+
+# Or install the Cask version (recommended)
+brew install --cask whit3rabbit/tap/secrets-scanner
+```
+
+### Cargo / cargo-binstall
+If you have Cargo installed:
+```bash
+# Install the pre-built binary quickly with cargo-binstall
+cargo binstall secrets_scanner
+
+# Build and install from crates.io
 cargo install secrets_scanner
 
-# Or build with the runtime rule-updater feature enabled (requires HTTP client dependency)
+# Build and install with runtime updater support (optional features)
 cargo install secrets_scanner --features updater
 ```
+
+### Manual Download
+1. Download the pre-built binary matching your platform from [GitHub Releases](https://github.com/whit3rabbit/secrets-scanner/releases).
+2. Move it to a directory in your `PATH` (e.g. `/usr/local/bin/` on macOS/Linux).
+3. Mark it as executable: `chmod +x /usr/local/bin/secrets-scanner`
+
+---
 
 ---
 
@@ -212,11 +273,13 @@ metadata, merge priority, and default-build inclusion. The committed
 `assets/secrets-scanner.toml` file is the lean merged artifact generated by
 `make merge-rules` for review and drift checks.
 
-The per-ruleset docs in `docs/rulesets/` are generated with `make ruleset-docs`.
-Each page lists raw provider rules, synthetic examples, regexes, and whether the
-current scanner can load the rule. `Active` means
-`secrets-scanner list-rules --rules <source>` can compile and load the rule;
-unsupported rules remain documented because they still exist in the raw source.
+The per-ruleset documentation pages in [`docs/rulesets/`](docs/rulesets/) are generated with `make ruleset-docs`, referencing the actual rules defined in the `*.toml` files under `assets/`:
+- **local**: Documented in [`local.md`](docs/rulesets/local.md) ── Actual rules in [`assets/local.toml`](assets/local.toml)
+- **gitleaks**: Documented in [`gitleaks.md`](docs/rulesets/gitleaks.md) ── Actual rules in [`assets/gitleaks.toml`](assets/gitleaks.toml)
+- **kingfisher**: Documented in [`kingfisher.md`](docs/rulesets/kingfisher.md) ── Actual rules in [`assets/kingfisher-rules.toml`](assets/kingfisher-rules.toml)
+- **secrets-patterns-db**: Documented in [`spdb.md`](docs/rulesets/spdb.md) ── Actual rules in [`assets/secrets-patterns-db.toml`](assets/secrets-patterns-db.toml)
+
+Each reference page lists raw provider rules, synthetic examples, regexes, and whether the current scanner can load the rule. `Active` means `secrets-scanner list-rules --rules <source>` can compile and load the rule; unsupported rules remain documented because they still exist in the raw source.
 
 ### Related projects and rule sources
 
@@ -405,6 +468,105 @@ Cached rules are stored in the OS user-data directory:
 
 ---
 
+## GitHub Action
+
+The bundled composite action (`action.yml`) installs the prebuilt release
+binary, verifies it against the release `SHA256SUMS`, and runs `scan` with a
+safe-by-default posture (redaction enabled by default, `--no-context`, bounded
+reads, deterministic exit). It emits SARIF for GitHub code scanning.
+
+```yaml
+# .github/workflows/secrets.yml
+permissions:
+  contents: read
+  security-events: write   # required for the SARIF upload
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # full history for `git`/`diff-base`
+
+      - id: scan
+        uses: whit3rabbit/secrets-scanner@v0.1.0   # pin a released tag
+        with:
+          fail-on-findings: false   # gate via SARIF instead of failing the job
+
+      - name: Upload SARIF
+        if: always() && steps.scan.outputs.sarif-file != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif-file }}
+```
+
+A runnable copy lives at `.github/workflows/secrets-scan.yml` (it dogfoods the
+action with `uses: ./`). The action downloads a *released* binary, so pin a tag
+that exists (`@vX.Y.Z`); `@main` or a local `uses: ./` falls back to the latest
+release.
+
+### Inputs
+
+| Input | Default | Description |
+|---|---|---|
+| `path` | `.` | Path to scan. |
+| `config` | – | Optional custom TOML rules file (`--rules`). |
+| `fail-on-findings` | `true` | Fail the job on findings. Set `false` to upload SARIF and gate separately. |
+| `sarif` | `true` | Write SARIF output. |
+| `sarif-file` | `secrets-scanner.sarif` | SARIF output path. |
+| `git` | `true` | Scan only git-tracked files (`--git`). |
+| `diff-base` | – | Base ref for diff scanning, e.g. `origin/${{ github.base_ref }}`. |
+| `max-file-size` | `2097152` | Max file size in bytes. |
+| `binary-policy` | `auto` | Binary handling: `auto \| skip \| scan`. |
+| `version` | – | Release to install (e.g. `v0.1.0`). Defaults to the action ref, else warns and uses latest. |
+| `extra-args` | – | Newline-delimited extra args appended to `scan`. |
+
+### Outputs
+
+| Output | Description |
+|---|---|
+| `sarif-file` | Path to the written SARIF file (empty when `sarif: false`). |
+
+To gate pull requests on only the changed code, set
+`diff-base: origin/${{ github.base_ref }}`. Use `if: always()` on the upload
+step (or `fail-on-findings: false` plus a separate gate) so SARIF still uploads
+when findings are present.
+
+---
+
+## Docker
+
+For non-GitHub CI (GitLab, Jenkins) or local use, build a lean static image
+(musl, no runtime updater; rebuild to refresh rules):
+
+```bash
+docker build -t secrets-scanner:dev .
+docker run --rm -v "$PWD:/repo" secrets-scanner:dev scan /repo --git
+```
+
+The runtime image bundles `git`, so the safe-default `--git` mode works inside
+the container. Write SARIF to the mounted volume to collect it on the host:
+
+```bash
+docker run --rm -v "$PWD:/repo" secrets-scanner:dev \
+  scan /repo --git --format sarif --output /repo/results.sarif
+```
+
+GitLab CI example:
+
+```yaml
+secrets-scan:
+  image: secrets-scanner:dev   # or a registry tag you build/push
+  script:
+    - secrets-scanner scan . --git --format sarif --output gl.sarif
+  artifacts:
+    when: always
+    paths: [gl.sarif]
+```
+
+---
+
 ## Pre-commit Hook
 
 Configure via `.pre-commit-config.yaml`:
@@ -423,21 +585,80 @@ This scans all staged files for secrets before each commit.
 
 ## Development
 
+### Building from Source
+
+To build and test the codebase from a local checkout:
+
 ```bash
-# Run tests
+# Clone the repository
+git clone https://github.com/whit3rabbit/secrets-scanner.git
+cd secrets-scanner
+
+# Build the debug binary (lean profile, no runtime updater)
+cargo build
+
+# Build with the runtime rule-updater feature (ureq HTTP client)
+cargo build --features updater
+
+# Build with the full ruleset (includes secrets-patterns-db)
+cargo build --features full-ruleset
+
+# Build optimized release binary
+cargo build --release
+```
+
+### Build features
+
+The default build embeds the bundled ruleset at compile time and does not include
+the runtime HTTP updater.
+
+```bash
+cargo build --release
+```
+
+To enable `secrets-scanner update-rules`, build with:
+
+```bash
+cargo build --release --features updater
+```
+
+Docker images embed rules at image build time. Rebuild the image to refresh rules.
+
+To build with the expanded ruleset (including `secrets-patterns-db`):
+
+```bash
+cargo build --release --features full-ruleset
+```
+
+
+### Running Tests and Lints
+
+We use a Makefile to simplify developer workflows:
+
+```bash
+# Run the automated test suite
 make test
 
-# Run clippy
+# Run Clippy lints
 make clippy
 
-# Format
-make fmt
+# Run rustfmt format checks
+make fmt-check
 
-# Full CI suite
+# Run full CI suite (combines build, test, lint, and ruleset checks)
 make ci
+```
 
-# Validate rules
+### Ruleset Validation and Merging
+
+When updating custom rules in `assets/local.toml` or upstream sets:
+
+```bash
+# Validate TOML structure and regex compile safety
 make validate-rules
+
+# Re-merge assets and generate target/merge-report.json
+make merge-rules
 ```
 
 ---

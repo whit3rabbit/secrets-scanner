@@ -48,6 +48,7 @@ pub fn data_dir() -> Option<PathBuf> {
     base.map(|p| p.join("secrets-scanner"))
 }
 
+#[cfg(not(target_os = "windows"))]
 fn home_dir() -> Option<PathBuf> {
     std::env::var("HOME").ok().map(PathBuf::from)
 }

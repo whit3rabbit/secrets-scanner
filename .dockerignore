@@ -1,0 +1,11 @@
+# Keep the build context small. Do NOT exclude assets/: build.rs embeds the
+# ruleset at compile time and reads from assets/.
+target/
+.git/
+.github/
+*.sarif
+*.log
+.DS_Store
+.idea/
+.vscode/
+.syntext/

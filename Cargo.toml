@@ -25,6 +25,11 @@ updater = ["dep:ureq", "dep:sha2", "dep:hex"]
 # via the CARGO_FEATURE_FULL_RULESET env var. No extra dependencies.
 full-ruleset = []
 
+# `bench` — compile in the per-scan timing instrumentation used by the
+# benchmarks (the `unkeyworded_scan_time_ns` accumulator on `Scanner`). Off by
+# default so the lean release build never pays for `Instant::now()` per file.
+bench = []
+
 # ── dependencies ──────────────────────────────────────────────────────────────
 [dependencies]
 aho-corasick = "1.1"
@@ -43,6 +48,9 @@ toml         = "0.8"
 log          = "0.4"
 env_logger   = "0.11"
 
+# Typed error enum for library callers (distinguish IO vs invalid-rules, etc.)
+thiserror    = "1"
+
 # JSON serialization (baseline comparison)
 serde_json   = "1"
 
@@ -54,6 +62,7 @@ hex          = { version = "0.4", optional = true }
 [dev-dependencies]
 tempfile = "3"
 criterion = { version = "0.5", features = ["html_reports"] }
+proptest = "1"
 
 [[bench]]
 name = "scan"

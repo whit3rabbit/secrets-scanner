@@ -22,3 +22,9 @@ name = "fuzz_scan_content"
 path = "fuzz_targets/fuzz_scan_content.rs"
 test = false
 doc = false
+
+[[bin]]
+name = "fuzz_rule_parsing"
+path = "fuzz_targets/fuzz_rule_parsing.rs"
+test = false
+doc = false

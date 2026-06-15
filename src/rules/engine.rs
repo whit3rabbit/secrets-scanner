@@ -94,7 +94,7 @@ impl RuleEngine {
     ///
     /// Returns an error if the TOML is malformed or if the Aho-Corasick
     /// automaton cannot be built.
-    pub fn from_toml(toml_str: &str) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn from_toml(toml_str: &str) -> Result<Self, crate::error::ScannerError> {
         let config: RulesetConfig = toml::from_str(toml_str)?;
 
         let mut keyworded_rules = Vec::new();

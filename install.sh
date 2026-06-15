@@ -34,6 +34,14 @@ has_cmd() {
     command -v "$1" >/dev/null 2>&1
 }
 
+sha256_file() {
+    if has_cmd sha256sum; then
+        sha256sum "$1" | awk '{ print $1 }'
+    else
+        shasum -a 256 "$1" | awk '{ print $1 }'
+    fi
+}
+
 # -----------------------------------------------------------------------------
 # Method 1: Homebrew (macOS Cask)
 # -----------------------------------------------------------------------------
@@ -150,9 +158,9 @@ download_binary() {
 
     # Construct download URL
     local asset_name="secrets-scanner-${ver_raw}-${target}"
-    local download_url="https://github.com/ToReplaceForPublicUrl/${REPO}/releases/download/${tag}/${asset_name}"
-    # Wait, the repo is whit3rabbit/secrets-scanner
-    download_url="https://github.com/${REPO}/releases/download/${tag}/${asset_name}"
+    local base_url="https://github.com/${REPO}/releases/download/${tag}"
+    local download_url="${base_url}/${asset_name}"
+    local checksums_url="${base_url}/SHA256SUMS"
 
     log_info "Downloading secrets-scanner version $tag ($target)..."
     
@@ -160,12 +168,35 @@ download_binary() {
     mkdir -p "$INSTALL_DIR"
     local dest_path="$INSTALL_DIR/${BINARY_NAME}"
     local temp_dest_path="${dest_path}.tmp"
+    local temp_sums_path="${dest_path}.SHA256SUMS.tmp"
 
     if ! curl -fsSL "$download_url" -o "$temp_dest_path"; then
         log_error "Failed to download binary from $download_url"
         log_error "Please check the version and target combination."
         exit 1
     fi
+    if ! curl -fsSL "$checksums_url" -o "$temp_sums_path"; then
+        rm -f "$temp_dest_path"
+        log_error "Failed to download checksums from $checksums_url"
+        exit 1
+    fi
+
+    local expected_sha
+    if ! expected_sha=$(awk -v asset="$asset_name" '$2 == asset { print $1; found = 1 } END { if (!found) exit 1 }' "$temp_sums_path"); then
+        rm -f "$temp_dest_path" "$temp_sums_path"
+        log_error "SHA256SUMS does not contain $asset_name"
+        exit 1
+    fi
+    local actual_sha
+    actual_sha=$(sha256_file "$temp_dest_path")
+    if [ "$expected_sha" != "$actual_sha" ]; then
+        rm -f "$temp_dest_path" "$temp_sums_path"
+        log_error "Checksum mismatch for $asset_name"
+        log_error "Expected: $expected_sha"
+        log_error "Actual:   $actual_sha"
+        exit 1
+    fi
+    rm -f "$temp_sums_path"
 
     chmod +x "$temp_dest_path"
     mv "$temp_dest_path" "$dest_path"

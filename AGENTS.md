@@ -13,9 +13,10 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 - `CLAUDE.md` is a symlink to `AGENTS.md` — edit `AGENTS.md` (the `Write` tool refuses symlinks).
 - Files included by `build.rs` via `#[path]` (`merge.rs`, `validation.rs`, `manifest.rs`) must stay crate-independent: no `crate::`/`super::`, only std + `[build-dependencies]` (serde/toml/regex/log).
 - A `#[cfg(test)] mod tests;` in any file that `build.rs` `#[path]`-includes needs an explicit `#[path = "..."]`, or `cargo fmt` fails to resolve the submodule.
-- Keep source files ≤ 400 lines; split tests into a dedicated `tests/` module when a file exceeds this.
+- Keep source files ≤ 400 lines; split tests into a dedicated `tests/` module when a file exceeds this. When *non-test* code exceeds 400 lines, extract a cohesive concern into a sibling file declared `#[path = "x.rs"] mod x;` — a child module reuses the parent's private items (structs, fns, fields) via `super::` (e.g. `walk_staged.rs` inside `walk.rs`).
 - Document every public function, struct, and trait with a `///` doc comment.
 - Prefer `--features updater` builds for development; the default (no feature) build is the lean release artifact.
+- The `bench` feature gates per-scan timing instrumentation; run `cargo test --features bench` to exercise bench-gated tests (default builds show expected rust-analyzer "inactive-code" hints on those lines — not errors).
 - No `unwrap()` in library code — use `?` or explicit error handling.
 
 ---
@@ -208,18 +209,60 @@ content (e.g. running as a GitHub Action). Key behaviors:
 - **Git path safety** (`src/scanner/walk.rs`): NUL-delimited output
   (`-z`, `core.quotePath=false`), absolute paths from git are dropped (containment),
   `--diff-base <ref>` scans `<base>...HEAD`, `--include-untracked` adds
-  `ls-files --others --exclude-standard`.
+  `ls-files --others --exclude-standard`. On any git failure the scan falls back
+  to a directory walk and the fallback is recorded (`ScanStats.git_fallback`) so
+  the scope change (may include untracked/ignored files) is surfaced, not silent.
+  Directory-walk traversal errors (e.g. an unreadable subdir) count toward
+  `ScanStats.errored`, not silently dropped.
+- **Staged mode** (`src/scanner/walk_staged.rs`): `--staged` scans the **index
+  blob content** that is about to be committed (`git diff --cached
+  --name-only --diff-filter=ACMR` then `git cat-file -s`/`blob :path`), NOT the
+  working-tree files — so a secret staged then scrubbed from the working copy (or
+  staged via `git add -p`) is still caught. Blob size is checked before the read
+  (bounded-memory). Staged deletions are excluded. It is mutually exclusive with
+  `--git-diff`/`--diff-base`/`--include-untracked` (enforced by clap).
+- **Inline suppression**: a line containing `secrets-scanner:allow` or
+  `gitleaks:allow` (ecosystem compat) skips that finding (`matching.rs`). For
+  multi-line matches (e.g. PEM keys) the marker is honored on the match's first
+  line only.
 - **Result caps**: `--max-files`, `--max-findings`, `--max-findings-per-file`.
   Every cap that fires logs a truncation notice (never silent).
+- **Honest coverage**: `ScanStats.errored` counts files that could not be
+  stat'd/read (distinct from intentional binary/oversized skips) and the CLI
+  summary reports `N unreadable`, so an errored file never looks like a
+  scanned-and-clean one.
+- **Entropy floor**: `--min-entropy` (`min_entropy_override`) only *raises* a
+  rule's threshold (`max(override, rule_threshold)`); a low value can never
+  weaken a stricter rule.
 - **Safe CI logging**: `--no-context` suppresses context lines; text output
-  escapes control chars in paths/matched (`format::sanitize_display`) to prevent
-  terminal/CI-log injection. A file-level summary (counts only, no secrets) is
-  logged to stderr via `ScanStats` (`Scanner::scan_path_with_stats`).
+  escapes control chars in paths/matched (`safe_display::sanitize_display`) to
+  prevent terminal/CI-log injection. A file-level summary (counts only, no
+  secrets) is logged to stderr via `ScanStats` (`Scanner::scan_path_with_stats`).
+- **Baseline** (`--baseline`/`--generate-baseline`): suppression matches on a
+  line-tolerant fingerprint (`fingerprint::finding_fingerprint` over
+  rule id + file + raw secret, computed pre-redaction so it is redact-agnostic),
+  with a fallback to the legacy `(file, line, rule)` tuple for baselines written
+  before fingerprints existed. `--generate-baseline <file>` writes the current
+  findings as JSON (includes fingerprints) and exits 0. The `matched` field is
+  force-redacted even under `--no-redact` (suppression keys on the fingerprint,
+  not the text), so a committed/uploaded baseline never carries raw secrets.
 - **SARIF** (`src/format.rs::write_sarif`, serde_json): `--output <file>`,
   generic `message.text` (rule + entropy, never the matched value),
-  `partialFingerprints` (inline FNV-1a over `rule_id|uri|matched`),
-  `endLine`/`endColumn`, repo-relative `uri` + `uriBaseId: "SRCROOT"`,
-  driver metadata, `automationDetails`.
+  `partialFingerprints` (the finding's pre-redaction fingerprint, falling back to
+  `fingerprint::location_fingerprint` over `rule_id|uri|start|end` — never the
+  matched value), `startLine`/`startColumn`/`endColumn` clamped `>= 1` (a
+  `line == 0` finding cannot emit an invalid region), columns in **UTF-16 code
+  units** (SARIF's default `columnKind`, which GitHub assumes; byte columns are
+  kept for text/JSON), repo-relative `uri` + `uriBaseId: "SRCROOT"` (multi-path
+  scans relativize against the current directory), driver metadata,
+  `automationDetails`.
+
+### Known limitations
+
+Detection runs on raw file bytes, so it does not see secrets that are
+base64/URL-encoded, JSON-escaped, or inside skipped archives (`.zip`, `.tar`,
+Docker layers). This matches gitleaks. A decode-then-rescan pass is a possible
+future enhancement.
 
 ### Exit codes
 
@@ -230,8 +273,14 @@ content (e.g. running as a GitHub Action). Key behaviors:
 | 2 | Runtime error (I/O, baseline read/parse, output write) |
 | 3 | Invalid configuration/rules (rules file unreadable or uncompilable) |
 
-`--no-fail` writes output but always exits 0 on findings, so a workflow can
-upload SARIF and gate separately.
+The table above is the `scan` mapping. `--no-fail` writes output but always
+exits 0 on findings, so a workflow can upload SARIF and gate separately.
+
+`validate-rules` has its own mapping (validity is its result, not a config error
+blocking a scan): **0** = all files valid; **1** = ≥1 file parsed but invalid
+(a rule/regex failed); **2** = ≥1 file unreadable (I/O). A read error takes
+precedence over invalid content. Exit 3 stays reserved for `scan`'s runtime
+rule-load failures.
 
 ### GitHub Action
 
@@ -240,12 +289,25 @@ binary (target triple per `install.sh`; version from `inputs.version`, else the
 action ref, else latest) and runs `scan` with a safe-by-default posture
 (`--git --redact --no-context --format sarif --output <file>`). Inputs:
 `path`, `config`, `fail-on-findings`, `sarif`, `sarif-file`, `git`,
-`diff-base`, `max-file-size`, `binary-policy`, `version`, `extra-args`.
+`diff-base`, `max-file-size`, `binary-policy`, `version`, `extra-args`. Output:
+`sarif-file`. A runnable example that dogfoods `uses: ./` lives at
+`.github/workflows/secrets-scan.yml` (non-blocking; flip `fail-on-findings`).
 
 Upload SARIF with `github/codeql-action/upload-sarif` (needs
 `security-events: write`; private repos also `actions: read` + `contents: read`).
 Use `if: always()` on the upload step (or `fail-on-findings: false` + a separate
 gate) so SARIF uploads even when findings are present.
+
+### Docker
+
+`Dockerfile` is a multi-stage build: `rust:1-alpine` (musl, lean default build,
+no `updater` feature) → `alpine:3` runtime with `git` + `ca-certificates`.
+`ENTRYPOINT secrets-scanner`, `WORKDIR /repo`. `git` is bundled because the
+safe-default `--git` mode shells out to it. Rules are embedded at compile time
+(no runtime `update-rules`), so rebuild the image to refresh them.
+`.dockerignore` excludes `target/`/`.git/` but **not** `assets/` (build.rs reads
+it). Not auto-published — `make`/`release.yml` are untouched.
+`docker run --rm -v "$PWD:/repo" <image> scan /repo --git`.
 
 ---
 
@@ -275,6 +337,7 @@ secrets-scanner validate-rules
 # Validate specific rules files
 secrets-scanner validate-rules path/to/my-rules.toml
 ```
+Exit: 0 valid, 1 invalid rules, 2 unreadable file (see Exit codes above).
 
 #### 4. Makefile Shortcut
 ```bash

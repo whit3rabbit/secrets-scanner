@@ -14,7 +14,7 @@ use std::io::{self, Write};
 
 use clap::{CommandFactory, Parser, Subcommand, ValueEnum};
 use clap_complete::Shell;
-use log::{error, info};
+use log::{error, info, warn};
 use secrets_scanner::{BinaryPolicy, Finding, ScanConfig, ScanStats, Scanner};
 
 mod format;
@@ -32,7 +32,7 @@ mod safe_display;
     version,
     about = "Scan repositories and files for leaked secrets",
     long_about = "A multi-layer secrets scanner (memchr → Aho-Corasick → entropy → regex).\n\
-                  Exit codes: 0 = clean, 1 = findings, 2 = error."
+                  Exit codes: 0 = clean, 1 = findings, 2 = runtime error, 3 = invalid scan rules/config."
 )]
 struct Cli {
     /// Subcommand to run.
@@ -127,6 +127,10 @@ struct ScanArgs {
     no_redact: bool,
 
     /// Path to a custom TOML rules file. Overrides the three-tier rule loading.
+    /// Validation is strict and all-or-nothing: if ANY rule fails to compile
+    /// (e.g. uses look-around, which Rust's regex engine rejects) the whole file
+    /// is rejected with exit 3, rather than silently scanning with a reduced
+    /// rule set. Run `validate-rules <file>` to see which rule is at fault.
     #[arg(long, value_name = "PATH")]
     rules: Option<String>,
 
@@ -134,7 +138,9 @@ struct ScanArgs {
     #[arg(long = "ignore-rule", value_name = "ID")]
     ignore_rules: Vec<String>,
 
-    /// Override entropy thresholds for rules that define one.
+    /// Entropy floor for rules that define a threshold. Raises a rule's
+    /// threshold to this value when higher; never lowers it (cannot weaken
+    /// stricter rules).
     #[arg(long, value_name = "FLOAT")]
     min_entropy: Option<f64>,
 
@@ -143,8 +149,15 @@ struct ScanArgs {
     max_file_size: u64,
 
     /// Path to a previous JSON output file to suppress known findings.
+    /// Matching is fingerprint-based (survives line moves), with a fallback to
+    /// (file, line, rule) for baselines written before fingerprints existed.
     #[arg(long, value_name = "FILE")]
     baseline: Option<String>,
+
+    /// Write the current findings to FILE as a baseline (JSON) and exit 0
+    /// without failing on findings. Use as the input to a later `--baseline`.
+    #[arg(long, value_name = "FILE", conflicts_with = "baseline")]
+    generate_baseline: Option<String>,
 
     /// Only scan files tracked by git (`git ls-files`).
     #[arg(long)]
@@ -157,6 +170,13 @@ struct ScanArgs {
     /// Base ref for diff scanning (e.g. origin/main); scans `<base>...HEAD`. Implies --git-diff.
     #[arg(long, value_name = "REF")]
     diff_base: Option<String>,
+
+    /// Scan only the content staged in the git index (`git cat-file`). Intended
+    /// for pre-commit hooks: it scans the index blobs (what will be committed),
+    /// not the working-tree files. Implies git mode and is mutually exclusive
+    /// with `--git-diff`/`--diff-base`/`--include-untracked`.
+    #[arg(long, conflicts_with_all = ["git_diff", "diff_base", "include_untracked"])]
+    staged: bool,
 
     /// In git mode, also scan untracked (but not ignored) files.
     #[arg(long)]
@@ -268,6 +288,7 @@ fn handle_scan(args: ScanArgs) {
         git: args.git,
         git_diff,
         diff_base: args.diff_base.clone(),
+        git_staged: args.staged,
         include_untracked: args.include_untracked,
         binary_policy: args.binary_policy.into(),
         max_files: args.max_files,
@@ -314,6 +335,8 @@ fn handle_scan(args: ScanArgs) {
         stats.binary_skipped += s.binary_skipped;
         stats.oversized_skipped += s.oversized_skipped;
         stats.files_over_cap += s.files_over_cap;
+        stats.errored += s.errored;
+        stats.git_fallback |= s.git_fallback;
         // Apply --ignore-rule filtering.
         if !args.ignore_rules.is_empty() {
             findings.retain(|f| !args.ignore_rules.contains(&f.rule_id));
@@ -321,7 +344,48 @@ fn handle_scan(args: ScanArgs) {
         all_findings.extend(findings);
     }
 
-    // Apply --baseline filtering: suppress findings that existed in a prior scan.
+    // --generate-baseline: write the current findings as a JSON baseline
+    // (includes fingerprints) and exit 0 without failing on findings.
+    //
+    // Suppression keys on the fingerprint, not the `matched` text, so the raw
+    // secret is never needed in a baseline. A baseline is typically committed or
+    // uploaded as a CI artifact, so force-redact `matched` even under
+    // `--no-redact` to avoid writing cleartext secrets to disk. (On Unix the
+    // file is also chmod 0600 by `create_private_file`; other platforms get no
+    // permission restriction, which is the other reason not to write raw bytes.)
+    if let Some(ref out_path) = args.generate_baseline {
+        let baseline_findings: Vec<Finding> = if args.no_redact {
+            all_findings
+                .iter()
+                .map(|f| {
+                    let mut f = f.clone();
+                    f.matched = secrets_scanner::filters::redact(&f.matched);
+                    f
+                })
+                .collect()
+        } else {
+            all_findings.clone()
+        };
+        match serde_json::to_string_pretty(&baseline_findings) {
+            Ok(json) => {
+                if let Err(e) = write_private_file(out_path, json.as_bytes()) {
+                    error!("Failed to write baseline '{out_path}': {e}");
+                    std::process::exit(2);
+                }
+                info!(
+                    "[scanner] Wrote baseline with {} finding(s) to {out_path}",
+                    all_findings.len()
+                );
+                return;
+            }
+            Err(e) => {
+                error!("Failed to serialize baseline: {e}");
+                std::process::exit(2);
+            }
+        }
+    }
+
+    // Apply --baseline filtering: suppress findings recorded in a prior scan.
     if let Some(ref baseline_path) = args.baseline {
         match std::fs::read_to_string(baseline_path) {
             Ok(content) => {
@@ -334,13 +398,23 @@ fn handle_scan(args: ScanArgs) {
                         std::process::exit(2);
                     }
                 };
-                let known: HashSet<(String, usize, String)> = baseline
-                    .into_iter()
-                    .map(|f| (f.file, f.line, f.rule_id))
-                    .collect();
+                // Primary match is the line-tolerant fingerprint. Entries from a
+                // pre-fingerprint baseline (empty fingerprint) fall back to the
+                // legacy (file, line, rule) tuple so old baselines still work.
+                let mut known_fps: HashSet<String> = HashSet::new();
+                let mut known_legacy: HashSet<(String, usize, String)> = HashSet::new();
+                for f in baseline {
+                    if f.fingerprint.is_empty() {
+                        known_legacy.insert((f.file, f.line, f.rule_id));
+                    } else {
+                        known_fps.insert(f.fingerprint);
+                    }
+                }
                 let before = all_findings.len();
-                all_findings
-                    .retain(|f| !known.contains(&(f.file.clone(), f.line, f.rule_id.clone())));
+                all_findings.retain(|f| {
+                    !known_fps.contains(&f.fingerprint)
+                        && !known_legacy.contains(&(f.file.clone(), f.line, f.rule_id.clone()))
+                });
                 let suppressed = before - all_findings.len();
                 if suppressed > 0 {
                     info!("[scanner] Baseline suppressed {suppressed} known finding(s)");
@@ -368,16 +442,30 @@ fn handle_scan(args: ScanArgs) {
 
     let elapsed = start.elapsed();
 
-    let unkeyworded_time = std::time::Duration::from_nanos(scanner.unkeyworded_scan_time_ns());
-    if unkeyworded_time.as_nanos() > 0 {
-        info!(
-            "[scanner] Unkeyworded regex rules evaluation time: {:.2?}",
-            unkeyworded_time
-        );
+    #[cfg(feature = "bench")]
+    {
+        let unkeyworded_time = std::time::Duration::from_nanos(scanner.unkeyworded_scan_time_ns());
+        if unkeyworded_time.as_nanos() > 0 {
+            info!(
+                "[scanner] Unkeyworded regex rules evaluation time: {:.2?}",
+                unkeyworded_time
+            );
+        }
     }
 
     // Output to a file or stdout. An output write failure is a runtime error: exit 2.
-    let base = args.paths.first().map(String::as_str).unwrap_or(".");
+    // SARIF paths are made repo-relative against `base`. A single path roots the
+    // report there; with multiple paths there is no single root, so use the
+    // current directory (not "."), which still strips an absolute prefix from
+    // findings discovered under absolute path arguments.
+    let cwd = std::env::current_dir()
+        .map(|p| p.to_string_lossy().into_owned())
+        .unwrap_or_else(|_| ".".to_string());
+    let base = if args.paths.len() == 1 {
+        args.paths.first().map(String::as_str).unwrap_or(".")
+    } else {
+        cwd.as_str()
+    };
     let show_context = !args.no_context;
     if let Err(e) = write_output(&args, &all_findings, base, show_context) {
         error!("Failed to write output: {e}");
@@ -385,15 +473,18 @@ fn handle_scan(args: ScanArgs) {
     }
 
     // Safe summary to stderr (file-level counts only — never echoes secrets).
+    // `unreadable` is surfaced so an errored file is never mistaken for a
+    // scanned-and-clean one (incomplete coverage must be visible).
     info!(
         "[scanner] Scanned {} path(s) in {:.2?} — {} file(s), {} finding(s); \
-         skipped {} binary, {} oversized; {} over file-cap{}",
+         skipped {} binary, {} oversized; {} unreadable; {} over file-cap{}",
         args.paths.len(),
         elapsed,
         stats.files_scanned,
         all_findings.len(),
         stats.binary_skipped,
         stats.oversized_skipped,
+        stats.errored,
         stats.files_over_cap,
         if findings_truncated {
             " (findings truncated)"
@@ -401,6 +492,12 @@ fn handle_scan(args: ScanArgs) {
             ""
         },
     );
+    if stats.git_fallback {
+        warn!(
+            "[scanner] git path discovery failed for one or more paths; scanned the \
+             working tree instead (scope may include untracked/ignored files)."
+        );
+    }
 
     // Exit code: 1 = findings (unless --no-fail), 0 = clean.
     if !all_findings.is_empty() && !args.no_fail {
@@ -417,7 +514,7 @@ fn write_output(
 ) -> io::Result<()> {
     match &args.output {
         Some(path) => {
-            let mut f = std::fs::File::create(path)?;
+            let mut f = create_private_file(path)?;
             dispatch_format(&mut f, args.format, findings, base, show_context)
         }
         None => {
@@ -426,6 +523,36 @@ fn write_output(
             dispatch_format(&mut lock, args.format, findings, base, show_context)
         }
     }
+}
+
+/// Create or truncate a file intended to hold scanner output.
+///
+/// On Unix, force owner-only (0600) permissions because JSON/text output may
+/// contain raw secrets when `--no-redact` is used. On non-Unix platforms no
+/// permission restriction is applied (the file inherits the default ACL), so
+/// secret-bearing output on those platforms relies on the caller's directory
+/// permissions; generated baselines are redacted regardless for this reason.
+fn create_private_file(path: &str) -> io::Result<std::fs::File> {
+    let mut options = std::fs::OpenOptions::new();
+    options.create(true).write(true).truncate(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::{OpenOptionsExt, PermissionsExt};
+        options.mode(0o600);
+        let file = options.open(path)?;
+        file.set_permissions(std::fs::Permissions::from_mode(0o600))?;
+        Ok(file)
+    }
+    #[cfg(not(unix))]
+    {
+        options.open(path)
+    }
+}
+
+/// Write scanner-owned output with private file permissions where supported.
+fn write_private_file(path: &str, bytes: &[u8]) -> io::Result<()> {
+    let mut file = create_private_file(path)?;
+    file.write_all(bytes)
 }
 
 /// Dispatch to the format writer matching `format`.
@@ -482,8 +609,16 @@ fn handle_update(check_only: bool, url: Option<String>) {
 // ─────────────────────────────────────────────
 
 /// Handle the `validate-rules` subcommand.
+///
+/// Exit codes: 0 = all files valid; 1 = at least one file parsed but is
+/// invalid (the command's own result, like a linter); 2 = at least one file
+/// could not be read (an I/O/runtime error, matching `scan`/`list-rules`).
+/// A read error takes precedence over invalid content, because an unreadable
+/// file means validation could not run at all. Exit 3 stays reserved for
+/// `scan`'s runtime rule-load failures that prevent scanning.
 fn handle_validate(files: &[String]) {
-    let mut all_valid = true;
+    let mut had_invalid = false;
+    let mut had_read_error = false;
     for file in files {
         match std::fs::read_to_string(file) {
             Ok(content) => {
@@ -492,7 +627,7 @@ fn handle_validate(files: &[String]) {
                         println!("✅ {file} is valid");
                     }
                     Err(errors) => {
-                        all_valid = false;
+                        had_invalid = true;
                         error!("{file} validation failed:");
                         for err in errors {
                             error!("  - {err}");
@@ -501,12 +636,15 @@ fn handle_validate(files: &[String]) {
                 }
             }
             Err(e) => {
-                all_valid = false;
+                had_read_error = true;
                 error!("Failed to read {file}: {e}");
             }
         }
     }
-    if !all_valid {
+    if had_read_error {
+        std::process::exit(2);
+    }
+    if had_invalid {
         std::process::exit(1);
     }
 }
@@ -575,7 +713,7 @@ fn handle_merge_rules(
             Err(e) => {
                 info!(
                     "[merge] optional source '{}' unreadable ({}): {e}",
-                    src.name, e
+                    src.name, src.file
                 );
                 continue;
             }

@@ -26,6 +26,41 @@ keywords = ["-----begin"]
     Scanner::from_toml(toml).expect("should build test scanner")
 }
 
+const INVALID_CUSTOM_RULES: &str = r#"
+title = "invalid"
+
+[[rules]]
+id = "lookahead"
+description = "Unsupported lookahead"
+regex = '(?=SECRET)SECRET[0-9]+'
+keywords = ["secret"]
+"#;
+
+#[test]
+fn from_toml_rejects_invalid_custom_regex() {
+    assert!(
+        matches!(
+            Scanner::from_toml(INVALID_CUSTOM_RULES),
+            Err(crate::error::ScannerError::InvalidRules(_))
+        ),
+        "scanner constructors must reject invalid custom regexes"
+    );
+}
+
+#[test]
+fn from_file_rejects_invalid_custom_regex() {
+    let file = tempfile::NamedTempFile::new().expect("temp rules");
+    std::fs::write(file.path(), INVALID_CUSTOM_RULES).expect("write rules");
+
+    assert!(
+        matches!(
+            Scanner::from_file(file.path().to_str().expect("path")),
+            Err(crate::error::ScannerError::InvalidRules(_))
+        ),
+        "scanner file constructor must reject invalid custom regexes"
+    );
+}
+
 #[test]
 fn detects_aws_key() {
     let scanner = test_scanner();
@@ -159,6 +194,7 @@ regex = 'https://hooks\.slack\.com/services/[T|B][A-Za-z0-9_]{8}/[A-Za-z0-9_]{8}
     assert_eq!(findings[0].rule_id, "slack-webhook");
 }
 
+#[cfg(feature = "bench")]
 #[test]
 fn unkeyworded_scan_time_is_benchmarked() {
     let toml = r#"
@@ -216,6 +252,50 @@ keywords = ["-----begin"]
         "structural rule (no entropy threshold) must survive a high --min-entropy override"
     );
     assert_eq!(findings[0].rule_id, "pem-private-key");
+}
+
+#[test]
+fn min_entropy_override_is_a_floor_not_a_replacement() {
+    // A rule whose own entropy threshold is 3.0.
+    let toml = r#"
+title = "floor"
+
+[[rules]]
+id = "tok"
+description = "token"
+regex = 'tok-[A-Za-z0-9]{12}'
+keywords = ["tok-"]
+entropy = 3.0
+"#;
+    let build = |override_value: Option<f64>| {
+        Scanner::from_toml(toml)
+            .expect("build")
+            .with_config(ScanConfig {
+                min_entropy_override: override_value,
+                ..Default::default()
+            })
+    };
+
+    // High-entropy token clears the rule's 3.0 threshold normally.
+    let high = "tok-Ab3Xz9Qw1Mn7";
+    assert_eq!(build(None).scan_content("a", high).len(), 1);
+    // A *higher* override raises the floor and rejects it.
+    assert!(
+        build(Some(5.0)).scan_content("a", high).is_empty(),
+        "override above the rule threshold must raise the floor"
+    );
+
+    // Low-entropy token is rejected by the rule's 3.0 threshold. A *low* override
+    // must NOT weaken it (the old `unwrap_or` replace would have let it through).
+    let low = "tok-aaaaaaaaaaaa";
+    assert!(
+        build(None).scan_content("a", low).is_empty(),
+        "low-entropy token is below the rule threshold"
+    );
+    assert!(
+        build(Some(1.0)).scan_content("a", low).is_empty(),
+        "a low override must not lower a stricter rule's threshold"
+    );
 }
 
 #[test]
@@ -319,6 +399,72 @@ keywords = ["ghp_"]
         nums,
         vec![1, 2, 3, 4, 5],
         "context should span 2 lines on each side of the match"
+    );
+}
+
+#[test]
+fn reports_multiline_and_later_match_locations() {
+    let toml = r#"
+title = "locations"
+
+[[rules]]
+id = "token"
+regex = 'TOKEN-[A-Z0-9]{4}(?:\nNEXT-[A-Z0-9]{4})?'
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let content = "aa\nbb TOKEN-ABCD\nNEXT-EFGH tail\nxx TOKEN-IJKL end";
+    let findings = scanner.scan_content("tokens.txt", content);
+
+    assert_eq!(findings.len(), 2);
+    assert_eq!(
+        (
+            findings[0].line,
+            findings[0].col,
+            findings[0].end_line,
+            findings[0].end_col,
+        ),
+        (2, 4, 3, 10)
+    );
+    assert_eq!(
+        (
+            findings[1].line,
+            findings[1].col,
+            findings[1].end_line,
+            findings[1].end_col,
+        ),
+        (4, 4, 4, 14)
+    );
+}
+
+#[test]
+fn utf16_columns_account_for_multibyte_prefix() {
+    // A line with a multibyte prefix: byte columns and UTF-16 columns diverge.
+    // "δ" is 2 UTF-8 bytes but 1 UTF-16 code unit; "𝟚" (U+1D7DA) is 4 UTF-8
+    // bytes but 2 UTF-16 code units (a surrogate pair). The ASCII fast path must
+    // NOT apply here, so the scanner must report the UTF-16 columns.
+    let toml = r#"
+title = "u16"
+
+[[rules]]
+id = "tok"
+regex = 'TOKEN-[A-Z0-9]{4}'
+keywords = ["token-"]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let prefix = "δ𝟚 "; // 1 + 2 = 3 UTF-16 units, then a space => 4 units before TOKEN
+    let content = format!("{prefix}TOKEN-ABCD");
+    let findings = scanner.scan_content("u.txt", &content);
+
+    assert_eq!(findings.len(), 1);
+    let f = &findings[0];
+    // Byte column counts UTF-8 bytes (2 + 4 + 1 = 7 bytes) => 1-based col 8.
+    assert_eq!(f.col, 8, "byte column counts UTF-8 bytes");
+    // UTF-16 column counts code units (1 + 2 + 1 = 4) => 1-based col 5.
+    assert_eq!(f.col_utf16, 5, "utf16 column counts UTF-16 code units");
+    assert_eq!(
+        f.end_col_utf16,
+        f.col_utf16 + 10,
+        "TOKEN-ABCD is 10 ASCII units"
     );
 }
 

@@ -39,9 +39,16 @@ fn git(repo: &std::path::Path, args: &[&str]) {
 // A simple `> 100` threshold would not catch deleting, say, 100 rules.
 // Lean bundled ruleset after manifest-driven merge + detection-equivalent dedup
 // (gitleaks + local + kingfisher; 1217 raw rules -> 1136 after dedup -> 987 compile
-// under Rust's regex engine, the rest using unsupported look-around).
+// under Rust's regex engine, the rest using unsupported look-around). The
+// all-features build enables `full-ruleset`, adding secrets-patterns-db.
+#[cfg(not(feature = "full-ruleset"))]
 const EXPECTED_RULE_COUNT: usize = 987;
+#[cfg(feature = "full-ruleset")]
+const EXPECTED_RULE_COUNT: usize = 2586;
+#[cfg(not(feature = "full-ruleset"))]
 const EXPECTED_KEYWORD_COUNT: usize = 750;
+#[cfg(feature = "full-ruleset")]
+const EXPECTED_KEYWORD_COUNT: usize = 1500;
 
 #[test]
 fn bundled_rules_match_snapshot_counts() {

@@ -341,6 +341,84 @@ fn cli_exit_codes() {
     );
 }
 
+#[test]
+fn cli_invalid_custom_regex_exits_3_without_scan() {
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = dir.path().join("bad.toml");
+    std::fs::write(
+        &rules,
+        r#"
+title = "bad"
+
+[[rules]]
+id = "bad-lookahead"
+regex = '(?=TOKEN)TOKEN[0-9]+'
+keywords = ["token"]
+"#,
+    )
+    .expect("write bad rules");
+    let target = dir.path().join("app.txt");
+    std::fs::write(&target, "TOKEN123456").expect("write target");
+
+    let out = Command::new(BIN)
+        .args(["scan", target.to_str().expect("target")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--no-fail"])
+        .output()
+        .expect("run scanner");
+
+    assert_eq!(out.status.code(), Some(3), "invalid custom rules → 3");
+    let stdout = String::from_utf8_lossy(&out.stdout);
+    assert!(
+        !stdout.contains("No secrets found"),
+        "invalid custom rules must fail before scan output is written"
+    );
+}
+
+#[cfg(unix)]
+#[test]
+fn cli_output_and_baseline_files_are_private() {
+    use std::os::unix::fs::PermissionsExt;
+
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+    let target = dir.path().join("app.txt");
+    std::fs::write(&target, format!("TOKEN={PAT}")).expect("write");
+    let out_file = dir.path().join("findings.json");
+    let baseline = dir.path().join("baseline.json");
+
+    let scan = Command::new(BIN)
+        .args(["scan", target.to_str().expect("target")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args([
+            "--format",
+            "json",
+            "--output",
+            out_file.to_str().expect("out"),
+        ])
+        .args(["--no-fail"])
+        .status()
+        .expect("run scan");
+    assert!(scan.success(), "scan output should be written");
+
+    let gen = Command::new(BIN)
+        .args(["scan", target.to_str().expect("target")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--generate-baseline", baseline.to_str().expect("baseline")])
+        .status()
+        .expect("run baseline");
+    assert!(gen.success(), "baseline should be written");
+
+    for path in [&out_file, &baseline] {
+        let mode = std::fs::metadata(path)
+            .expect("metadata")
+            .permissions()
+            .mode()
+            & 0o777;
+        assert_eq!(mode, 0o600, "{} should be owner-only", path.display());
+    }
+}
+
 #[cfg(unix)]
 #[test]
 fn cli_text_output_sanitizes_control_chars_in_filename() {
@@ -365,5 +443,192 @@ fn cli_text_output_sanitizes_control_chars_in_filename() {
     assert!(
         !stdout.contains('\x1b'),
         "raw ESC must not reach the terminal"
+    );
+}
+
+// ─────────────────────────────────────────────
+// Staged-changes mode (pre-commit)
+// ─────────────────────────────────────────────
+
+#[test]
+fn staged_mode_scans_only_staged_files() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("tracked.txt"), "clean").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+
+    // Stage a new file with a secret.
+    std::fs::write(repo.path().join("staged.txt"), "SECRET123456").expect("write");
+    git(repo.path(), &["add", "staged.txt"]);
+    // Modify a tracked file but DO NOT stage it — must be invisible to --staged.
+    std::fs::write(repo.path().join("tracked.txt"), "SECRET654321").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        git_staged: true,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+
+    assert_eq!(findings.len(), 1, "only the staged file should be scanned");
+    assert!(findings[0].file.ends_with("staged.txt"));
+}
+
+#[test]
+fn staged_mode_reads_index_blob_not_working_tree() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("seed.txt"), "clean").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+
+    // Stage a secret, then edit the WORKING TREE to remove it. The secret now
+    // lives only in the index. A working-tree scan would miss it; --staged must
+    // scan the index blob and still find it.
+    let app = repo.path().join("app.txt");
+    std::fs::write(&app, "key = SECRET123456").expect("stage secret");
+    git(repo.path(), &["add", "app.txt"]);
+    std::fs::write(&app, "key = (removed)").expect("scrub working tree");
+
+    // A second file whose secret exists ONLY in the working tree (never staged)
+    // must NOT be reported by --staged.
+    std::fs::write(repo.path().join("untracked.txt"), "SECRET999999").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        git_staged: true,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+
+    assert_eq!(
+        findings.len(),
+        1,
+        "only the staged index blob should be scanned: {findings:?}"
+    );
+    assert!(
+        findings[0].file.ends_with("app.txt"),
+        "the staged secret (present only in the index) must be found"
+    );
+}
+
+// ─────────────────────────────────────────────
+// Honest coverage: unreadable files are counted
+// ─────────────────────────────────────────────
+
+#[cfg(unix)]
+#[test]
+fn unreadable_file_is_counted_as_errored() {
+    use std::os::unix::fs::PermissionsExt;
+
+    let dir = tempfile::tempdir().expect("dir");
+    std::fs::write(dir.path().join("ok.txt"), "SECRET123456").expect("write");
+    let locked = dir.path().join("locked.txt");
+    std::fs::write(&locked, "SECRET999999").expect("write");
+    std::fs::set_permissions(&locked, std::fs::Permissions::from_mode(0o000)).expect("chmod");
+
+    // Skip under root (where 000 is still readable) to avoid a flaky assertion.
+    if std::fs::read(&locked).is_ok() {
+        return;
+    }
+
+    let scanner = scanner(ScanConfig::default());
+    let (findings, stats) = scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+
+    assert_eq!(stats.files_scanned, 1, "only the readable file is scanned");
+    assert_eq!(stats.errored, 1, "the unreadable file must be counted");
+    assert_eq!(findings.len(), 1, "secret in the readable file is reported");
+}
+
+// ─────────────────────────────────────────────
+// Non-git symlink rejection
+// ─────────────────────────────────────────────
+
+#[cfg(unix)]
+#[test]
+fn non_git_symlink_target_is_not_scanned() {
+    let dir = tempfile::tempdir().expect("dir");
+    let outside = tempfile::tempdir().expect("outside");
+    let secret = outside.path().join("secret.txt");
+    std::fs::write(&secret, "SECRET123456").expect("write");
+    std::os::unix::fs::symlink(&secret, dir.path().join("link.txt")).expect("symlink");
+
+    let scanner = scanner(ScanConfig::default());
+    let findings = scanner.scan_path(dir.path().to_str().expect("path"));
+
+    assert!(
+        findings.is_empty(),
+        "a symlink to an outside secret must not be followed"
+    );
+}
+
+// ─────────────────────────────────────────────
+// Inline suppression
+// ─────────────────────────────────────────────
+
+#[test]
+fn inline_allow_marker_suppresses_finding() {
+    let scanner = scanner(ScanConfig::default());
+
+    let plain = scanner.scan_content("a.txt", "key = SECRET123456");
+    assert_eq!(plain.len(), 1, "unmarked secret should be found");
+
+    for marker in ["# gitleaks:allow", "// secrets-scanner:allow"] {
+        let content = format!("key = SECRET123456 {marker}");
+        let suppressed = scanner.scan_content("a.txt", &content);
+        assert!(
+            suppressed.is_empty(),
+            "marker {marker:?} should suppress the finding"
+        );
+    }
+}
+
+// ─────────────────────────────────────────────
+// CLI: baseline generate + line-tolerant suppression
+// ─────────────────────────────────────────────
+
+#[test]
+fn cli_baseline_is_line_tolerant_and_reports_new_secrets() {
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+    let app = dir.path().join("app.txt");
+    std::fs::write(&app, format!("line1\nTOKEN={PAT}\n")).expect("write");
+    let baseline = dir.path().join("baseline.json");
+
+    // Generate a baseline of the existing finding; exits 0 even with findings.
+    let gen = Command::new(BIN)
+        .args(["scan", app.to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--generate-baseline", baseline.to_str().expect("baseline")])
+        .output()
+        .expect("run");
+    assert!(gen.status.success(), "generate-baseline should exit 0");
+    assert!(baseline.exists(), "baseline file should be written");
+
+    // Move the known secret down a line and add a brand-new one above it.
+    let new_pat = "ghp_BRAND0New0Secret0Token0123456789abcd";
+    std::fs::write(
+        &app,
+        format!("line1\nline2\nTOKEN2={new_pat}\nTOKEN={PAT}\n"),
+    )
+    .expect("rewrite");
+
+    // --no-context so the suppressed secret cannot appear merely as an adjacent
+    // context line of the new finding; we assert on reported matches only.
+    let scan = Command::new(BIN)
+        .args(["scan", app.to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--baseline", baseline.to_str().expect("baseline")])
+        .args(["--format", "json", "--no-redact", "--no-context"])
+        .output()
+        .expect("run");
+    let stdout = String::from_utf8_lossy(&scan.stdout);
+
+    assert!(
+        stdout.contains(new_pat),
+        "the newly added secret must be reported"
+    );
+    assert!(
+        !stdout.contains(PAT),
+        "the moved, baselined secret must stay suppressed: {stdout}"
     );
 }

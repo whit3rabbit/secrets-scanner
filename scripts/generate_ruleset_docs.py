@@ -68,34 +68,32 @@ def display_name(name: str) -> str:
     return name
 
 
-def markdown_cell(value: object) -> str:
-    text = "" if value is None else str(value)
-    escaped = html.escape(text, quote=False)
-    escaped = escaped.replace("|", "&#124;")
-    escaped = escaped.replace("\r\n", "\n").replace("\r", "\n")
-    return escaped.replace("\n", "<br>")
-
-
-def code_cell(value: object) -> str:
-    text = markdown_cell(value)
-    if not text:
+def markdown_code_span(value: str) -> str:
+    if not value:
         return ""
-    return f"<code>{text}</code>"
-
-
-def entity_text(value: object) -> str:
-    text = "" if value is None else str(value)
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-    return "<br>".join(
-        "".join(f"&#x{ord(ch):02x};" for ch in line) for line in text.split("\n")
-    )
-
-
-def entity_code_cell(value: object) -> str:
-    text = entity_text(value)
-    if not text:
-        return ""
-    return f"<code>{text}</code>"
+    # We must escape '|' to avoid breaking the markdown table.
+    # HTML <code>...</code> tag is used if '|', '<', '>', or '&' is present.
+    if "|" in value or "<" in value or ">" in value or "&" in value:
+        escaped = html.escape(value, quote=False)
+        escaped = escaped.replace("|", "&#124;")
+        escaped = escaped.replace("\r\n", "\n").replace("\r", "\n").replace("\n", "<br>")
+        return f"<code>{escaped}</code>"
+    
+    # If the value contains backticks, wrap it with double backticks
+    if "`" in value:
+        max_ticks = 0
+        current_run = 0
+        for ch in value:
+            if ch == '`':
+                current_run += 1
+                max_ticks = max(max_ticks, current_run)
+            else:
+                current_run = 0
+        ticks = '`' * (max_ticks + 1)
+        space = " " if value.startswith("`") or value.endswith("`") else ""
+        return f"{ticks}{space}{value}{space}{ticks}"
+    
+    return f"`{value}`"
 
 
 def printable_example(value: str) -> str:
@@ -103,7 +101,9 @@ def printable_example(value: str) -> str:
 
 
 def example_cell(value: str) -> str:
-    return entity_code_cell(printable_example(value))
+    if not value:
+        return ""
+    return markdown_code_span(printable_example(value))
 
 
 def example_for_rule(rule: dict) -> str:
@@ -162,10 +162,7 @@ def source_doc_path(source: dict) -> Path:
 
 def render_rule_cell(rule: dict) -> str:
     rule_id = rule.get("id", "")
-    description = rule.get("description") or ""
-    if description:
-        return f"{entity_code_cell(rule_id)}<br>{entity_text(description)}"
-    return entity_code_cell(rule_id)
+    return markdown_code_span(rule_id)
 
 
 def render_source_doc(source: dict, rules: list[dict], active_ids: set[str]) -> str:
@@ -213,9 +210,9 @@ def render_source_doc(source: dict, rules: list[dict], active_ids: set[str]) -> 
             + " | ".join(
                 [
                     render_rule_cell(rule),
-                    markdown_cell(status),
+                    status,
                     example_cell(example_for_rule(rule)) or "_Unavailable_",
-                    entity_code_cell(rule.get("regex")) or "_Unavailable_",
+                    markdown_code_span(rule.get("regex", "")) or "_Unavailable_",
                 ]
             )
             + " |"

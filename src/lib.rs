@@ -36,6 +36,12 @@
 /// Shannon entropy calculation utilities.
 pub mod entropy;
 
+/// Typed errors for library entry points.
+pub mod error;
+
+/// Stable FNV-1a fingerprints for findings (baseline + SARIF).
+pub mod fingerprint;
+
 /// File filtering and secret redaction utilities.
 pub mod filters;
 
@@ -47,6 +53,8 @@ mod safe_display;
 /// High-performance parallel file scanner.
 pub mod scanner;
 
+pub use error::ScannerError;
+pub use fingerprint::{finding_fingerprint, fnv1a_hex, location_fingerprint};
 pub use rules::engine::{CompiledRule, RuleEngine};
 pub use rules::validation::{AllowlistConfig, GlobalAllowlist, RuleConfig, RulesetConfig};
 pub use scanner::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanStats, Scanner};

@@ -213,6 +213,39 @@ fn diff_base_scans_range_against_base() {
 }
 
 #[test]
+fn diff_base_rejects_dash_led_git_option() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("clean.txt"), "nothing here").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+    std::fs::write(repo.path().join("secret.txt"), "SECRET123456").expect("write");
+    let injected_output = repo.path().join("git-diff-output");
+
+    let scanner = scanner(ScanConfig {
+        git_diff: true,
+        diff_base: Some(format!("--output={}", injected_output.display())),
+        ..Default::default()
+    });
+    let (findings, stats) = scanner.scan_path_with_stats(repo.path().to_str().expect("path"));
+
+    assert!(
+        stats.git_fallback,
+        "invalid diff-base should fall back instead of trusting an empty git diff"
+    );
+    assert_eq!(
+        findings.len(),
+        1,
+        "fallback directory walk should still report the working-tree secret"
+    );
+    assert!(
+        !injected_output.exists()
+            && !Path::new(&format!("{}...HEAD", injected_output.display())).exists(),
+        "dash-led diff-base must not be parsed by git as --output"
+    );
+}
+
+#[test]
 fn include_untracked_scans_untracked_files() {
     let repo = tempfile::tempdir().expect("repo");
     init_repo(repo.path());
@@ -509,6 +542,28 @@ fn staged_mode_reads_index_blob_not_working_tree() {
         findings[0].file.ends_with("app.txt"),
         "the staged secret (present only in the index) must be found"
     );
+}
+
+#[test]
+fn staged_mode_reads_paths_that_look_like_stage_selectors() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("foo"), "clean").expect("write clean");
+    std::fs::write(repo.path().join("0:foo"), "SECRET123456").expect("write secret");
+    git(repo.path(), &["add", "foo", "0:foo"]);
+
+    let scanner = scanner(ScanConfig {
+        git_staged: true,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+
+    assert_eq!(
+        findings.len(),
+        1,
+        "staged path named 0:foo must read that path, not stage-0 foo"
+    );
+    assert!(findings[0].file.ends_with("0:foo"));
 }
 
 // ─────────────────────────────────────────────

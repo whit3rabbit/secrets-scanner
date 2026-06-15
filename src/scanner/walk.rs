@@ -1,9 +1,16 @@
 //! scanner/walk.rs — Directory walking and path filtering.
 //!
-//! Two path-discovery modes:
+//! Path-discovery modes:
 //! * Default — uses `walkdir` recursively.
-//! * Git mode — uses `git ls-files` or `git diff --name-only` for git-aware scanning.
-//!   On any git failure it falls back to the recursive directory walk.
+//! * `git_tracked` / `changed_files` — uses `git ls-files` or
+//!   `git diff --name-only` to scan the current working-tree content of tracked
+//!   or changed files.
+//! * `git_staged` (`walk_staged.rs`) — scans index blobs for pre-commit.
+//! * `git_history` (`walk_history.rs`) — scans `git log -p` patches.
+//!
+//! Explicit git modes fail closed on git error by default (the CLI exits 2);
+//! they fall back to a directory walk only when `git_fallback_walk` is set
+//! (history mode never falls back).
 //!
 //! Hardening for hostile repositories: reads are bounded (the file cannot grow
 //! past `max_file_size` between the metadata check and the read), symlinks are
@@ -41,6 +48,7 @@ struct StatsAcc {
     files_over_cap: AtomicUsize,
     errored: AtomicUsize,
     git_fallback: AtomicBool,
+    git_failed: AtomicBool,
 }
 
 impl StatsAcc {
@@ -52,6 +60,7 @@ impl StatsAcc {
             files_over_cap: self.files_over_cap.load(Ordering::Relaxed),
             errored: self.errored.load(Ordering::Relaxed),
             git_fallback: self.git_fallback.load(Ordering::Relaxed),
+            git_failed: self.git_failed.load(Ordering::Relaxed),
         }
     }
 }
@@ -61,6 +70,16 @@ impl StatsAcc {
 /// Returns the findings plus file-level [`ScanStats`].
 pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
     let stats = StatsAcc::default();
+
+    // History mode scans `git log -p` patches, attributing findings to the
+    // commit that added them. It is its own git mode and always fails closed
+    // (a directory walk cannot approximate history), so `git_fallback_walk`
+    // does not apply here.
+    if scanner.config.git_history {
+        let mut findings = history::scan_history(scanner, root, &stats);
+        sort_findings(&mut findings);
+        return (findings, stats.snapshot());
+    }
 
     // Staged mode scans index-blob content (`git cat-file`), NOT working-tree
     // files, so the bytes examined are exactly what is about to be committed.
@@ -72,23 +91,32 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
             sort_findings(&mut findings);
             return (findings, stats.snapshot());
         }
-        // Git unavailable / not a repo: fall back to a directory walk below.
-        stats.git_fallback.store(true, Ordering::Relaxed);
+        // Git unavailable / not a repo. Fail closed by default (nothing scanned,
+        // CLI exits 2); only walk the tree if the caller opted in.
+        if !git_failure_falls_back(scanner, &stats) {
+            return (Vec::new(), stats.snapshot());
+        }
     }
 
-    let want_git = (scanner.config.git || scanner.config.git_diff)
+    let want_git = (scanner.config.git_tracked || scanner.config.changed_files)
         && !stats.git_fallback.load(Ordering::Relaxed);
     let mut paths = if want_git {
         match collect_git_paths(root, &scanner.config) {
             Some(git_paths) => filter_git_paths(scanner, git_paths),
-            // Git failed (not a repo, git missing, file path arg, …) — fall back
-            // to the directory walk rather than silently scanning nothing. Record
-            // the fallback: it widens scope (may include untracked/ignored files).
+            // Git failed (not a repo, git missing, file path arg, …). Fail
+            // closed by default rather than silently scanning the whole working
+            // tree (which would widen scope to untracked/ignored files); only
+            // fall back to a directory walk when `git_fallback_walk` is set.
             None => {
-                stats.git_fallback.store(true, Ordering::Relaxed);
+                if !git_failure_falls_back(scanner, &stats) {
+                    return (Vec::new(), stats.snapshot());
+                }
                 collect_walkdir_paths(scanner, root, &stats)
             }
         }
+    } else if stats.git_failed.load(Ordering::Relaxed) {
+        // A failed staged mode already decided to fail closed above.
+        return (Vec::new(), stats.snapshot());
     } else {
         collect_walkdir_paths(scanner, root, &stats)
     };
@@ -100,6 +128,20 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
     sort_findings(&mut findings);
 
     (findings, stats.snapshot())
+}
+
+/// Decide what happens when an explicit git mode fails. Returns `true` when the
+/// caller should fall back to a directory walk (records `git_fallback`); returns
+/// `false` to fail closed (records `git_failed`, so the CLI exits 2 and the
+/// failed git request is never mistaken for a clean scan).
+fn git_failure_falls_back(scanner: &Scanner, stats: &StatsAcc) -> bool {
+    if scanner.config.git_fallback_walk {
+        stats.git_fallback.store(true, Ordering::Relaxed);
+        true
+    } else {
+        stats.git_failed.store(true, Ordering::Relaxed);
+        false
+    }
 }
 
 /// Collect paths via recursive directory walk, applying filters.
@@ -143,7 +185,7 @@ fn collect_walkdir_paths(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec
 }
 
 /// Apply the same extension/allowlist filters to git-collected paths that the
-/// directory walk applies, so `--git` mode does not scan binaries or
+/// directory walk applies, so `--git-tracked` mode does not scan binaries or
 /// globally-allowlisted files that the default mode would skip.
 fn filter_git_paths(scanner: &Scanner, paths: Vec<String>) -> Vec<String> {
     paths
@@ -172,10 +214,10 @@ fn collect_git_paths(root: &str, config: &crate::scanner::ScanConfig) -> Option<
 
     // Staged mode is handled separately in `scan_path` (it reads index blobs,
     // not working-tree files), so it never reaches here.
-    if config.git_diff {
+    if config.changed_files {
         // diff against the configured base (e.g. origin/main) or HEAD.
-        let range = match &config.diff_base {
-            Some(base) => format!("{}...HEAD", resolve_diff_base(root, base)?),
+        let range = match &config.base {
+            Some(base) => format!("{}...HEAD", resolve_base(root, base)?),
             None => "HEAD".to_string(),
         };
         let out = run_git(root, &["diff", "--name-only", "-z", &range, "--"])?;
@@ -194,11 +236,11 @@ fn collect_git_paths(root: &str, config: &crate::scanner::ScanConfig) -> Option<
     Some(paths)
 }
 
-fn resolve_diff_base(root: &str, base: &str) -> Option<String> {
+fn resolve_base(root: &str, base: &str) -> Option<String> {
     let base = base.trim();
     if base.is_empty() || base.starts_with('-') {
         warn!(
-            "[scanner] Warning: invalid --diff-base '{}'. Falling back to directory walk.",
+            "[scanner] Warning: invalid --base '{}'.",
             sanitize_display(base)
         );
         return None;
@@ -218,7 +260,7 @@ fn resolve_diff_base(root: &str, base: &str) -> Option<String> {
         Some(commit) => Some(commit.to_string()),
         None => {
             warn!(
-                "[scanner] Warning: --diff-base '{}' did not resolve to a commit. Falling back to directory walk.",
+                "[scanner] Warning: --base '{}' did not resolve to a commit.",
                 sanitize_display(base)
             );
             None
@@ -279,11 +321,11 @@ pub(super) enum BlobRead {
 /// full. The child is killed before `wait` so stopping the read early cannot
 /// deadlock against git blocking on a full stdout pipe (a no-op if it already
 /// exited, e.g. the normal in-cap case).
-pub(super) fn run_git_blob_bounded(root: &str, spec: &str, max: u64) -> BlobRead {
+pub(super) fn run_git_blob_bounded(root: &str, spec: &std::ffi::OsStr, max: u64) -> BlobRead {
     let mut cmd = Command::new("git");
     cmd.arg("-c").arg("core.quotePath=false");
     cmd.arg("-C").arg(root);
-    cmd.args(["cat-file", "blob", spec]);
+    cmd.arg("cat-file").arg("blob").arg(spec);
     cmd.stdout(Stdio::piped());
     cmd.stderr(Stdio::null());
 
@@ -321,6 +363,22 @@ pub(super) fn run_git_blob_bounded(root: &str, spec: &str, max: u64) -> BlobRead
     }
 }
 
+/// Lexical containment check for a repo-relative path emitted by git: returns
+/// `true` when the path is absolute or contains a `..` component, either of which
+/// is a containment risk in a hostile repository.
+///
+/// Shared by every git mode so the guard lives in one place: callers that open
+/// the file (`append_git_paths`) additionally canonicalize and verify the result
+/// stays under the scan root, while index- and patch-content readers
+/// (`walk_staged`, `walk_history`), which never open the file, rely on this
+/// lexical check alone.
+pub(super) fn is_unsafe_rel_path(candidate: &Path) -> bool {
+    candidate.is_absolute()
+        || candidate
+            .components()
+            .any(|component| matches!(component, Component::ParentDir))
+}
+
 /// Parse NUL-delimited git output and append resolved, contained paths to `out`.
 ///
 /// Absolute paths from git are dropped: tracked files are always repo-relative,
@@ -334,11 +392,7 @@ fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<String>) {
     for path in stdout.split(|&b| b == 0).filter(|p| !p.is_empty()) {
         let path = String::from_utf8_lossy(path);
         let candidate = Path::new(path.as_ref());
-        if candidate.is_absolute()
-            || candidate
-                .components()
-                .any(|component| matches!(component, Component::ParentDir))
-        {
+        if is_unsafe_rel_path(candidate) {
             warn!(
                 "[scanner] Warning: dropping unsafe path from git output: {}",
                 sanitize_display(&path)
@@ -366,6 +420,12 @@ fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<String>) {
 // it reuses walk's private helpers via `super::`.
 #[path = "walk_staged.rs"]
 mod staged;
+
+// Git-history (`--git-history`) patch scanning lives in a sibling file; as a
+// child module it reuses walk's private helpers (`StatsAcc`, path filters) via
+// `super::`.
+#[path = "walk_history.rs"]
+mod history;
 
 // Tests live in a sibling file (explicit `#[path]`) to keep walk.rs ≤ 400 lines.
 #[cfg(test)]

@@ -18,6 +18,10 @@ pub(super) struct Cli {
 }
 
 /// Available subcommands.
+// `Scan` carries many flags so its variant is large, but `Commands` is parsed
+// exactly once at startup and never stored in bulk, so the size asymmetry is
+// irrelevant; boxing would only complicate the clap derive and dispatch.
+#[allow(clippy::large_enum_variant)]
 #[derive(Subcommand)]
 pub(super) enum Commands {
     /// Scan one or more files or directories for secrets.
@@ -139,28 +143,73 @@ pub(super) struct ScanArgs {
     #[arg(long, value_name = "FILE", conflicts_with = "baseline")]
     pub(super) generate_baseline: Option<String>,
 
-    /// Only scan files tracked by git (`git ls-files`).
+    /// Scan only files currently tracked by git (`git ls-files`). This is the
+    /// current working-tree content of tracked files, NOT git history (a secret
+    /// committed then removed from the tree is invisible here; use
+    /// `--git-history`).
     #[arg(long)]
-    pub(super) git: bool,
+    pub(super) git_tracked: bool,
 
-    /// Only scan files changed since the last commit (`git diff --name-only HEAD`).
+    /// Scan only the current working-tree content of files changed relative to a
+    /// base (`git diff --name-only`). Scans whole files, not the added hunks.
     #[arg(long)]
-    pub(super) git_diff: bool,
+    pub(super) changed_files: bool,
 
-    /// Base ref for diff scanning (e.g. origin/main); scans `<base>...HEAD`. Implies --git-diff.
+    /// Base ref for `--changed-files` (e.g. origin/main); scans `<base>...HEAD`.
+    /// Implies --changed-files.
     #[arg(long, value_name = "REF")]
-    pub(super) diff_base: Option<String>,
+    pub(super) base: Option<String>,
+
+    /// Scan the full git history as patches (`git log -p -U0`), attributing each
+    /// finding to the commit that added it. Catches secrets committed then later
+    /// removed. Always fails closed on git error (no walk fallback).
+    #[arg(
+        long,
+        conflicts_with_all = ["git_tracked", "changed_files", "base", "staged", "include_untracked"]
+    )]
+    pub(super) git_history: bool,
+
+    /// With --git-history, traverse all refs (`git log --all`).
+    #[arg(long, requires = "git_history")]
+    pub(super) all: bool,
+
+    /// With --git-history, pass `--full-history` to `git log`.
+    #[arg(long, requires = "git_history")]
+    pub(super) full_history: bool,
+
+    /// With --git-history, a raw operator-trusted option spliced into `git log`
+    /// before `--` (e.g. "--since=2 weeks ago"). Each occurrence is passed as ONE
+    /// argv entry verbatim (so quoted values keep their spaces); repeat the flag
+    /// for multiple options. Never run through a shell. NOT for attacker input.
+    // `allow_hyphen_values` is required because every real git-log option begins
+    // with `-` (e.g. `--since=...`); without it clap rejects the value as an
+    // unknown flag. Each occurrence still consumes exactly one value.
+    #[arg(
+        long,
+        value_name = "OPT",
+        requires = "git_history",
+        action = clap::ArgAction::Append,
+        allow_hyphen_values = true
+    )]
+    pub(super) log_opts: Vec<String>,
 
     /// Scan only the content staged in the git index (`git cat-file`). Intended
     /// for pre-commit hooks: it scans the index blobs (what will be committed),
     /// not the working-tree files. Is its own git mode, so it is mutually
-    /// exclusive with `--git`/`--git-diff`/`--diff-base`/`--include-untracked`.
-    #[arg(long, conflicts_with_all = ["git", "git_diff", "diff_base", "include_untracked"])]
+    /// exclusive with the other git modes.
+    #[arg(long, conflicts_with_all = ["git_tracked", "changed_files", "base", "include_untracked", "git_history"])]
     pub(super) staged: bool,
 
     /// In git mode, also scan untracked (but not ignored) files.
     #[arg(long)]
     pub(super) include_untracked: bool,
+
+    /// What to do when an explicit git mode fails (git missing, not a repo).
+    /// Default: fail closed (exit 2). `walk` restores the legacy fallback to a
+    /// directory walk (which may widen scope to untracked/ignored files). Does
+    /// not apply to --git-history, which always fails closed.
+    #[arg(long, value_enum, value_name = "MODE")]
+    pub(super) git_fallback: Option<GitFallbackArg>,
 
     /// How to treat files detected as binary by content inspection.
     #[arg(long, value_enum, default_value_t = BinaryPolicyArg::Auto)]
@@ -189,6 +238,14 @@ pub(super) struct ScanArgs {
     /// Do not exit non-zero when findings are present (still writes output).
     #[arg(long)]
     pub(super) no_fail: bool,
+}
+
+/// Fallback behavior when an explicit git mode fails.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub(super) enum GitFallbackArg {
+    /// Fall back to a recursive directory walk (legacy behavior; may widen scope
+    /// to untracked/ignored files).
+    Walk,
 }
 
 /// Binary-file handling policy for the `scan` subcommand.
@@ -242,27 +299,64 @@ mod tests {
     }
 
     #[test]
-    fn diff_base_alone_implies_git_diff() {
-        // Regression: clap does not auto-imply, so `--diff-base` passed without
-        // `--git-diff` must still derive git-diff mode rather than silently
-        // falling back to a full directory walk that discards the base ref.
-        let args = scan_args(&["secrets-scanner", "scan", ".", "--diff-base", "origin/main"]);
-        assert!(!args.git_diff, "only --diff-base was passed");
-        assert_eq!(args.diff_base.as_deref(), Some("origin/main"));
+    fn base_alone_implies_changed_files() {
+        // Regression: clap does not auto-imply, so `--base` passed without
+        // `--changed-files` must still derive changed-files mode rather than
+        // silently falling back to a full directory walk that discards the base.
+        let args = scan_args(&["secrets-scanner", "scan", ".", "--base", "origin/main"]);
+        assert!(!args.changed_files, "only --base was passed");
+        assert_eq!(args.base.as_deref(), Some("origin/main"));
         assert!(
-            super::super::scan::resolve_git_diff(&args),
-            "--diff-base must imply git-diff mode"
+            super::super::scan::resolve_changed_files(&args),
+            "--base must imply changed-files mode"
         );
     }
 
     #[test]
-    fn staged_conflicts_with_git() {
-        // `--staged` is its own git mode; combined with `--git` (which would
-        // otherwise silently win at runtime) it must be a parse error.
+    fn staged_conflicts_with_git_tracked() {
+        // `--staged` is its own git mode; combined with `--git-tracked` (which
+        // would otherwise silently win at runtime) it must be a parse error.
         assert!(
-            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--staged", "--git"]).is_err(),
-            "--staged --git must conflict"
+            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--staged", "--git-tracked"])
+                .is_err(),
+            "--staged --git-tracked must conflict"
         );
+    }
+
+    #[test]
+    fn git_history_conflicts_with_other_git_modes() {
+        for other in ["--git-tracked", "--changed-files", "--staged"] {
+            assert!(
+                Cli::try_parse_from(["secrets-scanner", "scan", ".", "--git-history", other])
+                    .is_err(),
+                "--git-history {other} must conflict"
+            );
+        }
+    }
+
+    #[test]
+    fn history_options_require_git_history() {
+        // `--all`/`--log-opts` are meaningless without history mode and must be
+        // rejected so they cannot silently no-op.
+        assert!(
+            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--all"]).is_err(),
+            "--all requires --git-history"
+        );
+        assert!(
+            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--log-opts", "-c"]).is_err(),
+            "--log-opts requires --git-history"
+        );
+    }
+
+    #[test]
+    fn old_git_flag_names_are_rejected() {
+        // Clean break: the pre-rename flags must no longer parse.
+        for old in ["--git", "--git-diff", "--diff-base"] {
+            assert!(
+                Cli::try_parse_from(["secrets-scanner", "scan", ".", old]).is_err(),
+                "old flag {old} must be rejected after the rename"
+            );
+        }
     }
 
     #[test]

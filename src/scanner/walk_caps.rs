@@ -9,41 +9,60 @@ use crate::scanner::{Finding, Scanner};
 
 use super::{scan_one_file, staged, StatsAcc};
 
-pub(super) fn scan_file_paths(
+/// Run `scan_one` over every item, applying the `--max-findings` total cap.
+///
+/// With no cap, scans in parallel via rayon. With a cap, the scan deliberately
+/// drops to a serial walk so the running total can early-exit deterministically
+/// once the cap is reached: this trades multi-core throughput on capped scans for
+/// a bounded, reproducible result set (the previous parallel-then-truncate path
+/// scanned every file before discarding the overflow). `noun`/`scan_label` only
+/// shape the warning text, keeping it identical to the per-mode messages.
+fn scan_capped<T: Sync>(
     scanner: &Scanner,
-    paths: &[String],
-    stats: &StatsAcc,
+    items: &[T],
+    noun: &str,
+    scan_label: &str,
+    scan_one: impl Fn(&T) -> Vec<Finding> + Sync,
 ) -> Vec<Finding> {
     let Some(cap) = scanner.config.max_findings else {
-        return paths
-            .par_iter()
-            .flat_map(|path| scan_one_file(scanner, path, stats))
-            .collect();
+        return items.par_iter().flat_map(&scan_one).collect();
     };
 
     if cap == 0 {
-        if !paths.is_empty() {
-            warn!("[scanner] Warning: --max-findings is 0; no files scanned.");
+        if !items.is_empty() {
+            warn!("[scanner] Warning: --max-findings is 0; no {noun} scanned.");
         }
         return Vec::new();
     }
 
     let mut findings = Vec::new();
-    for (idx, path) in paths.iter().enumerate() {
+    for (idx, it) in items.iter().enumerate() {
         let remaining = cap - findings.len();
-        let mut file_findings = scan_one_file(scanner, path, stats);
-        let truncated_current = file_findings.len() > remaining;
-        file_findings.truncate(remaining);
-        findings.extend(file_findings);
+        let mut item_findings = scan_one(it);
+        let truncated_current = item_findings.len() > remaining;
+        item_findings.truncate(remaining);
+        findings.extend(item_findings);
 
         if findings.len() >= cap {
-            if truncated_current || idx + 1 < paths.len() {
-                warn!("[scanner] Warning: reached --max-findings ({cap}); scan stopped early.");
+            if truncated_current || idx + 1 < items.len() {
+                warn!(
+                    "[scanner] Warning: reached --max-findings ({cap}); {scan_label} stopped early."
+                );
             }
             break;
         }
     }
     findings
+}
+
+pub(super) fn scan_file_paths(
+    scanner: &Scanner,
+    paths: &[String],
+    stats: &StatsAcc,
+) -> Vec<Finding> {
+    scan_capped(scanner, paths, "files", "scan", |path| {
+        scan_one_file(scanner, path, stats)
+    })
 }
 
 pub(super) fn scan_staged_entries(
@@ -52,38 +71,9 @@ pub(super) fn scan_staged_entries(
     entries: &[staged::StagedEntry],
     stats: &StatsAcc,
 ) -> Vec<Finding> {
-    let Some(cap) = scanner.config.max_findings else {
-        return entries
-            .par_iter()
-            .flat_map(|entry| staged::scan_one_staged(scanner, root, entry, stats))
-            .collect();
-    };
-
-    if cap == 0 {
-        if !entries.is_empty() {
-            warn!("[scanner] Warning: --max-findings is 0; no staged files scanned.");
-        }
-        return Vec::new();
-    }
-
-    let mut findings = Vec::new();
-    for (idx, entry) in entries.iter().enumerate() {
-        let remaining = cap - findings.len();
-        let mut entry_findings = staged::scan_one_staged(scanner, root, entry, stats);
-        let truncated_current = entry_findings.len() > remaining;
-        entry_findings.truncate(remaining);
-        findings.extend(entry_findings);
-
-        if findings.len() >= cap {
-            if truncated_current || idx + 1 < entries.len() {
-                warn!(
-                    "[scanner] Warning: reached --max-findings ({cap}); staged scan stopped early."
-                );
-            }
-            break;
-        }
-    }
-    findings
+    scan_capped(scanner, entries, "staged files", "staged scan", |entry| {
+        staged::scan_one_staged(scanner, root, entry, stats)
+    })
 }
 
 pub(super) fn sort_findings(findings: &mut [Finding]) {

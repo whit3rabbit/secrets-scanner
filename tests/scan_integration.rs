@@ -547,7 +547,7 @@ regex = 'SECRET[0-9]{6}'
 keywords = ["secret"]
 "#;
     let scanner = scanner_from_toml(toml).with_config(ScanConfig {
-        git: true,
+        git_tracked: true,
         ..Default::default()
     });
     let repo = tempfile::tempdir().expect("repo");
@@ -572,7 +572,7 @@ regex = 'SECRET[0-9]{6}'
 keywords = ["secret"]
 "#;
     let scanner = scanner_from_toml(toml).with_config(ScanConfig {
-        git_diff: true,
+        changed_files: true,
         ..Default::default()
     });
     let repo = tempfile::tempdir().expect("repo");
@@ -603,7 +603,7 @@ regex = 'SECRET[0-9]{6}'
 keywords = ["secret"]
 "#;
     let scanner = scanner_from_toml(toml).with_config(ScanConfig {
-        git: true,
+        git_tracked: true,
         ..Default::default()
     });
     let temp = tempfile::tempdir().expect("temp");

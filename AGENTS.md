@@ -18,6 +18,10 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 - Prefer `--features updater` builds for development; the default (no feature) build is the lean release artifact.
 - The `bench` feature gates per-scan timing instrumentation; run `cargo test --features bench` to exercise bench-gated tests (default builds show expected rust-analyzer "inactive-code" hints on those lines — not errors).
 - No `unwrap()` in library code — use `?` or explicit error handling.
+- rust-analyzer/IDE inline diagnostics are often stale here: after editing
+  `ScanConfig`/`Finding` or test files you may see phantom "missing field" or
+  `Option` vs `Vec` errors that `cargo build`/`cargo test` do not. Trust a direct
+  `cargo` run, not the IDE diagnostics.
 
 ---
 
@@ -30,7 +34,7 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 | `make merge-rules-check` | Verify committed `assets/secrets-scanner.toml` matches the lean manifest merge |
 | `make build-full` | Build with `--features full-ruleset` |
 | `cargo test --bin secrets-scanner --features updater` | Fast focused check for binary/CLI refactors |
-| `cargo run -- scan <path> --git` | Run a scan locally (safe-default git mode) |
+| `cargo run -- scan <path> --git-tracked` | Run a scan locally (git-tracked files) |
 | `cargo run -- completions <shell>` | Generate shell completions (bash/zsh/fish/...) |
 
 ---
@@ -54,6 +58,8 @@ secrets-scanner/
 │       ├── mod.rs             # load_rules() — three-tier rule loading
 │       ├── updater.rs         # Runtime HTTP updater (feature-gated: `updater`)
 │       └── validation.rs      # Rule TOML and Regex validator
+├── bindings/
+│   └── node/                  # NAPI-RS Node bindings (@secrets-scanner/core); see bindings/node/CLAUDE.md
 ├── build.rs                   # Validates and merges manifest-selected rule sources at compile time
 └── Makefile                   # Developer convenience targets
 ```
@@ -207,6 +213,13 @@ To prevent regressions and verify that custom rules accurately match target secr
 2. **Integration Test Suite (`tests/local_rules_validation.rs`)**:
    Runs automatically as part of `cargo test` (or `make test`). It reads the generated fixtures JSON, feeds each test string into the compiled scanner, and asserts that the corresponding `rule_id` is successfully detected. Only active rules (i.e. those successfully compiled by Rust's `regex` engine) are tested.
 
+### Testing Git Modes
+
+Git/history/staged-mode tests live in `tests/hardening.rs`. Use the inline
+`SECRET_RULE` via the `scanner(ScanConfig)` helper plus `init_repo()` / `git()`;
+the canonical test secret is `SECRET123456` (rule `SECRET[0-9]{6}`, keyword
+`secret`, matched case-insensitively).
+
 ---
 
 ## Scanning & Hardening
@@ -224,21 +237,51 @@ content (e.g. running as a GitHub Action). Key behaviors:
   source/secret-bearing (`is_source_allowlisted`: `.env*`, `.pem`, `.key`,
   `.json`, `.yaml`/`.yml`, `.toml`, `.properties`, `.npmrc`, `.pypirc`,
   `Dockerfile`, `Makefile`); `skip` ignores the allowlist; `scan` never skips.
-- **Git path safety** (`src/scanner/walk.rs`): NUL-delimited output
-  (`-z`, `core.quotePath=false`), absolute paths from git are dropped (containment),
-  `--diff-base <ref>` scans `<base>...HEAD`, `--include-untracked` adds
-  `ls-files --others --exclude-standard`. On any git failure the scan falls back
-  to a directory walk and the fallback is recorded (`ScanStats.git_fallback`) so
-  the scope change (may include untracked/ignored files) is surfaced, not silent.
+- **Git modes & path safety** (`src/scanner/walk.rs`): NUL-delimited output
+  (`-z`, `core.quotePath=false`), absolute paths from git are dropped (containment).
+  The current-content modes scan the working-tree bytes of selected files:
+  `--git-tracked` (`git ls-files`), `--changed-files` (`git diff --name-only`,
+  whole files not hunks), `--base <ref>` (implies `--changed-files`; scans
+  `<base>...HEAD`), `--include-untracked` adds `ls-files --others
+  --exclude-standard`. **Fail-closed:** on git failure an explicit git mode exits
+  2 (`ScanStats.git_failed`) and scans nothing, rather than silently widening
+  scope to the whole tree. `--git-fallback=walk` opts back into the legacy
+  directory-walk fallback (recorded as `ScanStats.git_fallback`, scope may include
+  untracked/ignored files); it does not apply to `--git-history`.
   Directory-walk traversal errors (e.g. an unreadable subdir) count toward
   `ScanStats.errored`, not silently dropped.
+- **History mode** (`src/scanner/walk_history.rs`): `--git-history` scans
+  `git log -p -U0 --no-color --no-ext-diff --full-history [--all] [<log-opts>...]
+  --`, attributing each finding to the commit that ADDED the matched line
+  (`Finding.commit`). This catches secrets committed then later removed — the gap
+  versus current-content modes. The **scan unit is one file diff** (all hunks of a
+  file within a commit): their added (`+`) lines are reconstructed into one buffer
+  handed to `scan_bytes` exactly like a working-tree file, so binary detection,
+  `max_findings_per_file`, `max_files` (counted as file diffs), `max_findings`
+  (with a truncation notice), and redaction all apply uniformly — history is NOT a
+  parallel path that re-derives caps per hunk. A `line_map` records each buffered
+  line's real new-file line so findings (and context lines) report file-accurate
+  numbers across non-contiguous hunks; byte offsets stay buffer-relative (a patch
+  has no single real-file byte offset). The `+++ b/path` header is recognized only
+  BEFORE a file's first hunk, so an added content line beginning with `++ `
+  (patch form `+++ `) is not mistaken for a header. Merge/combined diffs (`@@@`)
+  and deletions are not attributed (merge content is caught on a non-merge
+  ancestor; deleted content was an addition in an earlier commit). `--full-history`
+  is always on in history mode (decoupled from `--log-opts` so narrowing traversal
+  never silently reduces coverage). `--log-opts <OPT>` is **operator-trusted**
+  (repeatable; each occurrence is one verbatim argv entry — `allow_hyphen_values`,
+  so a value may begin with `-` or contain spaces — never split or run through a
+  shell; the `--base` dash-rejection does not apply); terminated with `--`. Always
+  fails closed on git error (no walk fallback).
 - **Staged mode** (`src/scanner/walk_staged.rs`): `--staged` scans the **index
   blob content** that is about to be committed (`git diff --cached
-  --name-only --diff-filter=ACMR` then `git cat-file -s`/`blob :path`), NOT the
-  working-tree files — so a secret staged then scrubbed from the working copy (or
-  staged via `git add -p`) is still caught. Blob size is checked before the read
-  (bounded-memory). Staged deletions are excluded. It is mutually exclusive with
-  `--git-diff`/`--diff-base`/`--include-untracked` (enforced by clap).
+  --name-only --diff-filter=ACMRT` then `git cat-file -t`/`-s`/`blob :path`), NOT
+  the working-tree files — so a secret staged then scrubbed from the working copy
+  (or staged via `git add -p`) is still caught. Type-changes (`T`) are included
+  but each object is verified to be a blob (a `T` change can stage a gitlink/tree).
+  Non-UTF-8 paths are passed to git byte-exact (`OsString` pathspec), not lossily
+  mangled. Blob size is checked before the read (bounded-memory). Staged deletions
+  are excluded. It is mutually exclusive with the other git modes (enforced by clap).
 - **Inline suppression**: a line containing `secrets-scanner:allow` or
   `gitleaks:allow` (ecosystem compat) skips that finding (`matching.rs`). For
   multi-line matches (e.g. PEM keys) the marker is honored on the match's first
@@ -344,9 +387,9 @@ rule-load failures.
 `action.yml` is a composite action: it downloads the pinned prebuilt release
 binary (target triple per `install.sh`; version from `inputs.version`, else the
 action ref, else latest) and runs `scan` with a safe-by-default posture
-(`--git --redact --no-context --format sarif --output <file>`). Inputs:
-`path`, `config`, `fail-on-findings`, `sarif`, `sarif-file`, `git`,
-`diff-base`, `max-file-size`, `binary-policy`, `version`, `extra-args`. Output:
+(`--git-tracked --redact --no-context --format sarif --output <file>`). Inputs:
+`path`, `config`, `fail-on-findings`, `sarif`, `sarif-file`, `git-tracked`,
+`base`, `max-file-size`, `binary-policy`, `version`, `extra-args`. Output:
 `sarif-file`. A runnable example that dogfoods `uses: ./` lives at
 `.github/workflows/secrets-scan.yml` (non-blocking; flip `fail-on-findings`).
 
@@ -360,11 +403,11 @@ gate) so SARIF uploads even when findings are present.
 `Dockerfile` is a multi-stage build: `rust:1-alpine` (musl, lean default build,
 no `updater` feature) → `alpine:3` runtime with `git` + `ca-certificates`.
 `ENTRYPOINT secrets-scanner`, `WORKDIR /repo`. `git` is bundled because the
-safe-default `--git` mode shells out to it. Rules are embedded at compile time
-(no runtime `update-rules`), so rebuild the image to refresh them.
+safe-default `--git-tracked` mode shells out to it. Rules are embedded at compile
+time (no runtime `update-rules`), so rebuild the image to refresh them.
 `.dockerignore` excludes `target/`/`.git/` but **not** `assets/` (build.rs reads
 it). Auto-published to Docker Hub on release tags.
-`docker run --rm -v "$PWD:/repo" <image> scan /repo --git`.
+`docker run --rm -v "$PWD:/repo" <image> scan /repo --git-tracked`.
 
 ---
 

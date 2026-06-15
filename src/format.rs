@@ -23,14 +23,20 @@ pub fn write_text(w: &mut dyn Write, findings: &[Finding], show_context: bool) -
     for f in findings {
         // Text output reports the byte column (`f.col`) to match `grep`/editor
         // byte offsets; SARIF emits UTF-16 columns (`col_utf16`) for GitHub.
+        // `--git-history` findings carry the commit that introduced them.
+        let commit = match &f.commit {
+            Some(sha) => format!(" commit={}", &sha[..sha.len().min(12)]),
+            None => String::new(),
+        };
         writeln!(
             w,
-            "  {}:{}:{} | rule={} entropy={:.2} | {}",
+            "  {}:{}:{} | rule={} entropy={:.2}{} | {}",
             sanitize_display(&f.file),
             f.line,
             f.col,
             f.rule_id,
             f.entropy,
+            commit,
             sanitize_display(&f.matched),
         )?;
         if !f.rule_description.is_empty() {
@@ -63,8 +69,14 @@ fn finding_to_json(f: &Finding, show_context: bool) -> String {
             .collect();
         format!(r#","context":[{}]"#, items.join(","))
     };
+    // `--git-history` findings carry the introducing commit; omitted otherwise
+    // so working-tree/staged output is byte-for-byte unchanged.
+    let commit_json = match &f.commit {
+        Some(sha) => format!(r#","commit":{}"#, json_string(sha)),
+        None => String::new(),
+    };
     format!(
-        r#"{{"rule_id":{},"description":{},"file":{},"line":{},"col":{},"end_line":{},"end_col":{},"col_utf16":{},"end_col_utf16":{},"matched":{},"entropy":{:.6},"start_offset":{},"end_offset":{},"secret_start_offset":{},"secret_end_offset":{},"fingerprint":{}{}}}"#,
+        r#"{{"rule_id":{},"description":{},"file":{},"line":{},"col":{},"end_line":{},"end_col":{},"col_utf16":{},"end_col_utf16":{},"matched":{},"entropy":{:.6},"start_offset":{},"end_offset":{},"secret_start_offset":{},"secret_end_offset":{},"fingerprint":{}{}{}}}"#,
         json_string(&f.rule_id),
         json_string(&f.rule_description),
         json_string(&f.file),
@@ -81,6 +93,7 @@ fn finding_to_json(f: &Finding, show_context: bool) -> String {
         f.secret_start_offset,
         f.secret_end_offset,
         json_string(&f.fingerprint),
+        commit_json,
         context_json,
     )
 }
@@ -156,6 +169,12 @@ pub fn write_sarif(w: &mut dyn Write, findings: &[Finding], base: &str) -> io::R
             let uri = relativize(&f.file, base);
             let (start_line, start_col, end_line, end_col) = sarif_region(f);
             let fingerprint = sarif_fingerprint(f, &uri);
+            // `--git-history` findings carry the introducing commit in a
+            // properties bag (never in `message.text`, which stays secret-free).
+            let properties = match &f.commit {
+                Some(sha) => json!({ "commit": sha }),
+                None => json!({}),
+            };
             json!({
                 "ruleId": f.rule_id,
                 "ruleIndex": rule_index[f.rule_id.as_str()],
@@ -166,9 +185,13 @@ pub fn write_sarif(w: &mut dyn Write, findings: &[Finding], base: &str) -> io::R
                         f.rule_id, f.entropy
                     )
                 },
+                // v2 marks the fingerprint scheme switch from FNV-1a hex to
+                // `sha256:`-prefixed values; bumping the key (not just the value)
+                // keeps the scheme change explicit for code-scanning consumers.
                 "partialFingerprints": {
-                    "secretsScanner/v1": fingerprint
+                    "secretsScanner/v2": fingerprint
                 },
+                "properties": properties,
                 "locations": [{
                     "physicalLocation": {
                         "artifactLocation": { "uri": uri, "uriBaseId": "SRCROOT" },
@@ -396,8 +419,8 @@ mod tests {
 
         let doc_a: serde_json::Value = serde_json::from_slice(&out_a).expect("json a");
         let doc_b: serde_json::Value = serde_json::from_slice(&out_b).expect("json b");
-        let fp_a = &doc_a["runs"][0]["results"][0]["partialFingerprints"]["secretsScanner/v1"];
-        let fp_b = &doc_b["runs"][0]["results"][0]["partialFingerprints"]["secretsScanner/v1"];
+        let fp_a = &doc_a["runs"][0]["results"][0]["partialFingerprints"]["secretsScanner/v2"];
+        let fp_b = &doc_b["runs"][0]["results"][0]["partialFingerprints"]["secretsScanner/v2"];
 
         assert_eq!(fp_a, "stable-raw-fingerprint");
         assert_eq!(fp_a, fp_b);

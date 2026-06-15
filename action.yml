@@ -21,11 +21,11 @@ inputs:
   sarif-file:
     description: "SARIF output path."
     default: "secrets-scanner.sarif"
-  git:
-    description: "Scan only files tracked by git."
+  git-tracked:
+    description: "Scan only files currently tracked by git."
     default: "true"
-  diff-base:
-    description: "Optional base ref for diff scanning (e.g. origin/main). Implies diff mode."
+  base:
+    description: "Optional base ref for changed-files scanning (e.g. origin/main). Implies --changed-files."
     required: false
   max-file-size:
     description: "Maximum file size in bytes."
@@ -110,8 +110,8 @@ runs:
         IN_FAIL: ${{ inputs.fail-on-findings }}
         IN_SARIF: ${{ inputs.sarif }}
         IN_SARIF_FILE: ${{ inputs.sarif-file }}
-        IN_GIT: ${{ inputs.git }}
-        IN_DIFF_BASE: ${{ inputs.diff-base }}
+        IN_GIT_TRACKED: ${{ inputs.git-tracked }}
+        IN_BASE: ${{ inputs.base }}
         IN_MAX_FILE_SIZE: ${{ inputs.max-file-size }}
         IN_BINARY_POLICY: ${{ inputs.binary-policy }}
         IN_EXTRA: ${{ inputs.extra-args }}
@@ -120,8 +120,8 @@ runs:
         # Safe-by-default posture: redaction on, no context lines in CI logs,
         # bounded reads, deterministic exit. SARIF is uploaded by a later step.
         args=(scan "$IN_PATH" --no-context --max-file-size "$IN_MAX_FILE_SIZE" --binary-policy "$IN_BINARY_POLICY")
-        [ "$IN_GIT" = "true" ] && args+=(--git)
-        [ -n "$IN_DIFF_BASE" ] && args+=(--diff-base "$IN_DIFF_BASE")
+        [ "$IN_GIT_TRACKED" = "true" ] && args+=(--git-tracked)
+        [ -n "$IN_BASE" ] && args+=(--base "$IN_BASE")
         [ -n "$IN_CONFIG" ] && args+=(--rules "$IN_CONFIG")
         if [ "$IN_SARIF" = "true" ]; then
           args+=(--format sarif --output "$IN_SARIF_FILE")

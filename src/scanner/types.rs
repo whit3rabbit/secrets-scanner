@@ -46,24 +46,56 @@ pub struct ScanConfig {
     /// Whether to redact matched secrets in findings.
     pub redact: bool,
 
-    /// If true, only scan files tracked by git (`git ls-files`).
-    pub git: bool,
+    /// If true, only scan files currently tracked by git (`git ls-files`).
+    /// This is the current working-tree content of tracked files, NOT git
+    /// history: a secret committed then removed from the working tree is
+    /// invisible here. Use `git_history` for history/patch scanning.
+    pub git_tracked: bool,
 
-    /// If true, only scan files changed since the last commit (`git diff --name-only HEAD`).
-    pub git_diff: bool,
+    /// If true, only scan the current working-tree content of files changed
+    /// relative to a base (`git diff --name-only`). Scans whole files, not the
+    /// added hunks. Range is `<base>...HEAD` when `base` is set, else `HEAD`.
+    pub changed_files: bool,
 
-    /// Base ref for diff scanning. When set (and `git_diff` is true), scans
-    /// `git diff --name-only <diff_base>...HEAD` instead of `HEAD`.
-    pub diff_base: Option<String>,
+    /// Base ref for `changed_files` scanning. When set (and `changed_files` is
+    /// true), scans `git diff --name-only <base>...HEAD` instead of `HEAD`.
+    pub base: Option<String>,
+
+    /// If true, scan the full git history as patches (`git log -p -U0`),
+    /// attributing each finding to the commit that ADDED it. Catches secrets
+    /// committed then later removed. Own git mode (mutually exclusive with the
+    /// others). Always fails closed on git error regardless of
+    /// `git_fallback_walk`.
+    pub git_history: bool,
+
+    /// With `git_history`, traverse all refs (`git log --all`).
+    pub history_all: bool,
+
+    /// With `git_history`, pass `--full-history`. Default-on for history mode.
+    pub history_full: bool,
+
+    /// With `git_history`, raw operator-trusted options spliced into the
+    /// `git log` invocation before `--`. Each element is passed as ONE argv
+    /// entry verbatim, so a value may legitimately contain spaces (e.g.
+    /// `"--since=2 weeks ago"`); the list is never re-tokenized or passed
+    /// through a shell. NOT attacker-controlled.
+    pub history_log_opts: Vec<String>,
 
     /// If true, scan only files staged in the git index (`git diff --cached
     /// --name-only`). Intended for pre-commit hooks. Takes precedence over
-    /// `git_diff`/`git` path selection.
+    /// `changed_files`/`git_tracked` path selection.
     pub git_staged: bool,
 
     /// If true, also scan untracked-but-not-ignored files in git mode
     /// (`git ls-files --others --exclude-standard`).
     pub include_untracked: bool,
+
+    /// When an explicit git mode fails (git missing, not a repo, command
+    /// error), fall back to a recursive directory walk instead of failing
+    /// closed. Default `false`: explicit git modes fail closed (the CLI maps it
+    /// to exit 2) rather than silently widening scope to the whole tree. Has no
+    /// effect on `git_history`, which always fails closed.
+    pub git_fallback_walk: bool,
 
     /// How to handle files detected as binary by content inspection.
     pub binary_policy: BinaryPolicy,
@@ -103,11 +135,16 @@ impl Default for ScanConfig {
             min_entropy_override: None,
             max_file_size: DEFAULT_MAX_FILE_SIZE,
             redact: true,
-            git: false,
-            git_diff: false,
-            diff_base: None,
+            git_tracked: false,
+            changed_files: false,
+            base: None,
+            git_history: false,
+            history_all: false,
+            history_full: false,
+            history_log_opts: Vec::new(),
             git_staged: false,
             include_untracked: false,
+            git_fallback_walk: false,
             binary_policy: BinaryPolicy::default(),
             max_files: None,
             max_findings: None,
@@ -136,6 +173,22 @@ impl ScanConfig {
             ..Self::default()
         }
     }
+
+    /// Whether this config satisfies the hardened posture that
+    /// [`Scanner::scan_proxy`](crate::Scanner::scan_proxy) requires for untrusted
+    /// content: redaction on, inline allow markers ignored, context capture off,
+    /// and both the per-file finding cap and the `matched`-length cap set.
+    ///
+    /// Defined next to [`proxy`](Self::proxy) so the constructor and the
+    /// enforcement check cannot drift — a new hardening field added to `proxy()`
+    /// must be reflected here, or `scan_proxy` will fail closed by design.
+    pub fn is_hardened(&self) -> bool {
+        self.redact
+            && !self.honor_allow_markers
+            && !self.capture_context
+            && self.max_findings_per_file.is_some()
+            && self.max_matched_len.is_some()
+    }
 }
 
 /// Aggregate counts from a directory/git scan, for safe CI summary reporting.
@@ -163,9 +216,16 @@ pub struct ScanStats {
     pub errored: usize,
 
     /// True if git path discovery failed and the scan fell back to a recursive
-    /// directory walk. The fallback changes scope (it can pick up untracked or
-    /// ignored files), so the summary flags it distinctly.
+    /// directory walk (only possible when `git_fallback_walk` is set). The
+    /// fallback changes scope (it can pick up untracked or ignored files), so
+    /// the summary flags it distinctly.
     pub git_fallback: bool,
+
+    /// True if an explicit git mode failed and fallback-to-walk was NOT opted
+    /// in, so nothing was scanned. The CLI maps this to exit 2 (fail closed):
+    /// an unscannable git request must not look like a clean scan. Mutually
+    /// exclusive with `git_fallback` per scanned path.
+    pub git_failed: bool,
 }
 
 /// Scanner output that pairs findings with redacted content.
@@ -250,6 +310,12 @@ pub struct Finding {
     /// for findings deserialized from a pre-fingerprint baseline.
     #[serde(default)]
     pub fingerprint: String,
+
+    /// Commit SHA that introduced this finding. Set only by `git_history` mode
+    /// (the commit whose patch ADDED the matched line); `None` for working-tree
+    /// and staged scans. Omitted from serialized output when `None`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub commit: Option<String>,
 
     /// Surrounding lines of context (±2 lines) as (line_number, content) pairs.
     /// Sorted in ascending line order. Always includes the matched line.

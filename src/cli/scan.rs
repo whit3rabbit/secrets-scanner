@@ -4,18 +4,18 @@ use std::io::{self, Write};
 use log::{error, info, warn};
 use secrets_scanner::{Finding, ScanConfig, ScanStats, Scanner};
 
-use super::args::{OutputFormat, ScanArgs};
+use super::args::{GitFallbackArg, OutputFormat, ScanArgs};
 
-/// Whether to run in git-diff mode. `--diff-base` implies it: clap does not
+/// Whether to run in changed-files mode. `--base` implies it: clap does not
 /// auto-imply, so a base ref passed alone must still scan `<base>...HEAD` rather
 /// than silently falling back to a full directory walk.
-pub(super) fn resolve_git_diff(args: &ScanArgs) -> bool {
-    args.git_diff || args.diff_base.is_some()
+pub(super) fn resolve_changed_files(args: &ScanArgs) -> bool {
+    args.changed_files || args.base.is_some()
 }
 
 /// Handle the `scan` subcommand.
 pub(super) fn handle(args: ScanArgs) {
-    let git_diff = resolve_git_diff(&args);
+    let changed_files = resolve_changed_files(&args);
     let early_max_findings = if args.generate_baseline.is_none()
         && args.baseline.is_none()
         && args.ignore_rules.is_empty()
@@ -29,11 +29,20 @@ pub(super) fn handle(args: ScanArgs) {
         capture_context: !args.no_context && !matches!(args.format, OutputFormat::Sarif),
         min_entropy_override: args.min_entropy,
         max_file_size: args.max_file_size,
-        git: args.git,
-        git_diff,
-        diff_base: args.diff_base.clone(),
+        git_tracked: args.git_tracked,
+        changed_files,
+        base: args.base.clone(),
+        git_history: args.git_history,
+        history_all: args.all,
+        // History mode always uses --full-history (gitleaks-like full traversal).
+        // It is intentionally NOT coupled to --log-opts: narrowing traversal via
+        // --log-opts must never also silently drop --full-history and reduce
+        // coverage (a missed-secret hazard in a security tool).
+        history_full: args.git_history || args.full_history,
+        history_log_opts: args.log_opts.clone(),
         git_staged: args.staged,
         include_untracked: args.include_untracked,
+        git_fallback_walk: matches!(args.git_fallback, Some(GitFallbackArg::Walk)),
         binary_policy: args.binary_policy.into(),
         max_files: args.max_files,
         max_findings: early_max_findings,
@@ -79,6 +88,7 @@ pub(super) fn handle(args: ScanArgs) {
         stats.files_over_cap += s.files_over_cap;
         stats.errored += s.errored;
         stats.git_fallback |= s.git_fallback;
+        stats.git_failed |= s.git_failed;
         if !args.ignore_rules.is_empty() {
             findings.retain(|f| !args.ignore_rules.contains(&f.rule_id));
         }
@@ -182,6 +192,19 @@ pub(super) fn handle(args: ScanArgs) {
         );
     }
 
+    // Fail closed: an explicit git mode could not run and the caller did not opt
+    // into `--git-fallback=walk`, so nothing was scanned. Exit 2 (runtime error)
+    // rather than letting an empty result look like a clean scan. This takes
+    // precedence over the findings exit and ignores `--no-fail` (which only
+    // governs the findings-present case, not a scan that never happened).
+    if stats.git_failed {
+        error!(
+            "[scanner] git mode failed and --git-fallback=walk was not set; \
+             refusing to silently scan the working tree (nothing was scanned)."
+        );
+        std::process::exit(2);
+    }
+
     if !all_findings.is_empty() && !args.no_fail {
         std::process::exit(1);
     }
@@ -229,6 +252,35 @@ fn write_baseline_or_exit(out_path: &str, no_redact: bool, all_findings: &[Findi
     }
 }
 
+/// Suppress findings present in `baseline` from `all_findings`, returning the
+/// number suppressed.
+///
+/// Baseline entries are matched by fingerprint scheme: a `sha256:`-prefixed
+/// fingerprint (the current scheme) suppresses by exact fingerprint, which is
+/// line-tolerant. Anything else — an empty fingerprint, or a legacy FNV hex
+/// fingerprint written by an older build — falls back to the
+/// `(file, line, rule)` tuple. Without the prefix check a legacy FNV
+/// fingerprint would land in the fingerprint set, never equal a new `sha256:`
+/// value, and silently re-surface every previously-suppressed finding. Old
+/// baselines suppress by exact location until regenerated.
+fn suppress_baseline(baseline: Vec<Finding>, all_findings: &mut Vec<Finding>) -> usize {
+    let mut known_fps: HashSet<String> = HashSet::new();
+    let mut known_legacy: HashSet<(String, usize, String)> = HashSet::new();
+    for f in baseline {
+        if f.fingerprint.starts_with("sha256:") {
+            known_fps.insert(f.fingerprint);
+        } else {
+            known_legacy.insert((f.file, f.line, f.rule_id));
+        }
+    }
+    let before = all_findings.len();
+    all_findings.retain(|f| {
+        !known_fps.contains(&f.fingerprint)
+            && !known_legacy.contains(&(f.file.clone(), f.line, f.rule_id.clone()))
+    });
+    before - all_findings.len()
+}
+
 fn apply_baseline_or_exit(baseline_path: &str, all_findings: &mut Vec<Finding>) {
     match std::fs::read_to_string(baseline_path) {
         Ok(content) => {
@@ -239,21 +291,7 @@ fn apply_baseline_or_exit(baseline_path: &str, all_findings: &mut Vec<Finding>) 
                     std::process::exit(2);
                 }
             };
-            let mut known_fps: HashSet<String> = HashSet::new();
-            let mut known_legacy: HashSet<(String, usize, String)> = HashSet::new();
-            for f in baseline {
-                if f.fingerprint.is_empty() {
-                    known_legacy.insert((f.file, f.line, f.rule_id));
-                } else {
-                    known_fps.insert(f.fingerprint);
-                }
-            }
-            let before = all_findings.len();
-            all_findings.retain(|f| {
-                !known_fps.contains(&f.fingerprint)
-                    && !known_legacy.contains(&(f.file.clone(), f.line, f.rule_id.clone()))
-            });
-            let suppressed = before - all_findings.len();
+            let suppressed = suppress_baseline(baseline, all_findings);
             if suppressed > 0 {
                 info!("[scanner] Baseline suppressed {suppressed} known finding(s)");
             }
@@ -370,6 +408,55 @@ mod tests {
         let findings = vec![finding_with_raw_context()];
         let out = super::baseline_findings(false, &findings);
         assert!(out[0].context_lines.is_empty());
+    }
+
+    /// Build a finding carrying a specific fingerprint at a given location.
+    fn finding_at(fingerprint: &str, file: &str, line: usize, rule: &str) -> Finding {
+        serde_json::from_value(serde_json::json!({
+            "file": file, "line": line, "end_line": line, "col": 1, "end_col": 2,
+            "rule_id": rule, "description": "Test", "matched": "[REDACTED_SECRET]",
+            "entropy": 4.2, "fingerprint": fingerprint, "context_lines": []
+        }))
+        .expect("finding")
+    }
+
+    #[test]
+    fn legacy_fnv_baseline_suppresses_by_location() {
+        // A baseline written by an older build carries a non-empty FNV hex
+        // fingerprint (no `sha256:` prefix). It must suppress a current finding
+        // at the same (file, line, rule) even though the new finding's `sha256:`
+        // fingerprint differs — otherwise every old baseline silently breaks.
+        let baseline = vec![finding_at("a1b2c3d4e5f60718", "app.env", 7, "test-token")];
+        let mut current = vec![finding_at("sha256:deadbeef", "app.env", 7, "test-token")];
+        let suppressed = super::suppress_baseline(baseline, &mut current);
+        assert_eq!(
+            suppressed, 1,
+            "legacy FNV baseline must suppress by location"
+        );
+        assert!(current.is_empty());
+    }
+
+    #[test]
+    fn empty_fingerprint_baseline_suppresses_by_location() {
+        let baseline = vec![finding_at("", "app.env", 7, "test-token")];
+        let mut current = vec![finding_at("sha256:deadbeef", "app.env", 7, "test-token")];
+        assert_eq!(super::suppress_baseline(baseline, &mut current), 1);
+    }
+
+    #[test]
+    fn sha256_baseline_suppresses_by_fingerprint_line_tolerant() {
+        // sha256 fingerprints suppress by value (line-independent): same
+        // fingerprint at a different line is still suppressed; a different
+        // fingerprint at the same line is not.
+        let baseline = vec![finding_at("sha256:aaaa", "app.env", 7, "test-token")];
+        let mut current = vec![
+            finding_at("sha256:aaaa", "app.env", 99, "test-token"), // moved line, same fp
+            finding_at("sha256:bbbb", "app.env", 7, "test-token"),  // diff fp, same line
+        ];
+        let suppressed = super::suppress_baseline(baseline, &mut current);
+        assert_eq!(suppressed, 1, "only the matching fingerprint is suppressed");
+        assert_eq!(current.len(), 1);
+        assert_eq!(current[0].fingerprint, "sha256:bbbb");
     }
 
     #[test]

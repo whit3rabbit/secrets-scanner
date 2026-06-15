@@ -248,8 +248,8 @@ fn diff_base_scans_range_against_base() {
     git(repo.path(), &["commit", "-q", "-m", "add secret"]);
 
     let scanner = scanner(ScanConfig {
-        git_diff: true,
-        diff_base: Some("HEAD~1".to_string()),
+        changed_files: true,
+        base: Some("HEAD~1".to_string()),
         ..Default::default()
     });
     let findings = scanner.scan_path(repo.path().to_str().expect("path"));
@@ -269,25 +269,66 @@ fn diff_base_rejects_dash_led_git_option() {
     let injected_output = repo.path().join("git-diff-output");
 
     let scanner = scanner(ScanConfig {
-        git_diff: true,
-        diff_base: Some(format!("--output={}", injected_output.display())),
+        changed_files: true,
+        base: Some(format!("--output={}", injected_output.display())),
         ..Default::default()
     });
     let (findings, stats) = scanner.scan_path_with_stats(repo.path().to_str().expect("path"));
 
+    // Fail closed by default: an unresolvable base must not silently scan the
+    // working tree. Nothing is scanned and `git_failed` (mapped to CLI exit 2)
+    // is set, rather than the secret being reported from a fallback walk.
     assert!(
-        stats.git_fallback,
-        "invalid diff-base should fall back instead of trusting an empty git diff"
+        stats.git_failed,
+        "invalid base should fail closed, not fall back to a directory walk"
+    );
+    assert!(
+        !stats.git_fallback,
+        "no fallback walk should happen without --git-fallback=walk"
+    );
+    assert!(findings.is_empty(), "fail-closed mode must scan nothing");
+    assert!(
+        !injected_output.exists()
+            && !Path::new(&format!("{}...HEAD", injected_output.display())).exists(),
+        "dash-led base must not be parsed by git as --output"
+    );
+}
+
+#[test]
+fn diff_base_dash_led_with_fallback_walk() {
+    // With --git-fallback=walk, an unresolvable base restores the legacy
+    // behavior: fall back to a directory walk (recording git_fallback) and still
+    // report the working-tree secret, while never letting git parse the dash-led
+    // value as an option.
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("clean.txt"), "nothing here").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+    std::fs::write(repo.path().join("secret.txt"), "SECRET123456").expect("write");
+    let injected_output = repo.path().join("git-diff-output");
+
+    let scanner = scanner(ScanConfig {
+        changed_files: true,
+        base: Some(format!("--output={}", injected_output.display())),
+        git_fallback_walk: true,
+        ..Default::default()
+    });
+    let (findings, stats) = scanner.scan_path_with_stats(repo.path().to_str().expect("path"));
+
+    assert!(stats.git_fallback, "opt-in should fall back to a walk");
+    assert!(
+        !stats.git_failed,
+        "fallback walk is not a fail-closed error"
     );
     assert_eq!(
         findings.len(),
         1,
-        "fallback directory walk should still report the working-tree secret"
+        "fallback walk reports the working-tree secret"
     );
     assert!(
-        !injected_output.exists()
-            && !Path::new(&format!("{}...HEAD", injected_output.display())).exists(),
-        "dash-led diff-base must not be parsed by git as --output"
+        !injected_output.exists(),
+        "dash-led base must not be parsed by git as --output"
     );
 }
 
@@ -303,7 +344,7 @@ fn include_untracked_scans_untracked_files() {
 
     // Without --include-untracked, ls-files won't see it.
     let tracked_only = scanner(ScanConfig {
-        git: true,
+        git_tracked: true,
         ..Default::default()
     });
     assert!(
@@ -314,7 +355,7 @@ fn include_untracked_scans_untracked_files() {
     );
 
     let with_untracked = scanner(ScanConfig {
-        git: true,
+        git_tracked: true,
         include_untracked: true,
         ..Default::default()
     });
@@ -377,7 +418,7 @@ fn cli_sarif_is_valid_and_omits_secret() {
     let result = &doc["runs"][0]["results"][0];
     let msg = result["message"]["text"].as_str().expect("message text");
     assert!(msg.starts_with("Potential secret detected by rule"));
-    assert!(result["partialFingerprints"]["secretsScanner/v1"].is_string());
+    assert!(result["partialFingerprints"]["secretsScanner/v2"].is_string());
     let region = &result["locations"][0]["physicalLocation"]["region"];
     assert!(region["endColumn"].is_number());
     let loc = &result["locations"][0]["physicalLocation"]["artifactLocation"];
@@ -610,6 +651,319 @@ fn staged_mode_reads_paths_that_look_like_stage_selectors() {
         "staged path named 0:foo must read that path, not stage-0 foo"
     );
     assert!(findings[0].file.ends_with("0:foo"));
+}
+
+#[cfg(unix)]
+#[test]
+fn staged_type_change_is_scanned() {
+    // `--diff-filter=ACMRT` now includes type-changes (T). Replacing a tracked
+    // regular file with a symlink stages a type-change whose blob is the link
+    // target text; it must be scanned (ACMR would have excluded it).
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    let f = repo.path().join("f");
+    std::fs::write(&f, "clean").expect("write regular");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+
+    std::fs::remove_file(&f).expect("rm regular");
+    std::os::unix::fs::symlink("SECRET123456", &f).expect("symlink");
+    git(repo.path(), &["add", "f"]);
+
+    let scanner = scanner(ScanConfig {
+        git_staged: true,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1, "type-changed blob must be scanned");
+    assert!(findings[0].file.ends_with("f"));
+}
+
+#[cfg(unix)]
+#[test]
+fn staged_non_utf8_filename_scanned() {
+    // Git pathnames are arbitrary bytes on Unix. The pathspec must reach git
+    // byte-exact; a lossy String conversion would corrupt the name so `cat-file`
+    // could not find it and the staged secret would be missed.
+    use std::ffi::OsString;
+    use std::os::unix::ffi::OsStringExt;
+
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    let name = OsString::from_vec(vec![b'a', 0xff, b'.', b't', b'x', b't']);
+    // Some filesystems (e.g. APFS on macOS) enforce valid UTF-8 filenames and
+    // reject the byte sequence. The byte-exact path handling only matters where
+    // such names are allowed (e.g. Linux ext4), so skip where they are not.
+    if std::fs::write(repo.path().join(&name), "SECRET123456").is_err() {
+        return;
+    }
+    git(repo.path(), &["add", "-A"]);
+
+    let scanner = scanner(ScanConfig {
+        git_staged: true,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(
+        findings.len(),
+        1,
+        "non-UTF-8 staged path must be read byte-exact: {findings:?}"
+    );
+}
+
+// ─────────────────────────────────────────────
+// Git-history (`--git-history`) patch scanning
+// ─────────────────────────────────────────────
+
+/// Run git and return trimmed stdout (for reading commit SHAs in tests).
+fn git_out(repo: &Path, args: &[&str]) -> String {
+    let out = Command::new("git")
+        .arg("-C")
+        .arg(repo)
+        .args(args)
+        .output()
+        .expect("run git");
+    assert!(out.status.success(), "git {args:?} failed");
+    String::from_utf8(out.stdout)
+        .expect("utf8")
+        .trim()
+        .to_string()
+}
+
+fn history_scanner() -> Scanner {
+    scanner(ScanConfig {
+        git_history: true,
+        history_full: true,
+        ..Default::default()
+    })
+}
+
+#[test]
+fn history_finds_secret_removed_from_tree() {
+    // A secret committed then deleted is gone from the working tree but lives in
+    // history. `--git-tracked` would miss it; `--git-history` must catch it.
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("seed.txt"), "clean").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+
+    let secret = repo.path().join("leak.txt");
+    std::fs::write(&secret, "key = SECRET123456").expect("write secret");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "add secret"]);
+
+    std::fs::remove_file(&secret).expect("rm");
+    git(repo.path(), &["add", "-A"]);
+    git(repo.path(), &["commit", "-q", "-m", "remove secret"]);
+
+    // Sanity: the working tree is clean now.
+    let tracked = scanner(ScanConfig {
+        git_tracked: true,
+        ..Default::default()
+    });
+    assert!(
+        tracked
+            .scan_path(repo.path().to_str().expect("path"))
+            .is_empty(),
+        "working tree must be clean after removal"
+    );
+
+    let findings = history_scanner().scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1, "history must find the removed secret");
+    assert!(findings[0].file.ends_with("leak.txt"));
+}
+
+#[test]
+fn history_attributes_commit_sha() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("a.txt"), "SECRET123456").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "add secret"]);
+    let adding = git_out(repo.path(), &["rev-parse", "HEAD"]);
+    // A later, unrelated commit so HEAD is not the adding commit.
+    std::fs::write(repo.path().join("b.txt"), "clean").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "unrelated"]);
+
+    let findings = history_scanner().scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1);
+    assert_eq!(
+        findings[0].commit.as_deref(),
+        Some(adding.as_str()),
+        "finding must be attributed to the commit that added it"
+    );
+}
+
+#[test]
+fn history_reports_added_line_number() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    // Secret on the 3rd line of the file.
+    std::fs::write(
+        repo.path().join("c.txt"),
+        "one\ntwo\nkey=SECRET123456\nfour\n",
+    )
+    .expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "add"]);
+
+    let findings = history_scanner().scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1);
+    assert_eq!(
+        findings[0].line, 3,
+        "line number must map to the new-file line"
+    );
+}
+
+#[test]
+fn history_log_opts_limit_commits() {
+    // Each `--log-opts` value is spliced into `git log` as one verbatim argv
+    // entry. `--max-count=1` restricts scanning to the most recent commit.
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("a.txt"), "SECRET111111").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "first"]);
+    std::fs::write(repo.path().join("b.txt"), "SECRET222222").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "second"]);
+
+    let scanner = scanner(ScanConfig {
+        git_history: true,
+        history_log_opts: vec!["--max-count=1".to_string()],
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(
+        findings.len(),
+        1,
+        "only the latest commit should be scanned"
+    );
+    assert!(findings[0].file.ends_with("b.txt"));
+}
+
+#[test]
+fn history_finds_secret_after_plusplus_content_line() {
+    // Regression: an added line whose text begins with "++ " renders as "+++ " in
+    // the `-U0` patch. The parser must treat it as hunk content (because a hunk is
+    // already open), NOT as a "+++ b/path" file header — otherwise it would drop
+    // the rest of the hunk and miss the secret on the following added line.
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(
+        repo.path().join("notes.txt"),
+        "++ heading line\nkey=SECRET123456\n",
+    )
+    .expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "add"]);
+
+    let findings = history_scanner().scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(
+        findings.len(),
+        1,
+        "secret after a '++ ' content line must still be found"
+    );
+    assert_eq!(findings[0].line, 2, "secret is on the 2nd new-file line");
+    assert!(findings[0].file.ends_with("notes.txt"));
+}
+
+#[test]
+fn history_context_line_number_matches_reported_line() {
+    // Regression: across multiple hunks of one file diff, a finding's reported
+    // line and its context-line numbers must both be real new-file lines (not
+    // relative to the reconstructed patch buffer). One commit edits line 1 and
+    // adds a secret on line 5, producing two separate `-U0` hunks.
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("d.txt"), "a\nb\nc\nd\ne\n").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+
+    std::fs::write(repo.path().join("d.txt"), "A\nb\nc\nd\nkey=SECRET123456\n").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "edit"]);
+
+    let findings = history_scanner().scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1);
+    assert_eq!(findings[0].line, 5, "secret is on new-file line 5");
+    assert!(
+        findings[0]
+            .context_lines
+            .iter()
+            .any(|(ln, _)| *ln == findings[0].line),
+        "context lines must use real file line numbers, not buffer-relative ones: {:?}",
+        findings[0].context_lines
+    );
+}
+
+#[test]
+fn history_mode_outside_repo_fails_closed() {
+    // History mode always fails closed (no walk fallback), even with
+    // git_fallback_walk set — a directory walk cannot approximate history.
+    let dir = tempfile::tempdir().expect("dir");
+    std::fs::write(dir.path().join("leak.txt"), "SECRET123456").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        git_history: true,
+        git_fallback_walk: true,
+        ..Default::default()
+    });
+    let (findings, stats) = scanner.scan_path_with_stats(dir.path().to_str().expect("path"));
+    assert!(stats.git_failed, "non-repo history scan must fail closed");
+    assert!(findings.is_empty(), "history mode must not walk the tree");
+}
+
+// ─────────────────────────────────────────────
+// CLI: git modes fail closed (exit 2)
+// ─────────────────────────────────────────────
+
+#[test]
+fn cli_git_mode_failure_exits_2() {
+    // `--git-tracked` outside a git repo fails closed: exit 2, nothing scanned,
+    // rather than silently walking the directory.
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+    std::fs::write(dir.path().join("app.txt"), format!("TOKEN={PAT}")).expect("write");
+    let d = dir.path().to_str().expect("dir");
+    let r = rules.to_str().expect("rules");
+
+    let code = |args: &[&str]| {
+        Command::new(BIN)
+            .args(args)
+            .status()
+            .expect("run")
+            .code()
+            .expect("code")
+    };
+
+    assert_eq!(
+        code(&["scan", d, "--rules", r, "--git-tracked"]),
+        2,
+        "git failure must fail closed with exit 2"
+    );
+    // Even --no-fail does not mask a fail-closed git error.
+    assert_eq!(
+        code(&["scan", d, "--rules", r, "--git-tracked", "--no-fail"]),
+        2,
+        "--no-fail does not downgrade a fail-closed git error"
+    );
+    // Opting into the walk fallback restores scanning (finds the PAT → exit 1).
+    assert_eq!(
+        code(&[
+            "scan",
+            d,
+            "--rules",
+            r,
+            "--git-tracked",
+            "--git-fallback",
+            "walk"
+        ]),
+        1,
+        "--git-fallback=walk restores the directory walk"
+    );
 }
 
 // ─────────────────────────────────────────────

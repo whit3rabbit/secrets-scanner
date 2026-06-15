@@ -150,6 +150,14 @@ fn build_bytes_regex_set(patterns: &[String]) -> Result<regex::bytes::RegexSet, 
     builder.build()
 }
 
+// Classifies a compile error as "a literal `{`/`}` the author meant verbatim,
+// not a counted-repetition quantifier" by matching `regex::Error`'s message text.
+// `regex::Error` is `#[non_exhaustive]` and exposes only `Syntax(String)` — there
+// is no structured brace-error kind to match on, so substring matching is the only
+// available signal. It is coupled to the regex crate's wording; a crate bump that
+// rewords these would make a repairable rule fail to compile and be dropped. The
+// `escaped == pattern` short-circuit at the call sites bounds the blast radius:
+// repair is attempted only when escaping actually changes the pattern.
 fn is_literal_brace_compile_error(e: &regex::Error) -> bool {
     let msg = e.to_string();
     msg.contains("repetition")

@@ -12,7 +12,7 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 - **Gitleaks-compatible TOML rules**: Loads rules from a gitleaks-style TOML configuration. Supports custom rules via `--rules` or `SECRETS_SCANNER_RULES`.
 - **Manifest-driven bundled rules**: Combines local, gitleaks, and kingfisher rulesets at compile time, validated and deduped by priority.
 - **Safe-by-default scanning**: Redacts matched secrets, rejects symlinks, uses bounded file reads, and automatically skips binary files.
-- **Git-aware scanning**: Scan git-tracked files (`--git`), local diffs (`--git-diff` / `--diff-base`), or untracked files (`--include-untracked`).
+- **Git-aware scanning**: Scan git-tracked files (`--git-tracked`), changed files (`--changed-files` / `--base`), full history patches (`--git-history`, finds secrets committed then removed), staged index blobs (`--staged`), or untracked files (`--include-untracked`). Explicit git modes fail closed on git error (opt back in with `--git-fallback=walk`).
 - **CI-friendly output**: Exports to text, JSON, JSONL, and SARIF formats. Supports suppressions, baselines, and scan scope limits.
 - **CLI and automation**: Complete CLI toolset with completions, GitHub Action, pre-commit hook, Docker image, and Homebrew cask packaging.
 - **Optional runtime updates**: Download and update rule configurations dynamically to the OS user-data directory via the `--features updater` build.
@@ -217,8 +217,16 @@ scan options:
   --min-entropy <FLOAT>     Override per-rule entropy thresholds
   --max-file-size <BYTES>   Skip files larger than this (default: 2MB)
   --baseline <FILE>         Suppress findings present in a generated baseline
-  --git                     Only scan files tracked by git
-  --git-diff                Only scan files changed since the last commit
+  --git-tracked             Only scan files currently tracked by git
+  --changed-files           Only scan current content of files changed vs a base
+  --base <REF>              Base ref for --changed-files (implies it); scans <base>...HEAD
+  --git-history             Scan full git history (git log -p); finds removed secrets
+  --all                     With --git-history, traverse all refs
+  --full-history            With --git-history, pass --full-history
+  --log-opts <OPTS>         With --git-history, raw git log options (operator-trusted)
+  --staged                  Scan staged index blobs (pre-commit)
+  --include-untracked       In git mode, also scan untracked (non-ignored) files
+  --git-fallback <MODE>     On git failure: fail closed (default) or `walk` (legacy)
 
 update-rules options:
   --check                   Report update availability without downloading
@@ -266,12 +274,12 @@ gitleaks + kingfisher**; `secrets-patterns-db` is opt-in via `--features full-ru
 Counts are raw `[[rules]]` entries; many are disabled at load because they use
 look-around, which Rust's `regex` engine rejects (see "active" below).
 
-| Ruleset | Upstream | Raw rules | Size | Priority | Default build |
+| Ruleset | Upstream Source | Raw rules | Size | Priority | Default Build |
 |---|---|--:|--:|--:|:--:|
-| [`local`](docs/rulesets/local.md) | hand-curated (`assets/local.toml`) | 240 | 76 KB | 100 | ✅ embedded |
-| [`gitleaks`](docs/rulesets/gitleaks.md) | [gitleaks](https://github.com/gitleaks/gitleaks) | 222 | 96 KB | 10 | ✅ embedded |
-| [`kingfisher`](docs/rulesets/kingfisher.md) | [MongoDB Kingfisher](https://github.com/mongodb/kingfisher) | 755¹ | 240 KB | 7 | ✅ embedded |
-| [`secrets-patterns-db`](docs/rulesets/spdb.md) | [mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db) | 1599 | 360 KB | 5 | ⬚ `--features full-ruleset` |
+| [`local`](docs/rulesets/local.md) | hand-curated ([`assets/local.toml`](assets/local.toml)) | 240 | 76 KB | 100 | ✅ embedded |
+| [`gitleaks`](docs/rulesets/gitleaks.md) | [gitleaks](https://github.com/gitleaks/gitleaks) ([`assets/gitleaks.toml`](assets/gitleaks.toml)) | 222 | 96 KB | 10 | ✅ embedded |
+| [`kingfisher`](docs/rulesets/kingfisher.md) | [MongoDB Kingfisher](https://github.com/mongodb/kingfisher) ([`assets/kingfisher-rules.toml`](assets/kingfisher-rules.toml)) | 755¹ | 240 KB | 7 | ✅ embedded |
+| [`secrets-patterns-db`](docs/rulesets/spdb.md) | [mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db) ([`assets/secrets-patterns-db.toml`](assets/secrets-patterns-db.toml)) | 1599 | 360 KB | 5 | ⬚ `--features full-ruleset` |
 
 ¹ Kingfisher is converted from 951 YAML rules to TOML by `scripts/convert_kingfisher_rules.py`:
 `visible:false` helper rules are skipped, rules already covered by gitleaks/local are removed by
@@ -279,10 +287,10 @@ behavioral dedup, and patterns the Rust engine can't compile are dropped.
 
 **Merged totals** (after id-collision + detection-equivalent dedup, then look-around disabling):
 
-| Build | Sources | Merged | Active (compiled) |
-|---|---|--:|--:|
-| lean default | local + gitleaks + kingfisher | 1136 | 987 |
-| `--features full-ruleset` | + secrets-patterns-db | 2735 | 2586 |
+| Build | Sources | Merged | Active (compiled) | Embedded Ruleset / Output File |
+|---|---|--:|--:|---|
+| lean default | local + gitleaks + kingfisher | 1136 | 987 | [`assets/secrets-scanner.toml`](assets/secrets-scanner.toml) (committed & embedded by default) |
+| `--features full-ruleset` | + secrets-patterns-db | 2735 | 2586 | `$OUT_DIR/secrets-scanner.toml` (embedded at compile time) |
 
 Regenerate the merged ruleset with `make merge-rules`; inspect cross-source duplicates with
 `make find-dups`.
@@ -506,7 +514,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0    # full history for `git`/`diff-base`
+          fetch-depth: 0    # full history for `git-tracked`/`base`
 
       - id: scan
         uses: whit3rabbit/secrets-scanner@v0.1.0   # pin a released tag
@@ -534,8 +542,8 @@ release.
 | `fail-on-findings` | `true` | Fail the job on findings. Set `false` to upload SARIF and gate separately. |
 | `sarif` | `true` | Write SARIF output. |
 | `sarif-file` | `secrets-scanner.sarif` | SARIF output path. |
-| `git` | `true` | Scan only git-tracked files (`--git`). |
-| `diff-base` | – | Base ref for diff scanning, e.g. `origin/${{ github.base_ref }}`. |
+| `git-tracked` | `true` | Scan only git-tracked files (`--git-tracked`). |
+| `base` | – | Base ref for changed-files scanning, e.g. `origin/${{ github.base_ref }}`. |
 | `max-file-size` | `2097152` | Max file size in bytes. |
 | `binary-policy` | `auto` | Binary handling: `auto \| skip \| scan`. |
 | `version` | – | Release to install (e.g. `v0.1.0`). Defaults to the action ref, else warns and uses latest. |
@@ -548,7 +556,7 @@ release.
 | `sarif-file` | Path to the written SARIF file (empty when `sarif: false`). |
 
 To gate pull requests on only the changed code, set
-`diff-base: origin/${{ github.base_ref }}`. Use `if: always()` on the upload
+`base: origin/${{ github.base_ref }}`. Use `if: always()` on the upload
 step (or `fail-on-findings: false` plus a separate gate) so SARIF still uploads
 when findings are present.
 
@@ -561,15 +569,15 @@ For non-GitHub CI (GitLab, Jenkins) or local use, build a lean static image
 
 ```bash
 docker build -t secrets-scanner:dev .
-docker run --rm -v "$PWD:/repo" secrets-scanner:dev scan /repo --git
+docker run --rm -v "$PWD:/repo" secrets-scanner:dev scan /repo --git-tracked
 ```
 
-The runtime image bundles `git`, so the safe-default `--git` mode works inside
-the container. Write SARIF to the mounted volume to collect it on the host:
+The runtime image bundles `git`, so the safe-default `--git-tracked` mode works
+inside the container. Write SARIF to the mounted volume to collect it on the host:
 
 ```bash
 docker run --rm -v "$PWD:/repo" secrets-scanner:dev \
-  scan /repo --git --format sarif --output /repo/results.sarif
+  scan /repo --git-tracked --format sarif --output /repo/results.sarif
 ```
 
 GitLab CI example:
@@ -578,7 +586,7 @@ GitLab CI example:
 secrets-scan:
   image: secrets-scanner:dev   # or a registry tag you build/push
   script:
-    - secrets-scanner scan . --git --format sarif --output gl.sarif
+    - secrets-scanner scan . --git-tracked --format sarif --output gl.sarif
   artifacts:
     when: always
     paths: [gl.sarif]

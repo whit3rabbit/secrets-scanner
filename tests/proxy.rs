@@ -114,6 +114,38 @@ fn per_file_finding_cap_enforced_in_scan_bytes() {
 }
 
 #[test]
+fn redaction_covers_secrets_past_the_finding_cap() {
+    // Regression: redaction must run on the full pre-cap finding set. With the
+    // per-content cap below the number of distinct secrets, the findings list is
+    // truncated to the cap, but every detected secret must still be redacted out
+    // of the forwarded payload. Redacting off the post-cap list would forward the
+    // secrets past the cap in the clear (the fail-open hazard).
+    let content = "tok_AAAAAAAAAA tok_BBBBBBBBBB tok_CCCCCCCCCC";
+    let config = ScanConfig {
+        max_findings_per_file: Some(1),
+        ..ScanConfig::proxy()
+    };
+    let scanner = proxy_scanner(config);
+    let out = scanner
+        .scan_proxy(content.as_bytes())
+        .expect("within size cap");
+
+    assert_eq!(out.findings.len(), 1, "findings list is capped at 1");
+    let redacted = as_str(&out.redacted);
+    for secret in ["tok_AAAAAAAAAA", "tok_BBBBBBBBBB", "tok_CCCCCCCCCC"] {
+        assert!(
+            !redacted.contains(secret),
+            "a secret past the finding cap must still be redacted, not forwarded: {redacted}"
+        );
+    }
+    assert_eq!(
+        redacted.matches("[REDACTED_SECRET]").count(),
+        3,
+        "all three secrets must be redacted even though findings are capped at 1"
+    );
+}
+
+#[test]
 fn long_match_is_omitted_not_amplified() {
     // One match longer than the proxy `max_matched_len` (256).
     let token = format!("tok_{}", "A".repeat(400));

@@ -202,13 +202,7 @@ impl Scanner {
         // to remember `ScanConfig::proxy()`) is to fail closed when the posture is
         // not hardened. Caps are checked for presence, not exact value, so a caller
         // may raise them via `with_config` and still pass.
-        let cfg = &self.config;
-        let hardened = cfg.redact
-            && !cfg.honor_allow_markers
-            && !cfg.capture_context
-            && cfg.max_findings_per_file.is_some()
-            && cfg.max_matched_len.is_some();
-        if !hardened {
+        if !self.config.is_hardened() {
             return Err(ProxyError::NotHardened);
         }
         if content.len() as u64 > self.config.max_file_size {
@@ -224,6 +218,20 @@ impl Scanner {
     ///
     /// This operates directly on raw bytes to avoid heap allocations.
     pub fn scan_bytes(&self, path: &str, content: &[u8]) -> Vec<Finding> {
+        let mut findings = self.scan_bytes_uncapped(path, content);
+        self.apply_findings_cap(path, &mut findings);
+        findings
+    }
+
+    /// Scan a byte slice and return every finding WITHOUT applying the per-file
+    /// finding cap.
+    ///
+    /// Callers that derive payload output from the finding set (redaction) must
+    /// use the full pre-cap set: the cap drops finding *entries*, but a dropped
+    /// secret's bytes still live in `content`, so redacting off a truncated set
+    /// would forward secrets past the cap in the clear. `scan_bytes` and
+    /// `scan_and_redact_bytes` re-apply the cap themselves at the right point.
+    fn scan_bytes_uncapped(&self, path: &str, content: &[u8]) -> Vec<Finding> {
         // Check global path allowlist first — skip entirely if path matches.
         if self.engine.is_path_globally_allowlisted(path) {
             return Vec::new();
@@ -257,6 +265,7 @@ impl Scanner {
                             path,
                             path.as_bytes(),
                         ),
+                        commit: None,
                         context_lines: Vec::new(),
                     });
                 }
@@ -321,9 +330,17 @@ impl Scanner {
             matching::redact_context_lines(content, &mut findings);
         }
 
-        // Per-content finding cap. Enforced here (not only in the directory
-        // walk) so every caller of `scan_bytes` — including the in-memory proxy
-        // path — is bounded and cannot be starved by a match-spam payload.
+        findings
+    }
+
+    /// Apply the per-content finding cap (`max_findings_per_file`) in place.
+    ///
+    /// Enforced here (not only in the directory walk) so every caller of
+    /// `scan_bytes` — including the in-memory proxy path — is bounded and cannot
+    /// be starved by a match-spam payload. Callers that redact a payload from the
+    /// finding set must do so on the pre-cap findings (see `scan_bytes_uncapped`)
+    /// and call this only afterwards.
+    fn apply_findings_cap(&self, path: &str, findings: &mut Vec<Finding>) {
         if let Some(cap) = self.config.max_findings_per_file {
             if findings.len() > cap {
                 log::warn!(
@@ -335,17 +352,22 @@ impl Scanner {
                 findings.truncate(cap);
             }
         }
-
-        findings
     }
 
     /// Scan bytes and return both findings and redacted bytes.
     ///
     /// Secret byte spans are replaced with `[REDACTED_SECRET]`. Path-only and
     /// zero-length findings are reported but do not mutate the returned bytes.
+    ///
+    /// Redaction runs against the **full pre-cap** finding set so a payload with
+    /// more than `max_findings_per_file` distinct secrets still has every secret
+    /// redacted; only the returned `findings` list is then truncated to the cap.
+    /// Redacting off the post-cap list would forward secrets past the cap in the
+    /// clear — the fail-open hazard this ordering closes.
     pub fn scan_and_redact_bytes(&self, path: &str, content: &[u8]) -> ScanOutput<Vec<u8>> {
-        let findings = self.scan_bytes(path, content);
+        let mut findings = self.scan_bytes_uncapped(path, content);
         let redacted = redaction::redact_content_bytes(content, &findings);
+        self.apply_findings_cap(path, &mut findings);
         ScanOutput { findings, redacted }
     }
 

@@ -237,6 +237,7 @@ pub(super) fn check_rule_match(
             secret_start_offset: secret_start_in_file,
             secret_end_offset: secret_end_in_file,
             fingerprint,
+            commit: None,
             context_lines,
         });
     }

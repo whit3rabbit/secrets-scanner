@@ -1,7 +1,18 @@
 export interface ScanConfig {
+  /**
+   * Use the hardened proxy preset: redaction enabled, inline allow markers
+   * ignored, context capture disabled, and proxy-safe caps applied.
+   */
+  proxy?: boolean;
+
   redact?: boolean;
   minEntropy?: number;
+  maxFileSize?: number;
+  maxFindingsPerFile?: number;
+  maxMatchedLen?: number;
 }
+
+export type ProxyScanConfig = Omit<ScanConfig, "proxy">;
 
 export interface ContextLine {
   line: number;
@@ -41,6 +52,7 @@ export class Scanner {
   private constructor(nativeScanner: unknown);
 
   static bundled(config?: ScanConfig): Scanner;
+  static proxy(config?: ProxyScanConfig): Scanner;
   static fromDefaultRules(config?: ScanConfig): Scanner;
   static fromRulesFile(path: string, config?: ScanConfig): Scanner;
   static fromToml(toml: string, config?: ScanConfig): Scanner;
@@ -49,4 +61,5 @@ export class Scanner {
   scanAndRedactContent(path: string, content: string): StringRedactionResult;
   scanBytes(path: string, content: Uint8Array): Finding[];
   scanAndRedactBytes(path: string, content: Uint8Array): BytesRedactionResult;
+  scanProxy(content: Uint8Array): BytesRedactionResult;
 }

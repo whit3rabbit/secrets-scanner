@@ -2,13 +2,17 @@ use napi::bindgen_prelude::{Buffer, Result};
 use napi::{Error, Status};
 use napi_derive::napi;
 use secrets_scanner::{
-    Finding, ScanConfig as RustScanConfig, Scanner as RustScanner, ScannerError,
+    Finding, ProxyError, ScanConfig as RustScanConfig, Scanner as RustScanner, ScannerError,
 };
 
 #[napi(object)]
 pub struct NativeScanConfig {
+    pub proxy: Option<bool>,
     pub redact: Option<bool>,
     pub min_entropy: Option<f64>,
+    pub max_file_size: Option<f64>,
+    pub max_findings_per_file: Option<f64>,
+    pub max_matched_len: Option<f64>,
 }
 
 #[napi(object)]
@@ -144,12 +148,31 @@ impl NativeScanner {
             has_findings,
         }
     }
+
+    #[napi]
+    pub fn scan_proxy(&self, content: Buffer) -> Result<NativeByteRedactionResult> {
+        let output = self
+            .inner
+            .scan_proxy(&content)
+            .map_err(to_napi_proxy_error)?;
+        let has_findings = output.has_findings();
+
+        Ok(NativeByteRedactionResult {
+            findings: output.findings.into_iter().map(finding_to_native).collect(),
+            redacted: output.redacted.into(),
+            has_findings,
+        })
+    }
 }
 
 fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig> {
-    let mut rust = RustScanConfig::default();
     let Some(config) = config else {
-        return Ok(rust);
+        return Ok(RustScanConfig::default());
+    };
+    let mut rust = if config.proxy.unwrap_or(false) {
+        RustScanConfig::proxy()
+    } else {
+        RustScanConfig::default()
     };
 
     if let Some(redact) = config.redact {
@@ -164,6 +187,21 @@ fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig> {
             ));
         }
         rust.min_entropy_override = Some(min_entropy);
+    }
+
+    if let Some(max_file_size) = config.max_file_size {
+        rust.max_file_size = number_to_u64("maxFileSize", max_file_size)?;
+    }
+
+    if let Some(max_findings_per_file) = config.max_findings_per_file {
+        rust.max_findings_per_file = Some(number_to_usize(
+            "maxFindingsPerFile",
+            max_findings_per_file,
+        )?);
+    }
+
+    if let Some(max_matched_len) = config.max_matched_len {
+        rust.max_matched_len = Some(number_to_usize("maxMatchedLen", max_matched_len)?);
     }
 
     Ok(rust)
@@ -214,6 +252,35 @@ fn to_napi_error(error: ScannerError) -> Error {
             napi_error("ENGINE_BUILD", "scanner engine could not be built")
         }
     }
+}
+
+fn to_napi_proxy_error(error: ProxyError) -> Error {
+    match error {
+        ProxyError::InputTooLarge { .. } => napi_error(
+            "INPUT_TOO_LARGE",
+            "proxy input exceeds configured maxFileSize",
+        ),
+    }
+}
+
+fn number_to_u64(field: &str, value: f64) -> Result<u64> {
+    if !value.is_finite() || value < 0.0 || value.fract() != 0.0 || value > u64::MAX as f64 {
+        return Err(napi_error(
+            "INVALID_CONFIG",
+            &format!("scan config contains an invalid {field}"),
+        ));
+    }
+    Ok(value as u64)
+}
+
+fn number_to_usize(field: &str, value: f64) -> Result<usize> {
+    if !value.is_finite() || value < 0.0 || value.fract() != 0.0 || value > usize::MAX as f64 {
+        return Err(napi_error(
+            "INVALID_CONFIG",
+            &format!("scan config contains an invalid {field}"),
+        ));
+    }
+    Ok(value as usize)
 }
 
 fn napi_error(code: &str, message: &str) -> Error {

@@ -29,6 +29,10 @@ describe("@secrets-scanner/core", () => {
     expect(() => Scanner.bundled()).not.toThrow();
   });
 
+  it("constructs from bundled rules with proxy defaults", () => {
+    expect(() => Scanner.proxy()).not.toThrow();
+  });
+
   it("detects a planted token from inline TOML", () => {
     const scanner = Scanner.fromToml(RULES);
     const findings = scanner.scanContent("input.env", `API_TOKEN=${SECRET}`);
@@ -84,6 +88,32 @@ describe("@secrets-scanner/core", () => {
     expect(result.hasFindings).toBe(true);
     expect(Buffer.from(result.redacted).toString("utf8")).toBe(
       "API_TOKEN=[REDACTED_SECRET]"
+    );
+  });
+
+  it("exposes hardened proxy scans to TypeScript", () => {
+    const content = `API_TOKEN=${SECRET} secrets-scanner:allow`;
+    const defaultScanner = Scanner.fromToml(RULES);
+    const proxyScanner = Scanner.fromToml(RULES, { proxy: true });
+
+    expect(defaultScanner.scanContent("input.env", content)).toHaveLength(0);
+
+    const result = proxyScanner.scanProxy(Buffer.from(content, "utf8"));
+    const redacted = Buffer.from(result.redacted).toString("utf8");
+
+    expect(result.hasFindings).toBe(true);
+    expect(result.findings).toHaveLength(1);
+    expect(result.findings[0]?.file).toBe("<proxy>");
+    expect(result.findings[0]?.contextLines).toEqual([]);
+    expect(redacted).toBe("API_TOKEN=[REDACTED_SECRET] secrets-scanner:allow");
+    expect(redacted).not.toContain(SECRET);
+  });
+
+  it("reports proxy oversize failures with a stable code", () => {
+    const scanner = Scanner.fromToml(RULES, { proxy: true, maxFileSize: 8 });
+
+    expect(() => scanner.scanProxy(Buffer.from(SECRET, "utf8"))).toThrowError(
+      expect.objectContaining({ code: "INPUT_TOO_LARGE" })
     );
   });
 

@@ -5,6 +5,7 @@ const path = require("node:path");
 
 const ERROR_MESSAGES = {
   ENGINE_BUILD: "scanner engine could not be built",
+  INPUT_TOO_LARGE: "proxy input exceeds configured maxFileSize",
   INVALID_CONFIG: "scan config is invalid",
   INVALID_RULES: "scanner rules are invalid",
   INVALID_RULES_TOML: "scanner rules TOML is invalid",
@@ -24,6 +25,10 @@ class Scanner {
 
   static bundled(config) {
     return wrapNative(() => new Scanner(native.NativeScanner.bundled(toNativeConfig(config))));
+  }
+
+  static proxy(config) {
+    return Scanner.bundled({ ...(config ?? {}), proxy: true });
   }
 
   static fromDefaultRules(config) {
@@ -77,6 +82,12 @@ class Scanner {
       )
     );
   }
+
+  scanProxy(content) {
+    return wrapNative(() =>
+      mapByteRedactionResult(this.nativeScanner.scanProxy(toBuffer(content)))
+    );
+  }
 }
 
 function loadNative() {
@@ -113,7 +124,11 @@ function toNativeConfig(config) {
   }
 
   return {
+    proxy: config.proxy,
     minEntropy: config.minEntropy,
+    maxFileSize: config.maxFileSize,
+    maxFindingsPerFile: config.maxFindingsPerFile,
+    maxMatchedLen: config.maxMatchedLen,
     redact: config.redact,
   };
 }
@@ -199,9 +214,10 @@ function normalizeNativeError(error) {
   }
 
   const message = error && error.message ? String(error.message) : String(error);
-  const match = /^(ENGINE_BUILD|INVALID_CONFIG|INVALID_RULES_TOML|INVALID_RULES|IO):/.exec(
-    message
-  );
+  const match =
+    /^(ENGINE_BUILD|INPUT_TOO_LARGE|INVALID_CONFIG|INVALID_RULES_TOML|INVALID_RULES|IO):/.exec(
+      message
+    );
   const code = match ? match[1] : "NATIVE_ERROR";
   const wrapped = new Error(ERROR_MESSAGES[code] ?? ERROR_MESSAGES.NATIVE_ERROR);
   wrapped.code = code;

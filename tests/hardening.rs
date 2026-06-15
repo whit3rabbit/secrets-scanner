@@ -631,6 +631,7 @@ fn staged_mode_reads_index_blob_not_working_tree() {
     );
 }
 
+#[cfg(unix)]
 #[test]
 fn staged_mode_reads_paths_that_look_like_stage_selectors() {
     let repo = tempfile::tempdir().expect("repo");

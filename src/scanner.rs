@@ -32,7 +32,9 @@ mod output;
 mod redaction;
 mod types;
 mod walk;
-pub use types::{BinaryPolicy, Finding, ScanConfig, ScanOutput, ScanResult, ScanStats};
+pub use types::{
+    BinaryPolicy, Finding, RedactionMode, ScanConfig, ScanOutput, ScanResult, ScanStats,
+};
 
 /// The scanner. Owns a compiled `RuleEngine` and scan configuration.
 ///

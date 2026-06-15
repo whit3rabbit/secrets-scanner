@@ -173,6 +173,21 @@ pub fn redact(s: &str) -> String {
     format!("{}{}{}", prefix, "*".repeat(char_count - keep * 2), suffix,)
 }
 
+/// Fully redact a matched secret to a fixed marker that reveals nothing, not
+/// even its length. Used by [`crate::scanner::types::RedactionMode::Full`].
+///
+/// # Examples
+///
+/// ```
+/// use secrets_scanner::filters::redact_full;
+///
+/// assert_eq!(redact_full("AKIAIOSFODNN7EXAMPLE123"), "[REDACTED]");
+/// assert_eq!(redact_full("short"), "[REDACTED]");
+/// ```
+pub fn redact_full(_s: &str) -> String {
+    "[REDACTED]".to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -234,6 +249,15 @@ mod tests {
         assert_eq!(redact("twelvechars!").chars().count(), 12);
         assert_eq!(redact("twelvechars!"), "************");
         assert_eq!(redact("thirteenchars"), "thir*****hars");
+    }
+
+    #[test]
+    fn redact_full_returns_length_hiding_marker() {
+        // Full mode must reveal nothing, including length: same marker regardless
+        // of input.
+        assert_eq!(redact_full("AKIAIOSFODNN7EXAMPLE123"), "[REDACTED]");
+        assert_eq!(redact_full("short"), "[REDACTED]");
+        assert_eq!(redact_full(""), "[REDACTED]");
     }
 
     #[test]

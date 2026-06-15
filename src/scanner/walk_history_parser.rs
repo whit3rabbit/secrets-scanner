@@ -23,7 +23,7 @@ pub(super) struct FileDiff {
 }
 
 /// Streaming state machine over `git log -p -U0` output.
-pub(super) struct Parser<'a> {
+pub(crate) struct Parser<'a> {
     scanner: &'a Scanner,
     root: &'a str,
     stats: &'a StatsAcc,
@@ -50,7 +50,7 @@ pub(super) struct Parser<'a> {
 }
 
 impl<'a> Parser<'a> {
-    pub(super) fn new(scanner: &'a Scanner, root: &'a str, stats: &'a StatsAcc) -> Self {
+    pub(crate) fn new(scanner: &'a Scanner, root: &'a str, stats: &'a StatsAcc) -> Self {
         Parser {
             scanner,
             root,
@@ -70,19 +70,19 @@ impl<'a> Parser<'a> {
         }
     }
 
-    pub(super) fn reached_cap(&self) -> bool {
+    pub(crate) fn reached_cap(&self) -> bool {
         self.cap.is_some_and(|c| self.findings.len() >= c)
     }
 
-    pub(super) fn into_findings(self) -> Vec<Finding> {
+    pub(crate) fn into_findings(self) -> Vec<Finding> {
         self.findings
     }
 
-    pub(super) fn finish(&mut self) {
+    pub(crate) fn finish(&mut self) {
         self.flush_diff();
     }
 
-    pub(super) fn feed(&mut self, line: &[u8]) {
+    pub(crate) fn feed(&mut self, line: &[u8]) {
         if let Some(sha) = parse_commit_sha(line) {
             self.flush_diff();
             self.current_commit = Some(sha);
@@ -316,7 +316,7 @@ fn map_line(buf_line: usize, line_map: &[usize]) -> usize {
 /// 40-hex (sha1) or 64-hex (sha256) object id. Patch content lines are prefixed
 /// (`+`/`-`/` `) and commit-message lines are indented, so a column-0 `commit `
 /// here is the log header, not file content; the hex check is belt-and-suspenders.
-fn parse_commit_sha(line: &[u8]) -> Option<String> {
+pub(crate) fn parse_commit_sha(line: &[u8]) -> Option<String> {
     let rest = line.strip_prefix(b"commit ")?;
     let token = rest.split(|&b| b == b' ').next()?;
     if (token.len() == 40 || token.len() == 64) && token.iter().all(u8::is_ascii_hexdigit) {
@@ -328,7 +328,7 @@ fn parse_commit_sha(line: &[u8]) -> Option<String> {
 
 /// Parse the new-file start line from a unified hunk header
 /// `@@ -a,b +c,d @@ ...` (or the single-count `@@ -a +c @@` form), returning `c`.
-fn parse_hunk_new_start(line: &[u8]) -> Option<usize> {
+pub(crate) fn parse_hunk_new_start(line: &[u8]) -> Option<usize> {
     let s = std::str::from_utf8(line).ok()?;
     let after_plus = s.split('+').nth(1)?;
     let token = after_plus.split([' ', ',']).next()?;

@@ -1,58 +1,58 @@
 {
   "deepseek-api-key": {
-    "secret": "sk-DeepSeekBz9YJXufKErs762SkKK22UKdS2P9wtqj",
-    "test_content": "deepseek = sk-DeepSeekBz9YJXufKErs762SkKK22UKdS2P9wtqj"
+    "secret": "sk-DeepSeekyLtHMvKBk9Z83briuXvOYqzBakXTkrov",
+    "test_content": "deepseek = sk-DeepSeekyLtHMvKBk9Z83briuXvOYqzBakXTkrov"
   },
   "mistral-ai-api-key": {
-    "secret": "mistral_4fSLIx0jrAZcOwQh5AEZOI-6Ny2WWzH8",
-    "test_content": "mistral = mistral_4fSLIx0jrAZcOwQh5AEZOI-6Ny2WWzH8"
+    "secret": "mistral_1lWjl6X-1e09vFGYo9reNFBCjCigM3aL",
+    "test_content": "mistral = mistral_1lWjl6X-1e09vFGYo9reNFBCjCigM3aL"
   },
   "mongodb-atlas-db-uri-with-credentials": {
-    "secret": "mongodb+srv://Ya'\"g\"\"=ld=O\"l\"'r\"D6'yE\"=_==z=r=:Y9\"k1'\"\":FGE'\"ehc'=pO'w=:H'E=o\"=@'W:A\"'=\"\":Il:t==Km\"k\"'=CY=bg\"=XX",
-    "test_content": "mongodb = mongodb+srv://Ya'\"g\"\"=ld=O\"l\"'r\"D6'yE\"=_==z=r=:Y9\"k1'\"\":FGE'\"ehc'=pO'w=:H'E=o\"=@'W:A\"'=\"\":Il:t==Km\"k\"'=CY=bg\"=XX"
+    "secret": "mongodb+srv://oN\"\"3'x\"4z\"'=\"=1\"Y'90Ttpx\"J''\"g':'\"''X=\"Nc''0w'B=4='=O:Qs:m:u\"uh'@\"a=b\"''\"w:\"\"R'_=B=='=IUItJ\"v'jX\"",
+    "test_content": "mongodb = mongodb+srv://oN\"\"3'x\"4z\"'=\"=1\"Y'90Ttpx\"J''\"g':'\"''X=\"Nc''0w'B=4='=O:Qs:m:u\"uh'@\"a=b\"''\"w:\"\"R'_=B=='=IUItJ\"v'jX\""
   },
   "neon-connection-uri": {
-    "secret": "postgresql://X\"==3\"''3g=en'\"\"9R'i\"ZoCi'aynI\"\":l\"Fhlk:ahp\"d:Y'''2:\":==T'MRf:Xzi@'\"Xo6=Hnm'\"'\"oS=YNs=0Q:=U6\"\"\"lFv.neon.tech8do=K'P1\"3\"='':'L=u9W=aR1E53=O=G",
-    "test_content": "neon = postgresql://X\"==3\"''3g=en'\"\"9R'i\"ZoCi'aynI\"\":l\"Fhlk:ahp\"d:Y'''2:\":==T'MRf:Xzi@'\"Xo6=Hnm'\"'\"oS=YNs=0Q:=U6\"\"\"lFv.neon.tech8do=K'P1\"3\"='':'L=u9W=aR1E53=O=G"
+    "secret": "postgresql://'\"1'\"'\"kg\"=sD'Z\"\"'=\"IrU=dO'=P7A':=:xN'F\"rg':'s'N3t'UNi:4:NM'm=8'b@4l11M6Lr:d=t=R56=I=Ab7X\"'\":W\"'_'.neon.tech:E\"Y'==\"=':mKKbyoLKD''pf\"f::TM:=",
+    "test_content": "neon = postgresql://'\"1'\"'\"kg\"=sD'Z\"\"'=\"IrU=dO'=P7A':=:xN'F\"rg':'s'N3t'UNi:4:NM'm=8'b@4l11M6Lr:d=t=R56=I=Ab7X\"'\":W\"'_'.neon.tech:E\"Y'==\"=':mKKbyoLKD''pf\"f::TM:="
   },
   "openrouter-api-key": {
-    "secret": "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",
-    "test_content": "openrouter = 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"
+    "secret": "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",
+    "test_content": "openrouter = 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"
   },
   "snowflake-postgres-connection-string": {
-    "secret": "postgresql://====\"4w'n8HC\"V\"\"pEzI=C\"pW\"j=\"=u\":9Y':\"H\"3a\"':'f\":3'C'J:=\"xomb'\"\"=@'H\"onDXH4uJ'y:'Y=rm==D:rQoE=Zakvsnowflake8'X\"hl='EPP='Xi:D=dP\"3:'To:\"'awc",
-    "test_content": "snowflake = postgresql://====\"4w'n8HC\"V\"\"pEzI=C\"pW\"j=\"=u\":9Y':\"H\"3a\"':'f\":3'C'J:=\"xomb'\"\"=@'H\"onDXH4uJ'y:'Y=rm==D:rQoE=Zakvsnowflake8'X\"hl='EPP='Xi:D=dP\"3:'To:\"'awc"
+    "secret": "postgresql://'S\"\"V==='\"6TV=Oi=ZiTj\"\"=6pO'p\"R=:=J'uv\"x'\"uWtT=:8\"SSd=B=95I2:S\"Gp@='R\"'i'':eh::x':'x\"P:\"E:=B:a=B\"=snowflake\"gDa2\"3I:E\"szYUL=kD=e1l:Fe=mL7:\"",
+    "test_content": "snowflake = postgresql://'S\"\"V==='\"6TV=Oi=ZiTj\"\"=6pO'p\"R=:=J'uv\"x'\"uWtT=:8\"SSd=B=95I2:S\"Gp@='R\"'i'':eh::x':'x\"P:\"E:=B:a=B\"=snowflake\"gDa2\"3I:E\"szYUL=kD=e1l:Fe=mL7:\""
   },
   "snowflake-postgres-host-snowflake-postgres-password": {
-    "secret": "iqIYML2gTjZXmkx20dbtwukJrr78yT6m.snowflakecomputing.com:a--Lc15J7ErPsU+QfTxoNW3bfU:NgB1s",
-    "test_content": "snowflake = iqIYML2gTjZXmkx20dbtwukJrr78yT6m.snowflakecomputing.com:a--Lc15J7ErPsU+QfTxoNW3bfU:NgB1s"
+    "secret": "v46TzTlVG2sBI2cTcj4bjxtHDbh03K-j.snowflakecomputing.com:4zm2:wR9/JT7swQlYAek6TUCAkw2.+g",
+    "test_content": "snowflake = v46TzTlVG2sBI2cTcj4bjxtHDbh03K-j.snowflakecomputing.com:4zm2:wR9/JT7swQlYAek6TUCAkw2.+g"
   },
   "xai-api-key": {
-    "secret": "xai-B9IOSnVjG9A7UY_DYuqw4fgiTBgDCWV5",
-    "test_content": "xai = xai-B9IOSnVjG9A7UY_DYuqw4fgiTBgDCWV5"
+    "secret": "xAI=gV =tK9\t'jhHKfsG':\"as''::==ag\t:x9aZwMs-jBRFWY.OSiFbyx1rtQpmXrzy",
+    "test_content": "xai = xAI=gV =tK9\t'jhHKfsG':\"as''::==ag\t:x9aZwMs-jBRFWY.OSiFbyx1rtQpmXrzy"
   },
   "brave-search-api-key": {
-    "secret": "BSA4e3NwWhcPoP1uj93QLZffVCQWu0I9s6Y",
-    "test_content": "brave = BSA4e3NwWhcPoP1uj93QLZffVCQWu0I9s6Y"
+    "secret": "BSA15N9d8J8Qn_4g3t8zG0bui2-QXbG9N70",
+    "test_content": "brave = BSA15N9d8J8Qn_4g3t8zG0bui2-QXbG9N70"
   },
   "clipdrop-api-key": {
-    "secret": "clipdrop g6:D y:uQdiP_C2vsN\tO:noU'J:'vziUcVYHhgLrQMVtI4ercRV41W_7XDLZ3yT",
-    "test_content": "clipdrop = clipdrop g6:D y:uQdiP_C2vsN\tO:noU'J:'vziUcVYHhgLrQMVtI4ercRV41W_7XDLZ3yT"
+    "secret": "clipdrop=\t= \"Z'=f:\t :'q= '\"\t' \t\"=\t:A\t\t\t=9e8hWf1_cQBY4QRZIuW4_GJFpYvxdWD3",
+    "test_content": "clipdrop = clipdrop=\t= \"Z'=f:\t :'q= '\"\t' \t\"=\t:A\t\t\t=9e8hWf1_cQBY4QRZIuW4_GJFpYvxdWD3"
   },
   "firecrawl-api-key": {
-    "secret": "fc-9ec23BE3C6E603552a0CE90a9b39e899",
-    "test_content": "firecrawl = fc-9ec23BE3C6E603552a0CE90a9b39e899"
+    "secret": "fc-61b19C1afedd5eBdbB8e65443e29AAD1",
+    "test_content": "firecrawl = fc-61b19C1afedd5eBdbB8e65443e29AAD1"
   },
   "openai-api-key": {
-    "secret": "sk-svcacct-AHsnHD9fNLok9P2jgq5tbf3OEkKQWSNaGeuUEQlMT3BlbkFJNRX9XhAFVYtodkA8ClHMDM5VDZBVg_aPAVa2mLIm",
-    "test_content": "t3blbkfj = sk-svcacct-AHsnHD9fNLok9P2jgq5tbf3OEkKQWSNaGeuUEQlMT3BlbkFJNRX9XhAFVYtodkA8ClHMDM5VDZBVg_aPAVa2mLIm"
+    "secret": "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",
+    "test_content": "t3blbkfj = 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"
   },
   "perplexity-api-key": {
-    "secret": "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",
-    "test_content": "pplx- = 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"
+    "secret": "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",
+    "test_content": "pplx- = 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"
   },
   "vapi-api-key": {
-    "secret": "vapi_private_key_PQMi9BpmS83q906Pa9amFegXLXR0NCiY",
-    "test_content": "vapi = vapi_private_key_PQMi9BpmS83q906Pa9amFegXLXR0NCiY"
+    "secret": "vapi_private_key_II5f4uP9ah794MygSzGQ1uPaUWp66nW6",
+    "test_content": "vapi = vapi_private_key_II5f4uP9ah794MygSzGQ1uPaUWp66nW6"
   }
 }

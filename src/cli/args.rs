@@ -1,6 +1,6 @@
 use clap::{Parser, Subcommand, ValueEnum};
 use clap_complete::Shell;
-use secrets_scanner::BinaryPolicy;
+use secrets_scanner::{BinaryPolicy, RedactionMode};
 
 /// A high-performance secrets scanner powered by Aho-Corasick and regex.
 #[derive(Parser)]
@@ -106,6 +106,12 @@ pub(super) struct ScanArgs {
     /// Disable secret redaction in output (shows raw matched text).
     #[arg(long)]
     pub(super) no_redact: bool,
+
+    /// Redaction style for the `matched` field: `partial` (keep first/last 4
+    /// chars) or `full` (replace with a fixed marker that hides even the
+    /// length). Ignored under `--no-redact` (raw text), which it conflicts with.
+    #[arg(long, value_enum, default_value_t = RedactionModeArg::Partial, conflicts_with = "no_redact")]
+    pub(super) redaction: RedactionModeArg,
 
     /// Path to a custom TOML rules file. Overrides the three-tier rule loading.
     /// Validation is strict and all-or-nothing: if ANY rule fails to compile
@@ -219,8 +225,11 @@ pub(super) struct ScanArgs {
     #[arg(long, value_name = "N")]
     pub(super) max_files: Option<usize>,
 
-    /// Cap total findings reported across the scan.
-    #[arg(long, value_name = "N")]
+    /// Cap total findings reported across the scan. Conflicts with
+    /// `--generate-baseline`: a capped baseline would silently fail to suppress
+    /// findings beyond the cap on a later scan, so the combination is rejected
+    /// rather than silently dropping the cap.
+    #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
     pub(super) max_findings: Option<usize>,
 
     /// Cap findings reported per file.
@@ -238,6 +247,13 @@ pub(super) struct ScanArgs {
     /// Do not exit non-zero when findings are present (still writes output).
     #[arg(long)]
     pub(super) no_fail: bool,
+
+    /// Exit 2 if any file could not be read (incomplete coverage). Off by
+    /// default: unreadable files are logged but do not fail the scan. Independent
+    /// of `--no-fail` (which governs only the findings-present case). Output is
+    /// still written first. Does not apply to `--generate-baseline`.
+    #[arg(long)]
+    pub(super) error_on_unreadable: bool,
 }
 
 /// Fallback behavior when an explicit git mode fails.
@@ -265,6 +281,25 @@ impl From<BinaryPolicyArg> for BinaryPolicy {
             BinaryPolicyArg::Auto => BinaryPolicy::Auto,
             BinaryPolicyArg::Skip => BinaryPolicy::Skip,
             BinaryPolicyArg::Scan => BinaryPolicy::Scan,
+        }
+    }
+}
+
+/// Redaction style for the `matched` field of findings (CLI mirror of
+/// [`secrets_scanner::RedactionMode`]).
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub(super) enum RedactionModeArg {
+    /// Keep the first and last 4 characters; star the middle.
+    Partial,
+    /// Replace the whole match with a fixed marker that hides even the length.
+    Full,
+}
+
+impl From<RedactionModeArg> for RedactionMode {
+    fn from(m: RedactionModeArg) -> Self {
+        match m {
+            RedactionModeArg::Partial => RedactionMode::Partial,
+            RedactionModeArg::Full => RedactionMode::Full,
         }
     }
 }
@@ -362,5 +397,53 @@ mod tests {
     #[test]
     fn staged_alone_parses() {
         assert!(scan_args(&["secrets-scanner", "scan", ".", "--staged"]).staged);
+    }
+
+    #[test]
+    fn max_findings_conflicts_with_generate_baseline() {
+        // A capped baseline silently under-suppresses later; reject the combo
+        // instead of dropping the cap on the quiet.
+        assert!(
+            Cli::try_parse_from([
+                "secrets-scanner",
+                "scan",
+                ".",
+                "--generate-baseline",
+                "b.json",
+                "--max-findings",
+                "5",
+            ])
+            .is_err(),
+            "--max-findings with --generate-baseline must conflict"
+        );
+    }
+
+    #[test]
+    fn redaction_full_conflicts_with_no_redact() {
+        // `--no-redact` shows raw text; pairing it with a redaction style is
+        // contradictory.
+        assert!(
+            Cli::try_parse_from([
+                "secrets-scanner",
+                "scan",
+                ".",
+                "--no-redact",
+                "--redaction",
+                "full",
+            ])
+            .is_err(),
+            "--no-redact --redaction full must conflict"
+        );
+        let args = scan_args(&["secrets-scanner", "scan", ".", "--redaction", "full"]);
+        assert!(matches!(args.redaction, super::RedactionModeArg::Full));
+    }
+
+    #[test]
+    fn error_on_unreadable_defaults_off_and_parses() {
+        assert!(!scan_args(&["secrets-scanner", "scan", "."]).error_on_unreadable);
+        assert!(
+            scan_args(&["secrets-scanner", "scan", ".", "--error-on-unreadable"])
+                .error_on_unreadable
+        );
     }
 }

@@ -31,6 +31,22 @@ pub enum BinaryPolicy {
     Scan,
 }
 
+/// How the `matched` field of a finding is redacted when `redact` is enabled.
+///
+/// Orthogonal to `redact`: `redact = false` (`--no-redact`) shows the raw match
+/// regardless of this mode. Has no effect on the `[REDACTED_SECRET]` content
+/// substitution used by the redaction proxy (that path always fully redacts).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum RedactionMode {
+    /// Preserve the first and last 4 characters, star the middle
+    /// ([`crate::filters::redact`]). Secrets ≤ 12 chars are fully starred.
+    #[default]
+    Partial,
+    /// Replace the whole match with a fixed marker that leaks nothing, not even
+    /// the secret's length ([`crate::filters::redact_full`]).
+    Full,
+}
+
 /// Configuration for a scan operation.
 #[derive(Debug, Clone)]
 pub struct ScanConfig {
@@ -45,6 +61,10 @@ pub struct ScanConfig {
 
     /// Whether to redact matched secrets in findings.
     pub redact: bool,
+
+    /// Redaction style for the `matched` field when `redact` is true. Ignored
+    /// when `redact` is false (raw match shown). Default [`RedactionMode::Partial`].
+    pub redaction_mode: RedactionMode,
 
     /// If true, only scan files currently tracked by git (`git ls-files`).
     /// This is the current working-tree content of tracked files, NOT git
@@ -135,6 +155,7 @@ impl Default for ScanConfig {
             min_entropy_override: None,
             max_file_size: DEFAULT_MAX_FILE_SIZE,
             redact: true,
+            redaction_mode: RedactionMode::Partial,
             git_tracked: false,
             changed_files: false,
             base: None,

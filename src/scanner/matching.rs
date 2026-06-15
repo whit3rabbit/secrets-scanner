@@ -209,7 +209,14 @@ pub(super) fn check_rule_match(
             _ => {
                 let matched_str = String::from_utf8_lossy(matched_bytes);
                 if scanner.config.redact {
-                    filters::redact(&matched_str)
+                    match scanner.config.redaction_mode {
+                        crate::scanner::types::RedactionMode::Partial => {
+                            filters::redact(&matched_str)
+                        }
+                        crate::scanner::types::RedactionMode::Full => {
+                            filters::redact_full(&matched_str)
+                        }
+                    }
                 } else {
                     matched_str.to_string()
                 }

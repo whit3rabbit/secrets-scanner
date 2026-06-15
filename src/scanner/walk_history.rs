@@ -182,7 +182,9 @@ fn append_history_options(cmd: &mut Command, scanner: &Scanner) {
 #[path = "walk_history_parser.rs"]
 mod parser;
 
-use parser::Parser;
+pub(super) use parser::Parser;
+#[cfg(test)]
+pub(super) use parser::{parse_commit_sha, parse_hunk_new_start};
 
 #[cfg(test)]
 #[path = "walk_history_tests.rs"]

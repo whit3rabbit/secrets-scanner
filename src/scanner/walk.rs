@@ -214,6 +214,8 @@ fn should_collect_path(scanner: &Scanner, path: &str) -> bool {
 #[path = "walk_git.rs"]
 mod walk_git;
 
+#[cfg(test)]
+pub(super) use walk_git::append_git_paths;
 pub(super) use walk_git::{
     collect_git_paths, is_unsafe_rel_path, run_git, run_git_blob_bounded, BlobRead,
 };

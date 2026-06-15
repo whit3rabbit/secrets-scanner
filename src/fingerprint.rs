@@ -4,8 +4,37 @@
 //! SARIF `partialFingerprints`. A fingerprint derived from a secret is still an
 //! offline guessing target for low-entropy secrets, so generated baselines should
 //! be treated as sensitive metadata even though they do not store raw secrets.
+//!
+//! Setting `SECRETS_SCANNER_FINGERPRINT_KEY` switches every fingerprint to a
+//! keyed HMAC-SHA256 (`hmac-sha256:` prefix), which removes that guessing target
+//! and makes baselines unlinkable across keys. Changing the key changes all
+//! fingerprints, so baselines must be regenerated when it changes.
 
+use std::sync::OnceLock;
+
+use hmac::{Hmac, Mac};
 use sha2::{Digest, Sha256};
+
+type HmacSha256 = Hmac<Sha256>;
+
+/// Cached optional fingerprint key from `SECRETS_SCANNER_FINGERPRINT_KEY`.
+///
+/// Read once per process: an empty or unset var disables keying (plain SHA-256).
+/// A `OnceLock` keeps [`finding_fingerprint`]/[`location_fingerprint`] as stable
+/// free functions (no signature change at the matching/SARIF call sites) while
+/// avoiding a getenv per finding. Setting the var after the first fingerprint is
+/// computed has no effect — acceptable for the one-scan-per-process CLI.
+fn cached_key() -> Option<&'static [u8]> {
+    static FP_KEY: OnceLock<Option<Vec<u8>>> = OnceLock::new();
+    FP_KEY
+        .get_or_init(
+            || match std::env::var_os("SECRETS_SCANNER_FINGERPRINT_KEY") {
+                Some(v) if !v.is_empty() => Some(v.into_encoded_bytes()),
+                _ => None,
+            },
+        )
+        .as_deref()
+}
 
 /// Compute a hex-encoded 64-bit FNV-1a hash over `parts`, inserting a NUL byte
 /// between adjacent parts so `["a", "bc"]` and `["ab", "c"]` hash differently.
@@ -37,13 +66,41 @@ fn fnv_mix(hash: u64, b: u8) -> u64 {
     (hash ^ b as u64).wrapping_mul(0x0000_0100_0000_01b3)
 }
 
-fn sha256_fingerprint(parts: &[&[u8]]) -> String {
-    let mut hasher = Sha256::new();
-    for part in parts {
-        hasher.update((part.len() as u64).to_le_bytes());
-        hasher.update(part);
+/// Compute a finding/location digest over length-prefixed `parts`.
+///
+/// `None` key → `sha256:<hex>` (unkeyed, the default). `Some(key)` →
+/// `hmac-sha256:<hex>` via HMAC-SHA256, which makes fingerprints unlinkable
+/// across baselines and removes the offline-guessing target for low-entropy
+/// secrets. Both schemes share identical length-prefixed framing, so the only
+/// difference is the keyed MAC versus the bare hash. The distinct prefix keeps
+/// keyed and unkeyed baselines from cross-matching.
+fn fingerprint_digest(key: Option<&[u8]>, parts: &[&[u8]]) -> String {
+    match key {
+        Some(k) => {
+            // HMAC accepts a key of any length, so `new_from_slice` is infallible
+            // here; the `expect` documents that contract rather than a reachable
+            // error path.
+            let mut mac =
+                HmacSha256::new_from_slice(k).expect("HMAC-SHA256 accepts a key of any length");
+            for part in parts {
+                mac.update(&(part.len() as u64).to_le_bytes());
+                mac.update(part);
+            }
+            format!("hmac-sha256:{}", hex::encode(mac.finalize().into_bytes()))
+        }
+        None => {
+            let mut hasher = Sha256::new();
+            for part in parts {
+                hasher.update((part.len() as u64).to_le_bytes());
+                hasher.update(part);
+            }
+            format!("sha256:{}", hex::encode(hasher.finalize()))
+        }
     }
-    format!("sha256:{}", hex::encode(hasher.finalize()))
+}
+
+fn sha256_fingerprint(parts: &[&[u8]]) -> String {
+    fingerprint_digest(cached_key(), parts)
 }
 
 /// Line-tolerant fingerprint of a finding: identifies the same secret across
@@ -105,6 +162,29 @@ mod tests {
         assert_ne!(
             a, c,
             "different secrets must produce different fingerprints"
+        );
+    }
+
+    #[test]
+    fn keyed_digest_differs_and_is_prefixed() {
+        // Exercises the pure keyed path directly; the env+OnceLock wiring is left
+        // out of unit tests to avoid process-global state flakiness.
+        let parts: &[&[u8]] = &[b"rule", b"file", b"secret"];
+        let unkeyed = fingerprint_digest(None, parts);
+        let keyed = fingerprint_digest(Some(b"k1"), parts);
+        let keyed_other = fingerprint_digest(Some(b"k2"), parts);
+        assert!(unkeyed.starts_with("sha256:"));
+        assert!(keyed.starts_with("hmac-sha256:"));
+        assert_eq!(keyed.len(), "hmac-sha256:".len() + 64);
+        assert_ne!(unkeyed, keyed, "keyed digest must differ from unkeyed");
+        assert_ne!(
+            keyed, keyed_other,
+            "different keys must produce different digests"
+        );
+        assert_eq!(
+            keyed,
+            fingerprint_digest(Some(b"k1"), parts),
+            "same key must be deterministic"
         );
     }
 

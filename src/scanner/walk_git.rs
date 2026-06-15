@@ -187,7 +187,7 @@ pub(crate) fn is_unsafe_rel_path(candidate: &Path) -> bool {
 ///
 /// Absolute paths from git are dropped: tracked files are always repo-relative,
 /// so an absolute path would be a path-containment risk in a hostile repo.
-fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<String>) {
+pub(crate) fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<String>) {
     let root_canonical = match Path::new(root).canonicalize() {
         Ok(path) => path,
         Err(_) => return,

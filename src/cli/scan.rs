@@ -48,6 +48,7 @@ pub(super) fn handle(args: ScanArgs) {
         max_findings: early_max_findings,
         max_findings_per_file: args.max_findings_per_file,
         honor_allow_markers: true,
+        redaction_mode: args.redaction.into(),
         max_matched_len: None,
     };
 
@@ -206,6 +207,20 @@ pub(super) fn handle(args: ScanArgs) {
         );
     }
 
+    // Fail on incomplete coverage when requested. Exit 2 (coverage/runtime) takes
+    // precedence over the findings exit 1, and is independent of `--no-fail`
+    // (which governs only the findings-present case). Output is already written so
+    // a SARIF upload still happens. `--generate-baseline` returned earlier, so
+    // this never blocks baseline generation.
+    if args.error_on_unreadable && stats.errored > 0 {
+        error!(
+            "[scanner] {} file(s) could not be read; failing on incomplete coverage \
+             (--error-on-unreadable).",
+            stats.errored
+        );
+        std::process::exit(2);
+    }
+
     if !all_findings.is_empty() && !args.no_fail {
         std::process::exit(1);
     }
@@ -256,19 +271,25 @@ fn write_baseline_or_exit(out_path: &str, no_redact: bool, all_findings: &[Findi
 /// Suppress findings present in `baseline` from `all_findings`, returning the
 /// number suppressed.
 ///
-/// Baseline entries are matched by fingerprint scheme: a `sha256:`-prefixed
-/// fingerprint (the current scheme) suppresses by exact fingerprint, which is
-/// line-tolerant. Anything else — an empty fingerprint, or a legacy FNV hex
-/// fingerprint written by an older build — falls back to the
-/// `(file, line, rule)` tuple. Without the prefix check a legacy FNV
-/// fingerprint would land in the fingerprint set, never equal a new `sha256:`
+/// Baseline entries are matched by fingerprint scheme: a `sha256:`- or
+/// `hmac-sha256:`-prefixed fingerprint (the current unkeyed/keyed schemes)
+/// suppresses by exact fingerprint, which is line-tolerant. Anything else — an
+/// empty fingerprint, or a legacy FNV hex fingerprint written by an older build
+/// — falls back to the `(file, line, rule)` tuple. Without the prefix check a
+/// legacy FNV fingerprint would land in the fingerprint set, never equal a new
 /// value, and silently re-surface every previously-suppressed finding. Old
-/// baselines suppress by exact location until regenerated.
+/// baselines suppress by exact location until regenerated. A keyed baseline only
+/// matches when scanning with the same `SECRETS_SCANNER_FINGERPRINT_KEY`.
 fn suppress_baseline(baseline: Vec<Finding>, all_findings: &mut Vec<Finding>) -> usize {
     let mut known_fps: HashSet<String> = HashSet::new();
     let mut known_legacy: HashSet<(String, usize, String)> = HashSet::new();
     for f in baseline {
-        if f.fingerprint.starts_with("sha256:") {
+        // Both the unkeyed (`sha256:`) and keyed (`hmac-sha256:`) schemes are
+        // line-tolerant fingerprints. Anything else (empty, or a legacy FNV hex)
+        // routes to the location-tuple fallback. Omitting `hmac-sha256:` here
+        // would mis-route a keyed baseline to the legacy set and re-surface every
+        // suppressed finding.
+        if f.fingerprint.starts_with("sha256:") || f.fingerprint.starts_with("hmac-sha256:") {
             known_fps.insert(f.fingerprint);
         } else {
             known_legacy.insert((f.file, f.line, f.rule_id));

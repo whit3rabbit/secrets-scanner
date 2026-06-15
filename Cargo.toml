@@ -58,6 +58,9 @@ serde_json   = "1"
 sha2         = "0.10"
 hex          = "0.4"
 
+# Optional keyed (HMAC-SHA256) finding fingerprints (SECRETS_SCANNER_FINGERPRINT_KEY).
+hmac         = "0.12"
+
 # Unix no-follow opens for hostile repository scans.
 libc         = "0.2"
 

@@ -42,13 +42,13 @@ fn git(repo: &std::path::Path, args: &[&str]) {
 // under Rust's regex engine, the rest using unsupported look-around). The
 // all-features build enables `full-ruleset`, adding secrets-patterns-db.
 #[cfg(not(feature = "full-ruleset"))]
-const EXPECTED_RULE_COUNT: usize = 987;
+const EXPECTED_RULE_COUNT: usize = 988;
 #[cfg(feature = "full-ruleset")]
-const EXPECTED_RULE_COUNT: usize = 2586;
+const EXPECTED_RULE_COUNT: usize = 2587;
 #[cfg(not(feature = "full-ruleset"))]
-const EXPECTED_KEYWORD_COUNT: usize = 750;
+const EXPECTED_KEYWORD_COUNT: usize = 751;
 #[cfg(feature = "full-ruleset")]
-const EXPECTED_KEYWORD_COUNT: usize = 1500;
+const EXPECTED_KEYWORD_COUNT: usize = 1501;
 
 #[test]
 fn bundled_rules_match_snapshot_counts() {

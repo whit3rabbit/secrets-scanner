@@ -75,11 +75,15 @@ jobs:
       - name: Install Node dependencies
         run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
 
-      # --platform suffixes the artifact (secrets_scanner_core.<target>.node) so
-      # `napi artifacts` can route it; --no-js preserves the hand-written index.js
-      # loader. --locked is passed through to cargo for a reproducible build.
+      # Invoke napi via `npm run` (PATH includes node_modules/.bin), NOT `npx`:
+      # with --no-package-lock there is no node_modules/.package-lock.json for npx
+      # to map the `napi` bin -> @napi-rs/cli, so `npx napi` would try to fetch a
+      # bare `napi` package (ENOVERSIONS). `build:ci` = napi build --release
+      # --platform --no-js; --platform suffixes the artifact
+      # (secrets_scanner_core.<target>.node) so `napi artifacts` can route it,
+      # --no-js preserves the hand-written index.js loader, --locked -> cargo.
       - name: Build ${{ matrix.target }}
-        run: npx napi build --release --platform --no-js --target ${{ matrix.target }} -- --locked
+        run: npm run build:ci -- --target ${{ matrix.target }} -- --locked
 
       # Each runner is native to its target, so the freshly built binary loads
       # here; this proves the artifact actually works before publishing.
@@ -146,16 +150,17 @@ jobs:
             echo "::notice::Dry run: building and packaging all targets, no publish."
           fi
 
+      # napi via `npm run` (see the build job for why not `npx`).
       - name: Create per-platform package dirs
-        run: npx napi create-npm-dirs --npm-dir npm
+        run: npm run napi:create-dirs
 
       - name: Move artifacts into platform packages
-        run: npx napi artifacts --output-dir ./artifacts --npm-dir ./npm
+        run: npm run napi:artifacts
 
       # Publishes the per-platform optionalDependency packages and syncs the main
       # package.json. No --gh-release (release.yml already creates the release).
       - name: Publish platform packages
-        run: npx napi pre-publish -t npm --npm-dir npm ${{ steps.mode.outputs.dry }}
+        run: npm run napi:prepublish -- ${{ steps.mode.outputs.dry }}
 
       # --ignore-scripts: the main package ships no binary, so skip the prepack
       # rebuild (the publish runner has no Rust toolchain).

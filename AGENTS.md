@@ -19,6 +19,9 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 - Prefer `--features updater` builds for development; the default (no feature) build is the lean release artifact.
 - The `bench` feature gates per-scan timing instrumentation; run `cargo test --features bench` to exercise bench-gated tests (default builds show expected rust-analyzer "inactive-code" hints on those lines — not errors).
 - No `unwrap()` in library code — use `?` or explicit error handling.
+- Benchmark throughput is dominated by keyword-hit *density*, not rule count. The README table uses a low-density benign corpus (`scripts/gen_corpus.sh`); a keyword-dense corpus is orders of magnitude slower (~6 GiB/s vs ~0.03 GiB/s). Default `max_file_size` is 2 MiB, so corpora must be many files (rayon parallelizes across files, not within one). The `scan` time prints to stderr at `info` by default (no `RUST_LOG` needed).
+- On macOS, `docker` is the Docker Desktop Linux VM (musl artifact), so its benchmark numbers are slower and NOT comparable to a native macOS build — keep the two in separate, labeled tables.
+- CLI `--rules`/`Scanner::from_file`/`from_toml` use the STRICT loader (errors on any uncompilable regex), but merged rule files and raw `assets/gitleaks.toml` still load because the merge already drops uncompilable look-around rules (so merged count == active count).
 - `bindings/node` is a **separate crate** (root `Cargo.toml` has no `[workspace]`), so `make ci` and root `cargo fmt`/`clippy`/`test` do NOT cover it. After touching it, run inside `bindings/node/`: `cargo fmt`, `cargo clippy --all-targets -- -D warnings`, `cargo test`, plus `npm run build && npm run typecheck && npm test`.
 - The clippy gate is `-D warnings` (`make ci` → `cargo clippy -- -D warnings`); a warning fails CI. That target omits `--all-targets`, so lint test code with `cargo clippy --all-targets -- -D warnings` to catch what `make ci` misses.
 - rust-analyzer/IDE inline diagnostics are often stale here: after editing
@@ -47,6 +50,7 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 | `cargo test --bin secrets-scanner --features updater` | Fast focused check for binary/CLI refactors |
 | `cargo run -- scan <path> --git-tracked` | Run a scan locally (git-tracked files) |
 | `cargo run -- completions <shell>` | Generate shell completions (bash/zsh/fish/...) |
+| `CORPUS=<dir> scripts/benchmark.sh "label\|rules.toml" ...` | Reproduce the README runtime-ruleset table (CLI harness, NOT `cargo bench`); self-bootstraps a benign corpus via `scripts/gen_corpus.sh`, portable across BSD/GNU `time` |
 
 ---
 

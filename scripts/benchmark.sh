@@ -56,6 +56,12 @@ dur_to_ms() {
 
 median() { sort -n | awk '{a[NR]=$1} END{ if(NR%2){print a[(NR+1)/2]} else {print (a[NR/2]+a[NR/2+1])/2} }'; }
 
+# Bootstrap the corpus if the directory is missing or empty (FILES * ~1 MiB).
+if [ ! -d "$CORPUS" ] || [ -z "$(ls -A "$CORPUS" 2>/dev/null)" ]; then
+  echo "# generating corpus at $CORPUS (${FILES:-512} x ~1 MiB)" >&2
+  sh "$(dirname "$0")/gen_corpus.sh" "$CORPUS" "${FILES:-512}"
+fi
+
 CORPUS_BYTES=$(corpus_bytes)
 echo "# corpus: $CORPUS  ($((CORPUS_BYTES/1024/1024)) MiB, $(ls "$CORPUS" | wc -l | tr -d ' ') files), runs=$RUNS, time=$TIME_FLAVOR, bin=$BIN" >&2
 

@@ -542,37 +542,66 @@ of them.
 
 ### Ruleset benchmark results
 
-Measured on macOS 26.5.1, Apple M4 Max, 14 logical CPUs, 36 GiB RAM, rustc 1.96.0,
-release profile with LTO. Runtime rows are medians of 3 CLI runs over a warm 512 MiB
-benign text corpus with no findings. `wall` is the full CLI process time, including
-rule file load and regex/Aho-Corasick construction; `scan` is the scanner's logged
-time after rule construction. RSS and CPU come from `/usr/bin/time -l`.
-Throughput uses `scan` time. CPU is `(user + sys) / wall`, so values above 100%
-mean the process used more than one core.
+Measured on macOS 26.5.1, Apple M4 Max (arm64), 14 logical CPUs, 36 GiB RAM,
+rustc 1.96.0, release profile with LTO. Re-measured 2026-06-15 with the
+reproducible harness in [`scripts/benchmark.sh`](scripts/benchmark.sh) (portable
+across BSD `/usr/bin/time -l` and GNU `time -v`, so the same script drives both the
+native and Docker passes below).
 
-Binary size is affected only by what is embedded at build time:
+Runtime rows are medians of 3 CLI runs over a warm 512 MiB benign corpus (512 files
+of ~1 MiB, no findings). `wall` is the full CLI process time, including rule file
+load and regex/Aho-Corasick construction; `scan` is the scanner's logged time after
+rule construction. Throughput uses `scan` time and is **sensitive to keyword
+density**: this benign corpus has near-zero rule-keyword hits, so it exercises the
+keyword-gate fast path rather than the worst case where most content is a regex
+candidate. CPU is `(user + sys) / wall`, so values above 100% mean the scan used
+more than one core (rayon parallelizes across files).
+
+Binary size (native macOS arm64 build) is affected only by what is embedded at
+build time:
 
 | Build | Embedded sources | Binary size |
 |---|---|--:|
-| `cargo build --release` | local + secrets-scanner + gitleaks + kingfisher | 3.28 MiB |
-| `cargo build --release --features full-ruleset` | local + secrets-scanner + gitleaks + kingfisher + secrets-patterns-db | 3.56 MiB |
+| `cargo build --release` | local + secrets-scanner + gitleaks + kingfisher | 3.49 MiB |
+| `cargo build --release --features full-ruleset` | + secrets-patterns-db | 3.78 MiB |
 
 Selecting a smaller ruleset with `--rules <PATH>` changes load time, memory use, and
 scan behavior, but does not shrink the compiled binary.
 
-| Runtime ruleset | Merged TOML | Merged rules | Active rules | Keywords | wall | scan | Throughput | Peak RSS | CPU |
-|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| gitleaks | 95.4 KiB | 222 | 222 | 244 | 1.69 s | 86.6 ms | 5.9 GiB/s | 660 MiB | 143% |
-| gitleaks + local + secrets-scanner | 104.1 KiB | 237 | 237 | 258 | 1.58 s | 72.3 ms | 6.9 GiB/s | 662 MiB | 147% |
-| gitleaks + local + secrets-scanner + kingfisher (default) | 311.2 KiB | 988 | 988 | 751 | 1.84 s | 75.5 ms | 6.6 GiB/s | 761 MiB | 140% |
-| full (+ secrets-patterns-db) | 686.0 KiB | 2587 | 2587 | 1501 | 2.08 s | 221.2 ms | 2.3 GiB/s | 856 MiB | 215% |
+**Native (macOS, Apple M4 Max), `/usr/bin/time -l`:**
 
-Interpretation: `local` and `secrets-scanner` add coverage with almost no measured memory penalty because
-many overlapping rules are deduplicated or disabled by Rust `regex` compatibility.
-`kingfisher` is the default broad-coverage step and adds about 100 MiB RSS in this
-benchmark. `secrets-patterns-db` roughly triples active rules versus the default,
-adds another about 95 MiB RSS, and is the first option here with a clear scan-time
-cost. Use it when maximum coverage matters more than memory and false-positive budget.
+| Runtime ruleset | Merged TOML | Rules | Keywords | wall | scan | Throughput | Peak RSS | CPU |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| gitleaks | 95.4 KiB | 222 | 244 | 1.48 s | 75.8 ms | 6.6 GiB/s | 661 MiB | 150% |
+| gitleaks + local + secrets-scanner | 90.9 KiB | 234 | 263 | 1.47 s | 75.7 ms | 6.6 GiB/s | 663 MiB | 150% |
+| gitleaks + local + secrets-scanner + kingfisher (default) | 311.4 KiB | 988 | 751 | 1.71 s | 83.1 ms | 6.0 GiB/s | 762 MiB | 143% |
+| full (+ secrets-patterns-db) | 606.8 KiB | 2587 | 1501 | 1.98 s | 213.1 ms | 2.3 GiB/s | 856 MiB | 196% |
+
+All rules listed are active (compiled): the merge already drops patterns Rust's
+`regex` engine cannot compile, so merged count equals active count here.
+
+**Docker (lean musl image, Docker Desktop Linux VM on the same M4 Max, arm64), GNU
+`/usr/bin/time -v`:** same ruleset metadata as above; the corpus is generated inside
+the container to avoid bind-mount I/O. These numbers reflect the VM + musl runtime,
+so throughput is lower and RSS smaller than the native build. This is the container
+artifact (`docker run secrets-scanner …`), **not** a bare-metal Linux measurement.
+
+| Runtime ruleset | wall | scan | Throughput | Peak RSS | CPU |
+|---|--:|--:|--:|--:|--:|
+| gitleaks | 1.74 s | 113.6 ms | 4.4 GiB/s | 585 MiB | 161% |
+| gitleaks + local + secrets-scanner | 1.72 s | 109.6 ms | 4.6 GiB/s | 582 MiB | 159% |
+| gitleaks + local + secrets-scanner + kingfisher (default) | 1.99 s | 110.3 ms | 4.5 GiB/s | 680 MiB | 154% |
+| full (+ secrets-patterns-db) | 2.27 s | 195.8 ms | 2.6 GiB/s | 758 MiB | 201% |
+
+Interpretation: `local` and `secrets-scanner` add coverage with almost no measured
+memory or scan penalty because many overlapping rules are deduplicated or disabled by
+Rust `regex` compatibility. `kingfisher` is the default broad-coverage step and adds
+about 100 MiB RSS. `secrets-patterns-db` roughly triples active rules versus the
+default, adds another about 95 MiB RSS, and is the first option with a clear scan-time
+cost (about 2.5x the default). Use it when maximum coverage matters more than memory
+and false-positive budget. The Docker rows run the same binary logic under the Docker
+Desktop VM with a musl allocator: scan throughput drops about 25-30% versus native and
+peak RSS is roughly 80 MiB lower, but the relative ordering of rulesets is unchanged.
 
 ---
 

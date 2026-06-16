@@ -60,8 +60,13 @@ jobs:
         with:
           node-version: 20
 
+      # `npm install`, not `npm ci`: the main package declares optionalDependencies
+      # on the per-platform packages, which do not exist on the registry until the
+      # first successful publish, so npm cannot record them in the lockfile and
+      # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
+      # so installs stay reproducible. Missing optional deps are non-fatal.
       - name: Install Node dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       # --platform suffixes the artifact (secrets_scanner_core.<target>.node) so
       # `napi artifacts` can route it; --no-js preserves the hand-written index.js
@@ -98,8 +103,13 @@ jobs:
           node-version: 20
           registry-url: "https://registry.npmjs.org/"
 
+      # `npm install`, not `npm ci`: the main package declares optionalDependencies
+      # on the per-platform packages, which do not exist on the registry until the
+      # first successful publish, so npm cannot record them in the lockfile and
+      # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
+      # so installs stay reproducible. Missing optional deps are non-fatal.
       - name: Install Node dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4

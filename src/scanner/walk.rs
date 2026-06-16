@@ -17,6 +17,7 @@
 //! rejected, git output is NUL-delimited and absolute paths from git are dropped,
 //! and binary content is detected by inspection rather than extension alone.
 
+use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 
 use walkdir::WalkDir;
@@ -167,7 +168,7 @@ pub fn scan_file(scanner: &Scanner, path: &str) -> (Vec<Finding>, ScanStats) {
     // Route through the capped scan so the total `--max-findings` cap applies to
     // the single-file path too (a bare `scan_one_file` only honors the per-file
     // cap inside `scan_bytes_detailed`).
-    let paths = [path.to_string()];
+    let paths = [PathBuf::from(path)];
     let mut findings = scan_file_paths(scanner, &paths, &stats);
     sort_findings(&mut findings);
     let snapshot = stats.snapshot();
@@ -210,7 +211,7 @@ fn git_failure_falls_back(scanner: &Scanner, stats: &StatsAcc) -> bool {
 }
 
 /// Collect paths via recursive directory walk, applying filters.
-fn collect_walkdir_paths(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec<String> {
+fn collect_walkdir_paths(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec<PathBuf> {
     WalkDir::new(root)
         .follow_links(false)
         .into_iter()
@@ -245,18 +246,20 @@ fn collect_walkdir_paths(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec
             }
             true
         })
-        .map(|e| e.path().to_string_lossy().to_string())
+        .map(|e| e.path().to_path_buf())
         .collect()
 }
 
 /// Apply the same extension/allowlist filters to git-collected paths that the
 /// directory walk applies, so `--git-tracked` mode does not scan binaries or
 /// globally-allowlisted files that the default mode would skip.
-fn filter_git_paths(scanner: &Scanner, paths: Vec<String>) -> Vec<String> {
+fn filter_git_paths(scanner: &Scanner, paths: Vec<PathBuf>) -> Vec<PathBuf> {
     paths
         .into_iter()
         .filter(|p| {
-            should_collect_path(scanner, p) && !scanner.engine.is_path_globally_allowlisted(p)
+            let display = p.to_string_lossy();
+            should_collect_path(scanner, &display)
+                && !scanner.engine.is_path_globally_allowlisted(&display)
         })
         .collect()
 }

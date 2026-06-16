@@ -14,6 +14,15 @@ fn parse_positive_usize(s: &str) -> Result<usize, String> {
     }
 }
 
+/// Parse a byte-size cap as a strictly positive `u64`.
+fn parse_positive_u64(s: &str) -> Result<u64, String> {
+    match s.parse::<u64>() {
+        Ok(0) => Err("value must be a positive integer (>= 1); 0 would scan nothing".to_string()),
+        Ok(n) => Ok(n),
+        Err(e) => Err(format!("invalid integer: {e}")),
+    }
+}
+
 /// A high-performance secrets scanner powered by Aho-Corasick and regex.
 #[derive(Parser)]
 #[command(
@@ -159,7 +168,7 @@ pub(super) struct ScanArgs {
     pub(super) min_entropy: Option<f64>,
 
     /// Maximum file size in bytes (files larger than this are skipped).
-    #[arg(long, value_name = "BYTES", default_value_t = 2 * 1024 * 1024)]
+    #[arg(long, value_name = "BYTES", default_value_t = 2 * 1024 * 1024, value_parser = parse_positive_u64)]
     pub(super) max_file_size: u64,
 
     /// Path to a previous JSON output or generated baseline file to suppress
@@ -181,7 +190,7 @@ pub(super) struct ScanArgs {
     /// current working-tree content of tracked files, NOT git history (a secret
     /// committed then removed from the tree is invisible here; use
     /// `--git-history`).
-    #[arg(long)]
+    #[arg(long, conflicts_with = "changed_files")]
     pub(super) git_tracked: bool,
 
     /// Scan only the current working-tree content of files changed relative to a
@@ -207,7 +216,7 @@ pub(super) struct ScanArgs {
     #[arg(long, requires = "git_history")]
     pub(super) all: bool,
 
-    /// With --git-history, pass `--full-history` to `git log`.
+    /// Compatibility flag: history mode already passes `--full-history`.
     #[arg(long, requires = "git_history")]
     pub(super) full_history: bool,
 

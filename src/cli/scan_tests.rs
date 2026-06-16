@@ -132,6 +132,15 @@ fn create_private_file_rejects_symlink_and_sets_mode() {
     assert_eq!(mode & 0o777, 0o600, "output file must be 0600");
 }
 
+#[cfg(unix)]
+#[test]
+fn create_private_file_rejects_non_regular_descriptor() {
+    assert!(
+        super::create_private_file("/dev/null").is_err(),
+        "scanner output must not be written to non-regular files"
+    );
+}
+
 #[test]
 fn scanner_loads_from_bundled() {
     let scanner = Scanner::from_bundled().expect("should load bundled rules");

@@ -341,14 +341,22 @@ fn create_private_file(path: &str) -> io::Result<std::fs::File> {
     #[cfg(unix)]
     {
         use std::os::unix::fs::{OpenOptionsExt, PermissionsExt};
+        use std::os::unix::io::AsRawFd;
         options.mode(0o600);
         // O_NOFOLLOW: refuse to follow a symlink at the final path component, so a
         // hostile checkout cannot redirect our truncating write to another file.
-        options.custom_flags(libc::O_NOFOLLOW | libc::O_CLOEXEC);
+        // O_NONBLOCK avoids hanging on attacker-controlled fifos/devices before
+        // the descriptor-level regular-file check below rejects them.
+        options.custom_flags(libc::O_NOFOLLOW | libc::O_CLOEXEC | libc::O_NONBLOCK);
         let file = options.open(path)?;
-        // Reject a non-regular target (fifo/device/dir): O_NOFOLLOW stops a
-        // symlink, this stops the other types we should never truncate or chmod.
-        if !file.metadata()?.file_type().is_file() {
+        let mut stat = std::mem::MaybeUninit::<libc::stat>::uninit();
+        if unsafe { libc::fstat(file.as_raw_fd(), stat.as_mut_ptr()) } != 0 {
+            return Err(io::Error::last_os_error());
+        }
+        let stat = unsafe { stat.assume_init() };
+        // Reject a non-regular target by descriptor: O_NOFOLLOW stops a symlink,
+        // this stops the other types we should never write or chmod.
+        if (stat.st_mode & libc::S_IFMT) != libc::S_IFREG {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
                 format!("refusing to write output to non-regular file: {path}"),

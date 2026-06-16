@@ -364,6 +364,33 @@ fn include_untracked_scans_untracked_files() {
     assert!(findings[0].file.ends_with("new.txt"));
 }
 
+#[cfg(unix)]
+#[test]
+fn git_tracked_non_utf8_filename_scanned() {
+    use std::ffi::OsString;
+    use std::os::unix::ffi::OsStringExt;
+
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    let name = OsString::from_vec(vec![b't', 0xff, b'.', b't', b'x', b't']);
+    if std::fs::write(repo.path().join(&name), "SECRET123456").is_err() {
+        return;
+    }
+    git(repo.path(), &["add", "-A"]);
+    git(repo.path(), &["commit", "-q", "-m", "add non-utf8"]);
+
+    let scanner = scanner(ScanConfig {
+        git_tracked: true,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(
+        findings.len(),
+        1,
+        "non-UTF-8 tracked path must be opened byte-exact: {findings:?}"
+    );
+}
+
 // ─────────────────────────────────────────────
 // CLI: SARIF shape, exit codes, sanitization
 // ─────────────────────────────────────────────
@@ -919,6 +946,54 @@ fn history_context_line_number_matches_reported_line() {
         "context lines must use real file line numbers, not buffer-relative ones: {:?}",
         findings[0].context_lines
     );
+}
+
+#[test]
+fn history_finds_merge_resolution_secret_once() {
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    let path = repo.path().join("conflict.txt");
+    std::fs::write(&path, "value=base\n").expect("write base");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "base"]);
+    let default_branch = git_out(repo.path(), &["branch", "--show-current"]);
+
+    git(repo.path(), &["checkout", "-q", "-b", "left"]);
+    std::fs::write(&path, "value=left\n").expect("write left");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "left"]);
+
+    git(repo.path(), &["checkout", "-q", &default_branch]);
+    std::fs::write(&path, "value=right\n").expect("write right");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "right"]);
+
+    let merge = Command::new("git")
+        .arg("-C")
+        .arg(repo.path())
+        .args(["merge", "left"])
+        .status()
+        .expect("run merge");
+    assert!(
+        !merge.success(),
+        "merge should conflict so the resolution can introduce the secret"
+    );
+    std::fs::write(&path, "value=SECRET123456\n").expect("resolve with secret");
+    git(repo.path(), &["add", "."]);
+    git(
+        repo.path(),
+        &["commit", "-q", "-m", "merge introduces secret"],
+    );
+    let merge_sha = git_out(repo.path(), &["rev-parse", "HEAD"]);
+
+    let findings = history_scanner().scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(
+        findings.len(),
+        1,
+        "merge-introduced secret should be reported once: {findings:?}"
+    );
+    assert_eq!(findings[0].commit.as_deref(), Some(merge_sha.as_str()));
+    assert!(findings[0].file.ends_with("conflict.txt"));
 }
 
 #[test]

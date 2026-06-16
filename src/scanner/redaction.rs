@@ -8,6 +8,10 @@ const REDACTION_MARKER: &[u8] = b"[REDACTED_SECRET]";
 /// Redact detected secret byte ranges in content.
 pub(super) fn redact_content_bytes(content: &[u8], findings: &[Finding]) -> Vec<u8> {
     let ranges = super::matching::merged_secret_ranges(findings, content.len());
+    redact_content_ranges(content, &ranges)
+}
+
+pub(super) fn redact_content_ranges(content: &[u8], ranges: &[(usize, usize)]) -> Vec<u8> {
     if ranges.is_empty() {
         return content.to_vec();
     }
@@ -15,7 +19,7 @@ pub(super) fn redact_content_bytes(content: &[u8], findings: &[Finding]) -> Vec<
     let mut redacted = Vec::with_capacity(content.len());
     let mut cursor = 0;
     let mut open_marker = false;
-    for (start, end) in ranges {
+    for &(start, end) in ranges {
         // Widen each range to UTF-8 char boundaries so a `regex::bytes` match that
         // begins/ends mid-codepoint cannot leave a split char in the forwarded
         // bytes (which `scan_and_redact_content`'s `from_utf8_lossy` would then

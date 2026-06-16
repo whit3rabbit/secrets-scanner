@@ -236,18 +236,34 @@ impl Scanner {
     /// would forward secrets past the cap in the clear. `scan_bytes` and
     /// `scan_and_redact_bytes` re-apply the cap themselves at the right point.
     fn scan_bytes_uncapped(&self, path: &str, content: &[u8]) -> Vec<Finding> {
-        // Check global path allowlist first — skip entirely if path matches.
-        if self.engine.is_path_globally_allowlisted(path) {
-            return Vec::new();
+        let mut findings = Vec::new();
+        self.scan_bytes_emit(path, content, &mut |finding| findings.push(finding));
+
+        // Redact secrets out of every finding's context window BEFORE the
+        // per-file cap. `redact_context_lines` builds its secret ranges from the
+        // finding set it is handed, so if the cap dropped a finding first, a
+        // surviving finding's context could still contain the dropped secret's
+        // raw bytes (two secrets within a few lines of each other). Redacting the
+        // full set first means truncation only removes finding entries, never
+        // redaction coverage.
+        if self.config.redact && self.config.capture_context {
+            matching::redact_context_lines(content, &mut findings);
         }
 
-        let mut findings = Vec::new();
+        findings
+    }
+
+    fn scan_bytes_emit(&self, path: &str, content: &[u8], emit: &mut impl FnMut(Finding)) {
+        // Check global path allowlist first — skip entirely if path matches.
+        if self.engine.is_path_globally_allowlisted(path) {
+            return;
+        }
 
         // Check path-only rules without walking the whole ruleset per file.
         for rule in self.engine.path_only_rules() {
             if let Some(ref path_re) = rule.path_filter {
                 if path_re.is_match(path) {
-                    findings.push(Finding {
+                    emit(Finding {
                         file: path.to_string(),
                         line: 1,
                         col: 1,
@@ -297,7 +313,7 @@ impl Scanner {
                 continue;
             }
 
-            matching::check_rule_match(self, rule, path, content, &mut findings);
+            matching::check_rule_match_with_sink(self, rule, path, content, emit);
         }
 
         // 3. Evaluate unkeyworded regex rules and benchmark their cost.
@@ -308,12 +324,12 @@ impl Scanner {
             for set_idx in regex_set.matches(content).iter() {
                 let rule_idx = rule_indices[set_idx];
                 let rule = &self.engine.unkeyworded_rules()[rule_idx];
-                matching::check_rule_match(self, rule, path, content, &mut findings);
+                matching::check_rule_match_with_sink(self, rule, path, content, emit);
             }
         } else {
             for rule in self.engine.unkeyworded_rules().iter() {
                 if rule.regex.is_some() {
-                    matching::check_rule_match(self, rule, path, content, &mut findings);
+                    matching::check_rule_match_with_sink(self, rule, path, content, emit);
                 }
             }
         }
@@ -322,19 +338,45 @@ impl Scanner {
             unkeyworded_start.elapsed().as_nanos() as u64,
             std::sync::atomic::Ordering::Relaxed,
         );
+    }
 
-        // Redact secrets out of every finding's context window BEFORE the
-        // per-file cap. `redact_context_lines` builds its secret ranges from the
-        // finding set it is handed, so if the cap dropped a finding first, a
-        // surviving finding's context could still contain the dropped secret's
-        // raw bytes (two secrets within a few lines of each other). Redacting the
-        // full set first means truncation only removes finding entries, never
-        // redaction coverage.
-        if self.config.redact && self.config.capture_context {
-            matching::redact_context_lines(content, &mut findings);
+    fn scan_bytes_for_bounded_redaction(
+        &self,
+        path: &str,
+        content: &[u8],
+    ) -> (Vec<Finding>, Vec<(usize, usize)>, bool) {
+        let cap = self
+            .config
+            .max_findings_per_file
+            .expect("bounded redaction requires a finding cap");
+        let mut findings = Vec::with_capacity(cap.saturating_add(1));
+        let mut ranges = Vec::new();
+        let mut total_findings = 0usize;
+
+        self.scan_bytes_emit(path, content, &mut |finding| {
+            total_findings = total_findings.saturating_add(1);
+            if finding.secret_start_offset < finding.secret_end_offset
+                && finding.secret_end_offset <= content.len()
+            {
+                ranges.push((finding.secret_start_offset, finding.secret_end_offset));
+            }
+            if findings.len() <= cap {
+                findings.push(finding);
+            }
+        });
+
+        let findings_truncated = total_findings > cap;
+        if findings_truncated {
+            log::warn!(
+                "[scanner] Warning: {} finding(s) in '{}' truncated to \
+                 --max-findings-per-file ({cap}).",
+                total_findings,
+                crate::safe_display::sanitize_display(path),
+            );
+            findings.truncate(cap);
         }
-
-        findings
+        merge_ranges(&mut ranges);
+        (findings, ranges, findings_truncated)
     }
 
     /// Apply the per-content finding cap (`max_findings_per_file`) in place.
@@ -370,6 +412,20 @@ impl Scanner {
                         && memchr::memchr(b.to_ascii_uppercase(), content).is_some())
             })
     }
+}
+
+fn merge_ranges(ranges: &mut Vec<(usize, usize)>) {
+    ranges.sort_unstable_by_key(|&(start, end)| (start, end));
+    let mut write = 0usize;
+    for read in 0..ranges.len() {
+        if write > 0 && ranges[read].0 <= ranges[write - 1].1 {
+            ranges[write - 1].1 = ranges[write - 1].1.max(ranges[read].1);
+        } else {
+            ranges[write] = ranges[read];
+            write += 1;
+        }
+    }
+    ranges.truncate(write);
 }
 
 #[cfg(test)]

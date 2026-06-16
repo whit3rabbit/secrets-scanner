@@ -1,6 +1,7 @@
 //! Per-file read, binary gating, and scan helpers for directory walks.
 
 use std::io::Read;
+use std::path::Path;
 use std::sync::atomic::Ordering;
 
 use crate::filters;
@@ -9,7 +10,8 @@ use crate::scanner::{BinaryPolicy, Finding, Scanner};
 use super::StatsAcc;
 
 /// Read and scan a single file after applying metadata, size, and binary filters.
-pub(super) fn scan_one_file(scanner: &Scanner, path: &str, stats: &StatsAcc) -> Vec<Finding> {
+pub(super) fn scan_one_file(scanner: &Scanner, path: &Path, stats: &StatsAcc) -> Vec<Finding> {
+    let display_path = path.to_string_lossy();
     let metadata = match std::fs::symlink_metadata(path) {
         Ok(m) => m,
         // Could not stat the file: count it as errored (incomplete coverage),
@@ -44,13 +46,13 @@ pub(super) fn scan_one_file(scanner: &Scanner, path: &str, stats: &StatsAcc) -> 
         }
     };
 
-    if is_binary_skipped(scanner.config.binary_policy, path, &bytes) {
+    if is_binary_skipped(scanner.config.binary_policy, &display_path, &bytes) {
         stats.binary_skipped.fetch_add(1, Ordering::Relaxed);
         return vec![];
     }
 
     stats.files_scanned.fetch_add(1, Ordering::Relaxed);
-    let result = scanner.scan_bytes_detailed(path, &bytes);
+    let result = scanner.scan_bytes_detailed(&display_path, &bytes);
     if result.findings_truncated {
         stats.findings_truncated.store(true, Ordering::Relaxed);
     }
@@ -75,7 +77,7 @@ pub(super) fn is_binary_skipped(policy: BinaryPolicy, path: &str, bytes: &[u8]) 
 
 /// Bounded read: returns `Ok(None)` if the file exceeds `max` bytes.
 pub(super) fn read_bounded(
-    path: &str,
+    path: &Path,
     max: u64,
     expected_len: u64,
 ) -> std::io::Result<Option<Vec<u8>>> {
@@ -100,16 +102,37 @@ pub(super) fn read_bounded(
 }
 
 #[cfg(unix)]
-fn open_no_follow(path: &str) -> std::io::Result<std::fs::File> {
+fn open_no_follow(path: &Path) -> std::io::Result<std::fs::File> {
     use std::os::unix::fs::OpenOptionsExt;
-
-    std::fs::OpenOptions::new()
+    let file = std::fs::OpenOptions::new()
         .read(true)
-        .custom_flags(libc::O_NOFOLLOW)
-        .open(path)
+        .custom_flags(libc::O_NOFOLLOW | libc::O_CLOEXEC)
+        .open(path)?;
+    ensure_regular_file_descriptor(&file, path)?;
+    Ok(file)
+}
+
+#[cfg(unix)]
+fn ensure_regular_file_descriptor(file: &std::fs::File, path: &Path) -> std::io::Result<()> {
+    use std::os::fd::AsRawFd;
+
+    let mut stat = std::mem::MaybeUninit::<libc::stat>::uninit();
+    // Descriptor metadata closes the race between pre-open `symlink_metadata`
+    // and the actual object now being read.
+    if unsafe { libc::fstat(file.as_raw_fd(), stat.as_mut_ptr()) } != 0 {
+        return Err(std::io::Error::last_os_error());
+    }
+    let stat = unsafe { stat.assume_init() };
+    if (stat.st_mode & libc::S_IFMT) != libc::S_IFREG {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            format!("refusing to read non-regular file: {}", path.display()),
+        ));
+    }
+    Ok(())
 }
 
 #[cfg(not(unix))]
-fn open_no_follow(path: &str) -> std::io::Result<std::fs::File> {
+fn open_no_follow(path: &Path) -> std::io::Result<std::fs::File> {
     std::fs::File::open(path)
 }

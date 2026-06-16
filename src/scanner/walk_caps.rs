@@ -1,5 +1,6 @@
 //! Deterministic path/finding ordering and scan caps for directory walks.
 
+use std::path::PathBuf;
 use std::sync::atomic::Ordering;
 
 use log::warn;
@@ -62,7 +63,7 @@ fn scan_capped<T: Sync>(
 
 pub(super) fn scan_file_paths(
     scanner: &Scanner,
-    paths: &[String],
+    paths: &[PathBuf],
     stats: &StatsAcc,
 ) -> Vec<Finding> {
     scan_capped(scanner, paths, stats, "files", "scan", |path| {

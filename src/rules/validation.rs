@@ -55,6 +55,22 @@ pub fn validate_rules_toml(toml_str: &str) -> Result<(), Vec<String>> {
             errors.push(format!("Duplicate rule ID found: '{}'", rule.id));
         }
 
+        if rule.regex.is_none() && rule.path.is_none() {
+            errors.push(format!(
+                "{} must define at least one detection predicate: regex or path",
+                rule_label
+            ));
+        }
+
+        for (kw_idx, keyword) in rule.keywords.iter().enumerate() {
+            if keyword.trim().is_empty() {
+                errors.push(format!(
+                    "{} has an empty keyword at index {}",
+                    rule_label, kw_idx
+                ));
+            }
+        }
+
         // Detection regexes run on raw bytes at scan time, so validation must
         // use the same regex engine and reject anything runtime would skip.
         if let Some(ref regex_str) = rule.regex {

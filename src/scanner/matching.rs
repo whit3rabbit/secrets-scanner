@@ -131,12 +131,12 @@ fn next_line_end(content: &[u8], line_start: usize) -> usize {
 /// produces the same span twice; distinct rules matching the same span are each
 /// reported on purpose (they fire in different situations). No cross-match dedup
 /// is needed here.
-pub(super) fn check_rule_match(
+pub(super) fn check_rule_match_with_sink(
     scanner: &Scanner,
     rule: &CompiledRule,
     path: &str,
     content: &[u8],
-    findings: &mut Vec<Finding>,
+    emit: &mut impl FnMut(Finding),
 ) {
     let regex_re = match &rule.regex {
         Some(re) => re,
@@ -269,7 +269,7 @@ pub(super) fn check_rule_match(
         // regardless of the redact setting and across line moves.
         let fingerprint = crate::fingerprint::finding_fingerprint(&rule.id, path, secret_part);
 
-        findings.push(Finding {
+        emit(Finding {
             file: path.to_string(),
             line: start.line,
             col: start.col,

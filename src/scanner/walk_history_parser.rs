@@ -38,8 +38,10 @@ pub(crate) struct Parser<'a> {
     cap_warned: bool,
     files_over_cap_warned: bool,
     current_commit: Option<String>,
-    /// True while inside a combined/merge diff (`diff --cc`/`@@@`), which we do
-    /// not attribute (merge-introduced content is caught on a non-merge parent).
+    /// True while inside a combined/merge diff (`diff --cc`/`@@@`). Normal
+    /// history scans request `git log -m`, so merge commits should arrive as
+    /// split `diff --git` entries; this remains a defensive skip for unexpected
+    /// combined diffs.
     in_combined: bool,
     /// True once a `@@` hunk has begun in the current file diff; while true a
     /// `+`-prefixed line is added content, never a `+++` file header.
@@ -106,7 +108,9 @@ impl<'a> Parser<'a> {
             return;
         }
         if line.starts_with(b"@@@ ") {
-            // Combined-diff hunk (merge): not attributed.
+            // Combined-diff hunk: not attributed. History mode asks git for
+            // split merge diffs (`-m`), so this is defensive for unexpected
+            // combined output.
             self.flush_diff();
             self.in_combined = true;
             self.in_hunk = false;

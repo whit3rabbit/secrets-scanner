@@ -37,6 +37,21 @@ fn staged_conflicts_with_git_tracked() {
 }
 
 #[test]
+fn git_tracked_conflicts_with_changed_files() {
+    assert!(
+        Cli::try_parse_from([
+            "secrets-scanner",
+            "scan",
+            ".",
+            "--git-tracked",
+            "--changed-files",
+        ])
+        .is_err(),
+        "--git-tracked --changed-files must conflict"
+    );
+}
+
+#[test]
 fn git_history_conflicts_with_other_git_modes() {
     for other in ["--git-tracked", "--changed-files", "--staged"] {
         assert!(
@@ -44,6 +59,14 @@ fn git_history_conflicts_with_other_git_modes() {
             "--git-history {other} must conflict"
         );
     }
+}
+
+#[test]
+fn max_file_size_rejects_zero() {
+    assert!(
+        Cli::try_parse_from(["secrets-scanner", "scan", ".", "--max-file-size", "0"]).is_err(),
+        "--max-file-size 0 must be rejected"
+    );
 }
 
 #[test]

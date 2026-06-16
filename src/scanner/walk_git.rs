@@ -1,5 +1,5 @@
 use std::io::Read;
-use std::path::{Component, Path};
+use std::path::{Component, Path, PathBuf};
 use std::process::{Command, Stdio};
 
 use log::warn;
@@ -23,7 +23,7 @@ pub(crate) enum BlobRead {
 /// Returns `None` if git is unavailable, the directory is not a repository, or
 /// a command fails, signalling the caller to fall back to a directory walk.
 /// Returns `Some(paths)` (possibly empty) on success.
-pub(crate) fn collect_git_paths(root: &str, config: &ScanConfig) -> Option<Vec<String>> {
+pub(crate) fn collect_git_paths(root: &str, config: &ScanConfig) -> Option<Vec<PathBuf>> {
     let mut paths = Vec::new();
 
     // Staged mode is handled separately in `scan_path` (it reads index blobs,
@@ -195,35 +195,50 @@ pub(crate) fn is_unsafe_rel_path(candidate: &Path) -> bool {
 ///
 /// Absolute paths from git are dropped: tracked files are always repo-relative,
 /// so an absolute path would be a path-containment risk in a hostile repo.
-pub(crate) fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<String>) {
+pub(crate) fn append_git_paths(root: &str, stdout: &[u8], out: &mut Vec<PathBuf>) {
     let root_canonical = match Path::new(root).canonicalize() {
         Ok(path) => path,
         Err(_) => return,
     };
 
     for path in stdout.split(|&b| b == 0).filter(|p| !p.is_empty()) {
-        let path = String::from_utf8_lossy(path);
-        let candidate = Path::new(path.as_ref());
+        let path_display = String::from_utf8_lossy(path);
+        let candidate_buf = pathbuf_from_git_bytes(path);
+        let candidate = candidate_buf.as_path();
         if is_unsafe_rel_path(candidate) {
             warn!(
                 "[scanner] Warning: dropping unsafe path from git output: {}",
-                sanitize_display(&path)
+                sanitize_display(&path_display)
             );
             continue;
         }
-        let trimmed = path.strip_prefix("./").unwrap_or(&path);
+        let trimmed = candidate.strip_prefix(".").unwrap_or(candidate);
         let joined = Path::new(root).join(trimmed);
         match joined.canonicalize() {
             Ok(canonical) if canonical.starts_with(&root_canonical) => {
-                out.push(joined.to_string_lossy().to_string());
+                out.push(joined);
             }
             Ok(_) => {
                 warn!(
                     "[scanner] Warning: dropping path outside scan root from git output: {}",
-                    sanitize_display(&path)
+                    sanitize_display(&path_display)
                 );
             }
             Err(_) => {}
         }
     }
+}
+
+#[cfg(unix)]
+fn pathbuf_from_git_bytes(bytes: &[u8]) -> PathBuf {
+    use std::os::unix::ffi::OsStrExt;
+
+    PathBuf::from(std::ffi::OsStr::from_bytes(bytes))
+}
+
+#[cfg(not(unix))]
+fn pathbuf_from_git_bytes(bytes: &[u8]) -> PathBuf {
+    PathBuf::from(std::ffi::OsString::from(
+        String::from_utf8_lossy(bytes).into_owned(),
+    ))
 }

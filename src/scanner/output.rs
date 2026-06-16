@@ -49,6 +49,17 @@ impl Scanner {
     /// Redacting off the post-cap list would forward secrets past the cap in the
     /// clear — the fail-open hazard this ordering closes.
     pub fn scan_and_redact_bytes(&self, path: &str, content: &[u8]) -> ScanOutput<Vec<u8>> {
+        if !self.config.capture_context && self.config.max_findings_per_file.is_some() {
+            let (findings, ranges, findings_truncated) =
+                self.scan_bytes_for_bounded_redaction(path, content);
+            let redacted = redaction::redact_content_ranges(content, &ranges);
+            return ScanOutput {
+                findings,
+                redacted,
+                findings_truncated,
+            };
+        }
+
         let mut findings = self.scan_bytes_uncapped(path, content);
         let redacted = redaction::redact_content_bytes(content, &findings);
         let findings_truncated = self.apply_findings_cap(path, &mut findings);

@@ -57,7 +57,7 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
     let mut cmd = Command::new("git");
     cmd.arg("-c").arg("core.quotePath=false");
     cmd.arg("-C").arg(root);
-    cmd.args(["log", "-p", "-U0", "--no-color", "--no-ext-diff"]);
+    cmd.args(["log", "-m", "-p", "-U0", "--no-color", "--no-ext-diff"]);
     append_history_options(&mut cmd, scanner);
     // Terminate options so an operator-supplied value cannot be reinterpreted as
     // a pathspec beyond git's own option parsing.
@@ -177,7 +177,23 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
             }
         }
     }
-    parser.into_findings()
+    dedup_history_findings(parser.into_findings())
+}
+
+fn dedup_history_findings(findings: Vec<Finding>) -> Vec<Finding> {
+    let mut seen = std::collections::HashSet::new();
+    findings
+        .into_iter()
+        .filter(|finding| {
+            seen.insert((
+                finding.commit.clone(),
+                finding.file.clone(),
+                finding.line,
+                finding.rule_id.clone(),
+                finding.fingerprint.clone(),
+            ))
+        })
+        .collect()
 }
 
 fn scan_history_zero_cap(scanner: &Scanner, root: &str, stats: &StatsAcc) -> Vec<Finding> {

@@ -34,6 +34,20 @@ pub(super) fn build_from_toml(toml_str: &str) -> Result<(RuleEngine, Vec<String>
         } else if !seen_ids.insert(rule_config.id.as_str()) {
             issues.push(format!("duplicate rule ID: '{}'", rule_config.id));
         }
+        if rule_config.regex.is_none() && rule_config.path.is_none() {
+            issues.push(format!(
+                "rule '{}' must define at least one detection predicate: regex or path",
+                rule_config.id
+            ));
+        }
+        for (kw_idx, keyword) in rule_config.keywords.iter().enumerate() {
+            if keyword.trim().is_empty() {
+                issues.push(format!(
+                    "rule '{}' has an empty keyword at index {}",
+                    rule_config.id, kw_idx
+                ));
+            }
+        }
     }
 
     for rule_config in &config.rules {
@@ -145,8 +159,12 @@ pub(super) fn build_from_toml(toml_str: &str) -> Result<(RuleEngine, Vec<String>
             if is_path_only {
                 path_only_rules.push(RuleRef::Keyworded(rule_idx));
             }
+            let mut seen_rule_keywords = std::collections::BTreeSet::new();
             for kw in &rule_config.keywords {
                 let kw_lower = kw.to_lowercase();
+                if !seen_rule_keywords.insert(kw_lower.clone()) {
+                    continue;
+                }
                 let idx = *keyword_map.entry(kw_lower.clone()).or_insert_with(|| {
                     unique_keywords.push(kw_lower);
                     keyword_to_rules.push(Vec::new());

@@ -158,6 +158,35 @@ fn redaction_covers_secrets_past_the_finding_cap() {
 }
 
 #[test]
+fn proxy_redacts_all_matches_while_reporting_only_capped_findings() {
+    let content = (0..150)
+        .map(|idx| format!("tok_{idx:010}"))
+        .collect::<Vec<_>>()
+        .join(" ");
+    let config = ScanConfig {
+        max_findings_per_file: Some(3),
+        ..ScanConfig::proxy()
+    };
+    let scanner = proxy_scanner(config);
+    let out = scanner
+        .scan_proxy(content.as_bytes())
+        .expect("within size cap");
+
+    assert_eq!(out.findings.len(), 3, "returned findings are capped");
+    assert!(out.findings_truncated, "cap should be surfaced");
+    let redacted = as_str(&out.redacted);
+    assert!(
+        !redacted.contains("tok_"),
+        "all token prefixes must be redacted out of the forwarded payload"
+    );
+    assert_eq!(
+        redacted.matches("[REDACTED_SECRET]").count(),
+        150,
+        "every detected secret should be redacted"
+    );
+}
+
+#[test]
 fn detailed_scan_reports_per_content_truncation() {
     let content = "tok_AAAAAAAAAA tok_BBBBBBBBBB";
     let config = ScanConfig {

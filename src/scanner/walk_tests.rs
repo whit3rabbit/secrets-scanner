@@ -37,7 +37,9 @@ fn append_git_paths_rejects_parent_dir_components() {
     assert_eq!(paths.len(), 1, "safe git path should be kept");
     assert!(paths[0].ends_with("safe.txt"));
     assert!(
-        paths.iter().all(|path| !path.contains("outside.txt")),
+        paths
+            .iter()
+            .all(|path| !path.to_string_lossy().contains("outside.txt")),
         "git paths containing parent components must be dropped"
     );
 }
@@ -68,11 +70,10 @@ fn append_git_paths_rejects_intermediate_symlink_escape() {
 fn read_bounded_returns_none_for_oversized_file() {
     let file = tempfile::NamedTempFile::new().expect("tmp");
     std::fs::write(file.path(), vec![b'a'; 100]).expect("write");
-    let path = file.path().to_str().expect("path");
 
     // Cap below the file size: the one-byte overshoot detects it as oversized.
     assert!(
-        read_bounded(path, 50, 100).expect("read").is_none(),
+        read_bounded(file.path(), 50, 100).expect("read").is_none(),
         "a file larger than the cap must read as None"
     );
 }
@@ -81,9 +82,10 @@ fn read_bounded_returns_none_for_oversized_file() {
 fn read_bounded_accepts_file_at_exact_cap() {
     let file = tempfile::NamedTempFile::new().expect("tmp");
     std::fs::write(file.path(), vec![b'a'; 64]).expect("write");
-    let path = file.path().to_str().expect("path");
 
-    let bytes = read_bounded(path, 64, 64).expect("read").expect("some");
+    let bytes = read_bounded(file.path(), 64, 64)
+        .expect("read")
+        .expect("some");
     assert_eq!(bytes.len(), 64, "a file at exactly the cap must be read");
 }
 
@@ -97,8 +99,17 @@ fn read_bounded_rejects_symlink() {
     std::os::unix::fs::symlink(&target, &link).expect("symlink");
 
     assert!(
-        read_bounded(link.to_str().expect("link"), 100, 12).is_err(),
+        read_bounded(&link, 100, 12).is_err(),
         "O_NOFOLLOW must reject symlinks even if the caller raced after stat"
+    );
+}
+
+#[cfg(unix)]
+#[test]
+fn read_bounded_rejects_non_regular_descriptor() {
+    assert!(
+        read_bounded(std::path::Path::new("/dev/null"), 100, 0).is_err(),
+        "opened descriptors must be verified as regular files before reading"
     );
 }
 

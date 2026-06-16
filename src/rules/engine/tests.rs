@@ -41,6 +41,26 @@ fn maps_keywords_to_rules() {
 }
 
 #[test]
+fn duplicate_normalized_keywords_map_rule_once() {
+    let toml = r#"
+title = "dupe keywords"
+
+[[rules]]
+id = "case-dupe"
+regex = 'secret[0-9]+'
+keywords = ["SECRET", "secret"]
+"#;
+    let engine = RuleEngine::from_toml(toml).expect("should parse");
+
+    assert_eq!(engine.keyword_count(), 1);
+    assert_eq!(
+        engine.rules_for_keyword(0),
+        &[0],
+        "same rule should be mapped once per normalized keyword"
+    );
+}
+
+#[test]
 fn compiles_global_allowlist() {
     let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
     assert!(engine.is_path_globally_allowlisted("file.test"));
@@ -197,6 +217,35 @@ keywords = ["c"]
     assert!(
         issues.iter().any(|i| i.to_lowercase().contains("empty")),
         "expected an empty-id issue: {issues:?}"
+    );
+}
+
+#[test]
+fn from_toml_reporting_flags_empty_keywords_and_inert_rules() {
+    let toml = r#"
+title = "structural"
+
+[[rules]]
+id = "empty-keyword"
+regex = 'secret[0-9]+'
+keywords = ["secret", "   "]
+
+[[rules]]
+id = "inert"
+keywords = ["inert"]
+"#;
+    let (_engine, issues) = RuleEngine::from_toml_reporting(toml).expect("should parse");
+    assert!(
+        issues
+            .iter()
+            .any(|i| i.contains("empty-keyword") && i.contains("empty keyword")),
+        "expected an empty-keyword issue: {issues:?}"
+    );
+    assert!(
+        issues
+            .iter()
+            .any(|i| i.contains("inert") && i.contains("regex") && i.contains("path")),
+        "expected an inert-rule issue: {issues:?}"
     );
 }
 

@@ -252,3 +252,35 @@ allowlists = [
     assert!(res.is_err());
     assert!(res.unwrap_err()[0].contains("invalid path regex"));
 }
+
+#[test]
+fn test_empty_keywords_are_invalid() {
+    let bad = r#"
+[[rules]]
+id = "r"
+regex = 'good'
+keywords = ["good", "  "]
+"#;
+    let res = validate_rules_toml(bad);
+    assert!(res.is_err());
+    assert!(
+        res.unwrap_err()[0].contains("empty keyword"),
+        "empty keyword should be reported clearly"
+    );
+}
+
+#[test]
+fn test_rule_without_regex_or_path_is_invalid() {
+    let bad = r#"
+[[rules]]
+id = "r"
+keywords = ["r"]
+"#;
+    let res = validate_rules_toml(bad);
+    assert!(res.is_err());
+    let errors = res.unwrap_err();
+    assert!(
+        errors[0].contains("regex") && errors[0].contains("path"),
+        "inert rule should be reported clearly"
+    );
+}

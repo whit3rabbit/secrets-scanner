@@ -68,8 +68,12 @@ jobs:
       # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
       # workspace (whose node-mcp member depends on the published darwin/arm64-only
       # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
+      # --no-package-lock too: the committed bindings/node/package-lock.json was
+      # generated inside the bindings/ workspace and is inconsistent when read
+      # standalone (ENOVERSIONS). devDependencies are exact-pinned, so a fresh
+      # resolve is still deterministic.
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund --no-workspaces
+        run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
 
       # --platform suffixes the artifact (secrets_scanner_core.<target>.node) so
       # `napi artifacts` can route it; --no-js preserves the hand-written index.js
@@ -114,8 +118,12 @@ jobs:
       # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
       # workspace (whose node-mcp member depends on the published darwin/arm64-only
       # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
+      # --no-package-lock too: the committed bindings/node/package-lock.json was
+      # generated inside the bindings/ workspace and is inconsistent when read
+      # standalone (ENOVERSIONS). devDependencies are exact-pinned, so a fresh
+      # resolve is still deterministic.
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund --no-workspaces
+        run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4

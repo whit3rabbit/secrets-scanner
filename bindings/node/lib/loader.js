@@ -45,14 +45,41 @@ function loadNative() {
 function nativeCandidates(
   parentDir = path.join(__dirname, ".."),
   platform = process.platform,
-  arch = process.arch
+  arch = process.arch,
+  libc = detectLibc(platform)
 ) {
-  const platformArch = `${platform}-${arch}`;
-  return [
-    path.join(parentDir, `secrets_scanner_core.${platformArch}.node`),
-    path.join(parentDir, `secrets_scanner_core.${platform}.node`),
-    path.join(parentDir, "secrets_scanner_core.node"),
-  ];
+  const suffix = platformArtifactSuffix(platform, arch, libc);
+  const names = [];
+  // napi emits the abi-suffixed artifact name (e.g. linux-x64-gnu,
+  // win32-x64-msvc; darwin has no abi suffix). Try it first so a locally built
+  // `napi build --platform` artifact is found on every platform.
+  if (suffix) {
+    names.push(`secrets_scanner_core.${suffix}.node`);
+  }
+  names.push(`secrets_scanner_core.${platform}-${arch}.node`);
+  names.push(`secrets_scanner_core.${platform}.node`);
+  names.push("secrets_scanner_core.node");
+  return [...new Set(names)].map((name) => path.join(parentDir, name));
+}
+
+// Suffix napi appends to per-platform artifacts and package names
+// (`<platform>-<arch>[-<abi>]`): `darwin-arm64`, `linux-x64-gnu`,
+// `win32-x64-msvc`, etc. Returns null for a platform we do not publish.
+function platformArtifactSuffix(
+  platform = process.platform,
+  arch = process.arch,
+  libc = detectLibc(platform)
+) {
+  switch (platform) {
+    case "darwin":
+      return `darwin-${arch}`;
+    case "win32":
+      return `win32-${arch}-msvc`;
+    case "linux":
+      return `linux-${arch}-${libc || "gnu"}`;
+    default:
+      return null;
+  }
 }
 
 // Compute the scoped per-platform package name for the current host, matching
@@ -66,21 +93,8 @@ function platformPackageName(
   arch = process.arch,
   libc = detectLibc(platform)
 ) {
-  let suffix;
-  switch (platform) {
-    case "darwin":
-      suffix = `darwin-${arch}`;
-      break;
-    case "win32":
-      suffix = `win32-${arch}-msvc`;
-      break;
-    case "linux":
-      suffix = `linux-${arch}-${libc || "gnu"}`;
-      break;
-    default:
-      return null;
-  }
-  return `${PLATFORM_PACKAGE_SCOPE}-${suffix}`;
+  const suffix = platformArtifactSuffix(platform, arch, libc);
+  return suffix ? `${PLATFORM_PACKAGE_SCOPE}-${suffix}` : null;
 }
 
 // Detect the active C standard library on Linux. glibc exposes
@@ -132,6 +146,7 @@ module.exports = {
   loadNative,
   nativeCandidates,
   platformPackageName,
+  platformArtifactSuffix,
   detectLibc,
   nativeBindingNotFound,
 };

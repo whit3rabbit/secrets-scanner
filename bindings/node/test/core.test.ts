@@ -664,6 +664,25 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     expect(detectLibc("win32")).toBeNull();
     expect(detectLibc("linux")).toMatch(/^(gnu|musl)$/);
   });
+
+  it("tries the abi-suffixed local artifact first on linux and windows", () => {
+    // napi build --platform emits secrets_scanner_core.linux-x64-gnu.node, so the
+    // loader must look for that exact name (the bare linux-x64 has no abi suffix).
+    expect(nativeCandidates("/pkg", "linux", "x64", "gnu")).toEqual([
+      join("/pkg", "secrets_scanner_core.linux-x64-gnu.node"),
+      join("/pkg", "secrets_scanner_core.linux-x64.node"),
+      join("/pkg", "secrets_scanner_core.linux.node"),
+      join("/pkg", "secrets_scanner_core.node"),
+    ]);
+    expect(nativeCandidates("/pkg", "win32", "x64")[0]).toBe(
+      join("/pkg", "secrets_scanner_core.win32-x64-msvc.node")
+    );
+  });
+
+  it("does not duplicate the darwin candidate (no abi suffix)", () => {
+    // darwin's abi-suffixed name == <platform>-<arch>, so it must dedupe to 3.
+    expect(nativeCandidates("/pkg", "darwin", "arm64")).toHaveLength(3);
+  });
 });
 
 function scannerComplete(result: unknown) {

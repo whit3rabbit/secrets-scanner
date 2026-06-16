@@ -125,6 +125,16 @@ impl Scanner {
         &self.engine
     }
 
+    /// Whether this scanner's config satisfies the hardened posture required by
+    /// [`scan_proxy`](Self::scan_proxy) for untrusted content (see
+    /// [`ScanConfig::is_hardened`]). Lets a front-end (e.g. the Node binding's
+    /// async proxy path) reproduce `scan_proxy`'s NotHardened-first ordering
+    /// before doing other work, instead of letting an oversize-size check report
+    /// a different error than the synchronous path.
+    pub fn is_hardened(&self) -> bool {
+        self.config.is_hardened()
+    }
+
     /// Returns the accumulated time spent on unkeyworded scans in nanoseconds.
     /// Only available under the `bench` feature.
     #[cfg(feature = "bench")]

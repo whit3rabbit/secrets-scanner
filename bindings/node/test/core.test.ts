@@ -137,6 +137,7 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     expect(result.hasFindings).toBe(true);
     expect(result.findings).toHaveLength(1);
     expect(result.findings[0]?.file).toBe("<proxy>");
+    expect(result.findings[0]?.matched).toBe("[REDACTED]");
     expect(result.findings[0]?.contextLines).toEqual([]);
     expect(redacted).toBe("API_TOKEN=[REDACTED_SECRET] secrets-scanner:allow");
     expect(redacted).not.toContain(SECRET);
@@ -171,7 +172,34 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     }
   });
 
-  it("rejects unsafe config numbers and proxy config fields", () => {
+  it("rejects oversized byte inputs before copying them to Buffer", async () => {
+    const scanner = Scanner.fromToml(RULES, { maxFileSize: 1 });
+    const bytes = new Uint8Array([65, 66]);
+    const originalFrom = Buffer.from;
+    let bufferFromCalled = false;
+    (Buffer as unknown as { from: typeof Buffer.from }).from = (() => {
+      bufferFromCalled = true;
+      throw new Error("Buffer.from should not be called");
+    }) as typeof Buffer.from;
+
+    try {
+      expect(() => scanner.scanBytes("input.env", bytes)).toThrowError(
+        expect.objectContaining({
+          code: "INPUT_TOO_LARGE",
+          details: { size: 2, maxFileSize: 1 },
+        })
+      );
+      await expect(scanner.scanBytesAsync("input.env", bytes)).rejects.toMatchObject({
+        code: "INPUT_TOO_LARGE",
+        details: { size: 2, maxFileSize: 1 },
+      });
+      expect(bufferFromCalled).toBe(false);
+    } finally {
+      (Buffer as unknown as { from: typeof Buffer.from }).from = originalFrom;
+    }
+  });
+
+  it("rejects unsafe and ambiguous config", () => {
     expect(() =>
       Scanner.proxy({ maxFileSize: Number.MAX_SAFE_INTEGER + 1 })
     ).toThrowError(expect.objectContaining({ code: "INVALID_CONFIG" }));
@@ -181,16 +209,41 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     expect(() => Scanner.proxy({ gitHistory: true } as never)).toThrowError(
       expect.objectContaining({ code: "INVALID_CONFIG" })
     );
+    expect(() => Scanner.proxy({ captureContext: false } as never)).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
     expect(() => Scanner.fromToml(RULES, { proxy: true, redact: false } as never)).toThrowError(
       expect.objectContaining({ code: "INVALID_CONFIG" })
     );
     expect(() => Scanner.fromToml(RULES, { proxy: true, gitHistory: true } as never)).toThrowError(
       expect.objectContaining({ code: "INVALID_CONFIG" })
     );
+    expect(() =>
+      Scanner.fromToml(RULES, { proxy: true, historyTimeoutSecs: 1 } as never)
+    ).toThrowError(expect.objectContaining({ code: "INVALID_CONFIG" }));
     expect(() => Scanner.fromToml(RULES, { proxy: true, maxFiles: 1 } as never)).toThrowError(
       expect.objectContaining({ code: "INVALID_CONFIG" })
     );
+    expect(() => Scanner.fromToml(RULES, { historyTimeoutSecs: 1 })).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
+    expect(() => Scanner.fromToml(RULES, { includeUntracked: true })).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
+    expect(() =>
+      Scanner.fromToml(RULES, { gitTracked: true, changedFiles: true })
+    ).toThrowError(expect.objectContaining({ code: "INVALID_CONFIG" }));
+    expect(() => Scanner.fromToml(RULES, { gitTracked: true, base: "HEAD" })).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
     expect(() => Scanner.fromToml(RULES, { proxy: true, maxFileSize: 1024 })).not.toThrow();
+    expect(() =>
+      Scanner.fromToml(RULES, {
+        gitHistory: true,
+        historyTimeoutSecs: 1,
+        captureContext: false,
+      })
+    ).not.toThrow();
   });
 
   it("rejects string coercion for public arguments", () => {
@@ -205,6 +258,9 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     expect(() => scanner.scanBytes({} as unknown as string, Buffer.from(SECRET))).toThrowError(
       expect.objectContaining({ code: "INVALID_ARGUMENT" })
     );
+    expect(() =>
+      new (Scanner as unknown as { new (nativeScanner: unknown): Scanner })({})
+    ).toThrowError(expect.objectContaining({ code: "INVALID_ARGUMENT" }));
   });
 
   it("refuses scanProxy on a non-hardened scanner", () => {
@@ -215,6 +271,42 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
 
     expect(() => scanner.scanProxy(Buffer.from(SECRET, "utf8"))).toThrowError(
       expect.objectContaining({ code: "NOT_HARDENED" })
+    );
+  });
+
+  it("refuses scanProxyAsync on a non-hardened scanner with NOT_HARDENED", async () => {
+    // The async proxy path must check the hardened gate BEFORE the size gate, so
+    // it reports NOT_HARDENED (not INPUT_TOO_LARGE) for a non-hardened scanner,
+    // matching the synchronous scanProxy / Rust core ordering.
+    const scanner = Scanner.fromToml(RULES);
+
+    await expect(scanner.scanProxyAsync(Buffer.from(SECRET, "utf8"))).rejects.toMatchObject({
+      code: "NOT_HARDENED",
+    });
+  });
+
+  it("supports full redaction mode and forbids overriding it on proxy configs", () => {
+    const full = Scanner.fromToml(RULES, { redactionMode: "full" });
+    const detailed = full.scanContentDetailed("input.env", `API_TOKEN=${SECRET}`);
+    expect(detailed.findings).toHaveLength(1);
+    expect(detailed.findings[0]?.matched).toBe("[REDACTED]");
+    expect(detailed.findings[0]?.matched).not.toContain(SECRET);
+
+    const partial = Scanner.fromToml(RULES, { redactionMode: "partial" });
+    const partialDetailed = partial.scanContentDetailed("input.env", `API_TOKEN=${SECRET}`);
+    expect(partialDetailed.findings[0]?.matched).not.toBe("[REDACTED]");
+    expect(partialDetailed.findings[0]?.matched).not.toContain(SECRET);
+
+    // The proxy preset hard-codes full redaction; overriding it is rejected so it
+    // cannot weaken the proxy's no-leak posture.
+    expect(() => Scanner.proxy({ redactionMode: "full" } as never)).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
+    );
+    expect(() =>
+      Scanner.fromToml(RULES, { proxy: true, redactionMode: "full" } as never)
+    ).toThrowError(expect.objectContaining({ code: "INVALID_CONFIG" }));
+    expect(() => Scanner.fromToml(RULES, { redactionMode: "bogus" as never })).toThrowError(
+      expect.objectContaining({ code: "INVALID_CONFIG" })
     );
   });
 
@@ -308,6 +400,49 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
           },
         })
       );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("throws from strict file scans when maxFileSize skips the requested file", () => {
+    const dir = mkdtempSync(join(tmpdir(), "secrets-scanner-node-"));
+    try {
+      const file = join(dir, "input.env");
+      writeFileSync(file, `A=${SECRET}`);
+      const scanner = Scanner.fromToml(RULES, { maxFileSize: 1 });
+
+      const result = scanner.scanFile(file);
+      expect(result.incomplete).toBe(true);
+      expect(result.stats.oversizedSkipped).toBe(1);
+      expect(() => scanner.scanFileStrict(file)).toThrowError(
+        expect.objectContaining({
+          code: "INCOMPLETE_SCAN",
+          details: {
+            stats: expect.objectContaining({ oversizedSkipped: 1 }),
+          },
+        })
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("reports skippedByPolicy for oversized skips and false on a clean scan", () => {
+    const dir = mkdtempSync(join(tmpdir(), "secrets-scanner-node-"));
+    try {
+      const file = join(dir, "input.env");
+      writeFileSync(file, `A=${SECRET}`);
+
+      // Oversized skip is a policy skip → skippedByPolicy true (and, for
+      // oversized, also incomplete).
+      const skipped = Scanner.fromToml(RULES, { maxFileSize: 1 }).scanFile(file);
+      expect(skipped.skippedByPolicy).toBe(true);
+
+      // A normal scan skips nothing → skippedByPolicy false.
+      const clean = Scanner.fromToml(RULES).scanFile(file);
+      expect(clean.skippedByPolicy).toBe(false);
+      expect(clean.incomplete).toBe(false);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

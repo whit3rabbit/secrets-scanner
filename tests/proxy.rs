@@ -114,6 +114,18 @@ fn per_file_finding_cap_enforced_in_scan_bytes() {
 }
 
 #[test]
+fn proxy_findings_use_full_matched_redaction() {
+    let secret = "tok_ABCDEFGHIJKLMNOPQRST";
+    let scanner = proxy_scanner(ScanConfig::proxy());
+    let out = scanner
+        .scan_proxy(secret.as_bytes())
+        .expect("within size cap");
+
+    assert_eq!(out.findings.len(), 1);
+    assert_eq!(out.findings[0].matched, "[REDACTED]");
+}
+
+#[test]
 fn redaction_covers_secrets_past_the_finding_cap() {
     // Regression: redaction must run on the full pre-cap finding set. With the
     // per-content cap below the number of distinct secrets, the findings list is
@@ -241,4 +253,28 @@ fn context_not_captured_in_proxy_but_captured_by_default() {
         out.findings[0].context_lines.is_empty(),
         "proxy config skips context capture"
     );
+}
+
+#[test]
+fn scan_proxy_rejects_partial_redaction_override() {
+    use secrets_scanner::RedactionMode;
+
+    // The proxy preset hard-codes Full (length-hiding) redaction. A caller that
+    // keeps the rest of the preset but overrides to Partial would leak the
+    // first/last 4 chars and length of every secret in the finding's `matched`
+    // field. `is_hardened()` must reject it so `scan_proxy` fails closed.
+    let cfg = ScanConfig {
+        redaction_mode: RedactionMode::Partial,
+        ..ScanConfig::proxy()
+    };
+    assert!(
+        !cfg.is_hardened(),
+        "Partial redaction must not count as a hardened posture"
+    );
+
+    let scanner = proxy_scanner(cfg);
+    match scanner.scan_proxy(b"tok_ABCDEFGHIJKLMNOPQRST") {
+        Err(ProxyError::NotHardened) => {}
+        other => panic!("expected NotHardened for Partial-redaction proxy, got {other:?}"),
+    }
 }

@@ -14,7 +14,7 @@ use async_tasks::{
     ScanContentDetailedTask, ScanContentTask,
 };
 use config::{config_to_rust, NativeScanConfig};
-use errors::{ensure_input_within_limit, to_napi_error, to_napi_proxy_error};
+use errors::{ensure_input_within_limit, napi_error, to_napi_error, to_napi_proxy_error};
 use native_types::{
     byte_output_to_parts, byte_parts_to_native, findings_to_native, path_result_to_native,
     scan_result_to_native, string_output_to_native, NativeByteRedactionResult, NativeFinding,
@@ -104,6 +104,11 @@ impl NativeScanner {
     }
 
     #[napi]
+    pub fn max_file_size(&self) -> f64 {
+        self.max_file_size as f64
+    }
+
+    #[napi]
     pub fn scan_file(&self, path: String) -> Result<NativePathScanResult> {
         let (findings, stats) = self.inner.scan_file_with_stats(&path);
         path_result_to_native(findings, stats)
@@ -116,13 +121,18 @@ impl NativeScanner {
     }
 
     #[napi]
-    pub fn scan_content_async(&self, path: String, content: String) -> AsyncTask<ScanContentTask> {
-        AsyncTask::new(ScanContentTask {
+    pub fn scan_content_async(
+        &self,
+        path: String,
+        content: String,
+    ) -> Result<AsyncTask<ScanContentTask>> {
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(ScanContentTask {
             scanner: Arc::clone(&self.inner),
             path,
             content,
             max_file_size: self.max_file_size,
-        })
+        }))
     }
 
     #[napi]
@@ -130,13 +140,14 @@ impl NativeScanner {
         &self,
         path: String,
         content: String,
-    ) -> AsyncTask<ScanContentDetailedTask> {
-        AsyncTask::new(ScanContentDetailedTask {
+    ) -> Result<AsyncTask<ScanContentDetailedTask>> {
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(ScanContentDetailedTask {
             scanner: Arc::clone(&self.inner),
             path,
             content,
             max_file_size: self.max_file_size,
-        })
+        }))
     }
 
     #[napi]
@@ -144,23 +155,29 @@ impl NativeScanner {
         &self,
         path: String,
         content: String,
-    ) -> AsyncTask<RedactContentTask> {
-        AsyncTask::new(RedactContentTask {
+    ) -> Result<AsyncTask<RedactContentTask>> {
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(RedactContentTask {
             scanner: Arc::clone(&self.inner),
             path,
             content,
             max_file_size: self.max_file_size,
-        })
+        }))
     }
 
     #[napi]
-    pub fn scan_bytes_async(&self, path: String, content: Buffer) -> AsyncTask<ScanBytesTask> {
-        AsyncTask::new(ScanBytesTask {
+    pub fn scan_bytes_async(
+        &self,
+        path: String,
+        content: Buffer,
+    ) -> Result<AsyncTask<ScanBytesTask>> {
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(ScanBytesTask {
             scanner: Arc::clone(&self.inner),
             path,
             content: content.to_vec(),
             max_file_size: self.max_file_size,
-        })
+        }))
     }
 
     #[napi]
@@ -168,13 +185,14 @@ impl NativeScanner {
         &self,
         path: String,
         content: Buffer,
-    ) -> AsyncTask<ScanBytesDetailedTask> {
-        AsyncTask::new(ScanBytesDetailedTask {
+    ) -> Result<AsyncTask<ScanBytesDetailedTask>> {
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(ScanBytesDetailedTask {
             scanner: Arc::clone(&self.inner),
             path,
             content: content.to_vec(),
             max_file_size: self.max_file_size,
-        })
+        }))
     }
 
     #[napi]
@@ -182,21 +200,34 @@ impl NativeScanner {
         &self,
         path: String,
         content: Buffer,
-    ) -> AsyncTask<RedactBytesTask> {
-        AsyncTask::new(RedactBytesTask {
+    ) -> Result<AsyncTask<RedactBytesTask>> {
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(RedactBytesTask {
             scanner: Arc::clone(&self.inner),
             path,
             content: content.to_vec(),
             max_file_size: self.max_file_size,
-        })
+        }))
     }
 
     #[napi]
-    pub fn scan_proxy_async(&self, content: Buffer) -> AsyncTask<ProxyTask> {
-        AsyncTask::new(ProxyTask {
+    pub fn scan_proxy_async(&self, content: Buffer) -> Result<AsyncTask<ProxyTask>> {
+        // Check the hardened-posture gate BEFORE the size gate so a non-hardened
+        // scanner reports NOT_HARDENED regardless of input size, matching the
+        // synchronous `scan_proxy` (which delegates to the core's NotHardened-first
+        // ordering). Without this, oversized input on a non-hardened scanner would
+        // report INPUT_TOO_LARGE on this path but NOT_HARDENED on the sync path.
+        if !self.inner.is_hardened() {
+            return Err(napi_error(
+                "NOT_HARDENED",
+                "scanner is not hardened for proxy use (build it with proxy: true)",
+            ));
+        }
+        ensure_input_within_limit(content.len(), self.max_file_size)?;
+        Ok(AsyncTask::new(ProxyTask {
             scanner: Arc::clone(&self.inner),
             content: content.to_vec(),
-        })
+        }))
     }
 
     #[napi]

@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "node",
+    "node-mcp"
+  ],
+  "scripts": {
+    "test": "npm --workspace @whit3rabbit/rsecrets-scanner test && npm --workspace @whit3rabbit/rsecrets-scanner-mcp test",
+    "typecheck": "npm --workspace @whit3rabbit/rsecrets-scanner typecheck"
+  }
+}

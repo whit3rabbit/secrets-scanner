@@ -20,6 +20,7 @@ const config: ScanConfig = {
   maxFiles: 10,
   maxFindings: 20,
   gitTracked: true,
+  captureContext: false,
 };
 const proxyConfig: ProxyScanConfig = {
   maxFileSize: 1024,
@@ -30,10 +31,14 @@ const proxyConfig: ProxyScanConfig = {
 Scanner.proxy({ redact: false });
 // @ts-expect-error proxy scans do not accept path scan options.
 Scanner.proxy({ gitHistory: true });
+// @ts-expect-error proxy scans do not accept context-capture overrides.
+Scanner.proxy({ captureContext: false });
 // @ts-expect-error direct proxy scans always redact.
 Scanner.fromToml("title = \"empty\"\n", { proxy: true, redact: false });
 // @ts-expect-error direct proxy scans do not accept path scan options.
 Scanner.fromToml("title = \"empty\"\n", { proxy: true, gitHistory: true });
+// @ts-expect-error direct proxy scans do not accept history timeout controls.
+Scanner.fromToml("title = \"empty\"\n", { proxy: true, historyTimeoutSecs: 1 });
 
 const scanner = Scanner.fromToml("title = \"empty\"\n", config);
 const proxyScanner = Scanner.proxy(proxyConfig);

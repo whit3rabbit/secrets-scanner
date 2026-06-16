@@ -199,3 +199,7 @@ fn expand_to_utf8_boundaries(content: &[u8], mut start: usize, mut end: usize) -
 fn is_utf8_boundary_byte(byte: u8) -> bool {
     (byte as i8) >= -0x40
 }
+
+#[cfg(test)]
+#[path = "matching_context_tests.rs"]
+mod tests;

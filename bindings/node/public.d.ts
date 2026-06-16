@@ -21,15 +21,28 @@ export interface ScannerError extends Error {
 
 export type BinaryPolicy = "auto" | "skip" | "scan";
 
+/**
+ * How the `matched` field of a finding is redacted when `redact` is enabled.
+ * `"partial"` (default) keeps the first/last 4 chars; `"full"` replaces the
+ * whole match with a fixed marker that leaks neither the value nor its length.
+ * Ignored when `redact` is false.
+ */
+export type RedactionMode = "partial" | "full";
+
 export interface NormalScanConfig {
   proxy?: false;
   redact?: boolean;
+  redactionMode?: RedactionMode;
   minEntropy?: number;
   maxFileSize?: number;
   maxFindingsPerFile?: number;
   maxMatchedLen?: number;
   binaryPolicy?: BinaryPolicy;
   maxFiles?: number;
+  /**
+   * Total finding cap for path, git, staged, and history scans. In-memory
+   * scanContent and scanBytes calls use maxFindingsPerFile.
+   */
   maxFindings?: number;
   gitTracked?: boolean;
   changedFiles?: boolean;
@@ -38,9 +51,11 @@ export interface NormalScanConfig {
   historyAll?: boolean;
   historyFull?: boolean;
   historyLogOpts?: string[];
+  historyTimeoutSecs?: number;
   gitStaged?: boolean;
   includeUntracked?: boolean;
   gitFallbackWalk?: boolean;
+  captureContext?: boolean;
 }
 
 export interface DirectProxyScanConfig {
@@ -54,6 +69,7 @@ export interface DirectProxyScanConfig {
   maxFindingsPerFile?: number;
   maxMatchedLen?: number;
   redact?: never;
+  redactionMode?: never;
   binaryPolicy?: never;
   maxFiles?: never;
   maxFindings?: never;
@@ -64,9 +80,11 @@ export interface DirectProxyScanConfig {
   historyAll?: never;
   historyFull?: never;
   historyLogOpts?: never;
+  historyTimeoutSecs?: never;
   gitStaged?: never;
   includeUntracked?: never;
   gitFallbackWalk?: never;
+  captureContext?: never;
 }
 
 export type ScanConfig = NormalScanConfig | DirectProxyScanConfig;
@@ -78,6 +96,7 @@ export interface ProxyScanConfig {
   maxMatchedLen?: number;
   proxy?: never;
   redact?: never;
+  redactionMode?: never;
   binaryPolicy?: never;
   maxFiles?: never;
   maxFindings?: never;
@@ -88,9 +107,11 @@ export interface ProxyScanConfig {
   historyAll?: never;
   historyFull?: never;
   historyLogOpts?: never;
+  historyTimeoutSecs?: never;
   gitStaged?: never;
   includeUntracked?: never;
   gitFallbackWalk?: never;
+  captureContext?: never;
 }
 
 export interface ContextLine {
@@ -145,7 +166,18 @@ export interface ScanStats {
 
 export interface PathScanResult extends ScanResult {
   stats: ScanStats;
+  /**
+   * True when coverage is incomplete: unreadable files, oversized skips,
+   * `maxFiles` cap, git failure, or git fallback. Strict scans throw on this.
+   */
   incomplete: boolean;
+  /**
+   * True when any file was skipped by policy (binary or oversized). Unlike
+   * `incomplete`, a binary skip is intentional policy and does not make a strict
+   * scan throw; inspect this to treat policy skips as a coverage gap. Mirrors the
+   * CLI `--error-on-skipped` flag.
+   */
+  skippedByPolicy: boolean;
 }
 
 export class Scanner {

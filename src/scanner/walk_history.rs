@@ -82,10 +82,29 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
         }
     };
 
+    // Optional wall-clock budget: stop the `git log` stream once the deadline
+    // passes so a huge history cannot keep a scan running unbounded. `0` (the
+    // default) disables it. A trip is reported as truncated coverage, not failure.
+    // `checked_add` guards against an absurdly large operator timeout overflowing
+    // the platform clock representation (which would panic on `Instant + Duration`):
+    // such a value collapses to "no deadline" (effectively unlimited, which is what
+    // a near-`u64::MAX` timeout means anyway) instead of crashing the scan.
+    let deadline = if scanner.config.history_timeout_secs > 0 {
+        std::time::Instant::now().checked_add(std::time::Duration::from_secs(
+            scanner.config.history_timeout_secs,
+        ))
+    } else {
+        None
+    };
+
     let mut parser = Parser::new(scanner, root, stats);
     let mut reader = BufReader::new(stdout);
     let mut line = Vec::new();
     let mut read_error = false;
+    let mut timed_out = false;
+    // Check the clock only every N lines: an Instant::now() per patch line would
+    // add measurable overhead on a large history.
+    let mut since_check: u32 = 0;
     loop {
         line.clear();
         match reader.read_until(b'\n', &mut line) {
@@ -100,6 +119,16 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
                 if parser.reached_cap() {
                     break;
                 }
+                if let Some(dl) = deadline {
+                    since_check += 1;
+                    if since_check >= 1024 {
+                        since_check = 0;
+                        if std::time::Instant::now() >= dl {
+                            timed_out = true;
+                            break;
+                        }
+                    }
+                }
             }
             Err(_) => {
                 read_error = true;
@@ -109,7 +138,9 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
     }
     parser.finish();
 
-    let killed_early = parser.reached_cap();
+    // A timeout is an intentional early stop (like the finding cap), so the
+    // resulting non-success exit status is expected, not a git failure.
+    let killed_early = parser.reached_cap() || timed_out;
     if killed_early || read_error {
         let _ = child.kill();
     }
@@ -119,6 +150,19 @@ pub(super) fn scan_history(scanner: &Scanner, root: &str, stats: &StatsAcc) -> V
         warn!("[scanner] git-history mode: error reading `git log` output.");
         stats.git_failed.store(true, Ordering::Relaxed);
         return Vec::new();
+    }
+    if timed_out {
+        // Surface the partial coverage via the existing truncation signal (same
+        // one the zero-cap path uses), which the CLI summary and Node binding
+        // already report. Also set `history_timed_out`: unlike a finding cap, an
+        // expired timeout left commits unscanned, so it counts as incomplete
+        // coverage (a strict Node scan throws INCOMPLETE_SCAN on it).
+        stats.findings_truncated.store(true, Ordering::Relaxed);
+        stats.history_timed_out.store(true, Ordering::Relaxed);
+        warn!(
+            "[scanner] git-history mode: --history-timeout budget exceeded; \
+             scan stopped early (coverage incomplete)."
+        );
     }
     // A clean (non-killed) run that exits non-zero means git failed (e.g. not a
     // repository). Killing the child ourselves to honor --max-findings yields a

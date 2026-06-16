@@ -298,7 +298,12 @@ content (e.g. running as a GitHub Action). Key behaviors:
   (repeatable; each occurrence is one verbatim argv entry — `allow_hyphen_values`,
   so a value may begin with `-` or contain spaces — never split or run through a
   shell; the `--base` dash-rejection does not apply); terminated with `--`. Always
-  fails closed on git error (no walk fallback).
+  fails closed on git error (no walk fallback). `--history-timeout <SECS>` (`0`
+  = unlimited, the default; `ScanConfig::history_timeout_secs`) is an opt-in
+  wall-clock budget checked while streaming `git log`: on expiry the stream is
+  stopped, the child killed, partial findings kept, and `findings_truncated` set
+  (surfaced in the summary and Node `findingsTruncated`) so a huge history cannot
+  run unbounded. The clock is sampled every ~1024 patch lines, not per line.
 - **Staged mode** (`src/scanner/walk_staged.rs`): `--staged` scans the **index
   blob content** that is about to be committed (`git diff --cached
   --name-only --diff-filter=ACMRT` then `git cat-file -t`/`-s`/`blob :path`), NOT
@@ -309,28 +314,39 @@ content (e.g. running as a GitHub Action). Key behaviors:
   mangled. Blob size is checked before the read (bounded-memory). Staged deletions
   are excluded. It is mutually exclusive with the other git modes (enforced by clap).
 - **Inline suppression**: a line containing `secrets-scanner:allow` or
-  `gitleaks:allow` (ecosystem compat) skips that finding (`matching.rs`). For
-  multi-line matches (e.g. PEM keys) the marker is honored on the match's first
-  line only.
+  `gitleaks:allow` (ecosystem compat) skips that finding (`matching.rs`). The
+  check is **line-level** (the marker may appear anywhere on the match's first
+  line, not just as a trailing comment — gitleaks parity), so a marker inside a
+  same-line string value also suppresses. For multi-line matches (e.g. PEM keys)
+  the marker is honored on the match's first line only.
 - **Result caps**: `--max-files`, `--max-findings`, `--max-findings-per-file`.
-  Every cap that fires logs a truncation notice (never silent). `--max-findings`
-  conflicts with `--generate-baseline` (enforced by clap): a capped baseline
-  would silently under-suppress later scans, so the combination is rejected
-  rather than dropping the cap quietly. `--max-findings` still works with
-  `--baseline` (the cap applies after suppression).
+  Every cap that fires logs a truncation notice (never silent), and per-path
+  truncation is folded into the aggregate `ScanStats.findings_truncated` and the
+  CLI summary suffix (so a `--max-findings-per-file` truncation shows even when
+  `--max-findings` never fires). **All three** caps conflict with
+  `--generate-baseline` (enforced by clap): a capped baseline would silently
+  under-suppress later scans by omitting findings/files, so the combinations are
+  rejected rather than dropping a cap quietly. The caps still work with
+  `--baseline` (they apply after suppression).
 - **Redaction style**: `--redaction partial|full` controls the `matched` field
   when redaction is on (default `partial` keeps the first/last 4 chars via
   `filters::redact`; `full` replaces it with the fixed `[REDACTED]` marker via
   `filters::redact_full`, hiding even the length). Orthogonal to `--no-redact`
   (raw text), which it conflicts with. Carried on `ScanConfig::redaction_mode`
-  (`RedactionMode`); the proxy preset stays `Partial`.
+  (`RedactionMode`); the proxy preset uses `Full`.
 - **Honest coverage**: `ScanStats.errored` counts files that could not be
   stat'd/read (distinct from intentional binary/oversized skips) and the CLI
   summary reports `N unreadable`, so an errored file never looks like a
   scanned-and-clean one. `--error-on-unreadable` (off by default) turns a
   non-zero `errored` count into **exit 2** (incomplete coverage) after output is
   written; it takes precedence over the findings exit 1, is independent of
-  `--no-fail`, and does not apply to `--generate-baseline`.
+  `--no-fail`, and does not apply to `--generate-baseline`. `--error-on-skipped`
+  (off by default) does the same for files skipped **by policy** (binary +
+  oversized): a skipped file is "not scanned", not "scanned clean", so a strict
+  caller can fail on that gap. The Node binding exposes the same signal as the
+  additive `PathScanResult.skippedByPolicy` boolean (distinct from `incomplete`,
+  which already counts oversized/errored/cap/git but treats binary skips as
+  policy, not a coverage failure).
 - **Entropy floor**: `--min-entropy` (`min_entropy_override`) only *raises* a
   rule's threshold (`max(override, rule_threshold)`); a low value can never
   weaken a stricter rule.
@@ -344,8 +360,11 @@ content (e.g. running as a GitHub Action). Key behaviors:
   with a fallback to the legacy `(file, line, rule)` tuple for baselines written
   before fingerprints existed. `--generate-baseline <file>` writes the current
   findings as JSON (includes fingerprints) and exits 0. The `matched` field is
-  force-redacted even under `--no-redact` (suppression keys on the fingerprint,
-  not the text), so a committed/uploaded baseline never carries raw secrets.
+  replaced by the fixed `[REDACTED_SECRET]` marker for **every** finding,
+  regardless of redaction mode (including `--no-redact` and default partial
+  redaction) — suppression keys on the fingerprint, not the text, so a
+  committed/uploaded baseline never carries raw secrets *or* the length/first-last
+  structure that partial redaction would otherwise preserve.
   Baselines from older FNV-fingerprint builds should be regenerated once.
   Setting `SECRETS_SCANNER_FINGERPRINT_KEY` switches every fingerprint to a keyed
   HMAC-SHA256 (`hmac-sha256:` prefix instead of `sha256:`), which removes the
@@ -363,6 +382,13 @@ content (e.g. running as a GitHub Action). Key behaviors:
   kept for text/JSON), repo-relative `uri` + `uriBaseId: "SRCROOT"` (multi-path
   scans relativize against the current directory), driver metadata,
   `automationDetails`.
+- **Hardened output writes** (`cli/scan.rs::create_private_file`): every
+  scanner-written file (`--output` in any format, and `--generate-baseline`) is
+  created `0600` on Unix and opened with `O_NOFOLLOW | O_CLOEXEC`, then the opened
+  descriptor is verified to be a regular file. So an attacker-planted symlink at
+  the output path is not followed (open fails `ELOOP`) and a pre-existing
+  fifo/device/dir is rejected instead of being truncated/chmod'd — matching the
+  read-side symlink hardening.
 
 ### Proxy / untrusted content
 

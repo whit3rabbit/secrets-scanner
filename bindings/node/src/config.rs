@@ -1,6 +1,6 @@
 use napi::bindgen_prelude::Result;
 use napi_derive::napi;
-use secrets_scanner::{BinaryPolicy, ScanConfig as RustScanConfig};
+use secrets_scanner::{BinaryPolicy, RedactionMode, ScanConfig as RustScanConfig};
 
 use crate::errors::napi_error;
 
@@ -11,6 +11,7 @@ const JS_MAX_SAFE_INTEGER_F64: f64 = 9_007_199_254_740_991.0;
 pub struct NativeScanConfig {
     pub proxy: Option<bool>,
     pub redact: Option<bool>,
+    pub redaction_mode: Option<String>,
     pub min_entropy: Option<f64>,
     pub max_file_size: Option<f64>,
     pub max_findings_per_file: Option<f64>,
@@ -25,9 +26,11 @@ pub struct NativeScanConfig {
     pub history_all: Option<bool>,
     pub history_full: Option<bool>,
     pub history_log_opts: Option<Vec<String>>,
+    pub history_timeout_secs: Option<f64>,
     pub git_staged: Option<bool>,
     pub include_untracked: Option<bool>,
     pub git_fallback_walk: Option<bool>,
+    pub capture_context: Option<bool>,
 }
 
 pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig> {
@@ -45,6 +48,10 @@ pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig
 
     if let Some(redact) = config.redact {
         rust.redact = redact;
+    }
+
+    if let Some(redaction_mode) = config.redaction_mode {
+        rust.redaction_mode = parse_redaction_mode(&redaction_mode)?;
     }
 
     if let Some(min_entropy) = config.min_entropy {
@@ -94,9 +101,15 @@ pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig
     rust.history_all = config.history_all.unwrap_or(false);
     rust.history_full = rust.git_history || config.history_full.unwrap_or(false);
     rust.history_log_opts = config.history_log_opts.unwrap_or_default();
+    if let Some(history_timeout_secs) = config.history_timeout_secs {
+        rust.history_timeout_secs = number_to_u64("historyTimeoutSecs", history_timeout_secs)?;
+    }
     rust.git_staged = config.git_staged.unwrap_or(false);
     rust.include_untracked = config.include_untracked.unwrap_or(false);
     rust.git_fallback_walk = config.git_fallback_walk.unwrap_or(false);
+    if let Some(capture_context) = config.capture_context {
+        rust.capture_context = capture_context;
+    }
 
     Ok(rust)
 }
@@ -108,6 +121,7 @@ fn validate_proxy_config(config: &NativeScanConfig) -> Result<()> {
 
     let forbidden = [
         ("redact", config.redact.is_some()),
+        ("redactionMode", config.redaction_mode.is_some()),
         ("binaryPolicy", config.binary_policy.is_some()),
         ("maxFiles", config.max_files.is_some()),
         ("maxFindings", config.max_findings.is_some()),
@@ -118,9 +132,11 @@ fn validate_proxy_config(config: &NativeScanConfig) -> Result<()> {
         ("historyAll", config.history_all.is_some()),
         ("historyFull", config.history_full.is_some()),
         ("historyLogOpts", config.history_log_opts.is_some()),
+        ("historyTimeoutSecs", config.history_timeout_secs.is_some()),
         ("gitStaged", config.git_staged.is_some()),
         ("includeUntracked", config.include_untracked.is_some()),
         ("gitFallbackWalk", config.git_fallback_walk.is_some()),
+        ("captureContext", config.capture_context.is_some()),
     ];
 
     for (field, present) in forbidden {
@@ -144,10 +160,11 @@ fn validate_git_mode_config(config: &NativeScanConfig) -> Result<()> {
     let include_untracked = config.include_untracked.unwrap_or(false);
     let has_history_opts = config.history_all.unwrap_or(false)
         || config.history_full.unwrap_or(false)
+        || config.history_timeout_secs.is_some()
         || config
             .history_log_opts
             .as_ref()
-            .map_or(false, |opts| !opts.is_empty());
+            .is_some_and(|opts| !opts.is_empty());
 
     if has_history_opts && !git_history {
         return Err(napi_error(
@@ -168,7 +185,30 @@ fn validate_git_mode_config(config: &NativeScanConfig) -> Result<()> {
             "gitStaged conflicts with other git scan modes",
         ));
     }
+    if git_tracked && (changed_files || has_base) {
+        return Err(napi_error(
+            "INVALID_CONFIG",
+            "gitTracked conflicts with changedFiles and base",
+        ));
+    }
+    if include_untracked && !(git_tracked || changed_files || has_base) {
+        return Err(napi_error(
+            "INVALID_CONFIG",
+            "includeUntracked requires gitTracked, changedFiles, or base",
+        ));
+    }
     Ok(())
+}
+
+fn parse_redaction_mode(value: &str) -> Result<RedactionMode> {
+    match value {
+        "partial" => Ok(RedactionMode::Partial),
+        "full" => Ok(RedactionMode::Full),
+        _ => Err(napi_error(
+            "INVALID_CONFIG",
+            "redactionMode must be one of partial or full",
+        )),
+    }
 }
 
 fn parse_binary_policy(value: &str) -> Result<BinaryPolicy> {
@@ -262,6 +302,16 @@ mod tests {
                 git_history: Some(true),
                 ..NativeScanConfig::default()
             },
+            NativeScanConfig {
+                proxy: Some(true),
+                history_timeout_secs: Some(1.0),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                proxy: Some(true),
+                capture_context: Some(false),
+                ..NativeScanConfig::default()
+            },
         ] {
             assert!(config_to_rust(Some(config)).is_err());
         }
@@ -285,5 +335,47 @@ mod tests {
         assert_eq!(rust.min_entropy_override, Some(4.0));
         assert_eq!(rust.max_findings_per_file, Some(10));
         assert_eq!(rust.max_matched_len, Some(128));
+    }
+
+    #[test]
+    fn rejects_ambiguous_git_scope_config() {
+        for config in [
+            NativeScanConfig {
+                include_untracked: Some(true),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                git_tracked: Some(true),
+                changed_files: Some(true),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                git_tracked: Some(true),
+                base: Some("origin/main".to_string()),
+                ..NativeScanConfig::default()
+            },
+            NativeScanConfig {
+                history_timeout_secs: Some(1.0),
+                ..NativeScanConfig::default()
+            },
+        ] {
+            assert!(config_to_rust(Some(config)).is_err());
+        }
+    }
+
+    #[test]
+    fn accepts_history_timeout_and_capture_context_for_normal_scans() {
+        let config = NativeScanConfig {
+            git_history: Some(true),
+            history_timeout_secs: Some(5.0),
+            capture_context: Some(false),
+            ..NativeScanConfig::default()
+        };
+
+        let rust = config_to_rust(Some(config)).expect("config should convert");
+
+        assert!(rust.git_history);
+        assert_eq!(rust.history_timeout_secs, 5);
+        assert!(!rust.capture_context);
     }
 }

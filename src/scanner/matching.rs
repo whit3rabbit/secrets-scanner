@@ -18,7 +18,16 @@ const MIN_TOKEN_LEN: usize = 8;
 /// skipped. `gitleaks:allow` is accepted for ecosystem compatibility.
 const ALLOW_MARKERS: [&[u8]; 2] = [b"secrets-scanner:allow", b"gitleaks:allow"];
 
-/// True if `line` contains any inline-suppression marker (byte substring scan).
+/// True if `line` contains any inline-suppression marker anywhere on it.
+///
+/// This is a whole-line byte-substring scan, matching gitleaks' line-level
+/// semantics (ecosystem compatibility), NOT a trailing-comment check. The marker
+/// is honored regardless of where it sits relative to the secret — including
+/// inside a string value on the same line (e.g. `t="gitleaks:allow"` would
+/// suppress a secret elsewhere on that line). That broadness is deliberate for
+/// parity; tightening it (e.g. requiring the marker after the match) would be a
+/// behavior change. In proxy mode the whole mechanism is disabled
+/// (`honor_allow_markers = false`) so attacker content cannot self-suppress.
 fn line_has_allow_marker(line: &[u8]) -> bool {
     ALLOW_MARKERS
         .iter()
@@ -166,10 +175,11 @@ pub(super) fn check_rule_match(
         let start = line_cursor.locate(content, match_start_in_file);
         let line_bytes = &content[start.line_start..start.line_end];
 
-        // Inline suppression: a trailing `# gitleaks:allow` (or
-        // `secrets-scanner:allow`) on the match's first line skips the finding.
-        // Multi-line matches (e.g. PEM keys) honor the marker on the start line
-        // only, matching gitleaks behavior. Disabled in proxy mode
+        // Inline suppression: a `gitleaks:allow` (or `secrets-scanner:allow`)
+        // marker ANYWHERE on the match's first line skips the finding (line-level,
+        // matching gitleaks; see `line_has_allow_marker`). Multi-line matches
+        // (e.g. PEM keys) honor the marker on the start line only. Disabled in
+        // proxy mode
         // (`honor_allow_markers = false`): an attacker controlling the content
         // could otherwise append the marker to forward a secret in the clear.
         if scanner.config.honor_allow_markers && line_has_allow_marker(line_bytes) {

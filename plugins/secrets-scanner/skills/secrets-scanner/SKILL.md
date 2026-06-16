@@ -92,6 +92,35 @@ hardened library entry points documented in `REFERENCE.md`: Rust
 those APIs, but it cannot transparently intercept every Hermes/OpenClaw message
 without a separate runtime integration.
 
+## MCP server
+
+For MCP-compatible agents, run the Node MCP wrapper from this repo/package:
+
+```sh
+npx -y @whit3rabbit/rsecrets-scanner-mcp --root /path/to/project
+```
+
+Example client config:
+
+```json
+{
+  "mcpServers": {
+    "rsecrets": {
+      "command": "npx",
+      "args": ["-y", "@whit3rabbit/rsecrets-scanner-mcp", "--root", "/path/to/project"]
+    }
+  }
+}
+```
+
+The MCP tools expose hardened text redaction plus root-bound file, workspace,
+staged, changed-files, and opt-in history scans. They never return raw `matched`
+values or context lines. Enable history only when explicitly requested:
+
+```sh
+npx -y @whit3rabbit/rsecrets-scanner-mcp --root /path/to/project --enable-history
+```
+
 ## References
 
 - Detailed flag/mode reference and gotchas: [REFERENCE.md](REFERENCE.md)

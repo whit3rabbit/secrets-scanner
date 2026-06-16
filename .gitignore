@@ -41,6 +41,9 @@ VolumeIcon.icns
 __pycache__/
 *.pyc
 
+# Node package installs
+node_modules/
+
 # Syn
 .syntext/
 .synrepo/

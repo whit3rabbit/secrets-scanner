@@ -75,6 +75,32 @@ Proxy mode fails closed on oversized input, enforces redaction, ignores inline a
 skips context capture, and caps matched output length. It is for literal recognizable secrets;
 it is not a general prompt-injection, shell, SQL, or XSS sanitizer.
 
+## MCP server
+
+The MCP runtime is packaged as `@whit3rabbit/rsecrets-scanner-mcp` under
+`bindings/node-mcp/`. It uses stdio, so logs must go to stderr and stdout must
+carry only MCP JSON-RPC messages.
+
+```bash
+npx -y @whit3rabbit/rsecrets-scanner-mcp --root /path/to/project
+```
+
+Tools:
+
+- `redact_text` — hardened proxy scan, returns redacted text.
+- `scan_text` — hardened proxy scan, returns safe metadata only.
+- `scan_file` — strict scan of one file under `--root`.
+- `scan_workspace` — strict root-bound walk/git-tracked/changed-files/staged scan.
+- `scan_git_history` — root-bound history scan, available only with `--enable-history`.
+
+Safety rules:
+
+- MCP results omit `matched` and `contextLines`.
+- Tool paths must resolve inside `--root`.
+- Per-call rules files are not accepted; `--rules-file` is startup-only.
+- Tool-supplied caps are clamped to startup caps.
+- Raw `git log` options are startup-only via `--history-log-opt`, not tool input.
+
 ## Install locations
 
 - Prebuilt download (install.sh fallback): `~/.secrets-scanner/bin/secrets-scanner` (add to PATH).

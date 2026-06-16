@@ -10,30 +10,26 @@
 //! and makes baselines unlinkable across keys. Changing the key changes all
 //! fingerprints, so baselines must be regenerated when it changes.
 
-use std::sync::OnceLock;
-
 use hmac::{Hmac, Mac};
 use sha2::{Digest, Sha256};
 
 type HmacSha256 = Hmac<Sha256>;
 
-/// Cached optional fingerprint key from `SECRETS_SCANNER_FINGERPRINT_KEY`.
+/// Read the optional fingerprint key from `SECRETS_SCANNER_FINGERPRINT_KEY`.
 ///
-/// Read once per process: an empty or unset var disables keying (plain SHA-256).
-/// A `OnceLock` keeps [`finding_fingerprint`]/[`location_fingerprint`] as stable
-/// free functions (no signature change at the matching/SARIF call sites) while
-/// avoiding a getenv per finding. Setting the var after the first fingerprint is
-/// computed has no effect — acceptable for the one-scan-per-process CLI.
-fn cached_key() -> Option<&'static [u8]> {
-    static FP_KEY: OnceLock<Option<Vec<u8>>> = OnceLock::new();
-    FP_KEY
-        .get_or_init(
-            || match std::env::var_os("SECRETS_SCANNER_FINGERPRINT_KEY") {
-                Some(v) if !v.is_empty() => Some(v.into_encoded_bytes()),
-                _ => None,
-            },
-        )
-        .as_deref()
+/// An empty or unset var disables keying (plain SHA-256). Read fresh on each
+/// call rather than cached in a `OnceLock`: the binding is embedded in
+/// long-lived host processes (the Node binding, a redaction proxy) that may
+/// build many scanners and set/rotate the key after the first fingerprint was
+/// computed; a process-global cache would silently freeze the key at its first
+/// observed value and key later baselines with the wrong (or no) key. The cost
+/// is one `getenv` per finding — negligible beside the regex scan that produced
+/// the finding, and fingerprints are not computed in the per-line hot loop.
+fn current_key() -> Option<Vec<u8>> {
+    match std::env::var_os("SECRETS_SCANNER_FINGERPRINT_KEY") {
+        Some(v) if !v.is_empty() => Some(v.into_encoded_bytes()),
+        _ => None,
+    }
 }
 
 /// Compute a hex-encoded 64-bit FNV-1a hash over `parts`, inserting a NUL byte
@@ -100,7 +96,7 @@ fn fingerprint_digest(key: Option<&[u8]>, parts: &[&[u8]]) -> String {
 }
 
 fn sha256_fingerprint(parts: &[&[u8]]) -> String {
-    fingerprint_digest(cached_key(), parts)
+    fingerprint_digest(current_key().as_deref(), parts)
 }
 
 /// Line-tolerant fingerprint of a finding: identifies the same secret across

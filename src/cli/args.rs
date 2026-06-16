@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{ArgGroup, Parser, Subcommand, ValueEnum};
 use clap_complete::Shell;
 use secrets_scanner::{BinaryPolicy, RedactionMode};
 
@@ -94,6 +94,16 @@ pub(super) enum Commands {
 
 /// Arguments for the `scan` subcommand.
 #[derive(Parser)]
+// `--include-untracked` only has an effect inside a path-discovery git mode
+// (`--git-tracked`/`--changed-files`/`--base`); on its own it was a silent
+// no-op. Requiring this group makes it an explicit usage error instead, matching
+// the Node binding's `includeUntracked requires gitTracked, changedFiles, or base`.
+#[command(group(
+    ArgGroup::new("git_path_scope")
+        .args(["git_tracked", "changed_files", "base"])
+        .multiple(true)
+        .required(false)
+))]
 pub(super) struct ScanArgs {
     /// Paths to scan (files or directories). Defaults to current directory.
     #[arg(default_value = ".")]
@@ -145,7 +155,8 @@ pub(super) struct ScanArgs {
     /// Write the current findings to FILE as a baseline (JSON) and exit 0
     /// without failing on findings. Use as the input to a later `--baseline`.
     /// This output is safer to commit/upload than normal JSON scan output because
-    /// it drops context and force-redacts `matched` even under `--no-redact`.
+    /// it drops context and replaces `matched` with a fixed `[REDACTED_SECRET]`
+    /// marker for every finding, regardless of redaction mode.
     #[arg(long, value_name = "FILE", conflicts_with = "baseline")]
     pub(super) generate_baseline: Option<String>,
 
@@ -206,8 +217,10 @@ pub(super) struct ScanArgs {
     #[arg(long, conflicts_with_all = ["git_tracked", "changed_files", "base", "include_untracked", "git_history"])]
     pub(super) staged: bool,
 
-    /// In git mode, also scan untracked (but not ignored) files.
-    #[arg(long)]
+    /// In git mode, also scan untracked (but not ignored) files. Requires a
+    /// path-discovery git mode (`--git-tracked`, `--changed-files`, or `--base`);
+    /// it has no effect otherwise and is rejected on its own.
+    #[arg(long, requires = "git_path_scope")]
     pub(super) include_untracked: bool,
 
     /// What to do when an explicit git mode fails (git missing, not a repo).
@@ -222,7 +235,10 @@ pub(super) struct ScanArgs {
     pub(super) binary_policy: BinaryPolicyArg,
 
     /// Cap the number of files scanned (excess files are not scanned).
-    #[arg(long, value_name = "N")]
+    /// Conflicts with `--generate-baseline`: dropping whole files would write a
+    /// baseline missing their findings, which then silently fail to suppress on a
+    /// later uncapped scan.
+    #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
     pub(super) max_files: Option<usize>,
 
     /// Cap total findings reported across the scan. Conflicts with
@@ -232,8 +248,10 @@ pub(super) struct ScanArgs {
     #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
     pub(super) max_findings: Option<usize>,
 
-    /// Cap findings reported per file.
-    #[arg(long, value_name = "N")]
+    /// Cap findings reported per file. Conflicts with `--generate-baseline`: a
+    /// per-file cap can drop findings from the baseline, which then silently fail
+    /// to suppress on a later uncapped scan.
+    #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
     pub(super) max_findings_per_file: Option<usize>,
 
     /// Do not print surrounding context lines (safe default for CI logs).
@@ -254,6 +272,26 @@ pub(super) struct ScanArgs {
     /// still written first. Does not apply to `--generate-baseline`.
     #[arg(long)]
     pub(super) error_on_unreadable: bool,
+
+    /// Exit 2 if any file was skipped by policy (binary or oversized). Off by
+    /// default: such files are skipped intentionally, but a skipped file is "not
+    /// scanned", not "scanned clean", so a strict caller can opt into failing on
+    /// the coverage gap. Mirrors `--error-on-unreadable`; same exit-2 precedence;
+    /// does not apply to `--generate-baseline`.
+    #[arg(long)]
+    pub(super) error_on_skipped: bool,
+
+    /// Wall-clock budget (seconds) for `--git-history` patch scanning. `0`
+    /// (default) means unlimited. When the deadline is exceeded the `git log`
+    /// stream is stopped and the scan is reported as truncated (incomplete
+    /// coverage) rather than running unbounded on a huge history.
+    #[arg(
+        long,
+        value_name = "SECS",
+        default_value_t = 0,
+        requires = "git_history"
+    )]
+    pub(super) history_timeout: u64,
 }
 
 /// Fallback behavior when an explicit git mode fails.
@@ -318,132 +356,5 @@ pub(super) enum OutputFormat {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::{Cli, Commands, ScanArgs};
-    use clap::Parser;
-
-    /// Parse argv and return the `scan` args, panicking on any other command.
-    fn scan_args(argv: &[&str]) -> ScanArgs {
-        match Cli::try_parse_from(argv)
-            .expect("args should parse")
-            .command
-        {
-            Commands::Scan(args) => args,
-            _ => panic!("expected scan subcommand"),
-        }
-    }
-
-    #[test]
-    fn base_alone_implies_changed_files() {
-        // Regression: clap does not auto-imply, so `--base` passed without
-        // `--changed-files` must still derive changed-files mode rather than
-        // silently falling back to a full directory walk that discards the base.
-        let args = scan_args(&["secrets-scanner", "scan", ".", "--base", "origin/main"]);
-        assert!(!args.changed_files, "only --base was passed");
-        assert_eq!(args.base.as_deref(), Some("origin/main"));
-        assert!(
-            super::super::scan::resolve_changed_files(&args),
-            "--base must imply changed-files mode"
-        );
-    }
-
-    #[test]
-    fn staged_conflicts_with_git_tracked() {
-        // `--staged` is its own git mode; combined with `--git-tracked` (which
-        // would otherwise silently win at runtime) it must be a parse error.
-        assert!(
-            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--staged", "--git-tracked"])
-                .is_err(),
-            "--staged --git-tracked must conflict"
-        );
-    }
-
-    #[test]
-    fn git_history_conflicts_with_other_git_modes() {
-        for other in ["--git-tracked", "--changed-files", "--staged"] {
-            assert!(
-                Cli::try_parse_from(["secrets-scanner", "scan", ".", "--git-history", other])
-                    .is_err(),
-                "--git-history {other} must conflict"
-            );
-        }
-    }
-
-    #[test]
-    fn history_options_require_git_history() {
-        // `--all`/`--log-opts` are meaningless without history mode and must be
-        // rejected so they cannot silently no-op.
-        assert!(
-            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--all"]).is_err(),
-            "--all requires --git-history"
-        );
-        assert!(
-            Cli::try_parse_from(["secrets-scanner", "scan", ".", "--log-opts", "-c"]).is_err(),
-            "--log-opts requires --git-history"
-        );
-    }
-
-    #[test]
-    fn old_git_flag_names_are_rejected() {
-        // Clean break: the pre-rename flags must no longer parse.
-        for old in ["--git", "--git-diff", "--diff-base"] {
-            assert!(
-                Cli::try_parse_from(["secrets-scanner", "scan", ".", old]).is_err(),
-                "old flag {old} must be rejected after the rename"
-            );
-        }
-    }
-
-    #[test]
-    fn staged_alone_parses() {
-        assert!(scan_args(&["secrets-scanner", "scan", ".", "--staged"]).staged);
-    }
-
-    #[test]
-    fn max_findings_conflicts_with_generate_baseline() {
-        // A capped baseline silently under-suppresses later; reject the combo
-        // instead of dropping the cap on the quiet.
-        assert!(
-            Cli::try_parse_from([
-                "secrets-scanner",
-                "scan",
-                ".",
-                "--generate-baseline",
-                "b.json",
-                "--max-findings",
-                "5",
-            ])
-            .is_err(),
-            "--max-findings with --generate-baseline must conflict"
-        );
-    }
-
-    #[test]
-    fn redaction_full_conflicts_with_no_redact() {
-        // `--no-redact` shows raw text; pairing it with a redaction style is
-        // contradictory.
-        assert!(
-            Cli::try_parse_from([
-                "secrets-scanner",
-                "scan",
-                ".",
-                "--no-redact",
-                "--redaction",
-                "full",
-            ])
-            .is_err(),
-            "--no-redact --redaction full must conflict"
-        );
-        let args = scan_args(&["secrets-scanner", "scan", ".", "--redaction", "full"]);
-        assert!(matches!(args.redaction, super::RedactionModeArg::Full));
-    }
-
-    #[test]
-    fn error_on_unreadable_defaults_off_and_parses() {
-        assert!(!scan_args(&["secrets-scanner", "scan", "."]).error_on_unreadable);
-        assert!(
-            scan_args(&["secrets-scanner", "scan", ".", "--error-on-unreadable"])
-                .error_on_unreadable
-        );
-    }
-}
+#[path = "args_tests.rs"]
+mod tests;

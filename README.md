@@ -15,6 +15,7 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 - **Git-aware scanning**: Scan git-tracked files (`--git-tracked`), changed files (`--changed-files` / `--base`), full history patches (`--git-history`, finds secrets committed then removed), staged index blobs (`--staged`), or untracked files (`--include-untracked`). Explicit git modes fail closed on git error (opt back in with `--git-fallback=walk`).
 - **CI-friendly output**: Exports to text, JSON, JSONL, and SARIF formats. Supports suppressions, baselines, and scan scope limits.
 - **CLI and automation**: Complete CLI toolset with completions, GitHub Action, pre-commit hook, Docker image, and Homebrew cask packaging.
+- **Rust and Node.js libraries**: Use the Rust crate directly or install the Node.js binding package `@whit3rabbit/rsecrets-scanner`.
 - **Optional runtime updates**: Download and update rule configurations dynamically to the OS user-data directory via the `--features updater` build.
 - **Developer tooling**: Includes built-in rule validation, merge check validation, duplicate-rule detectors, benchmarks, and fuzz targets.
 
@@ -105,12 +106,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 For untrusted inputs (e.g. proxying user prompts or LLM generated payloads), use the hardened `scan_proxy` interface. This API is **fail-closed** (returns an error on oversized input) and enforces a hardened `ScanConfig::proxy()` setup (enforces redaction, disables allow markers, caps maximum findings, and limits matched length to prevent memory amplification/bypass attacks).
 
 ```rust
-use secrets_scanner::{Scanner, ScanConfig, ProxyError};
+use secrets_scanner::{ScanConfig, Scanner};
 
-fn handle_untrusted_input(payload: &[u8]) -> Result<Vec<u8>, ProxyError> {
-    // Create a scanner configured for proxy hardened mode
-    let config = ScanConfig::proxy();
-    let scanner = Scanner::with_config(config).map_err(|_| ProxyError::NotHardened)?;
+fn handle_untrusted_input(payload: &[u8]) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    // Create a scanner configured for proxy hardened mode.
+    let scanner = Scanner::from_bundled()?.with_config(ScanConfig::proxy());
 
     // scan_proxy returns Err(ProxyError::InputTooLarge) if input exceeds config.max_file_size
     // It also fails with Err(ProxyError::NotHardened) if the config is not secure.
@@ -125,6 +125,35 @@ fn handle_untrusted_input(payload: &[u8]) -> Result<Vec<u8>, ProxyError> {
     Ok(output.redacted)
 }
 ```
+
+### 4. Use from Node.js
+
+The Node.js binding package is `@whit3rabbit/rsecrets-scanner`, not
+`secrets-scanner`. It is a library binding over the same Rust implementation; it
+does not install the CLI binary.
+
+```bash
+npm install @whit3rabbit/rsecrets-scanner
+```
+
+```js
+const { Scanner } = require("@whit3rabbit/rsecrets-scanner");
+
+const scanner = Scanner.proxy({ maxFileSize: 1024 * 1024 });
+const result = scanner.scanProxy(
+  Buffer.from("token=ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh1234567")
+);
+
+if (result.hasFindings) {
+  const safePayload = Buffer.from(result.redacted).toString("utf8");
+  // Forward safePayload instead of the original input.
+}
+```
+
+`Scanner.proxy()` maps to Rust `ScanConfig::proxy()`, and `scanProxy()`
+maps to Rust `Scanner::scan_proxy()`: oversized input and non-hardened configs
+fail closed. See [`bindings/node/README.md`](bindings/node/README.md) for the
+full Node API, source-build instructions, and current native packaging limits.
 
 ---
 
@@ -185,6 +214,24 @@ cargo install secrets_scanner
 
 # Build and install with runtime updater support (optional features)
 cargo install secrets_scanner --features updater
+```
+
+### Node.js Binding Package
+For Node.js applications, install the scoped binding package:
+
+```bash
+npm install @whit3rabbit/rsecrets-scanner
+```
+
+This is not the CLI package. It loads a native NAPI-RS `.node` artifact and
+wraps the Rust `secrets_scanner` crate. Current npm packaging ships the native
+artifact built for the publish target; if no artifact matches your platform,
+build from a checkout with:
+
+```bash
+cd bindings/node
+npm install
+npm run build
 ```
 
 ### Manual Download

@@ -1,0 +1,36 @@
+{
+  "name": "@whit3rabbit/rsecrets-scanner-mcp",
+  "version": "0.1.0",
+  "description": "MCP stdio server for secrets-scanner.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "rsecrets-scanner-mcp": "./bin/rsecrets-scanner-mcp.js"
+  },
+  "exports": {
+    ".": "./src/server.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@whit3rabbit/rsecrets-scanner": "^0.1.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "vitest": "4.1.8"
+  }
+}

@@ -45,6 +45,7 @@ struct StatsAcc {
     git_fallback: AtomicBool,
     git_failed: AtomicBool,
     findings_truncated: AtomicBool,
+    history_timed_out: AtomicBool,
 }
 
 impl StatsAcc {
@@ -58,6 +59,7 @@ impl StatsAcc {
             git_fallback: self.git_fallback.load(Ordering::Relaxed),
             git_failed: self.git_failed.load(Ordering::Relaxed),
             findings_truncated: self.findings_truncated.load(Ordering::Relaxed),
+            history_timed_out: self.history_timed_out.load(Ordering::Relaxed),
         }
     }
 }
@@ -127,15 +129,70 @@ pub fn scan_path(scanner: &Scanner, root: &str) -> (Vec<Finding>, ScanStats) {
     (findings, stats.snapshot())
 }
 
-/// Scan exactly one file through the hardened file-read path.
+/// Scan exactly one named file through the hardened file-read path.
+///
+/// Unlike [`scan_path`] this scans the single named path rather than discovering
+/// files, but it inherits the same caps and coverage honesty so the single-file
+/// API cannot silently under-report:
+///
+/// - `git_history`/`git_staged` change *which content* is scanned (commit
+///   patches / index blobs) and cannot be reproduced from one working-tree file,
+///   so they fail closed (`git_failed`) instead of silently scanning the working
+///   tree and reporting a git-scoped request as a complete plain scan.
+///   (`git_tracked`/`changed_files` are path-discovery filters, moot for an
+///   explicitly named file, so they do not fail closed here.)
+/// - It routes through [`scan_file_paths`] so the total `max_findings` cap
+///   applies, not only the per-file `max_findings_per_file` cap.
+/// - An explicitly named file excluded by path policy, or dropped by the
+///   read-side symlink / non-regular-file guard, is recorded as a coverage gap
+///   (`errored`) rather than returning all-zero stats that read as
+///   scanned-and-clean. A genuine empty (zero-length) regular file stays clean.
 pub fn scan_file(scanner: &Scanner, path: &str) -> (Vec<Finding>, ScanStats) {
     let stats = StatsAcc::default();
-    if !should_collect_path(scanner, path) || scanner.engine.is_path_globally_allowlisted(path) {
+
+    // Content-changing git modes cannot be honored for one working-tree file.
+    if scanner.config.git_history || scanner.config.git_staged {
+        stats.git_failed.store(true, Ordering::Relaxed);
         return (Vec::new(), stats.snapshot());
     }
-    let mut findings = scan_one_file(scanner, path, &stats);
+
+    // Excluded by path policy (skip-extension/noisy-dir filter or a global
+    // allowlist). For a single explicitly named file this is "not scanned", a
+    // coverage gap, not a clean result.
+    if !should_collect_path(scanner, path) || scanner.engine.is_path_globally_allowlisted(path) {
+        stats.errored.fetch_add(1, Ordering::Relaxed);
+        return (Vec::new(), stats.snapshot());
+    }
+
+    // Route through the capped scan so the total `--max-findings` cap applies to
+    // the single-file path too (a bare `scan_one_file` only honors the per-file
+    // cap inside `scan_bytes_detailed`).
+    let paths = [path.to_string()];
+    let mut findings = scan_file_paths(scanner, &paths, &stats);
     sort_findings(&mut findings);
-    (findings, stats.snapshot())
+    let snapshot = stats.snapshot();
+
+    // The path passed the filters but produced no findings and incremented no
+    // skip/error counter: it was dropped by the symlink / non-regular-file guard
+    // in `scan_one_file`. For a single explicitly named file that is an unscanned
+    // coverage gap, so surface it. A zero-length regular file is genuinely empty
+    // and stays clean (it is still `is_file()`).
+    if findings.is_empty()
+        && snapshot.files_scanned == 0
+        && snapshot.binary_skipped == 0
+        && snapshot.oversized_skipped == 0
+        && snapshot.errored == 0
+    {
+        let unscannable = std::fs::symlink_metadata(path)
+            .map(|m| !m.file_type().is_file())
+            .unwrap_or(true);
+        if unscannable {
+            stats.errored.fetch_add(1, Ordering::Relaxed);
+            return (findings, stats.snapshot());
+        }
+    }
+
+    (findings, snapshot)
 }
 
 /// Decide what happens when an explicit git mode fails. Returns `true` when the

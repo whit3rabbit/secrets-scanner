@@ -1,7 +1,8 @@
 # @whit3rabbit/rsecrets-scanner (Node bindings)
 
 Native Node.js bindings (NAPI-RS) over the Rust `secrets_scanner` crate (`../..`).
-Core binding only; MCP server packaging is a planned follow-up layer.
+Core binding only. The same repo also ships an MCP stdio wrapper in
+`../node-mcp` for `npx`/MCP clients.
 
 ## Commands
 
@@ -54,7 +55,8 @@ details are encoded after `details=` in the native message and parsed by
   or throws `NOT_HARDENED`; oversize input throws `INPUT_TOO_LARGE`. Do not
   loosen these to "scan anyway".
 - All in-memory public scan methods enforce `maxFileSize`, not only
-  `scanProxy()`.
+  `scanProxy()`. Byte entry points must reject oversize `Uint8Array` inputs
+  before copying them into `Buffer`.
 - Finding positions are `usize` → `f64`; a value above JS `MAX_SAFE_INTEGER`
   throws `POSITION_OVERFLOW` rather than silently clamping.
 - Config numbers are validated (finite, non-negative, integer, JS safe integer)
@@ -64,9 +66,12 @@ details are encoded after `details=` in the native message and parsed by
   confuse proxy posture.
 - Direct `{ proxy: true }` configs on `bundled`/`fromToml`/`fromRulesFile` follow
   the same safe override rule. Reject `redact`, path/git fields, binary policy,
-  and result caps there too.
+  result caps, `captureContext`, and history timeout controls there too.
 - `gitHistory: true` implies full-history traversal to match the CLI. Do not
   make Node callers remember `historyFull: true` for safe defaults.
+- `historyTimeoutSecs` is valid only with `gitHistory: true`.
+- `captureContext` is normal-scan-only. Keep MCP/server path scans on
+  `captureContext: false` so tool output cannot echo surrounding source lines.
 
 ## Constructors (factories)
 
@@ -83,22 +88,29 @@ Also `fromRulesFile(path)`, `fromToml(toml)`.
 `{ findings, hasFindings, findingsTruncated }`. Redaction results also expose
 `findingsTruncated`; the redacted payload is still built from the full pre-cap
 finding set. `scanFile()` / `scanPath()` return `PathScanResult` with safe
-coverage `stats` and `incomplete`. Strict variants (`scanFileStrict()`,
-`scanPathStrict()`, and async forms) throw `INCOMPLETE_SCAN` with safe `stats`
-details when coverage is incomplete.
+coverage `stats`, `incomplete`, and `skippedByPolicy`. Strict variants
+(`scanFileStrict()`, `scanPathStrict()`, and async forms) throw `INCOMPLETE_SCAN`
+with safe `stats` details when coverage is incomplete. Oversized skipped files
+are incomplete coverage for strict scans; binary skips remain scan policy.
+`skippedByPolicy` (binary OR oversized) is an additive informational boolean that
+does NOT affect `incomplete`/strict throwing — it lets a caller treat policy
+skips as a gap, mirroring the CLI `--error-on-skipped` flag.
 
 Async methods mirror the sync names with an `Async` suffix and return Promises.
-They use NAPI-RS `Task`/`AsyncTask`; JS buffers are copied into owned `Vec<u8>`
-before worker execution. The public JS wrapper also copies `Uint8Array` inputs
-with `Buffer.from(content)` before sync native calls so callers cannot share a
-mutable view across the binding boundary.
+They use NAPI-RS `Task`/`AsyncTask`; byte inputs are size-checked before JS
+copies them with `Buffer.from(content)` and before Rust copies NAPI `Buffer`
+values into owned `Vec<u8>` for worker execution.
 
 ## Packaging
 
 `package.json` is publishable and includes an `exports` map, `engines.node`, and
-prepack/prepublish checks. This package still ships the built host `.node`
+prepack/prepublish checks. `prepublishOnly` builds before testing because tests
+need the `.node` artifact. This package still ships the built host `.node`
 artifact only; per-platform optional package publishing is a separate release
 task.
+
+`bindings/package.json` is a private npm workspace root for local development of
+the core binding and `@whit3rabbit/rsecrets-scanner-mcp`; do not publish it.
 
 ## Cargo notes
 

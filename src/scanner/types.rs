@@ -101,6 +101,13 @@ pub struct ScanConfig {
     /// through a shell. NOT attacker-controlled.
     pub history_log_opts: Vec<String>,
 
+    /// Wall-clock budget (in seconds) for `git_history` patch scanning. `0`
+    /// (default) means unlimited. When exceeded, the `git log` stream is stopped
+    /// and the scan is reported as truncated (`ScanStats::findings_truncated`),
+    /// so a huge history cannot keep a scan running unbounded. Only consulted in
+    /// history mode.
+    pub history_timeout_secs: u64,
+
     /// If true, scan only files staged in the git index (`git diff --cached
     /// --name-only`). Intended for pre-commit hooks. Takes precedence over
     /// `changed_files`/`git_tracked` path selection.
@@ -163,6 +170,7 @@ impl Default for ScanConfig {
             history_all: false,
             history_full: false,
             history_log_opts: Vec::new(),
+            history_timeout_secs: 0,
             git_staged: false,
             include_untracked: false,
             git_fallback_walk: false,
@@ -187,6 +195,7 @@ impl ScanConfig {
     pub fn proxy() -> Self {
         Self {
             redact: true,
+            redaction_mode: RedactionMode::Full,
             honor_allow_markers: false,
             capture_context: false,
             max_findings_per_file: Some(DEFAULT_PROXY_MAX_FINDINGS),
@@ -197,14 +206,19 @@ impl ScanConfig {
 
     /// Whether this config satisfies the hardened posture that
     /// [`Scanner::scan_proxy`](crate::Scanner::scan_proxy) requires for untrusted
-    /// content: redaction on, inline allow markers ignored, context capture off,
-    /// and both the per-file finding cap and the `matched`-length cap set.
+    /// content: redaction on (in the length-hiding [`RedactionMode::Full`] mode),
+    /// inline allow markers ignored, context capture off, and both the per-file
+    /// finding cap and the `matched`-length cap set.
     ///
     /// Defined next to [`proxy`](Self::proxy) so the constructor and the
     /// enforcement check cannot drift — a new hardening field added to `proxy()`
-    /// must be reflected here, or `scan_proxy` will fail closed by design.
+    /// must be reflected here, or `scan_proxy` will fail closed by design. The
+    /// `redaction_mode == Full` check is one such reflection: a proxy preset
+    /// reconfigured to `Partial` would otherwise pass this gate and leak the
+    /// first/last 4 chars and length of every secret in each finding's `matched`.
     pub fn is_hardened(&self) -> bool {
         self.redact
+            && self.redaction_mode == RedactionMode::Full
             && !self.honor_allow_markers
             && !self.capture_context
             && self.max_findings_per_file.is_some()
@@ -250,7 +264,15 @@ pub struct ScanStats {
 
     /// True when a finding cap dropped one or more finding entries from the
     /// returned result set. Redaction still uses the full pre-cap finding set.
+    /// This is NOT incomplete coverage: everything was scanned, only the count of
+    /// reported findings was capped.
     pub findings_truncated: bool,
+
+    /// True when a git-history `--history-timeout` budget expired and the
+    /// `git log` stream was stopped before all commits were traversed, so some
+    /// history was NOT scanned. Unlike `findings_truncated` (a count cap), this
+    /// IS incomplete coverage: a strict scan must surface it.
+    pub history_timed_out: bool,
 }
 
 /// Findings from one content scan plus whether a finding cap truncated them.

@@ -776,6 +776,27 @@ fn history_finds_secret_removed_from_tree() {
 }
 
 #[test]
+fn history_with_generous_timeout_still_finds_secret() {
+    // Exercises the wall-clock-budget branch (deadline set) without flakiness: a
+    // large timeout never trips, so history scanning must behave normally. A real
+    // trip is intentionally not asserted (timing-dependent and flaky).
+    let repo = tempfile::tempdir().expect("repo");
+    init_repo(repo.path());
+    std::fs::write(repo.path().join("a.txt"), "key = SECRET123456").expect("write");
+    git(repo.path(), &["add", "."]);
+    git(repo.path(), &["commit", "-q", "-m", "add secret"]);
+
+    let scanner = scanner(ScanConfig {
+        git_history: true,
+        history_full: true,
+        history_timeout_secs: 600,
+        ..Default::default()
+    });
+    let findings = scanner.scan_path(repo.path().to_str().expect("path"));
+    assert_eq!(findings.len(), 1, "generous timeout must not drop findings");
+}
+
+#[test]
 fn history_attributes_commit_sha() {
     let repo = tempfile::tempdir().expect("repo");
     init_repo(repo.path());
@@ -1124,6 +1145,63 @@ fn inline_allow_marker_suppresses_finding() {
     }
 }
 
+#[test]
+fn inline_allow_marker_is_line_level_not_trailing_only() {
+    // Documents the deliberate broad (gitleaks-compatible) behavior: the marker
+    // suppresses when it appears ANYWHERE on the secret's line, not only as a
+    // trailing comment. If a future change narrows this, these cases break on
+    // purpose. See `line_has_allow_marker`.
+    let scanner = scanner(ScanConfig::default());
+
+    // Marker before the secret.
+    assert!(
+        scanner
+            .scan_content("a.txt", "# gitleaks:allow test fixture: SECRET123456")
+            .is_empty(),
+        "marker before the secret still suppresses (line-level)"
+    );
+    // Marker inside a string value elsewhere on the line.
+    assert!(
+        scanner
+            .scan_content("a.txt", "token = SECRET123456; note = \"gitleaks:allow\"")
+            .is_empty(),
+        "marker inside a same-line string still suppresses (line-level)"
+    );
+    // A marker on a DIFFERENT line does not suppress.
+    assert_eq!(
+        scanner
+            .scan_content("a.txt", "# gitleaks:allow\nkey = SECRET123456")
+            .len(),
+        1,
+        "marker on another line must not suppress"
+    );
+}
+
+#[test]
+fn cli_summary_reports_per_file_truncation() {
+    // A per-file cap (`--max-findings-per-file`) truncates findings; the CLI must
+    // surface that in its stderr summary even when the global `--max-findings`
+    // never fires. Regression for the aggregate that dropped per-path
+    // `findings_truncated`.
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+    let app = dir.path().join("app.txt");
+    std::fs::write(&app, format!("A={PAT}\nB={PAT}\n")).expect("write");
+
+    let out = Command::new(BIN)
+        .args(["scan", app.to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--max-findings-per-file", "1", "--no-fail", "--no-context"])
+        .env("RUST_LOG", "info")
+        .output()
+        .expect("run");
+    let stderr = String::from_utf8_lossy(&out.stderr);
+    assert!(
+        stderr.contains("findings truncated"),
+        "summary must flag per-file truncation: {stderr}"
+    );
+}
+
 // ─────────────────────────────────────────────
 // CLI: baseline generate + line-tolerant suppression
 // ─────────────────────────────────────────────
@@ -1219,4 +1297,211 @@ fn cli_json_output_can_be_used_as_line_tolerant_baseline() {
         "the moved finding from normal JSON output must be suppressed: {stdout}"
     );
     assert_eq!(stdout.trim(), "[]");
+}
+
+// ─────────────────────────────────────────────
+// Single-file scan (scan_file) coverage honesty
+// ─────────────────────────────────────────────
+
+#[test]
+fn scan_file_scans_named_file_and_reports_coverage() {
+    let dir = tempfile::tempdir().expect("dir");
+    let file = dir.path().join("app.env");
+    std::fs::write(&file, "KEY=SECRET123456").expect("write");
+
+    let scanner = scanner(ScanConfig::default());
+    let (findings, stats) = scanner.scan_file_with_stats(file.to_str().expect("path"));
+
+    assert_eq!(findings.len(), 1, "the named file's secret is found");
+    assert_eq!(stats.files_scanned, 1);
+    assert_eq!(stats.errored, 0);
+}
+
+#[test]
+fn scan_file_respects_total_max_findings_cap() {
+    // Regression: the single-file path must honor the total `max_findings` cap,
+    // not only the per-file cap (it previously called scan_one_file directly and
+    // bypassed the capped scan).
+    let dir = tempfile::tempdir().expect("dir");
+    let file = dir.path().join("app.env");
+    std::fs::write(&file, "A=SECRET111111 B=SECRET222222 C=SECRET333333").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        max_findings: Some(1),
+        ..ScanConfig::default()
+    });
+    let (findings, stats) = scanner.scan_file_with_stats(file.to_str().expect("path"));
+
+    assert_eq!(
+        findings.len(),
+        1,
+        "total max_findings cap applies to scan_file"
+    );
+    assert!(stats.findings_truncated);
+}
+
+#[test]
+fn scan_file_history_mode_fails_closed() {
+    // git_history changes WHICH content is scanned (commit patches) and cannot be
+    // reproduced from one working-tree file, so scan_file fails closed instead of
+    // silently scanning the working-tree bytes and looking like a complete scan.
+    let dir = tempfile::tempdir().expect("dir");
+    let file = dir.path().join("app.env");
+    std::fs::write(&file, "KEY=SECRET123456").expect("write");
+
+    let scanner = scanner(ScanConfig {
+        git_history: true,
+        ..ScanConfig::default()
+    });
+    let (findings, stats) = scanner.scan_file_with_stats(file.to_str().expect("path"));
+
+    assert!(findings.is_empty(), "history mode is not scanned per-file");
+    assert!(
+        stats.git_failed,
+        "a content-changing git mode on a single file must fail closed"
+    );
+}
+
+#[test]
+fn scan_file_extension_filtered_named_file_is_coverage_gap() {
+    // A file the caller explicitly named but that the skip-extension policy
+    // excludes was NOT scanned: it must be surfaced as a coverage gap (errored),
+    // never reported with all-zero stats that read as scanned-and-clean.
+    let dir = tempfile::tempdir().expect("dir");
+    let file = dir.path().join("blob.bin"); // .bin is a skip extension under Auto
+    std::fs::write(&file, "SECRET123456").expect("write");
+
+    let scanner = scanner(ScanConfig::default());
+    let (findings, stats) = scanner.scan_file_with_stats(file.to_str().expect("path"));
+
+    assert!(findings.is_empty());
+    assert_eq!(stats.files_scanned, 0);
+    assert_eq!(
+        stats.errored, 1,
+        "an explicitly named but filtered file is a coverage gap"
+    );
+}
+
+#[cfg(unix)]
+#[test]
+fn scan_file_symlink_is_coverage_gap() {
+    // The symlink is correctly NOT followed (hardening), but for an explicitly
+    // named single file the silent skip is a coverage gap, not a clean scan.
+    let dir = tempfile::tempdir().expect("dir");
+    let target = dir.path().join("real.env");
+    std::fs::write(&target, "KEY=SECRET123456").expect("write");
+    let link = dir.path().join("link.env");
+    std::os::unix::fs::symlink(&target, &link).expect("symlink");
+
+    let scanner = scanner(ScanConfig::default());
+    let (findings, stats) = scanner.scan_file_with_stats(link.to_str().expect("path"));
+
+    assert!(findings.is_empty(), "a symlink must not be followed");
+    assert_eq!(
+        stats.errored, 1,
+        "a skipped symlink is a coverage gap, not a scanned-clean file"
+    );
+}
+
+#[test]
+fn scan_file_empty_file_stays_clean() {
+    // A genuinely empty (zero-length) regular file is clean, not a coverage gap.
+    let dir = tempfile::tempdir().expect("dir");
+    let file = dir.path().join("empty.env");
+    std::fs::write(&file, "").expect("write");
+
+    let scanner = scanner(ScanConfig::default());
+    let (findings, stats) = scanner.scan_file_with_stats(file.to_str().expect("path"));
+
+    assert!(findings.is_empty());
+    assert_eq!(stats.errored, 0, "an empty regular file is genuinely clean");
+}
+
+// ─────────────────────────────────────────────
+// CLI: multi-path git failure preserves real findings
+// ─────────────────────────────────────────────
+
+#[test]
+fn cli_multipath_git_failure_preserves_real_findings() {
+    // `scan repoA repoB --git-tracked` where repoA is a healthy repo with a
+    // tracked secret and repoB is not a git repo. The run still fails closed
+    // (exit 2, coverage incomplete), but the real finding from repoA must be
+    // WRITTEN to --output, not discarded behind the generic git error.
+    let base = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(base.path());
+
+    let repo_a = base.path().join("a");
+    std::fs::create_dir(&repo_a).expect("mkdir a");
+    init_repo(&repo_a);
+    std::fs::write(repo_a.join("app.txt"), format!("TOKEN={PAT}")).expect("write");
+    git(&repo_a, &["add", "."]);
+
+    let repo_b = base.path().join("b"); // deliberately NOT a git repo
+    std::fs::create_dir(&repo_b).expect("mkdir b");
+
+    let out_file = base.path().join("out.json");
+    std::fs::write(&out_file, "SENTINEL").expect("write sentinel");
+
+    let output = Command::new(BIN)
+        .args([
+            "scan",
+            repo_a.to_str().expect("a"),
+            repo_b.to_str().expect("b"),
+            "--rules",
+            rules.to_str().expect("rules"),
+            "--git-tracked",
+            "--format",
+            "json",
+            "--output",
+            out_file.to_str().expect("out"),
+        ])
+        .output()
+        .expect("run");
+
+    assert_eq!(
+        output.status.code().expect("code"),
+        2,
+        "a mixed multi-path git failure still fails closed (exit 2)"
+    );
+    let written = std::fs::read_to_string(&out_file).expect("output file should be written");
+    assert_ne!(
+        written, "SENTINEL",
+        "the real finding from the healthy repo must be written, not discarded"
+    );
+    assert!(
+        written.contains("app.txt"),
+        "the preserved output must contain the healthy repo's finding: {written}"
+    );
+}
+
+// ─────────────────────────────────────────────
+// CLI: --include-untracked requires a git path mode
+// ─────────────────────────────────────────────
+
+#[test]
+fn cli_include_untracked_requires_git_path_mode() {
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_pat_rules(dir.path());
+
+    let output = Command::new(BIN)
+        .args([
+            "scan",
+            dir.path().to_str().expect("dir"),
+            "--rules",
+            rules.to_str().expect("rules"),
+            "--include-untracked",
+        ])
+        .output()
+        .expect("run");
+
+    assert_eq!(
+        output.status.code().expect("code"),
+        2,
+        "bare --include-untracked is a usage error, not a silent no-op"
+    );
+    let stderr = String::from_utf8_lossy(&output.stderr).to_lowercase();
+    assert!(
+        stderr.contains("include-untracked") || stderr.contains("required"),
+        "error should explain the missing git path mode: {stderr}"
+    );
 }

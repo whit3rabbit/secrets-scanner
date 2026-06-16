@@ -72,6 +72,12 @@ pub struct NativePathScanResult {
     pub findings: Vec<NativeFinding>,
     pub stats: NativeScanStats,
     pub incomplete: bool,
+    /// True if any file was skipped by policy (binary or oversized). Distinct
+    /// from `incomplete`: a binary skip is intentional policy, not a coverage
+    /// failure, so it does not make a strict scan throw — but a caller that wants
+    /// to treat "not scanned" as a gap can inspect this. Mirrors the CLI's
+    /// `--error-on-skipped`.
+    pub skipped_by_policy: bool,
     pub has_findings: bool,
     pub findings_truncated: bool,
 }
@@ -131,12 +137,26 @@ pub fn path_result_to_native(
 ) -> Result<NativePathScanResult> {
     let has_findings = !findings.is_empty();
     let findings_truncated = stats.findings_truncated;
-    let incomplete =
-        stats.errored > 0 || stats.files_over_cap > 0 || stats.git_failed || stats.git_fallback;
+    // A `historyTimeoutSecs` expiry left commits unscanned, so it is incomplete
+    // coverage (folded in alongside `files_over_cap`, the `maxFiles` cap). A plain
+    // finding cap (`maxFindings`/`maxFindingsPerFile`) is deliberately NOT counted:
+    // everything was scanned, only the reported finding count was capped, so it
+    // sets `findingsTruncated` without forcing a strict scan to fail.
+    let incomplete = stats.errored > 0
+        || stats.oversized_skipped > 0
+        || stats.files_over_cap > 0
+        || stats.history_timed_out
+        || stats.git_failed
+        || stats.git_fallback;
+    // Binary skips are policy (not incomplete coverage), so they are surfaced
+    // here rather than folded into `incomplete`. Oversized is included too so the
+    // field is self-contained and matches the CLI `--error-on-skipped` semantics.
+    let skipped_by_policy = stats.binary_skipped > 0 || stats.oversized_skipped > 0;
     Ok(NativePathScanResult {
         findings: findings_to_native(findings)?,
         stats: stats_to_native(stats)?,
         incomplete,
+        skipped_by_policy,
         has_findings,
         findings_truncated,
     })

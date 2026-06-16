@@ -1,10 +1,12 @@
-use std::collections::HashSet;
 use std::io::{self, Write};
 
 use log::{error, info, warn};
 use secrets_scanner::{Finding, ScanConfig, ScanStats, Scanner};
 
 use super::args::{GitFallbackArg, OutputFormat, ScanArgs};
+
+#[path = "scan_baseline.rs"]
+mod baseline;
 
 /// Whether to run in changed-files mode. `--base` implies it: clap does not
 /// auto-imply, so a base ref passed alone must still scan `<base>...HEAD` rather
@@ -40,6 +42,7 @@ pub(super) fn handle(args: ScanArgs) {
         // coverage (a missed-secret hazard in a security tool).
         history_full: args.git_history || args.full_history,
         history_log_opts: args.log_opts.clone(),
+        history_timeout_secs: args.history_timeout,
         git_staged: args.staged,
         include_untracked: args.include_untracked,
         git_fallback_walk: matches!(args.git_fallback, Some(GitFallbackArg::Walk)),
@@ -90,6 +93,12 @@ pub(super) fn handle(args: ScanArgs) {
         stats.errored += s.errored;
         stats.git_fallback |= s.git_fallback;
         stats.git_failed |= s.git_failed;
+        // Per-file/per-path truncation (e.g. `--max-findings-per-file`, or the
+        // history wall-clock budget) is otherwise invisible unless the CLI-level
+        // `--max-findings` also fires. Fold it into both the aggregate stat and
+        // the local that drives the summary suffix.
+        stats.findings_truncated |= s.findings_truncated;
+        findings_truncated |= s.findings_truncated;
         if !args.ignore_rules.is_empty() {
             findings.retain(|f| !args.ignore_rules.contains(&f.rule_id));
         }
@@ -120,27 +129,52 @@ pub(super) fn handle(args: ScanArgs) {
         }
     }
 
-    // Fail closed: an explicit git mode could not run and the caller did not opt
-    // into `--git-fallback=walk`, so nothing was scanned. Exit 2 (runtime error)
-    // before writing any normal output or baseline that could be mistaken for a
-    // clean scan. This takes precedence over the findings exit and ignores
-    // `--no-fail` (which only governs the findings-present case, not a scan that
-    // never happened).
+    let cwd = std::env::current_dir()
+        .map(|p| p.to_string_lossy().into_owned())
+        .unwrap_or_else(|_| ".".to_string());
+    let base = if args.paths.len() == 1 {
+        args.paths.first().map(String::as_str).unwrap_or(".")
+    } else {
+        cwd.as_str()
+    };
+    let show_context = !args.no_context;
+
+    // Fail closed: an explicit git mode could not run for one or more paths and
+    // the caller did not opt into `--git-fallback=walk`. Coverage is incomplete,
+    // so exit 2 (takes precedence over the findings exit and ignores `--no-fail`,
+    // which only governs the findings-present case, not a scan that could not
+    // run). When some paths DID succeed and produced findings — a multi-path run
+    // where only one path is a non-repo — those real findings are still written
+    // first so a secret found in a healthy repo is not discarded behind the
+    // generic git error. A baseline is never written from an incomplete scan, and
+    // when nothing was found there is nothing to write and we must not emit a
+    // clean-looking empty artifact (preserving the fail-closed posture for the
+    // single-path / all-failed case).
     if stats.git_failed {
         error!(
-            "[scanner] git mode failed and --git-fallback=walk was not set; \
-             refusing to silently scan the working tree (nothing was scanned)."
+            "[scanner] git mode failed for one or more paths and --git-fallback=walk \
+             was not set; failing closed (exit 2): coverage is incomplete."
         );
+        if !all_findings.is_empty() {
+            if let Some(ref baseline_path) = args.baseline {
+                baseline::apply_baseline_or_exit(baseline_path, &mut all_findings);
+            }
+            if !all_findings.is_empty() {
+                if let Err(e) = write_output(&args, &all_findings, base, show_context) {
+                    error!("Failed to write output: {e}");
+                }
+            }
+        }
         std::process::exit(2);
     }
 
     if let Some(ref out_path) = args.generate_baseline {
-        write_baseline_or_exit(out_path, args.no_redact, &all_findings);
+        baseline::write_baseline_or_exit(out_path, &all_findings);
         return;
     }
 
     if let Some(ref baseline_path) = args.baseline {
-        apply_baseline_or_exit(baseline_path, &mut all_findings);
+        baseline::apply_baseline_or_exit(baseline_path, &mut all_findings);
     }
 
     if early_max_findings.is_none() {
@@ -169,15 +203,6 @@ pub(super) fn handle(args: ScanArgs) {
         }
     }
 
-    let cwd = std::env::current_dir()
-        .map(|p| p.to_string_lossy().into_owned())
-        .unwrap_or_else(|_| ".".to_string());
-    let base = if args.paths.len() == 1 {
-        args.paths.first().map(String::as_str).unwrap_or(".")
-    } else {
-        cwd.as_str()
-    };
-    let show_context = !args.no_context;
     if let Err(e) = write_output(&args, &all_findings, base, show_context) {
         error!("Failed to write output: {e}");
         std::process::exit(2);
@@ -221,107 +246,23 @@ pub(super) fn handle(args: ScanArgs) {
         std::process::exit(2);
     }
 
+    // Same incomplete-coverage posture for policy-skipped files. A binary- or
+    // size-skipped file is "not scanned", not "scanned clean"; a strict caller
+    // can opt into failing on that gap. Exit 2 takes precedence over the findings
+    // exit 1, like --error-on-unreadable.
+    if args.error_on_skipped && (stats.binary_skipped + stats.oversized_skipped) > 0 {
+        error!(
+            "[scanner] {} file(s) skipped by policy ({} binary, {} oversized); failing \
+             on incomplete coverage (--error-on-skipped).",
+            stats.binary_skipped + stats.oversized_skipped,
+            stats.binary_skipped,
+            stats.oversized_skipped,
+        );
+        std::process::exit(2);
+    }
+
     if !all_findings.is_empty() && !args.no_fail {
         std::process::exit(1);
-    }
-}
-
-/// Build the findings to serialize into a `--generate-baseline` file.
-///
-/// Strips `context_lines` from every finding (baselines suppress on
-/// `fingerprint`, or the legacy (file,line,rule) tuple, never on context) and
-/// force-redacts `matched` under `--no-redact`. Both guard the same hazard: a
-/// committed/uploaded baseline must never carry raw secret material. Under
-/// `--no-redact`, `scan_bytes` redacts neither `matched` nor the context, so
-/// without this the surrounding source (including the secret) would leak.
-fn baseline_findings(no_redact: bool, all_findings: &[Finding]) -> Vec<Finding> {
-    all_findings
-        .iter()
-        .map(|f| {
-            let mut f = f.clone();
-            f.context_lines = Vec::new();
-            if no_redact {
-                f.matched = secrets_scanner::filters::redact(&f.matched);
-            }
-            f
-        })
-        .collect()
-}
-
-fn write_baseline_or_exit(out_path: &str, no_redact: bool, all_findings: &[Finding]) {
-    let baseline_findings = baseline_findings(no_redact, all_findings);
-    match serde_json::to_string_pretty(&baseline_findings) {
-        Ok(json) => {
-            if let Err(e) = write_private_file(out_path, json.as_bytes()) {
-                error!("Failed to write baseline '{out_path}': {e}");
-                std::process::exit(2);
-            }
-            info!(
-                "[scanner] Wrote baseline with {} finding(s) to {out_path}",
-                all_findings.len()
-            );
-        }
-        Err(e) => {
-            error!("Failed to serialize baseline: {e}");
-            std::process::exit(2);
-        }
-    }
-}
-
-/// Suppress findings present in `baseline` from `all_findings`, returning the
-/// number suppressed.
-///
-/// Baseline entries are matched by fingerprint scheme: a `sha256:`- or
-/// `hmac-sha256:`-prefixed fingerprint (the current unkeyed/keyed schemes)
-/// suppresses by exact fingerprint, which is line-tolerant. Anything else — an
-/// empty fingerprint, or a legacy FNV hex fingerprint written by an older build
-/// — falls back to the `(file, line, rule)` tuple. Without the prefix check a
-/// legacy FNV fingerprint would land in the fingerprint set, never equal a new
-/// value, and silently re-surface every previously-suppressed finding. Old
-/// baselines suppress by exact location until regenerated. A keyed baseline only
-/// matches when scanning with the same `SECRETS_SCANNER_FINGERPRINT_KEY`.
-fn suppress_baseline(baseline: Vec<Finding>, all_findings: &mut Vec<Finding>) -> usize {
-    let mut known_fps: HashSet<String> = HashSet::new();
-    let mut known_legacy: HashSet<(String, usize, String)> = HashSet::new();
-    for f in baseline {
-        // Both the unkeyed (`sha256:`) and keyed (`hmac-sha256:`) schemes are
-        // line-tolerant fingerprints. Anything else (empty, or a legacy FNV hex)
-        // routes to the location-tuple fallback. Omitting `hmac-sha256:` here
-        // would mis-route a keyed baseline to the legacy set and re-surface every
-        // suppressed finding.
-        if f.fingerprint.starts_with("sha256:") || f.fingerprint.starts_with("hmac-sha256:") {
-            known_fps.insert(f.fingerprint);
-        } else {
-            known_legacy.insert((f.file, f.line, f.rule_id));
-        }
-    }
-    let before = all_findings.len();
-    all_findings.retain(|f| {
-        !known_fps.contains(&f.fingerprint)
-            && !known_legacy.contains(&(f.file.clone(), f.line, f.rule_id.clone()))
-    });
-    before - all_findings.len()
-}
-
-fn apply_baseline_or_exit(baseline_path: &str, all_findings: &mut Vec<Finding>) {
-    match std::fs::read_to_string(baseline_path) {
-        Ok(content) => {
-            let baseline: Vec<Finding> = match serde_json::from_str(&content) {
-                Ok(b) => b,
-                Err(e) => {
-                    error!("Failed to parse baseline JSON '{baseline_path}': {e}");
-                    std::process::exit(2);
-                }
-            };
-            let suppressed = suppress_baseline(baseline, all_findings);
-            if suppressed > 0 {
-                info!("[scanner] Baseline suppressed {suppressed} known finding(s)");
-            }
-        }
-        Err(e) => {
-            error!("Failed to read baseline file '{baseline_path}': {e}");
-            std::process::exit(2);
-        }
     }
 }
 
@@ -348,9 +289,13 @@ fn write_output(
 /// Create or truncate a file intended to hold scanner output.
 ///
 /// On Unix, force owner-only (0600) permissions because JSON/text output may
-/// contain raw secrets when `--no-redact` is used. On non-Unix platforms no
-/// permission restriction is applied (the file inherits the default ACL), so
-/// secret-bearing output on those platforms relies on the caller's directory
+/// contain raw secrets when `--no-redact` is used. To match the read-side
+/// hardening, the open is `O_NOFOLLOW` (so an attacker-planted symlink at the
+/// output path is not followed — `open` fails with `ELOOP`) and `O_CLOEXEC`, and
+/// the opened descriptor is verified to be a regular file (rejecting a
+/// pre-existing fifo/device/dir that we would otherwise truncate/chmod). On
+/// non-Unix platforms no permission restriction is applied (the file inherits the
+/// default ACL), so secret-bearing output there relies on the caller's directory
 /// permissions; generated baselines are redacted regardless for this reason.
 fn create_private_file(path: &str) -> io::Result<std::fs::File> {
     let mut options = std::fs::OpenOptions::new();
@@ -359,7 +304,18 @@ fn create_private_file(path: &str) -> io::Result<std::fs::File> {
     {
         use std::os::unix::fs::{OpenOptionsExt, PermissionsExt};
         options.mode(0o600);
+        // O_NOFOLLOW: refuse to follow a symlink at the final path component, so a
+        // hostile checkout cannot redirect our truncating write to another file.
+        options.custom_flags(libc::O_NOFOLLOW | libc::O_CLOEXEC);
         let file = options.open(path)?;
+        // Reject a non-regular target (fifo/device/dir): O_NOFOLLOW stops a
+        // symlink, this stops the other types we should never truncate or chmod.
+        if !file.metadata()?.file_type().is_file() {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidInput,
+                format!("refusing to write output to non-regular file: {path}"),
+            ));
+        }
         file.set_permissions(std::fs::Permissions::from_mode(0o600))?;
         Ok(file)
     }

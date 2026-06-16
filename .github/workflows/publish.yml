@@ -65,8 +65,11 @@ jobs:
       # first successful publish, so npm cannot record them in the lockfile and
       # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
       # so installs stay reproducible. Missing optional deps are non-fatal.
+      # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
+      # workspace (whose node-mcp member depends on the published darwin/arm64-only
+      # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund --no-workspaces
 
       # --platform suffixes the artifact (secrets_scanner_core.<target>.node) so
       # `napi artifacts` can route it; --no-js preserves the hand-written index.js
@@ -108,8 +111,11 @@ jobs:
       # first successful publish, so npm cannot record them in the lockfile and
       # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
       # so installs stay reproducible. Missing optional deps are non-fatal.
+      # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
+      # workspace (whose node-mcp member depends on the published darwin/arm64-only
+      # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund --no-workspaces
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4

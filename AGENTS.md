@@ -572,6 +572,7 @@ Release is CI-only. Do not publish from a local machine except for dry-run valid
 Pre-release:
 - Make the GitHub repo public before pushing the release tag if Homebrew install should work. A private repo can still publish crates.io and GitHub Release artifacts, but normal Homebrew installs cannot fetch private release asset URLs.
 - Update `Cargo.toml` `[package].version`, `Dockerfile` `LABEL version`, and `CHANGELOG.md` for the same `vX.Y.Z`.
+- A tag also triggers `.github/workflows/publish.yml` (npm), so bump the node binding in lockstep: `bindings/node/package.json` (incl. its `optionalDependencies` pins), `bindings/node/Cargo.toml`, and both `Cargo.lock` files. A stale node version makes the npm publish reject an already-published version.
 - Run `make ci`. For packaging changes, also run `cargo publish --dry-run --locked` from the clean release commit.
 - Commit and push the release prep to `main`.
 

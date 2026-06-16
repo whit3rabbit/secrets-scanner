@@ -120,9 +120,10 @@ runner). At runtime `lib/loader.js` (`platformPackageName` + `detectLibc`)
 requires the scoped platform package npm installed for the host. We ship **gnu**
 Linux only, so a musl host resolves to a `-musl` name that is intentionally
 absent → `NATIVE_BINDING_NOT_FOUND` rather than an ABI-incompatible load. The
-committed `package-lock.json` omits the (not-yet-published) optionalDependencies;
-`npm ci` treats them as satisfied-by-absence. Validate the whole matrix with the
-`workflow_dispatch` dry-run before tagging `vX.Y.Z`.
+committed `package-lock.json` omits the (not-yet-published) optionalDependencies,
+so the workflow uses `npm install` (NOT `npm ci`, which fails the lock-sync check
+until those per-platform packages exist on the registry). Validate the whole
+matrix with the `workflow_dispatch` dry-run before tagging `vX.Y.Z`.
 
 `bindings/package.json` is a private npm workspace root for local development of
 the core binding and `@whit3rabbit/rsecrets-scanner-mcp`; do not publish it.

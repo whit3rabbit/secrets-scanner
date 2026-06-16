@@ -2,3 +2,6 @@ node_modules/
 index.d.ts
 *.node
 target/
+# napi multi-platform publish scratch dirs (generated in CI)
+npm/
+artifacts/

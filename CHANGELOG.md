@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+## v0.2.1 (2026-06-16)
+
+### Fixed
+- npm bindings (`@whit3rabbit/rsecrets-scanner`) now publish as a proper
+  multi-platform NAPI-RS package: per-platform optionalDependency packages
+  (`-darwin-arm64`, `-darwin-x64`, `-linux-x64-gnu`, `-linux-arm64-gnu`,
+  `-win32-x64-msvc`) built on native runners, plus a thin main package that
+  selects the right native binary at install time. Fixes the `EBADPLATFORM`
+  failure that blocked the 0.2.0 npm publish (the package previously pinned
+  `os`/`cpu` to darwin/arm64 while building and publishing on a Linux runner).
+- The runtime loader (`lib/loader.js`) now resolves the scoped per-platform
+  package (with glibc-vs-musl detection on Linux) before falling back, so a host
+  without a matching prebuilt binary gets a clear `NATIVE_BINDING_NOT_FOUND`.
+
+### Changed
+- `publish.yml` rebuilt as a build matrix (5 native runners) plus a publish job,
+  with a `workflow_dispatch` dry-run mode to validate the whole matrix before
+  tagging.
+
 ## v0.2.0 (2026-06-16)
 
 ### Added

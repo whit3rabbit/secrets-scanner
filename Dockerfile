@@ -18,7 +18,7 @@ RUN cargo build --release --bin secrets-scanner \
 # an unpublished pin fails the runtime stage with "manifest unknown". Bump in
 # lockstep with the build base above.
 FROM alpine:3.24
-LABEL version="0.1.0"
+LABEL version="0.2.0"
 LABEL org.opencontainers.image.source="https://github.com/whit3rabbit/secrets-scanner"
 LABEL org.opencontainers.image.description="A high-performance secrets scanner using Aho-Corasick, regex, and entropy gating"
 LABEL org.opencontainers.image.licenses="MIT"

@@ -1,4 +1,4 @@
-name: "Secrets Scanner"
+name: "RSecrets Scanner"
 description: "Scan repository content for committed secrets and emit SARIF for GitHub code scanning."
 author: "whit3rabbit"
 branding:
@@ -12,6 +12,9 @@ inputs:
   config:
     description: "Optional path to a custom TOML rules file."
     required: false
+  rules-source:
+    description: "Rule source when config is unset: bundled | auto. Defaults to bundled for deterministic CI scans."
+    default: "bundled"
   fail-on-findings:
     description: "Fail the job when findings are detected. Set false to upload SARIF then gate separately."
     default: "true"
@@ -27,6 +30,12 @@ inputs:
   base:
     description: "Optional base ref for changed-files scanning (e.g. origin/main). Implies --changed-files."
     required: false
+  git-history:
+    description: "Scan git history patches instead of current tree paths."
+    default: "false"
+  history-timeout:
+    description: "Wall-clock budget in seconds for git-history scans."
+    default: "300"
   max-file-size:
     description: "Maximum file size in bytes."
     default: "2097152"
@@ -36,6 +45,9 @@ inputs:
   version:
     description: "Release version to install (e.g. v0.2.0). Defaults to the action ref, else warns and uses latest."
     required: false
+  build-from-source:
+    description: "Build from source instead of downloading a prebuilt release. Requires Rust. Use for dogfooding (uses: ./) before any release exists."
+    default: "false"
   extra-args:
     description: "Additional newline-delimited arguments passed to `secrets-scanner scan`."
     required: false
@@ -48,14 +60,37 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Install secrets-scanner (prebuilt binary)
+    - name: Install secrets-scanner
       shell: bash
       env:
         REPO: "whit3rabbit/secrets-scanner"
         INPUT_VERSION: ${{ inputs.version }}
         ACTION_REF: ${{ github.action_ref }}
+        BUILD_FROM_SOURCE: ${{ inputs.build-from-source }}
       run: |
         set -euo pipefail
+
+        # Build from source when explicitly requested (dogfooding uses: ./).
+        if [ "${BUILD_FROM_SOURCE}" = "true" ]; then
+          echo "::group::Build secrets-scanner from source"
+          if ! command -v cargo >/dev/null 2>&1; then
+            echo "::error::build-from-source=true requires Rust (cargo) on the runner"
+            exit 1
+          fi
+          cargo build --locked --release --features updater --manifest-path "$GITHUB_ACTION_PATH/Cargo.toml"
+          dest="${RUNNER_TEMP}/secrets-scanner-bin"
+          mkdir -p "$dest"
+          binary="$GITHUB_ACTION_PATH/target/release/secrets-scanner"
+          if [ ! -f "$binary" ]; then
+            echo "::error::cargo build succeeded but $binary not found"
+            exit 1
+          fi
+          cp "$binary" "${dest}/secrets-scanner"
+          echo "$dest" >> "$GITHUB_PATH"
+          echo "::endgroup::"
+          exit 0
+        fi
+
         os="$(uname -s)"; arch="$(uname -m)"
         case "$os" in
           Linux)  [ "$arch" = "x86_64" ] && target="x86_64-unknown-linux-musl" || { echo "::error::unsupported Linux arch $arch"; exit 1; } ;;
@@ -72,7 +107,10 @@ runs:
             | sed -nE 's/.*"tag_name": *"([^"]+)".*/\1/p' \
             | head -n 1)"
         fi
-        [ -n "$version" ] || { echo "::error::could not resolve a release version"; exit 1; }
+        if [ -z "$version" ]; then
+          echo "::error::could not resolve a release version. Set 'build-from-source: true' to build from source instead."
+          exit 1
+        fi
         case "$version" in v*) tag="$version"; ver="${version#v}" ;; *) tag="v$version"; ver="$version" ;; esac
 
         dest="${RUNNER_TEMP}/secrets-scanner-bin"
@@ -107,11 +145,14 @@ runs:
       env:
         IN_PATH: ${{ inputs.path }}
         IN_CONFIG: ${{ inputs.config }}
+        IN_RULES_SOURCE: ${{ inputs.rules-source }}
         IN_FAIL: ${{ inputs.fail-on-findings }}
         IN_SARIF: ${{ inputs.sarif }}
         IN_SARIF_FILE: ${{ inputs.sarif-file }}
         IN_GIT_TRACKED: ${{ inputs.git-tracked }}
         IN_BASE: ${{ inputs.base }}
+        IN_GIT_HISTORY: ${{ inputs.git-history }}
+        IN_HISTORY_TIMEOUT: ${{ inputs.history-timeout }}
         IN_MAX_FILE_SIZE: ${{ inputs.max-file-size }}
         IN_BINARY_POLICY: ${{ inputs.binary-policy }}
         IN_EXTRA: ${{ inputs.extra-args }}
@@ -120,9 +161,18 @@ runs:
         # Safe-by-default posture: redaction on, no context lines in CI logs,
         # bounded reads, deterministic exit. SARIF is uploaded by a later step.
         args=(scan "$IN_PATH" --no-context --max-file-size "$IN_MAX_FILE_SIZE" --binary-policy "$IN_BINARY_POLICY")
-        [ "$IN_GIT_TRACKED" = "true" ] && args+=(--git-tracked)
-        [ -n "$IN_BASE" ] && args+=(--base "$IN_BASE")
-        [ -n "$IN_CONFIG" ] && args+=(--rules "$IN_CONFIG")
+        if [ "$IN_GIT_HISTORY" = "true" ]; then
+          args+=(--git-history --history-timeout "$IN_HISTORY_TIMEOUT")
+        elif [ -n "$IN_BASE" ]; then
+          args+=(--base "$IN_BASE")
+        elif [ "$IN_GIT_TRACKED" = "true" ]; then
+          args+=(--git-tracked)
+        fi
+        if [ -n "$IN_CONFIG" ]; then
+          args+=(--rules "$IN_CONFIG")
+        else
+          args+=(--rules-source "$IN_RULES_SOURCE")
+        fi
         if [ "$IN_SARIF" = "true" ]; then
           args+=(--format sarif --output "$IN_SARIF_FILE")
           echo "sarif-file=$IN_SARIF_FILE" >> "$GITHUB_OUTPUT"

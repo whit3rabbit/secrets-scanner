@@ -3,7 +3,7 @@ use std::io::{self, Write};
 use log::{error, info, warn};
 use secrets_scanner::{Finding, ScanConfig, ScanStats, Scanner};
 
-use super::args::{GitFallbackArg, OutputFormat, ScanArgs};
+use super::args::{GitFallbackArg, OutputFormat, RulesSourceArg, ScanArgs};
 
 #[path = "scan_baseline.rs"]
 mod baseline;
@@ -13,6 +13,24 @@ mod baseline;
 /// than silently falling back to a full directory walk.
 pub(super) fn resolve_changed_files(args: &ScanArgs) -> bool {
     args.changed_files || args.base.is_some()
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(super) enum ResolvedRulesSource<'a> {
+    File(&'a str),
+    Auto,
+    Bundled,
+}
+
+pub(super) fn resolve_rules_source(args: &ScanArgs) -> ResolvedRulesSource<'_> {
+    if let Some(path) = args.rules.as_deref() {
+        return ResolvedRulesSource::File(path);
+    }
+
+    match args.rules_source {
+        RulesSourceArg::Auto => ResolvedRulesSource::Auto,
+        RulesSourceArg::Bundled => ResolvedRulesSource::Bundled,
+    }
 }
 
 /// Handle the `scan` subcommand.
@@ -55,22 +73,28 @@ pub(super) fn handle(args: ScanArgs) {
         max_matched_len: None,
     };
 
-    let scanner = if let Some(ref rules_path) = args.rules {
-        match Scanner::from_file(rules_path) {
+    let scanner = match resolve_rules_source(&args) {
+        ResolvedRulesSource::File(rules_path) => match Scanner::from_file(rules_path) {
             Ok(s) => s.with_config(config),
             Err(e) => {
                 error!("Failed to load rules from {rules_path}: {e}");
                 std::process::exit(3);
             }
-        }
-    } else {
-        match Scanner::new() {
+        },
+        ResolvedRulesSource::Bundled => match Scanner::from_bundled() {
+            Ok(s) => s.with_config(config),
+            Err(e) => {
+                error!("Failed to load bundled rules: {e}");
+                std::process::exit(3);
+            }
+        },
+        ResolvedRulesSource::Auto => match Scanner::new() {
             Ok(s) => s.with_config(config),
             Err(e) => {
                 error!("Failed to load rules: {e}");
                 std::process::exit(3);
             }
-        }
+        },
     };
 
     info!(

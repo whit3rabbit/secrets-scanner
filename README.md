@@ -659,10 +659,13 @@ Cached rules are stored in the OS user-data directory:
 
 ## GitHub Action
 
-The bundled composite action (`action.yml`) installs the prebuilt release
-binary, verifies it against the release `SHA256SUMS`, and runs `scan` with a
-safe-by-default posture (redaction enabled by default, `--no-context`, bounded
-reads, deterministic exit). It emits SARIF for GitHub code scanning.
+The bundled composite action (`action.yml`, published as **RSecrets Scanner**)
+installs the prebuilt release binary, verifies it against the release
+`SHA256SUMS`, and runs `scan` with a safe-by-default posture (redaction enabled
+by default, `--no-context`, bounded reads, deterministic exit). It emits SARIF
+for GitHub code scanning and uses the bundled rules by default so self-hosted
+runners do not accidentally pick up stale OS-cache rules. Linux and macOS
+runners are supported.
 
 ```yaml
 # .github/workflows/secrets.yml
@@ -676,7 +679,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0    # full history for `git-tracked`/`base`
+          fetch-depth: 0    # full history for `git-tracked`, `base`, or history scans
 
       - id: scan
         uses: whit3rabbit/secrets-scanner@v0.1.0   # pin a released tag
@@ -691,9 +694,10 @@ jobs:
 ```
 
 A runnable copy lives at `.github/workflows/secrets-scan.yml` (it dogfoods the
-action with `uses: ./`). The action downloads a *released* binary, so pin a tag
-that exists (`@vX.Y.Z`); `@main` or a local `uses: ./` falls back to the latest
-release.
+action with `uses: ./`). Before the first release exists, use
+`build-from-source: true` after installing Rust. For consumers, pin a tag that
+exists (`@vX.Y.Z`); `@main` falls back to the latest release and is
+non-reproducible.
 
 ### Inputs
 
@@ -701,14 +705,18 @@ release.
 |---|---|---|
 | `path` | `.` | Path to scan. |
 | `config` | – | Optional custom TOML rules file (`--rules`). |
+| `rules-source` | `bundled` | Rule source when `config` is unset: `bundled` for deterministic CI or `auto` for env/cache/bundled priority. |
 | `fail-on-findings` | `true` | Fail the job on findings. Set `false` to upload SARIF and gate separately. |
 | `sarif` | `true` | Write SARIF output. |
 | `sarif-file` | `secrets-scanner.sarif` | SARIF output path. |
 | `git-tracked` | `true` | Scan only git-tracked files (`--git-tracked`). |
-| `base` | – | Base ref for changed-files scanning, e.g. `origin/${{ github.base_ref }}`. |
+| `base` | – | Base ref for changed-files scanning, e.g. `origin/${{ github.base_ref }}`. Takes precedence over `git-tracked`. |
+| `git-history` | `false` | Scan git history patches (`--git-history`) instead of current tree paths. |
+| `history-timeout` | `300` | Wall-clock budget in seconds for `git-history` scans. |
 | `max-file-size` | `2097152` | Max file size in bytes. |
 | `binary-policy` | `auto` | Binary handling: `auto \| skip \| scan`. |
 | `version` | – | Release to install (e.g. `v0.1.0`). Defaults to the action ref, else warns and uses latest. |
+| `build-from-source` | `false` | Build the scanner from the action checkout instead of downloading a release. Requires Rust. |
 | `extra-args` | – | Newline-delimited extra args appended to `scan`. |
 
 ### Outputs
@@ -718,7 +726,9 @@ release.
 | `sarif-file` | Path to the written SARIF file (empty when `sarif: false`). |
 
 To gate pull requests on only the changed code, set
-`base: origin/${{ github.base_ref }}`. Use `if: always()` on the upload
+`base: origin/${{ github.base_ref }}`; the action automatically skips
+`--git-tracked` for that run. For Gitleaks-style history coverage, set
+`git-history: true` and keep `fetch-depth: 0`. Use `if: always()` on the upload
 step (or `fail-on-findings: false` plus a separate gate) so SARIF still uploads
 when findings are present.
 

@@ -1,4 +1,4 @@
-use super::{Cli, Commands, ScanArgs};
+use super::{Cli, Commands, RulesSourceArg, ScanArgs};
 use clap::Parser;
 
 /// Parse argv and return the `scan` args, panicking on any other command.
@@ -116,6 +116,45 @@ fn old_git_flag_names_are_rejected() {
 #[test]
 fn staged_alone_parses() {
     assert!(scan_args(&["secrets-scanner", "scan", ".", "--staged"]).staged);
+}
+
+#[test]
+fn rules_source_defaults_to_auto_and_accepts_bundled() {
+    assert!(matches!(
+        scan_args(&["secrets-scanner", "scan", "."]).rules_source,
+        RulesSourceArg::Auto
+    ));
+    assert!(matches!(
+        scan_args(&["secrets-scanner", "scan", ".", "--rules-source", "bundled",]).rules_source,
+        RulesSourceArg::Bundled
+    ));
+}
+
+#[test]
+fn explicit_rules_path_takes_precedence_over_rules_source() {
+    let args = scan_args(&[
+        "secrets-scanner",
+        "scan",
+        ".",
+        "--rules-source",
+        "bundled",
+        "--rules",
+        "custom.toml",
+    ]);
+    assert_eq!(args.rules.as_deref(), Some("custom.toml"));
+    assert!(matches!(args.rules_source, RulesSourceArg::Bundled));
+    assert!(matches!(
+        super::super::scan::resolve_rules_source(&args),
+        super::super::scan::ResolvedRulesSource::File("custom.toml")
+    ));
+}
+
+#[test]
+fn rules_source_rejects_unknown_values() {
+    assert!(
+        Cli::try_parse_from(["secrets-scanner", "scan", ".", "--rules-source", "cache",]).is_err(),
+        "--rules-source must be limited to documented values"
+    );
 }
 
 #[test]

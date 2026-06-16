@@ -2,6 +2,36 @@
 
 ## Unreleased
 
+## v0.2.0 (2026-06-16)
+
+### Added
+- `install-skill` / `uninstall-skill` CLI subcommands: install or remove the
+  bundled agent skill into supported runtimes via the `agent-config` crate
+  (`--agent <id>`, `--local [PATH]`, `--dry-run`). Uninstall only removes skills
+  carrying the `secrets-scanner` owner tag.
+- `--rules-source <bundled|auto>` on `scan`: select the embedded ruleset
+  explicitly (`bundled`) or use the standard env/cache/bundled priority order
+  (`auto`, the default). An explicit `--rules <file>` still takes precedence.
+- GitHub Action (`action.yml`) inputs: `rules-source` (defaults to `bundled` for
+  deterministic CI), `git-history` + `history-timeout` (Gitleaks-style history
+  scanning), and `build-from-source` (build the scanner from the action checkout
+  for dogfooding before a release exists). Scan modes are now mutually exclusive
+  (`git-history` > `base` > `git-tracked`). The action is published as
+  "RSecrets Scanner".
+- Benchmark harness documentation and an auto-generated benign corpus
+  (`scripts/gen_corpus.sh`, `scripts/benchmark.sh`).
+
+### Changed
+- Hardened all scanner-written output files (`--output`, `--generate-baseline`):
+  created `0600` and opened with `O_NOFOLLOW | O_CLOEXEC`, then verified to be a
+  regular file, so a planted symlink or pre-existing fifo/device/dir at the
+  output path is rejected rather than followed/truncated.
+- Stricter rule-predicate validation during rule loading.
+- Refactored rule loading and updated scan tests.
+- Bumped pinned GitHub Actions to current major versions across CI/release
+  workflows (`checkout@v6`, `setup-node@v6`, `upload/download-artifact`,
+  `action-gh-release@v3`, `codeql-action@v4`, etc.).
+
 ## v0.1.0 (2026-06-15)
 
 Initial release.

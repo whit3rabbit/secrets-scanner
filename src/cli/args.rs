@@ -188,6 +188,10 @@ pub(super) struct ScanArgs {
     #[arg(long, value_name = "PATH")]
     pub(super) rules: Option<String>,
 
+    /// Rule source to use when `--rules` is not set.
+    #[arg(long, value_enum, default_value_t = RulesSourceArg::Auto)]
+    pub(super) rules_source: RulesSourceArg,
+
     /// Suppress a specific rule by ID. May be specified multiple times.
     #[arg(long = "ignore-rule", value_name = "ID")]
     pub(super) ignore_rules: Vec<String>,
@@ -368,6 +372,15 @@ pub(super) enum GitFallbackArg {
     /// Fall back to a recursive directory walk (legacy behavior; may widen scope
     /// to untracked/ignored files).
     Walk,
+}
+
+/// Rule source selection for the `scan` subcommand when `--rules` is not set.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub(super) enum RulesSourceArg {
+    /// Use the standard priority order: env override, verified OS cache, bundled.
+    Auto,
+    /// Use only the ruleset compiled into the binary.
+    Bundled,
 }
 
 /// Binary-file handling policy for the `scan` subcommand.

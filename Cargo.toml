@@ -1,6 +1,6 @@
 [package]
 name = "secrets_scanner"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 build = "build.rs"
 description = "A high-performance secrets scanner using Aho-Corasick, regex, and entropy gating"

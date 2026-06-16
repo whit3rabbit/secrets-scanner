@@ -92,19 +92,24 @@ def generate_from_in(choices):
         return random.choice(flat_choices)
 
 def main():
-    toml_path = "assets/local.toml"
+    toml_paths = ["assets/local.toml", "assets/secrets-scanner-rules.toml"]
     output_path = "tests/local_rules_fixtures.json"
 
-    if not os.path.exists(toml_path):
-        print(f"Error: {toml_path} not found.", file=sys.stderr)
+    rules = []
+    for toml_path in toml_paths:
+        if os.path.exists(toml_path):
+            print(f"Reading rules from {toml_path}...")
+            with open(toml_path, "rb") as f:
+                cfg = tomllib.load(f)
+            file_rules = cfg.get("rules", [])
+            print(f"Loaded {len(file_rules)} rules from {toml_path}.")
+            rules.extend(file_rules)
+        else:
+            print(f"Warning: {toml_path} not found.")
+
+    if not rules:
+        print("Error: No rules loaded from any source.", file=sys.stderr)
         sys.exit(1)
-
-    print(f"Reading rules from {toml_path}...")
-    with open(toml_path, "rb") as f:
-        cfg = tomllib.load(f)
-
-    rules = cfg.get("rules", [])
-    print(f"Loaded {len(rules)} rules.")
 
     fixtures = {}
     failed = []

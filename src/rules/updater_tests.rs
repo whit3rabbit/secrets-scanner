@@ -6,6 +6,7 @@ fn atomic_cache_write_writes_rules_and_sha_content() {
     let rules_path = dir.path().join("secrets-scanner.toml");
     let sha_path = dir.path().join("secrets-scanner.toml.sha256");
     let cache_sha_path = dir.path().join("secrets-scanner.toml.cache.sha256");
+    let local_sha_path = dir.path().join("secrets-scanner.toml.local.sha256");
 
     write_cache_atomically(
         &rules_path,
@@ -14,6 +15,8 @@ fn atomic_cache_write_writes_rules_and_sha_content() {
         "remote-sha",
         &cache_sha_path,
         "cache-sha",
+        &local_sha_path,
+        "local-sha",
     )
     .expect("atomic write");
 
@@ -29,9 +32,14 @@ fn atomic_cache_write_writes_rules_and_sha_content() {
         std::fs::read_to_string(&cache_sha_path).expect("cache sha"),
         "cache-sha"
     );
+    assert_eq!(
+        std::fs::read_to_string(&local_sha_path).expect("local sha"),
+        "local-sha"
+    );
     assert!(!temp_path_for(&rules_path).exists());
     assert!(!temp_path_for(&sha_path).exists());
     assert!(!temp_path_for(&cache_sha_path).exists());
+    assert!(!temp_path_for(&local_sha_path).exists());
 }
 
 #[test]

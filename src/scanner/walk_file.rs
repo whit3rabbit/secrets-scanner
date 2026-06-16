@@ -79,9 +79,18 @@ pub(super) fn read_bounded(
     max: u64,
     expected_len: u64,
 ) -> std::io::Result<Option<Vec<u8>>> {
+    // Clamp the prealloc hint: `expected_len` comes from (attacker-influenceable)
+    // file metadata, so with an absurdly high `max` a bogus length could drive a
+    // huge `with_capacity` before the bounded read rejects the file. The `take`
+    // below still bounds the actual bytes, so capping the hint only avoids the
+    // up-front over-allocation; it never changes what is read.
+    const READ_CAPACITY_HINT_MAX: u64 = 8 * 1024 * 1024;
     let file = open_no_follow(path)?;
     let mut reader = file.take(max.saturating_add(1));
-    let cap = expected_len.saturating_add(1).min(max.saturating_add(1));
+    let cap = expected_len
+        .saturating_add(1)
+        .min(max.saturating_add(1))
+        .min(READ_CAPACITY_HINT_MAX);
     let mut bytes = Vec::with_capacity(usize::try_from(cap).unwrap_or(usize::MAX));
     reader.read_to_end(&mut bytes)?;
     if bytes.len() as u64 > max {

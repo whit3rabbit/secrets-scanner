@@ -24,6 +24,11 @@ const LOCAL: Source = Source {
     file: "assets/local.toml",
     priority: 100,
 };
+const SECRETS_SCANNER: Source = Source {
+    name: "secrets-scanner",
+    file: "assets/secrets-scanner-rules.toml",
+    priority: 90,
+};
 const GITLEAKS: Source = Source {
     name: "gitleaks",
     file: "assets/gitleaks.toml",
@@ -43,9 +48,9 @@ const SPDB: Source = Source {
 /// The three cumulative ruleset configurations, smallest first.
 fn ruleset_configs() -> Vec<(&'static str, Vec<Source>)> {
     vec![
-        ("core", vec![LOCAL, GITLEAKS]),
-        ("core+kingfisher", vec![LOCAL, GITLEAKS, KINGFISHER]),
-        ("full", vec![LOCAL, GITLEAKS, KINGFISHER, SPDB]),
+        ("core", vec![LOCAL, SECRETS_SCANNER, GITLEAKS]),
+        ("core+kingfisher", vec![LOCAL, SECRETS_SCANNER, GITLEAKS, KINGFISHER]),
+        ("full", vec![LOCAL, SECRETS_SCANNER, GITLEAKS, KINGFISHER, SPDB]),
     ]
 }
 

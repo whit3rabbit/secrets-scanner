@@ -76,9 +76,17 @@ pub(super) fn suppress_baseline(baseline: Vec<Finding>, all_findings: &mut Vec<F
         }
     }
     let before = all_findings.len();
+    // Short-circuit the legacy-tuple probe when there are no legacy entries (the
+    // common case once baselines carry fingerprints): it skips a per-finding
+    // `file`/`rule_id` clone that the `contains` lookup would otherwise force.
+    let has_legacy = !known_legacy.is_empty();
     all_findings.retain(|f| {
-        !known_fps.contains(&f.fingerprint)
-            && !known_legacy.contains(&(f.file.clone(), f.line, f.rule_id.clone()))
+        if known_fps.contains(&f.fingerprint) {
+            return false;
+        }
+        // Only build the legacy tuple (cloning file/rule_id) when the baseline
+        // actually has legacy entries — the common post-fingerprint case skips it.
+        !(has_legacy && known_legacy.contains(&(f.file.clone(), f.line, f.rule_id.clone())))
     });
     before - all_findings.len()
 }

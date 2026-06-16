@@ -19,10 +19,20 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
 - Prefer `--features updater` builds for development; the default (no feature) build is the lean release artifact.
 - The `bench` feature gates per-scan timing instrumentation; run `cargo test --features bench` to exercise bench-gated tests (default builds show expected rust-analyzer "inactive-code" hints on those lines — not errors).
 - No `unwrap()` in library code — use `?` or explicit error handling.
+- `bindings/node` is a **separate crate** (root `Cargo.toml` has no `[workspace]`), so `make ci` and root `cargo fmt`/`clippy`/`test` do NOT cover it. After touching it, run inside `bindings/node/`: `cargo fmt`, `cargo clippy --all-targets -- -D warnings`, `cargo test`, plus `npm run build && npm run typecheck && npm test`.
+- The clippy gate is `-D warnings` (`make ci` → `cargo clippy -- -D warnings`); a warning fails CI. That target omits `--all-targets`, so lint test code with `cargo clippy --all-targets -- -D warnings` to catch what `make ci` misses.
 - rust-analyzer/IDE inline diagnostics are often stale here: after editing
   `ScanConfig`/`Finding` or test files you may see phantom "missing field" or
   `Option` vs `Vec` errors that `cargo build`/`cargo test` do not. Trust a direct
   `cargo` run, not the IDE diagnostics.
+- `Scanner` does not implement `Debug`, so `expect_err()`/`unwrap_err()` on a
+  `Result<Scanner, _>` (e.g. testing `Scanner::from_toml` rejection) will not
+  compile — assert the error path with `match { Ok(_) => panic!(...), Err(e) => e }`.
+- `make ci` builds/tests only the **default** feature set. Code behind a feature
+  (e.g. `updater`, including `updater_tests.rs` and any `#[cfg(not(feature =
+  "updater"))]` stub) is verified only by `cargo clippy --features updater
+  --all-targets` + `cargo test --features updater`. Changing a feature-gated fn
+  signature also requires updating its cfg-disabled stub to match.
 
 ---
 
@@ -145,9 +155,20 @@ secrets-scanner update-rules
 # Check-only mode (exit 1 if update available)
 secrets-scanner update-rules --check
 
+# Force a re-fetch + re-merge + cache rewrite (bypasses the "already current" fast-path)
+secrets-scanner update-rules --force
+
 # Makefile shortcut (builds with updater feature first)
 make update-rules-runtime
 ```
+
+The "already current" fast-path is keyed on **three** sidecars, not just the
+upstream SHA: the cached upstream SHA (`*.sha256`), the merged-content integrity
+SHA (`*.cache.sha256`), and the local-input SHA (`*.local.sha256`). So editing
+local rules (e.g. `assets/local.toml`) while upstream is unchanged correctly
+invalidates the cache and triggers a re-merge — the upstream-SHA-only check used
+to miss this and report "already current". `--force` bypasses the fast-path
+entirely (and conflicts with `--check`).
 
 OS data-dir locations:
 
@@ -301,9 +322,15 @@ content (e.g. running as a GitHub Action). Key behaviors:
   fails closed on git error (no walk fallback). `--history-timeout <SECS>` (`0`
   = unlimited, the default; `ScanConfig::history_timeout_secs`) is an opt-in
   wall-clock budget checked while streaming `git log`: on expiry the stream is
-  stopped, the child killed, partial findings kept, and `findings_truncated` set
-  (surfaced in the summary and Node `findingsTruncated`) so a huge history cannot
-  run unbounded. The clock is sampled every ~1024 patch lines, not per line.
+  stopped, the child killed, partial findings kept, and `findings_truncated` +
+  `ScanStats.history_timed_out` set (surfaced in the summary and Node
+  `findingsTruncated`) so a huge history cannot run unbounded. The clock is
+  sampled every ~1024 patch lines, not per line. The CLI aggregates
+  `history_timed_out` across paths and **exits 2 unconditionally** on a trip
+  (after writing output): a timed-out history scan left commits unscanned, so it
+  must not look like a clean or merely-truncated scan. This is not gated behind a
+  flag (the caller opted into the budget by setting the timeout); exit 2 takes
+  precedence over the findings exit 1 and ignores `--no-fail`.
 - **Staged mode** (`src/scanner/walk_staged.rs`): `--staged` scans the **index
   blob content** that is about to be committed (`git diff --cached
   --name-only --diff-filter=ACMRT` then `git cat-file -t`/`-s`/`blob :path`), NOT
@@ -318,8 +345,14 @@ content (e.g. running as a GitHub Action). Key behaviors:
   check is **line-level** (the marker may appear anywhere on the match's first
   line, not just as a trailing comment — gitleaks parity), so a marker inside a
   same-line string value also suppresses. For multi-line matches (e.g. PEM keys)
-  the marker is honored on the match's first line only.
+  the marker is honored on the match's first line only. `--no-allow-markers`
+  (`honor_allow_markers = false`) turns this off for the CLI scan — use it on
+  untrusted content where an author could append a marker to smuggle a secret
+  past the scan. (The library `ScanConfig::proxy()` preset already disables it.)
 - **Result caps**: `--max-files`, `--max-findings`, `--max-findings-per-file`.
+  All three reject `0` at parse time (clap `value_parser`, exit 2): a zero cap
+  would silently scan nothing and read as a clean result. The library `scan_capped`
+  path still tolerates `0` defensively for programmatic callers.
   Every cap that fires logs a truncation notice (never silent), and per-path
   truncation is folded into the aggregate `ScanStats.findings_truncated` and the
   CLI summary suffix (so a `--max-findings-per-file` truncation shows even when
@@ -359,7 +392,13 @@ content (e.g. running as a GitHub Action). Key behaviors:
   rule id + file + raw secret, computed pre-redaction so it is redact-agnostic),
   with a fallback to the legacy `(file, line, rule)` tuple for baselines written
   before fingerprints existed. `--generate-baseline <file>` writes the current
-  findings as JSON (includes fingerprints) and exits 0. The `matched` field is
+  findings as JSON (includes fingerprints) and exits 0 — **unless coverage was
+  incomplete**: it refuses to write (exit 2, no file) when `ScanStats.errored > 0`
+  or `history_timed_out`, since a baseline missing findings would silently
+  under-suppress later scans (the same rationale that makes the caps conflict with
+  `--generate-baseline`). Binary/oversized *policy* skips are deliberately not a
+  blocker — those files skip identically on the next scan, so they never
+  contribute findings to suppress. The `matched` field is
   replaced by the fixed `[REDACTED_SECRET]` marker for **every** finding,
   regardless of redaction mode (including `--no-redact` and default partial
   redaction) — suppression keys on the fingerprint, not the text, so a

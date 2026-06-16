@@ -54,7 +54,7 @@ fn main() {
     // Only announce the non-default (opt-in) full build; stay quiet for lean so a
     // normal `cargo build` produces no spurious warnings.
     if full {
-        println!("cargo:warning=secrets-scanner: embedding FULL ruleset (gitleaks+local+spdb)");
+        println!("cargo:warning=secrets-scanner: embedding FULL ruleset (gitleaks+local+secrets-scanner+spdb)");
     }
 
     let selected = manifest::select_sources(

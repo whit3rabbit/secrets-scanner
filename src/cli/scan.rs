@@ -50,7 +50,7 @@ pub(super) fn handle(args: ScanArgs) {
         max_files: args.max_files,
         max_findings: early_max_findings,
         max_findings_per_file: args.max_findings_per_file,
-        honor_allow_markers: true,
+        honor_allow_markers: !args.no_allow_markers,
         redaction_mode: args.redaction.into(),
         max_matched_len: None,
     };
@@ -93,6 +93,7 @@ pub(super) fn handle(args: ScanArgs) {
         stats.errored += s.errored;
         stats.git_fallback |= s.git_fallback;
         stats.git_failed |= s.git_failed;
+        stats.history_timed_out |= s.history_timed_out;
         // Per-file/per-path truncation (e.g. `--max-findings-per-file`, or the
         // history wall-clock budget) is otherwise invisible unless the CLI-level
         // `--max-findings` also fires. Fold it into both the aggregate stat and
@@ -146,8 +147,9 @@ pub(super) fn handle(args: ScanArgs) {
     // run). When some paths DID succeed and produced findings — a multi-path run
     // where only one path is a non-repo — those real findings are still written
     // first so a secret found in a healthy repo is not discarded behind the
-    // generic git error. A baseline is never written from an incomplete scan, and
-    // when nothing was found there is nothing to write and we must not emit a
+    // generic git error. A baseline is never written from an incomplete scan
+    // (git_failed here, plus the errored/history-timeout guard below), and when
+    // nothing was found there is nothing to write and we must not emit a
     // clean-looking empty artifact (preserving the fail-closed posture for the
     // single-path / all-failed case).
     if stats.git_failed {
@@ -165,6 +167,28 @@ pub(super) fn handle(args: ScanArgs) {
                 }
             }
         }
+        std::process::exit(2);
+    }
+
+    // Refuse to write a baseline from an incomplete scan. A baseline suppresses by
+    // fingerprint on later scans, so a baseline missing findings (because files
+    // could not be read, or history scanning hit its wall-clock budget) would
+    // silently under-suppress — the same hazard for which caps already conflict
+    // with --generate-baseline. Binary/oversized *policy* skips are deliberately
+    // NOT a blocker: those files are skipped identically on the next scan, so they
+    // never contribute findings to suppress and cannot cause under-suppression.
+    if args.generate_baseline.is_some() && (stats.errored > 0 || stats.history_timed_out) {
+        error!(
+            "[scanner] Refusing to write a baseline from an incomplete scan \
+             ({} unreadable file(s){}); a baseline missing findings would silently \
+             under-suppress later scans. Re-run after resolving the coverage gap.",
+            stats.errored,
+            if stats.history_timed_out {
+                ", history timed out"
+            } else {
+                ""
+            },
+        );
         std::process::exit(2);
     }
 
@@ -257,6 +281,20 @@ pub(super) fn handle(args: ScanArgs) {
             stats.binary_skipped + stats.oversized_skipped,
             stats.binary_skipped,
             stats.oversized_skipped,
+        );
+        std::process::exit(2);
+    }
+
+    // A history scan that hit its `--history-timeout` budget left commits
+    // unscanned: coverage is incomplete, so it must not look like a clean (or
+    // merely truncated) scan. Unlike --error-on-unreadable/--error-on-skipped this
+    // is unconditional — the caller opted into the budget by setting the timeout,
+    // and expiry is a definite coverage gap. Exit 2 takes precedence over the
+    // findings exit 1 and is independent of --no-fail; output is already written.
+    if stats.history_timed_out {
+        error!(
+            "[scanner] git history scan stopped at the --history-timeout budget; \
+             commits remain unscanned (incomplete coverage). Failing (exit 2)."
         );
         std::process::exit(2);
     }

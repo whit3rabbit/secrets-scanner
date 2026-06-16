@@ -7,6 +7,58 @@ use crate::rules::validation::{
 };
 use regex::Regex;
 
+pub(crate) struct AllowlistMatch<'a> {
+    file_path: &'a str,
+    line_bytes: &'a [u8],
+    matched_bytes: &'a [u8],
+    secret_bytes: &'a [u8],
+    line_lower: Option<String>,
+    matched_lower: Option<String>,
+    secret_lower: Option<String>,
+}
+
+impl<'a> AllowlistMatch<'a> {
+    pub(crate) fn new(
+        file_path: &'a str,
+        line_bytes: &'a [u8],
+        matched_bytes: &'a [u8],
+        secret_bytes: &'a [u8],
+    ) -> Self {
+        Self {
+            file_path,
+            line_bytes,
+            matched_bytes,
+            secret_bytes,
+            line_lower: None,
+            matched_lower: None,
+            secret_lower: None,
+        }
+    }
+
+    fn target_bytes(&self, target: RegexTarget) -> &'a [u8] {
+        match target {
+            RegexTarget::Secret => self.secret_bytes,
+            RegexTarget::Match => self.matched_bytes,
+            RegexTarget::Line => self.line_bytes,
+        }
+    }
+
+    fn target_lower(&mut self, target: RegexTarget) -> &str {
+        let bytes = match target {
+            RegexTarget::Secret => self.secret_bytes,
+            RegexTarget::Match => self.matched_bytes,
+            RegexTarget::Line => self.line_bytes,
+        };
+        let slot = match target {
+            RegexTarget::Secret => &mut self.secret_lower,
+            RegexTarget::Match => &mut self.matched_lower,
+            RegexTarget::Line => &mut self.line_lower,
+        };
+        slot.get_or_insert_with(|| String::from_utf8_lossy(bytes).to_lowercase())
+            .as_str()
+    }
+}
+
 /// A compiled allowlist rule.
 #[derive(Debug)]
 pub struct CompiledAllowlist {
@@ -119,27 +171,30 @@ impl CompiledAllowlist {
         matched_bytes: &[u8],
         secret_bytes: &[u8],
     ) -> bool {
+        let mut allowlist_match =
+            AllowlistMatch::new(file_path, line_bytes, matched_bytes, secret_bytes);
+        self.evaluate_cached(&mut allowlist_match)
+    }
+
+    pub(crate) fn evaluate_cached(&self, allowlist_match: &mut AllowlistMatch<'_>) -> bool {
         if self.paths.is_empty() && self.regexes.is_empty() && self.stopwords.is_empty() {
             return false;
         }
 
-        let path_matched =
-            !self.paths.is_empty() && self.paths.iter().any(|re| re.is_match(file_path));
+        let path_matched = !self.paths.is_empty()
+            && self
+                .paths
+                .iter()
+                .any(|re| re.is_match(allowlist_match.file_path));
 
-        let target_bytes = match self.regex_target {
-            RegexTarget::Secret => secret_bytes,
-            RegexTarget::Match => matched_bytes,
-            RegexTarget::Line => line_bytes,
-        };
-
+        let target_bytes = allowlist_match.target_bytes(self.regex_target);
         let regex_matched =
             !self.regexes.is_empty() && self.regexes.iter().any(|re| re.is_match(target_bytes));
 
         let stopword_matched = if self.stopwords.is_empty() {
             false
         } else {
-            let target_str = String::from_utf8_lossy(target_bytes);
-            let target_lower = target_str.to_lowercase();
+            let target_lower = allowlist_match.target_lower(self.regex_target);
             self.stopwords.iter().any(|sw| target_lower.contains(sw))
         };
 
@@ -188,13 +243,26 @@ pub fn is_match_globally_allowlisted(
     matched_bytes: &[u8],
     secret_bytes: &[u8],
 ) -> bool {
-    global_allowlists.iter().any(|al| {
+    let mut allowlist_match =
+        AllowlistMatch::new(file_path, line_bytes, matched_bytes, secret_bytes);
+    is_match_globally_allowlisted_cached(global_allowlists, rule_id, &mut allowlist_match)
+}
+
+pub(crate) fn is_match_globally_allowlisted_cached(
+    global_allowlists: &[CompiledAllowlist],
+    rule_id: &str,
+    allowlist_match: &mut AllowlistMatch<'_>,
+) -> bool {
+    for al in global_allowlists {
         if !al.target_rules.is_empty() && !al.target_rules.iter().any(|r| r == rule_id) {
-            return false;
+            continue;
         }
 
-        al.evaluate(file_path, line_bytes, matched_bytes, secret_bytes)
-    })
+        if al.evaluate_cached(allowlist_match) {
+            return true;
+        }
+    }
+    false
 }
 
 /// Check if a finding is suppressed by a specific rule's allowlist.
@@ -205,7 +273,16 @@ pub fn is_rule_allowlisted(
     matched_bytes: &[u8],
     secret_bytes: &[u8],
 ) -> bool {
+    let mut allowlist_match =
+        AllowlistMatch::new(file_path, line_bytes, matched_bytes, secret_bytes);
+    is_rule_allowlisted_cached(rule, &mut allowlist_match)
+}
+
+pub(crate) fn is_rule_allowlisted_cached(
+    rule: &CompiledRule,
+    allowlist_match: &mut AllowlistMatch<'_>,
+) -> bool {
     rule.allowlists
         .iter()
-        .any(|al| al.evaluate(file_path, line_bytes, matched_bytes, secret_bytes))
+        .any(|al| al.evaluate_cached(allowlist_match))
 }

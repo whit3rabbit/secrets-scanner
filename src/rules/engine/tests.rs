@@ -83,6 +83,30 @@ keywords = ["abc"]
 }
 
 #[test]
+fn strict_load_rejects_out_of_range_secret_group() {
+    // The lenient path (above) downgrades to default group selection. The strict
+    // gate `Scanner::from_toml` / `from_file` (explicit `--rules`) must instead
+    // reject: an out-of-range group silently shifts the entropy/redaction/
+    // fingerprint span.
+    let bad_group_toml = r#"
+title = "bad group"
+[[rules]]
+id = "bad-group-rule"
+regex = 'abc([0-9]+)'
+secretGroup = 2
+keywords = ["abc"]
+"#;
+    let msg = match crate::Scanner::from_toml(bad_group_toml) {
+        Ok(_) => panic!("strict load must reject an out-of-range secret_group"),
+        Err(e) => e.to_string(),
+    };
+    assert!(
+        msg.contains("secret_group") && msg.contains("bad-group-rule"),
+        "error should name the rule and the bad secret_group: {msg}"
+    );
+}
+
+#[test]
 fn has_keyword_first_bytes() {
     let engine = RuleEngine::from_toml(MINIMAL_TOML).expect("should parse");
     let bytes = engine.keyword_first_bytes();
@@ -362,4 +386,41 @@ allowlists = [
         b"AKIA1234567890",
         b"1234567890"
     ));
+}
+
+#[test]
+fn allowlist_stopword_cache_is_separate_per_regex_target() {
+    let toml = r#"
+title = "target cache"
+
+[[allowlists]]
+id = "secret-miss"
+targetRules = ["token"]
+regexTarget = "secret"
+stopwords = ["missing"]
+
+[[allowlists]]
+id = "line-hit"
+targetRules = ["token"]
+regexTarget = "line"
+stopwords = ["lineonly"]
+
+[[rules]]
+id = "token"
+regex = 'token=([A-Za-z0-9]+)'
+secretGroup = 1
+keywords = ["token="]
+"#;
+    let engine = RuleEngine::from_toml(toml).expect("should parse");
+
+    assert!(
+        engine.is_match_globally_allowlisted(
+            "token",
+            "file.rs",
+            b"lineonly token=ABC123",
+            b"token=ABC123",
+            b"ABC123"
+        ),
+        "line-target stopword should not reuse the previous secret-target lowercase cache"
+    );
 }

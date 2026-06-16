@@ -186,7 +186,17 @@ fn redact_line(
     redacted.trim_end().to_string()
 }
 
-fn expand_to_utf8_boundaries(content: &[u8], mut start: usize, mut end: usize) -> (usize, usize) {
+/// Widen `[start, end)` outward to the nearest UTF-8 char boundaries.
+///
+/// Rules compile as `regex::bytes`, so a match can begin or end mid-codepoint.
+/// Slicing on such a range yields invalid UTF-8; expanding first keeps the
+/// surrounding bytes valid. Shared with the proxy redaction path
+/// (`redaction::redact_content_bytes`) so both redactors are boundary-consistent.
+pub fn expand_to_utf8_boundaries(
+    content: &[u8],
+    mut start: usize,
+    mut end: usize,
+) -> (usize, usize) {
     while start > 0 && !is_utf8_boundary_byte(content[start]) {
         start -= 1;
     }

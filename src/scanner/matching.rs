@@ -1,5 +1,10 @@
 //! Rule match evaluation for scanner content.
 
+use std::sync::OnceLock;
+
+use memchr::memmem;
+
+use crate::rules::allowlist::AllowlistMatch;
 use crate::rules::engine::{CompiledRule, RuleEngine};
 use crate::{entropy, filters};
 
@@ -8,7 +13,7 @@ use super::{Finding, Scanner};
 #[path = "matching_context.rs"]
 mod context;
 use context::context_lines;
-pub(super) use context::{merged_secret_ranges, redact_context_lines};
+pub(super) use context::{expand_to_utf8_boundaries, merged_secret_ranges, redact_context_lines};
 
 /// Minimum token length for entropy checking. Tokens shorter than this
 /// are likely not secrets and would produce unreliable entropy scores.
@@ -17,6 +22,18 @@ const MIN_TOKEN_LEN: usize = 8;
 /// Inline-suppression markers: a finding on a line containing any of these is
 /// skipped. `gitleaks:allow` is accepted for ecosystem compatibility.
 const ALLOW_MARKERS: [&[u8]; 2] = [b"secrets-scanner:allow", b"gitleaks:allow"];
+
+fn allow_marker_finders() -> &'static [memmem::Finder<'static>] {
+    static FINDERS: OnceLock<Vec<memmem::Finder<'static>>> = OnceLock::new();
+    FINDERS
+        .get_or_init(|| {
+            ALLOW_MARKERS
+                .iter()
+                .map(|&marker| memmem::Finder::new(marker))
+                .collect()
+        })
+        .as_slice()
+}
 
 /// True if `line` contains any inline-suppression marker anywhere on it.
 ///
@@ -29,9 +46,9 @@ const ALLOW_MARKERS: [&[u8]; 2] = [b"secrets-scanner:allow", b"gitleaks:allow"];
 /// behavior change. In proxy mode the whole mechanism is disabled
 /// (`honor_allow_markers = false`) so attacker content cannot self-suppress.
 fn line_has_allow_marker(line: &[u8]) -> bool {
-    ALLOW_MARKERS
+    allow_marker_finders()
         .iter()
-        .any(|marker| line.windows(marker.len()).any(|window| window == *marker))
+        .any(|finder| finder.find(line).is_some())
 }
 
 /// 1-based column in UTF-16 code units of `offset` within `loc`'s line (SARIF's
@@ -133,6 +150,7 @@ pub(super) fn check_rule_match(
     }
 
     let mut line_cursor = LineCursor::new(content);
+    let mut allow_marker_cache: Option<(usize, usize, bool)> = None;
 
     for captures in regex_re.captures_iter(content) {
         let m = match captures.get(0) {
@@ -159,17 +177,19 @@ pub(super) fn check_rule_match(
         let secret_start_in_file = secret_match.start();
         let secret_end_in_file = secret_match.end();
 
-        let ent = entropy::shannon_entropy_bytes(secret_part);
+        let mut ent = None;
         if let Some(rule_threshold) = rule.entropy_threshold {
+            let computed_entropy = entropy::shannon_entropy_bytes(secret_part);
             // The override is a floor: it can only raise a rule's threshold,
             // never lower it. A low override must not weaken a stricter rule.
             let threshold = scanner
                 .config
                 .min_entropy_override
                 .map_or(rule_threshold, |o| o.max(rule_threshold));
-            if secret_part.len() < MIN_TOKEN_LEN || ent < threshold {
+            if secret_part.len() < MIN_TOKEN_LEN || computed_entropy < threshold {
                 continue;
             }
+            ent = Some(computed_entropy);
         }
 
         let start = line_cursor.locate(content, match_start_in_file);
@@ -182,24 +202,36 @@ pub(super) fn check_rule_match(
         // proxy mode
         // (`honor_allow_markers = false`): an attacker controlling the content
         // could otherwise append the marker to forward a secret in the clear.
-        if scanner.config.honor_allow_markers && line_has_allow_marker(line_bytes) {
+        let has_allow_marker = scanner.config.honor_allow_markers
+            && match allow_marker_cache {
+                Some((line_start, line_end, has_marker))
+                    if line_start == start.line_start && line_end == start.line_end =>
+                {
+                    has_marker
+                }
+                _ => {
+                    let has_marker = line_has_allow_marker(line_bytes);
+                    allow_marker_cache = Some((start.line_start, start.line_end, has_marker));
+                    has_marker
+                }
+            };
+        if has_allow_marker {
             continue;
         }
 
-        if scanner.engine.is_match_globally_allowlisted(
-            &rule.id,
-            path,
-            line_bytes,
-            matched_bytes,
-            secret_part,
-        ) {
+        let mut allowlist_match = AllowlistMatch::new(path, line_bytes, matched_bytes, secret_part);
+        if scanner
+            .engine
+            .is_match_globally_allowlisted_cached(&rule.id, &mut allowlist_match)
+        {
             continue;
         }
 
-        if RuleEngine::is_rule_allowlisted(rule, path, line_bytes, matched_bytes, secret_part) {
+        if RuleEngine::is_rule_allowlisted_cached(rule, &mut allowlist_match) {
             continue;
         }
 
+        let ent = ent.unwrap_or_else(|| entropy::shannon_entropy_bytes(secret_part));
         let end = line_cursor.locate(content, match_end_in_file);
         let context_lines = if scanner.config.capture_context {
             context_lines(content, start.line, start.line_start, start.line_end)

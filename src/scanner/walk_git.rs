@@ -122,9 +122,12 @@ fn run_git_quiet(root: &str, args: &[&str]) -> Option<Vec<u8>> {
 /// posture as [`read_bounded`]: stdout is capped at `max + 1` bytes so a blob that
 /// grew past the cap between the `cat-file -s` size check and this read (a TOCTOU
 /// window under a concurrent `git add`) is reported as oversized, never loaded in
-/// full. The child is killed before `wait` so stopping the read early cannot
-/// deadlock against git blocking on a full stdout pipe (a no-op if it already
-/// exited, e.g. the normal in-cap case).
+/// full. The child is killed **only on the oversized path**, where we stopped
+/// reading early and git may be blocked writing to a full stdout pipe. On the
+/// in-cap path the read reached EOF because git already closed stdout as it exits;
+/// killing there would race git's own exit and could mark a correctly-read blob as
+/// a signal death (`status.success() == false`), turning a clean read into a
+/// spurious `BlobRead::Error` (a phantom coverage gap in staged mode).
 pub(crate) fn run_git_blob_bounded(root: &str, spec: &std::ffi::OsStr, max: u64) -> BlobRead {
     let mut cmd = Command::new("git");
     cmd.arg("-c").arg("core.quotePath=false");
@@ -150,15 +153,20 @@ pub(crate) fn run_git_blob_bounded(root: &str, spec: &std::ffi::OsStr, max: u64)
         }
     };
 
-    // Kill first (no-op if git already exited) so an early-stopped read of an
-    // oversized blob cannot leave git blocked on the pipe, then reap.
-    let _ = child.kill();
+    // Kill ONLY when we stopped reading early (oversized): there git may still be
+    // blocked writing to the now-full pipe and would never exit on its own. On the
+    // in-cap path the read already hit EOF (git closed stdout as it exits), so a
+    // kill would only race git's exit and risk a spurious signal-death status.
+    let oversized = bytes.len() as u64 > max;
+    if oversized {
+        let _ = child.kill();
+    }
     let status = child.wait();
 
     match read_result {
         // Oversized is decided by byte count: we deliberately stopped reading, so
-        // git's (likely killed) exit status is irrelevant here.
-        Ok(_) if bytes.len() as u64 > max => BlobRead::Oversized,
+        // git's (killed) exit status is irrelevant here.
+        Ok(_) if oversized => BlobRead::Oversized,
         Ok(_) => match status {
             Ok(s) if s.success() => BlobRead::Ok(bytes),
             _ => BlobRead::Error,

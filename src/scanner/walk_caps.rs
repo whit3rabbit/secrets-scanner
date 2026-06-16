@@ -39,7 +39,9 @@ fn scan_capped<T: Sync>(
 
     let mut findings = Vec::new();
     for (idx, it) in items.iter().enumerate() {
-        let remaining = cap - findings.len();
+        // `saturating_sub` is defensive: the `break` below keeps `findings.len() <
+        // cap` on re-entry today, but a future edit must not be able to underflow.
+        let remaining = cap.saturating_sub(findings.len());
         let mut item_findings = scan_one(it);
         let truncated_current = item_findings.len() > remaining;
         item_findings.truncate(remaining);
@@ -85,21 +87,33 @@ pub(super) fn scan_staged_entries(
 }
 
 pub(super) fn sort_findings(findings: &mut [Finding]) {
+    // `commit` and `line` are part of the key so history-mode output is
+    // deterministic: offsets there are buffer-relative, so two findings in the
+    // same file from different commits can share (file, offsets, rule). Without
+    // commit/line in the key the unstable sort would order those arbitrarily.
     findings.sort_unstable_by(|a, b| {
         (
             a.file.as_str(),
             a.start_offset,
             a.end_offset,
             a.rule_id.as_str(),
+            a.commit.as_deref(),
+            a.line,
         )
             .cmp(&(
                 b.file.as_str(),
                 b.start_offset,
                 b.end_offset,
                 b.rule_id.as_str(),
+                b.commit.as_deref(),
+                b.line,
             ))
     });
 }
+
+#[cfg(test)]
+#[path = "walk_caps_tests.rs"]
+mod tests;
 
 /// Apply the `--max-files` cap, recording the drop so the summary cannot read as full coverage.
 pub(super) fn apply_max_files<T>(items: &mut Vec<T>, scanner: &Scanner, stats: &StatsAcc) {

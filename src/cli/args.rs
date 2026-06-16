@@ -2,6 +2,18 @@ use clap::{ArgGroup, Parser, Subcommand, ValueEnum};
 use clap_complete::Shell;
 use secrets_scanner::{BinaryPolicy, RedactionMode};
 
+/// Parse a scan cap (`--max-files`, `--max-findings`, `--max-findings-per-file`)
+/// as a strictly positive `usize`. Zero is rejected at the CLI boundary because a
+/// zero cap silently turns a scan into an empty (clean-looking) result, which is
+/// almost always a caller error in a security tool.
+fn parse_positive_usize(s: &str) -> Result<usize, String> {
+    match s.parse::<usize>() {
+        Ok(0) => Err("value must be a positive integer (>= 1); 0 would scan nothing".to_string()),
+        Ok(n) => Ok(n),
+        Err(e) => Err(format!("invalid integer: {e}")),
+    }
+}
+
 /// A high-performance secrets scanner powered by Aho-Corasick and regex.
 #[derive(Parser)]
 #[command(
@@ -38,6 +50,11 @@ pub(super) enum Commands {
         /// Override the upstream URL to pull rules from.
         #[arg(long, value_name = "URL")]
         url: Option<String>,
+
+        /// Bypass the "already current" fast-path and always re-fetch, re-merge,
+        /// and rewrite the cache. Conflicts with `--check`.
+        #[arg(long, conflicts_with = "check")]
+        force: bool,
     },
 
     /// Validate one or more TOML rules files for structural and regex correctness.
@@ -238,21 +255,28 @@ pub(super) struct ScanArgs {
     /// Conflicts with `--generate-baseline`: dropping whole files would write a
     /// baseline missing their findings, which then silently fail to suppress on a
     /// later uncapped scan.
-    #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
+    #[arg(long, value_name = "N", value_parser = parse_positive_usize, conflicts_with = "generate_baseline")]
     pub(super) max_files: Option<usize>,
 
     /// Cap total findings reported across the scan. Conflicts with
     /// `--generate-baseline`: a capped baseline would silently fail to suppress
     /// findings beyond the cap on a later scan, so the combination is rejected
     /// rather than silently dropping the cap.
-    #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
+    #[arg(long, value_name = "N", value_parser = parse_positive_usize, conflicts_with = "generate_baseline")]
     pub(super) max_findings: Option<usize>,
 
     /// Cap findings reported per file. Conflicts with `--generate-baseline`: a
     /// per-file cap can drop findings from the baseline, which then silently fail
     /// to suppress on a later uncapped scan.
-    #[arg(long, value_name = "N", conflicts_with = "generate_baseline")]
+    #[arg(long, value_name = "N", value_parser = parse_positive_usize, conflicts_with = "generate_baseline")]
     pub(super) max_findings_per_file: Option<usize>,
+
+    /// Do not honor inline `secrets-scanner:allow` / `gitleaks:allow` markers.
+    /// By default a line carrying such a marker suppresses its finding. Disable
+    /// this when scanning untrusted content (e.g. text whose author could append
+    /// a marker to smuggle a secret past the scan).
+    #[arg(long)]
+    pub(super) no_allow_markers: bool,
 
     /// Do not print surrounding context lines (safe default for CI logs).
     #[arg(long)]

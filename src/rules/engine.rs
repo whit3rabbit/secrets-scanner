@@ -228,6 +228,18 @@ impl RuleEngine {
         )
     }
 
+    pub(crate) fn is_match_globally_allowlisted_cached(
+        &self,
+        rule_id: &str,
+        allowlist_match: &mut crate::rules::allowlist::AllowlistMatch<'_>,
+    ) -> bool {
+        crate::rules::allowlist::is_match_globally_allowlisted_cached(
+            &self.global_allowlists,
+            rule_id,
+            allowlist_match,
+        )
+    }
+
     /// Check if a finding is suppressed by a specific rule's allowlist.
     pub fn is_rule_allowlisted(
         rule: &CompiledRule,
@@ -243,6 +255,13 @@ impl RuleEngine {
             matched_bytes,
             secret_bytes,
         )
+    }
+
+    pub(crate) fn is_rule_allowlisted_cached(
+        rule: &CompiledRule,
+        allowlist_match: &mut crate::rules::allowlist::AllowlistMatch<'_>,
+    ) -> bool {
+        crate::rules::allowlist::is_rule_allowlisted_cached(rule, allowlist_match)
     }
 }
 

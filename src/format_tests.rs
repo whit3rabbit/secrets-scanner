@@ -37,6 +37,25 @@ fn json_output_includes_baseline_metadata() {
 }
 
 #[test]
+fn write_text_truncates_multibyte_commit_without_panic() {
+    // `Finding.commit` is serde(default) and unvalidated, so a deserialized/
+    // hand-built finding can carry a multibyte commit. Char-safe truncation must
+    // keep 12 chars and never byte-slice mid-codepoint (which would panic).
+    let f = finding(json!({
+        "file": "a", "line": 1, "end_line": 1, "col": 1, "end_col": 5,
+        "rule_id": "r", "description": "d", "matched": "m", "entropy": 0.0,
+        "commit": "ééééééééééééééé"
+    }));
+    let mut out = Vec::new();
+    write_text(&mut out, &[f], false).expect("text");
+    let s = String::from_utf8(out).expect("utf8");
+    assert!(
+        s.contains("commit=éééééééééééé"),
+        "first 12 chars of the commit should be kept: {s}"
+    );
+}
+
+#[test]
 fn relativize_strips_base_and_normalizes_separators() {
     assert_eq!(relativize("./src/a.rs", "."), "src/a.rs");
     assert_eq!(relativize("repo/src/a.rs", "repo"), "src/a.rs");

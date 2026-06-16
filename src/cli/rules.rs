@@ -2,8 +2,8 @@ use log::{error, info};
 use secrets_scanner::Scanner;
 
 /// Handle the `update-rules` subcommand.
-pub(super) fn handle_update(check_only: bool, url: Option<String>) {
-    match secrets_scanner::rules::updater::update_rules(check_only, url.as_deref()) {
+pub(super) fn handle_update(check_only: bool, url: Option<String>, force: bool) {
+    match secrets_scanner::rules::updater::update_rules(check_only, url.as_deref(), force) {
         Ok(secrets_scanner::rules::updater::UpdateResult::AlreadyCurrent { sha256 }) => {
             println!("✅ Rules already up to date (SHA-256: {sha256})");
         }

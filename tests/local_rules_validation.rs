@@ -1,4 +1,4 @@
-//! Integration test validating all custom rules in assets/local.toml
+//! Integration test validating all custom rules in assets/local.toml and assets/secrets-scanner-rules.toml
 //! against their generated mock secret fixtures.
 
 use secrets_scanner::{ScanConfig, Scanner};
@@ -15,7 +15,7 @@ struct RuleFixture {
 #[test]
 fn validate_all_local_rules() {
     // 1. Initialize the scanner from the bundled ruleset.
-    // The bundled ruleset includes the merged assets/local.toml rules.
+    // The bundled ruleset includes the merged assets/local.toml and assets/secrets-scanner-rules.toml rules.
     let scanner = Scanner::from_bundled().expect("bundled rules should load successfully");
 
     // Disable redaction so we can assert the matched value exactly,

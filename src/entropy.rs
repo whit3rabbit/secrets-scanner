@@ -1,15 +1,15 @@
 //! Shannon entropy calculation for secret detection.
 //!
-//! High-entropy strings (> ~3.5 bits/byte) are likely real secrets.
-//! Low-entropy strings like `password = "changeme"` are filtered out.
+//! High-entropy strings (above `DEFAULT_MIN_ENTROPY`, 3.2 bits/byte) are likely
+//! real secrets. Low-entropy strings like `password = "changeme"` are filtered out.
 
 /// Recommended minimum entropy threshold for rules that opt into entropy gating.
 pub const DEFAULT_MIN_ENTROPY: f64 = 3.2;
 
 /// Compute Shannon entropy of a string's UTF-8 bytes.
 ///
-/// Returns bits per byte — real secrets typically score > 3.5,
-/// while dictionary words and placeholders score < 3.0.
+/// Returns bits per byte — real secrets typically score above the 3.2
+/// `DEFAULT_MIN_ENTROPY`, while dictionary words and placeholders score < 3.0.
 ///
 /// # Examples
 ///

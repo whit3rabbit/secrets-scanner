@@ -98,7 +98,7 @@ check-rules: ## Check if gitleaks rules are up to date (exit 1 = update availabl
 
 .PHONY: validate-rules
 validate-rules: ## Validate rule TOML files in assets/
-	$(CARGO) run $(FEATURES_UPD) --bin $(BINARY) -- validate-rules assets/gitleaks.toml assets/local.toml assets/secrets-scanner.toml
+	$(CARGO) run $(FEATURES_UPD) --bin $(BINARY) -- validate-rules assets/gitleaks.toml assets/local.toml assets/secrets-scanner-rules.toml assets/secrets-scanner.toml
 
 .PHONY: import-spdb
 import-spdb: ## Download & deduplicate secrets-patterns-db rules → assets/secrets-patterns-db.toml

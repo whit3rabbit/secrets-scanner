@@ -321,16 +321,25 @@ gitleaks + kingfisher**; `secrets-patterns-db` is opt-in via `--features full-ru
 Counts are raw `[[rules]]` entries; many are disabled at load because they use
 look-around, which Rust's `regex` engine rejects (see "active" below).
 
-| Ruleset | Upstream Source | Raw rules | Size | Priority | Default Build |
-|---|---|--:|--:|--:|:--:|
-| [`local`](docs/rulesets/local.md) | hand-curated ([`assets/local.toml`](assets/local.toml)) | 240 | 76 KB | 100 | ✅ embedded |
-| [`gitleaks`](docs/rulesets/gitleaks.md) | [gitleaks](https://github.com/gitleaks/gitleaks) ([`assets/gitleaks.toml`](assets/gitleaks.toml)) | 222 | 96 KB | 10 | ✅ embedded |
-| [`kingfisher`](docs/rulesets/kingfisher.md) | [MongoDB Kingfisher](https://github.com/mongodb/kingfisher) ([`assets/kingfisher-rules.toml`](assets/kingfisher-rules.toml)) | 755¹ | 240 KB | 7 | ✅ embedded |
-| [`secrets-patterns-db`](docs/rulesets/spdb.md) | [mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db) ([`assets/secrets-patterns-db.toml`](assets/secrets-patterns-db.toml)) | 1599 | 360 KB | 5 | ⬚ `--features full-ruleset` |
+| Ruleset | Upstream Source | License | Raw rules | Size | Priority | Default Build |
+|---|---|---|--:|--:|--:|:--:|
+| [`local`](docs/rulesets/local.md) | hand-curated ([`assets/local.toml`](assets/local.toml)) | MIT | 240 | 76 KB | 100 | ✅ embedded |
+| [`gitleaks`](docs/rulesets/gitleaks.md) | [gitleaks](https://github.com/gitleaks/gitleaks) ([`assets/gitleaks.toml`](assets/gitleaks.toml)) | MIT | 222 | 96 KB | 10 | ✅ embedded |
+| [`kingfisher`](docs/rulesets/kingfisher.md) | [MongoDB Kingfisher](https://github.com/mongodb/kingfisher) ([`assets/kingfisher-rules.toml`](assets/kingfisher-rules.toml)) | Apache-2.0 | 755¹ | 240 KB | 7 | ✅ embedded |
+| [`secrets-patterns-db`](docs/rulesets/spdb.md) | [mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db) ([`assets/secrets-patterns-db.toml`](assets/secrets-patterns-db.toml)) | CC-BY-4.0 / AGPL-3.0² | 1599 | 360 KB | 5 | ⬚ `--features full-ruleset` |
 
 ¹ Kingfisher is converted from 951 YAML rules to TOML by `scripts/convert_kingfisher_rules.py`:
 `visible:false` helper rules are skipped, rules already covered by gitleaks/local are removed by
 behavioral dedup, and patterns the Rust engine can't compile are dropped.
+
+² The `secrets-patterns-db` repository is primarily CC-BY-4.0, but it contains rules derived from TruffleHog which are licensed under the copyleft AGPL-3.0.
+
+> [!IMPORTANT]
+> **License Implications of Combining Rulesets**
+>
+> Combining rulesets with different license terms can change the overall licensing agreement of the resulting output, cache, or embedded binary depending on their types:
+> - **Permissive Mix (Default):** The default lean build combines `local` (MIT), `gitleaks` (MIT), and `kingfisher` (Apache-2.0). These permissive licenses are compatible and allow standard distribution and usage.
+> - **Copyleft Impact (Full Ruleset):** When compiling with `--features full-ruleset` (which embeds `secrets-patterns-db`), the combined work includes rules covered by the AGPL-3.0. If you distribute this compiled binary or run it as a network service (e.g., in a cloud-based API or proxy pipeline), you must comply with the source-sharing obligations of the AGPL-3.0.
 
 **Merged totals** (after id-collision + detection-equivalent dedup, then look-around disabling):
 

@@ -66,6 +66,16 @@ pub(super) fn build_from_toml(toml_str: &str) -> Result<(RuleEngine, Vec<String>
                     "[engine] Warning: rule '{}' has secret_group {} but regex only has {} capture groups. Falling back to default group selection.",
                     rule_config.id, g, re.captures_len()
                 );
+                // Record for the strict report so `Scanner::from_toml`/`from_file`
+                // rejects an explicit `--rules` file with an out-of-range group
+                // (it silently shifts the entropy/redaction/fingerprint span). The
+                // lenient bundled/cached tiers ignore `issues` and still downgrade.
+                issues.push(format!(
+                    "rule '{}' has secret_group {} but its regex has only {} capture group(s)",
+                    rule_config.id,
+                    g,
+                    re.captures_len()
+                ));
                 secret_group = None;
             }
         }

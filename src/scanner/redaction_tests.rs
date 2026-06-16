@@ -82,6 +82,71 @@ keywords = ["key="]
 }
 
 #[test]
+fn proxy_redaction_expands_to_utf8_boundaries() {
+    // A `(?-u)` rule matches a single byte, so against a multibyte char the match
+    // ends mid-codepoint. `redact_content_bytes` must widen the range to char
+    // boundaries; otherwise the trailing continuation byte becomes invalid UTF-8
+    // and `from_utf8_lossy` mangles the forwarded tail into U+FFFD.
+    let toml = r#"
+title = "byte-boundary"
+
+[[rules]]
+id = "byte-boundary-secret"
+regex = '(?-u)KEY=.'
+keywords = ["key="]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    let content = "KEY=é tail";
+
+    let output = scanner.scan_and_redact_content("unicode.env", content);
+
+    assert_eq!(output.findings.len(), 1);
+    assert_eq!(
+        output.redacted, "[REDACTED_SECRET] tail",
+        "boundary-expanded redaction should cover the whole char and keep the tail"
+    );
+    assert!(
+        !output.redacted.contains('\u{fffd}'),
+        "proxy redaction must not bisect UTF-8: {}",
+        output.redacted
+    );
+}
+
+#[test]
+fn proxy_redaction_coalesces_adjacent_markers_across_split_char() {
+    // Two separate secrets sit on either side of a multibyte char that `(?-u)`
+    // byte rules split. Their merged ranges have a one-byte gap (the `é`
+    // continuation byte) that boundary expansion closes, making the ranges touch.
+    // The redactor must extend the first marker, not emit an adjacent duplicate.
+    let toml = r#"
+title = "coalesce"
+
+[[rules]]
+id = "head"
+regex = '(?-u)KEY=.'
+keywords = ["key="]
+
+[[rules]]
+id = "tail"
+regex = '(?-u) Z'
+keywords = [" z"]
+"#;
+    let scanner = Scanner::from_toml(toml).expect("build");
+    // bytes: K E Y = C3 A9 ' ' Z — `head` matches `KEY=\xC3`, `tail` matches ` Z`,
+    // and the `\xA9` continuation byte between them is the gap expansion closes.
+    let content = "KEY=é Z";
+
+    let output = scanner.scan_and_redact_content("unicode.env", content);
+
+    assert_eq!(output.findings.len(), 2);
+    assert_eq!(
+        output.redacted, "[REDACTED_SECRET]",
+        "touching expanded ranges must coalesce into one marker, not a duplicate: {}",
+        output.redacted
+    );
+}
+
+#[test]
 fn scan_and_redact_content_replaces_multiple_secrets() {
     let toml = r#"
 title = "multi-redact"

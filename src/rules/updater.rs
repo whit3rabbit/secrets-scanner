@@ -25,6 +25,12 @@ const VERSION_FILE: &str = "secrets-scanner.toml.sha256";
 /// Integrity file for the actual merged cached rules content.
 const CACHE_SHA_FILE: &str = "secrets-scanner.toml.cache.sha256";
 
+/// Sidecar recording the SHA-256 of the local merge input that produced the
+/// cached ruleset. The "already current" fast-path matches on the UPSTREAM SHA
+/// only; without this a local-rules edit (e.g. `assets/local.toml`) while
+/// upstream is unchanged would leave the cache stale yet report "already current".
+const LOCAL_SHA_FILE: &str = "secrets-scanner.toml.local.sha256";
+
 #[cfg(feature = "updater")]
 const UPDATE_CONNECT_TIMEOUT_SECS: u64 = 10;
 #[cfg(feature = "updater")]
@@ -84,6 +90,11 @@ pub fn cached_sha_path() -> Option<PathBuf> {
 /// Full path to the cached rules content SHA-256 sidecar file.
 pub fn cached_content_sha_path() -> Option<PathBuf> {
     data_dir().map(|d| d.join(CACHE_SHA_FILE))
+}
+
+/// Full path to the local-input SHA-256 sidecar file.
+pub fn cached_local_sha_path() -> Option<PathBuf> {
+    data_dir().map(|d| d.join(LOCAL_SHA_FILE))
 }
 
 // ── SHA-256 helper ────────────────────────────────────────────────────────────
@@ -146,6 +157,8 @@ pub enum UpdateResult {
 /// * `check_only` — if `true`, report whether an update is available but do
 ///   not write anything to disk.
 /// * `custom_url` — if `Some`, pull rules from this URL instead of the default.
+/// * `force` — if `true`, bypass the "already current" fast-path and always
+///   re-fetch, re-merge, and rewrite the cache.
 ///
 /// This function is synchronous and has no async runtime requirement.
 /// It requires the `updater` feature to be enabled in `Cargo.toml` so that
@@ -154,6 +167,7 @@ pub enum UpdateResult {
 pub fn update_rules(
     check_only: bool,
     custom_url: Option<&str>,
+    force: bool,
 ) -> Result<UpdateResult, Box<dyn std::error::Error>> {
     let url = custom_url.unwrap_or(UPSTREAM_URL);
     validate_update_url(url)?;
@@ -164,7 +178,7 @@ pub fn update_rules(
     let remote_sha = sha256_hex(&body);
     info!("[updater] Remote SHA-256: {remote_sha}");
 
-    // Read local SHA if cached
+    // Read cached upstream SHA if present
     let local_sha = cached_sha_path()
         .and_then(|p| std::fs::read_to_string(p).ok())
         .map(|s| s.trim().to_string())
@@ -174,7 +188,22 @@ pub fn update_rules(
         info!("[updater] Local  SHA-256: {local_sha}");
     }
 
-    if remote_sha == local_sha && cached_rules_content_is_verified() {
+    // Load the local merge input now so its SHA can participate in the staleness
+    // decision: the cache is stale not only when upstream changed but also when
+    // the local rules changed (which the upstream-SHA fast-path alone misses).
+    let local_toml = super::load_local_rules_for_merge();
+    let local_input_sha = sha256_hex(local_toml.as_bytes());
+    let cached_local_input_sha = cached_local_sha_path()
+        .and_then(|p| std::fs::read_to_string(p).ok())
+        .map(|s| s.trim().to_string())
+        .unwrap_or_default();
+
+    let is_current = !force
+        && remote_sha == local_sha
+        && local_input_sha == cached_local_input_sha
+        && cached_rules_content_is_verified();
+
+    if is_current {
         return Ok(if check_only {
             UpdateResult::CheckedCurrent { sha256: remote_sha }
         } else {
@@ -192,6 +221,7 @@ pub fn update_rules(
     let rules_path = cached_rules_path().ok_or("Cannot determine data directory")?;
     let sha_path = cached_sha_path().ok_or("Cannot determine data directory")?;
     let cache_sha_path = cached_content_sha_path().ok_or("Cannot determine data directory")?;
+    let local_sha_path = cached_local_sha_path().ok_or("Cannot determine data directory")?;
 
     // Merge the downloaded upstream rules with local custom rules
     let upstream_toml = String::from_utf8(body)?;
@@ -205,7 +235,7 @@ pub fn update_rules(
         .into());
     }
 
-    let local_toml = super::load_local_rules_for_merge();
+    // Reuse `local_toml` loaded above for the staleness check.
     let merged_toml = super::merge::merge_toml_rules(&upstream_toml, &local_toml)?;
 
     // Validate merged rules after merging
@@ -217,17 +247,23 @@ pub fn update_rules(
         std::fs::create_dir_all(parent)?;
     }
 
-    // Record the UPSTREAM body's SHA (not the merged SHA): the staleness check
-    // compares this against a freshly fetched upstream SHA, so it must be the
-    // same quantity or the "already current" path becomes unreachable.
+    // `cache_sha` is the MERGED content's SHA: it goes to the integrity sidecar
+    // (CACHE_SHA_FILE) and is what `verify_cached_rules_content` checks against the
+    // cached file on the next scan.
     let cache_sha = sha256_hex(merged_toml.as_bytes());
     write_cache_atomically(
         &rules_path,
         &merged_toml,
         &sha_path,
+        // Record the UPSTREAM body's SHA (not the merged SHA) in the staleness
+        // sidecar (VERSION_FILE): the staleness check compares this against a
+        // freshly fetched upstream SHA, so it must be the same quantity or the
+        // "already current" path becomes unreachable.
         &remote_sha,
         &cache_sha_path,
         &cache_sha,
+        &local_sha_path,
+        &local_input_sha,
     )?;
 
     info!("[updater] Combined rules saved to {}", rules_path.display());
@@ -305,6 +341,7 @@ fn cached_rules_content_is_verified() -> bool {
 }
 
 #[cfg(feature = "updater")]
+#[allow(clippy::too_many_arguments)]
 fn write_cache_atomically(
     rules_path: &std::path::Path,
     rules_content: &str,
@@ -312,23 +349,33 @@ fn write_cache_atomically(
     sha_content: &str,
     cache_sha_path: &std::path::Path,
     cache_sha_content: &str,
+    local_sha_path: &std::path::Path,
+    local_sha_content: &str,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let rules_tmp = temp_path_for(rules_path);
     let sha_tmp = temp_path_for(sha_path);
     let cache_sha_tmp = temp_path_for(cache_sha_path);
+    let local_sha_tmp = temp_path_for(local_sha_path);
 
     std::fs::write(&rules_tmp, rules_content)?;
     std::fs::write(&sha_tmp, sha_content)?;
     std::fs::write(&cache_sha_tmp, cache_sha_content)?;
+    std::fs::write(&local_sha_tmp, local_sha_content)?;
 
     std::fs::rename(&rules_tmp, rules_path)?;
     if let Err(e) = std::fs::rename(&sha_tmp, sha_path) {
         let _ = std::fs::remove_file(&sha_tmp);
         let _ = std::fs::remove_file(&cache_sha_tmp);
+        let _ = std::fs::remove_file(&local_sha_tmp);
         return Err(e.into());
     }
     if let Err(e) = std::fs::rename(&cache_sha_tmp, cache_sha_path) {
         let _ = std::fs::remove_file(&cache_sha_tmp);
+        let _ = std::fs::remove_file(&local_sha_tmp);
+        return Err(e.into());
+    }
+    if let Err(e) = std::fs::rename(&local_sha_tmp, local_sha_path) {
+        let _ = std::fs::remove_file(&local_sha_tmp);
         return Err(e.into());
     }
 
@@ -353,6 +400,7 @@ fn temp_path_for(path: &std::path::Path) -> PathBuf {
 pub fn update_rules(
     _check_only: bool,
     _custom_url: Option<&str>,
+    _force: bool,
 ) -> Result<UpdateResult, Box<dyn std::error::Error>> {
     Err("Built without the `updater` feature. \
          Rebuild with `cargo build --features updater` or run \

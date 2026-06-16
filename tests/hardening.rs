@@ -1143,6 +1143,17 @@ fn inline_allow_marker_suppresses_finding() {
             "marker {marker:?} should suppress the finding"
         );
     }
+
+    let mixed = scanner.scan_content(
+        "a.txt",
+        "SECRET123456 SECRET654321 // gitleaks:allow\nkey = SECRET111111",
+    );
+    assert_eq!(
+        mixed.len(),
+        1,
+        "same-line marker should suppress both first-line findings only"
+    );
+    assert_eq!(mixed[0].line, 2);
 }
 
 #[test]
@@ -1503,5 +1514,137 @@ fn cli_include_untracked_requires_git_path_mode() {
     assert!(
         stderr.contains("include-untracked") || stderr.contains("required"),
         "error should explain the missing git path mode: {stderr}"
+    );
+}
+
+// ─────────────────────────────────────────────
+// CLI: zero scan caps rejected (#4)
+// ─────────────────────────────────────────────
+
+/// Write the inline `SECRET_RULE` ruleset to a file and return its path.
+fn write_secret_rules(dir: &Path) -> std::path::PathBuf {
+    let rules = dir.join("rules.toml");
+    std::fs::write(&rules, SECRET_RULE).expect("write rules");
+    rules
+}
+
+/// A zero cap turns a scan into an empty (clean-looking) result, almost always a
+/// caller error in a security tool. The three caps must be rejected at parse time
+/// with a clap usage error (exit 2) rather than silently scanning nothing.
+fn assert_zero_cap_rejected(flag: &str) {
+    let dir = tempfile::tempdir().expect("dir");
+    let output = Command::new(BIN)
+        .args(["scan", dir.path().to_str().expect("path")])
+        .args([flag, "0"])
+        .output()
+        .expect("run");
+
+    assert_eq!(
+        output.status.code().expect("code"),
+        2,
+        "{flag} 0 must be a usage error, not a silent no-scan"
+    );
+    let stderr = String::from_utf8_lossy(&output.stderr).to_lowercase();
+    assert!(
+        stderr.contains("positive"),
+        "error should explain a positive value is required: {stderr}"
+    );
+}
+
+#[test]
+fn cli_rejects_zero_max_findings() {
+    assert_zero_cap_rejected("--max-findings");
+}
+
+#[test]
+fn cli_rejects_zero_max_files() {
+    assert_zero_cap_rejected("--max-files");
+}
+
+#[test]
+fn cli_rejects_zero_max_findings_per_file() {
+    assert_zero_cap_rejected("--max-findings-per-file");
+}
+
+// ─────────────────────────────────────────────
+// CLI: --no-allow-markers (#9)
+// ─────────────────────────────────────────────
+
+#[test]
+fn cli_no_allow_markers_overrides_inline_suppression() {
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_secret_rules(dir.path());
+    // The marker on the match's line suppresses the finding by default.
+    std::fs::write(
+        dir.path().join("app.txt"),
+        "key = SECRET123456 // secrets-scanner:allow\n",
+    )
+    .expect("write");
+
+    // Default: the inline allow marker suppresses → clean scan (exit 0).
+    let suppressed = Command::new(BIN)
+        .args(["scan", dir.path().to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--no-context"])
+        .output()
+        .expect("run");
+    assert_eq!(
+        suppressed.status.code().expect("code"),
+        0,
+        "inline allow marker should suppress by default"
+    );
+
+    // --no-allow-markers: the marker is ignored → finding present (exit 1).
+    let reported = Command::new(BIN)
+        .args(["scan", dir.path().to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--no-context", "--no-allow-markers"])
+        .output()
+        .expect("run");
+    assert_eq!(
+        reported.status.code().expect("code"),
+        1,
+        "--no-allow-markers must report the otherwise-suppressed finding"
+    );
+}
+
+// ─────────────────────────────────────────────
+// CLI: incomplete scans never write a baseline (#5)
+// ─────────────────────────────────────────────
+
+#[test]
+#[cfg(unix)]
+fn cli_refuses_baseline_from_incomplete_scan() {
+    use std::os::unix::fs::PermissionsExt;
+
+    let dir = tempfile::tempdir().expect("dir");
+    let rules = write_secret_rules(dir.path());
+    std::fs::write(dir.path().join("ok.txt"), "key = SECRET123456\n").expect("write");
+    let locked = dir.path().join("locked.txt");
+    std::fs::write(&locked, "key = SECRET999999\n").expect("write");
+    std::fs::set_permissions(&locked, std::fs::Permissions::from_mode(0o000)).expect("chmod");
+
+    // Skip under root (where 000 is still readable) to avoid a flaky assertion.
+    if std::fs::read(&locked).is_ok() {
+        return;
+    }
+
+    let baseline = dir.path().join("baseline.json");
+    let output = Command::new(BIN)
+        .args(["scan", dir.path().to_str().expect("path")])
+        .args(["--rules", rules.to_str().expect("rules")])
+        .args(["--generate-baseline", baseline.to_str().expect("baseline")])
+        .args(["--no-context"])
+        .output()
+        .expect("run");
+
+    assert_eq!(
+        output.status.code().expect("code"),
+        2,
+        "an unreadable file makes coverage incomplete; baseline generation must fail closed"
+    );
+    assert!(
+        !baseline.exists(),
+        "no baseline file may be written from an incomplete scan"
     );
 }

@@ -25,7 +25,9 @@ pub fn write_text(w: &mut dyn Write, findings: &[Finding], show_context: bool) -
         // byte offsets; SARIF emits UTF-16 columns (`col_utf16`) for GitHub.
         // `--git-history` findings carry the commit that introduced them.
         let commit = match &f.commit {
-            Some(sha) => format!(" commit={}", &sha[..sha.len().min(12)]),
+            // Char-safe truncation: a deserialized `Finding.commit` is unvalidated,
+            // so byte-slicing `&sha[..12]` could split a multibyte char and panic.
+            Some(sha) => format!(" commit={}", sha.chars().take(12).collect::<String>()),
             None => String::new(),
         };
         writeln!(

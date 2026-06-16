@@ -17,7 +17,14 @@ schema_version = 1
 [[source]]
 name       = "local"
 file       = "assets/local.toml"
-priority   = 100          # hand-curated; always wins
+priority   = 100          # hand-curated local developer override; always wins
+embed      = true
+# no update_url: maintained by hand
+
+[[source]]
+name       = "secrets-scanner"
+file       = "assets/secrets-scanner-rules.toml"
+priority   = 90           # secrets-scanner built-in custom rules
 embed      = true
 # no update_url: maintained by hand / scripts/convert_csv_to_toml.py
 

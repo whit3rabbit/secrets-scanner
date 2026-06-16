@@ -13,6 +13,7 @@ Core binding only. The same repo also ships an MCP stdio wrapper in
 | `npm test` | `vitest run` — needs the `.node` built first |
 | `npm run typecheck` | `tsc --noEmit` (checks `public.d.ts` + `test/types.ts`) |
 | `cargo test` | Rust unit tests in `src/lib.rs` (e.g. position-overflow conversion) |
+| `cargo clippy --all-targets -- -D warnings` | Lint this crate (NOT run by root `make ci`) |
 
 Tests load the binding via `index.js`, which `require`s the built `.node`; a
 missing artifact throws `NATIVE_BINDING_NOT_FOUND` (`run npm run build`). So

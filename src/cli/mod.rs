@@ -17,7 +17,7 @@ pub(crate) fn run() {
 
     match cli.command {
         Commands::Scan(args) => scan::handle(args),
-        Commands::UpdateRules { check, url } => rules::handle_update(check, url),
+        Commands::UpdateRules { check, url, force } => rules::handle_update(check, url, force),
         Commands::ValidateRules { files } => rules::handle_validate(&files),
         Commands::MergeRules {
             manifest,

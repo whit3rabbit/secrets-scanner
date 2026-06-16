@@ -1,6 +1,6 @@
 //! scanner.rs — High-performance parallel file scanner.
 //!
-//! Implements the scan pipeline described in TODO.md:
+//! Implements the multi-layer scan pipeline:
 //!
 //! ```text
 //! File bytes

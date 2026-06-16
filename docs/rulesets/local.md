@@ -6,25 +6,12 @@
 - Manifest source: `local`
 - Priority: `100`
 - Default build: `yes`
-- Raw rules: `14`
-- Active rules: `14`
+- Raw rules: `1`
+- Active rules: `1`
 - Unsupported rules: `0`
 
 Status is computed by loading this source with `secrets-scanner list-rules --rules`. Active means the current scanner can compile and load the rule. Unsupported rules remain listed because they are present in the raw provider file.
 
 | Rule | Status | Example | Regex |
 |---|---|---|---|
-| `deepseek-api-key` | Active | `sk-DeepSeekw4aCQ9gfZ6y1T9eWl56NgISIwGnzQ6it` | <code>(?i)\b(?:DEEPSEEK_API_KEY&#124;api\.deepseek\.com&#124;deepseek)\b[^\r\n]{0,80}?\b(sk-[A-Za-z0-9]{20,128})\b&#124;\b(sk-DeepSeek[A-Za-z0-9]{16,96})\b</code> |
-| `mistral-ai-api-key` | Active | `mistral_SnMJq8Mt3oa94hHBLzA-qfpIYceS5LKo` | `\b(mistral_[A-Za-z0-9_-]{20,160})\b` |
-| `mongodb-atlas-db-uri-with-credentials` | Active | `mongodb+srv://4G7FgtJsThJv07In9ZMJLsCfMZyuKpsl:m0lcNQqEefRWi4j7c1f5S71IRz1THrHZ@p2n5RL08ALrCFQPS6YwfuNhFLOv2mpbU` | `(?i)\bmongodb(?:\+srv)?://[^\s:/?#]+:[^\s@/]+@[^\s]+` |
-| `neon-connection-uri` | Active | `postgresql://rhToxYkvB0dgYj2Soc0KO67IMRebhOmM:1Khzfx1hcMbm9lThEnUZd7RbIBNg1qeo@ePtwBldGDcMgSzmqw5UE156KkSRn9XdY.neon.techRk2kvHqhM6CQlaERA5K3G6tPwy1QqjJS` | `(?i)\bpostgres(?:ql)?://[^\s:/?#]+:[^\s@/]+@[^\s]*\.neon\.tech[^\s]*` |
-| `openrouter-api-key` | Active | `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` | `\b(sk-or-v1-[a-f0-9]{64})\b` |
-| `snowflake-postgres-connection-string` | Active | `snowflake://27zOfbr6CZYh3qiPH0PPwh3jr2bccnRq:Ju8x8K62c2V9SMPFTP5DOBx3IlnyLsai@jrvvYxTfvXNccrkjLsxzJishEUp7dtl2snowflakeHUetz1vtAggJ6EEv1ZZvhEhSFBctvVR5` | <code>(?i)\b(?:postgres(?:ql)?&#124;snowflake)://[^\s:/?#]+:[^\s@/]+@[^\s]*snowflake[^\s]*</code> |
-| `snowflake-postgres-host-snowflake-postgres-password` | Active | `TVwLIKZcHxBMyl5.b2KvchV3YtOID5ZP.snowflakecomputing.com:_ygaFbSNZ6wu-TN.Sz2/_p__Z-cBropE` | `(?i)\b([A-Za-z0-9.-]+\.snowflakecomputing\.com:[A-Za-z0-9._~:/+=-]{16,160})\b` |
-| `xai-api-key` | Active | `api.x.aiTwl8IKFIcQFmB5qUT6v-w-ELJ2al19xd` | <code>(?i)\b(?:XAI_API_KEY&#124;api\.x\.ai&#124;xAI)\b[^\r\n]{0,80}?\b([A-Za-z0-9._-]{20,160})\b&#124;\b(xai[-_][A-Za-z0-9_-]{20,160})\b</code> |
-| `brave-search-api-key` | Active | `BSACAXmgqI-hm0xxHUQekqHE91S_KTt0E7x` | `\b(BSA[A-Za-z0-9_-]{24,40})\b` |
-| `clipdrop-api-key` | Active | `clipdrop6GM8TCEQpNsYx_OH7rPlQxlPYEy4vY6t` | `(?i)\b(?:clipdrop)\b[^\r\n]{0,80}?\b([A-Za-z0-9_-]{24,128})\b` |
-| `firecrawl-api-key` | Active | `fc-8cbb3Ca4966ABc84414Dde161cd1cd1e` | `\b(fc-[a-fA-F0-9]{32})\b` |
-| `openai-api-key` | Active | `sk-svcacct-31D-pgKtJPtDssWBduJSaAaPAlvDdSX6O9shQDauT3BlbkFJq8llpXKNnUwSQcofeXlv1FQCyJJQ1m1S2mtKf4vH` | <code>\b(sk-(?:proj&#124;svcacct&#124;admin)-[A-Za-z0-9_-]{40,120}T3BlbkFJ[A-Za-z0-9_-]{40,120})\b&#124;\b(sk-[A-Za-z0-9]{20}T3BlbkFJ[A-Za-z0-9]{20})\b</code> |
-| `perplexity-api-key` | Active | `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` | `\b(pplx-[A-Za-z0-9]{48})\b` |
-| `vapi-api-key` | Active | `vapi_private_key0ee06939-4df2-f7c8-0381-08cce38b9621` | <code>(?i)\b(?:vapi&#124;vapi_private_key&#124;vapi_web_token)\b[^\r\n]{0,80}?\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b&#124;\b(vapi_private_key_[A-Za-z0-9]{20,128})\b</code> |
+| `my-internal-api-key` | Active | `MYCO_2Yw4aCQ9gfZ6y1T9eWl56NgISIwGnzQ6` | `MYCO_[A-Za-z0-9]{32,64}` |

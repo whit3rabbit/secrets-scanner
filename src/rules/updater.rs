@@ -15,6 +15,18 @@ use std::path::PathBuf;
 #[cfg(feature = "updater")]
 use log::info;
 
+#[path = "updater/error.rs"]
+mod error;
+pub use error::UpdateError;
+
+#[cfg(feature = "updater")]
+#[path = "updater/cache.rs"]
+mod cache;
+#[cfg(all(test, feature = "updater"))]
+use cache::temp_path_for;
+#[cfg(feature = "updater")]
+use cache::write_cache_atomically;
+
 /// URL of the upstream gitleaks ruleset.
 pub const UPSTREAM_URL: &str =
     "https://raw.githubusercontent.com/gitleaks/gitleaks/refs/heads/master/config/gitleaks.toml";
@@ -168,7 +180,7 @@ pub fn update_rules(
     check_only: bool,
     custom_url: Option<&str>,
     force: bool,
-) -> Result<UpdateResult, Box<dyn std::error::Error>> {
+) -> Result<UpdateResult, UpdateError> {
     let url = custom_url.unwrap_or(UPSTREAM_URL);
     validate_update_url(url)?;
     info!("[updater] Fetching rules from {url}");
@@ -191,7 +203,7 @@ pub fn update_rules(
     // Load the local merge input now so its SHA can participate in the staleness
     // decision: the cache is stale not only when upstream changed but also when
     // the local rules changed (which the upstream-SHA fast-path alone misses).
-    let local_toml = super::load_local_rules_for_merge();
+    let local_toml = super::load_local_rules_for_merge()?.into_content();
     let local_input_sha = sha256_hex(local_toml.as_bytes());
     let cached_local_input_sha = cached_local_sha_path()
         .and_then(|p| std::fs::read_to_string(p).ok())
@@ -218,21 +230,17 @@ pub fn update_rules(
         });
     }
 
-    let rules_path = cached_rules_path().ok_or("Cannot determine data directory")?;
-    let sha_path = cached_sha_path().ok_or("Cannot determine data directory")?;
-    let cache_sha_path = cached_content_sha_path().ok_or("Cannot determine data directory")?;
-    let local_sha_path = cached_local_sha_path().ok_or("Cannot determine data directory")?;
+    let rules_path = cached_rules_path().ok_or(UpdateError::DataDirUnavailable)?;
+    let sha_path = cached_sha_path().ok_or(UpdateError::DataDirUnavailable)?;
+    let cache_sha_path = cached_content_sha_path().ok_or(UpdateError::DataDirUnavailable)?;
+    let local_sha_path = cached_local_sha_path().ok_or(UpdateError::DataDirUnavailable)?;
 
     // Merge the downloaded upstream rules with local custom rules
     let upstream_toml = String::from_utf8(body)?;
 
     // Validate upstream rules before merging
     if let Err(errors) = super::validation::validate_rules_toml(&upstream_toml) {
-        return Err(format!(
-            "Downloaded upstream rules are invalid:\n- {}",
-            errors.join("\n- ")
-        )
-        .into());
+        return Err(UpdateError::InvalidUpstreamRules(errors));
     }
 
     // Reuse `local_toml` loaded above for the staleness check.
@@ -240,11 +248,11 @@ pub fn update_rules(
 
     // Validate merged rules after merging
     if let Err(errors) = super::validation::validate_rules_toml(&merged_toml) {
-        return Err(format!("Merged ruleset is invalid:\n- {}", errors.join("\n- ")).into());
+        return Err(UpdateError::InvalidMergedRules(errors));
     }
 
     if let Some(parent) = rules_path.parent() {
-        std::fs::create_dir_all(parent)?;
+        std::fs::create_dir_all(parent).map_err(UpdateError::CacheWrite)?;
     }
 
     // `cache_sha` is the MERGED content's SHA: it goes to the integrity sidecar
@@ -271,7 +279,7 @@ pub fn update_rules(
 }
 
 #[cfg(feature = "updater")]
-fn fetch_rules_body(url: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+fn fetch_rules_body(url: &str) -> Result<Vec<u8>, UpdateError> {
     use std::time::Duration;
 
     let agent = ureq::AgentBuilder::new()
@@ -281,23 +289,23 @@ fn fetch_rules_body(url: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
         .timeout_write(Duration::from_secs(UPDATE_WRITE_TIMEOUT_SECS))
         .timeout(Duration::from_secs(UPDATE_TOTAL_TIMEOUT_SECS))
         .build();
-    let response = agent.get(url).call()?;
+    let response = agent.get(url).call().map_err(|source| UpdateError::Fetch {
+        url: url.to_string(),
+        source: Box::new(source),
+    })?;
     reject_large_content_length(response.header("Content-Length"), MAX_RULES_DOWNLOAD_BYTES)?;
     read_capped_body(response.into_reader(), MAX_RULES_DOWNLOAD_BYTES)
 }
 
 #[cfg(feature = "updater")]
-fn reject_large_content_length(
-    content_length: Option<&str>,
-    max: u64,
-) -> Result<(), Box<dyn std::error::Error>> {
+fn reject_large_content_length(content_length: Option<&str>, max: u64) -> Result<(), UpdateError> {
     if let Some(value) = content_length {
         if let Ok(length) = value.trim().parse::<u64>() {
             if length > max {
-                return Err(format!(
-                    "rules download is too large: Content-Length {length} exceeds {max} bytes"
-                )
-                .into());
+                return Err(UpdateError::DownloadTooLarge {
+                    actual: length,
+                    max,
+                });
             }
         }
     }
@@ -305,23 +313,25 @@ fn reject_large_content_length(
 }
 
 #[cfg(feature = "updater")]
-fn read_capped_body<R: std::io::Read>(
-    reader: R,
-    max: u64,
-) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+fn read_capped_body<R: std::io::Read>(reader: R, max: u64) -> Result<Vec<u8>, UpdateError> {
     use std::io::Read;
 
     let mut body = Vec::new();
     let mut limited = reader.take(max.saturating_add(1));
-    limited.read_to_end(&mut body)?;
+    limited
+        .read_to_end(&mut body)
+        .map_err(UpdateError::ReadBody)?;
     if body.len() as u64 > max {
-        return Err(format!("rules download is too large: body exceeds {max} bytes").into());
+        return Err(UpdateError::DownloadTooLarge {
+            actual: body.len() as u64,
+            max,
+        });
     }
     Ok(body)
 }
 
 #[cfg(feature = "updater")]
-fn validate_update_url(url: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn validate_update_url(url: &str) -> Result<(), UpdateError> {
     let is_https = url
         .get(..8)
         .map(|prefix| prefix.eq_ignore_ascii_case("https://"))
@@ -329,7 +339,7 @@ fn validate_update_url(url: &str) -> Result<(), Box<dyn std::error::Error>> {
     if is_https {
         Ok(())
     } else {
-        Err("rule update URL must use https://".into())
+        Err(UpdateError::NonHttpsUrl)
     }
 }
 
@@ -340,59 +350,6 @@ fn cached_rules_content_is_verified() -> bool {
         .is_some_and(|content| verify_cached_rules_content(&content).is_ok())
 }
 
-#[cfg(feature = "updater")]
-#[allow(clippy::too_many_arguments)]
-fn write_cache_atomically(
-    rules_path: &std::path::Path,
-    rules_content: &str,
-    sha_path: &std::path::Path,
-    sha_content: &str,
-    cache_sha_path: &std::path::Path,
-    cache_sha_content: &str,
-    local_sha_path: &std::path::Path,
-    local_sha_content: &str,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let rules_tmp = temp_path_for(rules_path);
-    let sha_tmp = temp_path_for(sha_path);
-    let cache_sha_tmp = temp_path_for(cache_sha_path);
-    let local_sha_tmp = temp_path_for(local_sha_path);
-
-    std::fs::write(&rules_tmp, rules_content)?;
-    std::fs::write(&sha_tmp, sha_content)?;
-    std::fs::write(&cache_sha_tmp, cache_sha_content)?;
-    std::fs::write(&local_sha_tmp, local_sha_content)?;
-
-    std::fs::rename(&rules_tmp, rules_path)?;
-    if let Err(e) = std::fs::rename(&sha_tmp, sha_path) {
-        let _ = std::fs::remove_file(&sha_tmp);
-        let _ = std::fs::remove_file(&cache_sha_tmp);
-        let _ = std::fs::remove_file(&local_sha_tmp);
-        return Err(e.into());
-    }
-    if let Err(e) = std::fs::rename(&cache_sha_tmp, cache_sha_path) {
-        let _ = std::fs::remove_file(&cache_sha_tmp);
-        let _ = std::fs::remove_file(&local_sha_tmp);
-        return Err(e.into());
-    }
-    if let Err(e) = std::fs::rename(&local_sha_tmp, local_sha_path) {
-        let _ = std::fs::remove_file(&local_sha_tmp);
-        return Err(e.into());
-    }
-
-    Ok(())
-}
-
-#[cfg(feature = "updater")]
-fn temp_path_for(path: &std::path::Path) -> PathBuf {
-    let mut tmp = path.to_path_buf();
-    let file_name = path
-        .file_name()
-        .and_then(|name| name.to_str())
-        .unwrap_or("secrets-scanner.tmp");
-    tmp.set_file_name(format!("{file_name}.tmp.{}", std::process::id()));
-    tmp
-}
-
 /// Stub used when the `updater` feature is disabled.  Returns an error
 /// message directing the user to rebuild with the feature enabled or use
 /// the shell script.
@@ -401,11 +358,8 @@ pub fn update_rules(
     _check_only: bool,
     _custom_url: Option<&str>,
     _force: bool,
-) -> Result<UpdateResult, Box<dyn std::error::Error>> {
-    Err("Built without the `updater` feature. \
-         Rebuild with `cargo build --features updater` or run \
-         `./scripts/update_rules.sh` manually."
-        .into())
+) -> Result<UpdateResult, UpdateError> {
+    Err(UpdateError::Disabled)
 }
 
 #[cfg(all(test, feature = "updater"))]

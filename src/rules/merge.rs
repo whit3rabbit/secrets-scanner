@@ -14,6 +14,10 @@ use std::sync::OnceLock;
 
 use log::warn;
 
+#[path = "merge/error.rs"]
+mod error;
+pub use error::MergeError;
+
 /// One source's raw TOML plus the metadata the merge needs.
 pub struct MergeSource {
     /// Source name used in the merge report (e.g. "local", "gitleaks", "spdb").
@@ -134,17 +138,16 @@ fn detection_equivalent(a: &toml::Value, b: &toml::Value) -> bool {
 ///
 /// Returns an error if any source is not valid TOML or the result cannot be
 /// re-serialized.
-pub fn merge_sources(
-    sources: Vec<MergeSource>,
-) -> Result<(String, MergeReport), Box<dyn std::error::Error>> {
+pub fn merge_sources(sources: Vec<MergeSource>) -> Result<(String, MergeReport), MergeError> {
     // Parse every source up front; keep (name, priority, table).
     let mut parsed: Vec<(String, i64, toml::Table)> = Vec::with_capacity(sources.len());
     for s in sources {
-        let val: toml::Value = toml::from_str(&s.toml)?;
-        let table = val
-            .as_table()
-            .cloned()
-            .ok_or_else(|| format!("source '{}' is not a TOML table", s.name))?;
+        let val: toml::Value =
+            toml::from_str(&s.toml).map_err(|source_error| MergeError::SourceToml {
+                source: s.name.clone(),
+                source_error,
+            })?;
+        let table = table_from_value(&s.name, val)?;
         parsed.push((s.name, s.priority, table));
     }
 
@@ -293,7 +296,19 @@ pub fn merge_sources(
         result.insert("allowlists".to_string(), als);
     }
 
-    Ok((toml::to_string(&toml::Value::Table(result))?, report))
+    Ok((
+        toml::to_string(&toml::Value::Table(result)).map_err(MergeError::Serialize)?,
+        report,
+    ))
+}
+
+fn table_from_value(source: &str, value: toml::Value) -> Result<toml::Table, MergeError> {
+    value
+        .as_table()
+        .cloned()
+        .ok_or_else(|| MergeError::SourceNotTable {
+            source: source.to_string(),
+        })
 }
 
 /// Merge two TOML rule strings. Rules in `override_toml` take precedence.
@@ -304,10 +319,7 @@ pub fn merge_sources(
 /// # Errors
 ///
 /// Returns an error if either input is not valid TOML.
-pub fn merge_toml_rules(
-    base_toml: &str,
-    override_toml: &str,
-) -> Result<String, Box<dyn std::error::Error>> {
+pub fn merge_toml_rules(base_toml: &str, override_toml: &str) -> Result<String, MergeError> {
     let (merged, _report) = merge_sources(vec![
         MergeSource {
             name: "override".to_string(),

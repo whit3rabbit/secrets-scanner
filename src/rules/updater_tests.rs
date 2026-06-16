@@ -1,4 +1,6 @@
 use super::*;
+use std::ffi::OsString;
+use std::sync::{Mutex, OnceLock};
 
 #[test]
 fn atomic_cache_write_writes_rules_and_sha_content() {
@@ -49,24 +51,86 @@ fn update_url_validation_accepts_https() {
 
 #[test]
 fn update_url_validation_rejects_http() {
-    assert!(validate_update_url("http://example.com/rules.toml").is_err());
+    assert!(matches!(
+        validate_update_url("http://example.com/rules.toml"),
+        Err(UpdateError::NonHttpsUrl)
+    ));
 }
 
 #[test]
 fn content_length_over_cap_is_rejected() {
     let max = 5;
     let err = reject_large_content_length(Some("6"), max).expect_err("over cap");
-    assert!(err.to_string().contains("Content-Length 6 exceeds 5"));
+    assert!(matches!(
+        err,
+        UpdateError::DownloadTooLarge { actual: 6, max: 5 }
+    ));
 }
 
 #[test]
 fn capped_body_reader_rejects_stream_over_cap() {
     let err = read_capped_body(std::io::Cursor::new(vec![b'a'; 6]), 5).expect_err("over cap");
-    assert!(err.to_string().contains("body exceeds 5 bytes"));
+    assert!(matches!(
+        err,
+        UpdateError::DownloadTooLarge { actual: 6, max: 5 }
+    ));
 }
 
 #[test]
 fn capped_body_reader_accepts_stream_at_cap() {
     let body = read_capped_body(std::io::Cursor::new(vec![b'a'; 5]), 5).expect("at cap");
     assert_eq!(body, b"aaaaa");
+}
+
+fn cwd_lock() -> &'static Mutex<()> {
+    static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
+    LOCK.get_or_init(|| Mutex::new(()))
+}
+
+struct CwdGuard {
+    original: OsString,
+}
+
+impl CwdGuard {
+    fn enter(path: &std::path::Path) -> Self {
+        let original = std::env::current_dir()
+            .expect("current dir")
+            .into_os_string();
+        std::env::set_current_dir(path).expect("set current dir");
+        Self { original }
+    }
+}
+
+impl Drop for CwdGuard {
+    fn drop(&mut self) {
+        std::env::set_current_dir(&self.original).expect("restore current dir");
+    }
+}
+
+#[test]
+fn existing_unreadable_local_rules_fail_instead_of_falling_back() {
+    let _lock = cwd_lock().lock().expect("cwd lock");
+    let dir = tempfile::tempdir().expect("tempdir");
+    std::fs::create_dir(dir.path().join("local.toml")).expect("local.toml dir");
+    let _guard = CwdGuard::enter(dir.path());
+
+    let err = crate::rules::load_local_rules_for_merge().expect_err("strict local rules");
+
+    assert!(matches!(
+        err,
+        crate::rules::LocalRulesError::Unreadable { .. }
+    ));
+}
+
+#[test]
+fn existing_invalid_local_rules_fail_instead_of_falling_back() {
+    let _lock = cwd_lock().lock().expect("cwd lock");
+    let dir = tempfile::tempdir().expect("tempdir");
+    std::fs::write(dir.path().join("local.toml"), "not valid toml = [")
+        .expect("invalid local rules");
+    let _guard = CwdGuard::enter(dir.path());
+
+    let err = crate::rules::load_local_rules_for_merge().expect_err("strict local rules");
+
+    assert!(matches!(err, crate::rules::LocalRulesError::Invalid { .. }));
 }

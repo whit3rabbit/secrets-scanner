@@ -27,6 +27,7 @@
 use crate::error::{ProxyError, ScannerError};
 use crate::rules::engine::RuleEngine;
 
+mod coverage;
 mod matching;
 mod output;
 mod redaction;

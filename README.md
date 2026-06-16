@@ -126,6 +126,161 @@ fn handle_untrusted_input(payload: &[u8]) -> Result<Vec<u8>, Box<dyn std::error:
 }
 ```
 
+#### Loading Custom Rules
+Load a scanner from your own gitleaks-style TOML instead of the bundled rules.
+`from_file` / `from_toml` use a strict gate: they fail loudly on an empty/duplicate
+rule id or an uncompilable regex (`ScannerError::InvalidRules`), rather than silently
+scanning with a reduced rule set.
+
+```rust
+use secrets_scanner::{Scanner, ScannerError};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // From a path on disk...
+    let scanner = Scanner::from_file("my-rules.toml")?;
+
+    // ...or from an in-memory TOML string.
+    let toml = r#"
+        title = "custom rules"
+
+        [[rules]]
+        id = "acme-api-key"
+        description = "ACME service API key"
+        regex = 'ACME_[A-Za-z0-9]{32}'
+        keywords = ["acme_"]
+        entropy = 3.5
+    "#;
+    match Scanner::from_toml(toml) {
+        Ok(s) => { let _ = s.scan_path("./src"); }
+        // InvalidRules carries one message per rejected rule.
+        Err(ScannerError::InvalidRules(issues)) => {
+            for issue in issues {
+                eprintln!("rejected rule: {issue}");
+            }
+        }
+        Err(e) => return Err(e.into()),
+    }
+
+    let _ = scanner;
+    Ok(())
+}
+```
+
+#### Custom Scan Configuration
+Tune scan behavior with [`ScanConfig`] and attach it via `with_config`. Every field
+has a safe default; override only what you need.
+
+```rust
+use secrets_scanner::{BinaryPolicy, ScanConfig, Scanner};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let config = ScanConfig {
+        // Only *raise* a rule's entropy threshold (never weakens a stricter rule).
+        min_entropy_override: Some(4.0),
+        // Skip files larger than 1 MiB.
+        max_file_size: 1024 * 1024,
+        // Never skip on binary detection (still honors size/symlink guards).
+        binary_policy: BinaryPolicy::Scan,
+        // Bound the result set for hostile/huge inputs.
+        max_findings: Some(500),
+        max_findings_per_file: Some(50),
+        ..ScanConfig::default()
+    };
+
+    let scanner = Scanner::new()?.with_config(config);
+    let findings = scanner.scan_path("./");
+    println!("{} finding(s)", findings.len());
+    Ok(())
+}
+```
+
+#### Git-Aware Scanning
+The same `git ls-files` / `git log -p` modes the CLI exposes are available from the
+library through `ScanConfig`. Explicit git modes fail closed on git error unless you
+set `git_fallback_walk`.
+
+```rust
+use secrets_scanner::{ScanConfig, Scanner};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Scan only git-tracked working-tree content.
+    let tracked = Scanner::new()?.with_config(ScanConfig {
+        git_tracked: true,
+        ..ScanConfig::default()
+    });
+    for f in tracked.scan_path(".") {
+        println!("{}:{} [{}]", f.file, f.line, f.rule_id);
+    }
+
+    // Scan full history; each finding is attributed to the commit that ADDED it
+    // (catches secrets committed then later removed).
+    let history = Scanner::new()?.with_config(ScanConfig {
+        git_history: true,
+        // Optional wall-clock budget; 0 = unlimited.
+        history_timeout_secs: 30,
+        ..ScanConfig::default()
+    });
+    for f in history.scan_path(".") {
+        if let Some(commit) = &f.commit {
+            println!("{commit} {}:{} [{}]", f.file, f.line, f.rule_id);
+        }
+    }
+    Ok(())
+}
+```
+
+#### CI Summary with Scan Stats
+`scan_path_with_stats` returns file-level [`ScanStats`] alongside findings, so a CI
+job can print a safe summary (counts only, no secret material) and distinguish a
+scanned-and-clean file from one that was skipped or unreadable.
+
+```rust
+use secrets_scanner::Scanner;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let scanner = Scanner::new()?;
+    let (findings, stats) = scanner.scan_path_with_stats("./src");
+
+    eprintln!(
+        "scanned {} file(s): {} finding(s), {} binary, {} oversized, {} unreadable",
+        stats.files_scanned,
+        findings.len(),
+        stats.binary_skipped,
+        stats.oversized_skipped,
+        stats.errored,
+    );
+
+    // `errored > 0` means coverage was incomplete: treat it as a hard failure
+    // rather than a clean result.
+    if stats.errored > 0 {
+        std::process::exit(2);
+    }
+    Ok(())
+}
+```
+
+#### Inspecting Findings
+Each [`Finding`] carries full location and identity metadata. The `fingerprint`
+(line-tolerant SHA-256 over rule id + file + raw secret) is the stable key used for
+baseline suppression and SARIF `partialFingerprints`.
+
+```rust
+use secrets_scanner::Scanner;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let scanner = Scanner::new()?;
+    for f in scanner.scan_content("config.env", "AWS_SECRET=AKIAIOSFODNN7EXAMPLE") {
+        println!("rule        : {} ({})", f.rule_id, f.rule_description);
+        println!("location    : {}:{}:{}", f.file, f.line, f.col);
+        println!("entropy     : {:.2}", f.entropy);
+        println!("fingerprint : {}", f.fingerprint);
+        // `matched` is redacted by default; build with `redact: false` for raw text.
+        println!("matched     : {}", f.matched);
+    }
+    Ok(())
+}
+```
+
 ### 4. Use from Node.js
 
 The Node.js binding package is `@whit3rabbit/rsecrets-scanner`, not
@@ -317,13 +472,14 @@ Finding { file, line, rule_id, matched (redacted), entropy }
 
 Rules are declared in a manifest (`assets/sources.toml`) and merged at build time by
 priority (higher wins id/regex collisions). The default lean build embeds **local +
-gitleaks + kingfisher**; `secrets-patterns-db` is opt-in via `--features full-ruleset`.
+secrets-scanner + gitleaks + kingfisher**; `secrets-patterns-db` is opt-in via `--features full-ruleset`.
 Counts are raw `[[rules]]` entries; many are disabled at load because they use
 look-around, which Rust's `regex` engine rejects (see "active" below).
 
 | Ruleset | Upstream Source | License | Raw rules | Size | Priority | Default Build |
 |---|---|---|--:|--:|--:|:--:|
-| [`local`](docs/rulesets/local.md) | hand-curated ([`assets/local.toml`](assets/local.toml)) | MIT | 240 | 76 KB | 100 | ✅ embedded |
+| [`local`](docs/rulesets/local.md) | custom developer overrides ([`assets/local.toml`](assets/local.toml)) | MIT | 1 | <1 KB | 100 | ✅ embedded |
+| [`secrets-scanner`](docs/rulesets/secrets-scanner.md) | hand-curated rules ([`assets/secrets-scanner-rules.toml`](assets/secrets-scanner-rules.toml)) | MIT | 14 | 7 KB | 90 | ✅ embedded |
 | [`gitleaks`](docs/rulesets/gitleaks.md) | [gitleaks](https://github.com/gitleaks/gitleaks) ([`assets/gitleaks.toml`](assets/gitleaks.toml)) | MIT | 222 | 96 KB | 10 | ✅ embedded |
 | [`kingfisher`](docs/rulesets/kingfisher.md) | [MongoDB Kingfisher](https://github.com/mongodb/kingfisher) ([`assets/kingfisher-rules.toml`](assets/kingfisher-rules.toml)) | Apache-2.0 | 755¹ | 240 KB | 7 | ✅ embedded |
 | [`secrets-patterns-db`](docs/rulesets/spdb.md) | [mazen160/secrets-patterns-db](https://github.com/mazen160/secrets-patterns-db) ([`assets/secrets-patterns-db.toml`](assets/secrets-patterns-db.toml)) | CC-BY-4.0 / AGPL-3.0² | 1599 | 360 KB | 5 | ⬚ `--features full-ruleset` |
@@ -338,15 +494,15 @@ behavioral dedup, and patterns the Rust engine can't compile are dropped.
 > **License Implications of Combining Rulesets**
 >
 > Combining rulesets with different license terms can change the overall licensing agreement of the resulting output, cache, or embedded binary depending on their types:
-> - **Permissive Mix (Default):** The default lean build combines `local` (MIT), `gitleaks` (MIT), and `kingfisher` (Apache-2.0). These permissive licenses are compatible and allow standard distribution and usage.
+> - **Permissive Mix (Default):** The default lean build combines `local` (MIT), `secrets-scanner` (MIT), `gitleaks` (MIT), and `kingfisher` (Apache-2.0). These permissive licenses are compatible and allow standard distribution and usage.
 > - **Copyleft Impact (Full Ruleset):** When compiling with `--features full-ruleset` (which embeds `secrets-patterns-db`), the combined work includes rules covered by the AGPL-3.0. If you distribute this compiled binary or run it as a network service (e.g., in a cloud-based API or proxy pipeline), you must comply with the source-sharing obligations of the AGPL-3.0.
 
 **Merged totals** (after id-collision + detection-equivalent dedup, then look-around disabling):
 
 | Build | Sources | Merged | Active (compiled) | Embedded Ruleset / Output File |
 |---|---|--:|--:|---|
-| lean default | local + gitleaks + kingfisher | 1136 | 987 | [`assets/secrets-scanner.toml`](assets/secrets-scanner.toml) (committed & embedded by default) |
-| `--features full-ruleset` | + secrets-patterns-db | 2735 | 2586 | `$OUT_DIR/secrets-scanner.toml` (embedded at compile time) |
+| lean default | local + secrets-scanner + gitleaks + kingfisher | 988 | 988 | [`assets/secrets-scanner.toml`](assets/secrets-scanner.toml) (committed & embedded by default) |
+| `--features full-ruleset` | + secrets-patterns-db | 2587 | 2587 | `$OUT_DIR/secrets-scanner.toml` (embedded at compile time) |
 
 Regenerate the merged ruleset with `make merge-rules`; inspect cross-source duplicates with
 `make find-dups`.
@@ -358,6 +514,7 @@ metadata, merge priority, and default-build inclusion. The committed
 
 The per-ruleset documentation pages in [`docs/rulesets/`](docs/rulesets/) are generated with `make ruleset-docs`, referencing the actual rules defined in the `*.toml` files under `assets/`:
 - **local**: Documented in [`local.md`](docs/rulesets/local.md) ── Actual rules in [`assets/local.toml`](assets/local.toml)
+- **secrets-scanner**: Documented in [`secrets-scanner.md`](docs/rulesets/secrets-scanner.md) ── Actual rules in [`assets/secrets-scanner-rules.toml`](assets/secrets-scanner-rules.toml)
 - **gitleaks**: Documented in [`gitleaks.md`](docs/rulesets/gitleaks.md) ── Actual rules in [`assets/gitleaks.toml`](assets/gitleaks.toml)
 - **kingfisher**: Documented in [`kingfisher.md`](docs/rulesets/kingfisher.md) ── Actual rules in [`assets/kingfisher-rules.toml`](assets/kingfisher-rules.toml)
 - **secrets-patterns-db**: Documented in [`spdb.md`](docs/rulesets/spdb.md) ── Actual rules in [`assets/secrets-patterns-db.toml`](assets/secrets-patterns-db.toml)
@@ -397,8 +554,8 @@ Binary size is affected only by what is embedded at build time:
 
 | Build | Embedded sources | Binary size |
 |---|---|--:|
-| `cargo build --release` | local + gitleaks + kingfisher | 3.28 MiB |
-| `cargo build --release --features full-ruleset` | local + gitleaks + kingfisher + secrets-patterns-db | 3.56 MiB |
+| `cargo build --release` | local + secrets-scanner + gitleaks + kingfisher | 3.28 MiB |
+| `cargo build --release --features full-ruleset` | local + secrets-scanner + gitleaks + kingfisher + secrets-patterns-db | 3.56 MiB |
 
 Selecting a smaller ruleset with `--rules <PATH>` changes load time, memory use, and
 scan behavior, but does not shrink the compiled binary.
@@ -406,11 +563,11 @@ scan behavior, but does not shrink the compiled binary.
 | Runtime ruleset | Merged TOML | Merged rules | Active rules | Keywords | wall | scan | Throughput | Peak RSS | CPU |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
 | gitleaks | 95.4 KiB | 222 | 222 | 244 | 1.69 s | 86.6 ms | 5.9 GiB/s | 660 MiB | 143% |
-| gitleaks + local | 134.0 KiB | 382 | 233 | 262 | 1.58 s | 72.3 ms | 6.9 GiB/s | 662 MiB | 147% |
-| gitleaks + local + kingfisher (default) | 354.5 KiB | 1136 | 987 | 750 | 1.84 s | 75.5 ms | 6.6 GiB/s | 761 MiB | 140% |
-| full (+ secrets-patterns-db) | 649.9 KiB | 2735 | 2586 | 1500 | 2.08 s | 221.2 ms | 2.3 GiB/s | 856 MiB | 215% |
+| gitleaks + local + secrets-scanner | 104.1 KiB | 237 | 237 | 258 | 1.58 s | 72.3 ms | 6.9 GiB/s | 662 MiB | 147% |
+| gitleaks + local + secrets-scanner + kingfisher (default) | 311.2 KiB | 988 | 988 | 751 | 1.84 s | 75.5 ms | 6.6 GiB/s | 761 MiB | 140% |
+| full (+ secrets-patterns-db) | 686.0 KiB | 2587 | 2587 | 1501 | 2.08 s | 221.2 ms | 2.3 GiB/s | 856 MiB | 215% |
 
-Interpretation: `local` adds coverage with almost no measured memory penalty because
+Interpretation: `local` and `secrets-scanner` add coverage with almost no measured memory penalty because
 many overlapping rules are deduplicated or disabled by Rust `regex` compatibility.
 `kingfisher` is the default broad-coverage step and adds about 100 MiB RSS in this
 benchmark. `secrets-patterns-db` roughly triples active rules versus the default,

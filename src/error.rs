@@ -25,6 +25,43 @@ pub enum ScannerError {
     AhoCorasick(#[from] aho_corasick::BuildError),
 }
 
+/// Reasons a path scan did not cover every requested file or commit.
+#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
+pub enum CoverageError {
+    /// Git path discovery failed and no walk fallback was used.
+    #[error("git mode failed; coverage is incomplete")]
+    GitFailed,
+
+    /// A history scan stopped because its wall-clock budget expired.
+    #[error("git history scan timed out; commits were left unscanned")]
+    HistoryTimedOut,
+
+    /// One or more files could not be read.
+    #[error("{count} file(s) could not be read")]
+    UnreadableFiles {
+        /// Number of unreadable files.
+        count: usize,
+    },
+
+    /// One or more files were skipped by binary or size policy.
+    #[error("{count} file(s) skipped by policy")]
+    PolicySkipped {
+        /// Total policy-skipped file count.
+        count: usize,
+        /// Files skipped because they looked binary.
+        binary: usize,
+        /// Files skipped because they exceeded the size cap.
+        oversized: usize,
+    },
+
+    /// The file cap dropped one or more files before scanning.
+    #[error("{count} file(s) were dropped by --max-files")]
+    FileCapReached {
+        /// Number of files dropped by the cap.
+        count: usize,
+    },
+}
+
 /// Errors from the hardened proxy entry point ([`Scanner::scan_proxy`]).
 ///
 /// Distinct from [`ScannerError`] (a setup/rule-loading failure): these are

@@ -49,8 +49,14 @@ const SPDB: Source = Source {
 fn ruleset_configs() -> Vec<(&'static str, Vec<Source>)> {
     vec![
         ("core", vec![LOCAL, SECRETS_SCANNER, GITLEAKS]),
-        ("core+kingfisher", vec![LOCAL, SECRETS_SCANNER, GITLEAKS, KINGFISHER]),
-        ("full", vec![LOCAL, SECRETS_SCANNER, GITLEAKS, KINGFISHER, SPDB]),
+        (
+            "core+kingfisher",
+            vec![LOCAL, SECRETS_SCANNER, GITLEAKS, KINGFISHER],
+        ),
+        (
+            "full",
+            vec![LOCAL, SECRETS_SCANNER, GITLEAKS, KINGFISHER, SPDB],
+        ),
     ]
 }
 

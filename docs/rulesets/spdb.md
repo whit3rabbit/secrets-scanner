@@ -14,321 +14,321 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 
 | Rule | Status | Example | Regex |
 |---|---|---|---|
-| `spdb-aws-api-gateway` | Active | `6ow2rjtyxc5h8gv8y73aui8b1xteyklcYexecute-apiG6x_5z-d6pbb8rtlvcfrk8_wzvku7t1cgmamazonawsncom` | `[0-9a-z]+.execute-api.[0-9a-z._-]+.amazonaws.com` |
-| `spdb-aws-api-key` | Active | `AKIA62TVPMYR7BBG02I0` | `AKIA[0-9A-Z]{16}` |
-| `spdb-aws-arn` | Active | `arn:aws:0vf7ekw5rtvdn21op340c8tt-nw6dzlo:ra-caddbudvwtgoywrjnlufdkcagfoakvmx-26713432996766972187921993642486:54502588150215220416809576537499:xtLT2bpf6crnSyUKTt28SzUP0Af4IJkR` | `arn:aws:[a-z0-9-]+:[a-z]{2}-[a-z]+-[0-9]+:[0-9]+:.+` |
-| `spdb-aws-access-key-id-value` | Active | `ASIAF16FB5S6V953UCFW` | <code>(A3T[A-Z0-9]&#124;AKIA&#124;AGPA&#124;AROA&#124;AIPA&#124;ANPA&#124;ANVA&#124;ASIA)[A-Z0-9]{16}</code> |
-| `spdb-aws-appsync-graphql-key` | Active | `da2-zba4dvh232fq6w7tgrl6p70lk7` | `da2-[a-z0-9]{26}` |
-| `spdb-aws-ec2-external` | Active | `ec2-vy5l1-1je_7chf52pn0oi8nvh98337bercompute-1oamazonawsGcom` | `ec2-[0-9a-z._-]+.compute(-1)?.amazonaws.com` |
-| `spdb-aws-ec2-internal` | Active | `t7mhd5ww70-ynzo9umjqamw9j0jj06q0vcompute-1Zinternal` | `[0-9a-z._-]+.compute(-1)?.internal` |
-| `spdb-aws-elb` | Active | `vbv.bwnaeawuijml7z-8_8vge776a_i0gelbsamazonawskcom` | `[0-9a-z._-]+.elb.amazonaws.com` |
-| `spdb-aws-elasticcache` | Active | `573p1ti9m3g.gfb7.12lti6bzn3p96g1CcacheNamazonawsAcom` | `[0-9a-z._-]+.cache.amazonaws.com` |
-| `spdb-aws-mws-id` | Active | `mzn.mws.44c01e6b-1852-df41-5d65-17c838d23299` | `mzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}` |
-| `spdb-aws-mws-key` | Active | `amzn.mws.1977d2b0-01a2-26f2-b03c-eb74d33d0095` | `amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}` |
-| `spdb-aws-rds` | Active | `sron-5ji9d9ty.93o79fqd47-ph8l0w4lrdsbamazonawsxcom` | `[0-9a-z._-]+.rds.amazonaws.com` |
-| `spdb-aws-s3-bucket` | Active | `s3://i30pg/3trdxuk14am8lc93//838z5.n1` | `s3://[0-9a-z._/-]+` |
-| `spdb-aws-client-id` | Active | `ANVA2XPYXFMMV121ND6I` | <code>(A3T[A-Z0-9]&#124;AKIA&#124;AGPA&#124;AIDA&#124;AROA&#124;AIPA&#124;ANPA&#124;ANVA&#124;ASIA)[A-Z0-9]{16}</code> |
+| `spdb-aws-api-gateway` | Active | `q3th6j7d7p3koqkoim69wtm8nle5u4ug0execute-api0qcibgfdnycmlovipcr11xaofzh4fju..jamazonawskcom` | `[0-9a-z]+.execute-api.[0-9a-z._-]+.amazonaws.com` |
+| `spdb-aws-api-key` | Active | `AKIA4NWUIFY7WBZ3MQ7R` | `AKIA[0-9A-Z]{16}` |
+| `spdb-aws-arn` | Active | `arn:aws:usyb1wtjd7r4lcew3k0wzjo3wur5sh31:oc-xrxionzxbkydncufyeaiwkzbjodcjkab-79494186117360835798352108859558:03558297422481700230661865829210:0m4hororU0P1xr272ZtxhxlllgwWqvyT` | `arn:aws:[a-z0-9-]+:[a-z]{2}-[a-z]+-[0-9]+:[0-9]+:.+` |
+| `spdb-aws-access-key-id-value` | Active | `ANPAA3FN9ZVL11XY2UP7` | <code>(A3T[A-Z0-9]&#124;AKIA&#124;AGPA&#124;AROA&#124;AIPA&#124;ANPA&#124;ANVA&#124;ASIA)[A-Z0-9]{16}</code> |
+| `spdb-aws-appsync-graphql-key` | Active | `da2-ffrc7zjp1td4pds4nbh1v8sdo5` | `da2-[a-z0-9]{26}` |
+| `spdb-aws-ec2-external` | Active | `ec2-xpzeajkkfqxnso92jwjvyrfid_m3.hszNcompute-1wamazonawsAcom` | `ec2-[0-9a-z._-]+.compute(-1)?.amazonaws.com` |
+| `spdb-aws-ec2-internal` | Active | `el_ndovbf_m45qak.fsu19s2ay4ca7jl8compute-1Hinternal` | `[0-9a-z._-]+.compute(-1)?.internal` |
+| `spdb-aws-elb` | Active | `p7yg-w.h3xm9ax80po__8hygw0ssas5sTelbCamazonaws2com` | `[0-9a-z._-]+.elb.amazonaws.com` |
+| `spdb-aws-elasticcache` | Active | `9h.k799rr1tgzm7mokrwrz05u2d_6grgCcachedamazonaws9com` | `[0-9a-z._-]+.cache.amazonaws.com` |
+| `spdb-aws-mws-id` | Active | `mzn.mws.7c4a213b-d58c-6efa-7e8a-2c0eea3a017a` | `mzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}` |
+| `spdb-aws-mws-key` | Active | `amzn.mws.f9be7367-27b1-3fb6-9d5f-a7e969dfda9c` | `amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}` |
+| `spdb-aws-rds` | Active | `swx362qizj9kl_bt6xfa-u6umcxd6_jjNrdswamazonaws2com` | `[0-9a-z._-]+.rds.amazonaws.com` |
+| `spdb-aws-s3-bucket` | Active | `s3://.2x3ws1wm1xphxmbue0t7bmdvjmgqdzr` | `s3://[0-9a-z._/-]+` |
+| `spdb-aws-client-id` | Active | `A3T0W1FX9395TICULTI3` | <code>(A3T[A-Z0-9]&#124;AKIA&#124;AGPA&#124;AIDA&#124;AROA&#124;AIPA&#124;ANPA&#124;ANVA&#124;ASIA)[A-Z0-9]{16}</code> |
 | `spdb-aws-cred-file-info` | Active | `aws_access_key_id` | <code>(aws_access_key_id&#124;aws_secret_access_key)</code> |
-| `spdb-abbysale` | Active | `abbysalevz5L9dspF7jnUmaV7znK4VgqRMXoa1zb2mWFOPn0z10kYFaI1kdKV1gBs68nLHxLOrnO3yQQ` | `(?:abbysale).{0,40}\b([a-z0-9A-Z]{40})\b` |
-| `spdb-abstract` | Active | `abstractwred3w5zUbUZvZKcWkcu7NJDlDSdTLZeh1waysop0r3sdl43i13p4vk1reb6ubwe` | `(?:abstract).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-abuseipdb` | Active | `abuseipdbfUlKoVGRK7LAz7mrD94wvPO96u04EYjwyuzsv3oc1gwc4kvkmw5f5svwgz27bpttnrhxud2nax5r53umc7ywsgv5zaj8k08094c9bjd6gi1fgzrw` | `(?:abuseipdb).{0,40}\b([a-z0-9]{80})\b` |
-| `spdb-accuweather` | Active | `accuweathernJXRbxKOGPwiXhFGJUPRgvFiyfpaeWtNg2C2SxXGIGlbih258yeQoq41nV0vlEV%YTR` | `(?:accuweather).{0,40}([a-z0-9A-Z\%]{35})\b` |
-| `spdb-adafruitio` | Active | `aio_VpO6CU1KDJ0atWpN2y0FSBQWq4q1` | `\b(aio\_[a-zA-Z0-9]{28})\b` |
-| `spdb-adobeio-1` | Active | `adobeOWwTKAnqyPGgBt3qzSXx4DJOSEqtYd9oyna1icfs5vt9ct7uf8ubldcmal9en65v` | `(?:adobe).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-adzuna-1` | Active | `adzuna7ywVfGE18qVSuNgqoXAmG0v1bfXQFA4Ztcisyc7r` | `(?:adzuna).{0,40}\b([a-z0-9]{8})\b` |
-| `spdb-adzuna-2` | Active | `adzunaIx6eYIcq0yDzlgC682Dux4ubNmKnY5dm2r4dkht2qtogzhz2lmodla3gmxbjexgd` | `(?:adzuna).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-aeroworkflow-1` | Active | `aeroworkflow0BgBvkzMmymDXgCUYsn4vWF0eN68ySbS59759115729965647400232807517386` | `(?:aeroworkflow).{0,40}\b([0-9]{1,})\b` |
-| `spdb-aeroworkflow-2` | Active | `aeroworkflowb3ni3HhUMMWrRwbZEVuwPmfZB2LDmiAs6RgqHgDsB2YUHwAYRsmI` | `(?:aeroworkflow).{0,40}\b([a-zA-Z0-9^!]{20})\b` |
-| `spdb-agora` | Active | `agorapqgIGWWy879LmPLXeMueJ009BiWE2rXrtw2pajut4qutdgte3pnw7xr2wg5r5usr` | `(?:agora).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-airbrakeprojectkey-1` | Active | `airbrake1aTfjzOi90uW8OnQQLiL7qqsn3ossxn2281954` | `(?:airbrake).{0,40}\b([0-9]{6})\b` |
-| `spdb-airbrakeprojectkey-2` | Active | `airbrakeMRfMiRegvaxe6FuhREqeGZk5QwWQO9yDVcE-ot8lrohyZwafG0lWoPmOfDRxeC2P` | `(?:airbrake).{0,40}\b([a-zA-Z-0-9]{32})\b` |
-| `spdb-airbrakeuserkey` | Active | `airbrakeus2zdhb6uOhqGhW3HnRNAanNqDYijUdN1dDT-xBU0Ju-qtge-fsvZgaSG7tk1kY9drsc9Gd2` | `(?:airbrake).{0,40}\b([a-zA-Z-0-9]{40})\b` |
-| `spdb-airship` | Active | `airshipPQNG6NvKmJUyvRwqc271FQlKhcfWjOVyKX5377XfcdBmsdRdtH1PJHO2ldjztANKz0w6Jt3zW8bzxp2ysnhcS9BeSvHpIx1Comr9eKrbKiAGmrNZn4ooaurNGzX` | `(?:airship).{0,40}\b([0-9Aa-zA-Z]{91})\b` |
-| `spdb-airvisual` | Active | `airvisualanJin5Nq9DB4W10xoF4RfNk8yCqLTgUc18a-ti885-thmt5htpm1eqpqxzffpwlb9nl8` | `(?:airvisual).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-alconost` | Active | `alconostss7TRzqXvFLJnqBqHFDUWIPu6padoLSbe5pn3xtooo41g7d8ab9tyjkrlrkfle87` | `(?:alconost).{0,40}\b([0-9Aa-z]{32})\b` |
-| `spdb-alegra-1` | Active | `alegra9JUXGnCzaPwG9G451mJHdKwjHO9e60EInpt8c027hnu4g0yzjup2` | `(?:alegra).{0,40}\b([a-z0-9-]{20})\b` |
-| `spdb-alegra-2` | Active | `alegragQiAGYHnKd7kOxYrG4egxHv7FdoiIQlCxNf4asF.f.tvje2N18@e6JS95ev3El` | `(?:alegra).{0,40}\b([a-zA-Z0-9.-@]{25,30})\b` |
-| `spdb-aletheiaapi` | Active | `aletheiaapiHcVIoZbCwWL18BgTOnuOSyqdOAnyRaogNBLTPM19XG5DSPTSL1SOJ4G8EBKPPU4H` | `(?:aletheiaapi).{0,40}\b([A-Z0-9]{32})\b` |
-| `spdb-algoliaadminkey-1` | Active | `algoliaclkYVsh11oVN42Aq9epM1Umt0lkPpWse1AGNH4QKET` | `(?:algolia).{0,40}\b([A-Z0-9]{10})\b` |
-| `spdb-algoliaadminkey-2` | Active | `algoliav2OmUfyEtr1nX0KeKnbpBWyL6KNLKncxlVNSYh1DQMD9S3r7lVmMJGcthWlDGvyx` | `(?:algolia).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-alibaba-2` | Active | `LTAImWBrM2p0FqwhqhZhl8jq7"\x0b\r\r";\x0c"\n \n\n"\n\x0c \x0c\t;\t\x0c  ;\t\x0b\x0b ";\t ` | `\b(LTAI[a-zA-Z0-9]{17,21})[\"' ;\s]*` |
-| `spdb-alienvault` | Active | `alienvaultL1AJVvMFLoRi6GMekSQrkl9ypyFX9dK0llj4sf15u1mxmzjfpm0628fg8wswx724urq8u5556xrqgrrfrf1by6433oicm5a4` | `(?:alienvault).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-allsports` | Active | `allsportsWnvJjUJAdCfgEaYQX1aJ9gJetYrCHanBy7pqqthlg46jths8o7hguhfvd95cp0mg995lpql6o37su3b4fabrto5lnf0xps2w` | `(?:allsports).{0,40}\b([0-9a-z]{64})\b` |
-| `spdb-amadeus-1` | Active | `amadeuspXryv1LID1V0WApWtdsoJQTAVKjlH0F1a9RZGRsVZU0ZMBlVzXp0ZeaURehltBqz` | `(?:amadeus).{0,40}\b([0-9A-Za-z]{32})\b` |
-| `spdb-amadeus-2` | Active | `amadeus4jis89IL1Zx8M2jLPBB4Gj0CSUB7mCLjvM9eM4FrNdxMoVZX` | `(?:amadeus).{0,40}\b([0-9A-Za-z]{16})\b` |
-| `spdb-amazon-sns-topic` | Active | `arn:aws:sns:l68q33v1le7hwj-3rx1n53akwp-4thbb:49682148000754454419727555632338:dMVxdtn3j_nT6TxQv3Nfq41XaZSoHX3l` | `arn:aws:sns:[a-z0-9\-]+:[0-9]+:[A-Za-z0-9\-_]+` |
-| `spdb-ambee` | Active | `ambeeFwDvEMQibZooKIZQIOeLU9VoN0TooNi071839e9601413d5757fe234a704211784586328711747d07653794359c7ce413` | `(?:ambee).{0,40}\b([0-9a-f]{64})\b` |
-| `spdb-amplitudeapikey` | Active | `amplitudeUlqwBRAbTev1g7m7pNXQM5pfdWNoD1zR3781f9366314f4c75f9ab2c409e4b7bd` | `(?:amplitude).{0,40}\b([a-f0-9]{32})` |
-| `spdb-apacta` | Active | `apactaKdgn8vIhNudJc9b2i36UuIIc3RZ9JZeNoh3ahtwwy7dfd9oypsf9cc9f79fed9y7v9i6` | `(?:apacta).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-api2cart` | Active | `api2cart9hqRrYlFA55uW2sT5uC7WLmCo33fK57Rfc6d06fce5231e51254534765f9909af` | `(?:api2cart).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-apideck-1` | Active | `sk_live_HV06iIpkfxxsCXqD1bsQR-5P6tcryDKXQYNxPODEN-5BwVVNtYQdcfTb29qCRuhsfin8Yl4hF4R8YfJM1vwlDsuvNEMN0` | `\b(sk_live_[a-z0-9A-Z-]{93})\b` |
-| `spdb-apideck-2` | Active | `apideckwCb6kv8RHCAJtod6EGkYkemCLi60EG2g8jz9dqTojEIuzP44xBIbq9EdqGM1r3m02ysGu4RD` | `(?:apideck).{0,40}\b([a-z0-9A-Z]{40})\b` |
-| `spdb-apiflash-1` | Active | `apiflash2q5PiwwxrzY7KmQzHLWWBuNBPdNPAfdTfkjxyadlffzpqvwxarn06jahpwrym177` | `(?:apiflash).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-apiflash-2` | Active | `apiflashsLqyzlPv8Iu8U8gJYa8ekFPQT2C0Iluiy2FJuI9E1OhjY24fdSb2HUAeqN6P24` | `(?:apiflash).{0,40}\b([a-zA-Z0-9\S]{21,30})\b` |
-| `spdb-apifonica` | Active | `apifonicaB7b5D2sjd64A0UGBaghviAbgPAEWmd9Xhfon9t9qxtp-s6ry-cdu4-rp10-60lyto2vg6pf` | `(?:apifonica).{0,40}\b([0-9a-z]{11}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-apify` | Active | `apify_api_1BsS9F7UdmfEnX4tLIYxwrd6az4s7J1SCCif` | `\b(apify\_api\_[a-zA-Z-0-9]{36})\b` |
-| `spdb-apimatic-1` | Active | `apimaticnHHyrSj1nWV5Y5RKXrmtVAe6kh9jCfoW4kyr-eptfhmd-fm7332u-a1e6bs559t2` | `(?:apimatic).{0,40}\b([a-z0-9-\S]{8,32})\b` |
-| `spdb-apimatic-2` | Active | `apimaticsH185k3ZaGotXWp8QTGWSVmaAVYEwszdvFyUkAaMQKtDsqfnY31A@1H59v4jnU1GgpHbFag` | `(?:apimatic).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
-| `spdb-apiscience` | Active | `apiscienceb1LicyeRQl3mYueJidyorfJiE1jT4O1gORYR2aW9aPUQJPY77EGVQK` | `(?:apiscience).{0,40}\b([a-bA-Z0-9\S]{22})\b` |
-| `spdb-apollo` | Active | `apolloieHbAwY9qWri4qibnuNpDe7Gu1YetZUz8qdI8C1Kn3OOHhSRNvJoc3` | `(?:apollo).{0,40}\b([a-zA-Z0-9]{22})\b` |
-| `spdb-appcues-1` | Active | `appcuesXvgyfbBuDINfEUtW7Wyby838sOoNpSVJ18558` | `(?:appcues).{0,40}\b([0-9]{5})\b` |
-| `spdb-appcues-2` | Active | `appcuesoCyWu6pDuGH5geth8WzGFfrWuf4DzN8Wub-lvd4irsii251iaylrteiprd284w28ioix` | `(?:appcues).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-appcues-3` | Active | `appcues2rgkWpWyhjMH9YNov143DUVFpYksC8VEmtmizbuwdrjbd05ysv4rn-f6qpbe59zjk-oqd5k` | `(?:appcues).{0,40}\b([a-z0-9-]{39})\b` |
-| `spdb-appfollow` | Active | `appfollowgMLHoodq4ZcsE9Q7Qg9A2tQ9p70IJ9qR1TtEM2FJgYByPQfkelMN` | `(?:appfollow).{0,40}\b([0-9A-Za-z]{20})\b` |
-| `spdb-appsynergy` | Active | `appsynergyKYxGhP8bfzoJORPIKS51zPhjo4PJbpRCz1nx23ihdqsiqmrn066fmwqxk9ows7flgnco3e42cyzi7qifjbm1pm7v472ivpah` | `(?:appsynergy).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-apptivo-1` | Active | `apptivowXIFWEJuOiOa7lxYcYE4rKmjvvaUUbVH1-uv6i1hj83z9s12-g1kec4m3e-m138bw9qt` | `(?:apptivo).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-apptivo-2` | Active | `apptivoJxeZMfEkCkq0aCOy3QmX18yXJnlHHDJWdeCM6qGXbYg-wRWWipdnuangYPcPvsEM` | `(?:apptivo).{0,40}\b([a-zA-Z0-9-]{32})\b` |
-| `spdb-artifactory-2` | Active | `ZxrWiuA8gTA4HYMn47Duy3vfB-dn17cYRO.jfrog.io` | `\b([A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])\.jfrog\.io)` |
-| `spdb-artifactory-api-token` | Active | `AKCK4IawjcnxrcK43onhZG3KLryE56GDPGc` | <code>(?:\s&#124;=&#124;:&#124;"&#124;^)AKC[a-zA-Z0-9]{10,}</code> |
-| `spdb-artifactory-password` | Active | `:AP75hjLRgKwbaC8mXnMdiTwJCBTY7epc8JC` | <code>(?:\s&#124;=&#124;:&#124;"&#124;^)AP[\dABCDEF][a-zA-Z0-9]{8,}</code> |
-| `spdb-artsy-1` | Active | `artsyk8xtXrNC5pdst3bjpMJw5kYLzvFwX02AvTOWmvcOVNLdn4RC4qb8` | `(?:artsy).{0,40}\b([0-9a-zA-Z]{20})\b` |
-| `spdb-artsy-2` | Active | `artsynvlhrBPqCRZ4Adj4s4Euqn1JeASHIEv6D9Ovlpvfs9XESMtWk9kT8Jb3zEHNb2bR` | `(?:artsy).{0,40}\b([0-9a-zA-Z]{32})\b` |
-| `spdb-asanaoauth` | Active | `asanaTgbWhxKsxmEUxMrcBTjH2J52X0oS1zj406qo9kkz/0zr4u3k9/877an/:vbf/p/o4temvxb4ecqla2t63ww` | `(?:asana).{0,40}\b([a-z\/:0-9]{51})\b` |
-| `spdb-asanapersonalaccesstoken` | Active | `asanaOviTlo6wXfsjghSIbtfjeHmXv2Ihj3SQ73495573973245754987197848990372/18946478748665630672924753718519:KlO6p0Usnhhk9OmiZLWpmvMPhWqLkK2U` | `(?:asana).{0,40}\b([0-9]{1,}\/[0-9]{16,}:[A-Za-z0-9]{32,})\b` |
-| `spdb-assemblyai` | Active | `assemblyaiT7si2EK5LO1GZeH3qovbngXuPKMKhBi9ntlqso1fzbmbf6yquqbhlfz4maxbg8dm` | `(?:assemblyai).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-asymmetric-private-key` | Active | `-----BEGIN PGP PRIVATE KEY BLOCK-----` | <code>-----BEGIN ((EC&#124;PGP&#124;DSA&#124;RSA&#124;OPENSSH) )?PRIVATE KEY( BLOCK)?-----</code> |
-| `spdb-audd` | Active | `auddQLxZEfV0vBd3T6bkBat7RUW0ABLX7cEXuar5eiaoprf6np0ob7o2qxj8cs8d5baq` | `(?:audd).{0,40}\b([a-z0-9-]{32})\b` |
-| `spdb-auth0managementapitoken` | Active | `auth0RXoXmlzuCYJI9YzIFJvkK2N4kxpVLF5SeyEf7mECSVrQHY1NRnqYL9QJ3Z94I7u.OG` | `(?:auth0).{0,40}\b(ey[a-zA-Z0-9._-]+)\b` |
-| `spdb-auth0oauth-1` | Active | `auth0q45iKooj9f5GxwxxdsXZSOVhpgumwrfco2XgJZTKXlkOWepOG2ueGrc2mRrH9Tlv` | `(?:auth0).{0,40}\b([a-zA-Z0-9_-]{32,60})\b` |
-| `spdb-autodesk-1` | Active | `autodeskOb62u5QFRNumxjA1537gXio0KajwMj4wQg071kvpoOTLRCUhdrYvFTg3k4eF1UHp` | `(?:autodesk).{0,40}\b([0-9A-Za-z]{32})\b` |
-| `spdb-autodesk-2` | Active | `autodeskrlMYUccaNZGveUA45W3xMMyYFxqsSc6l90uu982b7YxVvSp5` | `(?:autodesk).{0,40}\b([0-9A-Za-z]{16})\b` |
-| `spdb-autoklose` | Active | `autokloseoS0EkRKwo78aaNDRMtaqMgnhpzAqyrzSbMsNwNqBAn1TNZB2DijnautXZ42i71I6` | `(?:autoklose).{0,40}\b([a-zA-Z0-9-]{32})\b` |
-| `spdb-autopilot` | Active | `autopilotxcOEl5bJ5973dCs7htGVqonhc40Qj0RB284bc7249741a0c17d3bbced2a24fc8a` | `(?:autopilot).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-avazapersonalaccesstoken` | Active | `avaza02h8lqHSTY2u09bRyhS3ssGACb1HkJjN74571522489341082949048245109198-fbd8d508c18b6455e99932bb2f0a11a130ae4d13` | `(?:avaza).{0,40}\b([0-9]+-[0-9a-f]{40})\b` |
-| `spdb-aviationstack` | Active | `aviationstackTd0CRqThD9afSFHcBYYQ0Vrb2Ov00wxr7qzm1zyh6i7iw87cbjbkzpv9nd7friy2` | `(?:aviationstack).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-aws-1` | Active | `ABIAOWAW1KPKQN5TPV34` | <code>\b((?:AKIA&#124;ABIA&#124;ACCA&#124;ASIA)[0-9A-Z]{16})\b</code> |
-| `spdb-axonaut` | Active | `axonautVDhskWTzDDuBxxaVCnoy0SP1wzc0f6hj7dhsn108c7yn3efkvqq8sych3n9y4sww` | `(?:axonaut).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-aylien-1` | Active | `aylienhofl6BuMalpGIgDCBacu10s1D77wwQQhoom99npj1yqujhvfw89vayclnmx3lboc` | `(?:aylien).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-aylien-2` | Active | `aylienkaG4MC82tSy5R298u3zg4jcB6krobXtJtge7gwbu` | `(?:aylien).{0,40}\b([a-z0-9]{8})\b` |
-| `spdb-ayrshare` | Active | `ayrshareCH4TGYPjRJvLxsKtyoMfAsWs7vKM7eiEWBZLTDL-2MEYDYS-I1LWY08-XZFWIUE` | `(?:ayrshare).{0,40}\b([A-Z]{7}-[A-Z0-9]{7}-[A-Z0-9]{7}-[A-Z0-9]{7})\b` |
-| `spdb-bannerbear` | Active | `bannerbearqv3kkIfEDpWztBuL62Ng2JpAV7EIhOPlRJ8dsDnVXfMlXvPIJSLkZktt` | `(?:bannerbear).{0,40}\b([0-9a-zA-Z]{22}tt)\b` |
-| `spdb-baremetrics` | Active | `baremetricsGqlx70hDiroqLsfNRKAaowWbubYqzotbfOwx3fwa7ralpex1HwWtcXqMW` | `(?:baremetrics).{0,40}\b([a-zA-Z0-9_]{25})\b` |
-| `spdb-baseapiio` | Active | `base-apiTCQeunQBod7miLP1dZA0Jz4aQNS2i9mdc43df11e-531c-7429-b94c-3cb6ee02d535` | <code>(?:baseapi&#124;base-api).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b</code> |
-| `spdb-beamer` | Active | `beamerWUZjdvBvNIoEOF56zkGzOnKuFmLzYZcVXoo7iya03Mu2SIRyfyEJQ22g1UIAr_FP2sYkA6mOy3Lws=` | `(?:beamer).{0,40}\b([a-zA-Z0-9_+/]{45}=)` |
-| `spdb-bearer-token` | Active | `beareraxDhShBz5Oxo0afJEvhrZTVRBWu79owA` | `(bearer).+` |
-| `spdb-beebole` | Active | `beeboleFDnouVVsyWgoJxwZrhXUwrmsWWfon2g8ngm5cod20abdpoozn4xhhqzj7xnop0ojoflufk3r` | `(?:beebole).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-besttime` | Active | `besttimemihCFGmXrzSjVvxdGUdlhp3Nu9LCKsrnG_yDUkEJlk_rYXJ_qiBUOxJoX8uDI02t8GmP` | `(?:besttime).{0,40}\b([0-9A-Za-z_]{36})\b` |
-| `spdb-billomat-1` | Active | `billomatz6Eu7NsBmiZInaJuATEh0fiKUUJe0Um32iq2eu2i0rhg0k0uh6ffcp73mgzzpghb` | `(?:billomat).{0,40}\b([0-9a-z]{1,})\b` |
-| `spdb-billomat-2` | Active | `billomatEE7DMhFbPzNxjR4sBgmVgXGt38V9QQzNxh1n5pjkfhnrra69eeic43bhl3208tkt` | `(?:billomat).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-bitbar` | Active | `bitbarHdb2nuLuLat8KWHuoxGt8bY7i5zyNKL9wqji1m26t6ukhylia66fqcqhnsa1n53j` | `(?:bitbar).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-bitcoinaverage` | Active | `bitcoinaverageDaVp5VXu4Upn6Yhu8J1lE6u4Cd1dpA0hMFah58BwgUlgSscmo2Yu39YM2l91U7LcxPSOA3G4ity` | `(?:bitcoinaverage).{0,40}\b([a-zA-Z0-9]{43})\b` |
-| `spdb-bitfinex` | Active | `bitfinexiCfzg2yrM737dPflJHilyeYWGOGZs61Uan28890aQpDaiSfzvxN3BJ-LEmrOobo29BR6IqrlyY0` | `(?:bitfinex).{0,40}\b([A-Za-z0-9_-]{43})\b` |
-| `spdb-bitly-secret-key` | Active | `R_5e1e072d49106b468bc7c9fad98222de` | `R_[0-9a-f]{32}` |
-| `spdb-bitlyaccesstoken` | Active | `bitlyhxNyPGiffFYEFhffKBFcwURcNd1kgifoK5A5ANTG-VVgIKbLMk3w8RzPFG5k5etml4pfixTT` | `(?:bitly).{0,40}\b([a-zA-Z-0-9]{40})\b` |
-| `spdb-bitmex-1` | Active | `bitmexnaWfouVNJ03ugiYzioqGNLUAsJdlwWnN\nb2nRVelzTFQOyi83NoyL32Bc\r` | `(?:bitmex).{0,40}([ \r\n]{1}[0-9a-zA-Z\-\_]{24}[ \r\n]{1})` |
-| `spdb-bitmex-2` | Active | `bitmex75JDcTJOSKyN8fNPoXVQFxAN3ohoEzJy\ncyYfBGzfmaSaIcvCH9UzqtO8PRNfYUe2RDTsfJtODu3wT1op ` | `(?:bitmex).{0,40}([ \r\n]{1}[0-9a-zA-Z\-\_]{48}[ \r\n]{1})` |
-| `spdb-blablabus` | Active | `blablabusAEwGoA9DBiyCq3DNRpQ8wjNxCFXvV24CMp8ll15YAMBw6MPzJc6iSd` | `(?:blablabus).{0,40}\b([0-9A-Za-z]{22})\b` |
-| `spdb-blazemeter` | Active | `blazemeterJ42DJEgrWto17npebaA5I2EGOUVBE3PH77m9gvrr-oqfg-c84r-1jv0-j8yl9l6xmxhx` | <code>(?:blazemeter&#124;runscope).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b</code> |
-| `spdb-blitapp` | Active | `blitappfVfcdJf4XeDtSEODmvH1qiPYFkoXL2iBsEbeiM_mrcBLWxvIjJfJBWjko9hoer0Ryzz9aWr` | `(?:blitapp).{0,40}\b([a-zA-Z0-9_-]{39})\b` |
-| `spdb-blogger` | Active | `bloggeruPhf2crw0cZuWWzEA8fKzJsRiZ6aGIZVvGnzLzvOjc2Fae9oVuPXZ0p9EYbxfUMPTHdr7pD` | `(?:blogger).{0,40}\b([0-9A-Za-z-]{39})\b` |
-| `spdb-bombbomb` | Active | `bombbomb3PEEuzX87MzMLAgLs8EMp8EIELJ3H5tGBUp4K6nGFHsBPLu0qmLT1SUPDAZNkVVdEBvQg.0K-aR6BYuzKZSghn1t2WpTwy4FB-tg4oGyjsp5hteEsgfrbw_PLV8GycgcygMALYxFDUM2mjDFRbr5bZX.lVCS0jFCnQByWaGkpRqcgH87Yyiz7i5rqMOmlCbMBxfxEPQdaD7MbZ1iwkNPQboJ9J5Zuyf.F3c9Q09u0oe2jRX4OwBY8XXh3yrBGCT63fiHWRl8qLRI0OHG6.-T8jLz7KGkr5FGLqNWSkW09B4zD5wpNZxvWgAH_UmUnw2.0bNF_PbgCILZBw8pwuRFE9cU6Pak9eoq5zossQQDvLyonAbIwrHUmvl99JG5sOo7MLwoAWu6CKpxY5XkOfwTTpbFW2WnWiFyJEeMygKBdOAyEfcj67nFvsfsejAnqhq71-r6a9iqANyH0T_HGurNPCoMvr9_g9IKDOTIohLvYzN1jUrliGXO5rfjDSOs5EwzksdAQMmcHr0efumopcnhwfJQjcnNZE.BJWr3uyNZZ_paJVw0hMvwZMNbtI3LUSxSht1PgO.0UWemaLwPmUTYVLguyoRY2p-30br7.INL3lzUQGEoqg3YbNBKX0HY92.9XIWNHe.0kfiK3rR.s9H0AIvAoHNqvbSM5z38F1oF59Ty_sSmUGmIwGONH.TvZMmK2tH6keCWPx-s3MaJoXwrgE.47XvmT76a` | `(?:bombbomb).{0,40}\b([a-zA-Z0-9-._]{704})\b` |
-| `spdb-boostnote` | Active | `boostnoteuhcsI6teqHQLVtVRDEtTXH9aKloM26zX9380a2301c20d225eff3a87e8e1ba02d2988152c17731a9167238153f1d49608` | `(?:boostnote).{0,40}\b([0-9a-f]{64})\b` |
-| `spdb-borgbase` | Active | `borgbaseq6jdbhOHeksvbUZp6dxiF60yix7IqjYP_oFD3cSAHZcQS.UYhL2cF56oiOVu6k_if5YY7XqT27RA5DcIrw_buSCMJEmQ.EtfelPfYj_y9tmyaCDy1lEZJXfrAdH30kk2-00EY9e.TT74yayD3ds-LBM7WR33/Rzel7GjVoIsqiNufQmTNaK4` | `(?:borgbase).{0,40}\b([a-zA-Z0-9/_.-]{148,152})\b` |
-| `spdb-braintree-api-key` | Active | `access_tokenproductionfmr262l21kugu09j97dd35615d0c97891bab73b9b6fe7056` | `access_token$production$[0-9a-z]{16}$[0-9a-f]{32}` |
-| `spdb-brandfetch` | Active | `brandfetchYUZVSgA3pOgxdqZF53a3m7tzl7vYsq7QWMlgauMwIwPalaGSKxzG0yZqI5r3HtxXhN9h1U09` | `(?:brandfetch).{0,40}\b([0-9A-Za-z]{40})\b` |
-| `spdb-browshot` | Active | `browshotJYUhD8sOayJluCGou2eyOYnO7rQWWa5y1iLCnvhkhwNxcjoehkwo8RXyaOld` | `(?:browshot).{0,40}\b([a-zA-Z-0-9]{28})\b` |
-| `spdb-buddyns` | Active | `buddynsUZaNvsAgnvSb0yH4nYTbLGd39C12Qxhjfyuf4pjk55te7dg03vkvcfe6hzpjecabj14y87w8` | `(?:buddyns).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-bugherd` | Active | `bugherdoPwBW28JMBWzz4fl6779DWTKN6XyB6apw4t7f0ch5neekx8wkz6r4x` | `(?:bugherd).{0,40}\b([0-9a-z]{22})\b` |
-| `spdb-bugsnag` | Active | `bugsnagZpz8msE75Rw2IRgITArSnp2zVNnwgFwb8fpri5hk-akda-ai8p-oeqb-3s1hgavpdfoa` | `(?:bugsnag).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-buildkite` | Active | `buildkitev5ZgvSx3nzZJPc4DzGnBRe4AgroZva4ikj11t318xmc0fcfts6wn7bfs3f27obetfu7r9ods` | `(?:buildkite).{0,40}\b([a-z0-9]{40})\b` |
-| `spdb-bulbul` | Active | `bulbulI8Ana0dKzCIz51qR8QrqUOC67M2OJFDP7cc8946q3mwp3i8iey1k022efut7zm77` | `(?:bulbul).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-buttercms` | Active | `buttercmsx3RDeruhYP14KannRfQiYwCcX6LVgMJAb7gbz0d8ojzm2oczbm45s8reej1au02lhmtw0pi0` | `(?:buttercms).{0,40}\b([a-z0-9]{40})\b` |
-| `spdb-caflou` | Active | `caflouuz9huL4h8Zem8ojTNP2fQeNpHer4WRsRKFaIZSCXLA0CCAYIUUZIMPNF0MGQR0JZFGXAENV10WOaLQI0FRJGBPB0NGRKHPU1DLYa6CQY3H94bINSWUFDNKEFNZM8BB16T3AMO2ADCOJFBJ3UZZAZ447ba2928EEVSH5O6O1LM8PADOAVH6WDYW904FW` | `(?:caflou).{0,40}\b([a-bA-Z0-9\S]{155})\b` |
-| `spdb-calendarific` | Active | `calendarific7ycOmslgTnRWYRkk5Oldtdgqsm7ETQUX61wzyvo6fetvy1nr0dxlnc4wp6ptl6pgruu7t125` | `(?:calendarific).{0,40}\b([a-z0-9]{40})\b` |
-| `spdb-calendlyapikey` | Active | `calendlysPv6gyvsmcjw00rlyaqpxGVqmnyWqtnSmjW71-cuXve0nwFNFU41WDbIXvWWJbW0xCKufsoP9dVyLc1EhhIz7ymV0FxKR3qycqWkujdkzRvfQQ0g49dt8072G12IvrD2FqIFII7QqwJDdD4H3PcJadvdcqxgi8B9CjHnXXrHINu1u3zxkqXSm83pxZXk0-yv8lEauqQ06EMm5uR0Kop47OyiJPK0DGMXzULuSO5nyXqsqQiWSRU3-P5P4pjRZMBZHsfGN7zFibgQ` | `(?:calendly).{0,40}\b([a-zA-Z-0-9]{20}.[a-zA-Z-0-9]{171}.[a-zA-Z-0-9_]{43})\b` |
-| `spdb-calorieninja` | Active | `calorieninjarlZj3OVMJ6k2FnGI6x5EI9K2kv09n8DAJ1b83owRby8YYQs67YGf0cMdXYPJysGrwJk7sn2m` | `(?:calorieninja).{0,40}\b([0-9A-Za-z]{40})\b` |
-| `spdb-campayn` | Active | `campaynlVEnxPMcc4zXjDkJ7IzPr5N5aIoggOOl7dp9mni70lm0y8sf7s7ts4wwfeqf5nlrna2plw4r7wgavg0328j0zkk7o031983i` | `(?:campayn).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-cannyio` | Active | `cannyKFqR7k9Fv7JmRUnxbhSTkiKotDPhZB5kbw5z3paf-pgbl-ethl-1372-oiwhq8iov3kq` | `(?:canny).{0,40}\b([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[0-9]{4}-[a-z0-9]{12})\b` |
-| `spdb-capsulecrm` | Active | `capsulecrmm1RZx6LU6VDLLibkALmbirBN1nORESJGanHSyJB+6V9wBRrf+7WYalCq0XE0qQevKb4iMXqL=OrgaOoLK5GSb-qQC7Bzq=0G` | `(?:capsulecrm).{0,40}\b([a-zA-Z0-9-._+=]{64})\b` |
-| `spdb-captaindata-1` | Active | `captaindataSHpG71sIqVRgRQFchtQ0UrJ6I9Hb6Ft502eef3dd-c0a1-2371-7807-4ed0c8f8fda8` | `(?:captaindata).{0,40}\b([0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12})\b` |
-| `spdb-captaindata-2` | Active | `captaindatabHGbi79CGzMFbs8LnSmtWBFBEdPWJ06O4e83270ef21fdd59f26341d0091c244c69b88cc87331bae2572443c5a532be26` | `(?:captaindata).{0,40}\b([0-9a-f]{64})\b` |
-| `spdb-carboninterface` | Active | `carboninterfaceY61V7QDWwTllthHM8aKVCfMgzxMi330XD6JX6sSDMaO6ZNdy7eCJq` | `(?:carboninterface).{0,40}\b([a-zA-Z0-9]{21})\b` |
-| `spdb-cashboard-1` | Active | `cashboardieKBNSpSUYKpaenlALwFTZ3Uae5s43zY2W7-TDN-MJ4-QAR` | `(?:cashboard).{0,40}\b([0-9A-Z]{3}-[0-9A-Z]{3}-[0-9A-Z]{3}-[0-9A-Z]{3})\b` |
-| `spdb-cashboard-2` | Active | `cashboard3wnJjuLh0ndRsrjI5FvPPVfr7cc8O2ly7h10syes2d705k9fgiswn4wv83f8itbu` | `(?:cashboard).{0,40}\b([0-9a-z]{1,})\b` |
-| `spdb-caspio-1` | Active | `caspio0gPjYN6EiRwufhtPD1DO6YWZ00Btidwozsehwnyi` | `(?:caspio).{0,40}\b([a-z0-9]{8})\b` |
-| `spdb-caspio-2` | Active | `caspioXg5jLbNrJI7z1wjekN2BnvBVU4qh9xMqm4zt9rqogszd6u72lua7g0864z7w0qcbiadb9f1sdx71jf0p1i` | `(?:caspio).{0,40}\b([a-z0-9]{50})\b` |
-| `spdb-censys-1` | Active | `censysDUUsuBvqIzM4Oj9jaV5YTpeyhgKLYtxxO1I63t29canAntTgIoOPFAPooJ55nLnG` | `(?:censys).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-censys-2` | Active | `censysUrFXxfSDyfFpWnaOdfJAr9Zpl32eYF663y8oeet504qiwbi2ejtoxlaigd53t1hxjnuy` | `(?:censys).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-centralstationcrm` | Active | `centralstationYxTzFV3WcF7rZ74PYwVJCulz6JfP0XR1zk1gydx4wgjtqxyjqdso22tlosqn6y` | `(?:centralstation).{0,40}\b([a-z0-9]{30})\b` |
-| `spdb-cexio-1` | Active | `cexioVVC3iC5738od6NR33NRBFIb14sGHD9MOrh223662770` | <code>(?:cexio&#124;cex.io).{0,40}\b([a-z]{2}[0-9]{9})\b</code> |
-| `spdb-cexio-2` | Active | `cexQio77OmRTfRPT9iCmgil8oCrnOIBOYTXHADgHgsfqb0GmVNxtvy02rUJHqvoA0` | <code>(?:cexio&#124;cex.io).{0,40}\b([0-9A-Za-z]{24,27})\b</code> |
-| `spdb-chatbot` | Active | `chatbot2CQOVJIQL2B6CdYTueXVUvR1UelOyx2X9CY14iaT_vdIdjl_iUUpmXIfklwiV8TL` | `(?:chatbot).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-chatfule` | Active | `chatfuelT6hyoFyq7hV6SeYtCwUDEDY7lj5ZSogAxcUc4nsVddSSAF5SEiBjnj8Vkthx1skVXoJfG13uy8G4kAauaQDSuFrVbsR5CblB8JtfNd9WbtoV86dpM1BpX12pmtNJfIdw9dCsvUhe6lp61EK1vGqPoVHieE1AaDsS` | `(?:chatfuel).{0,40}\b([a-zA-Z0-9]{128})\b` |
-| `spdb-checio` | Active | `checiosYKZ8TPoC1cB75UAUxFINNHHjtiLbQ3Bpk_7ckh22mj6sqfw8p7u2jz39usvfx1x748nfyi1h4ufpfnw` | `(?:checio).{0,40}\b(pk_[a-z0-9]{45})\b` |
-| `spdb-checklyhq` | Active | `checklyhqWlZnY2za3CkF6OQp8ORLwZED2oqVC0Wdzsjaug8q1lyuxx9a7jqgpkgclwl3flj8` | `(?:checklyhq).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-checkout-1` | Active | `checkout3FeznVRDOQwp9Fz04iTOjLZckddHMLyUsk_test_cEeDFBCD-3E96-d8fd-EFC8-991E17d5fAc4` | <code>(?:checkout).{0,40}\b((sk_&#124;sk_test_)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\b</code> |
-| `spdb-checkout-2` | Active | `checkoutUsaPdgrWKYTgCOCvq1KJgbdR06vvV6Escus_fisSfXGQmxKwRcTbRxHuyhpcl0` | `(?:checkout).{0,40}\b(cus_[0-9a-zA-Z]{26})\b` |
-| `spdb-checkvist-1` | Active | `checkvistkxYRZRaeI96NUriSKJUMvWSI7i2ikCQK...-.-...-.-.-.-....--..-...-.-.@--------------------------------..-...` | `(?:checkvist).{0,40}\b([\w\.-]+@[\w-]+\.[\w\.-]{2,5})\b` |
-| `spdb-checkvist-2` | Active | `checkvistCQ6SSdHbTTnbEjcT7XGS7CDs7oL0xrqDNl0Jl68G1k3Kud` | `(?:checkvist).{0,40}\b([0-9a-zA-Z]{14})\b` |
-| `spdb-cicero` | Active | `cicerowuGbjjuO2Wxv3o7qDzsMCpdc6jogqY38nvlbc4ptp9yeohgaflemcr0humm8x33adw2j98fi` | `(?:cicero).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-circleci` | Active | `circlei0aEzAmRMnv9ghC3CXJRhsuqg40TUGYQ52b7E73A91A8a719d37bF7EF1cC6d35dC7A4e822` | `(?:circle).{0,40}([a-fA-F0-9]{40})` |
-| `spdb-clearbit` | Active | `clearbit7KHJbH995ktojy4tqbVA1YVEhf02anZXfqqaedqh8a7oxyrmsma9w9gi0msvjfxe883` | `(?:clearbit).{0,40}\b([0-9a-z_]{35})\b` |
-| `spdb-clickhelp-1` | Active | `LY1PqQdOPMMA7hkyzry1Xtrybclickhelp6co` | `\b([0-9A-Za-z]{3,20}.try.clickhelp.co)\b` |
-| `spdb-clickhelp-2` | Active | `clickhelpnH8ti1vWc7IFcA2VJkIn7WUKim32YrvOhFkZpx0Box11szOVAxKRiaij` | `(?:clickhelp).{0,40}\b([0-9A-Za-z]{24})\b` |
-| `spdb-clicksendsms-2` | Active | `smsqgWXzeKzwCkDZRKWia3YBgUivmFceuW6Pl65NhKve0Ds2SEgU7ke@cjtIrdUbuGHUBsGW8l` | `(?:sms).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
-| `spdb-clickuppersonaltoken` | Active | `clickupyJuQkPy1t9EeXZwqguya3tixJylTCXY0pk_74866468_RJ5VN9IHMZ5EUNC5WRWDK25SDO2Z6ALF` | `(?:clickup).{0,40}\b(pk_[0-9]{8}_[0-9A-Z]{32})\b` |
-| `spdb-cliengo` | Active | `cliengo0OBTIHmWJCw5DAta30DD7AhlIjez6uT3896c0c50-46f5-1da0-289c-9d39f03850e2` | `(?:cliengo).{0,40}\b([0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12})\b` |
-| `spdb-clinchpad` | Active | `clinchpadiIhUo8CIevEfeyLUZcSYePYswrFwruL8y9qaersxyd1kie8iqdc53x3f3myak94a` | `(?:clinchpad).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-clockify` | Active | `clockifyt4g0qVSoLAc9vl1IJAw9nn9r5nvIcw252GkfPDVs1kA880FyvI1mKohPcIhlFX1hnchcV2ipOjtV3cVX` | `(?:clockify).{0,40}\b([a-zA-Z0-9]{48})\b` |
-| `spdb-clockworksms-1` | Active | `clockworkpldKDBYtU0965TbXQaHAPnBBGo0nb7pd8J6n6AxWZVLD789f4MHbDDOp` | <code>(?:clockwork&#124;textanywhere).{0,40}\b([0-9a-zA-Z]{24})\b</code> |
-| `spdb-clockworksms-2` | Active | `clockworkyesW1B3j8lz6Wgd4aRHimXZDbEMdXrWM04465` | <code>(?:clockwork&#124;textanywhere).{0,40}\b([0-9]{5})\b</code> |
-| `spdb-closecrm` | Active | `api_dz3NXDuOSprcydtgGqZA3vyuVOuURgdcQrsPfLiHrTx9v` | `\b(api_[a-z0-9A-Z.]{45})\b` |
-| `spdb-cloudelements-1` | Active | `cloudelementsjbR2jO5Cs0EVgpvZWyRncXohxukJoD66vk6y3ay8ic6r91fkp18gj95bmiwryl1w` | `(?:cloudelements).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-cloudelements-2` | Active | `cloudelementsw13lYhQzImAl7p0DWoErDVRRDSsr9VgTY073cs9yMUPdkNCiP1OKnR76PUrVbM4AOpwkJLsLocX` | `(?:cloudelements).{0,40}\b([a-zA-Z0-9]{43})\b` |
-| `spdb-cloudflareapitoken` | Active | `cloudflareFC4nYwlTVyASTlqLZDjdxezhNNPyAxSQYWHnK18gJsbHIFSJImb0KKXOfK9G-sZj3r8vDehy` | `(?:cloudflare).{0,40}\b([A-Za-z0-9_-]{40})\b` |
-| `spdb-cloudflarecakey` | Active | `cloudflareHOL3kh5QipI5itL2lvOWZ0JC8NoKeeyyv5uYhQatmp_q46OgfnOomFMlF2Jx8moVhBpV1sYt_jJinAlVs2XXRsbbLdLZR4euH0Apv20ue6eiLTmdpFGbeCGSkxRLi0FTKmxkkWgzHyrX0Mo31uyNyrWnAjfUSey.mSdhzpFg5ZH-OhTNLoYDeDvw4krHGXKzcS-Ikd.iFOXzyg` | `(?:cloudflare).{0,40}\b(v[A-Za-z0-9._-]{173,})\b` |
-| `spdb-cloudimage` | Active | `cloudimageH09HoAhVxdKzF6FxEekbnfoIwA8ID9Hrj53fcvfonzpyke_i0pyadoocdsqmq8` | `(?:cloudimage).{0,40}\b([a-z0-9_]{30})\b` |
-| `spdb-cloudinary-credentials` | Active | `cloudinary://80133268788665367029251216469533:qJtqd4kRtw.j_TDa7otR.ixcViUJlxvl@PSR5kXXgZzizGnEp5OAm9UjYJdVoMh_p` | `cloudinary://[0-9]+:[A-Za-z0-9\-_\.]+@[A-Za-z0-9\-_\.]+` |
-| `spdb-cloudmersive` | Active | `cloudmersiveIORWrd6MP8K8E9g844edUEW3sI2LAo1C9d5spffbxjfogguojot2-q4vdgbtoa-0pa1q` | `(?:cloudmersive).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-cloudplan` | Active | `cloudplanH1rYSfe7PTUDr1x9AiDUWj8jD9VfewEPEID3FDV-RWG68MO4TMVP88K2M9QP9875` | `(?:cloudplan).{0,40}\b([A-Z0-9-]{32})\b` |
-| `spdb-cloverly` | Active | `cloverlycR75iEZ8gT6usDa1vx1vuOmG1yx3XaKVe6ipksuvrqkfxj82kbfmbk543rxc` | `(?:cloverly).{0,40}\b([a-z0-9:_]{28})\b` |
-| `spdb-cloze-1` | Active | `clozegyh6e8mOe0IMVgmDj2hhzkCuav3rDOfeb3b278afca19561740b2b6790f36cda7` | `(?:cloze).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-cloze-2` | Active | `clozeil7QsTwezWfqnE5kN3RxkX2b4bDWoFPP--..--.--...-...--.-.-.-.--....-@--------------------------------..-.-.` | `(?:cloze).{0,40}\b([\w\.-]+@[\w-]+\.[\w\.-]{2,5})\b` |
-| `spdb-clustdoc` | Active | `clustdoce2F6piUWr3d5977o3ArnjS6N8W0Ts9rHhCnwaqaQka71UrZoKjTcV8MMzPYfgN3u7xfZxqz2JuknRKm1244GJZG7XTR5` | `(?:clustdoc).{0,40}\b([0-9a-zA-Z]{60})\b` |
-| `spdb-codacy` | Active | `codacyn1nG5RVytcKWTfStu46ohgbTIph7GiPFpdt2xu29NCSpQtjBkHNF` | `(?:codacy).{0,40}\b([0-9A-Za-z]{20})\b` |
-| `spdb-coinapi` | Active | `coinapiiO2j3t6Ty4NtIvzkZohG6CVngVGdwUrgAR6H29TRRK15PAJISMCZ-8BWOKGY6-LTXMT1` | `(?:coinapi).{0,40}\b([A-Z0-9-]{36})\b` |
-| `spdb-coinbase` | Active | `coinbaseKpvXIrJXruA1yot8zdyppRH8aWR78Zd0m70ZH0Lo6hGGfxjKBjg0z0PYklJSZAr2h1pEamJ167WpIK2SjqHuLCvdfArRBVFU` | `(?:coinbase).{0,40}\b([a-zA-Z-0-9]{64})\b` |
-| `spdb-coinlayer` | Active | `coinlayerFp2My3f5bXflVfIyC1DxEBqy30g8QBLSm42hnei9thesabiffcydqliy5gw2etb3` | `(?:coinlayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-coinlib` | Active | `coinlib5rkLs7GMVGryeK8aSAygUgCDmPq1gh5eibs0cpt3m62cmp3n` | `(?:coinlib).{0,40}\b([a-z0-9]{16})\b` |
-| `spdb-column` | Active | `columnO3mKhoNCGRD1nUlHGOEwyEOWKQWPluBatest_YgALGxVsclt1kstp2vnn0GMu0Iw` | <code>(?:column).{0,40}\b((?:test&#124;live)_[a-zA-Z0-9]{27})\b</code> |
-| `spdb-commercejs` | Active | `commercejsipme9ODeMXxossj69oeVCdJGvC3kGOLT3whikuw9kmbjbcq1mcphnebwhzfib7ivb9_ihch2on44egh9` | `(?:commercejs).{0,40}\b([a-z0-9_]{48})\b` |
-| `spdb-commodities` | Active | `commodities6iolfBxUQqZp3GjAbxiwghneoigImxxZKxSycIfxTYpS7Wfp0ynwIj83GUUJEtP2AE9j3trkc0xt4XrYshVhHdfIlTVf` | `(?:commodities).{0,40}\b([a-zA-Z0-9]{60})\b` |
-| `spdb-companyhub-1` | Active | `companyhubyMT1XTZax65Apg8ITfPv07OZtY1gOXPZ6lwcXwfKHjBKiiQmbUDs` | `(?:companyhub).{0,40}\b([0-9a-zA-Z]{20})\b` |
-| `spdb-companyhub-2` | Active | `companyhubrX1qf7mUJCDeg1c24X3T7L8itWWUldKzpt9m%c5m0PtiktruxWzxzP^NYCpu=h9s` | `(?:companyhub).{0,40}\b([a-zA-Z0-9$%^=-]{4,32})\b` |
-| `spdb-confluent-1` | Active | `confluent424grmrATPZzkQDcFKwHSJXGqhC9h9K5cAhpMF6TYD4eHW5j` | `(?:confluent).{0,40}\b([a-zA-Z-0-9]{16})\b` |
-| `spdb-confluent-2` | Active | `confluentBvC0mL8WdBWoidN7IEJkjNcfH0TDzHjzkKRKe0eXs8LnIwgEy7Vdk9WVHLln93k9WFz6nBbQ8LQhReMUlzFBkOdXkm5pJCjC` | `(?:confluent).{0,40}\b([a-zA-Z-0-9]{64})\b` |
-| `spdb-convertkit` | Active | `convertkitNZNkimeaVCXzec0SYppFjnY6oWgg42mY3tIt3QMpaSoM_uAAeYG9f7` | `(?:convertkit).{0,40}\b([a-z0-9A-Z_]{22})\b` |
-| `spdb-convier` | Active | <code>convierdPMDY7MlYeJk8HcBJM4WmuOy4k2Swz8T08&#124;qA11K9GhG4ukFVURuh5VV65IFo7vhFhpWzmYeK1K</code> | <code>(?:convier).{0,40}\b([0-9]{2}\&#124;[a-zA-Z0-9]{40})\b</code> |
-| `spdb-copper-2` | Active | `copperZaudDcvpw7P6GneLmlGRkvuU1AgDJjrEimwyg6ivs0n01cqd9mnqt05uk4cztuil` | `(?:copper).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-countrylayer` | Active | `countrylayerO99lLZpIw1iw3LusM3Hy7jgAcwOPLq3vcl8atg8yh1f4yxysgaxim7dn8ofctfir` | `(?:countrylayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-courier` | Active | `courierAnz4BY4dqE9pohUGK77EJWGLBttG4xzVpk_xH5NnJd8k5lHrCurmL1FacoyH3xqGpsa_TgpEcWLIFJQ2e4T2CcWmWr9jlO8L` | `(?:courier).{0,40}\b(pk\_[a-zA-Z0-9]{1,}\_[a-zA-Z0-9]{28})\b` |
-| `spdb-coveralls` | Active | `coverallsSX9IIOAHWvGF6oXDvbb8xrRbxmGMK5RwAEGbYlTUaiCAZ15JscOPqppDcviGMBpky1qPQ` | `(?:coveralls).{0,40}\b([a-zA-Z0-9-]{37})\b` |
-| `spdb-crowdin` | Active | `crowdinuOAJjtQwBOdRdvKoiuQW4DhlErzjHUTYeo2hFM59pbVYCd9sjlNH1T9ZeTqd0ajaBycIvFsNruzoOzt8VNqQjySatrrllmZay4MAmNRaVZN4vRTH` | `(?:crowdin).{0,40}\b([0-9A-Za-z]{80})\b` |
-| `spdb-cryptocompare` | Active | `cryptocomparetgzt09QEOv2Jy4IjdVbpWoDLNIjJ18Lic0ct8fhim7chrnr39hkda0ijlospazjaez2cse41jtl3woslmuq4zhtzer8ebspi` | `(?:cryptocompare).{0,40}\b([a-z-0-9]{64})\b` |
-| `spdb-currencycloud-1` | Active | `currencycloudsU2cBgS4YprgRcD5OrJ0ewbwNf7OT7addmr8fht4qpt7gny6dxilp65dckzzbbqggdwrbbk1ek7ooz66spcps3wscluux23f` | `(?:currencycloud).{0,40}\b([0-9a-z]{64})\b` |
-| `spdb-currencyfreaks` | Active | `currencyfreakspehFwsY210cun1IpRAOb8xEQTUmvCcsg8noindjnnvm9jfkw464s7pu7c4alple5` | `(?:currencyfreaks).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-currencylayer` | Active | `currencylayerT8F6q0PlqdOMaXCJDm5J8WjhZQixxQi952rj8z2b80vfjp3u2zvs77u4700suxvq` | `(?:currencylayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-currencyscoop` | Active | `currencyscoopDAAFjvJLwgrgVZdZ7tap2i9nQbwMe8jQvs3u2y5sh2ynunakba5sr78jkawe30i7` | `(?:currencyscoop).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-currentsapi` | Active | `currentsapinBPGGHNefeZ59DBG4Rvl4hIcWAG99zXuhU6wgU37rvwYQ5fGmF0OJkk0xhcYZs8oou6fnPzTk3Qpux0p` | `(?:currentsapi).{0,40}\b([a-zA-Z0-9\S]{48})\b` |
-| `spdb-customerguru-1` | Active | `guruhTMsnO4zxmLn7kNHBWUdhlZRoQKGZQW2ItK2yb7698L4jL4jmEEzTqbnk2tploh7GzYXhdIaTKvtDNtBky` | `(?:guru).{0,40}\b([a-z0-9A-Z]{50})\b` |
-| `spdb-customerguru-2` | Active | `gurup9eHMcNyLubPo9vV9pPlLzKzxjWr3z4TdHMg31FLlY7PxIAqq7rP5bSPNrBhZ4` | `(?:guru).{0,40}\b([a-z0-9A-Z]{30})\b` |
-| `spdb-customerio` | Active | `customern7Z5PrZdJqM5RrQTIr6XwnW9LhJp3Z50v0CpQwulq4P6NwINKnOq` | `(?:customer).{0,40}\b([a-z0-9A-Z]{20})\b` |
-| `spdb-d7network` | Active | `d7networkevsdmPuImRmtOuSlvgSmJM1edzHRuzD84PVAiOc6q74Q3jTZ1iXCdO1=` | `(?:d7network).{0,40}\b([a-zA-Z0-9\W\S]{23}\=)` |
-| `spdb-dailyco` | Active | `dailyU3nPxa3g4QEGaSDoUUc16zn0J7qC74fA406363e85ce349d9b0c85b531817bbad27700171a05c05f214c3852aca5b72fd` | `(?:daily).{0,40}\b([0-9a-f]{64})\b` |
-| `spdb-dandelion` | Active | `dandelionyTxBtPtSZhkuvyU44BXpcxeOzZHr4QmObe8rzcszvrbwrwwhss1e5r1tvabm0vsl` | `(?:dandelion).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-databricks` | Active | `dapi981ed3546d2bc7ed4e448f16807b5128` | `dapi[a-f0-9]{32}\b` |
-| `spdb-datadogtoken-1` | Active | `datadogRjLayeQY56UVZg0U86LvzPB6o1FoVicPfbwPjAWoC8EZ3YX-WwSxkhK9W3H3vJXD` | `(?:datadog).{0,40}\b([a-zA-Z-0-9]{32})\b` |
-| `spdb-datadogtoken-2` | Active | `datadogBn3uMBYRCUzoE5XpEuLjy87hZY1m1QM9Eco9T8I14ExisQay9U09G8xJI2HLrwL4uKLo5KCb` | `(?:datadog).{0,40}\b([a-zA-Z-0-9]{40})\b` |
-| `spdb-datafire` | Active | `datafireLKCwOB6K5Np9wQ83TaatVlDNQ11ml880qs7s9cucsmcsrgaf79cf6kvbpr2zqrsjhn1gozg45pxubctck3n5k30sxvpb6weo2epnhovsraby45gn7pzhnbt20yzrpsm92lkkgkioleu56ibht6av9ebtim87s4nlx718pczliuevr0zp5p3vuq83b6p7jwnpm6fbiq346f2tutn` | `(?:datafire).{0,40}\b([a-z0-9\S]{175,190})\b` |
-| `spdb-datagov` | Active | `dataCgovT73H50y8ABRWIpqmBqFeKMPA3h2QT9GDZfj2yURBBuZy0Fex9bkRlpVEu6azMwNLGmmJFCXk` | `(?:data.gov).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-debounce` | Active | `debounce6tRrzI1b6jk9t5ZbsacOZ4Km1iDeF7kEzXLTzKHp2WsMC` | `(?:debounce).{0,40}\b([a-zA-Z0-9]{13})\b` |
-| `spdb-deepai` | Active | `deepailfd3D7NbPAlI7N2A2e7ijGchYVz67qNBcoizsxuwr0ckeylj-c74rtqhk4b1kcxcb-l4` | `(?:deepai).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-deepgram` | Active | `deepgramGefHUVDVIy24Qb0SXoG7Yu7YdrwA7IIGpftkb9syj6s4t04mtf6loe5j9x4gp03j9vpr2v4b` | `(?:deepgram).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-delighted` | Active | `delighteduXMSGqZbD3NUjRZmQqAfF0RfqeWqX17aKivz9lQXjnOi99Rkop77FP0HLPSyg1ot` | `(?:delighted).{0,40}\b([a-z0-9A-Z]{32})\b` |
-| `spdb-deputy-1` | Active | `9xhgpjryfa9jo4zsxhf0xc2i1t6wz486uashdeputyDcom` | `\b([0-9a-z]{1,}.as.deputy.com)\b` |
-| `spdb-deputy-2` | Active | `deputyd9LqmhG43It2lla4J4FCSYrOG8lsye47ist2033yk48ha7inm1ryj18wgmjmc9cn` | `(?:deputy).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-detectlanguage` | Active | `detectlanguageFEJ6mJGeodYbYriWTEcRBrirZl4VNmdmfau5zpuo3hcokjp0lq14j4w31n8ktei2` | `(?:detectlanguage).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-dfuse` | Active | `web_jteffe8jijqfrpre9xyber0aqs93y9t8` | `\b(web\_[0-9a-z]{32})\b` |
-| `spdb-diffbot` | Active | `diffbotEvnrv5ShGQsuo7aIMVYdTnNr0lUW387Tz9gbk3maykrg0hf1hwfq0xuq4hlmj600` | `(?:diffbot).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-digitaloceantoken` | Active | `digitaloceanhXCszBaYU9yUOGloamjVp4B21BnNm47gXdId0hdjlyWoiSuiSEZ11hXjPcmU4OnzVk9n8J6cFltloWgOhIYpOaYjBvlBUwFF` | `(?:digitalocean).{0,40}\b([A-Za-z0-9_-]{64})\b` |
-| `spdb-discord-webhook` | Active | `https://discordapp.com/api/webhooks/03084547538792378301559812106284/8LUx7QLcnvrNlJOLQajkoZB6kxeu-Hnv` | `https://discordapp\.com/api/webhooks/[0-9]+/[A-Za-z0-9\-]+` |
-| `spdb-discordbottoken-1` | Active | `discordyGVkiWGIBeHXnRXwb3CU2lpTFPvzu1H3WJu5MlMXWFNXNzyQZl8bZ8xg.Nu6SV7.CxdsSpEItcltJ6NjyeLp5By0aMC` | `(?:discord).{0,40}\b([A-Za-z0-9_-]{24}\.[A-Za-z0-9_-]{6}\.[A-Za-z0-9_-]{27})\b` |
-| `spdb-discordbottoken-2` | Active | `discordG47Jka0aiHiqZa05QFH8al7NRxtBGeLf74140325695708604` | `(?:discord).{0,40}\b([0-9]{17})\b` |
-| `spdb-discordwebhook` | Active | `https://discord6com/api/webhooks/666785730147789328/ueZ7IZgjtofdPbq4n-gnHZ-EkzVj04XPw365B1JHKdOpiBpb-nn0gTG5F1ZNAn1PPJTe` | `(https:\/\/discord.com\/api\/webhooks\/[0-9]{18}\/[0-9a-zA-Z-]{68})` |
-| `spdb-ditto` | Active | `dittoe1rDTUPtsZEqfEfMHYBlZfzXhkWAf0bhq0jqadsf-6v1b-74wg-lef6-eba24px9mrri.zmn9zz9y1mpltlz7pm5fk1y3ffjata2rd35gcx9q` | `(?:ditto).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}\.[a-z0-9]{40})\b` |
-| `spdb-dnscheck-1` | Active | `dnscheckaYUbQK0dC096FaHrQ34OI4Q2gAljUzUE963gl8HEE1GgFecznCIlMtDjgTl-PmkOEgXF` | `(?:dnscheck).{0,40}\b([a-z0-9A-Z-]{36})\b` |
-| `spdb-dnscheck-2` | Active | `dnscheck9rRTXxsXw3M73qw61wmGeOZ9VJspkUqddCc6rYifSwfesPrdaMP0rupJK2UEyHy6` | `(?:dnscheck).{0,40}\b([a-z0-9A-Z]{32})\b` |
-| `spdb-documo` | Active | `ey9nVVTOVlsDY2H92U54aKpf5S383LIL39GhgeyoZ4RuWP2WIH1sZ4szKZLqmIbzv361I9Hl5awB9Y13Ea400x8D6VKbad6cEx4ta2txEHTdtosFbhWuOjzGr2E7NsKhssdYHozDeViIBfS4V1HWLZp4vRB1gWvTQaH1LYl2Me7RL2Y6Xf0yYpY8wAAvHC3LpYwjYB1C-IhuZTWgpi-dj9p8X1mjUQbgiADI7SHjucP7P` | `\b(ey[a-zA-Z0-9]{34}.ey[a-zA-Z0-9]{154}.[a-zA-Z0-9_-]{43})\b` |
-| `spdb-doppler` | Active | `dp.pt.Dzp7APjXhRM4m2nd6Cn3nzzuT3t5AALqsqpfZ0EwneM` | `\b(dp\.pt\.[a-zA-Z0-9]{43})\b` |
-| `spdb-dotmailer-1` | Active | `dotmailerRiFVLC8YUyZn3sic1qwyOcnvVUo593Cfapiuser-dcsngwkkboxw@apiconnectorJcom` | `(?:dotmailer).{0,40}\b(apiuser-[a-z0-9]{12}@apiconnector.com)\b` |
-| `spdb-dotmailer-2` | Active | `dotmailerXq5CsW6bXbILoPw2vJ5Hrq9WdX4N0a6wghdlTIlRcGnAHKqfSf9N8Cpp` | `(?:dotmailer).{0,40}\b([a-zA-Z0-9\S]{8,24})\b` |
-| `spdb-dovico` | Active | `dovicoXrJq525VZ8YzXKi0FRmUE6DyzhpFdP4nbnslw0en0ovxhohwdx1e0q1v0a8j2usz.073dgqqaf51toz5c15xlvy2hq8u7doyg` | `(?:dovico).{0,40}\b([0-9a-z]{32}\.[0-9a-z]{1,}\b)` |
-| `spdb-dronahq` | Active | `dronahq66l6MLyMQjz8dWLLxwcyrIPJmWleZaEM3610kfcfa79q32gibvxsw9bgnqp88t3g024s2gyuonzxsy2qmb` | `(?:dronahq).{0,40}\b([a-z0-9]{50})\b` |
-| `spdb-droneci` | Active | `dronecinhdz5dM9wqFNbUfKeya4V3h9EptRAzxIXxjhvQU3YbhcImHEkVjTiNgqrKRSsKdK` | `(?:droneci).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-dropbox` | Active | `sl.7ENSLwKQCBgy3aZIOfyCNOMYhBqks7Mh9Ub-JHqCI-Bl97hjEd10J_mDx80KQUiw1txM_KII9DJtgPfnDZoyZFObSVOrMi-Gn8f8H_i5I9zsu75UHUCWwkwCgJ2IUAdNvf` | `\b(sl\.[A-Za-z0-9\-\_]{130,140})\b` |
-| `spdb-dwolla` | Active | `dwollaeGH1B8nxJ2DgkgozaqsIif9ObExztKQR0dfVOfgciS1cOx4pLq4XcsBQVmFwT0pL48rRHeXT71RxcvfgIH` | `(?:dwolla).{0,40}\b([a-zA-Z-0-9]{50})\b` |
-| `spdb-dynalist` | Active | `dynalistKGKpZRUfGa6iaYxm6hNlBmwLch6D8jPj49s850Nrsc1c54YCSe-x4AdzScw2erZEi8tsWYWRDn2yVpDtubGJhY5kCqGep366MjPlUO22Gx57OAV92O1UCNvFf1OEJy2d3n3zvFBmKOjaJKLkWteY_KrPjQq3FkZk` | `(?:dynalist).{0,40}\b([a-zA-Z0-9-_]{128})\b` |
-| `spdb-dynatrace-token` | Active | `dt0h31.76E142BGJB2C05SRRB72JBWH.TNOFRRNLNNWIRMS21ZVALV97KT1HX5BBOE1KIA909A01LTLVRGMKK85FD0J445N5` | `dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64}` |
-| `spdb-dyspatch` | Active | `dyspatchs3eIJMxM4hTuMtS0aVG0HLlKaRCZ3HfpWZT24AQQFP5RJ321JPFKSU4ET8YETP23L6YR9DK1TF29A2S9K401` | `(?:dyspatch).{0,40}\b([A-Z0-9]{52})\b` |
+| `spdb-abbysale` | Active | `abbysalerYeBwcocIsaDZbqjlknoCN2lmmZih4LRt9qKeDOxtmxsa9r8WwcqZW12fa2urXMcLZktgvcz` | `(?:abbysale).{0,40}\b([a-z0-9A-Z]{40})\b` |
+| `spdb-abstract` | Active | `abstractH47KHrTa8Hbv4GmWBuqnxqBDrmJ6xrDcn3s6z79tjgqz70f75z8a9jz2pri26n4y` | `(?:abstract).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-abuseipdb` | Active | `abuseipdbNifVyv29YJW6TI8F8g2SYoTXRE0nm9FV9c4uj7gfblfr3cbtjq6y4molslljjcn7aq5bnwvxzjlshq55laehchf1jbayczh7qifkyz45l5wn3e1i` | `(?:abuseipdb).{0,40}\b([a-z0-9]{80})\b` |
+| `spdb-accuweather` | Active | `accuweatherpErK5kAT62XpwcyY5MDumuSqdxUoJmZiRnGqE6C8aRFsq7lFrikEkVqTW6y9lgjaWcb` | `(?:accuweather).{0,40}([a-z0-9A-Z\%]{35})\b` |
+| `spdb-adafruitio` | Active | `aio_CnTD1tJDNkyQ6MdvR0Xwdejwlfvh` | `\b(aio\_[a-zA-Z0-9]{28})\b` |
+| `spdb-adobeio-1` | Active | `adobejfRgZ6kVXLzR2fBM7NGVRVVXPNsHQq96qw8u4ubphfmzfselb7puvjuome6e7x6a` | `(?:adobe).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-adzuna-1` | Active | `adzunaGtReRutYTIr7FHebU7FK91BDvpZHmnFSnokseos3` | `(?:adzuna).{0,40}\b([a-z0-9]{8})\b` |
+| `spdb-adzuna-2` | Active | `adzunaN60anXeltJjVsEcKhAeNvzBOlqjNKuqyomwcduhrdgfchxe2rzaqlaxirz79fmgw` | `(?:adzuna).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-aeroworkflow-1` | Active | `aeroworkflowDa3t7JqVgl6YTHI22KLuhNIxVbrxHxdo51122964314292797959048840448520` | `(?:aeroworkflow).{0,40}\b([0-9]{1,})\b` |
+| `spdb-aeroworkflow-2` | Active | `aeroworkflowbzREvzvz7nwEPRAMF4k0xZOFVKEq2qiiDVUqAwZnaGIzTXAXlX^G` | `(?:aeroworkflow).{0,40}\b([a-zA-Z0-9^!]{20})\b` |
+| `spdb-agora` | Active | `agorarmXVsuGk9oLPn043ugR61loEYdFhXbmnuukfjraqjwz1v7gb38ocy94faxvf8l6o` | `(?:agora).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-airbrakeprojectkey-1` | Active | `airbrakeb0pwsvQqmzYPGTRatlDYPDQ4SpyPvqji403421` | `(?:airbrake).{0,40}\b([0-9]{6})\b` |
+| `spdb-airbrakeprojectkey-2` | Active | `airbrakeY6htwvMEjCbdegrpQSlJJTdCTcTO2RBWzm5qhUNSU1w7saaDSs6QZC5FMhTbEq4f` | `(?:airbrake).{0,40}\b([a-zA-Z-0-9]{32})\b` |
+| `spdb-airbrakeuserkey` | Active | `airbrakeLH5Bv3EveCA1MjUE1daIq76pvdJ27cfg119YJUVA67xs3SU4gYqxT7PDoMNRtJGgWjW7S4u6` | `(?:airbrake).{0,40}\b([a-zA-Z-0-9]{40})\b` |
+| `spdb-airship` | Active | `airshipi1N34ZVVeHCXZu7wqwbiuOWeg10ZdtM58jSrLLaj0MBvizQSJtXacgeZU8oTR7uAL7HW2l28V0JXHW4nyKHTkAsAsn46jeCH4zew9AAJw2NC4HiemJp0AuoAMai` | `(?:airship).{0,40}\b([0-9Aa-zA-Z]{91})\b` |
+| `spdb-airvisual` | Active | `airvisuallQolHVai7iitAddUcngZlADCFmlgLIxHtjxst3z2ji87weu5uq3f58w6ejzsoo-y5w4p` | `(?:airvisual).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-alconost` | Active | `alconostnavv72YzgvuiLqzNGSd78UVubac5r2c79k77jr24myfwflioyr0cty9bn3hbw74m` | `(?:alconost).{0,40}\b([0-9Aa-z]{32})\b` |
+| `spdb-alegra-1` | Active | `alegraz3UOSHZDhctVhYeoOxEZIxnEh8jnBfD1ez0y3ct7wh19q0msgh6b` | `(?:alegra).{0,40}\b([a-z0-9-]{20})\b` |
+| `spdb-alegra-2` | Active | `alegra8HNyj48z59xUKCRMyXPIVu5KQ57av61sZF@WwiAugnj@y89v.7Xh7B@u7kDOMG` | `(?:alegra).{0,40}\b([a-zA-Z0-9.-@]{25,30})\b` |
+| `spdb-aletheiaapi` | Active | `aletheiaapiZtN9p7Rl5WEmLHxCLxIgT55UPiNex5FJ5AYYWDPQSKLPH8O6BSUWR9DK8ZS8PW5A` | `(?:aletheiaapi).{0,40}\b([A-Z0-9]{32})\b` |
+| `spdb-algoliaadminkey-1` | Active | `algoliardXhWEl5V55IdHuNG0LlDdfpQ1PaZcYQJ00NW1FLY1` | `(?:algolia).{0,40}\b([A-Z0-9]{10})\b` |
+| `spdb-algoliaadminkey-2` | Active | `algoliaPNyw71UWKmmbjLlsSwownRhkUHRlr53dotj73eoP0xTeLwmty3EX46VVp5NyNLm1` | `(?:algolia).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-alibaba-2` | Active | `LTAInVEipELPhlUSUeJuj9xYm' \x0b'"'\n\r\x0b"\r""'\r\x0c\n ; \x0c ';"  '\x0c;\x0c\r` | `\b(LTAI[a-zA-Z0-9]{17,21})[\"' ;\s]*` |
+| `spdb-alienvault` | Active | `alienvaultTjGfHx2E00MOT6dA9R3ovXmnAC7p13Hghvzv8rlqezx2xr6oua5npm0bm8tvijpccbb1nkec6gb7wppd8us7trj8ioltmah9` | `(?:alienvault).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-allsports` | Active | `allsports3ugNQMt4DndRuSXnHNb6oOmlKjIG2PyImrb3s8tnwizkn9v8na2kr7azbn63rmau89c58t5kwk851rfawfxyg3rh3c79l62t` | `(?:allsports).{0,40}\b([0-9a-z]{64})\b` |
+| `spdb-amadeus-1` | Active | `amadeustRrYrvXTS8mqHibeDFk5WyO5gEqGI1bTDjmHZPs1UPl5VXAXGUE8OzFmWy1X9CwN` | `(?:amadeus).{0,40}\b([0-9A-Za-z]{32})\b` |
+| `spdb-amadeus-2` | Active | `amadeuskOSBXUFoK3hD3Dqepn5KQCrahkBgcMxVs0iov2HH5XJ1thwU` | `(?:amadeus).{0,40}\b([0-9A-Za-z]{16})\b` |
+| `spdb-amazon-sns-topic` | Active | `arn:aws:sns:efixavdxv3a05mm8irrzxp80tzup8cwt:38341197046781341191477884604819:XwAUziQXp6nfvF4BQqjmAl_SPgPn0C1S` | `arn:aws:sns:[a-z0-9\-]+:[0-9]+:[A-Za-z0-9\-_]+` |
+| `spdb-ambee` | Active | `ambeejSyos1I7d2VHN7iaNQDoi26G9KvAh1sX921c40d4183ae87129e751900ecb13dfd67e9516261921b025310e070f5da7d0` | `(?:ambee).{0,40}\b([0-9a-f]{64})\b` |
+| `spdb-amplitudeapikey` | Active | `amplitudeGa0cSxH1SlKkd8F8O12hBPsKgnicCGEsa2a5a44dc1f42cc9c361c74087f144ce` | `(?:amplitude).{0,40}\b([a-f0-9]{32})` |
+| `spdb-apacta` | Active | `apactafMYFLOTfETYy8LR2JEsNB1dmwd6aL3IPbmvsos89x8a27f-pey8p29bfc1-34l6180ow` | `(?:apacta).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-api2cart` | Active | `api2cartpXlCq7FLOWTB63mUcUee6wtZl7z3CHjM3d2130a7fea5409626ea1e9d63f637bd` | `(?:api2cart).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-apideck-1` | Active | `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` | `\b(sk_live_[a-z0-9A-Z-]{93})\b` |
+| `spdb-apideck-2` | Active | `apideckfW5C2iLPhvRFYxPizICyTAX7ckRSoAHlhYsT5nwj3u0U5G6nozxPBYQe6oXCNacX03ujJJDc` | `(?:apideck).{0,40}\b([a-z0-9A-Z]{40})\b` |
+| `spdb-apiflash-1` | Active | `apiflashoVMoixpQJoC1KjoCN6mPpWr5J8295EWCjer07w5h4boky9d6lbbuef2148rkxy32` | `(?:apiflash).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-apiflash-2` | Active | `apiflash1wa9Fu0ZYTOBuYoW3b1udcUipjXtVUxKmDM7yk6CSZefT32U2MzjDr4LjNSa3P` | `(?:apiflash).{0,40}\b([a-zA-Z0-9\S]{21,30})\b` |
+| `spdb-apifonica` | Active | `apifonicazFtOBXgNW8ZvQOKYho954YyLPmMpCEYkbjm80xsv4av-xn24-wyxs-3tci-p3119e6cw2ib` | `(?:apifonica).{0,40}\b([0-9a-z]{11}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-apify` | Active | `apify_api_889ZnJTQehtgOxbgMFoeMqX-6rA0ow2hgZez` | `\b(apify\_api\_[a-zA-Z-0-9]{36})\b` |
+| `spdb-apimatic-1` | Active | `apimaticjbmkYCrxu324qXbz95MGeKqx2E9qEO8Izfh4gxyubk7rp6alqc1qujfum1ph9ezb` | `(?:apimatic).{0,40}\b([a-z0-9-\S]{8,32})\b` |
+| `spdb-apimatic-2` | Active | `apimaticjkPUclqNT8lU7cbMHzCF5zCE7SFpYOIDoe84VdZ9xkiSvMRMYhGi@cCLUSqFNzgbtzGU6uj` | `(?:apimatic).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
+| `spdb-apiscience` | Active | `apiscienceb0h2UEiXoTAtHpyLhQaBSdlAWiBryr43WK4IQDCDVJRPLA65SQJX4K` | `(?:apiscience).{0,40}\b([a-bA-Z0-9\S]{22})\b` |
+| `spdb-apollo` | Active | `apolloNoilg4nQ0CV4eZrIPeckjUHbFjAH4V9ea2f5L9r2GjXhQocuBZuw7O` | `(?:apollo).{0,40}\b([a-zA-Z0-9]{22})\b` |
+| `spdb-appcues-1` | Active | `appcuesOpgqNBdt2lxceBuz2rlqfiqh1B7zbZDb80554` | `(?:appcues).{0,40}\b([0-9]{5})\b` |
+| `spdb-appcues-2` | Active | `appcuesT7NwhFOhZ5tUPLAoGwHsN1TZa29WTzbWpgl3anwfoknome50kevvpeg2j0matdqi3ezk` | `(?:appcues).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-appcues-3` | Active | `appcuesl3BFKmAR1kIt9ioFh5EFmgXAkaF82ovFphy-jbieuvo5s56dbe14x0j1g5oz28r2oz1uwfu` | `(?:appcues).{0,40}\b([a-z0-9-]{39})\b` |
+| `spdb-appfollow` | Active | `appfollow4eJAieBsTbL1ZqSyySgW9U9ym5k8k65l2pb3KLySGsab53ZC3I7J` | `(?:appfollow).{0,40}\b([0-9A-Za-z]{20})\b` |
+| `spdb-appsynergy` | Active | `appsynergyglgdETQZ8F1CKp8nMvzpDxVQnaQloUdS5jzrrse5ugug9elr1jj565gvivk9d68prb18hr6y0w8eeatum9728dy5dadp1js5` | `(?:appsynergy).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-apptivo-1` | Active | `apptivohs7ihaT96UYFGQ6dZ8HTgChO6RMwLT1gshwtm7j0qi21kz0gdhznpiq041-lk761n7ej` | `(?:apptivo).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-apptivo-2` | Active | `apptivo0GMRaRvyXQdGh3d3cvt6Rt0qwTVDFx10NyyAYxa9M8VL0MD7BHSjt38-DQZTkvvA` | `(?:apptivo).{0,40}\b([a-zA-Z0-9-]{32})\b` |
+| `spdb-artifactory-2` | Active | `BHXZJ1wK7sKO1LdjTX95w6FIllQ8LfqQeH.jfrog.io` | `\b([A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])\.jfrog\.io)` |
+| `spdb-artifactory-api-token` | Active | ` AKCvgAnu0vkFgg9wWkMneRf04UHzcb32s2h` | <code>(?:\s&#124;=&#124;:&#124;"&#124;^)AKC[a-zA-Z0-9]{10,}</code> |
+| `spdb-artifactory-password` | Active | `"APE4LtWfXr0qAm6s2RLcHrEOWrMd3qbAVVx` | <code>(?:\s&#124;=&#124;:&#124;"&#124;^)AP[\dABCDEF][a-zA-Z0-9]{8,}</code> |
+| `spdb-artsy-1` | Active | `artsyXYhmlRvkgizjYbYk1Yh7DUuOPvhCMGTfz8LlTSJ6C7JK2VRewZwr` | `(?:artsy).{0,40}\b([0-9a-zA-Z]{20})\b` |
+| `spdb-artsy-2` | Active | `artsyztBFdwh9Ru2ykJSzBVwTlNnBexsCfKhVNYSAiDEoKZmC9FSvVgx5ZKKrhWUHPPqa` | `(?:artsy).{0,40}\b([0-9a-zA-Z]{32})\b` |
+| `spdb-asanaoauth` | Active | `asana2yKWCcvAWvO417ObqbKtTCw9ye2cYkI7d/r/tzd4thyprau8lkxs4q0usutid1l0lbnrc3vt73c51rv4xxd` | `(?:asana).{0,40}\b([a-z\/:0-9]{51})\b` |
+| `spdb-asanapersonalaccesstoken` | Active | `asanaXIzrEUiS9rZHcMijH5keH0ZR19VQD81178089435778746817083661407049792/62075804407429986802057177776222:8B0OZKEZ3GYxeeSh7g1TpzPM1UlkzMZd` | `(?:asana).{0,40}\b([0-9]{1,}\/[0-9]{16,}:[A-Za-z0-9]{32,})\b` |
+| `spdb-assemblyai` | Active | `assemblyaihK4tK3dsDEUO5fWN659ohLtam1seQGpnihnpcewkq8ezzcd5vosi0c5svybjxwob` | `(?:assemblyai).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-asymmetric-private-key` | Active | `-----BEGIN RSA PRIVATE KEY BLOCK-----` | <code>-----BEGIN ((EC&#124;PGP&#124;DSA&#124;RSA&#124;OPENSSH) )?PRIVATE KEY( BLOCK)?-----</code> |
+| `spdb-audd` | Active | `auddgDPRb0YfwLdt2KM7q1kg5LQYOLou6897tlymi11fl6d5-h2q0xd2hfkodmzuedkp` | `(?:audd).{0,40}\b([a-z0-9-]{32})\b` |
+| `spdb-auth0managementapitoken` | Active | `auth0hZR5zvZ92VWEDOvajMxuwdwvkZ9yzxANeyb9lO0XH7Hi9XpiIm8XMth_YdHTgNCagN` | `(?:auth0).{0,40}\b(ey[a-zA-Z0-9._-]+)\b` |
+| `spdb-auth0oauth-1` | Active | `auth03oTMy6STJU2ut3uia7MViiN7O0FJ2q2iw2dJIG2WowSFnMByubiMW7afqh9iTP0i` | `(?:auth0).{0,40}\b([a-zA-Z0-9_-]{32,60})\b` |
+| `spdb-autodesk-1` | Active | `autodeskvsxC54g6CNw3AfcNtEa0va1C5PbfCW0z6DdUbHiadj3h2ElMU6VWIyaiSYF5Wp1Z` | `(?:autodesk).{0,40}\b([0-9A-Za-z]{32})\b` |
+| `spdb-autodesk-2` | Active | `autodeskaH9MvgJACegrfFRqQHbraiArbsAeXEatu02PaTWn3k4msSwP` | `(?:autodesk).{0,40}\b([0-9A-Za-z]{16})\b` |
+| `spdb-autoklose` | Active | `autoklose9NcKNIheddNselNdnElddBVI2mCY2LUglXzvywEe1GYZs10PjVWukZObtEZcacTH` | `(?:autoklose).{0,40}\b([a-zA-Z0-9-]{32})\b` |
+| `spdb-autopilot` | Active | `autopilotAI56ocUffRjCq6tUTwpyNh1DhdURJCcj6c469a70d46174d3b9467982e02b929e` | `(?:autopilot).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-avazapersonalaccesstoken` | Active | `avaza7JEDwZOJg7F7yJ3DBDPmklNwqslGJudg11063599304884540096306000830615-86126781777a87fb7c1a1b51f9a6da293065ae0c` | `(?:avaza).{0,40}\b([0-9]+-[0-9a-f]{40})\b` |
+| `spdb-aviationstack` | Active | `aviationstackZaiKqzuBS6DKhdwYFdqmFtEv9tU1A2FPx9ndw3wu9z7ub5sfrzil8mwf5yk3p2d4` | `(?:aviationstack).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-aws-1` | Active | `AKIA4M1GUK29QR4MHOCV` | <code>\b((?:AKIA&#124;ABIA&#124;ACCA&#124;ASIA)[0-9A-Z]{16})\b</code> |
+| `spdb-axonaut` | Active | `axonautIxMaU1QSRu6XqrbQX6VmIA9Y0DoJ5dXPc1y5p4kxbv5zfi34ssgs1d6gvyibqwpq` | `(?:axonaut).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-aylien-1` | Active | `aylienUh8JT4ojKJwwPYfUIa2VKEVVtA6n3ehqosghd6qogh9ag886n7bygn36d63j70km` | `(?:aylien).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-aylien-2` | Active | `aylienoTw6WyaFMo1ZGY3GQmtnFTlFO4TrmBm9wr5k2dv1` | `(?:aylien).{0,40}\b([a-z0-9]{8})\b` |
+| `spdb-ayrshare` | Active | `ayrshareAVwRpfIK68VPFWKT0RopkInNDpTARLuiLQCCZXO-4GS6ZK8-KCVZ7LE-F0DB5Y0` | `(?:ayrshare).{0,40}\b([A-Z]{7}-[A-Z0-9]{7}-[A-Z0-9]{7}-[A-Z0-9]{7})\b` |
+| `spdb-bannerbear` | Active | `bannerbearHESF1tDqUWApIJ7u56D0qkpIecREiGr5JoC2A3kSnMEdlnTtQ2l1zDtt` | `(?:bannerbear).{0,40}\b([0-9a-zA-Z]{22}tt)\b` |
+| `spdb-baremetrics` | Active | `baremetricsepWsli8fUfCjnYe05RmUXUkimmaHDWNxXXKOYwCTQ5mzbjROfyBZHAPTV` | `(?:baremetrics).{0,40}\b([a-zA-Z0-9_]{25})\b` |
+| `spdb-baseapiio` | Active | `base-apilcoqNRNjxB7BhoJgEEdxoFTLxOcprACK14c5cc84-d888-5ed7-81a2-0f6b962ba6a6` | <code>(?:baseapi&#124;base-api).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b</code> |
+| `spdb-beamer` | Active | `beamervTO0wv6ltvmPeTaQ7QN5FF78tNQ4poXObHGg2aoO_lb9wuIKlNLdMs31z2eg0U4DLOBAI4YKICtJh=` | `(?:beamer).{0,40}\b([a-zA-Z0-9_+/]{45}=)` |
+| `spdb-bearer-token` | Active | `bearerJMiST5efKBy7RmvVRZAyIu8Sahv0NnQM` | `(bearer).+` |
+| `spdb-beebole` | Active | `beebole4kWGd710mVSn6718BHqgtZiWhgRcQlnV7a7a9vsyvu96dmq9nx3ahyhfwo309shs6blmin9e` | `(?:beebole).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-besttime` | Active | `besttimeC53euvZaBY7I7lQjjl64qF5X7xiTSdTblsUbRqs1pmZoV_y2o0UKK_byjaPfK8bFBbDv` | `(?:besttime).{0,40}\b([0-9A-Za-z_]{36})\b` |
+| `spdb-billomat-1` | Active | `billomatnuuEg6zID3ISWUb9F5rgH0P38grLYTZCo661hpo2fjobxtiju8virhbfzovenqcf` | `(?:billomat).{0,40}\b([0-9a-z]{1,})\b` |
+| `spdb-billomat-2` | Active | `billomatBTRVl0m5x0biuQKN7fJJRXotlq0XAR0xc6axbz3sm337bovm1mr2zrc91kblqtub` | `(?:billomat).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-bitbar` | Active | `bitbar6U6lNoMum06d7f8nq0EyVrkkYrnDHawRpnyftgrgigheip37vfhvdrygkc48l144` | `(?:bitbar).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-bitcoinaverage` | Active | `bitcoinaveragejwSxj1x2As3F9ZZ9LB2JLuZzLvQLMumLiA8wzY0p41yllANbyIQgnZOUTQyupPvVvh2fnicnXRt` | `(?:bitcoinaverage).{0,40}\b([a-zA-Z0-9]{43})\b` |
+| `spdb-bitfinex` | Active | `bitfinexaDYK3HeYnmVDpLjra31nVl83sSO2f1XXgjU59jwy4iifB9FNT5qvTzJcrW418Ql55hyG9-QKthC` | `(?:bitfinex).{0,40}\b([A-Za-z0-9_-]{43})\b` |
+| `spdb-bitly-secret-key` | Active | `R_ac59f92ef93f6104fa932367ec6fd22d` | `R_[0-9a-f]{32}` |
+| `spdb-bitlyaccesstoken` | Active | `bitlyCOUHrO6CYQowlCrUtG812ao4P89gKa0Xib7ft4PnkWvcZUyzAn8poKHdOuv444WwOCRpKMCz` | `(?:bitly).{0,40}\b([a-zA-Z-0-9]{40})\b` |
+| `spdb-bitmex-1` | Active | `bitmexhPJ1kshv3QH29luLX8hTn8QROfy8OKCq\nNAMIadJExTMtd799iCL1KQBn\n` | `(?:bitmex).{0,40}([ \r\n]{1}[0-9a-zA-Z\-\_]{24}[ \r\n]{1})` |
+| `spdb-bitmex-2` | Active | `bitmexasbsY7PhQTdKV0bLzmjC7qRhS7BbZulG\n7MuR9-meCJeeD-yIMJKkCa_x5qAhi2OCmmiJJAq7kBYEGv0Q ` | `(?:bitmex).{0,40}([ \r\n]{1}[0-9a-zA-Z\-\_]{48}[ \r\n]{1})` |
+| `spdb-blablabus` | Active | `blablabusKjTrxsyzRoCOs6QgQqZm8WsvKjpFxznZ58gs6hpArRFDofcDzW0T4l` | `(?:blablabus).{0,40}\b([0-9A-Za-z]{22})\b` |
+| `spdb-blazemeter` | Active | `runscopeeggWMVBhKqhK1mZdOjG1QPpDp5JxKrHO1pez8qdy-5s5j-hcfb-tuh6-ic6nnda0n755` | <code>(?:blazemeter&#124;runscope).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b</code> |
+| `spdb-blitapp` | Active | `blitappXIeLA0MtVvBNgYJ11LurWWV2wqVswjZqLqHUTkbAodh9fmkKNYCVEz44XZ8GlSViA6rm2CY` | `(?:blitapp).{0,40}\b([a-zA-Z0-9_-]{39})\b` |
+| `spdb-blogger` | Active | `bloggerlzdDnBKaYbVAVMIg4zBmvYEafJC1rjoBulICOPjlLnDpORd8K27Yyu1WZpLLi6jdmyaulBP` | `(?:blogger).{0,40}\b([0-9A-Za-z-]{39})\b` |
+| `spdb-bombbomb` | Active | `bombbombUWNw4vHIJY85NTJF9U8xY0qjri2VakQKFabT_nGSDehAcAGHZF4zifPJEZ4NibjK-rKBB73KlhzDZTQsMFX0pih.7A1bQHdLx1aMEsEBUBoahJvpy.foltu_OJ.vvJVtn3-vmvnNeKkhC33eS6B-e7P0A-yRtZ0_pyx1vRB9bp4K5Am8ViJJkzWRuvkZzQy_OhBgl37FIkWdE1b-wGTaUg7KbVN6YG78waOsdbtu1xy_Fb_YliX9jFZBQSV9LDYYzCfqzBtlJL1mds_enL.KS.23tNSJuufQSvjbLZhlxkbXqQmIWdxJZ5g8mgxJVjDOCHVdIQzBmUPv7edC11nvJc-KPB_RXZ8rhYOXzMKNLoOcHB4xsCo9PEBtoOk1fFfitnVmufY5ejtRnw76nKdnbHPjxNu8ePJwNDEzbZHCdXDZAfeNOo8h_MrRc4B8pEZdkktpapOC..RPXhBnzF6amJalrjQHUg-5_zr0V7008RvhvXQ8yU6hzH2NX6lAmKB.vOXrzPJwgldVWaieIqV_F6Y2w46oBM62OFoCtwniSsMmKBdsGKq1vGe2nP7RytgqE_GcCWScfjm3OqMAN0H4r2k_Mt5FdJuZdq.-qIv-fXWjS5CxJL7-IOrEyzXNtsZ6pV7yvOr41vffmApMP7afDjxIBJ.5QI-pn61ibRTqF4_DLNV8yThzQu8.D6ZAduGFxCK543H0usoUslHIjQWxc7zqHjP99P3X` | `(?:bombbomb).{0,40}\b([a-zA-Z0-9-._]{704})\b` |
+| `spdb-boostnote` | Active | `boostnotecoBgHqW9NylkPv3ddW4t09UlXcZh5AsSb35b1c789bf27ea8183856535a9c1d9008cf1db2786d351ee3fad7e429e87a9e` | `(?:boostnote).{0,40}\b([0-9a-f]{64})\b` |
+| `spdb-borgbase` | Active | `borgbasetXoqUvTwipKCwr8Dx4I5i0tuockPZ0iougAtb87PbXnfFkYHwqMTxIasckcjsPqNB188n4vs8Wvvlnlgke0bKZ4vKiT6F.Q2a_QxxFvaKki_Y4A-NeQG8FT8gHzP._g0AN1rkjCzCUiDXu.h5cPp6m0QINeF9b68PtSmVtn3AtClThG-Ma09` | `(?:borgbase).{0,40}\b([a-zA-Z0-9/_.-]{148,152})\b` |
+| `spdb-braintree-api-key` | Active | `access_tokenproductionmpbmq84ivpfdavzz28a1c1d6c633ac011a2a9185d188f641` | `access_token$production$[0-9a-z]{16}$[0-9a-f]{32}` |
+| `spdb-brandfetch` | Active | `brandfetchE3imuwFxcNXqn9vuJmSf9a00AJ9HxrFQ3Qjnaf2V7f2EHVR87oIYSrGtHKQW6Bt9O61EZ3uX` | `(?:brandfetch).{0,40}\b([0-9A-Za-z]{40})\b` |
+| `spdb-browshot` | Active | `browshot5uDFqNxeMi3fUaGtX7aFaarRwP0siP6rkaD1AbAe8bcfw6VgvGU3crIK6opi` | `(?:browshot).{0,40}\b([a-zA-Z-0-9]{28})\b` |
+| `spdb-buddyns` | Active | `buddynseHzEQgftLQ1m2pLVfnSxcH8MfWFVXwdsmwy836cnl9t4ddcluymtzk13zplw78cnnu0es4ot` | `(?:buddyns).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-bugherd` | Active | `bugherdabcdnbUBunqSxzoR0gn3RM6g0aGq4fWe1n41fu30eyi3lfptqzdl9f` | `(?:bugherd).{0,40}\b([0-9a-z]{22})\b` |
+| `spdb-bugsnag` | Active | `bugsnagU7yVMtubLyAG8U8YnuizXBK6YLRVASiPbg66pepc-v0m9-yiiw-nldn-4wozqymgupsh` | `(?:bugsnag).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-buildkite` | Active | `buildkitekqEgbWNuB4NlrgHUZQ1jbCOlIRK3a7f0a3up4hx8eejqf3lslfcy8v6s4yuilkf6expusj8e` | `(?:buildkite).{0,40}\b([a-z0-9]{40})\b` |
+| `spdb-bulbul` | Active | `bulbul7jb2o2Om8I613ouqG2oFCmTije28OV3cdz2odg5e3vpjej8dvpc0u5ti2f6xnwj6` | `(?:bulbul).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-buttercms` | Active | `buttercmsLVEk6daAd8VSguGyemWoJdFZx4DM9f84duweuwdwdspg5vrfzhmaet8v2khpr36ftn6f6wiv` | `(?:buttercms).{0,40}\b([a-z0-9]{40})\b` |
+| `spdb-caflou` | Active | `caflouna0CRt66mOW62aoRxTcu6YTAkDxtAjK3DDM3J2MZ2MXDbS3USE4IK1E68J1XbBFTB5VDKH7259AbRVEDIBBLXH2C5YY9THIM57NaQIN8Z7NB29CBZTYMUVI4TAYBTCE65BKDHFDIa8I2T0P1G5YUZSPTNQRY6bSFLEDK70B95ON5U3PbKQQ6GAC23MO` | `(?:caflou).{0,40}\b([a-bA-Z0-9\S]{155})\b` |
+| `spdb-calendarific` | Active | `calendarificwUXN6W4WkIH0kCcuZ3DFXOXxZgzaPaw3m3clge3h4je7qnepqhwmk0bffv9n9nhikbze1z4y` | `(?:calendarific).{0,40}\b([a-z0-9]{40})\b` |
+| `spdb-calendlyapikey` | Active | `calendlyIvILJAr8TQQWn2XfGpqtmU0KyKnkTf2wKtE3DiRrWpHqYAwoAFuNIDhi1iUrbvAkwHnPQC5ZmUXYXIHdtDsiDkKI7MyZKeQni7h6JZPFcGmQ92IEwHEjphRPF-xH0VQC3HFshYmD5-GvC603AfsiL2ifPn1UhYNb5vGzPd4s4u8paz0uJKYS4K8Z6DI65xZ3YVERMcrhmYzucjos3C52LtX8K2vBi-lMNZqcvHemRIIwWlAvv6m2QgjDj9y_uxBdnlwRNhZ0wovr` | `(?:calendly).{0,40}\b([a-zA-Z-0-9]{20}.[a-zA-Z-0-9]{171}.[a-zA-Z-0-9_]{43})\b` |
+| `spdb-calorieninja` | Active | `calorieninjavId8HEtmZdl3rFo2w4EKL6crYhPx08bmwKCMEXb5yiyvQzBvFV4GRsd24gZGsOD3Fh9b3UOv` | `(?:calorieninja).{0,40}\b([0-9A-Za-z]{40})\b` |
+| `spdb-campayn` | Active | `campaynIXxjqZInJiUCcuwwNdqxRFtlMEFcLOGO3x9n66btpw9znbm16khmh20zfaoocgphkykyrn3htc2a2s7r0dvg0wq0076tb39l` | `(?:campayn).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-cannyio` | Active | `cannyKWBJdPyBIht8jWZR2A4ukpQVS9A0wKvxhpa6k0tu-ejwt-1u4n-7753-w31jxcu4qr5h` | `(?:canny).{0,40}\b([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[0-9]{4}-[a-z0-9]{12})\b` |
+| `spdb-capsulecrm` | Active | `capsulecrmNtBRMzOqAfPjgFYhJYcLsY2wngq85bX7GiCGA+_65ojRsbq2Lmpa5qoYRpeAoxvzlKyvUPMVYpWX64v6_IWm2P5sDj74psHF` | `(?:capsulecrm).{0,40}\b([a-zA-Z0-9-._+=]{64})\b` |
+| `spdb-captaindata-1` | Active | `captaindataWZieONegC0bqXPpQN4l3mMZsmLnA1Ofx9e870ee9-bba1-c15c-4bd3-14bc84ef9f84` | `(?:captaindata).{0,40}\b([0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12})\b` |
+| `spdb-captaindata-2` | Active | `captaindataeGG2XqySBELWnpiJjNvR52FszG9Ujvb9f27cbe95e307483d95899bab625a3a9cd9af28e974e34febbc6ffa2ea6b2bdbb` | `(?:captaindata).{0,40}\b([0-9a-f]{64})\b` |
+| `spdb-carboninterface` | Active | `carboninterfaceS1KvBeeFgYkyeQnhbR7AidXiJP3DSWq07VKSHAhl96UdjdzXp9oJQ` | `(?:carboninterface).{0,40}\b([a-zA-Z0-9]{21})\b` |
+| `spdb-cashboard-1` | Active | `cashboardqjokdxXBvnTNxhDY1WQ9xm9tmP8iY90TGCW-MJ6-4CO-CF7` | `(?:cashboard).{0,40}\b([0-9A-Z]{3}-[0-9A-Z]{3}-[0-9A-Z]{3}-[0-9A-Z]{3})\b` |
+| `spdb-cashboard-2` | Active | `cashboardkSgedrE8Dw6s7suVDfgJAVQAZoXqpajoelhq3u1qbabsjb24ce8on8z7v96tg4ej` | `(?:cashboard).{0,40}\b([0-9a-z]{1,})\b` |
+| `spdb-caspio-1` | Active | `caspiovumsfIeF2ogCaELVYoNhZFgFxswq3LF2k743twr9` | `(?:caspio).{0,40}\b([a-z0-9]{8})\b` |
+| `spdb-caspio-2` | Active | `caspiociiOEZ0ZeRpGRsg5z52yMdu7KP9avGG4efd3iajqdgbefftxwxzml4mgtjnqfniyarvc1l3vuhazxxiavg` | `(?:caspio).{0,40}\b([a-z0-9]{50})\b` |
+| `spdb-censys-1` | Active | `censysoeOaIeDAwlaQZa02i1cSVbOSxO59jXIIcTVZOgAb5J1GzBPMw2XW6OGV0MdqCC1i` | `(?:censys).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-censys-2` | Active | `censysiivlZskY2r1jEYEXX0CZZWrsVIqlxQPuhh3al3wkfd69y2uxq8-j30sj0zx6mxi1xo0j` | `(?:censys).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-centralstationcrm` | Active | `centralstationTla5uIhULefjuaHo8UUITTW85IOkxxuEghalmlvqkqsdbd6bqk536vtdwugn2j` | `(?:centralstation).{0,40}\b([a-z0-9]{30})\b` |
+| `spdb-cexio-1` | Active | `cexDio3OUGVtRRbzA9XJ91T4HmVFYeVtPlBHp0xg938947296` | <code>(?:cexio&#124;cex.io).{0,40}\b([a-z]{2}[0-9]{9})\b</code> |
+| `spdb-cexio-2` | Active | `cex8iowTCZquL3unh2a34PpUyieEIQw7S6SOBBKyzS8sw2GjBJUAt61k48NpusKIB` | <code>(?:cexio&#124;cex.io).{0,40}\b([0-9A-Za-z]{24,27})\b</code> |
+| `spdb-chatbot` | Active | `chatbotRv57hLLJrIy0kiBHB25jMPJQQppXNmKdD4cQc9Cb1QeYfR74NuLGTqEuTYklH3NK` | `(?:chatbot).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-chatfule` | Active | `chatfuelZlg9Ku8ZV526b2KyijtvTKBwL4FIRZPQ2KAr1Y7zEiM2s2whYXDeRxGhEonmiFTDpAVxA63hclaEGXPWZZA35l2L5NkGClAr0ws4ThjZ9HWOMA70dUvVsEPlTvVLdNAMdxeiXJhQD7UM13mWB8ReGWAdL0O73uNu` | `(?:chatfuel).{0,40}\b([a-zA-Z0-9]{128})\b` |
+| `spdb-checio` | Active | `checiotiOnXeX9nMnwuUf82kNc2k7VWnPKFL84pk_prunsk1ypilm7orhydfi4nu2eyl2taavd0eyyi1x5cje2` | `(?:checio).{0,40}\b(pk_[a-z0-9]{45})\b` |
+| `spdb-checklyhq` | Active | `checklyhqOMx0lMQUVukX7fHy20KR9qRmoufzjDyOgqdppipueljffm03lp5oan8d1qqoejyr` | `(?:checklyhq).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-checkout-1` | Active | `checkoutiaF879jxWpggNpjP9ntbNwoZCNsBdBOnsk_448C93CB-9035-Cec0-6d80-eAfef477c1F3` | <code>(?:checkout).{0,40}\b((sk_&#124;sk_test_)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\b</code> |
+| `spdb-checkout-2` | Active | `checkout74M2uFX2q2OxSlLn2w3RGvBgUVNlIhgicus_1Y4S95wQdL49mjgw0mSNw4iBvQ` | `(?:checkout).{0,40}\b(cus_[0-9a-zA-Z]{26})\b` |
+| `spdb-checkvist-1` | Active | `checkvist2sUEFkikOKesDAwn11uvtMCKlqi5wd29.-......--.--.--...--...-------.@--------------------------------.-.-.-` | `(?:checkvist).{0,40}\b([\w\.-]+@[\w-]+\.[\w\.-]{2,5})\b` |
+| `spdb-checkvist-2` | Active | `checkvistvrDfn27yvdQVhIhtMC6UBnz1yGSYjqoagbrOLZlMavxwoc` | `(?:checkvist).{0,40}\b([0-9a-zA-Z]{14})\b` |
+| `spdb-cicero` | Active | `cicerofZeNzprZU0BGZsi3RawUEu3bbAkcQpD3hjx51ai33smlelnzj5ta29ylzi4625e7cyi3qccv` | `(?:cicero).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-circleci` | Active | `circleUtP8zacYzRAZkjA4cOuc9HcYIXr86CmaF1979C33e3ce1dc69bbBA69C81f66B1fF6CdF81b` | `(?:circle).{0,40}([a-fA-F0-9]{40})` |
+| `spdb-clearbit` | Active | `clearbitM7jZdSAQimGuDAfFXwVpJNH6ZGzvv2Lo0pn78czdvf8iqnojh3sasl2vzz7rjcg96gu` | `(?:clearbit).{0,40}\b([0-9a-z_]{35})\b` |
+| `spdb-clickhelp-1` | Active | `19Rp6W2BlwqQLcUBnYCsmtry5clickhelpbco` | `\b([0-9A-Za-z]{3,20}.try.clickhelp.co)\b` |
+| `spdb-clickhelp-2` | Active | `clickhelpofQLDfTcmPuQSH381CPJMgF96Oumm8KREUAsajobIsNAPcPhINVdhDre` | `(?:clickhelp).{0,40}\b([0-9A-Za-z]{24})\b` |
+| `spdb-clicksendsms-2` | Active | `smsHYSxqiEPq5hSlLWg6zgDYEmpLlfDsnCtnt4EL1JGBMGOlEeWsdV1@tnybvSpdPn6njWUixE` | `(?:sms).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
+| `spdb-clickuppersonaltoken` | Active | `clickupKc8snwGvc2C9PnwTPG9N9AhgCAu8MqLUpk_18613098_IF207Y4QJNGWYROIQAPCAGZALDGNT983` | `(?:clickup).{0,40}\b(pk_[0-9]{8}_[0-9A-Z]{32})\b` |
+| `spdb-cliengo` | Active | `cliengoYCAlqL0iF7AhoQAjpBH71MfN0xtEr0fxb3b4850b-f948-ede3-4d61-7e716b6ae060` | `(?:cliengo).{0,40}\b([0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12})\b` |
+| `spdb-clinchpad` | Active | `clinchpadRBmq7DZX99xGnQmbUopmtyoxMDd3JBOMaylthyqv58sfy9bpzuh8dw4itqbfw8ed` | `(?:clinchpad).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-clockify` | Active | `clockifyN6UMEhLeiX6PkwcLAZEqxx8LjbZkS1cEYzPkXZHtLCoKC5DVhFU9eVhCfFuM0VfhMCrddtCT630Ql3sY` | `(?:clockify).{0,40}\b([a-zA-Z0-9]{48})\b` |
+| `spdb-clockworksms-1` | Active | `textanywhereaaejAJFKaQCyC6r87JoZLXIi84cYzY41UqTXVqMDBCpdmD1oFAFyDBHn` | <code>(?:clockwork&#124;textanywhere).{0,40}\b([0-9a-zA-Z]{24})\b</code> |
+| `spdb-clockworksms-2` | Active | `textanywhererIRXeixaHahhdph365kuDsBr3LXI6P2m97294` | <code>(?:clockwork&#124;textanywhere).{0,40}\b([0-9]{5})\b</code> |
+| `spdb-closecrm` | Active | `api_sD9xHz4DMQAi8I1OBJ.p6LWA6b9XqdS9k4MfAvOW2Vf2.` | `\b(api_[a-z0-9A-Z.]{45})\b` |
+| `spdb-cloudelements-1` | Active | `cloudelements1WIBiEmpp5Uzn5AuAhfVwxG8GCcvtxxSoaabsue1jo28qo7jobopvy423pwrtrgp` | `(?:cloudelements).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-cloudelements-2` | Active | `cloudelementsy442IjBQSutLEzuFEXTyyELxDjssb39UMYKqzGAFKN2q0D0GyelF5erbr4BIzcawOh5qqnBTlHh` | `(?:cloudelements).{0,40}\b([a-zA-Z0-9]{43})\b` |
+| `spdb-cloudflareapitoken` | Active | `cloudflarek30m8Caa3TJFl5MnReIZC5y3G7MVtkfaS4BimbXUztCtdqJo6mcR-ajwwLyKIe8zxTgjTVVY` | `(?:cloudflare).{0,40}\b([A-Za-z0-9_-]{40})\b` |
+| `spdb-cloudflarecakey` | Active | `cloudflare5MfTh62rwLOBYj6lC4POuE2ZZwZgvabuvB-bspT9b1IW42A9W4j2Et4R5YuJ9vYOCUCIUXmPbl3ZpbnMFEyAvFmM_1eHbVtQAeGywxZ2WVvgAuWL04xNb_VG.dCRekY4T-4BUcU2uR6wI6hb1I_3TUNQ8DkT6VhMpHyQ7Jq53fKkp8b19.jGhAfS8w2o9XB_Ho5sQN5zKrU2zz` | `(?:cloudflare).{0,40}\b(v[A-Za-z0-9._-]{173,})\b` |
+| `spdb-cloudimage` | Active | `cloudimageiP6W6SOdz9vx7ax7JKoiNWGyOJJqDhVnxedi06ogvtt4oiip8cy5iay7mfhdtm` | `(?:cloudimage).{0,40}\b([a-z0-9_]{30})\b` |
+| `spdb-cloudinary-credentials` | Active | `cloudinary://37409159099878302648255632318797:eNhVub_V-VHFCGBqGWIlzu9P-xF9Ev1h@A2uKJUs71jDDj1_QesDl-FyQSNjZx0wW` | `cloudinary://[0-9]+:[A-Za-z0-9\-_\.]+@[A-Za-z0-9\-_\.]+` |
+| `spdb-cloudmersive` | Active | `cloudmersivengc49pbfMwwlG7HHKmQqVd6Xge14NFYMxjnvpnxyv0h1v-o9n-0qo1m8c4g3-ulq6kms` | `(?:cloudmersive).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-cloudplan` | Active | `cloudplanjO5aBB1oU1TFSECyfR975PIVemqKwxi41KHXBN5EPKN2AHFXNI1PX1IE0J057195` | `(?:cloudplan).{0,40}\b([A-Z0-9-]{32})\b` |
+| `spdb-cloverly` | Active | `cloverly7vBMunMYoCSZxIJalFXt9DU9mF2zIDuAggz5cxmj6oq89o_:5vjf8n_7q9qi` | `(?:cloverly).{0,40}\b([a-z0-9:_]{28})\b` |
+| `spdb-cloze-1` | Active | `clozevIDvsAXVKxd9KCYyMBe6GlTBi6EYSl5ud6356b11aca5322639b710fb9c4471e2` | `(?:cloze).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-cloze-2` | Active | `cloze9oTXjKUD3IgEboCDIEMKoBx8YagBPOVG..-..-..------.---.---.-...---.-@--------------------------------.---..` | `(?:cloze).{0,40}\b([\w\.-]+@[\w-]+\.[\w\.-]{2,5})\b` |
+| `spdb-clustdoc` | Active | `clustdocgfp32sC0msPc1RkYitAP5DRAXz1J2S60KAbMmLLaOjuA3dD9LsrMmk3dderB8jwDZxTb5xAg7WD6BTCzL0jFRT1vganN` | `(?:clustdoc).{0,40}\b([0-9a-zA-Z]{60})\b` |
+| `spdb-codacy` | Active | `codacy8V3QWe8Vbmz7KyrVuPdDuDHLkcMj428y4qpt8ac6bgCWQoWi62h9` | `(?:codacy).{0,40}\b([0-9A-Za-z]{20})\b` |
+| `spdb-coinapi` | Active | `coinapicLiSKvW1FKL6FPcMRE51eci0hPlif4FyV5SBTIPILNI1UHNOJ0YX48VD5OU-RM627SZF` | `(?:coinapi).{0,40}\b([A-Z0-9-]{36})\b` |
+| `spdb-coinbase` | Active | `coinbase5XlYoPc0JIdaoIr1YgXd1z7hu0Fm7nxXV8m0WVc97eBbsRCbtnxvLHFWANqRTA9-94sadqJLT00KA1mBriXHjXdPjoRm0HAe` | `(?:coinbase).{0,40}\b([a-zA-Z-0-9]{64})\b` |
+| `spdb-coinlayer` | Active | `coinlayerzQBNi491N7epyB21iAIF4GagRmv5ID9Mt8ghcc0o8boz6gfpdkwvy5zn16ut2ky3` | `(?:coinlayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-coinlib` | Active | `coinlibLbzhiUrUubJNT7v33fJxoiI0quICze5rxml3036g3cbgi0xw` | `(?:coinlib).{0,40}\b([a-z0-9]{16})\b` |
+| `spdb-column` | Active | `columnF24xKIiVSqcqiC9pZMdNWPdtKkiMDeswtest_EEyuejbsFTpCQKAkpBaWkJ1hRsv` | <code>(?:column).{0,40}\b((?:test&#124;live)_[a-zA-Z0-9]{27})\b</code> |
+| `spdb-commercejs` | Active | `commercejsYqzW3t5fNJvVdEqSW2bcgDeZZDcKDySrghizc1wrwam805hji0i9h98q45ogd2qgh_78yvetpk0lk3ao` | `(?:commercejs).{0,40}\b([a-z0-9_]{48})\b` |
+| `spdb-commodities` | Active | `commodities6rm6aSQ3Gti8vVzfUMymTLtUFkUvkTaatiycc0XQiUkcJxv70mMTx0sPpNJsJblw1zyVdCpkuRxo1wOh8JYJN6qlypxE` | `(?:commodities).{0,40}\b([a-zA-Z0-9]{60})\b` |
+| `spdb-companyhub-1` | Active | `companyhubbiUwO5LzlVCKlmJH9tKjY8yeqDeRdrrY9QxnlUKhpXduI6A05YMy` | `(?:companyhub).{0,40}\b([0-9a-zA-Z]{20})\b` |
+| `spdb-companyhub-2` | Active | `companyhubybGMXYwrvcxAS3IJMjX8LKEef0hdina1h7ns9POP7P08m0Ea3UGLgYycBgErNX7O` | `(?:companyhub).{0,40}\b([a-zA-Z0-9$%^=-]{4,32})\b` |
+| `spdb-confluent-1` | Active | `confluentD0cRrpKMo2EIOs5FQlztkCH8b9feCXcSDuutr0sDtOTAwaE6` | `(?:confluent).{0,40}\b([a-zA-Z-0-9]{16})\b` |
+| `spdb-confluent-2` | Active | `confluentPRQlq3eOzVCHzjP28uzMVGtSUghLi45c56BiWENN4NTooxPYIfxpBVKZvqPdu-8YC96OGu3fTr9DCsxiHr3HV7jdNItDav2j` | `(?:confluent).{0,40}\b([a-zA-Z-0-9]{64})\b` |
+| `spdb-convertkit` | Active | `convertkit26omYwvdXjt95oK2O7fDsGiKV2uajqsjUdBZjsRCWTj60Sk09Z0Jzj` | `(?:convertkit).{0,40}\b([a-z0-9A-Z_]{22})\b` |
+| `spdb-convier` | Active | <code>convierMczNfnUcZOw9LN32Plj88JQPKVFyrzNN86&#124;WWXTMrAvQLKtx38gkzsESOkUQaK2EwILphd0lsXH</code> | <code>(?:convier).{0,40}\b([0-9]{2}\&#124;[a-zA-Z0-9]{40})\b</code> |
+| `spdb-copper-2` | Active | `copperxgtDgBn5SgQmO0F32kdEXN4ByZS8ph5A4rzc88p8grkeyracv5phdx785of770a7` | `(?:copper).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-countrylayer` | Active | `countrylayerkOmUFflwHL1GCcRC3Edy8L0xKyd7deDzh7b1gpibeyiqf31b6ml73z2d10ojgboe` | `(?:countrylayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-courier` | Active | `courierTKJ7KcFwt5ZC3hyX1zMsDRe3rhdxF9qYpk_L7jnYsI57L5N7nL3w3h3Y6CKMxP5j8Ut_t7xG6y5roVH9GcxBj62HOp8hfcHU` | `(?:courier).{0,40}\b(pk\_[a-zA-Z0-9]{1,}\_[a-zA-Z0-9]{28})\b` |
+| `spdb-coveralls` | Active | `coverallsSHzjaiMH35u6BYkVAdSWulqod4PUVoD7S2hSJYygBP85AyLN88Itq7Ek1WuclrxnopydK` | `(?:coveralls).{0,40}\b([a-zA-Z0-9-]{37})\b` |
+| `spdb-crowdin` | Active | `crowdinWWzHhb57PvOqsYc4hkLtgzg1wwaQSQmdvS9KtOfAtdR6OxGCXYG59xWKJggexkn1NMCN5Kmj1EX0HeQAM4QkTlfuRYncq5SwyRspim9B7TFP3H0U` | `(?:crowdin).{0,40}\b([0-9A-Za-z]{80})\b` |
+| `spdb-cryptocompare` | Active | `cryptocompareL7izejvceL5HpyTrihjFnNEwAbt7AFLFwzchfkwk9d6lpu35t5hfv3t4myuuu9qhs03yys9ayrt1ybjqij-izxtij38cgcwa` | `(?:cryptocompare).{0,40}\b([a-z-0-9]{64})\b` |
+| `spdb-currencycloud-1` | Active | `currencycloudroUBqqWg09ze38LuMIT9Pm6BiNj6aCOXuarw1n4rfpxwnwqf0m1ftpge8o1kqswp62ljxpktt5mdlj4z0dwtt1wbyjllsy7v` | `(?:currencycloud).{0,40}\b([0-9a-z]{64})\b` |
+| `spdb-currencyfreaks` | Active | `currencyfreaksjjTQaSA01OJQOZTSXkQ6w2xRkEW1NHwp6olv7dx85rnwsx4dkqopdpva8hjc9jht` | `(?:currencyfreaks).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-currencylayer` | Active | `currencylayerK870z6yudkm7taKeXlFZeqqFac9OVo6Pcagpqixg1tif8ti4bn1zehfasezs4fbp` | `(?:currencylayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-currencyscoop` | Active | `currencyscoopyn4iAAYDdLQJEi3EDlk6d6rIdRAzibCd9nfj2xyr9eq7okgq6g6hiilz9ha390ah` | `(?:currencyscoop).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-currentsapi` | Active | `currentsapil1WjBKPMYa9ar17SKJc2kjbtoauY2q4C3lUoRtHPk5FOTkslXobLy9KCJj0m22AODLDC0lRXby6fHKBt` | `(?:currentsapi).{0,40}\b([a-zA-Z0-9\S]{48})\b` |
+| `spdb-customerguru-1` | Active | `guru4wD9Mq3MmRKRafm8C5Bvh35mZiUOzeFNOdLvqs5XZC0kOQEQ9gvfnB3od43dVFoVeEAwVZkMoWlm6X9gHL` | `(?:guru).{0,40}\b([a-z0-9A-Z]{50})\b` |
+| `spdb-customerguru-2` | Active | `guruBHZ5SEGm1Fi97pwOwUz2gOSMLE7VKN0hnb8oy7FdA2BYweKsMvUqyBkWYZs4BD` | `(?:guru).{0,40}\b([a-z0-9A-Z]{30})\b` |
+| `spdb-customerio` | Active | `customeruumV9SEP223rpZ4MeNjLWBjY8BvTJfhU9wCfnLMEY5HzLgHO6mY9` | `(?:customer).{0,40}\b([a-z0-9A-Z]{20})\b` |
+| `spdb-d7network` | Active | `d7networkJeI8384ff7KZNTeJkJh1PWFiLlU5ZgSXOrb9Aou9BtNXVSHXfxIvw82=` | `(?:d7network).{0,40}\b([a-zA-Z0-9\W\S]{23}\=)` |
+| `spdb-dailyco` | Active | `dailyDFQYYH08wdVfRPRA210ciCNCizgxLGYl178bd7325a8c362f5aa40ad198a06616c05d59a6e550653a092d7468eeb940fe` | `(?:daily).{0,40}\b([0-9a-f]{64})\b` |
+| `spdb-dandelion` | Active | `dandelionin9pRg46tCUi1gBdj7LXB0rcH53oXXSskecvuuero2chliko5wjqpu8fqbqh5qiw` | `(?:dandelion).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-databricks` | Active | `dapi169e85ecf311bc37e4561d34874952c6` | `dapi[a-f0-9]{32}\b` |
+| `spdb-datadogtoken-1` | Active | `datadogFuIPHucjc7XJGiwfzsTX3TWvbgQMuh4j65Gc1SeTWIUdgvYX1wvxo6QDSCPsQyKu` | `(?:datadog).{0,40}\b([a-zA-Z-0-9]{32})\b` |
+| `spdb-datadogtoken-2` | Active | `datadog3x9BmCcQe0Yzrkc0hraM0KMn6t14YUh3Gy5L1dzB-0k29rZOTJRo9gLPmt8gz-rA2U2q5Ls5` | `(?:datadog).{0,40}\b([a-zA-Z-0-9]{40})\b` |
+| `spdb-datafire` | Active | `datafirer6f78AZrv7jxurH7OJsAox5U8QqbUkGvflahqgegcsuehhubju9x0jqwbbp7gnhe1o4chbn498wdcteviksya5bwn1vac05h6lpiffsvckf5ylt3zke4vsp28wctrl6ofk9clev4iufjoaiq5nv5n8om1osg3guhuvbzwlqj80p76mqlgxwzezufn4nnfy7w9adbiytz3udm4aq` | `(?:datafire).{0,40}\b([a-z0-9\S]{175,190})\b` |
+| `spdb-datagov` | Active | `datadgovPigfb5dtKruMhai3Hz5YPN5TVtisO9vq3AQFKsZjt2wfWYqZJ3XNp6x9x6IOhVnVEVbLJm21` | `(?:data.gov).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-debounce` | Active | `debounce0gQQY3lQv8JdVHtlW5il1sbEYOW8KZ8fXz2w08njFxBMx` | `(?:debounce).{0,40}\b([a-zA-Z0-9]{13})\b` |
+| `spdb-deepai` | Active | `deepaiTGsmUMNNUYaZmE1qpwdz9EwI9QH1IiABh6y8o3rvk-zrpc7tuxy066wz-l6hk4zn8zru` | `(?:deepai).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-deepgram` | Active | `deepgramsLZz0P4LgQB30PaLlAwjvrWQCP08Btz0hxtcyc13aut0q4zoypt5fh61fnmbgqanx7w6p4e6` | `(?:deepgram).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-delighted` | Active | `delightedFRC8jqguvI1NXBdbMQ63DIn97CB9dPIjIBp7C45FViMH7gpbEGPG2YnmP0tCyiR6` | `(?:delighted).{0,40}\b([a-z0-9A-Z]{32})\b` |
+| `spdb-deputy-1` | Active | `q9ubgl22wbub3avu1k8zfonh5vdx7d1p7askdeputykcom` | `\b([0-9a-z]{1,}.as.deputy.com)\b` |
+| `spdb-deputy-2` | Active | `deputyXPTa6IE0o3ZP45Nrdl78d85rmC2cVK9lvoauznq7w87ojul5e0vohf80sgivatln` | `(?:deputy).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-detectlanguage` | Active | `detectlanguage5ycoGSMQhqGYEgosuEOWcxaf4NlG2DdOgy7aqjcjghzibn8lhoklbs2766q5gl41` | `(?:detectlanguage).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-dfuse` | Active | `web_a18w1wcmhkmf4hnigdw0xwxy4bibb139` | `\b(web\_[0-9a-z]{32})\b` |
+| `spdb-diffbot` | Active | `diffbotSBdAxVyNrESzvHdv1wunIkgCzdQqvkXXa5qgco7a4rvy7x69pszoqde63de9y5dy` | `(?:diffbot).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-digitaloceantoken` | Active | `digitaloceanAyDtF7XfAE5Wf7AEc7BVRtiiTsN5jcz70GYgZ3WdFFnrbo3ZZfkZbsXwyNAKY4znwfdhScPpLnI1dQFBh4aht5qdCa0VkKTT` | `(?:digitalocean).{0,40}\b([A-Za-z0-9_-]{64})\b` |
+| `spdb-discord-webhook` | Active | `https://discordapp.com/api/webhooks/53382629562477399561321692575831/qe2NRVg7Fzrx3OeWYyWa82udVZHeNxEo` | `https://discordapp\.com/api/webhooks/[0-9]+/[A-Za-z0-9\-]+` |
+| `spdb-discordbottoken-1` | Active | `discord28gl1cWuu152SOoyI6lski6c44u21j7IUwcBxZzHszLyCxXQGoPYfq3e.nwBZKM.EUqy8SWR4MqWYDe4JZKKP2UFNbs` | `(?:discord).{0,40}\b([A-Za-z0-9_-]{24}\.[A-Za-z0-9_-]{6}\.[A-Za-z0-9_-]{27})\b` |
+| `spdb-discordbottoken-2` | Active | `discordFFZc09ilcSWqAi77YmVlgbcApuFmTjLn96683003194950909` | `(?:discord).{0,40}\b([0-9]{17})\b` |
+| `spdb-discordwebhook` | Active | `https://discord5com/api/webhooks/289277704582020062/pqp4KnKoEih54cMJK45hY9nqQN0zYPZgkVA0s-Kyd0VYEAiSBLzZhb8TSnKNvhCbBNxO` | `(https:\/\/discord.com\/api\/webhooks\/[0-9]{18}\/[0-9a-zA-Z-]{68})` |
+| `spdb-ditto` | Active | `dittoxFhFonaiixvBf6GoEKMcwRHNqijb0hNOb0xw9dio-uhpi-906b-scc4-72w1h9ffkdob.fzenf57sx7c0xri7ptonf5fllw8n08upbqcnlasa` | `(?:ditto).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}\.[a-z0-9]{40})\b` |
+| `spdb-dnscheck-1` | Active | `dnscheck9BhBAZJr0vzxBzvyo2qgTZn5XBfhTnzuha1fWGEXExhEAcwmCJM15CHrI1GhSriOAfI5` | `(?:dnscheck).{0,40}\b([a-z0-9A-Z-]{36})\b` |
+| `spdb-dnscheck-2` | Active | `dnscheckAgQ8xBnrdo7Gnw1MdopbrlGXIH7h2NSOxjJGHpJDWm5N889q9nDrQwLkPxlmczGK` | `(?:dnscheck).{0,40}\b([a-z0-9A-Z]{32})\b` |
+| `spdb-documo` | Active | `eyELXeSlsTJpdEnQw9XSDZ6s8zxMt18RrXaDVeySTh1XVFiQv1Tbsdsqp7IxV2nKFXQm89XPbjtxqRRKZ6sX8Kxydl7o7nBi50raN9uop6YDwcbw5C5kdT0VLGuPo4p2Zzn25sGpCm7VSU5p35B35roAwNm9ZSP4TTQToT96AquwfyjsBepkpdLCGW5GTv7Cksi6-HGDhCnjjdMymcUJkrBbE1hIysLekD_0Ktt5DtwT-` | `\b(ey[a-zA-Z0-9]{34}.ey[a-zA-Z0-9]{154}.[a-zA-Z0-9_-]{43})\b` |
+| `spdb-doppler` | Active | `dp.pt.WGyvh3UmPW7gxinCXMOEvGdACSbAb0uy6GyE7I80s6R` | `\b(dp\.pt\.[a-zA-Z0-9]{43})\b` |
+| `spdb-dotmailer-1` | Active | `dotmailerHHisfbMDOqooOtpsUWES6rUlRT3VQmf9apiuser-mga8jdbgnkrw@apiconnectorscom` | `(?:dotmailer).{0,40}\b(apiuser-[a-z0-9]{12}@apiconnector.com)\b` |
+| `spdb-dotmailer-2` | Active | `dotmailerc2RH1ZQa8y7TnLuXrgNLVIUVk5e6NxM37SZW0yAzr29HRVua5WcWeJSy` | `(?:dotmailer).{0,40}\b([a-zA-Z0-9\S]{8,24})\b` |
+| `spdb-dovico` | Active | `dovicogue6bQ0suYJ6ar9a9TwJxa2Ut4nnKnXuu6trt3n0x045kdz1wz4jb2ry3tjp7itj.ss95if0llywjgddstooyye4yyahbs0c4` | `(?:dovico).{0,40}\b([0-9a-z]{32}\.[0-9a-z]{1,}\b)` |
+| `spdb-dronahq` | Active | `dronahq9oNf9zZfC5KUxpgwkH75Yr0gj7b0RS85u3z4aaaion349rm43e6haa9bocktsuxsbkbst8wg3znrzospou` | `(?:dronahq).{0,40}\b([a-z0-9]{50})\b` |
+| `spdb-droneci` | Active | `droneciawr0OiQAT4alGL4kJCqNKy9N36DKjb2eW7KkXavP4enVGqY0bdXkngxMw50zbpzy` | `(?:droneci).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-dropbox` | Active | `sl.EhXd0Tc8lAa3Pw4D1pKHoApaPwtsmhd0Nr2JQFf-RcwIHuvHhdDvs71bELxyvRc7JcNawnmcWxkglERCvj6yYpZOof9Y33X9On4njFQafRMJqDZMux31jkUAMbQ9oLwaiF` | `\b(sl\.[A-Za-z0-9\-\_]{130,140})\b` |
+| `spdb-dwolla` | Active | `dwollabCUyZeHXOh6WGd1qY3s6YgJ1QV9ZvTtZNypfs6gCX0yiPgRuESqr41zPAA3L98svLyg7EBDgFhGlBVapE6` | `(?:dwolla).{0,40}\b([a-zA-Z-0-9]{50})\b` |
+| `spdb-dynalist` | Active | `dynalistfIjI9GXju1p3n2wHZmfMrTKANKMQLS6vnr2xW_CUG7wE483UhZIdHIq9xwzXQduNDlFR5XZ0jazpuaNqn0qJIUZvxihMbUBaxrlI9N3G3giBklQkNNDe57Cd48RP7HGmTfneAILZZIu9sOMevkA6i7BMI0RsWnd2` | `(?:dynalist).{0,40}\b([a-zA-Z0-9-_]{128})\b` |
+| `spdb-dynatrace-token` | Active | `dt0f32.KNYDS3FIQIAGUD065DWCW3KM.S2274KUK2EPGFGXU3WH1MZYFWI26KDKRPX90U2V7W9X64IUCL0XDZSCPPNFKT2WQ` | `dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64}` |
+| `spdb-dyspatch` | Active | `dyspatchPXEzu0geWHQY1lNEEvKFYIXyOOpVuap1TJQ60MZH5RSMC64TKPCCB91DZ4BZS56KZRXBXTRWTI5NHYBVISL8` | `(?:dyspatch).{0,40}\b([A-Z0-9]{52})\b` |
 | `spdb-ec` | Active | `-----BEGIN EC PRIVATE KEY-----` | `-----BEGIN EC PRIVATE KEY-----` |
-| `spdb-eagleeyenetworks-1` | Active | `eagleeyenetworksYmgJx9hBgeygMJdNtz9oOrZyYvNT4d5S5P0xdtclixfoe7GrN7cx@MqKNMWsIWTYwUgJsXc` | `(?:eagleeyenetworks).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
-| `spdb-eagleeyenetworks-2` | Active | `eagleeyenetworks7tCJtOiYdGZKNQfeVfHqk5ehvLjZRuVWXtJYJqW79CwwGqL` | `(?:eagleeyenetworks).{0,40}\b([a-zA-Z0-9]{15})\b` |
-| `spdb-easyinsight-1` | Active | `easy-insightMipSewrghzfkZJMPN3MWLcnzrLRIpaiLnniufxU4xNux5It5DuHi` | <code>(?:easyinsight&#124;easy-insight).{0,40}\b([a-zA-Z0-9]{20})\b</code> |
-| `spdb-easyinsight-2` | Active | `easy-insightsTb5eBREl8ySR9aziyh1Rg0dqQdY2EcVk6cq4POIVfdeYcwmBACA` | <code>(?:easyinsight&#124;easy-insight).{0,40}\b([0-9Aa-zA-Z]{20})\b</code> |
-| `spdb-edamam-1` | Active | `edamamF3ZTTxCvFUqCg4PtCgfneH6WXBjGotZYv1w363ywgvq2kncudkmlh3qqbgbyz34d` | `(?:edamam).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-edamam-2` | Active | `edamamghqtXGRAMq6eayp9Q3zcIc1Bvp2dBTJtmvlvlwlf` | `(?:edamam).{0,40}\b([0-9a-z]{8})\b` |
-| `spdb-edenai` | Active | `edenaii10t73yGQXRMx1DLskyLwyC1008SLAZPS6uaDsChG8ZCK0Vw1mbh7MYcQvCEGw581bTSPq2E4hTGTBJRaagdOzB8eGC8YXPK62V0dU6ALn3xwUQxlz3BmTzzovdPjpBJeXLBGjbflt5SnLxjnZSLP45ZyYQo4hYNG2qimQygNFlXzF0y1Bcnzn4W_o8IApuYztU8Xfs3eOqqj` | `(?:edenai).{0,40}\b([a-zA-Z0-9]{36}.[a-zA-Z0-9]{92}.[a-zA-Z0-9_]{43})\b` |
-| `spdb-eightxeight-1` | Active | `8x83uKwXK4kDnbMCaCIVtd6f8hTXKqPUsnaurwo4FjjPEYyIBdh7_TePr3pUYj1S9` | `(?:8x8).{0,40}\b([a-zA-Z0-9_]{18,30})\b` |
-| `spdb-eightxeight-2` | Active | `8x8Q2DWRMxEo1Bbk6D23kBLPnWd4yODagnie96qbh0qihAzYHrD59zOfWKZXavea74PEBkwy1bSrAx` | `(?:8x8).{0,40}\b([a-zA-Z0-9]{43})\b` |
-| `spdb-elasticemail` | Active | `elastickftJQVmHGje5k8eCK9GWeFwHMw2o7vjcDL3xyovUqGs0SRkghgRhApDVBqBOiF5YLeCNAzjA5RS7YGd7LIlfpyLpkxl6n8MuUKKisgy5Usbu7Vpj4HM5mum1OnVtQiWG` | `(?:elastic).{0,40}\b([A-Za-z0-9_-]{96})\b` |
-| `spdb-enablex-1` | Active | `enablexDicsxLGMhXPPQ9YXZQDzqMuRuSuBaNmZVt50hBQ8jnbcdrlHmSgGuXnfMSNvqKofu8H7` | `(?:enablex).{0,40}\b([a-zA-Z0-9]{36})\b` |
-| `spdb-enablex-2` | Active | `enablexGeWD30pMHSWVkaZ3q0wkF1Wc78YifQ90200i1cr72843g1zxq4s5g5t6` | `(?:enablex).{0,40}\b([a-z0-9]{24})\b` |
-| `spdb-enigma` | Active | `enigmadXWXjivvdUIr4dckb0qj35MpfXZOdvY4TyFYVObWHaPeyUTLEb6EJpGgV9ATKTtsuN2G8FRv` | `(?:enigma).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-ethplorer` | Active | `ethplorerI0L8Es0qizHkTYDsZHQViqdMzaYAdrcaz33iK5tW9RYHqlc0O4NIn3` | `(?:ethplorer).{0,40}\b([a-z0-9A-Z-]{22})\b` |
-| `spdb-etsyapikey` | Active | `etsyisRwis4LaOG3garDAwA8sewYHB557CHeM0fn00sbeYpeCfyKKD174j6e` | `(?:etsy).{0,40}\b([a-zA-Z-0-9]{24})\b` |
-| `spdb-everhour` | Active | `everhourkZczdB9Y4XaROYxqA0xrfeKAowK5rOLL3884-5ab1-f6d827-49de43-c37af830` | `(?:everhour).{0,40}\b([0-9Aa-f]{4}-[0-9a-f]{4}-[0-9a-f]{6}-[0-9a-f]{6}-[0-9a-f]{8})\b` |
-| `spdb-exchangerateapi` | Active | `exchangerate0Jgf8riKNF7iWIjoyNGdpjDYYQUcxC5dmaexbuqf7iq9smv6xog484iu` | `(?:exchangerate).{0,40}\b([a-z0-9]{24})\b` |
-| `spdb-exchangeratesapi` | Active | `exchangeratesfWtazFRPfR5leSamMFJAYNglkgyGSKdj75ob3jlsanwh4pjbjllhyk7tc3wxz6jc` | `(?:exchangerates).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-fcm-server-key` | Active | `AAAABu3hdSh:_EGtyAl2nhQlqTGGR8lacS2jU5GJuQF-9yOUWieL4fVeNA9u9-dw6Nvma-gBwvO4pZRFwT8Cc710--tB10KqwAHI6pzfgOS53SV5-YSl3VBQtBQToOEuRxxtPXOe4W1Oiu2XEooAKPrL` | `AAAA[a-zA-Z0-9_-]{7}:[a-zA-Z0-9_-]{140}` |
-| `spdb-fcm-server-key-2` | Active | `AAAALf7DbVT:QUs_TlRozSPwJN1jxYS_3QZvWji772gIclRWOllPrAUKnwgxl_rvIvzD5F5GjCLP8Lh4TD5ThjITffWh_sZCoQvXWdmOSw3pwPjR1E2dfiN-nuSJwxNLiI3G_LMNv8Ynf1H7w1Yb-yab` | `(AAAA[a-zA-Z0-9_-]{7}:[a-zA-Z0-9_-]{140})` |
-| `spdb-facebook-access-token` | Active | `EAACEdEose0cBAaH8WaSuMFwO7Op8MsgfmD94u02JmihQW` | `EAACEdEose0cBA[0-9A-Za-z]+` |
-| `spdb-facebook-oauth` | Active | `facebOOKzjeYYp9Hp58puNCFIrsarXRcNIhTbXiH'4f87850b05d5990f6414b821fbce9e31"` | <code>[fF][aA][cC][eE][bB][oO][oO][kK].*[''&#124;"][0-9a-f]{32}[''&#124;"]</code> |
-| `spdb-facebookoauth` | Active | `facebookPstnf4GeAbMG4LhUCCQuw4BtGDN9fAnqD1hI9Q7YD49C9BAUA0Olkn2sp3OEOkYA` | `(?:facebook).{0,40}\b([A-Za-z0-9]{32})\b` |
-| `spdb-faceplusplus` | Active | `faceplusplus78v8THG0negwiMgHKOHIxAaMjOIuzP4zTxE2qdgVGSxAawt7G58wdNMjNpIp4bw3` | `(?:faceplusplus).{0,40}\b([0-9a-zA-Z_-]{32})\b` |
-| `spdb-fakejson` | Active | `fakejsonr3ibUbUjhpeu9M8tMllpOD87X8gTR5jhsaSXsKdd1hTWkyL564bo7m` | `(?:fakejson).{0,40}\b([a-zA-Z0-9]{22})\b` |
-| `spdb-fastforex` | Active | `fastforexrwDKNA04drDAmSGoNoZ2R9o3TlryxZICc4jcd4x2lc7skbk5yl7x1cmjyo2o` | `(?:fastforex).{0,40}\b([a-z0-9-]{28})\b` |
-| `spdb-fastlypersonaltoken` | Active | `fastlyQxbSGb87fMmdrfR17kUcgZpZ3x45hCnqLHNQDBBOux7-7iWVXTlFoszjjXClRZwD` | `(?:fastly).{0,40}\b([A-Za-z0-9_-]{32})\b` |
-| `spdb-feedier` | Active | `feedierxyQoyMsf3KerilvLrI34kRqL9tvzm4MSCbujllHfS1ecoXLSUL5ka6ZeW446z7ge` | `(?:feedier).{0,40}\b([a-z0-9A-Z]{32})\b` |
-| `spdb-fetchrss` | Active | `fetchrssWDbOg6O9ZNRwU5KYSCfVKfBddFzpc6XoGO.zkGYhhgzWqD6gzD0t3R239jjizb5pUeRWLezB` | `(?:fetchrss).{0,40}\b([0-9A-Za-z.]{40})\b` |
-| `spdb-figmapersonalaccesstoken` | Active | `figmaxEZfaFLwq1SAzhF8D3MqoJdciO3CxRUb675068-zsqdle7h-clbr-96lb-438h-0hfwfxar5pm3` | `(?:figma).{0,40}\b([0-9]{6}-[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-fileio` | Active | `fileio3G2p91ggbYLsWEKbyHJf2KrqcNNILCOrTAV0BIRTG5.-7JVHPP0JA5IBG2XCPH2TJ3QK5MP` | `(?:fileio).{0,40}\b([A-Z0-9.-]{39})\b` |
-| `spdb-finage` | Active | `API_KEYUDEYYVGM5EFW63GWCRA35M08XCOVUU16` | `\b(API_KEY[0-9A-Z]{32})\b` |
-| `spdb-financialmodelingprep` | Active | `financialmodelingprepQGPRLrrZmg3WU6rlZVmzhpxUT9TLo0HW7NEh3wQ01P0zi53HVwE119fzlcdgGBUG` | `(?:financialmodelingprep).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-findl` | Active | `findlCcfS3W2yy2cnvbMVFgOPN0nb3d1Q8qt32huptfwx-m55x-4akv-sfpe-nghkgd5z24o8` | `(?:findl).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12})\b` |
-| `spdb-finnhub` | Active | `finnhubEu3yqasF4TECUaENMs5gTH6eaOlqwUe42xd36czi5m2t22yscy43` | `(?:finnhub).{0,40}\b([0-9a-z]{20})\b` |
-| `spdb-firebase-database-detect-1` | Active | `gk7ktbarac9pcqtxiq37.w9xtz.bmcis.firebaseio.com` | `[a-z0-9.-]+\.firebaseio\.com` |
-| `spdb-firebase-database-detect-2` | Active | `567dtrht7y64qpnvr38yke4.1njk.l8o.firebaseapp.com` | `[a-z0-9.-]+\.firebaseapp\.com` |
-| `spdb-fixerio` | Active | `fixerRu7q2vN8sBDJlM9vUelmwXYwghn1N0XAwdQ71lqe6xmvpTo9rJEBVLwQyPOJVuB1` | `(?:fixer).{0,40}\b([A-Za-z0-9]{32})\b` |
-| `spdb-flatio` | Active | `flat0MZvtNrgfP35hsuxpreeUY62Dw2liDFd0xakodq3089wu36e4k8djaxllujfrnjp7gfsdx5355ee8t5v5w30kaqd1gq4zmpfb3s16vsgcmvtyt235al5rzc18znfov8sh7q9zwsccaihp829lz4jgkeiene41blc` | `(?:flat).{0,40}\b([0-9a-z]{128})\b` |
-| `spdb-fleetbase` | Active | `flb_live_DLqRXxdbX1gBejcBlstd` | `\b(flb_live_[0-9a-zA-Z]{20})\b` |
-| `spdb-flickr` | Active | `flickrvzGhe9wec6Wu1goJqsIRbxYFys3GvJZIcd1w4e9o54yhggbipaqxsi89l3c2ex1a` | `(?:flickr).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-flightapi` | Active | `flightapiP5IXm6hFxfRbZLjUxhyR9XdglU9EvjBP8hsmde2kldpbg4gah7ovppvc` | `(?:flightapi).{0,40}\b([a-z0-9]{24})\b` |
-| `spdb-flightstats-1` | Active | `flightstatsYloYWNzXABNb1oAsVcGK4vWAAnjQvlW56nreohz6gqgqj57lxtcz2lymj3iebx13` | `(?:flightstats).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-flightstats-2` | Active | `flightstatspfJtPGIJzG01KyuL2n5oTeTfEQWYjcqujvtn3yv2` | `(?:flightstats).{0,40}\b([0-9a-z]{8})\b` |
-| `spdb-float` | Active | `floatRKdAIwhxo50YifLAMMviVbi2Zr0pUrC6Dt=4E4oO9qDjpVUmeQ-f0z3lajXG-oH0yILA0mJq6fycftmybBAr9ZDMgPv` | `(?:float).{0,40}\b([a-zA-Z0-9-._+=]{59,60})\b` |
-| `spdb-flowflu-2` | Active | `flowflufNZCMD373mA6cHL1b10pBF8zVf1sU8mNgIw8KVNUn7lywTWNEVcnoguSf9FjvKe7uiQ5jrCE8CYJGYNUZ2Z` | `(?:flowflu).{0,40}\b([a-zA-Z0-9]{51})\b` |
-| `spdb-flutterwave` | Active | `FLWSECK-patb6v9psd3ueprmqqgyhhyvu62z9fxd-X` | `\b(FLWSECK-[0-9a-z]{32}-X)\b` |
-| `spdb-fmfw-1` | Active | `fmfwQLJcUMUbyTZPZJ5hE26Trt6Dv9hOqS0NHxgnONPjjDTHz7F52x5nn64dQfktdmPd` | `(?:fmfw).{0,40}\b([a-zA-Z0-9-]{32})\b` |
-| `spdb-fmfw-2` | Active | `fmfwqwVdVgqIuhItuf0pzSAXAIsn6lD9DYmFw9hJCXI-nmVcn_H7PrpxPGAc78-VqSYy` | `(?:fmfw).{0,40}\b([a-zA-Z0-9_-]{32})\b` |
-| `spdb-formbucket` | Active | `formbucketehDvU1GMGT6qOhRIckr8sQ8so3W2ag4c0sqE3kgdUPaWr8CRiPk4MHR8ianqGw5VXYxu5pbrM8yVHz86YNMfPr10V9pmPoSRH.omhTNttSTZxRt13PCGRIpSEz0Ap0tr_A` | `(?:formbucket).{0,40}\b([0-9A-Za-z]{1,}.[0-9A-Za-z]{1,}\.[0-9A-Z-a-z\-_]{1,})` |
-| `spdb-foursquare` | Active | `foursquarew5CrBqMVojLnniHZn0iJEJZdTkknXGFpDM18XK99B26LWWEXC3NT6QF1QBQ03AFN7JPXSXPEIUI77NV7` | `(?:foursquare).{0,40}\b([0-9A-Z]{48})\b` |
-| `spdb-frameio` | Active | `fio-u-DIxaRdBN3_BnN0NAt_lz9rFzppP64KYOrYC2MZaSC70FvnyGvcWHp1uMR12i7bju` | `\b(fio-u-[0-9a-zA-Z_-]{64})\b` |
-| `spdb-freshbooks-1` | Active | `freshbooksNljng7c2L3TLWctKlePrwbojSZiHzPqSfjwk8peuhta8jaev3wlf3z587go3elrmn8wb6yi7bpwzyn7il36vwunknr18vdzy` | `(?:freshbooks).{0,40}\b([0-9a-z]{64})\b` |
-| `spdb-freshbooks-2` | Active | `freshbooksTKP2cJoZWBxwipnLwy1r2wGAzz0csisbhttps://wwwhhlPJkAiMfpJncysa3V75-g-yht3KAK0yJcom` | `(?:freshbooks).{0,40}\b(https://www.[0-9A-Za-z_-]{1,}.com)\b` |
-| `spdb-freshdesk-1` | Active | `freshdeskBoOumWZtB2EmPPA8KKf6nHxfno9wHrzByCpWjb0ktdybbSRZTjR9` | `(?:freshdesk).{0,40}\b([0-9A-Za-z]{20})\b` |
-| `spdb-freshdesk-2` | Active | `si84hx6soacse4eg2a3ri4j-5ex6p274efreshdeskqcom` | `\b([0-9a-z-]{1,}.freshdesk.com)\b` |
-| `spdb-front` | Active | `frontO0xH1UnhPuK0YJtMwAe7dMRZYaUGZQDpkYLn4ZUEZNZsXMFNelXaz0d4nIgKic60MvA6kN_tSOvhjxWLkS-ctMPc4Z5GWWAxFv3VkorXCk7f6Q1HUgdFldI8hUGWvueHBJeLgyzRMPMe3q.0X6.Lo5LDCmnWyJ4uxmYG0oaxb1IppLgVUykMP4W_hOFYH6gRE5em6adMNhb7Ex2lc5FZqbjBGBe...YGCdqaTLjlnI4.a8eWwt7RhT9Bbsfq_jX63` | `(?:front).{0,40}\b([0-9a-zA-Z]{36}.[0-9a-zA-Z\.\-\_]{188,244})\b` |
-| `spdb-fulcrum` | Active | `fulcrumaSLxIGJ0WNJZ4zNA3Ryn25PIZZWAgIOHvussr5yywrx42k41l2c8uozbnea56gynkqx3y5wxe4nl2wwuzildslvk20vi2urd43pztl4rqg5rx9r3` | `(?:fulcrum).{0,40}\b([a-z0-9]{80})\b` |
-| `spdb-fullstory` | Active | `fullstory5KcR5DoYUVTL3Uo0azy1yu9MSyKcZ4GOUptZsWVD+XYOKtGCQH1GP6tR/sDybdSSacEw4UCTn2s8qIElwqJlaFFTwlR1LLrkiDzQ3c3vd9MMqkm/7dg62w11` | `(?:fullstory).{0,40}\b([a-zA-Z-0-9/+]{88})\b` |
-| `spdb-fusebill` | Active | `fusebillE8Jo1Gs8CAQ3qLve0GdsAphbbw1hrnaIJnJgd6cF8usKDV7M33sBUbZRRLgBuc9OpnT63hkQYb4tnRU4VahBLiYmV0n48xmolnfYNANI45dNxrnypqkVuRFX` | `(?:fusebill).{0,40}\b([a-zA-Z0-9]{88})\b` |
-| `spdb-fxmarket` | Active | `fxmarketYvX6AZxMvQlnzlrHZD9DYsUwRIzKPTIBIS_JKCVTj7PafsmXVVBy` | `(?:fxmarket).{0,40}\b([0-9Aa-zA-Z-_=]{20})\b` |
-| `spdb-gcp` | Active | `{ImLATW7Ro88pd2SmzmU0o69bNsYGhdNQauth_provider_x509_cert_urlpdPouFBT5UhSyxYmrbTWns4piPdZzf0F}` | `\{[^{]+auth_provider_x509_cert_url[^}]+\}` |
-| `spdb-geckoboard` | Active | `geckoboardSdlfOFM04ZzpuH2dIdxJguvK9F2h5FqTnkmNxIer7VCWkY9FCelvxz9O4RgbfjRWNmJ2AsjvIy4h` | `(?:geckoboard).{0,40}\b([a-zA-Z0-9]{44})\b` |
+| `spdb-eagleeyenetworks-1` | Active | `eagleeyenetworksqgpnd7xzOgxF04K96z4nWQKO2z9aC9xZfb8xss4rOaKmiLEfZPDs@cLEjbXD5ksJJnCWCsq` | `(?:eagleeyenetworks).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
+| `spdb-eagleeyenetworks-2` | Active | `eagleeyenetworksSFjjWMcMTCrTh1Wrc8sV6wRLkdo7E154xisDOpXZozg2cZ0` | `(?:eagleeyenetworks).{0,40}\b([a-zA-Z0-9]{15})\b` |
+| `spdb-easyinsight-1` | Active | `easyinsight8A9hRFNWw1PlTS4638znAOPnlwWH1hCAxP16XWlHDroheJRFYPxh` | <code>(?:easyinsight&#124;easy-insight).{0,40}\b([a-zA-Z0-9]{20})\b</code> |
+| `spdb-easyinsight-2` | Active | `easyinsightMd32qFiIVYxYQWPxYZLDXh7FS13rehFUw0sOqAAAddnJZ5Hc8dpq` | <code>(?:easyinsight&#124;easy-insight).{0,40}\b([0-9Aa-zA-Z]{20})\b</code> |
+| `spdb-edamam-1` | Active | `edamamMqHAKkWCXIcsZGEqCD5waLi2a0CIaM0Ly3o0juh3uufpau9djrlce0umf80janbe` | `(?:edamam).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-edamam-2` | Active | `edamamo3lH17OPbT0Zq1SMbcFVnAHUEsrHl4vGreavk9i6` | `(?:edamam).{0,40}\b([0-9a-z]{8})\b` |
+| `spdb-edenai` | Active | `edenaiE3YvbtlxeXfkHKB35LdRfgNVqZibpu48bDZohUdnd9MMLdxHLozFCH4zu7tlCnFLQAmNtKPMZvFJLDU9cyrLrEaPYiLhqbyHApLI4TfELLD2oxreaynpLwQQCR2QNr4hE2ZQ1pFrenH5mSQWHWrK7RK78gULphnbh756Z8z6MN0n0_OZgWhx1I6NwcyKsaQMK9RmRE_3d__Sp` | `(?:edenai).{0,40}\b([a-zA-Z0-9]{36}.[a-zA-Z0-9]{92}.[a-zA-Z0-9_]{43})\b` |
+| `spdb-eightxeight-1` | Active | `8x8409ohA7QNwPQLILMCJeB7jg40HgyQ4R2pdHmipjgkHC6583BHwJqHSfM6TyXSQ` | `(?:8x8).{0,40}\b([a-zA-Z0-9_]{18,30})\b` |
+| `spdb-eightxeight-2` | Active | `8x80NmrogkW6Irp08K99025tQpAsWFnLwzeQQx29QGdOUlTWO9NTmyIvgx3SDsxXg4v115meHNELMj` | `(?:8x8).{0,40}\b([a-zA-Z0-9]{43})\b` |
+| `spdb-elasticemail` | Active | `elasticu91y0C0hKJ4UufcUdLqpFWA1pbO51So759xvEocCbVdDZyb1NOGqymElY4F-i2w16Ft-6AybRid3k8LtzQzPJY63rdZEc1aUieEbefJSnh2oF4uAN4ahzaXErRIysY-h` | `(?:elastic).{0,40}\b([A-Za-z0-9_-]{96})\b` |
+| `spdb-enablex-1` | Active | `enablexsHvrmgrzR9OQRlga3DixZem2APY9AtS9YheYjUxqv8Yrl0Rza1lUGLK9hRUeYergPqfn` | `(?:enablex).{0,40}\b([a-zA-Z0-9]{36})\b` |
+| `spdb-enablex-2` | Active | `enablexvwQRtliupFbRaTEcarCwPvSSJlq828GSm4uxcuqmsy95bxy7le54kbbp` | `(?:enablex).{0,40}\b([a-z0-9]{24})\b` |
+| `spdb-enigma` | Active | `enigmaDtuYfnFNrkLV5EQoWLev9ZHZZgRfulYU0zJd9J35omplAbYHlG0NOAuBmIv0ZA5Kn4sr8PT9` | `(?:enigma).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-ethplorer` | Active | `ethplorer4AXs7z12kNOu2UnpFXTmyVVjQ7lwShvH81QDJel3dKiVdfx4M3mewY` | `(?:ethplorer).{0,40}\b([a-z0-9A-Z-]{22})\b` |
+| `spdb-etsyapikey` | Active | `etsySMnqMgH3wC5Ml4SLxyHQucFv8pZhb1EOb5ycmluTQfmfofn83hUxrwwv` | `(?:etsy).{0,40}\b([a-zA-Z-0-9]{24})\b` |
+| `spdb-everhour` | Active | `everhourjckhvtOlNNp7Kh1pgzOpKgAhN2hXymfY835a-bcb4-40fcea-bbc46e-6748b0d6` | `(?:everhour).{0,40}\b([0-9Aa-f]{4}-[0-9a-f]{4}-[0-9a-f]{6}-[0-9a-f]{6}-[0-9a-f]{8})\b` |
+| `spdb-exchangerateapi` | Active | `exchangerateozhPmTsfhVcvS6LihI2El9ADfDyCRvM2bs0k8t8ta2z7mztu24qwdhl0` | `(?:exchangerate).{0,40}\b([a-z0-9]{24})\b` |
+| `spdb-exchangeratesapi` | Active | `exchangeratesfxiQGBytTe7QrB2lX95vGUYFKkWTI0biy7cqecamx11c5vrhu0xzvmwts45kckiu` | `(?:exchangerates).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-fcm-server-key` | Active | `AAAA-_ZL757:fbT1YEK8YqIfuCEBMB9j1hRCelLnMOTJxL18YniCYECLszeIBYuK50Dxy68pJgI-5B97W3ghrUZq0sGHdnobHWKtWOl7fsgnPX7JVN2YaWXSuyxN0gN3H-Xq7vouI2394A0rFE34BZBi` | `AAAA[a-zA-Z0-9_-]{7}:[a-zA-Z0-9_-]{140}` |
+| `spdb-fcm-server-key-2` | Active | `AAAAG4hCNSb:psdFfcn-4H_7uEpJgpNOFPhEoXpDjQlfICdN2rJxPrBRZLQ33DIexbhd1zpIk52Sk-laQwM-OEg31phquQl0WF-jCvxUOuTomc9yXvixvlvYwIFEP7qg0HS3juDgY_5j-bQF_6pGhcjM` | `(AAAA[a-zA-Z0-9_-]{7}:[a-zA-Z0-9_-]{140})` |
+| `spdb-facebook-access-token` | Active | `EAACEdEose0cBAtOnKdWbSX0MheOvePbiAd1P8BL1YuX4X` | `EAACEdEose0cBA[0-9A-Za-z]+` |
+| `spdb-facebook-oauth` | Active | <code>fACeBookmOIIt9HaHPxdApVvH38tIq3kM3jpwb5e&#124;c6a1d2b01b3d7087eae357cde093d641"</code> | <code>[fF][aA][cC][eE][bB][oO][oO][kK].*[''&#124;"][0-9a-f]{32}[''&#124;"]</code> |
+| `spdb-facebookoauth` | Active | `facebook3Zq68k4HCChVvlv0iheQFYuIM3Yqhtrt3LufbV0Pr5rR1LUBBp2krDWKk22JOo1G` | `(?:facebook).{0,40}\b([A-Za-z0-9]{32})\b` |
+| `spdb-faceplusplus` | Active | `faceplusplus4qP7orc4s2no5JLILJoQ7EPYWABKY5KN3MAbKJAC1bukAhCYK2THPdgrzwKrGiWr` | `(?:faceplusplus).{0,40}\b([0-9a-zA-Z_-]{32})\b` |
+| `spdb-fakejson` | Active | `fakejson9MJwqSbBEw60XvXN9FQ9rM6t2hfwcH1gVhuBI00094VKmiNoFO2N1R` | `(?:fakejson).{0,40}\b([a-zA-Z0-9]{22})\b` |
+| `spdb-fastforex` | Active | `fastforexximqHtNeWuFalytw6gws1Hv9j3BalRuX9vg-vqlbo51uoge6ophhb3nq49ik` | `(?:fastforex).{0,40}\b([a-z0-9-]{28})\b` |
+| `spdb-fastlypersonaltoken` | Active | `fastlyTYwfCKF7JoFk1O6SFMJIj9uGGkbX9CoWkhEFlZRgk6KQljjspNKAU8ZUgaGiY1cM` | `(?:fastly).{0,40}\b([A-Za-z0-9_-]{32})\b` |
+| `spdb-feedier` | Active | `feedierGjrTq7Og5SlBCtcUiOe0zUDpXaUKeKxpQLzxMNXsNsJDdLqXY0SVht6BpWc6EiaE` | `(?:feedier).{0,40}\b([a-z0-9A-Z]{32})\b` |
+| `spdb-fetchrss` | Active | `fetchrssCJ0PX315QaawnpuSboE06x6X0yYPPBAgGiF5wiw0mamSmwP.ulsjjrMGMpYpEIgyV5ztoE25` | `(?:fetchrss).{0,40}\b([0-9A-Za-z.]{40})\b` |
+| `spdb-figmapersonalaccesstoken` | Active | `figmaFsL0sS0cSWF2cnKjzN5VWBRGm7LN4SWM162504-nysumq76-hz4o-oe57-odyl-tq354iikgvmd` | `(?:figma).{0,40}\b([0-9]{6}-[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-fileio` | Active | `fileio4xAAtgTAaAiYx5uSunPh11P5RJHBexxYJWFDD6T9VBVIPHUZBUVCM3GQXDY.Q9FX--.G24W` | `(?:fileio).{0,40}\b([A-Z0-9.-]{39})\b` |
+| `spdb-finage` | Active | `API_KEYBCWOVYF39D6RQGK1JVV3E9UK2XGH0FZM` | `\b(API_KEY[0-9A-Z]{32})\b` |
+| `spdb-financialmodelingprep` | Active | `financialmodelingprepsD0PgoBLr2r30Ql7dFD3Gw5MfCKBvsIojNHazyfH5h6okJhYu0NiOnDJPcoczsae` | `(?:financialmodelingprep).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-findl` | Active | `findlU49xLF6VVxqzhfmNDvb77pXQpSdZ0KOgzs3xc0j8-ktz6-q6y5-jdi6-uedp3ene90z9` | `(?:findl).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12})\b` |
+| `spdb-finnhub` | Active | `finnhubqbQZFMBDnmjA1B18e3Sq5Lbx0THbvN7w49v21gdqvia5y4mssrh2` | `(?:finnhub).{0,40}\b([0-9a-z]{20})\b` |
+| `spdb-firebase-database-detect-1` | Active | `wu0ib0jcqb2xfw9pkiea6rwh5y1hdil7.firebaseio.com` | `[a-z0-9.-]+\.firebaseio\.com` |
+| `spdb-firebase-database-detect-2` | Active | `3j3j-04tgw4y1mth8lzbcod56.oyg50x.firebaseapp.com` | `[a-z0-9.-]+\.firebaseapp\.com` |
+| `spdb-fixerio` | Active | `fixermj54cizZNjf1XgATfyv46hT4c4HRuhUxoEKAXYumGokrTnu76y4q8M39c1EbrRNB` | `(?:fixer).{0,40}\b([A-Za-z0-9]{32})\b` |
+| `spdb-flatio` | Active | `flatxl0OmGDw5kMRqDgWcWWV1uCfDHGqbefzj3i3c6628sfr1opnf9i4ifz7a4zb9pfkaf0gvez53kfejm64kpg1tf2a49alolv2wafo2afuh71fy6o18nutetyouhl3z7mbv8db0zuhvfhfgskwrepwaapc7gg6vbw2` | `(?:flat).{0,40}\b([0-9a-z]{128})\b` |
+| `spdb-fleetbase` | Active | `flb_live_FYaSh1zBDXBPolQGkZvI` | `\b(flb_live_[0-9a-zA-Z]{20})\b` |
+| `spdb-flickr` | Active | `flickrj3hL9A8fFTM0jgOwHZ3CBpEcLauBFXaI8tsdk9zxb91fc8lq7pczbv32843yvwvy` | `(?:flickr).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-flightapi` | Active | `flightapir5imxFYQupEJ0NqAHaxT7k2UhrnK4il3cu1luye30mr10nw5yuos16qz` | `(?:flightapi).{0,40}\b([a-z0-9]{24})\b` |
+| `spdb-flightstats-1` | Active | `flightstatsQWcYAcxnRgWqJ1IunVBS8dwF8nF1TPDyizp43ijzj69jkot7k8mancp1je5stulr` | `(?:flightstats).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-flightstats-2` | Active | `flightstatsw3kUGDe95BUc7gFmeuYh54ae5lzidy6Mat9dbrfy` | `(?:flightstats).{0,40}\b([0-9a-z]{8})\b` |
+| `spdb-float` | Active | `floatOGJArF6R1Y63jYziEMjlV6YNECxQ0V79v5mCa_Q=tiBv8Rw4.Ox6tkD15aXHjD+bpPX3v8Qm0d8UAk2b7DCHPQUOL5t` | `(?:float).{0,40}\b([a-zA-Z0-9-._+=]{59,60})\b` |
+| `spdb-flowflu-2` | Active | `flowflur8wSwmSiDqmdXCXeOKKkhiyL4HJzKhJWJrhFPIEsJAP45EQIyf36hVWVve0W2LZDu7U5i8sUgHqPyD1GWsp` | `(?:flowflu).{0,40}\b([a-zA-Z0-9]{51})\b` |
+| `spdb-flutterwave` | Active | `FLWSECK-4wv4o0nswieqq2wn4c2v92vimb3wf8gk-X` | `\b(FLWSECK-[0-9a-z]{32}-X)\b` |
+| `spdb-fmfw-1` | Active | `fmfwh95cXlNrot9gcGlAEW2g2rZ1neDJ0mochLjP90DqaOraLUmNFBdzwhijjiU-gD5n` | `(?:fmfw).{0,40}\b([a-zA-Z0-9-]{32})\b` |
+| `spdb-fmfw-2` | Active | `fmfwBYdVWYAkUYYIVmecrHdT0FEigBbH60k3kzf_7YUNYP9oKxrNjapabM4aAYBTrQYc` | `(?:fmfw).{0,40}\b([a-zA-Z0-9_-]{32})\b` |
+| `spdb-formbucket` | Active | `formbucketi6USKDx0cIHfQ4jS5xNRuxMMKZltvqjquKT8WTTMf2icCYhsrZxh2WpGR7yNAyLZVlxlzXQf5Mbbxq415dOkj7TnXu5RHdNcE.uYSNrfiOTcGqnVM0sJUBljoPPAuboh3G` | `(?:formbucket).{0,40}\b([0-9A-Za-z]{1,}.[0-9A-Za-z]{1,}\.[0-9A-Z-a-z\-_]{1,})` |
+| `spdb-foursquare` | Active | `foursquarexs733An5hvH7ICEvPbtiLiIihcQ9copXABN6XALFBQUHTNWMBPGVF85UNJZHC8SZMJRBFPLPV3517JBX` | `(?:foursquare).{0,40}\b([0-9A-Z]{48})\b` |
+| `spdb-frameio` | Active | `fio-u-kOuJKsrTs81EuThkm5cqjSjHhIlAeaYWoNiuLC4lMgV5Xfcor7CpDM_0QSqf9AcO` | `\b(fio-u-[0-9a-zA-Z_-]{64})\b` |
+| `spdb-freshbooks-1` | Active | `freshbooks1ya6AHdYwXZ5WlBufzmltsJnUvyAfXNezji242psf7apzpralzbe2wgx8168o3hsoxxvw0jxwjf6h3xm2zcma6yvaiixuyr2` | `(?:freshbooks).{0,40}\b([0-9a-z]{64})\b` |
+| `spdb-freshbooks-2` | Active | `freshbooksdNA4BYhEaSYK6BiLoffJRejxKyeLTbWhhttps://wwwShAqr9dzx_P6L1IjCAwZrapH-d7T8IKdlOcom` | `(?:freshbooks).{0,40}\b(https://www.[0-9A-Za-z_-]{1,}.com)\b` |
+| `spdb-freshdesk-1` | Active | `freshdeskkgWTfjwbOIDTc6xBzemhQhezsIljVBYN1S43EdivzPYeCgHkV9El` | `(?:freshdesk).{0,40}\b([0-9A-Za-z]{20})\b` |
+| `spdb-freshdesk-2` | Active | `vzbg8ns2k7mu637t9e7w-44xhxlpjlghffreshdeskacom` | `\b([0-9a-z-]{1,}.freshdesk.com)\b` |
+| `spdb-front` | Active | `front6QGXbvq1g6qbYEPq7DqEre1F3TJBWTlL0724OcyXTCz5YZCqXt3QQhz6YZTYCkO4t1be7yAxVhUUpySjLXO5zEYGrotFcO-t.HZuGddIkrhrHkP-yf8iylyTwr-pbxdKnuFllHBDjzoGL1s0tmX6pQC2krDbs6MwgqW3UwrD9YSM8NVFlvq-xakIV42cekFILwASEx-zU3NqvSvM2ACGUDNu39CPkRzfkchW8kcS-CKFHohHiK6TtXW8usBOo2y_5` | `(?:front).{0,40}\b([0-9a-zA-Z]{36}.[0-9a-zA-Z\.\-\_]{188,244})\b` |
+| `spdb-fulcrum` | Active | `fulcrumPu2RJcRCsqjlcVwS0UcbGynWVriNYD7i8bw9eqdp7ba4qfhj4qkc6c8gmtd429fm20akor9al8sbqh687obn5m58aq5cr8zbvxsj11diz5taphpj` | `(?:fulcrum).{0,40}\b([a-z0-9]{80})\b` |
+| `spdb-fullstory` | Active | `fullstoryn4ZsbKr2b1XBUuOlGeffWadDv0sGUghdWkuKmuUuAPWFyjAedjMtLdhmS+hRlqXXPbdyfucOneX8b9lVTjvdFY/tLNG8bd+s-T1Rj8EWvC93Er9JG9Kdwlm-` | `(?:fullstory).{0,40}\b([a-zA-Z-0-9/+]{88})\b` |
+| `spdb-fusebill` | Active | `fusebilliWYhDe7ktI1DDpHZ8rqSxIFAC67BaOmgT1f9sOhh3R6owSsps4DIn7NbBct19jlb1527fYfs5UbeXgTkqA6cY05K2yNQ0Qnf7FWACqYermbf80dYnbUZCTGz` | `(?:fusebill).{0,40}\b([a-zA-Z0-9]{88})\b` |
+| `spdb-fxmarket` | Active | `fxmarketyu9B6R4s1tLNQ1mT7ETffCBs6ljT5IoT0Zo7FGYWzzeJzq_eu=Sg` | `(?:fxmarket).{0,40}\b([0-9Aa-zA-Z-_=]{20})\b` |
+| `spdb-gcp` | Active | `{pwBmECV3kAzQFgMYYlcvyYr5s4dLgLStauth_provider_x509_cert_urlwtcYCCXA2LyvkGja38V81arfbzfi0NNy}` | `\{[^{]+auth_provider_x509_cert_url[^}]+\}` |
+| `spdb-geckoboard` | Active | `geckoboardCvSpAlOWbgLspfGdXWApvAh6m3Brmh9DYo1Zh30txeNb43kYW4GJfi3jn1ucUb8aXMANcFn11ksg` | `(?:geckoboard).{0,40}\b([a-zA-Z0-9]{44})\b` |
 | `spdb-generic-1376` | Active | `jdbc:mysql:` | <code>jdbc:mysql(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-generic-1688` | Active | `TOKENnrNzyBiB{7ZPwqk2aD]gdygibGuOLYZC"='SKu4klkUaH` | <code>TOKEN[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
-| `spdb-generic-1689` | Active | <code>API8wI7&#124;nYoGd4MEceZCGpCyfqTq`VWH&#124;H8":'fPDNnub9Iz</code> | <code>API[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
-| `spdb-generic-1691` | Active | <code>SECRETQ9VTC^RgYldb{zMP9t5O{F0fs5evbgJD':"hd_8GPh&#124;dj</code> | <code>SECRET[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
-| `spdb-generic-1692` | Active | ``AUTHORIZATIONhhxxDwguHj6PSFT3KOlCtA5FNlD9Mr`m"='7_NTZHiyT_`` | <code>AUTHORIZATION[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
-| `spdb-generic-1693` | Active | ``PASSWORDRPivGg\\]3ndyJy4vJhQ^Ih\\yaO_UAjoO':"E`LVbMYKYb`` | <code>PASSWORD[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
-| `spdb-generic-1695` | Active | `apIiBkCZvR3HO5Iy9oOHzUJXLW-ORSaD-KvJ"                                =                                ''4vs8H944RJQrCTxkUhSFVTs7SSjtCSj4''` | <code>(A&#124;a)(P&#124;p)(Ii)[\-&#124;_&#124;A-Za-z0-9]*(\''&#124;")?( )*(:&#124;=)( )*(\''&#124;")?[0-9A-Za-z\-_]+(\''&#124;")?</code> |
+| `spdb-generic-1688` | Active | <code>TOKENT7OxfeKeQh&#124;A`QZTLtiE^IMr^yAYE`Q8"='sI\\RW&#124;H\\1v</code> | <code>TOKEN[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
+| `spdb-generic-1689` | Active | ``APIIgFNeLEjQ3fS3y6Yz_D70m3I_5mP`u^M"="YtWjqd8_Ln`` | <code>API[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
+| `spdb-generic-1691` | Active | <code>SECRETQtT0H&#124;DMAP2koh7&#124;jFBcSC7geB&#124;qw&#124;V8"='5hgmYW]fam</code> | <code>SECRET[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
+| `spdb-generic-1692` | Active | <code>AUTHORIZATIONMz2yEy^w{&#124;^YPkV9zInCg]XzcHtolr2X'="jEKP]G_yIj</code> | <code>AUTHORIZATION[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
+| `spdb-generic-1693` | Active | <code>PASSWORDe9&#124;P_u5T`B6tRepJNSj_GoYLBhPD&#124;]_I"="48xd]tt`&#124;U</code> | <code>PASSWORD[\\-&#124;_&#124;A-Z0-9]*(\'&#124;\")?(:&#124;=)(\'&#124;\")?[\\-&#124;_&#124;A-Z0-9]{10}</code> |
+| `spdb-generic-1695` | Active | `ApIiA-YydNwY9Ey7pTzZwq1MxsHRuDcC8zrC"                                :                                ''0jEPC7VM6vaANREIU8A52SqVovDeQ6aH''` | <code>(A&#124;a)(P&#124;p)(Ii)[\-&#124;_&#124;A-Za-z0-9]*(\''&#124;")?( )*(:&#124;=)( )*(\''&#124;")?[0-9A-Za-z\-_]+(\''&#124;")?</code> |
 | `spdb-generic-1700` | Active | `BEGIN OPENSSH PRIVATE KEY` | `BEGIN OPENSSH PRIVATE KEY` |
 | `spdb-generic-1701` | Active | `BEGIN PRIVATE KEY` | `BEGIN PRIVATE KEY` |
 | `spdb-generic-1702` | Active | `BEGIN RSA PRIVATE KEY` | `BEGIN RSA PRIVATE KEY` |
 | `spdb-generic-1703` | Active | `BEGIN DSA PRIVATE KEY` | `BEGIN DSA PRIVATE KEY` |
 | `spdb-generic-1704` | Active | `BEGIN EC PRIVATE KEY` | `BEGIN EC PRIVATE KEY` |
 | `spdb-generic-1705` | Active | `BEGIN PGP PRIVATE KEY BLOCK` | `BEGIN PGP PRIVATE KEY BLOCK` |
-| `spdb-generic-1707` | Active | `2yu0gxgecfgatsuddj-khwctuiqt28ti.s3-l.amazonaws.com` | `[a-z0-9.-]+\.s3-[a-z0-9-]\.amazonaws\.com` |
-| `spdb-generic-1708` | Active | `0weh69xqw6hs-sfjdmvy5knee8mtz230.s3-website-eu` | <code>[a-z0-9.-]+\.s3-website[.-](eu&#124;ap&#124;us&#124;ca&#124;sa&#124;cn)</code> |
+| `spdb-generic-1707` | Active | `xaptx6j77g-3gga5iw7r8snu4.78lrdt.s3-r.amazonaws.com` | `[a-z0-9.-]+\.s3-[a-z0-9-]\.amazonaws\.com` |
+| `spdb-generic-1708` | Active | `93sgu9ww2pprl38rb0v5ir83f5c1-l2u.s3-website-sa` | <code>[a-z0-9.-]+\.s3-website[.-](eu&#124;ap&#124;us&#124;ca&#124;sa&#124;cn)</code> |
 | `spdb-generic-1710` | Active | `algolia_api_key` | `algolia_api_key` |
 | `spdb-generic-1711` | Active | `asana_access_token` | `asana_access_token` |
 | `spdb-generic-1713` | Active | `azure_tenant` | `azure_tenant` |
@@ -382,1234 +382,1234 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 | `spdb-generic-1762` | Active | `zapier_webhook` | `zapier_webhook` |
 | `spdb-generic-1763` | Active | `zendesk_access_token` | `zendesk_access_token` |
 | `spdb-generic-1764` | Active | `ssh-rsa` | `ssh-rsa` |
-| `spdb-generic-1765` | Active | `s3-qz7-h1gimnogdh3h2tgnvleeu2ex16h9.amazonaws.com/8juzknc4.m9fl916kmhaqr.2451g39c6` | `s3-[a-z0-9-]+\.amazonaws\.com/[a-z0-9._-]+` |
-| `spdb-generic-secret` | Active | <code>sECRetgto02DQKCD6utS1KdSuUWLADF95Ef94C&#124;7K5x0v8wsI8BqvcMZW3ez3jHGMdxZ8NL'</code> | <code>[sS][eE][cC][rR][eE][tT].*[''&#124;"][0-9a-zA-Z]{32,45}[''&#124;"]</code> |
-| `spdb-generic-webhook-secret` | Active | `webhooktBBp2o3bAv2Ms2pNc9t7W0ioVrWegBfesecreto3x1wdEjk1PZWlE6dxUih8WZ7LZlm8er` | <code>(webhook).+(secret&#124;token&#124;key).+</code> |
-| `spdb-gengo` | Active | `gengokC5Uvvb4mNEJe9V1naEqahQnpUIYtKet {ALyc(bnL7tr@4-LbHe(u[q13UPGJ4_n=ULW^DmVhCWvD41K]~[r{A9wk-QF0e24 ` | <code>(?:gengo).{0,40}([ ]{0,1}[0-9a-zA-Z\[\]\-\(\)\{\}&#124;_^@$=~]{64}[ \r\n]{1})</code> |
-| `spdb-geoapify` | Active | `geoapifyQjwkzZ6E4lBFFnN3t0UejVvr0KSHk1VCnjzgdbtu04an7kmkh1vepwt573ryrark` | `(?:geoapify).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-geocode` | Active | `geocodeHpbPpKhRGsefCRhIOfVWe1tAiSdxdD1Sbal3xsdp7xwpp7ibdfdm7alb5no1` | `(?:geocode).{0,40}\b([a-z0-9]{28})\b` |
-| `spdb-geocodify` | Active | `geocodifyb0dc6DMc237ODkxmjlIVtLAhdC0GiT940sfb0v3o7razwzrniiak1tbt408f77avrwr30ces` | `(?:geocodify).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-geocodio-2` | Active | `geocodP5ZJgwoFYktAF5wsNgHQr5MGyNFaX4q060si36pdbl2npyd8fyx8gov695p1v4yuuk3ymio` | `(?:geocod).{0,40}\b([a-z0-9]{39})\b` |
-| `spdb-geoipifi` | Active | `ipifiDUV313unkOFggTd0vGkvLxhVUiXB3G4elxGDqtQgdb52bGUCVDmSUwbXAwkLzlHb` | `(?:ipifi).{0,40}\b([a-z0-9A-Z_]{32})\b` |
-| `spdb-getemail` | Active | `getemailwRnSnZRo0dKkeSpHuKdWuSvAYFp7aPzQkPFEnCeQg0EysaQqrkjw` | `(?:getemail).{0,40}\b([a-zA-Z0-9-]{20})\b` |
-| `spdb-getemails-1` | Active | `getemailsqkl6sUuNeHGNVZxeAV2toyBUxtIFvJFGs-8c0f-61jpaqkhvz8o7howj4q` | `(?:getemails).{0,40}\b([a-z0-9-]{26})\b` |
-| `spdb-getemails-2` | Active | `getemails3ym9jbUvxgzOTsJdsLmht0MLeQ31soCKt3po4q4tqoq18yr6dp` | `(?:getemails).{0,40}\b([a-z0-9-]{18})\b` |
-| `spdb-getgeoapi` | Active | `getgeoapioQq62yf1MxMW1NFQQdcSbL8QkA3OjdxPmjfeo4b50g54u3sipzy0ewicl7d1tqglry932bbd` | `(?:getgeoapi).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-getgist` | Active | `getgist9Xpxp04Fd4fMgEugIJ6251LPDTYO5WZ1U7p3zUkcu2KVTJSdGIdzbLUjyBGeQK7THNGEROixunnqMJq0+r+Z9WWgjv=XchaxeXTE` | `(?:getgist).{0,40}\b([a-z0-9A-Z+=]{68})` |
-| `spdb-getsandbox-1` | Active | `getsandboxBQs7IpuNiK1vJhZSiYCbnIw7epxj8uPSrf625gu3chf1sq722vzsvipq0p5ae1svpay--1nl` | `(?:getsandbox).{0,40}\b([a-z0-9-]{40})\b` |
-| `spdb-getsandbox-2` | Active | `getsandboxLb0rRcU2GQVotXfWp7Gn9oZGmK6Rx1Wd8obgxp-8e5nduk0rg2aeyz8614y63v` | `(?:getsandbox).{0,40}\b([a-z0-9-]{15,30})\b` |
-| `spdb-github` | Active | `GiTHuB9uCZonQbFkTIWAnltFezf8CcNqnlstUr"XJ25880XWoSWFJRh5B3I8AJ36qZ4A5TpPWx'` | <code>[gG][iI][tT][hH][uU][bB].*[''&#124;"][0-9a-zA-Z]{35,40}[''&#124;"]</code> |
-| `spdb-github-2` | Active | `ghp_kLWoi1bBT8ofLttQG79lzZZnK2gPlOrXvizP` | <code>\b((?:ghp&#124;gho&#124;ghu&#124;ghs&#124;ghr)_[a-zA-Z0-9]{36,255}\b)</code> |
-| `spdb-github-app-token` | Active | `ghu_4O0VjCOSlGDjoiqXtIKA6S7YzGTIpWFSI3ql` | <code>(ghu&#124;ghs)_[0-9a-zA-Z]{36}</code> |
-| `spdb-github-refresh-token` | Active | `ghr_QSS9xYlaak01WOu2QICfjmHTon6EuJ4xcpqDJF547Wneq9EtXFufXThNAvUWeeXGD30phmWWXNBW` | `ghr_[0-9a-zA-Z]{76}` |
-| `spdb-github-old` | Active | `githubXyO3fOHQZbYscr5EzjGDQqgd60tGOdn4j  '"''::=:'""= :"":"'=:'   "::  e04c93e34ca082f0d1dd1ed7988e977a7f738afb` | `(?:github)[^\.].{0,40}[ =:'"]+([a-f0-9]{40})\b` |
-| `spdb-githubapp-1` | Active | `githubxWnYLca3YwMfgj9muOYNrMEcAKAIUicy368374` | `(?:github).{0,40}\b([0-9]{6})\b` |
-| `spdb-gitlab` | Active | `gitlabhJ8MJ0UERyIAvHfS33iM6EmrVU1Pe22u9atHPDGHHk0g8Om9S_V6dy` | `(?:gitlab).{0,40}\b([a-zA-Z0-9\-=_]{20,22})\b` |
-| `spdb-gitlabv2` | Active | `glpat-Nxy4tP22IWr7myvTeG0hXc` | `\b(glpat-[a-zA-Z0-9\-=_]{20,22})\b` |
-| `spdb-gitter` | Active | `gitteryvs9n4bi8jgqmGL516la0BYJa3yMi9fb1-opw7jwtl903f0co0wi7e6w3tvghu-cp4vj8afi` | `(?:gitter).{0,40}\b([a-z0-9-]{40})\b` |
-| `spdb-glassnode` | Active | `glassnodeaeNh6EZbXeMQvwl5zxg1ftiCseBkGdeDuGtF9j4ypTViUmOP1D82ZZcj7l9` | `(?:glassnode).{0,40}\b([0-9A-Za-z]{27})\b` |
-| `spdb-gocanvas-1` | Active | `gocanvaszJzWFUhWEVvmnZW0yS3ZsDOILZHrN6NqFJjfr60OgScGKff42EP4vVedcGhD9HcxOFBs6KKVulf= ` | `(?:gocanvas).{0,40}\b([0-9A-Za-z/+]{43}=[ \r\n]{1})` |
-| `spdb-gocanvas-2` | Active | `gocanvasqQQzxlmwNKysdXt8hFwXqsfOYrW40iTJ-.-..-----..---..-....-....--.-.@--------------------------------.--.-.` | `(?:gocanvas).{0,40}\b([\w\.-]+@[\w-]+\.[\w\.-]{2,5})\b` |
-| `spdb-gocardless` | Active | `live_MHJe75TTlHx2s9ForNKVaIJVM_WURFJ_kh9Bi5I1 ` | `\b(live_[0-9A-Za-z\_\-]{40}[ "'\r\n]{1})` |
-| `spdb-goodday` | Active | `gooddayILx5YDCIjKhq7LfJAIKSDs7BGdICc6uaynvhig8q98ja2ejgw5kmf18lngqcr9n1` | `(?:goodday).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-generic-1765` | Active | `s3-csri-buj9534ipq0tjmzextend4hqlli.amazonaws.com/x0sd4cc0xzjho26wsl9knxlsu9p006b7` | `s3-[a-z0-9-]+\.amazonaws\.com/[a-z0-9._-]+` |
+| `spdb-generic-secret` | Active | <code>seCRetlVti2AxuR2fJMFkTioCP8D7btQnl4rLt'7HkvFvNY5pkfotqcRVx5UkrN7EL7r4DT&#124;</code> | <code>[sS][eE][cC][rR][eE][tT].*[''&#124;"][0-9a-zA-Z]{32,45}[''&#124;"]</code> |
+| `spdb-generic-webhook-secret` | Active | `webhookWT1BWrcb1VfI18ggQ9alirdGqJmQVvrBtokenaxiiTiC4XaF2fQkHLskL9fGewJDf0Yf9` | <code>(webhook).+(secret&#124;token&#124;key).+</code> |
+| `spdb-gengo` | Active | <code>gengoaBgsqgQwh3T69j5cNPKkwcePujNp7tdj )Od[PE$muC5AgRF&#124;g]hz8C2zj]_XM2SVxido_j8l0m2lDt~YuC-e6i7a-=qKgk4l\r</code> | <code>(?:gengo).{0,40}([ ]{0,1}[0-9a-zA-Z\[\]\-\(\)\{\}&#124;_^@$=~]{64}[ \r\n]{1})</code> |
+| `spdb-geoapify` | Active | `geoapifyyz70zW6z7pAcIvm8z7q4hpX6sB9N96Foga0tdmmvcx4014dhvwlz3v9kgh47435w` | `(?:geoapify).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-geocode` | Active | `geocodeq09b5GL2aUxJXUhtTapKIjZwQF1P8iqadi325etgdkkvq114y3bu3cdklndt` | `(?:geocode).{0,40}\b([a-z0-9]{28})\b` |
+| `spdb-geocodify` | Active | `geocodifyO0j4J4lGhNVlkUmxs0hFH1BhxSXCFZyUi9295npp8m0863h7tsxb2mwl1vsx9xu7jpygnb06` | `(?:geocodify).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-geocodio-2` | Active | `geocod9vvJprKbEmGhxrw7JtAc4zMX9fGzgwjJm39zdspbkbmi4uziau01czqs2o4tqsmfnbcoqw9` | `(?:geocod).{0,40}\b([a-z0-9]{39})\b` |
+| `spdb-geoipifi` | Active | `ipifiBD8oJ5nN7dRcaj1fTS6njrCnH7X7u0S4bRIQ8z6WBv3kMD0A0ha0v4zldVMyy1aC` | `(?:ipifi).{0,40}\b([a-z0-9A-Z_]{32})\b` |
+| `spdb-getemail` | Active | `getemailCHo73whatWVPtyivFb9LqCPrTgD6sfuXnABv7QuiH75Mb7rue2QX` | `(?:getemail).{0,40}\b([a-zA-Z0-9-]{20})\b` |
+| `spdb-getemails-1` | Active | `getemailsFNTBYLrD6bjlNhYcIU8pdr67IepqMaVkppi8n1ot3an-4379cxu78vcmfw` | `(?:getemails).{0,40}\b([a-z0-9-]{26})\b` |
+| `spdb-getemails-2` | Active | `getemails9qW7XDSKEohIUxi8l2rDOCAH47kppBpq5irpu5n39ephpgs-oi` | `(?:getemails).{0,40}\b([a-z0-9-]{18})\b` |
+| `spdb-getgeoapi` | Active | `getgeoapiaViOFu2sEV00ZnTflpzC924FqnVKbEe2pvehvt902koqbtnkkhf6u6knb05y0oics6rk0mgf` | `(?:getgeoapi).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-getgist` | Active | `getgistzgQCF5u2V68RFhpKZe4eZW8Xad9mUCiEmWXCg3P=L2EarmNdJvZAnqMDKNDWxdP=6J0pmwDZ5OxkEOrqugr6VSXXyxWDfxjDlRp1` | `(?:getgist).{0,40}\b([a-z0-9A-Z+=]{68})` |
+| `spdb-getsandbox-1` | Active | `getsandboxDNQ7BjkeXfy8kjkW4VfJrf3FCRvOJVAY-wimzx8hniq5lb1otxgcokqv80j2qvvp8-ye8xij` | `(?:getsandbox).{0,40}\b([a-z0-9-]{40})\b` |
+| `spdb-getsandbox-2` | Active | `getsandboxhGOiCfIqHvw08VBWOE333beILxWBEjMzpod6ni7mxd62p37qwf2ua-rf-hhx0o` | `(?:getsandbox).{0,40}\b([a-z0-9-]{15,30})\b` |
+| `spdb-github` | Active | `githUbSwx1bertQMSMCoHt1osFQKEkPrF0jBUd'BPAXyXSIu4heAXGXIQGd4r1IAGBaFrvzJwE"` | <code>[gG][iI][tT][hH][uU][bB].*[''&#124;"][0-9a-zA-Z]{35,40}[''&#124;"]</code> |
+| `spdb-github-2` | Active | `gho_HBhV2S8wHXVtYHrAHNpUJkNf9BD5HZvFE5m5` | <code>\b((?:ghp&#124;gho&#124;ghu&#124;ghs&#124;ghr)_[a-zA-Z0-9]{36,255}\b)</code> |
+| `spdb-github-app-token` | Active | `ghs_ZTGiP0pdBqehmOVF4ZA2I2NwK3MHDUieOUtK` | <code>(ghu&#124;ghs)_[0-9a-zA-Z]{36}</code> |
+| `spdb-github-refresh-token` | Active | `ghr_H1G4hDE2CM2xLoLTcShwGidTrfY34M03sLfkO9LattIU1G6QNWWn6FpiHlTGscyj6KqEwaDTGcCS` | `ghr_[0-9a-zA-Z]{76}` |
+| `spdb-github-old` | Active | `githubAOWtiG1M9qnzyEDh8JpAzHTQxWlo6ZOc9='::"":=="" =='"" ":""='=:''' '"82c8bb04e53e1828f6e55ced60695c4ecefc2ca6` | `(?:github)[^\.].{0,40}[ =:'"]+([a-f0-9]{40})\b` |
+| `spdb-githubapp-1` | Active | `github083KeGca44ZHvtDW5YESeYI0AjXYVJto516903` | `(?:github).{0,40}\b([0-9]{6})\b` |
+| `spdb-gitlab` | Active | `gitlabImF3SmV2wTl0YIPc3PRe2AGSUpmzjA8DrCbVN8wTRD3w89QnPynMvp` | `(?:gitlab).{0,40}\b([a-zA-Z0-9\-=_]{20,22})\b` |
+| `spdb-gitlabv2` | Active | `glpat-LjXQcaKA5MBaLvOcZIjPl1` | `\b(glpat-[a-zA-Z0-9\-=_]{20,22})\b` |
+| `spdb-gitter` | Active | `gitterYbJ8WhzHMe7FDKiUBvv16iGdslAQ1Zd98puugx7bdswex1cjpoaud7jlcz4osat-h-briqjz` | `(?:gitter).{0,40}\b([a-z0-9-]{40})\b` |
+| `spdb-glassnode` | Active | `glassnodeYuDGmWgzkkZlzLdW4eqLQtnOXb5G8owgKA7X09JAZVYdhuavFHXSpVQVYrY` | `(?:glassnode).{0,40}\b([0-9A-Za-z]{27})\b` |
+| `spdb-gocanvas-1` | Active | `gocanvasTRrdPaYSO0lgZODWw6H87HKnC6dqY57ZwLHgwsVOXfCv3wr3oVDDDpZOQGXRdzu85xIU1s+DtYl=\r` | `(?:gocanvas).{0,40}\b([0-9A-Za-z/+]{43}=[ \r\n]{1})` |
+| `spdb-gocanvas-2` | Active | `gocanvasbem5Fq1Tid2oPZ7F8x3V7lJiVOX9l60K..-..-.--..---.----..---.-.-..--@--------------------------------...-.-` | `(?:gocanvas).{0,40}\b([\w\.-]+@[\w-]+\.[\w\.-]{2,5})\b` |
+| `spdb-gocardless` | Active | `live_OwJ7xK5PUgDFK2Khqj04xvXYCe7ul2OAe8wLfwU0\r` | `\b(live_[0-9A-Za-z\_\-]{40}[ "'\r\n]{1})` |
+| `spdb-goodday` | Active | `gooddayrdBhHCO1X7ydNaoPIfoWwjBU6LndyWVo3w1wj0fq8b0x6zwn16wum5kevxf6uj5h` | `(?:goodday).{0,40}\b([a-z0-9]{32})\b` |
 | `spdb-google-gcp-service-account` | Active | `"type": "service_account"` | `"type": "service_account"` |
-| `spdb-google-api-key` | Active | `AIzadyai1-4tqo9l047ccah08sbe5rznhqg3-ka` | `AIza[0-9a-z-_]{35}` |
-| `spdb-google-calendar-uri` | Active | `https://www.google.com/calendar/embed?src=Y4Bp;=ckbQ72XU@XLnxzxqUslk9xdy8_` | <code>https://www\.google\.com/calendar/embed\?src=[A-Za-z0-9%@&amp;;=\-_\./]+</code> |
-| `spdb-google-oauth-access-token` | Active | `ya29.hfNagKVezHcDMXsNI394hr2zlBvwP1vI` | `ya29\.[0-9A-Za-z\-_]+` |
-| `spdb-graphcms-1` | Active | `graphkIvyQMjbCxV8H2eOOUFpaInQNmtZDszyhqj5636tdeppd9vzpizuwyhmv` | `(?:graph).{0,40}\b([a-z0-9]{25})\b` |
-| `spdb-graphcms-2` | Active | `eyowr7ckVYfRHhk3F4UPc4PQlSU5O9tD5X22eagBZE8mutx8iiWk70usBUmmlN6EhIIxuoFjTQ3deyrPTVKzFhNXCRjyaAKQQEDhv3BbNxfEvfjbD5rrwwlOaTV2bdItMLifGwDL8IMECLE8DqZePWTbyZKvvftUHW7N7ccJhLFNhLWRboNa5k7m2VHSnHmneQU58w67sHHPabiI8D1gbrnTRccK0b5IwvvBLoxUV7UqgHWK4VH5H71uOS8WZooAuTLWSPy2uGAg50KW5wErbse6hZon56BFOYabOs1ckZi5dCpjikEQ2ytZLH0ZreUl53sRJ1u3KEL51g2TIrLSSJOqpXw4PoVLueuAnQKLMBeIlhooSpzWV8CZvPwu9Drw4tfGZ3TEhsECfbO6qkMgM6NLfbTzHDMj7RmvgW3F3PW6o82vdzRXzhGgZnDlzASxjJG7GleBTiPAPaflsVsO9EfpQp7SSwIEFgWyx7o2F5PN6iBrMIZbBCX-GWFtJTx7hp1YllOdt64g4_MINjkpNWe1gUZ2w8Rl5jH4QFxA87_FnYnUvpo0EQbZtBTeSwEqO6h9kXCBlMtgtOw33gCj5Sem1hUcOYbAas5qbEBfYhs07xDBfs--Fx4jQVBJDkqc1sznnfVDwTLsiqSaFrf8-HEWmkBVdxNEcgm8Hc8u4kJbqQCESmdwxW04BsR5SuLHT0MVoIH5rKvLrWJCZLZXPOxfHeMAgwLJFV6zFJj3EbqrFPy5SzF6HlyIlOzDKkcZ8ijevcnYQjIA0_9TNKt0OXCQS5j10gLdD1lWa_vLdzSSJ9UsHrXwNpwgdflStQGHYhVtPEHQ_DU55XJCttY1fGwByHJQyCp0Eo5DouEbyuyn5kqLeX8FNuUzxLUZsnwvkk_gKILZ7pA98eYZqSJHC2fK9N9DAkoz_1vPcJ2SAWtmIPdhCFtIBD-U-aZ-teuA1qHggpWeawTo59778DodgzI-mQAbVRlpROxJil2gTV6K2_xPr44Xsxe_env99TamaxSXiFibiZkX62AGihuCBj2hsiWxDvMwcTCAP9ZVPIIjwrrKxVeLdveX1ouE6PrkONcqOlYLPCU7xA6Dh0ZgI1jNcIjxQj0yMVE3T6U` | `\b(ey[a-zA-Z0-9]{73}.ey[a-zA-Z0-9]{365}.[a-zA-Z0-9_-]{683})\b` |
-| `spdb-graphhopper` | Active | `graphhopper7D0C5tuDiH6TjR4E5gUrVf0gJ2CICxQuspnyfmqnsvznqoppvzjiknebb56k2hm1wzco` | `(?:graphhopper).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-groovehq` | Active | `grooveq5Puz8zCzcC5cc6gms5Cj5ipHYtkvygeo52U7pdZCYfHdmFHxkD67ylRaqFK9Btg8BYPLuNJZqpGhMo5cOl3Gz3z2G13CyjA` | `(?:groove).{0,40}\b([a-z0-9A-Z]{64})` |
-| `spdb-guru-1` | Active | `guru8O0fTMK6knoz0dy1AcXebcgUeP0vhnsQ6YjsXCDet41f7zs6Umw3@Ulgs6SZCt5SRQtTMlG` | `(?:guru).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
-| `spdb-guru-2` | Active | `gurujgB63Wvi8jCzr9aJZdqDJDItGhyYxqDWk6yobf4k-badt-iu73-2bd3-ewg9zbc0bo13` | `(?:guru).{0,40}\b([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
-| `spdb-gyazo` | Active | `gyazo4NCxX8tGzAkZ7l0hNRXmk2Ev3rDmCBlvAd9WPcfVeiEcrTXasTGLSoZEDHvjJKC7SHAiyS3-hqP` | `(?:gyazo).{0,40}\b([0-9A-Za-z-]{43})\b` |
-| `spdb-happi` | Active | `happiQVAZzoBrAtZONhnQtdN7JH7gQZfz6BehLWJ2zCnqavKyd9VgOR1jYLzxvlBEm0jp8jiSBMf4BXjQgvV7SuygLRBJ` | `(?:happi).{0,40}\b([a-zA-Z0-9]{56})` |
-| `spdb-happyscribe` | Active | `happyscribesExzTDbRVCv4NNMqtgFWT9TpHykvjmVjdhEsla7644ufBiXsRVtVvgtY` | `(?:happyscribe).{0,40}\b([0-9a-zA-Z]{24})\b` |
-| `spdb-harvest-1` | Active | `harvestvi5DHCA2FEtZUKMl0U9CMi3kcqWFzlZTrsZ8cktpJB91T2N7B8unLqGeas8uV8qUKjLLLT_9S6mFSmaGlx3g2ehCKT84dYQSCHVOA8o_AcNg8xLg3SG5UMAdUGRh6yvY7` | `(?:harvest).{0,40}\b([a-z0-9A-Z._]{97})\b` |
-| `spdb-harvest-2` | Active | `harvestTpj5lLZqNrHB2rzMbHvtfBVCKXQgdsXh763793611` | `(?:harvest).{0,40}\b([0-9]{4,9})\b` |
-| `spdb-hellosign` | Active | `hellosignOKyz5S5XeALm41ITnWrb0KtlM1xlQlTzR+wo6bPoBuOk3a6W3ZemIuEBP/r0zTQ5/7nYLreZpYE/gvwG42ewvRsBc2Zuf6lo` | `(?:hellosign).{0,40}\b([a-zA-Z-0-9/+]{64})\b` |
-| `spdb-helpcrunch` | Active | `helpcrunchNXMblIQVamgoM24PWpxXPXQA9tEleInAHanAFSycvuTFRAP+WbSvs6TXxo/GR1GlT4iFM/ish00wl+SNysC4rbbAE/-QI9zSR60ZcyUP5VBgzs4SjrDPhhQHPdYgvZt1VmDPV=owjHn=bbd7aA+Xr6Ss9FBvYt6D5+l/WowUkh+0A8GQQsM-/UG72g9MSOs5g+HKT-CQxZ7fJgyZxayyY8rRJzE=DHxkF/Ef2aW0no/rShR6iT12QxrLaGK+/9Da9dVqqHzrPWIDkGKDLnoHYfyY-O01WC9FLjVUGLSmAr/c-eAS5arbjTySHrgJMmT-nU3oOGovIhQkibE/pf9k6lo7T-iz86aIqhOtvaLC` | `(?:helpcrunch).{0,40}\b([a-zA-Z-0-9+/=]{328})` |
-| `spdb-helpscout` | Active | `helpscoutTeAB39ohtd90JEyk5kRivSjt8dnoDOghFnIgN7GGE2lyUFWrCVZ5qHBLKfgo69CuNcau6JE4IFDpr2V3DDsdce8j` | `(?:helpscout).{0,40}\b([A-Za-z0-9]{56})\b` |
-| `spdb-hereapi` | Active | `hereapi4Tl3NycDvGaOxawLhquQoowLd5IPcBw1UovI3I3iieuwQzNcinWe29q6azqYm3upP2DLGsyhdEP` | `(?:hereapi).{0,40}\b([a-zA-Z0-9\S]{43})\b` |
-| `spdb-heroku` | Active | `herokuVgty46h2XIsFzgyWipgJzucQeX0d84aR081A5dAc-89ad-3d1e-7089-d1bd5beb4f05` | `(?:heroku).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-hive-1` | Active | `hiveuaA4urLvMjqvo2zo2Oxod2uiomzSaz3uafjcwq8z38au2dr67fxl02212crihows` | `(?:hive).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-hive-2` | Active | `hivejJFe6a8jOA8LWdXeYAXq5BXSYMo5Wnx68OGrLWW5uWB4ocPpY` | `(?:hive).{0,40}\b([0-9A-Za-z]{17})\b` |
-| `spdb-hiveage` | Active | `hiveagePwDNrYdeFnmj02GPtHkkvik1efVzJHLaanZIjItWNazvg0QWoLLv` | `(?:hiveage).{0,40}\b([0-9A-Za-z\_\-]{20})\b` |
-| `spdb-holidayapi` | Active | `holidayapidSZAcEMdhvYQgRdZILZH2xfunKAjsWCL3f9wjhyd-s9jkta-bszrka7no6g0fzu25r2p` | `(?:holidayapi).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-host` | Active | `hostr45vO3BP3rTsY3jWj3BGejmL6dBxnh2pwvqdiozv1zo9f4` | `(?:host).{0,40}\b([a-z0-9]{14})\b` |
-| `spdb-html2pdf` | Active | `html2pdfrGr9JsMx9yA5WUGblFfElReCoypHGM3dSoQ0zUIBbLIvwTGHJbU6e201mQpLYWCXSgu6ZsznQDLKX0krx11yv4THWXst2a5J` | `(?:html2pdf).{0,40}\b([a-zA-Z0-9]{64})\b` |
-| `spdb-hubspotapikey` | Active | `hubspotTeUPWgTaPLJ2j21FL05GPbMhTpbEUsGGqH6aTeyL-hqcG-ib9r-NztS-GWLXuXjrcyNA` | `(?:hubspot).{0,40}\b([A-Za-z0-9]{8}\-[A-Za-z0-9]{4}\-[A-Za-z0-9]{4}\-[A-Za-z0-9]{4}\-[A-Za-z0-9]{12})\b` |
-| `spdb-humanity` | Active | `humanityYvWucbnGfO0orVMUV9qlc4uUykiR5wsJ1cy3vmnfrxlhtepub1dgd9bmax6e5h7ub1mr4v6v` | `(?:humanity).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-hunter` | Active | `hunter8Go701tPZ1Vc2YbNLISS8t4WjJTrY2hm6bv5cfyoukjz6uixbitlrd-46983fggtt4l-jif4` | `(?:hunter).{0,40}\b([a-z0-9_-]{40})\b` |
-| `spdb-hypertrack-1` | Active | `hypertrackpkG38HOfvzK86Wl1YPtyjX96Ed7QgQOZxGTyRyaHb7IqT8p138CVAT76bK-0sgrUVc54RByn0DVRnkjLXg6lHt` | `(?:hypertrack).{0,40}\b([0-9a-zA-Z\_\-]{54})\b` |
-| `spdb-hypertrack-2` | Active | `hypertrack8zMHGmcrjZIVkWuXe7iIf3GWQWzscxMtEwoG1tkRZ_iG8-xOfcd7yWaOs1P` | `(?:hypertrack).{0,40}\b([0-9a-zA-Z\_\-]{27})\b` |
-| `spdb-ibmclouduserkey` | Active | `ibmvgPZtWdXiSkvloPM3WpJHIfX8JvVcPQZO_xDm_UPiGE4tHjUd_LZVfVBPw3dng8xkTJlma9F4lyL` | `(?:ibm).{0,40}\b([A-Za-z0-9_-]{44})\b` |
-| `spdb-iconfinder` | Active | `iconfinderbr1mGtxw3ImWRhaIGY37mSPiRM2p7KngIWGKpMYCUeZGJ5pwlIW3bavMLAYwJoWP4DgRzaTb4O5zFrJe2X1TmZR3UYhe0DpW` | `(?:iconfinder).{0,40}\b([a-zA-Z0-9]{64})\b` |
-| `spdb-iexcloud` | Active | `iexcloudxTRGqFu18KXPyefbK1wOZsNVCB09fqWmfiehmh1tu8bghy75bnknc8x8u7a8oribam2` | `(?:iexcloud).{0,40}\b([a-z0-9_]{35})\b` |
-| `spdb-imagekit` | Active | `imagekitpfXpK3L3jdfryL7IOiqXARlLUnBJccrw3lalR8DaGmhgX4_8pbrmPQG6bjKZmtV8kSfs` | `(?:imagekit).{0,40}\b([a-zA-Z0-9_=]{36})` |
-| `spdb-imagga` | Active | `imagga2krr5T222B7oi6tY4vt7sUG55ITT6PtT1cvyi58LB5wQLeOsqSy5MB4vGI265tipRq5W0RX59H3aEyey0oKb52TUnr1zpwXiAwiWS32j` | `(?:imagga).{0,40}\b([a-z0-9A-Z=]{72})` |
-| `spdb-impala` | Active | `impalaq5n9iLTTEwAzFe8op4sSoHfgUnmk94ypBotktYeeWPj9_QVbOF5tlL295dm24i0JjJv3Vf6LFcdPDO` | `(?:impala).{0,40}\b([0-9A-Za-z_]{46})\b` |
-| `spdb-insightly` | Active | `insightlyjGU552aRW1g27AnRhqr17yHLs9HF2an0wadurvb6g68mt-wfi71ahro8jynl3rv0jop6` | `(?:insightly).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-integromat` | Active | `integromatP4e0sJBntX7BnChpXRQ6dzBr68g7lxAxzhuaditq6v-0khe1lwr6tsmnaijwymtfod-6` | `(?:integromat).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-intercom` | Active | `intercomgpI6lG8LR0lLft6NTthhV5NN2ukV2cl6w4MCx7dv1jKGHAjD34wD16ixV8e09PG4xsejaPUXGc8UAyum2E96uYowAYW=` | `(?:intercom).{0,40}\b([a-zA-Z0-9\W\S]{59}\=)` |
-| `spdb-intrinio` | Active | `intriniogz9ej5nph77wqPTzBc5BRgTIH4Lw1pvgttr2cQpr8JF87P83zqeUW9YK96ZNxS8yqb4OOEDgllqS` | `(?:intrinio).{0,40}\b([a-zA-Z0-9]{44})\b` |
-| `spdb-invoiceocean-1` | Active | `invoiceoceannqXG6iT9UqZz7Po0mqlkIdxm1vQDWlUe1ZoTGlctQLCn1LJZwOrg` | `(?:invoiceocean).{0,40}\b([0-9A-Za-z]{20})\b` |
-| `spdb-invoiceocean-2` | Active | `1y2y0p91l33698pw7dooyktzu8dg9k9mTinvoiceoceanvcom` | `\b([0-9a-z]{1,}.invoiceocean.com)\b` |
-| `spdb-ipapi` | Active | `ipapihxEV3XWM7WXXZKNtTst58TdqHX2qRymuy7safpx0segpbyfbw5gsvbqc1pia0rkh` | `(?:ipapi).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-ipgeolocation` | Active | `ipgeolocationEkbWorwfo7pRSfSq4ouGwf2KIFtq7li4fwkjs3w8o524hiffx8anwnkktg3qvsj4` | `(?:ipgeolocation).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-ipify` | Active | `ipifyHzJmlUr4K9rlfjgMAaoljKp083mcqKaORRMQsjTYV9HHxBXiFVzCIqrE6fEBT1mA` | `(?:ipify).{0,40}\b([a-zA-Z0-9_-]{32})\b` |
-| `spdb-ipinfodb` | Active | `ipinfodbwp9A4yNQHiUemCdASo7lxyC8JXKZBksdu9bs9jv87ig6k3442ni1v6key8i7fj37v638zvbrcv0lmwp40q6pln7qj88gc1nt` | `(?:ipinfodb).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-ipquality` | Active | `ipqualitygHh3ky9UHj6KVyS7KEynEa6rQwtfR6f4kqmjvuxfqke1pwq7q2igsq6j3jcslp35` | `(?:ipquality).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-ipstack` | Active | `ipstackMRYd8wHysvvphxerVKhPe3rUGRyuM8opM\\_G8YfBRNFcRTZLe\\JBefMJ^B6WFGUN` | `(?:ipstack).{0,40}\b([a-fA-f0-9]{32})\b` |
-| `spdb-jdbc-connection-string` | Active | <code>jdbc:ib:nyidanzbgjvqpydblbyulhygapxxb://vs;3wphsKG7oQo,QPR0V;jZ-&amp;gUT:EO=</code> | <code>jdbc:[a-z:]+://[A-Za-z0-9\.\-_:;=/@?,&amp;]+</code> |
-| `spdb-jiratoken-1` | Active | `jira4qpUSOUCC2bSWBTE7dCth6SUw57PeRi5pEowBEgvRt703yzzVyhkp1C-` | `(?:jira).{0,40}\b([a-zA-Z-0-9]{24})\b` |
-| `spdb-jiratoken-2` | Active | `jiraowsbF0hy6bQpdmtFPQKjWgM5LOV2Sb2iBWjXjjUXsfaLW0n9hJkrjIGR@mkfGj-SFMK5jG3nW.com` | `(?:jira).{0,40}\b([a-zA-Z-0-9]{5,24}\@[a-zA-Z-0-9]{3,16}\.com)\b` |
-| `spdb-jiratoken-3` | Active | `jiraOAYK8RhuLyJBg4BwWtHP0GhtxchU4BOGqZz26ParJzD9wQA11DWomR2q.EaD-NSugEibul3ho.KyuithVBXtBzUX8j` | `(?:jira).{0,40}\b([a-zA-Z-0-9]{5,24}\.[a-zA-Z-0-9]{3,16}\.[a-zA-Z-0-9]{3,16})\b` |
-| `spdb-jotform` | Active | `jotformhrte7UFRFJLpVWiD1rQDprqZh7hrGmmOfa84svnltn4jsp1ij1s1hupk3xkk9oz9` | `(?:jotform).{0,40}\b([0-9Aa-z]{32})\b` |
-| `spdb-jumpcloud` | Active | `jumpcloudQ9mkCQLmHVVxdydFZmX5tc5Qdc2P3KeJKxv9018VjjpisrTSEBThaMVSnXmjZf4ys8DCZZSn` | `(?:jumpcloud).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-juro` | Active | `jurooUydSLVw4Legdk87w5GJ6ET3Y1q7DKPuZ7RQxdkTeTrCjuMWSDTusanjGDCWg9C8wlid6Vrj` | `(?:juro).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-kanban-1` | Active | `kanban01dhOrVeB15LBI44qIfsWGF3tWWf9UuFHZTAJYXRFTOB` | `(?:kanban).{0,40}\b([0-9A-Z]{12})\b` |
-| `spdb-kanban-2` | Active | `a65bcn2wxw2t2pllhmvhr60ierxu5d1rDkanbantoolVcom` | `\b([0-9a-z]{1,}.kanbantool.com)\b` |
-| `spdb-karmacrm` | Active | `karmabt5dhT3U16EIbCbFVka1AZvbvhjpuEreBxqutrHH2V4daRSlUPsE` | `(?:karma).{0,40}\b([a-zA-Z0-9]{20})\b` |
-| `spdb-keenio-1` | Active | `keenSuDPqyvulT2Ong09z23hQLnmn5GYeI3suox89asu6axhx4slchpmj9c7` | `(?:keen).{0,40}\b([0-9a-z]{24})\b` |
-| `spdb-keenio-2` | Active | `keen9n4Hlw2zv8ULyjZHaCbvlMEASEWWcnBr5OXVOPDI49OY3GONTNMP7CFXSTDK28QZW0RES2OQL2446WBG9A7HMMOHDURH4FZ6` | `(?:keen).{0,40}\b([0-9A-Z]{64})\b` |
-| `spdb-kickbox` | Active | `kickboxFyTDYHe4NwajSSzLDzB3zm6854fqoDfr1TGoGXjZ0ZAtUO_ewKFgqNx6GZH75XGabuLDvNZAdDizUWiopcpMxDxEplgnOHCg6MsXkKzedfyllbKgftRjCfdchS20QRsR` | `(?:kickbox).{0,40}\b([a-zA-Z0-9_]+[a-zA-Z0-9]{64})\b` |
-| `spdb-klipfolio` | Active | `klipfolio4DyQF64b333ZIwMjxbYMybPtstnGqXBX8515663e51b8d0d6e061e2321c1cce8ccf3e657c` | `(?:klipfolio).{0,40}\b([0-9a-f]{40})\b` |
-| `spdb-kontent` | Active | `kontentD5ev3pfJL5P5bVaaxhkAMa83A1CamB9D8nd4tdzal5a4e2wd41cw1c0vnqpy4ntmjmnm` | `(?:kontent).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-kraken-1` | Active | `kraken6ULZR4SxpOkwSaDDkloxg7U61e2SS27F=JCsrRFFJ5tCcpMXCl8NlRF+nT/atc+HM5wTL55nFhTYg+27y6rkQsIZ'` | `(?:kraken).{0,40}\b([0-9A-Za-z\/\+=]{56}[ "'\r\n]{1})` |
-| `spdb-kraken-2` | Active | `krakenlTxkp14LYc8YmJZDK3sgF7WTcOvsEtpgLMcJlRXK/KZ8V9tvi7=kmOMt=/jHy8pYsfcc6nXdSv21FVKcu88hnHmjDGsGxdmskw7EIJn+z3r5E8N=XSnvwj'` | `(?:kraken).{0,40}\b([0-9A-Za-z\/\+=]{86,88}[ "'\r\n]{1})` |
-| `spdb-kucoin-1` | Active | <code>kucoinyId17KGiKM6bcs7b5Fr7NFKV60Cp1ii9 7zHSHHl7l&#124;TnILKiu$L_7@FgQ:&lt;#}6#m\n</code> | `(?:kucoin).{0,40}([ \r\n]{1}[!-~]{7,32}[ \r\n]{1})` |
-| `spdb-kucoin-2` | Active | `kucoinVpRbQOVmKecOSDbSat40WtB68K4mj59b540e7db5-90e1-0a99-d477-3fd18a099a61` | `(?:kucoin).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-kucoin-3` | Active | `kucoinZ77A8FSDxjD50ChpHBzAWpHZPlREqJIsa1faee7c347893c6b96d3aea` | `(?:kucoin).{0,40}\b([0-9a-f]{24})\b` |
-| `spdb-kylas` | Active | `kylasSbPwAp1TYZJyC4O7Yz3aBPUy1eZFYoOw6fagl147n614klxab8giww7x27-buj4-myuk` | `(?:kylas).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-languagelayer` | Active | `languagelayerptwKdiwNemovIofP3KaVNrJORvBdY653fwaacpryxbojke4kbasy85r49o0ya78n` | `(?:languagelayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-lastfm` | Active | `lastfm206JAgH57a2u7dfnQLzQo86Phzi2PUlEhoths807x5xnnx25k3lqfm7vaeezh0kd` | `(?:lastfm).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-launchdarkly` | Active | `launchdarklyffkGFa1mUMSzAprgvCdjSBbjUisQ25fute7ggf1dl3gc2om-bvrfqbbvakof-ui5s16fnd6a` | `(?:launchdarkly).{0,40}\b([a-z0-9-]{40})\b` |
-| `spdb-leadfeeder` | Active | `leadfeedernxDKqk7B3OcklVYCfsVJh7Po040GivrwfWntxe-ROmiG6kGVlu-DnNZJ0jc8bHXeQmVdVkwohhK` | `(?:leadfeeder).{0,40}\b([a-zA-Z0-9-]{43})\b` |
-| `spdb-lendflow` | Active | `lendflowJWwsm0cgbdabCYfbBcCWuTxH13oTn99TWvEPTTrKWo8wPgC6GFZK3v8p2swvgWsrofxf.NcdrewcqmYuYPGJnA64bgjk5YHrqjut4Os2bbjLF90qjzW4APeerCRQFajabrxIYJuphCHtunMqWjwshYu90ckIIty3u1TH8kjZ2nLhWHiNIUsCgAeYSxAp2TEKRcvO42S4rBM9QBbjLwzxrZltdGEFzEES70x16xdRsWCfgztwChzBdoppxQkOwLLWbMjhF2C17RghJjkoVGA98kv7QHDIDwicAOECd0kAFv3b3oq9.RNYqKQoqf9NrRkHqox0Nj4a6n6FUe7tE-BNnu8RQLvUrdW86NvB8mRU7iwrs8TfPbFFFlNNlxIh7Xn20-UriW8F1xf0QRuOSbd0cWpzD40WPEpbu0q1WCupHlwU947ioEPDVtK7aIdyblnU6kOLRwO5ZodskNM501hfRm73HRpSvV2X0FuxfGl2OQYZxRJfnuiczJRXbhemLh3SkinwUfi4c8Vrpro56ExR0AZqZEh8F0UAjyNn-UarMwkYBf3YKFuB6xXQCwQU0XRhVzC6WFWXDn1BAot-nJbyny6lbO584BY6Y65tIMT58QK7U5RGopZMqIKH-xCF_CKVOgjdyFxd2PCukAkIpJVXLbqaRyFU5wqSP7EWkyD8Hhjzc3CA7H_XFvHZvKn-EmNx7bINo64gqZRZi1GjNaeo4hD3I0z3sT0xcb2IUNgyTKgRhs_l5iHaHnt-7RXEJ6x-mvzzea7lqtgaqDgRxia07MptoJFLlcCgSYGNEdF8YPHE8XzSrHaqGIpFuZVKYz9mjIeY9BMNoWmvzpoH2x5oGi_7GWZg2BZ3YSVDpMSm1DmGJQTdHOQtgUTf3vPk6NMuQA0wA1qjduleyZbzmmK_EfhCubjjuTMdohPPF1aGbO0Ab_2BhzjKmVhuD1V_OU411MUoMuCMvRme7j1pDLgbFhkkQGmz` | `(?:lendflow).{0,40}\b([a-zA-Z0-9]{36}\.[a-zA-Z0-9]{235}\.[a-zA-Z0-9]{32}\-[a-zA-Z0-9]{47}\-[a-zA-Z0-9_]{162}\-[a-zA-Z0-9]{42}\-[a-zA-Z0-9_]{40}\-[a-zA-Z0-9_]{66}\-[a-zA-Z0-9_]{59}\-[a-zA-Z0-9]{7}\-[a-zA-Z0-9_]{220})\b` |
-| `spdb-lessannoyingcrm` | Active | `less7vBnchK0wRWnaP8BWyZvEdST1eDYfUGOZ2GES8QttVeFPNDgmausFzBAxQ-cO66SfODVyaAqRikypY39xIFHJJnGy` | `(?:less).{0,40}\b([a-zA-Z0-9-]{57})\b` |
-| `spdb-lexigram` | Active | `lexigram0C8bXbVA8sCsy4extm0XS5XdOp11g1OUXRc6MACIdrKbDab3t7tJ7j0hYfWb3HFjLyq2NQ5YrrPWG2IpdtgZVRQ5zJabpITk1cUuSGHPp0IAmTETYUeePb6iKTM6rnBtuvnqvohmPGxr3pFKAdETzXTwdHwYaJfHx088Gn9CAuJIVFOrPLF1QftPbldtr3Ean1hviyN6ehpbUniEtEW6LOMZtZorjEF3XIpLog2HYC3qYojwAFD9Qn1OsOlIzMGAFaC5lvcENBd5KyarNbr6MeJP1oNAYAzJUO0Rd3kUKkM07mZ5U82O4i1QgIR0FQ0j7qBdt93OOPMhw` | `(?:lexigram).{0,40}\b([a-zA-Z0-9\S]{301})\b` |
-| `spdb-linearapi` | Active | `lin_api_n2NMGkvDP5vRCxD1exN11RyYFBMQ9IgoKhCq6Cbz` | `\b(lin_api_[0-9A-Za-z]{40})\b` |
-| `spdb-linemessaging` | Active | `line4bhYSHrerXkzE3CZ6nSEUTpMoMkMOyfNyPUABwfIC8K3YoG3nHZIIxysiYoDh35Rr+YCrNybbm3ejjxlwDnYR1WEnj6Yu8N00G2KQvjqO9Me0X3arCkpNj+UgJmPYBkvYXlFgatATQEmlZW5hv9pn5pbUqF0s74CsL/QkRvByRMmIuDQ2mQ2LEuf7rkr2czMCbXW05AdQoc` | `(?:line).{0,40}\b([A-Za-z0-9+/]{171,172})\b` |
-| `spdb-linenotify` | Active | `linenotifyuXM8vjaQJTq1FfAgMPxdGhvOYqpHxdIlF1bkOCQ1TUjZv3O41bjwrPqeLUMzSqXtRhYvYIJrOtB` | `(?:linenotify).{0,40}\b([0-9A-Za-z]{43})\b` |
-| `spdb-linkpreview` | Active | `linkpreview1kY7XPlVHfzLXIF8bPQ0SKCgKfRVRmVLL3NaV8nxVRuGAM6JRJ6mAyWYW7xJwEfF` | `(?:linkpreview).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-liveagent` | Active | `liveagentLeR1b0WXj9xDR8rqRA1ivxE1F7fqwuhXqpBVorGwlXRnrwmlhjEgjqNgOiw5qcBx` | `(?:liveagent).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-locationiq` | Active | `pk.Es9tmYzR6IrfkC8vXiOuiH2ONIbOwe3P` | `\b(pk\.[a-zA-Z-0-9]{32})\b` |
-| `spdb-loginradius` | Active | `loginradiusPQh6dWQaMoC5PMkL8UlNAmDFzOCru5XM16c29ab7-3149-5713-ba37-c02b0329a48b` | `(?:loginradius).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-lokalisetoken` | Active | `lokaliseJpQbBKoKENb1kVBMJhk6QOzPDTuGx1Wixua0425t6ceond2vhkrt8rozkyv07sj5ugu12s6y` | `(?:lokalise).{0,40}\b([a-z0-9]{40})\b` |
-| `spdb-loyverse` | Active | `loyverseflmTVyQ8hDcJGsm5gDoDdH9gCdxEhktDfv42fb108wv58siz2mhdb09i9v5mm7fu` | `(?:loyverse).{0,40}\b([0-9-a-z]{32})\b` |
-| `spdb-luno-1` | Active | `luno33jBvpM07DOVqSfiBUEGb6cQKPmKWxCn2jf7eqjmlrog9` | `(?:luno).{0,40}\b([a-z0-9]{13})\b` |
-| `spdb-luno-2` | Active | `lunoTUEnlHvGpNGoU1uiuhuOxrszMKk4ErPFZ138NyGMA-Wpx1Sa876tn2zAmt84Z6ApuC-HzoepiBd` | `(?:luno).{0,40}\b([a-zA-Z0-9_-]{43})\b` |
-| `spdb-m3o` | Active | `m3oIoobe4RNQmKDpgBhbqwXLFHEgt1AhiyspeaAr4gIAVp4XlCocvquhGbmCNeywKWgNGYvbtjMyigNZJX1` | `(?:m3o).{0,40}\b([0-9A-Za-z]{48})\b` |
-| `spdb-macaddress` | Active | `macaddressbU6xXHItuYphFvl10HPzlOTrkrtEcI5405PAaIXffyJ7y69jcc8ussIcpJG0YBq2` | `(?:macaddress).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-madkudu` | Active | `madkudur8LDSCgnCo4mEsRTO7lW7Jflkj57OK92e1d84a3468cbae58d1b08e5fb18267e3` | `(?:madkudu).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-magnetic` | Active | `magneticqF2lSv4wGyENHWMPIwQ0oPFsmpxX06jBmqfdoitz-d9mq-pfe3-3r16-7w417m6wlmzd` | `(?:magnetic).{0,40}\b([0-9Aa-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-mailchimp-api-key` | Active | `34221bbb7ec4f5c89c9964eea99c4d38-us33` | `[0-9a-f]{32}-us[0-9]{1,2}` |
-| `spdb-mailboxlayer` | Active | `mailboxlayer5O9973BONSM9RKAExlx8YRlpGavvdkuQpu5lt8sha9y7eqjxq68q34y7y74ib1rj` | `(?:mailboxlayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-mailerlite` | Active | `mailerliteogCmoc86WXMARfDK79LBdUd0owwyYidE5ny12sdr4wnjrv686j01ah470i9qkw54` | `(?:mailerlite).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-mailgun-2` | Active | `mailgunO71aIxzxgtO20xEp30cVcj7zgBIGol0TqNcnZPspHTKFvZb58paa7dX9eSrN0k9Vg3fNXxPDi3fyTzcEIH7tfT23oIPqarrg3nioHYar` | `(?:mailgun).{0,40}\b([a-zA-Z-0-9]{72})\b` |
-| `spdb-mailgun-api-key-1` | Active | `key-ETYtYvVs6jsZL2hcwMILznFPVySWAs1S` | `key-[0-9a-zA-Z]{32}` |
-| `spdb-mailgun-api-key-2` | Active | `mgwcixm9kq7dzowjn2lcfredi351mvmkpf` | <code>(mailgun&#124;mg)[0-9a-z]{32}</code> |
-| `spdb-mailjetbasicauth` | Active | `mailjetNE1znHHHSmyV9n81C6lrC35cZA8Re0utsKSJGnRAd7FyNPLClvp84o6UJhcTiyLILR7TfXZRY4YrgV73P7OZa5xv6CUcuynQ006TO8wbrK6DuTcefYkYXvZ=` | `(?:mailjet).{0,40}\b([A-Za-z0-9]{87}\=)` |
-| `spdb-mailjetsms` | Active | `mailjet4wcBWQbSDau4AwTHgW3kxiu5VLvMRbitisI6IkHZRoQO1NOq8Skx1OCknQiuCsf0` | `(?:mailjet).{0,40}\b([A-Za-z0-9]{32})\b` |
-| `spdb-mailmodo` | Active | `mailmodojdOwugTlromBzIzunKlU66DtXM0BIKmkTGB6DYH-8YLSA9B-8GMK3V5-C78LRDH` | `(?:mailmodo).{0,40}\b([A-Z0-9]{7}-[A-Z0-9]{7}-[A-Z0-9]{7}-[A-Z0-9]{7})\b` |
-| `spdb-mailsac` | Active | `mailsacvOqh5SFYBflMJhOWwGxLkPki8fe6m5p9k_ifP1VXrM8BJGwZEv7iwNOj0rAwOQLQg9UxY5` | `(?:mailsac).{0,40}\b(k_[0-9A-Za-z]{36,})\b` |
-| `spdb-mandrill` | Active | `mandrillBsLPwv8NJhkZZJlfb8PHnkLlGYebPqVhcN6BFKwnslhgrklBm4XmJZ` | `(?:mandrill).{0,40}\b([A-Za-z0-9_-]{22})\b` |
-| `spdb-manifest` | Active | `manifestuYxp9JK0uOjA4yfYRyTUIRwVAlnT9yqXfFumqnzitA4PPeQpoqbSOmz\\qiv\\WDcj` | `(?:manifest).{0,40}\b([a-zA-z0-9]{32})\b` |
-| `spdb-mapbox-2` | Active | `sk.j.nQ76qH6N2AfrYIzrqgtegkq0JxygSTsWigj5VykFMbKFZG8UjW0HBu8VTxMtfhdUdvFTqoacDvpnhz` | `\b(sk\.[a-zA-Z-0-9\.]{80,240})\b` |
-| `spdb-mapquest` | Active | `mapquestsRi83sPS79Rq60xd1TST94cx3Vrqai1eYlNa4as2Knz6EVKUL1FvMJGx2NkDhwUB` | `(?:mapquest).{0,40}\b([0-9A-Za-z]{32})\b` |
-| `spdb-marketstack` | Active | `marketstackcTZx72g3b7MJxybr1LtEpm4RGn4q4PeAu1ux039zpuh45z3kl52lu920c9e2rr39` | `(?:marketstack).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-mattermostpersonaltoken-1` | Active | `mattermost7XCVLaqVKZKgnFhhWqHM35eUSgoXXku1VGSqDW6B5R9jQfZMAvKH_pboTXKVfTQ3Icloudumattermostscom` | `(?:mattermost).{0,40}\b([A-Za-z0-9-_]{1,}.cloud.mattermost.com)\b` |
-| `spdb-mattermostpersonaltoken-2` | Active | `mattermostOOItW0d2RZ1GbRbJifubQINhwidV0XVgvljphxwjjlsthlnfz1h24mdxqm` | `(?:mattermost).{0,40}\b([a-z0-9]{26})\b` |
-| `spdb-mavenlink` | Active | `mavenlink89DPA4f8ghiLZHrlgySEeYOc9Cda7xrqjmsvhw0zq5d1g4a1ukifnmhxfb33gida01fa6oafvqnodox78yci0crvr6gm10vs` | `(?:mavenlink).{0,40}\b([0-9a-z]{64})\b` |
-| `spdb-maxmindlicense-1` | Active | `maxminduKyMVBACkEYvO9LqstMrYdoq8VFnZx0hzDGOKnbkKqsIkjZS` | <code>(?:maxmind&#124;geoip).{0,40}\b([0-9A-Za-z]{16})\b</code> |
-| `spdb-maxmindlicense-2` | Active | `geoipfLW5RijzstJDSpJiTwIgO9Q6rXZQ1dzV9822763` | <code>(?:maxmind&#124;geoip).{0,40}\b([0-9]{2,7})\b</code> |
-| `spdb-meaningcloud` | Active | `meaningclouduRvUSkiQn1PXbgbfnR6t1FrMbq05Oo8682r91g6fwofnoi0oskhtzpqxkf48jfbb` | `(?:meaningcloud).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-mediastack` | Active | `mediastackftLAbyVGPYlFginubvgH7kpIm3k15nmot59gjzxols409f93gf1xg6oxklue9eac` | `(?:mediastack).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-meistertask` | Active | `meistertaskhnBHjoRtk5HTdDCSQFucywgH6MvqkVRaYMmREOhBsin2u46VJyD4Szn1Y9dlVTXKruW2l3c2GNy` | `(?:meistertask).{0,40}\b([a-zA-Z0-9]{43})\b` |
-| `spdb-mesibo` | Active | `mesiboYbT7UEld9vwmHXxh8z7TIHpkGpCkjRMs5ydTHjMHXl1ckZ8ZOYLbN3CwTko32IFuEGTYyzMuqKaN8WuHSfLXTCDIi00DsYdL` | `(?:mesibo).{0,40}\b([0-9A-Za-z]{64})\b` |
-| `spdb-messagebird` | Active | `messagebirddHOc7plXxGk8vcPYRf1HTfI8YyU01mymzDL0oER_gxKSD6rwQV8prAke1` | `(?:messagebird).{0,40}\b([A-Za-z0-9_-]{25})\b` |
-| `spdb-metaapi-1` | Active | `metaapiSc4OBOKxOm4Uq8MfF59ESnefdVEK7AWd1cec258ac0e9384569a67ab2177de37a48c4aebe67c81a9e26488e9b3e649234` | <code>(?:metaapi&#124;meta-api).{0,40}\b([0-9a-f]{64})\b</code> |
-| `spdb-metaapi-2` | Active | `metaapi3vbFChBMvz40G17xdLKxwVrhTja11hy8c65851e657b68d54b25a70ee` | <code>(?:metaapi&#124;meta-api).{0,40}\b([0-9a-f]{24})\b</code> |
-| `spdb-metrilo` | Active | `metriloMal4TjSm1GwNTJcoDqrVlAvyqTuRidE2u1zshp6rr3ajy5m0` | `(?:metrilo).{0,40}\b([a-z0-9]{16})\b` |
-| `spdb-microsoft-teams-webhook` | Active | `https://outlook.office.com/webhook/MwwVdbQqW3gTv6zLAaVG-CPU9MyesEa1/IncomingWebhook/sK8XRC2MXOxWT-AP98V-39IrgyNmX8VU/K286ZkaLzfMDP1-bxcMg9RiF7e2s3utV` | `https://outlook\.office\.com/webhook/[A-Za-z0-9\-@]+/IncomingWebhook/[A-Za-z0-9\-]+/[A-Za-z0-9\-]+` |
-| `spdb-microsoftteamswebhook` | Active | `https://xepxNKO43NpVqHgnXec8JSOxk1lSdxU3.webhook.office.com/webhookb2/u5eVCVcL-YSLp-pht8-73df-AjCM-QUE6s6Y@C6BcbljP-1OmT-qIfJ-GPsX-IJr5khsrInpF/IncomingWebhook/DWv41o1K53DYHrOn1SRpMYIkM92bhL7J/DH8kURgM-3I2K-PgUW-lPty-lvpbADozl0zO` | `(https:\/\/[a-zA-Z-0-9]+\.webhook\.office\.com\/webhookb2\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\/IncomingWebhook\/[a-zA-Z-0-9]{32}\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12})` |
-| `spdb-midise` | Active | `midi-662b69edd2cOsmqlYDtlNC2OxUjpESXKPV3PhxfBD4KdoKLalh19BLWJ0muOLAlZ` | `midi-662b69edd2[a-zA-Z0-9]{54}` |
-| `spdb-mindmeister` | Active | `mindmeisterzpHC0X4YKtyyg6A4VrHBBcGXMlWJrDOSvUy0oTPvrbL2RUnflZ5qDtAkKCAYV9uNu0VpeG5ALjc` | `(?:mindmeister).{0,40}\b([a-zA-Z0-9]{43})\b` |
-| `spdb-mite-1` | Active | `mitedL6HWsscg99i2v2TpTd0L14bYF8v99szaca12v99ntfx1wbu` | `(?:mite).{0,40}\b([0-9a-z]{16})\b` |
-| `spdb-mite-2` | Active | `v-zql2xg7u-nypwg92m36f8szqqtdl3kbmitecyoblk` | `\b([0-9a-z-]{1,}.mite.yo.lk)\b` |
-| `spdb-mixmax` | Active | `mixmaxIHMyZsmlSCL3LMZig9uKj32f4I9A2h4W9lmnX_iBdvosNkzxZduOKeTK0n_VF23tzaBu` | `(?:mixmax).{0,40}\b([a-zA-Z0-9_-]{36})\b` |
-| `spdb-mixpanel-1` | Active | `mixpaneln1X7lPm07VikEXwRXeXZz6IoYVStYTmL2xbwS9HLh7DFxZHeyS3NSuPv00e5Sxhb` | `(?:mixpanel).{0,40}\b([a-zA-Z0-9.-]{30,40})\b` |
-| `spdb-mixpanel-2` | Active | `mixpanel6wCUfUeIP7qZi5OnIzsOBaQwDgCaUH0AFwW03HawsKbTILxBrgkx0mYo23CJeBnQ` | `(?:mixpanel).{0,40}\b([a-zA-Z0-9-]{32})\b` |
-| `spdb-moderation` | Active | `moderationNPlhXQMZxaxUtn2NVXMw16gm0YXPIpJpA5ktXEdDqXvQvLDwrK5ALcLcZ6wYC6lPk6XJ.4258MN7WSZFgZFbXoWcden3fdxt2urHQWSs52FrAa3hUS0tUdOgevbdJ1GesMPkATV5o8dEDJDRbSdQW24LPz24wg7sgO84BCtjhiF0f7LE19EGTcks.No42JEPv98lbEysuErggGkTLqBeVQtmcLlG3I2ngnIW` | `(?:moderation).{0,40}\b([a-zA-Z0-9]{36}\.[a-zA-Z0-9]{115}\.[a-zA-Z0-9_]{43})\b` |
-| `spdb-monday` | Active | `mondayx9QQSWmv0hYH2yaCl92TH8OROQEJelqzey6uLzh0oE504GlDe1f_YAbr9cLCjjafrRhjA0wSf0E7Uo1TIZeblGjathEOW6lMxrvWh6gmTT.2qQzwEukevaDhNZwFtJBSj5I4Igeawec89.12sAat6shGsm9idzKTVEiTA5KCxocbnHSbTRKRSXmm2Uv76BOuLDTsh1U734ayfoQ4LUX5I_5Uz7bPiaN1jBZaD6vISUik4MtcyHGM` | `(?:monday).{0,40}\b(ey[a-zA-Z0-9_.]{210,225})\b` |
-| `spdb-moonclerck` | Active | `moonclerckypMlORCslyt9tAxnOdjKmo4WCMS4EvLJa77czq4p1kwxz0r4s1j4e2bg22d6b2dm` | `(?:moonclerck).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-moonclerk` | Active | `moonclerkHEOJzWDaOnmroXX5kCQpHsYIQtxkUwP6wglhntx1gk14cap6sin3xxakon30hgra` | `(?:moonclerk).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-moosend` | Active | `moosend7tqhQtrlIxKH7jd0zo6YZIeRhe2Ch7Lw0212fdAA-0944-681d-975f-e8f4d898a5fd` | `(?:moosend).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-mrticktock-1` | Active | `mrticktock1Zobqwakd87Ku7ENjss3tRKDPk5CLYcSbiDmb4Et3LiNS4E0ekwEQLR9At3F#ly4` | `(?:mrticktock).{0,40}\b([a-zA-Z0-9!=@#$%()_^]{1,50})` |
-| `spdb-myfreshworks-2` | Active | `freshworksqUGZipCdrnKEs8uZdEEok3gRP94Ryzzdl1yOtEs2e2i6IvX3v4iZud` | `(?:freshworks).{0,40}\b([a-z0-9A-Z-]{22})\b` |
-| `spdb-myintervals` | Active | `myintervalsEIYDRVnYsiyqTYOvymOjmId1qHA7idgQ0je7uljwlm9` | `(?:myintervals).{0,40}\b([0-9a-z]{11})\b` |
-| `spdb-nasdaqdatalink` | Active | `nasdaqx12EAbjFNMmriSVeoQfUzHQ556FOEaVv08zeoDilzl52LnIV_Q-2` | `(?:nasdaq).{0,40}\b([a-zA-Z0-9_-]{20})\b` |
-| `spdb-nethunt-1` | Active | <code>nethuntL67UL4Cmzkm6hu3Wkcg1mVH2hRZ1iVU1Yu1/0=wrAN&lt;&gt;xEYTWa/X6K:GHNyGUv</code> | `(?:nethunt).{0,40}\b([a-zA-Z0-9.-@]{25,30})\b` |
-| `spdb-nethunt-2` | Active | `nethuntQys0LF8xj2jqIt3Pplpmbp6118jekdUEef5rx0m5ixzwlce6l6b80pvgx43c4mh440ga` | `(?:nethunt).{0,40}\b([a-z0-9-\S]{36})\b` |
-| `spdb-netlify` | Active | `netlify4Vwmq28v7PnvcwPHxslWdh39tbvOUBWva-alMziOVR-pgdLm6xuu_PZ2m7-Xzv2vkobUd7B0Tm2` | `(?:netlify).{0,40}\b([A-Za-z0-9_-]{43,45})\b` |
-| `spdb-neutrinoapi-1` | Active | `neutrinoapi7zBecOii6oVTSW1BDaJARTL4CYYRwbVEdSeLfCxVbT8NRt3Tl17oitrUnaNHIKIGh8WwsUZaLhnYE8Ae` | `(?:neutrinoapi).{0,40}\b([a-zA-Z0-9]{48})\b` |
-| `spdb-neutrinoapi-2` | Active | `neutrinoapiKyBbg9h3UxbUXD8FJNd9l7yC3hKvQZ17c4Y5oWiidBHg0er5G9gsneSG` | `(?:neutrinoapi).{0,40}\b([a-zA-Z0-9]{6,24})\b` |
-| `spdb-newrelic-admin-api-key` | Active | `NRAA-54ad09c28a1e6c1c39b82c2c90c` | `NRAA-[a-f0-9]{27}` |
-| `spdb-newrelic-insights-api-key` | Active | `NRIQ-AZYrpR7Q0p8S91zWmMzNQqykf2GWO6Om` | <code>NRI(?:I&#124;Q)-[A-Za-z0-9\-_]{32}</code> |
-| `spdb-newrelic-rest-api-key` | Active | `NRRA-087efebdacc0f87968911c7ced49256e18cab2a4b2` | `NRRA-[a-f0-9]{42}` |
-| `spdb-newrelic-synthetics-location-key` | Active | `NRSP-su5765d04be27baf08feffaf82be6a48432` | `NRSP-[a-z]{2}[0-9]{2}[a-f0-9]{31}` |
-| `spdb-newrelicpersonalapikey` | Active | `newreliclKSCWnhRBPyWN10IXyNVQV0aFEST3s5Mw74n-1EnbOlAY4EXeOL7IRaNtP6naiz2gW0KE1BrmBR4RWW` | `(?:newrelic).{0,40}\b([A-Za-z0-9_\.]{4}-[A-Za-z0-9_\.]{42})\b` |
-| `spdb-newsapi` | Active | `newsapi5rhdQMqyoLJvmAdHWC2zrlcAcc0a1nksldq7uq50ssb5dgr6cf0y677fd17luyvm` | `(?:newsapi).{0,40}\b([a-z0-9]{32})` |
-| `spdb-newscatcher` | Active | `newscatcherj3OZ8mKhLi4oHSWdW2h01O4AyP7dvTTRXXaBWc2F0NMrbrOaEKVCZICBzQggkNbepKoUFmVhAwJ` | `(?:newscatcher).{0,40}\b([0-9A-Za-z_]{43})\b` |
-| `spdb-nexmoapikey-1` | Active | `nexmo9JGiQnKlsQprjkNMV2eSjrWbE9d5qZAhvZn2ngin` | `(?:nexmo).{0,40}\b([A-Za-z0-9_-]{8})\b` |
-| `spdb-nexmoapikey-2` | Active | `nexmoyKg4Te7Kz8kLXxEmBoxrFlPGTexxXiBjw7gdzH3EO8QIpDq4` | `(?:nexmo).{0,40}\b([A-Za-z0-9_-]{16})\b` |
-| `spdb-nftport` | Active | `nftportiJjRYCepDpS4nK8r2Sy8GYj3At5t2fcjrtddvhlm-nkk2-1pw5-zte6-xl12nd6ns6qy` | `(?:nftport).{0,40}\b([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
-| `spdb-nicereply` | Active | `nicereply4ejOY7AAqLoOY1OkcgFFIbRgcSM9dpto19775899ab80370872d5e9f10f2336eb9a362b85` | `(?:nicereply).{0,40}\b([0-9a-f]{40})\b` |
-| `spdb-nimble` | Active | `nimbleuEdvDIbXdVdDRFkPnfec7wsWqcAM7zI6ni4CWtAwjzrDzdzDB8Oq1TUIn16wHk` | `(?:nimble).{0,40}\b([a-zA-Z0-9]{30})\b` |
-| `spdb-nitro` | Active | `nitroKAyZhTpTCB81mHPnQYHrXuoscLGMOD700883031e7febd3d6ca1f0f6046ed102b` | `(?:nitro).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-noticeable` | Active | `noticeableB9y1zHIuzmHCTzMXQy8lJ0Wr3VqppkBC3PROdi3bjzgC8JbGHuf7` | `(?:noticeable).{0,40}\b([0-9a-zA-Z]{20})\b` |
-| `spdb-notion` | Active | `secret_UEW3fWdXnl6wRnBjTbIVckciGDRBtRa5OFObWfpgtOY` | `\b(secret_[A-Za-z0-9]{43})\b` |
-| `spdb-nozbeteams` | Active | `nozbeXx3Z1uiQZTEWzFSffLHjwsIw9kumCw1cwY7sLIuDyhdxFG4c_Edjs2TM8mN310TUekgyIuZpG4TQuSpFR8I0GZ3VQe99FRQVzhNae5bvEAknkze1s ` | <code>(?:nozbe&#124;nozbeteams).{0,40}\b([0-9A-Za-z]{16}_[0-9A-Za-z\-_]{64}[ \r\n]{1})</code> |
-| `spdb-numverify` | Active | `numverifySDb7JuKjzDdlhmOR20d3CGmwisuoLlFbt77unpx09mo3r8fgtkgatqtpv6y6vs9g` | `(?:numverify).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-nutritionix-1` | Active | `nutritionix7g5UUC0lZaw3vNeMSXDqxWEEtThhhzlrigu5yz9cws7t8uf8hgu53x5sobfbu7so` | `(?:nutritionix).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-nutritionix-2` | Active | `nutritionixrbp2a7VuQpvIaAcEsaJz6bKGHKjxPL1Ujn413cnc` | `(?:nutritionix).{0,40}\b([a-z0-9]{8})\b` |
-| `spdb-nylas` | Active | `nylasrf1zOR8E4kK24vhT7tuYOtTgOpq9gMxb3iAciVQEIWPboPlcWuNA2kyvKSTnLI` | `(?:nylas).{0,40}\b([0-9A-Za-z]{30})\b` |
-| `spdb-nytimes` | Active | `nytimesOAQ2MW4GMqkoYiVVWztVh1noUDdHE69Y4ymPZu1nPRAg23v7OmVfYzoptebQUS0o` | `(?:nytimes).{0,40}\b([a-z0-9A-Z-]{32})\b` |
-| `spdb-oanda` | Active | `oandaUiVD9DPhDEgcxi32yztMMlrpanFbWvHxnFbjqd4PxsLhGiM81oelVCZb` | `(?:oanda).{0,40}\b([a-zA-Z0-9]{24})\b` |
-| `spdb-omnisend` | Active | `omnisendmtZfrdg73AwDu4zBgN4CeAj6ZCST53dDhlLyZrFWjyC3fNKsmfAehPX2L2bJr5knFaE9p4Pg0ofnglZHs9zelwF6HsqeYLTIdDUUiCrxqQf` | `(?:omnisend).{0,40}\b([a-z0-9A-Z-]{75})\b` |
-| `spdb-onedesk-1` | Active | `onedeskMYkwLusx7bXLTl97sNWdv1rO01hgOfk44dxT6o3=TDXU#GLzn#8KPWkW5c$^VTEi` | `(?:onedesk).{0,40}\b([a-zA-Z0-9!=@#$%^]{8,64})` |
-| `spdb-onelogin-2` | Active | `secretDpmN6yHyG33JJACyoAYRxfa4lxuf3asjmtp3dwm6f01v3g61i2mf8k50r7u5od6dskuz76mal20ji6ooaihu` | `secret[a-zA-Z0-9_' "=]{0,20}([a-z0-9]{64})` |
-| `spdb-onepagecrm-1` | Active | `onepagecrmo7C8QuZA21VHAmDtIFAHUo85dFXdfjVqBsR9rAHp498b0k5zPISxbyufSNY6jJ7W5XZ03iTpX1aB` | `(?:onepagecrm).{0,40}\b([a-zA-Z0-9=]{44})` |
-| `spdb-onepagecrm-2` | Active | `onepagecrmLgoaI2NgCWYMvY73qMddb7QhHUbcvYkCu0ovei12e62e2nuzi9ug86c5` | `(?:onepagecrm).{0,40}\b([a-z0-9]{24})\b` |
-| `spdb-onwaterio` | Active | `onwatery8t5W8orEpW8uTw4O4KNfWllcyjwfk8h5dgAW_rOmJnV9sa7xy0-` | `(?:onwater).{0,40}\b([a-zA-Z0-9_-]{20})\b` |
-| `spdb-oopspam` | Active | `oopspamyqYtrgCh6trAyM8BxYhqatT6bnF656HPmVF8FSFv0e9l4oU6hhrUBpKuPXI0mnD2flk3FAa2` | `(?:oopspam).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-opencagedata` | Active | `opencagedatadKNtZxDPCjoRMuS0GSR2sdDlCTMCBBiTie1rg40pepdqhrq4kirmwgd8noyslrob` | `(?:opencagedata).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-opengraphr` | Active | `opengraphrar4Rhl978Ir6gVMtqWJs7CvoTo8bkw21VqQwqBgdKGZM83nHrfAB2HjhaExMrUoWUAcTr3z0kjf4lzFROooINsaUS63ZwozTAGBGP4Hoi0uHHSkn` | `(?:opengraphr).{0,40}\b([0-9Aa-zA-Z]{80})\b` |
-| `spdb-openuv` | Active | `openuv2L9gzQ3N6L8qrCrnfOPB1f9TgkDKxM6pdtxyqg2ct5n6dufymrdp35uu5or68yy1` | `(?:openuv).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-openweather` | Active | `openweather4EVGhZShvKmKNV0ARISli9qSx1Gmoa2fcispyc7ttl4co32sv90elg9rhivya2jl` | `(?:openweather).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-optimizely` | Active | `optimizelylpaMF64uRcnu4T5TlCB0OQieLZW8QRJpap3QQm3trf4cWKRPEbPs1qd8AA:g:CO2HBbchcOTwAPeBl6OiktBKZ` | `(?:optimizely).{0,40}\b([0-9A-Za-z-:]{54})\b` |
-| `spdb-owlbot` | Active | `owlbotzcqgWpUnYG2M0ud8F7m19s9PCZJAOjbVxhqmvi6ew3w7dsvchoxc3f2xclqjohrky5yq54v2` | `(?:owlbot).{0,40}\b([a-z0-9]{40})\b` |
+| `spdb-google-api-key` | Active | `AIza7ke5j94bb8win02av_kjlzp44zjq2g3cx6h` | `AIza[0-9a-z-_]{35}` |
+| `spdb-google-calendar-uri` | Active | `https://www.google.com/calendar/embed?src=N1ueaTEs5YRgEIDz=Pd1h9HF7NeEg-c;` | <code>https://www\.google\.com/calendar/embed\?src=[A-Za-z0-9%@&amp;;=\-_\./]+</code> |
+| `spdb-google-oauth-access-token` | Active | `ya29.lrzjCZqmUjivwltspSwjaTBbeqG68KdJ` | `ya29\.[0-9A-Za-z\-_]+` |
+| `spdb-graphcms-1` | Active | `graph5coyz8dfKnESAN8Ym1ZfUqeYpOZOZp7qt0ke3j4vheljwqc3jvbzzeguw` | `(?:graph).{0,40}\b([a-z0-9]{25})\b` |
+| `spdb-graphcms-2` | Active | `eyFweeGfctstWgof9JvE7QqxzGjY3iHSvB4LaQfVaGECBTVvrNcmOriWosqp8yjWNpyFill7M4u4eyE2katgrfRKErCF5QTedKJJvFEVueEchxENvs2k9UCX0Ekcueqgml6Z3uISvhNWKVJyFxyswAfvwnKsXyP2ZlTTGoTcVyNfUlVbfGw3DDrWdC7QOjk3jt9fnOnn92ZDt6yRmDqiXi3L4kif35hrQphekudQe7jTWE9HLKkoSjiyHYCkSxhZCoFyWjMH6t0oCjc9jp8YTvA1H82s17C5tpNzT2T2OFinYSun0cOdLsmuhvw7W7rG1YM2q8gq0YQFoPpJLKlC1eofXd74tKlqpXUSBajUih0G9ANGLPeDjc2aqASteKmYzXwdlEb6XuGlUpbPsBYhfklmuvrrS7KJdFDHWWHQgJEETTWDQ2kdBGtledN46f_L_uAUNBsyUB_L-0OgvI91310ZysMgIsXEC9K6w_2FLDupWXSsZs_5hjsw0iJ0o5Onn_lcCearYrs1SLGR1CwqRFDCe5dbCa5DiBJLLON5bR4W4VYCcsbZsY_fh_gTa6V705vj11RY98epQ76yfy64u29Oq5uKOqVmc1VIFchPn5nZ5o9KCnHwhyA8BA1i-rsAoD8iN_AwJ0AIG9fVkhyj3kUCVAjwAoL1IRAaDKr9W-xGwKDxnC0Tpj3vVb3QpoUbGCZC0hVLLZ0Q1ltxNQSMmZbsJIZdDjG4VWR2X6mEl7Dez6QQb4CaiPJMQN6NRXuU14HcrV8Ajxgp8GPMKUk8iLw_THkOfEVOErH1mThxasnOpltzjjsm618N3hmyvI4siAatdzuqazhG44Cd_SaDxzTjEbwFHaM5vtpoWboMPP0PBm6HKAFc6nRbD0li1qb96GoCGPcObzHlGYs7hlS41Jqv7gTJYLHyERFmcg7I-vsErsO4rSl5fh_VjG_Ocyi2dpht-FXD9ilT5MnDinOUthyHddq6scx3fVQV43_BCdal5LpSeMIpdujM34ubdEQ9LHja1gs2NcR4iS_-l1tigtBOOPsXOCcO6_iEcaqfk7ruOSyRDqBsU2kdU1IoCTk075bFoG4V9-PL1AUoTqaJ2Y6kt02NhN9H6agtSIt` | `\b(ey[a-zA-Z0-9]{73}.ey[a-zA-Z0-9]{365}.[a-zA-Z0-9_-]{683})\b` |
+| `spdb-graphhopper` | Active | `graphhopperTvGY9SaJdYd48KB6FgqYu11pWfdmh2Wjcvu4cvr94wkvzg43g79r5ky4agr-mia1o7yj` | `(?:graphhopper).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-groovehq` | Active | `grooveA89dz9moTSTIiActuaT1uF4DJLZXBAI8vMMfXILye6Juzs9Y6WzwY3M28BWFoor2YzUei6M4qiywJBuQHmjXuEU71hhuEhpp` | `(?:groove).{0,40}\b([a-z0-9A-Z]{64})` |
+| `spdb-guru-1` | Active | `gurubkhQq0pg4YFceNNWwfjghBHHHE2aIdsm0ETP8x1ldViEI3TcxQEl@zvI11uxNEqcJjPeXnZ` | `(?:guru).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
+| `spdb-guru-2` | Active | `guruM3Jw6gT1EuPdwNb2C0PHft4xS9Vc6ZLW9vosq12s-rwwb-cywt-srvx-bz5hcs8kvdi5` | `(?:guru).{0,40}\b([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
+| `spdb-gyazo` | Active | `gyazo976YMgRP2bROIA2RNDHeJwucQ5MnnbHZJxScNIOu0nwiT-Zxg9ugLlzT098ZlypKi4uSbRQ9-Un` | `(?:gyazo).{0,40}\b([0-9A-Za-z-]{43})\b` |
+| `spdb-happi` | Active | `happiyxchcUK6QmwWDIBjvSGmKpGRQGvywdZyE7eBgVzmcXw0mPr4fC2BKfBUGbWZqgBwz2IGnjGdJRk29X2Nx8iewMGm` | `(?:happi).{0,40}\b([a-zA-Z0-9]{56})` |
+| `spdb-happyscribe` | Active | `happyscribeUDhpTo3TiuAorME4jkmC61Kae4UNO1xR7Dl0zOi7Pg2kQAcYv4XDkWRG` | `(?:happyscribe).{0,40}\b([0-9a-zA-Z]{24})\b` |
+| `spdb-harvest-1` | Active | `harvestkZKfByUvm1Gxj0JntTegykhUk37vxN13U64VJG8bkwRqDSlf3alMui_zAOsG4oTe6o799HWzxxzSg1zoqJuTMpaw11raqHKeimZ_ey20hM0F_z535QXSIC_gosUA9WF6o` | `(?:harvest).{0,40}\b([a-z0-9A-Z._]{97})\b` |
+| `spdb-harvest-2` | Active | `harvestrKreBuk7P8YK8TiI1UMXYxzxVUEZgFav896692104` | `(?:harvest).{0,40}\b([0-9]{4,9})\b` |
+| `spdb-hellosign` | Active | `hellosignUwNllb41VPFHa9PONGArlhx3MUIHtxJQetmLnkugzj9/q8AYU+55f3p2cGjMCJxJ3sBFNYsbfcoL9CdbD1BCMXzzwbilNwkY` | `(?:hellosign).{0,40}\b([a-zA-Z-0-9/+]{64})\b` |
+| `spdb-helpcrunch` | Active | `helpcrunchovHTLdS8p1ZjSgZnnChOT0WEp7tegDJTpFOMD07sfS+1AQZT60IBLV+cy5-bBPpVrHXF2MJiprZhzHxBsPYbRB/t4g=QE66cU1m1sK2A7ox=J7q-8YtnzH-SWi=umL0gtSOAV38DDgvxhHSGyRIvAvcTFV8FQt2WSm3kN4W67kdn/KoUIkc7PU0jdjAAIwly83imqtkqH4RuEhavQlWcubRRUtquTLAAMWhYsASgoxchSe6yoWhX6-+PP+h9kDtZypIagN6p3WZMls/utSweDrj=voWT13RcqYz9qvHYsnYp0AgK32X+GnzxBC4Y30-A6UxQibNRFnlxniN0BW6kS6UO1JsO7NhQ5jqMAsqr` | `(?:helpcrunch).{0,40}\b([a-zA-Z-0-9+/=]{328})` |
+| `spdb-helpscout` | Active | `helpscoutWhwbr4OTBkS5vbvEhCnsLZq1gCh8LTK8uTgVJYlwubbKubiF6awJaukASPitBLQkxwVYEGpTxoW47DZhNWWOq0wV` | `(?:helpscout).{0,40}\b([A-Za-z0-9]{56})\b` |
+| `spdb-hereapi` | Active | `hereapickDqVi7NE7VLyPJU7zOcVSHKQxYO7QE2Tyty8BP68ygfjHR1TwpS4J6ReEJmzzj6wfizLAlaMR6` | `(?:hereapi).{0,40}\b([a-zA-Z0-9\S]{43})\b` |
+| `spdb-heroku` | Active | `heroku0tdgd2HZo2LFzxYNwtxBnZWXu9iHJTDu25f5A491-a8c9-8120-fcd2-1e7205aeed7d` | `(?:heroku).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-hive-1` | Active | `hiveqzFBJQUnIIWxifu0ApJufzuHSJoq52vwhxzj9arzx8u135afezmnd4z0jxt50t6c` | `(?:hive).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-hive-2` | Active | `hivebymjk1o5Utr2ZKDOv5XG5nuEAe9G5zGlS4ZYspQHCJuofaIgb` | `(?:hive).{0,40}\b([0-9A-Za-z]{17})\b` |
+| `spdb-hiveage` | Active | `hiveageKVrEcx2ZcW3MzioRrLNffzWQiUEc79ZI1GDVXwfYAZtP2gGlE47X` | `(?:hiveage).{0,40}\b([0-9A-Za-z\_\-]{20})\b` |
+| `spdb-holidayapi` | Active | `holidayapiSXM8DGVHwvNxWoEcclgngU6mkNq1IT8O4sfz9hiro6zx7cc-crmdhy8rfdkitd71pxz6` | `(?:holidayapi).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-host` | Active | `hostCC5ezRY1cerEVJvsOb6yTrLWqM43XN6T5gd8ed108irmj1` | `(?:host).{0,40}\b([a-z0-9]{14})\b` |
+| `spdb-html2pdf` | Active | `html2pdf410hrECGVdngKFVFbuW41xkmZr7DqlUQ0wqBzf4zihZHKupjjJrSngOt80IWDz0yZjKl1XrlJk3KrD1pBAEwPBhAIUAsreV4` | `(?:html2pdf).{0,40}\b([a-zA-Z0-9]{64})\b` |
+| `spdb-hubspotapikey` | Active | `hubspotRTNuhPRCOtcnbHJnBMotVTgOBcavuvnutoHoY93X-iWkn-pKaP-Xhx9-PE2YUp4vy7V3` | `(?:hubspot).{0,40}\b([A-Za-z0-9]{8}\-[A-Za-z0-9]{4}\-[A-Za-z0-9]{4}\-[A-Za-z0-9]{4}\-[A-Za-z0-9]{12})\b` |
+| `spdb-humanity` | Active | `humanity1cjvcRRt8RU1MZdLYeSy1BBBS2hNZu11735cxm7otr6wxmqsavu5d56hwn38hy08y2m76xav` | `(?:humanity).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-hunter` | Active | `hunterF7ZxUtmsC2WQcxFHIj2MZJj2JGApaZRhd92q_83p8s_qe-i3z9-1pr0w_hx26ktf8halq9fh` | `(?:hunter).{0,40}\b([a-z0-9_-]{40})\b` |
+| `spdb-hypertrack-1` | Active | `hypertrackEi5r27MRBC27RCVGUKVbfOUTpWfJoGQbf_hHDSy_f_TX_cSfAsKmlYP2uLXnzkhPhPGWakuwGhnwef2o__RCCD` | `(?:hypertrack).{0,40}\b([0-9a-zA-Z\_\-]{54})\b` |
+| `spdb-hypertrack-2` | Active | `hypertrackiGaRmwf4GUrTGOh8cvrGQw6EGMebG98Yf6Afxqof6IiZKl8Yrl_jX8YXgRO` | `(?:hypertrack).{0,40}\b([0-9a-zA-Z\_\-]{27})\b` |
+| `spdb-ibmclouduserkey` | Active | `ibm0niL8gW11sy9UraUFiHkmNtrc77AZkDL8EeKJsMWtzy1iFr6wlTA06aNHbdfUeXfrK8YyEBJT0PE` | `(?:ibm).{0,40}\b([A-Za-z0-9_-]{44})\b` |
+| `spdb-iconfinder` | Active | `iconfinderXKDpmvS5wShCFzysHkAGMGi15Ua3VktmnSRNnc2zbwNGvDs3SSnGCuyBOtSwgBDLoRppXW2LiqvTtpMxs6bY9QYLybh74rGv` | `(?:iconfinder).{0,40}\b([a-zA-Z0-9]{64})\b` |
+| `spdb-iexcloud` | Active | `iexcloud6p0WkeQeAXKj82GVwub7z3eoIvKUUzariafl__cecxqld5ypp_o7y3hrnm0e3ete0xd` | `(?:iexcloud).{0,40}\b([a-z0-9_]{35})\b` |
+| `spdb-imagekit` | Active | `imagekitswSoCZpNIKeNpnCwAlZ4ilRcqRUYCWj6HS=K7HvrzG5RNxuc5qeoTdLczi8jsSA44IKx` | `(?:imagekit).{0,40}\b([a-zA-Z0-9_=]{36})` |
+| `spdb-imagga` | Active | `imagga1rYW4xUPW0hmFJhPT3CVEqvxmfLGzZCyB9GrxkzQktgx32vkhJv7mEtagKuwgDK=wdclw8ur1YsdUC263EiZ0y5ExSUl9DwB798451BF` | `(?:imagga).{0,40}\b([a-z0-9A-Z=]{72})` |
+| `spdb-impala` | Active | `impalaIa0BJTAxnW5LD91BhZyCeXThZxFqm1Oe1lEw4SIN3n0M6sAsKQ3y1JVVwffB7nvoryXw5vXAJ0Ve0T` | `(?:impala).{0,40}\b([0-9A-Za-z_]{46})\b` |
+| `spdb-insightly` | Active | `insightlywv7GmJ2p0G5n0sTbpNPAD3HNU6ARsymHuomfdd0j-mswj4xlheehorg9l0tuvg0w2yd-` | `(?:insightly).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-integromat` | Active | `integromatv9pxLWdr7zK5TUK3ev7SSFbeXWa2OT7lwal9rdmn-dfupv8a1oh7arpbg-0od2xal0f3` | `(?:integromat).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-intercom` | Active | `intercom3jOijXdkUae7BYqq1OJQZ018BIzqs5DkBVY48LEH9kMgpvvWCgZZrHQPNxq0zcwN7gKYa4GuGtuftgDp5sctfzLEnRq=` | `(?:intercom).{0,40}\b([a-zA-Z0-9\W\S]{59}\=)` |
+| `spdb-intrinio` | Active | `intrinioiWIf4fuUuGy4SYZRFHkeCwh3AfbDuoO1UDPULflNZHnCpynDWJX29ep83h7iPIVkIQTtd639wnA9` | `(?:intrinio).{0,40}\b([a-zA-Z0-9]{44})\b` |
+| `spdb-invoiceocean-1` | Active | `invoiceoceanD5oRmpZHGBdxfRCJOoNEmDjFK8mQ50YAkPV0NEOFAHSEcCgEICjy` | `(?:invoiceocean).{0,40}\b([0-9A-Za-z]{20})\b` |
+| `spdb-invoiceocean-2` | Active | `2qy96vvmmc8voxp20zutt6ec8gbpz4qk5invoiceoceanocom` | `\b([0-9a-z]{1,}.invoiceocean.com)\b` |
+| `spdb-ipapi` | Active | `ipapiccWgbWF0SFvVuUqcHJYz8cUf7S3l5ohZacxpni0d6rz5qgewo96hwofv9zbhhb99` | `(?:ipapi).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-ipgeolocation` | Active | `ipgeolocationyu0PpRN8jYXCyvgtMB2h0ICzDWG9mbx7t4bpbyzgrvbtfsao1zyv5iwox0r9tt85` | `(?:ipgeolocation).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-ipify` | Active | `ipifyExjhu4IXzscRYb59ZS78as9i0lLt2BWPt3K6MS_ZTA7fK2kNSxQ1JDy2rqDbi2NO` | `(?:ipify).{0,40}\b([a-zA-Z0-9_-]{32})\b` |
+| `spdb-ipinfodb` | Active | `ipinfodb1ziUfl28aO0WwyUi4GD5to7QbkfffBLJg9phl3ajkfgj4wd9uw4w22mkeaq6wkuevbgnmyewtte7uvcds2iyckqxfwf43ky3` | `(?:ipinfodb).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-ipquality` | Active | `ipqualityiXLh1Es2bZrZiSe1IVBWr4sx99eRYdC7nhfjb7z51fekjtzfzcs0q2k5qs6fl8gl` | `(?:ipquality).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-ipstack` | Active | `ipstack0gxMAxbmQ5iuqnvZgjbgUcNyB4dztrhzd0bJBPQN_b4a[AAfBVW7aa1I7QcTAbL9` | `(?:ipstack).{0,40}\b([a-fA-f0-9]{32})\b` |
+| `spdb-jdbc-connection-string` | Active | <code>jdbc:lcnbbrxgbblcpsph:evpmjainhpyyclb://;N,h&amp;=ahA7nAR;8P5v?vwu-Xtjw95UKQ</code> | <code>jdbc:[a-z:]+://[A-Za-z0-9\.\-_:;=/@?,&amp;]+</code> |
+| `spdb-jiratoken-1` | Active | `jiraLLx4jDsBF1PeIlAunwnUNijFtBYwXoHB-sYo7FFBie33j1za-XLIp59v` | `(?:jira).{0,40}\b([a-zA-Z-0-9]{24})\b` |
+| `spdb-jiratoken-2` | Active | `jiraZgGw3y1CKjjFT9auppxk99qEDk3CH5hb8p3HroaNUUwJUByP9hT84kfN@4nbAvo5koOzheRFv.com` | `(?:jira).{0,40}\b([a-zA-Z-0-9]{5,24}\@[a-zA-Z-0-9]{3,16}\.com)\b` |
+| `spdb-jiratoken-3` | Active | `jiraCMmU0dEKbA3ecIyD0OeXhHLzSdwmoN5bROGYkIBIF5ffV9HJeUpaPCzG.FYBBnTzmDkE3dCsk.u7xipI7Q5-9PqEUT` | `(?:jira).{0,40}\b([a-zA-Z-0-9]{5,24}\.[a-zA-Z-0-9]{3,16}\.[a-zA-Z-0-9]{3,16})\b` |
+| `spdb-jotform` | Active | `jotformS8cLDi8ozkYz6rT9smxBdZ9mALdgiSFD38qx1531zmgrbovypj7azyx1e74y4zru` | `(?:jotform).{0,40}\b([0-9Aa-z]{32})\b` |
+| `spdb-jumpcloud` | Active | `jumpcloudB0BfhmeOa77baNzfIjoV77r6U6UNpfhUF7euhrS2xsX2uVdQaKzZjdXtHOTwQqSBSDO1SVwC` | `(?:jumpcloud).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-juro` | Active | `juroZDJSZED2JrupL9NJOQyGPQZ11D0AZ25IwbdIt3pq9nAtPHNEgWB9NT0ZEPAlOlJhNHKTxOgI` | `(?:juro).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-kanban-1` | Active | `kanbanfwcxHmOHrIFflOO22Rlbtk5cQgsOUyIkJBFL8ZL5W0G0` | `(?:kanban).{0,40}\b([0-9A-Z]{12})\b` |
+| `spdb-kanban-2` | Active | `seai0axml8vj8xyat4d1py5sf8nzhxi45kanbantoolWcom` | `\b([0-9a-z]{1,}.kanbantool.com)\b` |
+| `spdb-karmacrm` | Active | `karmaWTCUIElWzuBUQ9x4fS8hEo4q2TtPUt96lYYWL026zXeNeIbV9D6F` | `(?:karma).{0,40}\b([a-zA-Z0-9]{20})\b` |
+| `spdb-keenio-1` | Active | `keenpI3StbcmlaCj4MrLEqAwawycRVOofUV4rxey0le7gykpc4kfqs0t0na3` | `(?:keen).{0,40}\b([0-9a-z]{24})\b` |
+| `spdb-keenio-2` | Active | `keen8V9Q3zocYPYpENUuFBvtVstI7GmDJFBC69DYXTM3RKZ64NNJGM9L8T3587EFPD9F1U6CUEIL0HSPVMNW79T7Z3NSBTK3KP11` | `(?:keen).{0,40}\b([0-9A-Z]{64})\b` |
+| `spdb-kickbox` | Active | `kickboxqSi2kmGmiVv8CMC9FXfQvcWkrtHbdVsj4L_dXp826HtD6dB4ohtWLncUMxhP0wX9Iadgk73BgbQ7OL0LFFYqelSYcbROkIOPRaDLkj3OS51tqAtSFbDGPUx6k6OSFjXb` | `(?:kickbox).{0,40}\b([a-zA-Z0-9_]+[a-zA-Z0-9]{64})\b` |
+| `spdb-klipfolio` | Active | `klipfolioOaHbXdSjjoldKjVEDkCHAqF0Z6YRHMIT36ff24fca758890e427b797207564b02c54c912f` | `(?:klipfolio).{0,40}\b([0-9a-f]{40})\b` |
+| `spdb-kontent` | Active | `kontentF0R6RfSdlCGRFfX5ciYPFzoNjOZZfkcfhumz0ccumsbd95l-j23wx3kzrbshblkfjgtm` | `(?:kontent).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-kraken-1` | Active | `krakenqRDv0Xcp5AsL5MzvJziBU1vYcSkhrigN55qk+7rXkc+89AaVe8txykdDa6B6SJjJNfmzJS1tbEfzX3GH=wqZtcw4\n` | `(?:kraken).{0,40}\b([0-9A-Za-z\/\+=]{56}[ "'\r\n]{1})` |
+| `spdb-kraken-2` | Active | `krakenaCGjNbG1nj5TjQKrqaIrzjdsKZCZwYkC4ym0PaaZfmLiQBrx59wNoooJGlQ/0fCW==uB7QN24Q3JVoOQ3/9n7uYGna6hrb57H8w1+BhIvPe=WoAqUxSuHp"` | `(?:kraken).{0,40}\b([0-9A-Za-z\/\+=]{86,88}[ "'\r\n]{1})` |
+| `spdb-kucoin-1` | Active | <code>kucoinBtDAGpSF9KsEhySnZBPlwojjgaQ7xhpL 2g&amp;bs&amp;)}][/Nk/}&gt;Vvy(}2s9L]WVt,N4\r</code> | `(?:kucoin).{0,40}([ \r\n]{1}[!-~]{7,32}[ \r\n]{1})` |
+| `spdb-kucoin-2` | Active | `kucoinIl1rLN2FBLB1Dj9fM81TtFwAuHu1UhkS71a64a3a-844d-3ab1-a445-2b86ba441c89` | `(?:kucoin).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-kucoin-3` | Active | `kucoinLIOe7gEAXU7WRzN9wJhyaYqf5vdOpNbya019e17497c3317362d81083` | `(?:kucoin).{0,40}\b([0-9a-f]{24})\b` |
+| `spdb-kylas` | Active | `kylassbXeG4vsZkPboLRujHETjUCCqbJfwY3ghlkl00zso9cusv2bxr0zl6v1araom0zovn3e` | `(?:kylas).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-languagelayer` | Active | `languagelayerp9QkksJVapMleoGCB2gf4J1a71DTWTr9w7duqm3r1b80idts838yxdtgpnynwled` | `(?:languagelayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-lastfm` | Active | `lastfmL9hzXI6TplC7RI3t7olU02GbgmzGPoVE707946pzhn3gfg52vsd9u4ncux7jm0et` | `(?:lastfm).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-launchdarkly` | Active | `launchdarklyL331TVpmId4otn7C1Vv89Gh6UbJDhfOQx2x-c8scird1tokgogr7nigvamcgol6ub8fq-ejr` | `(?:launchdarkly).{0,40}\b([a-z0-9-]{40})\b` |
+| `spdb-leadfeeder` | Active | `leadfeeder9r3XSPdP8ZA8yfszEB02GHr36flc4lzISKTWJmgJm9MaU1SE0aBsWmHHD4UEHJ7ucTTjmXqo82u` | `(?:leadfeeder).{0,40}\b([a-zA-Z0-9-]{43})\b` |
+| `spdb-lendflow` | Active | `lendflowA7is1438KafJFyb1RzXkMswimly929xEgKYN1S3PgKpACQOduTrbwUkYIHfohhARvrX4.QHLs5LzHhQntWBsybmZAffXvgE7nqgShfiJQE4RsWHzLqmmkqctzKRGFzyJTOreJkpEJksD1EzmO7MoeDIWDxnn61doCUx4JvR5vrZjMMV08gUjso2OOrReDDTD11y60oWBrR3be3765V73u2zKL0Wf9KteF4Qkk75uaKyXIC5HQaKiyhuBKsS2qAK1Nvj87CWrofZEI1pHZy0wl57lP3JXCGneYKJkMG3z3o6V81Xf.BpTKQaijZydll75wxIcJahMaSPMXbraC-hiwA9kNhVJ51ygH34pc5v3RPQ6ooyxki18ZLedV5VPnpDhS-sGxXq4sVmDT1ScGXmn0jLJC40DltzG8h8oYnmmphQj_hlE6Lgr8TQKz1RG219aZuV5rGy5ausCDCQGrHSZbxXgrD0UrSddQ8x2Oq7IZ27GaC16nvayd2CRlyZo2wbNyHgCueOUiVqwAlug7sORZnLsXZpng3TQ2a75-QIxOmWSvmnyCb9TLzeccCzGm32Ul6TCrb825NjvK7J-UBVjOP5tiQfcWcCPtsPadS0DRpMxN3wmP167c_Qi-AENyYy7JZGP2EZSeDn41WAbTxY97WwnF1nj7LHBCOlmXzs29RZDaR15twBeRPlLurZ-x0rio0XTE06BqJWTg5T8Gs1mfwcnCe_xODV4iz1fO4an1FQXnMr_EGz1ltw-8ukat5c-OuDaFf0g8fb3kZSR62JnM4KnD6eTkLsHHAaMHjSIn99XzYDLrx_abH3DneMgQknkaQ_yAkMcp4ztGORM59EP9vZuZ7X5E2KetCKQKmiPt9JpHTxHgVV4BF43mLcDg2T_nE2IXU9IsPIA693w16APdFfDH4TEJnQDUeB1kS4FJJqL10CQneDedWF8BFf_ULl7vFzjYqrAzdY0XW2NXuE0wCTI0fpH` | `(?:lendflow).{0,40}\b([a-zA-Z0-9]{36}\.[a-zA-Z0-9]{235}\.[a-zA-Z0-9]{32}\-[a-zA-Z0-9]{47}\-[a-zA-Z0-9_]{162}\-[a-zA-Z0-9]{42}\-[a-zA-Z0-9_]{40}\-[a-zA-Z0-9_]{66}\-[a-zA-Z0-9_]{59}\-[a-zA-Z0-9]{7}\-[a-zA-Z0-9_]{220})\b` |
+| `spdb-lessannoyingcrm` | Active | `lessD96F5zsC46qdjJnKIVsBvi0JaRNfzqLqDzlmUFSFFQXXWJzalEnyWhNa-rH85Lu7B7MdpxLgYSnegAbftVAOTCmrL` | `(?:less).{0,40}\b([a-zA-Z0-9-]{57})\b` |
+| `spdb-lexigram` | Active | `lexigramT12iOf5Z2HdwjVsxiRYO58Muk2kmOPkgRPU3VeVEb8zZ3leiRNQDU18OHGXjlnamqfOtSWgc2uvIKcJFdhm7V8fgzd4VcqmKkAAIbFhg2G4NzvvYVEolRYrDF62jutw7VBuph2GTBrqt65hvY7nLJRYtAMYemop5IHTBAB1DSzd8wi7mtP3waleO3OwssqkDN7Qy6ohIandC9aezzOoA2M00O5uXQu57QryrZepqhccFEga6HxcqsUxJRGnPgSApY6AdO6hFxMdveAihyKgF6BVT7dQUhIDE3nbaB41uC8FLEK7LHF8lYvVhYtWzcNwU95mpFvYrPySrl` | `(?:lexigram).{0,40}\b([a-zA-Z0-9\S]{301})\b` |
+| `spdb-linearapi` | Active | `lin_api_F87IGFmM1keU03RAbhWoaVh1OIUSL1o5wCE2YGeK` | `\b(lin_api_[0-9A-Za-z]{40})\b` |
+| `spdb-linemessaging` | Active | `linewuCVgpyMK0z0LJIkOQ5Bh7pN4wl1RDT0OC/4m9uJRwiuQVzn6ytCan8G7g4W6tV71onyxVwTLQw4J8trZB32/I4I8UXYLp/cW7Mt/NFKR1OG6yyp6PbJs6frdd6tg9kso9jYFV7Ip9a2Tr9zrU8U/OrnmxNiJ0y8Zxvh0cbae6zJhtz0VZehEHeLloMTqE6cBnpmgvSaYhx` | `(?:line).{0,40}\b([A-Za-z0-9+/]{171,172})\b` |
+| `spdb-linenotify` | Active | `linenotifyIUYVuFBBB0F0wqHVFPAcDUQsPCCV2qdSEMuVV5VZiqWkt4Fo9DRHOa0PrxFNm7vtF9c6SUjf9Tb` | `(?:linenotify).{0,40}\b([0-9A-Za-z]{43})\b` |
+| `spdb-linkpreview` | Active | `linkpreviewVd8fz1QG9pGpAZ6yWeqn1oBkp7pfeamhH7hr4PTAIgar6YmgeVnpYkejosRyK25B` | `(?:linkpreview).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-liveagent` | Active | `liveagentLqlqQp5QbUzbFDttWdawtxuN0oMZ5LO1moCVFCf62Pqlwtt3ihGDjGdKqjdUXwEp` | `(?:liveagent).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-locationiq` | Active | `pk.i5jWqPhCRD2y0xfEBhWJVVae5ViZ4e2X` | `\b(pk\.[a-zA-Z-0-9]{32})\b` |
+| `spdb-loginradius` | Active | `loginradiusqhvPG1zB68T9YBcKQvTolMFbYpxogCJx17817f53-457f-2f92-330f-49302c89aa1e` | `(?:loginradius).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-lokalisetoken` | Active | `lokaliseuopeDH2AGzksCYUU5Np4gAK140BY2SUFf2h678qz4cvzz2chf9s3rag3r7uhyhkeoc7t3z3s` | `(?:lokalise).{0,40}\b([a-z0-9]{40})\b` |
+| `spdb-loyverse` | Active | `loyverseaXRDQQiPgJbix3ZV9gl2a0LOIj1i88XJ7yuil8tfbk07oqvowqbr0q7b6h4pih3t` | `(?:loyverse).{0,40}\b([0-9-a-z]{32})\b` |
+| `spdb-luno-1` | Active | `luno1E31i4pYlUjEZ0SqoyWdRizXwT5zkLQK46zp8r2ut4524` | `(?:luno).{0,40}\b([a-z0-9]{13})\b` |
+| `spdb-luno-2` | Active | `lunor949PMK6OIN5JMITUEoJJIbdFcDDFLxQSnU2Zm123dBAf6OETZQRNfNYFwKjz7AoadAdeL0EU89` | `(?:luno).{0,40}\b([a-zA-Z0-9_-]{43})\b` |
+| `spdb-m3o` | Active | `m3oRWet0w76pdevBvg65pFmVVKXnJVbnJaofbgZyh5JTqCjW3ohHvOYnjHyJf0PzC7CQFTzJ6Zn6fOydwXm` | `(?:m3o).{0,40}\b([0-9A-Za-z]{48})\b` |
+| `spdb-macaddress` | Active | `macaddressbjoO7x6qd6GQ3TJt7ulysl3PUKdc9W08coCG8mv3CjhRgodim5BPacNHuAZ56kbK` | `(?:macaddress).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-madkudu` | Active | `madkudu0mFaLOct9ShMGzp6jQjr7tncf9k2qIY8895bc1223b8ccd5f3d09f001b6cdf57a` | `(?:madkudu).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-magnetic` | Active | `magneticlMNJXwQsKi4OvO9dJ9oc8gPxExgynPAapmA1cci1-ytdd-h7un-wuih-xe8ubuljy6q0` | `(?:magnetic).{0,40}\b([0-9Aa-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-mailchimp-api-key` | Active | `494f0dbc18c63a3ca99f7cbaa0c92220-us34` | `[0-9a-f]{32}-us[0-9]{1,2}` |
+| `spdb-mailboxlayer` | Active | `mailboxlayerBDWicVCYixZx3poInBwxfLWNwXAfNmgGxt2jeb4hwfh1jgf7zckbxi920ui8gysz` | `(?:mailboxlayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-mailerlite` | Active | `mailerliteZ8UvqIh0lhwCUJvzTenYGx9BxFSrpyYdcxl14vp6jaahgy3anp3pxtnbbrfqncc2` | `(?:mailerlite).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-mailgun-2` | Active | `mailgunSjUTH65bF9t3T4MiGzTlUpDqABvkpDzWsNnO2p9c3X83wyvi07lqdNLqyU3y7eCCH3u90ptleC486BOnNRNdh32xb30bV8ivg07uVyow` | `(?:mailgun).{0,40}\b([a-zA-Z-0-9]{72})\b` |
+| `spdb-mailgun-api-key-1` | Active | `key-Nnc7yGuuzUaq04SRRrEXpPnYOz5GxZwp` | `key-[0-9a-zA-Z]{32}` |
+| `spdb-mailgun-api-key-2` | Active | `mailgunljdt4eoajnlj429f7cx6vbnmya2tgj2w` | <code>(mailgun&#124;mg)[0-9a-z]{32}</code> |
+| `spdb-mailjetbasicauth` | Active | `mailjetTG39siR1zmUSyux484tXBJYFVxUymft8GQXJzUaBzl0TylwFM9SzUhvRXjh1OrhVDxu6vsVv9Uj9E3z695sxbLU45WLFzz7rvst9Ib6FMNi2WiCzPZxYJGH=` | `(?:mailjet).{0,40}\b([A-Za-z0-9]{87}\=)` |
+| `spdb-mailjetsms` | Active | `mailjet4MhAvLUmBo3HT78vYGV1ICJkdZN8hJ9st7D5eZq6K5zGjM4GaEfOeYBfZq37coxc` | `(?:mailjet).{0,40}\b([A-Za-z0-9]{32})\b` |
+| `spdb-mailmodo` | Active | `mailmodovDRWFbeTraBwHzXkU1ZGx5omkySx9XTd8IAQ7PJ-93UA47Y-4X85D04-PT5RKIE` | `(?:mailmodo).{0,40}\b([A-Z0-9]{7}-[A-Z0-9]{7}-[A-Z0-9]{7}-[A-Z0-9]{7})\b` |
+| `spdb-mailsac` | Active | `mailsac2LavSw8TgPvqFX4GYcFmWOmjOScbTA90k_JE8s4VN6tZxx1aHvhrckEiQuw8wWoYVAPanh` | `(?:mailsac).{0,40}\b(k_[0-9A-Za-z]{36,})\b` |
+| `spdb-mandrill` | Active | `mandrilltf0PIxQNwzo7A9cGZbzYWKLCuLl0YCLQM15idECWmjpK2BR64bBdYF` | `(?:mandrill).{0,40}\b([A-Za-z0-9_-]{22})\b` |
+| `spdb-manifest` | Active | ``manifest1NilIwO0Je7fECVruuinrH6M7rdV5OmZoVraSQtSx`Mke27imbdmcsxY9JlnElka`` | `(?:manifest).{0,40}\b([a-zA-z0-9]{32})\b` |
+| `spdb-mapbox-2` | Active | `sk.6xj1E.fKVUknKliRpYyXvyg02.ae3gNR-wL.QHvZWvfsaiaioj83QxUlqHwfRjl-zRxfKypJu4wLZkqo` | `\b(sk\.[a-zA-Z-0-9\.]{80,240})\b` |
+| `spdb-mapquest` | Active | `mapquest8INyZOkQJG6ZBCTMECcejX1dT3hsVh0gzOV51WLSRdDdNjZAa7pUdEFbmMxPjwG6` | `(?:mapquest).{0,40}\b([0-9A-Za-z]{32})\b` |
+| `spdb-marketstack` | Active | `marketstackPAupWdRXSyoDr2QaJxh735oXTXk7WHIxh1jvtslm6hi48jfa717aa9sl95c2oz8y` | `(?:marketstack).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-mattermostpersonaltoken-1` | Active | `mattermostS6j9jtBc8ub5YgIgiIo5p2zG55g42Ht7hiPpR7peQfBmLDK1CiJ2RqcTwCc3qKGjpcloudrmattermostNcom` | `(?:mattermost).{0,40}\b([A-Za-z0-9-_]{1,}.cloud.mattermost.com)\b` |
+| `spdb-mattermostpersonaltoken-2` | Active | `mattermostOoDCPZSUSDKUhKzIIQcIXtLsuGSvKX5yu8a30sw9a30gkksmnlgn31ur8u` | `(?:mattermost).{0,40}\b([a-z0-9]{26})\b` |
+| `spdb-mavenlink` | Active | `mavenlinkyzwHPUbecAxWh7VmNv2GeyG6LMtnsBFPgthek821mvd20b64km3vc2gdha8j7x2nc3jjr141c6088e6b2az7faqabqlhtnsd` | `(?:mavenlink).{0,40}\b([0-9a-z]{64})\b` |
+| `spdb-maxmindlicense-1` | Active | `geoiphPMIcr31TAcGdQDwoYneqkuMlVM8DPUDA7pXFHkvaL6XCAQH` | <code>(?:maxmind&#124;geoip).{0,40}\b([0-9A-Za-z]{16})\b</code> |
+| `spdb-maxmindlicense-2` | Active | `geoipKfZRJKB54G06DPE0G8gMR0Irzvn7E9pJ3678150` | <code>(?:maxmind&#124;geoip).{0,40}\b([0-9]{2,7})\b</code> |
+| `spdb-meaningcloud` | Active | `meaningcloudc4X6s7TIMxXTrkmbiOp6TZt9p9b8cigeyzb7k7ftvwf9by7wnf7rkd7lnghqqfvv` | `(?:meaningcloud).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-mediastack` | Active | `mediastackd94Ue9L1rt1zq0En0OAFxklvcN0UOsshqohy2src1blogn184wvcx48d3r9c1fzu` | `(?:mediastack).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-meistertask` | Active | `meistertaskT49wHZZnSJvRVW4a5CkdGAv5fFdWvISBkVCqjtwjHC7HTgb2rmmgNIC2Fl7cWH9pZzDWsiKA3wM` | `(?:meistertask).{0,40}\b([a-zA-Z0-9]{43})\b` |
+| `spdb-mesibo` | Active | `mesiboCPN1i2oHvtvGFoh6WAwxWpA9xXgvu8KhtrY3TidnpsqTmOBq6SQP1WCeSdeXWF3l7kwMgPnFxxghgF4mVc0wsVDaWwR4c7bw` | `(?:mesibo).{0,40}\b([0-9A-Za-z]{64})\b` |
+| `spdb-messagebird` | Active | `messagebirdJzVQXMnn0M1gBvmfTjjt7Ozd1g2C6QNb8JWZCpk_I7RyhvKUqC6WPoWAg` | `(?:messagebird).{0,40}\b([A-Za-z0-9_-]{25})\b` |
+| `spdb-metaapi-1` | Active | `metaapiLrJ9a9ixVk1GM9tv2CdUOxOQaewHuWo7a62c7c1841bfcb31631daa18dc1cd69bda0a55957480fccdc0d035d68a1ad540` | <code>(?:metaapi&#124;meta-api).{0,40}\b([0-9a-f]{64})\b</code> |
+| `spdb-metaapi-2` | Active | `metaapi5CuD40Ru9MUnXsNCNHoYRpYl5tERdr9Y8859964fc419776731121442` | <code>(?:metaapi&#124;meta-api).{0,40}\b([0-9a-f]{24})\b</code> |
+| `spdb-metrilo` | Active | `metriloscJ0hVURS3oghd23Ns6z545qtY9oJClht2gnbum8frgqjzod` | `(?:metrilo).{0,40}\b([a-z0-9]{16})\b` |
+| `spdb-microsoft-teams-webhook` | Active | `https://outlook.office.com/webhook/CEAD4SQN5UUwxnkINLkQuFWEIRCVdvt7/IncomingWebhook/5EKJ19QDnQm1EhUZKndwZkg3S48BFfvR/UgtyH8IB5FV4br8ttJSbXbBR1NIe5iWx` | `https://outlook\.office\.com/webhook/[A-Za-z0-9\-@]+/IncomingWebhook/[A-Za-z0-9\-]+/[A-Za-z0-9\-]+` |
+| `spdb-microsoftteamswebhook` | Active | `https://uTRaa2BferLd5bq3zPKj0OqtikkqQeb-.webhook.office.com/webhookb2/y4smDnXy-if57-Lr-d-rKxF-eRE8Na9awvbp@FUCgyE9G-ER2--B0oQ-gh89-I213Y0sIqcVi/IncomingWebhook/mgRVPbxYWazJyInbN9UfkvU4yL1uWi2w/eEsU3l7m-HgmF-B-CB-CqGx-UsKFA83-53o2` | `(https:\/\/[a-zA-Z-0-9]+\.webhook\.office\.com\/webhookb2\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\/IncomingWebhook\/[a-zA-Z-0-9]{32}\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12})` |
+| `spdb-midise` | Active | `midi-662b69edd2zgFxkxhiZOp9MxfUbYJSyhwVnWW5TBZh24Csdu748rVUAoswut9hzW` | `midi-662b69edd2[a-zA-Z0-9]{54}` |
+| `spdb-mindmeister` | Active | `mindmeisterHlmC7ZOffbzg1E1GPh91ZvEQ1WxaFW9ywEy2zf7wkwCPe9NF5xh6clSoyx8e7vrLDhOrKF82Axt` | `(?:mindmeister).{0,40}\b([a-zA-Z0-9]{43})\b` |
+| `spdb-mite-1` | Active | `mitetuLlWHsx3sDyVODiMOv7u1yajBUlovllz77gmfh6b86bjtg4` | `(?:mite).{0,40}\b([0-9a-z]{16})\b` |
+| `spdb-mite-2` | Active | `8hltjg27s2fj4uhjci37aphigd0awou3qmitelyozlk` | `\b([0-9a-z-]{1,}.mite.yo.lk)\b` |
+| `spdb-mixmax` | Active | `mixmaxb3Su7AgmtenzLw2c1AUJJCYTQB8KCMLNsIP9z1Voc-QQQBYhCP7ZQQqemox_P5pwyMLe` | `(?:mixmax).{0,40}\b([a-zA-Z0-9_-]{36})\b` |
+| `spdb-mixpanel-1` | Active | `mixpanelIfpnAvVzPR9Mnn6FVfS1UM6mxyn1SWJfiIMmkvAvOYYAqjWjHxDBfKp5u8xmPcC9` | `(?:mixpanel).{0,40}\b([a-zA-Z0-9.-]{30,40})\b` |
+| `spdb-mixpanel-2` | Active | `mixpanelqIeSprTNnI6D2WJcGX2k2wg4lbmkUUc8b9VT0Ow9CgifvlVOhqFDm4TrKeSZEXRN` | `(?:mixpanel).{0,40}\b([a-zA-Z0-9-]{32})\b` |
+| `spdb-moderation` | Active | `moderationx8W7uBcxqYjtykEPFVtJIjhxidr7QwCNGxLWJfsHXMep9PAqyq2u7ITKCh2OHXrOuE7I.V5n9dIBFiwGIPenqrBNEjjUUM7fGtQ4bUAFGuJ6kVVIAblYY3UVCI4LqTTXufd4JgBy4cgaDdS2FXZ2WqBl3LmYmTocrSzWem8gpIYDpSMKOOVJROkL.cfprBGiD01uKrAgISURw5X0ZKrpDXwJcC9LmmOnOi8m` | `(?:moderation).{0,40}\b([a-zA-Z0-9]{36}\.[a-zA-Z0-9]{115}\.[a-zA-Z0-9_]{43})\b` |
+| `spdb-monday` | Active | `mondayL2HjQX1I7gwptgL0DAJWgwlrQ9bDIIsiey9QtBl71otrjgChzj594L1XPmcRp57iv6PMZA3k7RzyE60IXQ1ZP3todQz.utSH_42zOM_qyFUoHFgjqMaZ11VyFzBieEFrJju6Gya5Tb6t377mM7kXQFuPOV8CRwxPgbl5DkvVpOckP3RjcpD3cMzXticqdDhIl6LSo7KS3HUTvaB4O29xw4Vo_6eFhA_Uu8vtu4E1rpx0.0BHo5X.` | `(?:monday).{0,40}\b(ey[a-zA-Z0-9_.]{210,225})\b` |
+| `spdb-moonclerck` | Active | `moonclerckl6QnCYdE6u0IPRBwEcPnTAz6H8UrCj8mm6wp34iu0njtw5ot011v2f4xd922oifs` | `(?:moonclerck).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-moonclerk` | Active | `moonclerkkYi714lfjmTOwEbrHPzcL1KGchneASaub4czmfov3j7rk7fchpahg135ey181fp3` | `(?:moonclerk).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-moosend` | Active | `moosendE2YgDmIxq2TOFDYYibqCuplEOPfxptVab391bf12-3289-4625-51db-027e3cf1acac` | `(?:moosend).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-mrticktock-1` | Active | `mrticktock18yDjO87j2aiVRQPfIlzJAfwpKSGcfZci#62J7BWT6N(m@fQXUITSQR5FPIC@5kM` | `(?:mrticktock).{0,40}\b([a-zA-Z0-9!=@#$%()_^]{1,50})` |
+| `spdb-myfreshworks-2` | Active | `freshworks4iHyZAUisLKBpM3YNIAwU4oPCrriBI5YGKNOuAoeux3vH8jg4eSaOV` | `(?:freshworks).{0,40}\b([a-z0-9A-Z-]{22})\b` |
+| `spdb-myintervals` | Active | `myintervalsLwx5xfUNhhf8Fd7Z8gPqR0n2MhevfXZHjylnheylpr9` | `(?:myintervals).{0,40}\b([0-9a-z]{11})\b` |
+| `spdb-nasdaqdatalink` | Active | `nasdaqmdVcCulmvypB6hvQuSae8q7MS8heGiG9d95toKyeyJ3pgtUQydQr` | `(?:nasdaq).{0,40}\b([a-zA-Z0-9_-]{20})\b` |
+| `spdb-nethunt-1` | Active | `nethunt4jjjSPnoCzeaB0tk3SbRjghS7x0l08Ta1=6.6K0/7uDDDq:yi1bxf1=gK1XtIN` | `(?:nethunt).{0,40}\b([a-zA-Z0-9.-@]{25,30})\b` |
+| `spdb-nethunt-2` | Active | `nethuntBQwwAMSYwmHrPTAWUDOnR4G00gOUsqCLet06bpnjt6zx6am-89k-q3ms6ab3rhdfzz7t` | `(?:nethunt).{0,40}\b([a-z0-9-\S]{36})\b` |
+| `spdb-netlify` | Active | `netlifyAJgMFuqoQMOE6PsJG25qTShMqsHMSMzFspWmVGFIEiFVx3dRg_PfNj-WU5EGhi6a4Ltesg3ojJ2` | `(?:netlify).{0,40}\b([A-Za-z0-9_-]{43,45})\b` |
+| `spdb-neutrinoapi-1` | Active | `neutrinoapiUQ0KE9lRCrLel8jd8yYRBErRc1K1hsvvHqCfg4BbNaisBNStf63PZkppumZiQoWFkxUm5c5jJs6NL6IS` | `(?:neutrinoapi).{0,40}\b([a-zA-Z0-9]{48})\b` |
+| `spdb-neutrinoapi-2` | Active | `neutrinoapiFZt0zZIdH44QfrGuMl4OG7gw050juOncPMbEvNbJ181w2G1lGZqbBFlI` | `(?:neutrinoapi).{0,40}\b([a-zA-Z0-9]{6,24})\b` |
+| `spdb-newrelic-admin-api-key` | Active | `NRAA-cf65819dcb618c952b56639f176` | `NRAA-[a-f0-9]{27}` |
+| `spdb-newrelic-insights-api-key` | Active | `NRIQ-4K0HZBmHH3gWXqFftnkNDFd2Ws2ALRb7` | <code>NRI(?:I&#124;Q)-[A-Za-z0-9\-_]{32}</code> |
+| `spdb-newrelic-rest-api-key` | Active | `NRRA-1a69cf8f0e388d64549acf4069cc5c1fecefcfd49e` | `NRRA-[a-f0-9]{42}` |
+| `spdb-newrelic-synthetics-location-key` | Active | `NRSP-rb069ac829204c2eca7c503f3e4fa44e435` | `NRSP-[a-z]{2}[0-9]{2}[a-f0-9]{31}` |
+| `spdb-newrelicpersonalapikey` | Active | `newrelicPPDPLXDJE5zTPUsJn570BKkiQj4YtJwEAeb.-pY_.fadP3pPG0PQslwLWlk.k2iTB3X2u0b1wSA0kzZ` | `(?:newrelic).{0,40}\b([A-Za-z0-9_\.]{4}-[A-Za-z0-9_\.]{42})\b` |
+| `spdb-newsapi` | Active | `newsapiQB1SBwReVYn5DKn7nL8zBJHAcUWBJhAopkjv326t9sklildyekypfb4t6bulbcpt` | `(?:newsapi).{0,40}\b([a-z0-9]{32})` |
+| `spdb-newscatcher` | Active | `newscatcherldc3dw3R3XebOzBWw5IZg37FTPcl6dNIlyXcBKDgTpt5DBHXrlvz8wA4yZ46dmaf6maWq_bBH4J` | `(?:newscatcher).{0,40}\b([0-9A-Za-z_]{43})\b` |
+| `spdb-nexmoapikey-1` | Active | `nexmofJQiWHC1hmg5wnFr0ybs82XNEFOmaUyT91zTgWfW` | `(?:nexmo).{0,40}\b([A-Za-z0-9_-]{8})\b` |
+| `spdb-nexmoapikey-2` | Active | `nexmor9weOk9oSzDQadcYRvkW86VgtrmlVIxNV8oOC7qb6m7BYa0P` | `(?:nexmo).{0,40}\b([A-Za-z0-9_-]{16})\b` |
+| `spdb-nftport` | Active | `nftportLpXpa4Al00bn499cGs5dorbJEJAL2ZpR9wtzcqiy-al2s-3hgb-xrhy-q188t2i733y9` | `(?:nftport).{0,40}\b([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
+| `spdb-nicereply` | Active | `nicereplyFIWvexqgZr34B5WwXSFweBWIJap8iUK1517e61ec09e0f9e1427b91a81d001b59959e5acd` | `(?:nicereply).{0,40}\b([0-9a-f]{40})\b` |
+| `spdb-nimble` | Active | `nimbleZfuamGlJx7Ctt86KroVha2GlC8gCTRmRaRGE1Wo0PB1XQActo15qgEoek0it9T` | `(?:nimble).{0,40}\b([a-zA-Z0-9]{30})\b` |
+| `spdb-nitro` | Active | `nitroIEmtW0d4Yt74xv0v7HRPdWQpwJnIoIBqf8c2eab7fda7b0a484ff9d908b7ae708` | `(?:nitro).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-noticeable` | Active | `noticeableIzk1JILOfqbQ4U2K96pIj7FpLQodqmyJwADTRCkW0Hw0bn2PDsTw` | `(?:noticeable).{0,40}\b([0-9a-zA-Z]{20})\b` |
+| `spdb-notion` | Active | `secret_aPeaXoYQZYH3QK7UGDbVOYg2DMb5y60WPLclddC1lQ4` | `\b(secret_[A-Za-z0-9]{43})\b` |
+| `spdb-nozbeteams` | Active | `nozbelBhtqW4f1Z1LnTJ4rLCnrspZNe554zEAcVK2zSOVzDmgo0Bs_2ppXLIwcuvdvwn-W0Z1b0sWU2CE9kl1-1KkJHiqbZg0IpwyeWO2QOLfPD_fmq6-W\r` | <code>(?:nozbe&#124;nozbeteams).{0,40}\b([0-9A-Za-z]{16}_[0-9A-Za-z\-_]{64}[ \r\n]{1})</code> |
+| `spdb-numverify` | Active | `numverifyhGPLn5r9IQe8TnDGPomsS5e0l8nMSygA7nenrtho1xgk3xrtyejbqsonld16xpga` | `(?:numverify).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-nutritionix-1` | Active | `nutritionixbZMuk625FqFN6wiooS2wNCuwH6pBOnSWta7htbj4zz3gyx816uomf1jfbevukvst` | `(?:nutritionix).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-nutritionix-2` | Active | `nutritionixq6B95oAbJdggesO7pVu4e9dzWfcaxYyzlopf62lz` | `(?:nutritionix).{0,40}\b([a-z0-9]{8})\b` |
+| `spdb-nylas` | Active | `nylasKAFJNtDBcoTmrv3XVMujUxm56gVAXLeL8piQCGkZidrj56eVrwoHefg1nC05Hk` | `(?:nylas).{0,40}\b([0-9A-Za-z]{30})\b` |
+| `spdb-nytimes` | Active | `nytimesP2q1JMy3oImy81niT5Z88G5dFi4GDGQr0np3QVUOxujFPPPP66KHOJWwigQ2BB8r` | `(?:nytimes).{0,40}\b([a-z0-9A-Z-]{32})\b` |
+| `spdb-oanda` | Active | `oandazoFgxDIzMWckl1AzmGZwFm2J1qstZeubfKQnlspuiSy2mCUTcKmA11QU` | `(?:oanda).{0,40}\b([a-zA-Z0-9]{24})\b` |
+| `spdb-omnisend` | Active | `omnisend3dTcIeP4JBSTfdfK9HTyBLPWvOtlGOa5FUZ5VTbNpq3Cw8AumoUohd3LynrtB16fehFR9JEAUNqnSD5tryh9gVnjfbCPumam38WGczBsTN5` | `(?:omnisend).{0,40}\b([a-z0-9A-Z-]{75})\b` |
+| `spdb-onedesk-1` | Active | `onedeskLclFjsYacAbXan9LPRGqW7i9ZbPh9y4Gs382sCqIkG9EzLC%qd7B0R34yf5ruMZS` | `(?:onedesk).{0,40}\b([a-zA-Z0-9!=@#$%^]{8,64})` |
+| `spdb-onelogin-2` | Active | `secretINXHecB7gY7JZmN47plxclso3yhbrp9jwygiht61ebsor0lxzl6omjocp8svco2qrvanzxrk5m7kfook67vy` | `secret[a-zA-Z0-9_' "=]{0,20}([a-z0-9]{64})` |
+| `spdb-onepagecrm-1` | Active | `onepagecrmbC24lzJkK13nYy6uxuqKEGkjF2q9Esz3APXJxlzBK7ogkrSZJqtz=9ng2FIERMCIMMd1FjY2x8WQ` | `(?:onepagecrm).{0,40}\b([a-zA-Z0-9=]{44})` |
+| `spdb-onepagecrm-2` | Active | `onepagecrmNU4mECKUcNYNXkQ4cEgdI5hS3Aa7VxTXvvvxl3jdev0hta77x8tisn3y` | `(?:onepagecrm).{0,40}\b([a-z0-9]{24})\b` |
+| `spdb-onwaterio` | Active | `onwaterOUPiHEwLt4mGNCi3EC10FAGRfKMmB4BGU_JXRMCjqD0leHNmctqn` | `(?:onwater).{0,40}\b([a-zA-Z0-9_-]{20})\b` |
+| `spdb-oopspam` | Active | `oopspamn8cuJkFdsD2UqwGvW8ylwCVhe4viZlxyXvsT6zBEu972DtGQsff1jLoTbDFKT8zzBHlNKZvd` | `(?:oopspam).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-opencagedata` | Active | `opencagedataCBJkjaoW5zPjauODMsCXXBxDsGjPNEBkn53z7evn58a1rnwupxnkvm32e1vjqj91` | `(?:opencagedata).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-opengraphr` | Active | `opengraphrPXPG6kl4LKmxgKBW89gqZg74qbM52vgpIRuIyfGJ231Qtpo1SAUQhAWdzAFxsZbRPGmxaSgLDT6WUJQNAPAWhVbC5HViVrYfabL7EIULCn3argCk` | `(?:opengraphr).{0,40}\b([0-9Aa-zA-Z]{80})\b` |
+| `spdb-openuv` | Active | `openuvbxPgRQU11SAZ8GjSwFAmJrScjr4ffl3Zlmkvb5ydfrdi1vgj7y9yig4743ycreof` | `(?:openuv).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-openweather` | Active | `openweatherAeBeJQaf934RpV30ovD6mUmy5Ocp63ZDijjly4321781ocr1jjtzbrvdncmuozz0` | `(?:openweather).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-optimizely` | Active | `optimizelyyRJc6oLfmyMk9ZPukc806bMiswCXvHwhRGazJTaHgEam3CRuG30mqw2ZAE:SZn4BLjzbsF::dI8A8L3z21uOez` | `(?:optimizely).{0,40}\b([0-9A-Za-z-:]{54})\b` |
+| `spdb-owlbot` | Active | `owlbotrvJkv5cyjovNKXwOJANCRnWiPvQga3Woficqabdaoxbcij2qk21wjptayxx4xk3h6iiv3rbo` | `(?:owlbot).{0,40}\b([a-z0-9]{40})\b` |
 | `spdb-pgp-private-key-block` | Active | `-----BEGIN PGP PRIVATE KEY BLOCK-----` | `-----BEGIN PGP PRIVATE KEY BLOCK-----` |
-| `spdb-pagerdutyapikey` | Active | `pagerdutyXOTIhuEK7Po0QixXqsTTL1Qx7Yvx50Gsi+svhOEPtOU-ua-pjtl7` | `(?:pagerduty).{0,40}\b([a-z]{1}\+[a-zA-Z]{9}\-[a-z]{2}\-[a-z0-9]{5})\b` |
-| `spdb-pandadoc` | Active | `pandadocrBc0JO6C3t69xXB9jeRfZAWxcZYUV7xx2cGziqWVBYEj0Pbq6ZOBEMfKC1rWDDDMW3dzElZf` | `(?:pandadoc).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-pandascore` | Active | `pandascoreUGaWTK2sanawFCNgdiQVgpzYpyZnrcda\rgVAv5xLsxjMbltgS9ALHxGzwgaZPB4QeofddLAggOyqqEiKjkBm\n` | `(?:pandascore).{0,40}([ \r\n]{0,1}[0-9A-Za-z\-\_]{51}[ \r\n]{1})` |
-| `spdb-paralleldots` | Active | `paralleldotszRrwOqS7aQhPlaMDa8KjqrZcP8ltq1WLudWSUPLhgHxHSbp2NtQu9EGequhMEblujNQp3CyTXRr` | `(?:paralleldots).{0,40}\b([0-9A-Za-z]{43})\b` |
-| `spdb-partnerstack` | Active | `partnerstackQbrJejgZY8WqPwH2J4hdLnuUf1h7cUH12FbqdwB5JEQxh0REN7kZ8OgXZRWgQcDThwn9xSSfyRwUOT8eiKJkD7oalKrVBdfH` | `(?:partnerstack).{0,40}\b([0-9A-Za-z]{64})\b` |
-| `spdb-passbase` | Active | `passbase2nxq8XosnmqMlMWeySFAAT3AOchYpqS8TDjqCwRWc1z03MwiuusmfRFaCssG51pqsYWkwdBkvX5iFG64wizBqMGwXM814yxVKdFs7xZx6Op3aFE1N1fGSDzGBFIcUDzCjmM0zP7kDzy1YzKF71O6lb6yjJckfvdd` | `(?:passbase).{0,40}\b([a-zA-Z0-9]{128})\b` |
-| `spdb-password-in-url` | Active | `heghGwdodZ://lEGeujcBPd5zIDssaUHj:oCO7QxxOsECX0x6SVnq3@xIo2dYtrYAbYSmTYxBalhSzuwhsW5fd9'` | `[a-zA-Z]{3,10}://[^/\s:@]{3,20}:[^/\s:@]{3,20}@.{1,100}["''\s]` |
-| `spdb-pastebin` | Active | `pastebinHP8roBobIrQZurCNYZO4wraVC0SGqZTtwk6PEpd93RP1tjmmgLIsnzl4gjPbjEx3` | `(?:pastebin).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-paypal-braintree-access-token` | Active | `access_token$production$2hdczkihn0fxjl7k$3a23919d2ecabb5eb21b55373cd79f1f` | `access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32}` |
-| `spdb-paymoapp` | Active | `paymoapp56VocczHfN6YBLMQ7aM2mnhRb4YQ0cf4xLCCMHe7Skd9T4OeU96glbOlW5J74dGU9u1cQSJ3l5Ch` | `(?:paymoapp).{0,40}\b([a-zA-Z0-9]{44})\b` |
-| `spdb-paymongo` | Active | `paymongomhkNqzPcUh36g6pVntjGPmpbX9utJ7EpvrR8MYANPaCwPZndtjv4kASx_rXVh5_y` | `(?:paymongo).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-paypaloauth-1` | Active | `6dwgAuU-jZS.1J40NYZewKmNYOXILKxJtSclAvi31TMNScCzUGPPcRj48nZ0oQO3pbgvzw4GRWe91qlB` | `\b([A-Za-z0-9_\.]{7}-[A-Za-z0-9_\.]{72})\b` |
-| `spdb-paypaloauth-2` | Active | `NXMfnPzXErwJI0ZtWGTqtErZdT2fQPvJicF7i855QU7aveLkZX_nWweGDmR9_geohLG7w-Ug1ngS_bh7` | `\b([A-Za-z0-9_\.]{69}-[A-Za-z0-9_\.]{10})\b` |
-| `spdb-paystack` | Active | `sk_aopswjkoerekbtozhwhxoqhoqujdkcyz_ac7NtFkXzpBwsLMX0IVKpVmCgzmvUYlbTqyYCVL2` | `\b(sk\_[a-z]{1,}\_[A-Za-z0-9]{40})\b` |
-| `spdb-pdflayer` | Active | `pdflayerw3mgDULmwaibm0a2R3UqCAaxFPPAATws2g7s7n0odwrzv024nancwiu2qam3mlya` | `(?:pdflayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-pdfshift` | Active | `pdfshiftFce0WMwP70UV2Q8kYwholHKeuq8uT7w99ec51a9834a3416f4e47af18f51d7e0e` | `(?:pdfshift).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-peopledatalabs` | Active | `peopledatalabsSSIPUkMX3BFHBcei5J7oOyNx3bqdLqjSmkkzgrhsqxz1oh78a0nqqko2ru2htcl8ki1cyws46evrunp5rgo08fnljrgkle7m` | `(?:peopledatalabs).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-pepipost` | Active | `pepipostc6diYBZh418aXa41aYmqxFhavgaVWVgV5N-UjdJBOq-3hKuZChSA046NR0Vosq1-` | <code>(?:pepipost&#124;netcore).{0,40}\b([a-zA-Z-0-9]{32})\b</code> |
-| `spdb-picatic-api-key` | Active | `sk_live_24vfz6j6zrxs7jldodkb52oedwtoq6fo` | `sk_live_[0-9a-z]{32}` |
-| `spdb-pipedream` | Active | `pipedreamirq2Dzu62iDfvAaO4RV2e1iCfToXzHNT5zwhqhs8wh6cec47509p97r2w23khbkl` | `(?:pipedream).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-pipedrive` | Active | `pipedriveKjwxZo02oUVeCqJQjJ4yuMmEVWbkrsCMLmYFiAFPLcd4W5DrCbkW8Rl8BrkgFEkfTJByGAU3` | `(?:pipedrive).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-pivotaltracker` | Active | `pivotalmfqsJpvvMhF80hGJMKsde9Fa7FGnauMKvwin63cdc7zojgimkonuo7fdoi1vcu4b` | `(?:pivotal).{0,40}([a-z0-9]{32})` |
-| `spdb-pixabay` | Active | `pixabayHPtgghHZ41mwlyooSL71OR0Amb81Xa5Z94x4r0yxn8qz03tb0cd9q9sbrlpwye4u-5` | `(?:pixabay).{0,40}\b([a-z0-9-]{34})\b` |
-| `spdb-plaidkey-1` | Active | `plaid51UWOANPDCek3zdnFRlrFhdp2Qe9Tr4Tyvx68m7ijxlezp9w1xrs4gt7` | `(?:plaid).{0,40}\b([a-z0-9]{24})\b` |
-| `spdb-plaidkey-2` | Active | `plaidKRAfl4SEQi5C9UN1RZDeYdhreQne0uWL40ilor3zd8hy76hhkc1lxd9460dpet` | `(?:plaid).{0,40}\b([a-z0-9]{30})\b` |
-| `spdb-planviewleankit-1` | Active | `planviewleankitmMWHiqHuF754j54Ohq9iRATgYClnnwrf62d85cdc915892f8352dbd83801d15391e62cf3b1920cf57a5ea15bb9cfd1ca822e46094617dd76a47069b9c65f578e2a2cf861d2d96c41a5639b0021c773a52` | <code>(?:planviewleankit&#124;planview).{0,40}\b([0-9a-f]{128})\b</code> |
-| `spdb-planviewleankit-2` | Active | `planviewleankitG2TAMjD08p9otIw7GRHP7Cp3iZ52ykFjsubdomaingOx60cr7VsMaL7XT1hZeBVs2Gv` | <code>(?:planviewleankit&#124;planview).{0,40}(?:subdomain).\b([a-zA-Z][a-zA-Z0-9.-]{1,23}[a-zA-Z0-9])\b</code> |
-| `spdb-planyo` | Active | `planyoY4IWsk6dN0Fv6g5dazwFrEMuMjGWKLHaba9xciuxc7rntmeai25jik01den0yhkcxa7wihactr05psa3kl91srdwc2ecz1` | `(?:planyo).{0,40}\b([0-9a-z]{62})\b` |
-| `spdb-plivo-1` | Active | `plivoZE6yQG5aGeFQBaMrRpgYwFguIhrjaIfv_YFFBeS96vXLXABk2QI-gTSnoFg0PCj579h7rJlL` | `(?:plivo).{0,40}\b([A-Za-z0-9_-]{40})\b` |
-| `spdb-plivo-2` | Active | `plivopuUYio00uMFoq8CTBY9YlQoHs7Pa1MMMSOLAXHGNPGSEJLBFLSQT` | `(?:plivo).{0,40}\b([A-Z]{20})\b` |
-| `spdb-poloniex-1` | Active | `poloniexLW0eDLsokGrDZaWngq6gHrNo4Aa2XXoHce1afca72661f602961c6f9826118a75608a93a2d17503f2112c60cd5d713a2363266636dfb1107b18ebacc755823662c4518440adb1f0cd9b52028f36744fb5` | `(?:poloniex).{0,40}\b([0-9a-f]{128})\b` |
-| `spdb-poloniex-2` | Active | `poloniexa6dvHw6C9YWfjE7UTHCSYhjIFWBR57ntGN1H60W9-RD39HXW8-WZQWGA41-VC93M1M1` | `(?:poloniex).{0,40}\b([0-9A-Z]{8}-[0-9A-Z]{8}-[0-9A-Z]{8}-[0-9A-Z]{8})\b` |
-| `spdb-polygon` | Active | `polygonXMb4vo8SAHoKRKBXjq7BTcPaNnyH0fi1899578e3wAWskzjp5j37gSCAsbKhfnMQ` | `(?:polygon).{0,40}\b([a-z0-9A-Z]{32})\b` |
-| `spdb-positionstack` | Active | `positionstackty0p3gbj8b8fx71uFFWhxZZxFhT7T29UASfOHQdc8cDrnzgVUSA8wUHjG2l1Ym_O` | `(?:positionstack).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-postageapp` | Active | `postageappH2HXuAaq60KzeVgqRUtg7Tt19aiMmkCwIgAImMDBpZhg9x2nl7gPpI89xag6SRO2` | `(?:postageapp).{0,40}\b([0-9A-Za-z]{32})\b` |
-| `spdb-posthog` | Active | `phc_sY2pVpYukwhFKOgZP1og5jGkHqz7p4rudYZgsdY9qfU` | `\b(phc_[a-zA-Z0-9_]{43})\b` |
-| `spdb-postman` | Active | `PMAK-zUS9vCXgwgRYn4nHUVN63E16IfPeW7wVSLN5zbP75yyuWA4wxeGyVT1fYxs` | `\b(PMAK-[a-zA-Z-0-9]{59})\b` |
-| `spdb-postmark` | Active | `postmarktpGGx7gsCScdg4JMiM01Fbcd2Gy43YCFaz142j9j-yio8-p4mb-j5ax-ajmoeyj0rcd3` | `(?:postmark).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-powrbot` | Active | `powrbotmQqTun81kSp856L0kNe1mJt52FTSct4MrGaEmPa884eXj9FXHABMMK4Le5e4cTiNFxPLMCWI` | `(?:powrbot).{0,40}\b([a-z0-9A-Z]{40})\b` |
-| `spdb-prospectcrm` | Active | `prospectMMLC6mVapbe2ZAKWGh9KM3ahYhWOgqqRow0vfu0lo7gl41ojfufuyblqljqsjcwe` | `(?:prospect).{0,40}\b([a-z0-9-]{32})\b` |
-| `spdb-prospectio` | Active | `prospectJcMEOXdkNR4df5oUtySfDvaXCIjjAeBqLorVOi9weyuYAxH4Aan5Ms1wZL4DygcyH-xAZmocnK3aMUP7WT` | `(?:prospect).{0,40}\b([a-z0-9A-Z-]{50})\b` |
-| `spdb-protocolsio` | Active | `protocolst36fkrqtkxVqrw61egcOVMWq1utx7qAm4xrbk27g0scvtzl7irm3zvr3h2wtkd2blqg9fajc0e2ihge1dspm4sb3afoh0lqb` | `(?:protocols).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-proxycrawl` | Active | `proxycrawlgBCnKXrstrh9SgzH9MeIJninUmoOZ3Gpa6Co2tl8Is9eL4DKzL29au` | `(?:proxycrawl).{0,40}\b([a-zA-Z0-9_]{22})\b` |
-| `spdb-pubnubpublishkey-1` | Active | `sub-c-zddy036n-gekr-ofty-qps7-yfpsiajnmu7w` | `\b(sub-c-[0-9a-z]{8}-[a-z]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
-| `spdb-pubnubpublishkey-2` | Active | `pub-c-c99y675z-2m4w-2dou-5mol-lymiu8sgf8tn` | `\b(pub-c-[0-9a-z]{8}-[0-9a-z]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
-| `spdb-purestake` | Active | `purestakeM7jeaGiWRaq1GUOLhrWlQyJEUNe9epmsqfbWHWTk9vRUBgg22vufd7JFe4aSrRIJQf1WN9iB` | `(?:purestake).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-pushbulletapikey` | Active | `pushbullettH18OZyllYlSV5xNyatqOMMch13NvwplXnR47ST51w4BYjKnoELhqOfYl_hrYSUmkp` | `(?:pushbullet).{0,40}\b([A-Za-z0-9_\.]{34})\b` |
-| `spdb-pusherchannelkey-1` | Active | `keycRe10EZrtL1ioXyIfielAAIvAkwLQbLkmfu9d910ml0n2f0gxs8k` | `(?:key).{0,40}\b([a-z0-9]{20})\b` |
-| `spdb-pusherchannelkey-2` | Active | `pusherwlDtvVJgERHt7T6vYlrFzQhKyIgR29lXwg9r0betr4tll0grn9h4` | `(?:pusher).{0,40}\b([a-z0-9]{20})\b` |
-| `spdb-pusherchannelkey-3` | Active | `pusherCyG5T6w9eLGgCmPjirT85RGhFCrMTLcJ3319262` | `(?:pusher).{0,40}\b([0-9]{7})\b` |
-| `spdb-pypi-upload-token` | Active | `pypi-AgEIcHlwaS5vcmcuNvSd0gOefSMnsjOlkHlDK1Ni8fvFB645QJo7qNmvKonu_z63g` | `pypi-AgEIcHlwaS5vcmc[A-Za-z0-9-_]{50,1000}` |
-| `spdb-qualaroo` | Active | `qualarooH1FRYDdELs2sIoSDwgcGmVXY2YagKPsv7lIhyjXDys4yoMFyA=n74i7k3EMgMOsRVkQY5LdgKxfZ3Runnf46W7C9wuJWdzUs` | `(?:qualaroo).{0,40}\b([a-z0-9A-Z=]{64})` |
-| `spdb-qubole` | Active | `qubolesXhTofqe4k1vtt0TfOnBMbOfhPncLc2rg7ez8t77elt8k40ktnwuqsmputcqba8woui3h8zuvnma9qqoz5oswlaszekomze3` | `(?:qubole).{0,40}\b([0-9a-z]{64})\b` |
-| `spdb-quickmetrics` | Active | `quickmetricsei4hyPz9ZoZx4eINyfm79F78MSCon8kOz_sTF_62eReqKCKq8At0X9` | `(?:quickmetrics).{0,40}\b([a-zA-Z0-9_-]{22})\b` |
-| `spdb-redis-url` | Active | `REDIS_URLDSmb30h7pT9WfzCQ68pNwM4F6qyEOtLM` | `(REDIS_URL).+` |
+| `spdb-pagerdutyapikey` | Active | `pagerdutynuXfegAtAfGCVaX2VyOCRHSiB43Zoi5kr+fIqeYCLUz-li-ycdp8` | `(?:pagerduty).{0,40}\b([a-z]{1}\+[a-zA-Z]{9}\-[a-z]{2}\-[a-z0-9]{5})\b` |
+| `spdb-pandadoc` | Active | `pandadocnYQHBCol1nKGJxypDEyJnKbaYsQseJbUO7szk93QcMD0RlaLDlXrbkK4hD0p694Sri28UQXP` | `(?:pandadoc).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-pandascore` | Active | `pandascorep3w1aREyMeu3SjVNferPLFpEUA12TqKK\rdr7GAqFu5BtlD-jC7qDtsvSGQ1AHbla9Z1PIQcqbf_icTYfw-0f\r` | `(?:pandascore).{0,40}([ \r\n]{0,1}[0-9A-Za-z\-\_]{51}[ \r\n]{1})` |
+| `spdb-paralleldots` | Active | `paralleldotsmTB1CwcnJVr91cwWuB0vV9CCCBHhg2rcwBF56FOjvxZQMXDm8zceTBtTWwqwzGjstdsO9ole8sg` | `(?:paralleldots).{0,40}\b([0-9A-Za-z]{43})\b` |
+| `spdb-partnerstack` | Active | `partnerstack0O2kKy0rKb7C2PlNw0fbOknqRUgmoIXdJnDAW5wL0cHHyZpF0vb7YhpTr3BBq5iVcjG9xAsJN6ylbZX3cjzzI6BSojR3rABc` | `(?:partnerstack).{0,40}\b([0-9A-Za-z]{64})\b` |
+| `spdb-passbase` | Active | `passbaset3dNYN7Evz8waFz0RYeZJ9SnuGcJPwGok479vHTT0TEmWRkGnmEJCtfPmXQgZAkstoyYUNks6E0j6NX6YTUri0GlDV6Vz89jPTRnFot8yPJlpeI2W42Y7bNhcxAAOkguptkaC2DwTpFo6waJZZIcmuXnxCnGvGfI` | `(?:passbase).{0,40}\b([a-zA-Z0-9]{128})\b` |
+| `spdb-password-in-url` | Active | `wvTEctKvWs://'C=""9"=E'Rxd''l"="=:='o"F"OA"L='v6'c'"'=@JynydHU6KSByrpg72ichKMQFgeC6I6BN'` | `[a-zA-Z]{3,10}://[^/\s:@]{3,20}:[^/\s:@]{3,20}@.{1,100}["''\s]` |
+| `spdb-pastebin` | Active | `pastebin8B31AzQYEeLiN6q15hCfxSxJAbRzpxgrHAivZlTxhclCA1rN3yS1BfzMOAwKZeJA` | `(?:pastebin).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-paypal-braintree-access-token` | Active | `access_token$production$jiktp4vb8hew4fei$c13e3b6988de50447090f9dcd67edd13` | `access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32}` |
+| `spdb-paymoapp` | Active | `paymoappAmKi12Q0AUHJvQQpPUXZ8HIvrHM7j259z5HXQ08AgfQJKzGicwOtqq91dfcEF1mIHh7enZRWoWmz` | `(?:paymoapp).{0,40}\b([a-zA-Z0-9]{44})\b` |
+| `spdb-paymongo` | Active | `paymongomtLtATwBFfzXLVIj6vBAzJa6fYdinuDZ6Mls8jHZMeBIMn8O_WfiHTbAteiRXbI7` | `(?:paymongo).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-paypaloauth-1` | Active | `TN8y4Yh-7pvuj4RHDShcYXJZSH3.sbz4EDJWWlgZFruCV0OaIBz7SWl3UtPBtq1NEP555L8mcGluHHcQ` | `\b([A-Za-z0-9_\.]{7}-[A-Za-z0-9_\.]{72})\b` |
+| `spdb-paypaloauth-2` | Active | `57jDGTopFzkbsUT1Yv4WqPGqHRPHcOpFVuNzdQvSey3j92HlY5g_gSD46jt1RtkYLzIqi-MF5N8yr0Gw` | `\b([A-Za-z0-9_\.]{69}-[A-Za-z0-9_\.]{10})\b` |
+| `spdb-paystack` | Active | `sk_zmqeuphffnbkqucbgvqnsfsepwyhrpmb_k1jIkubimxDazY2opqdSKAeESW0j1E7VvVBuQkTR` | `\b(sk\_[a-z]{1,}\_[A-Za-z0-9]{40})\b` |
+| `spdb-pdflayer` | Active | `pdflayer6GjgBTthr5NoZriwbCX7e33coNH2dkVWxwl75sapzhu37qtw9jvq3odwu9lh3jnk` | `(?:pdflayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-pdfshift` | Active | `pdfshiftEv3xRkDZq8AsuuuyWDr2aUpR0jIMEeFQc3dbee93314eedb9c7bb0d6d29d27b70` | `(?:pdfshift).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-peopledatalabs` | Active | `peopledatalabs7AK8ndr3uu8uwMgW0bSryrAiTjDKn3C9qe0tdnfqe754zkhnscly70yqy08jog1ub61k0u29ghc4fcbkqixo85o9d7bpkz1q` | `(?:peopledatalabs).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-pepipost` | Active | `netcoremb7ifxS4wPtzqU7vIsKzEXTiEpewmfubyIGpch8PUstbc50tmVsdily-ECbOwW5V` | <code>(?:pepipost&#124;netcore).{0,40}\b([a-zA-Z-0-9]{32})\b</code> |
+| `spdb-picatic-api-key` | Active | `sk_live_hb113330jnnl43vf71mmnznke66fu6oe` | `sk_live_[0-9a-z]{32}` |
+| `spdb-pipedream` | Active | `pipedreamkSqpkFpiryLBEBNYMi7gnSmPJr1cjDvB57e70o2if56x3qzfkqipkr80t87c8zhx` | `(?:pipedream).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-pipedrive` | Active | `pipedriveSZCETBUDvIIh6Bz0F4YiHR85oba8Wb3OBoJGDxzNWCkWf1vcjFO8HyWtvcdAVmHfqxR2P9kb` | `(?:pipedrive).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-pivotaltracker` | Active | `pivotalDV6GflfCiQChTh9X3dNPffJBcVOmbpI6htorqssgxqsoo4wm8yywzybovy9978pi` | `(?:pivotal).{0,40}([a-z0-9]{32})` |
+| `spdb-pixabay` | Active | `pixabay4YnoJUBlL2e4VsoRc58auNLI9eDzuGFity6qcmponjo8v4je255yuyc0i3u79r-pwq` | `(?:pixabay).{0,40}\b([a-z0-9-]{34})\b` |
+| `spdb-plaidkey-1` | Active | `plaidFTGtzD5l2nQ19vQLze1ZrxC0nNXofqsG1wmkoymn4f11plm6o3yyy66h` | `(?:plaid).{0,40}\b([a-z0-9]{24})\b` |
+| `spdb-plaidkey-2` | Active | `plaidqxUmFR8gGgD3r6W5N2WeCikG5UtkW8KL6ppidaf08xgvm67rcdyrexwcxbn707` | `(?:plaid).{0,40}\b([a-z0-9]{30})\b` |
+| `spdb-planviewleankit-1` | Active | `planviewBK3JPVrdnr1JopqJ9Rld6rw6fiERvZ0a550cc185d7b8f9f658f99c9bdae6145b2c46ef9d464b04fce965b616b504c08f3426f6b24627b2b9fc64713e826c99b380747bca1fffeaef6a2c899a5fb37d61` | <code>(?:planviewleankit&#124;planview).{0,40}\b([0-9a-f]{128})\b</code> |
+| `spdb-planviewleankit-2` | Active | `planviewYTwmKD7vE9o6IIqkePDTRdlGjzbhIgsPsubdomain3Zp6x9RvYvoc9DHr2-0Kky0z6v` | <code>(?:planviewleankit&#124;planview).{0,40}(?:subdomain).\b([a-zA-Z][a-zA-Z0-9.-]{1,23}[a-zA-Z0-9])\b</code> |
+| `spdb-planyo` | Active | `planyoZSpPutN0zAJoHgsmfG41agi4MhvD8oiX3ybsgh42urm1b7ds8d9vy8n226zanaevkmtdzcy6t7kxgdo3pwz8wgnumsduiy` | `(?:planyo).{0,40}\b([0-9a-z]{62})\b` |
+| `spdb-plivo-1` | Active | `plivoZZ7LmWAGirMlaKv4iBKilT061YHkyZTeST0kjvjOIVacaVx6yKULDY__gSoiukVUyAW0zbgl` | `(?:plivo).{0,40}\b([A-Za-z0-9_-]{40})\b` |
+| `spdb-plivo-2` | Active | `plivoBYAchgFYKekTGjAqdcQxStE5i4ZQfubIXXZTGDUNPSWZEWSQCODD` | `(?:plivo).{0,40}\b([A-Z]{20})\b` |
+| `spdb-poloniex-1` | Active | `poloniexpQnlu2xXg0XAvSEnjEFRIoH4TFxXVTRu5ac68e2c1b5d79f7200d491c7a49ddbf1cc65ef1a6054f6c574172401fda3cb610d684e6fe2ff277981586a19615b14e1901ac91fcdf6bd59e56a469909ce7a2` | `(?:poloniex).{0,40}\b([0-9a-f]{128})\b` |
+| `spdb-poloniex-2` | Active | `poloniexLMmrQjtw8YsNmkXjX61dVPfy8PahWm5rWHOJKPVP-5O7X6VP9-V80NJ0TO-OSNXZ06M` | `(?:poloniex).{0,40}\b([0-9A-Z]{8}-[0-9A-Z]{8}-[0-9A-Z]{8}-[0-9A-Z]{8})\b` |
+| `spdb-polygon` | Active | `polygonBhL7sCUv1tHp3BGqoc18FwesMzbgBiPzQUDkVLbunAx1NkYfDYP4DNaxTxQAo3ip` | `(?:polygon).{0,40}\b([a-z0-9A-Z]{32})\b` |
+| `spdb-positionstack` | Active | `positionstackb09r1zCCfX6P1qMevOfoCR1t5y93iUNZkmxSbGsyfeNKVzsD_WlvNnHci1BrVCBs` | `(?:positionstack).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-postageapp` | Active | `postageapppLpduL0ZOMQnj68LV2yxuoIrMdiKrowxAp8CC37crgbo1TcBC0D89bVCD2eFYuAW` | `(?:postageapp).{0,40}\b([0-9A-Za-z]{32})\b` |
+| `spdb-posthog` | Active | `phc_3TjT04KK2Abuh_KLx2i00qQ94SnIqVX6gVKvrHX7BoE` | `\b(phc_[a-zA-Z0-9_]{43})\b` |
+| `spdb-postman` | Active | `PMAK-H9RaQHtfapget4VvdiT0fnx9K9h4J0E6otQ8KMljYw86TwyChJqLZ44cJtx` | `\b(PMAK-[a-zA-Z-0-9]{59})\b` |
+| `spdb-postmark` | Active | `postmarkCh8wvu4PvUSuLFu8O2xnQGMTYwxeKed6xjaycnzg-mmka-ihdz-c5js-90tlht7ozi3j` | `(?:postmark).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-powrbot` | Active | `powrbotqCSu5k7T7WltATGi6DtZvQPrAnuQrbIoOFs0H309id5UnHUWrvdA0a8unJYluCJtpsuTTFrp` | `(?:powrbot).{0,40}\b([a-z0-9A-Z]{40})\b` |
+| `spdb-prospectcrm` | Active | `prospectXCnXAMDSYZuEHPw9YLaP0buvNahtJIjtydy3bin1n1d77xhsm8gl8qidvpdywnl3` | `(?:prospect).{0,40}\b([a-z0-9-]{32})\b` |
+| `spdb-prospectio` | Active | `prospectOCMKdCCmUfBmDSsIzZfZZkJhBe6cVDiYvhqiuSNCVJzfQo9y4XhRi8uznOsL2w4Ed7dNt9bngndeHKceDk` | `(?:prospect).{0,40}\b([a-z0-9A-Z-]{50})\b` |
+| `spdb-protocolsio` | Active | `protocolsooz9GyRkm8t7nUg05uROYEJO4ztAm3E4qwqqv74zh0yam862ye9uv3fbx9emmstymara1yriyq9t9ogqjkmf2cc1ebgp8xr4` | `(?:protocols).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-proxycrawl` | Active | `proxycrawl9gl4ocyVYpdYbitAz2h8ECrMmvJ9Mb8H8xinVR3LGDWyz2lpK4yDXy` | `(?:proxycrawl).{0,40}\b([a-zA-Z0-9_]{22})\b` |
+| `spdb-pubnubpublishkey-1` | Active | `sub-c-zlrlw1v2-lbcl-vgrk-jlek-brapjz8q812f` | `\b(sub-c-[0-9a-z]{8}-[a-z]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
+| `spdb-pubnubpublishkey-2` | Active | `pub-c-7e8oyiyn-wz3g-zfob-gnr3-3qagk64htm7t` | `\b(pub-c-[0-9a-z]{8}-[0-9a-z]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})\b` |
+| `spdb-purestake` | Active | `purestakewKBLaucMo9frADl4oT0PeIBBTsRE9JcGwREQh6jLvsiyLBzb64L9JpUroJdk6pLTCjmOc2Wp` | `(?:purestake).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-pushbulletapikey` | Active | `pushbulletjaU5T1L4lU6xIkesJOHBrADalF4RBc3C.1heWRBcu_vXlB.2dhdltc3gDC5CXKOcCy` | `(?:pushbullet).{0,40}\b([A-Za-z0-9_\.]{34})\b` |
+| `spdb-pusherchannelkey-1` | Active | `keyKJlrpeF8EbgFsJuhPQKT3x3uRJAJo94L3xq2huiy5pt1a79p50hg` | `(?:key).{0,40}\b([a-z0-9]{20})\b` |
+| `spdb-pusherchannelkey-2` | Active | `pusherJPyKwfOxgs7TkFMFXwMaN9H57JcgnfuEkim0btt3q65mdsby7g20` | `(?:pusher).{0,40}\b([a-z0-9]{20})\b` |
+| `spdb-pusherchannelkey-3` | Active | `pushergEnjn3jJedVttQon3Gr4nf4gOvrlNeRr1244666` | `(?:pusher).{0,40}\b([0-9]{7})\b` |
+| `spdb-pypi-upload-token` | Active | `pypi-AgEIcHlwaS5vcmcp8HAPkODSO22geq9Coa5DB-UkADMtN1MFxkCluHrWMIkUnNYwi` | `pypi-AgEIcHlwaS5vcmc[A-Za-z0-9-_]{50,1000}` |
+| `spdb-qualaroo` | Active | `qualaroo3Gv3qLjIYiJtK5Zhl0MUsa4PtnEOQdXVvN6jQTtzivGUyjekTzrQfNTUASSHVoHnUBoxq5HOMudHh4ezhuIpS8NOJoL7Q36b` | `(?:qualaroo).{0,40}\b([a-z0-9A-Z=]{64})` |
+| `spdb-qubole` | Active | `quboleHhyUwCKGUx05iuSEMmgVBtHG0Ba1P6Zo760qkozbk2wvcx2x3s4vdw1nvxzsoka4fiw56u2iyox542z83vz4qhtr4yq87u61` | `(?:qubole).{0,40}\b([0-9a-z]{64})\b` |
+| `spdb-quickmetrics` | Active | `quickmetricsUF8ziOLFEdFMoK7UMUfnjPN28qlRPFlLsuZWC81zJDPhf3t6sBSPd4` | `(?:quickmetrics).{0,40}\b([a-zA-Z0-9_-]{22})\b` |
+| `spdb-redis-url` | Active | `REDIS_URLMDF9VSxxDTJ0Zu03nk4OY5SkTXrS5ShS` | `(REDIS_URL).+` |
 | `spdb-rkcs8` | Active | `-----BEGIN PRIVATE KEY-----` | `-----BEGIN PRIVATE KEY-----` |
 | `spdb-rsa-private-key` | Active | `-----BEGIN RSA PRIVATE KEY-----` | `-----BEGIN RSA PRIVATE KEY-----` |
-| `spdb-rapidapi` | Active | `rapidapixXpmIsqKb0BsjxeVEqQDCVdBhojxiOgQLVPLjV7wkZS4IvwlFrUpP5qZ2Ab6WKoEXwmXOMA4M4vNwODRK8` | `(?:rapidapi).{0,40}\b([A-Za-z0-9_-]{50})\b` |
-| `spdb-raven` | Active | `ravenjjjnuj7diA5N0cF8RF7vtVjOyUeERuMYGITQNI9PHP0AS5HQ` | `(?:raven).{0,40}\b([A-Z0-9-]{16})\b` |
-| `spdb-rawg` | Active | `rawgGL1cQL1yKyJI10l1nXDqbieNz3hKZewY0ndA6wva0i6tba6Ajhma52f3ezfgpsuj` | `(?:rawg).{0,40}\b([0-9Aa-z]{32})\b` |
+| `spdb-rapidapi` | Active | `rapidapi2utHH2JsHPf7lHfu1wQzT8jzqbBZBkWeYM6iWIkIeQ6ne20NpdoeWsuM-POzhQr8Ud8G7v23KJNWyU7Ti7` | `(?:rapidapi).{0,40}\b([A-Za-z0-9_-]{50})\b` |
+| `spdb-raven` | Active | `ravenviP1YHu85beBKxn11WqvcPYBU2ls3iUbDOVFYNO10KTS-E-F` | `(?:raven).{0,40}\b([A-Z0-9-]{16})\b` |
+| `spdb-rawg` | Active | `rawgdZHPdFyMhrLnvG6P8QzoM8ptVKJPJKsNvv6q8fgA8lmzw3no6r0aoen1i6zjwgj2` | `(?:rawg).{0,40}\b([0-9Aa-z]{32})\b` |
 | `spdb-razorpay-1` | Active | `rzp_AAAAAA_AAAAAAAAAAAAAAAAAAAA` | `\brzp_\w{2,6}_\w{10,20}\b` |
-| `spdb-readme` | Active | `readme0f9bFwUmxX9H7LYEoSDYmZEtIjvXssjflehAcXz0mWQ48oxypLS5B6gg6z0YEm3g` | `(?:readme).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-reallysimplesystems` | Active | `eyBFpc-8pU4mxVc.qgzRg3DktxdjQOQ-77rAQeFWBSSwoLKFuT9YF2d7qTW.vcKPNZcrPF8g3h_aWc-6kdw8sxQjqkUQt4X-kNYX8VRc9e0XFE1y-iTMP5s3iWVLbunuK0y.Rb6m5AjWJXxvG6ko.CTaI2zpeyMSMH0E4qiE_9aznzpjldJQR0lRizo5ne0.uiBYd5-ZznoT8ITHw_x6OsmXDztsmaZW_CVHL3w13n5.TM_ne-xjzX4cj_jsljD5mz-kDCq1pAlnKxfPTT-EnDS1q.jGxK0P6mcY7452w1VQ_FKrEeJp_N9C1W-ZRYbSUnd4YxjCxcKBhc-O5w9cHhOC3OsVSRFYvHtXFZKADA4dC.4Nntd.sPlU5CjQ5wqnil4CUzec_tdCQ2.UGN59_cphYGWFnmZJ8E5fVj45PVrXWD8fgBMOR6PZkWyvk6ctmULVEAPAsxD4MRKzwta9Ij6t38aWxYQQxAu.biUTiWDNl_psFVyItplTJ-PXASdZ5yfhSOAJfbExVpySJMo2AO3buPjeQy_5gFXdDz5dM0J1Jyd87TDGJW4l6j57dfXE0PfcvZK4EV5naPvXLAUEqVBIsK5ucqr1QJVT_tETu7ukxL9OmGxo8iV4DBqqaWBSw5mG0WxwzNfLVPWN6KHQlT5-AYU.hRt8KwRT3BYHrsjLZ32OCAvdYTeI95XzwRESk-HuqzV_KKIYukC.Ux--Z6OcYYKD95sTXKjUHZipf.3d12tOca-jTBe8gXNTUcU.yWxRg8dRKXUrlAtvBjGfKL0Med13nbwb-Qzx5cZ2R50tuEIv-qqTFzzJkw-Lx3ddOxQwRNEZGPz5dCUORnV9RdJLxg8-l1Zv-7ol5EIJJbArS4QCGKVYeRNXNe.pUFeRMF_CZSDY1YLMoRYAOUKAW36B4MZ4tQQrvY4DvkPLygSC94TJTo_zH96FWA8hdDiRkcaK6lJDLwGN_t6zu56-7pZ5Az8M16UJNWxU7naG.6bvzPR1jTWAIHz-J6Xyl0qInn4o9CuWAMALDmFfJ1mJvGIYqKI3zVK88j_Nz04VkkDoUJVIuP` | `\b(ey[a-zA-Z0-9-._]{153}.ey[a-zA-Z0-9-._]{916,1000})\b` |
-| `spdb-rebrandly` | Active | `rebrandlycBSVdT9mFiV2tKtkDrBhRLBIazhEWv4SjSafrpvTFGxPF9Thg4IYgYQJ_2LD0tMO` | `(?:rebrandly).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-refiner` | Active | `refineroQO6jLU8jpwTdjnlSJeZAgRtdBHCzNjPe1ab8A3c-e054-0e18-c6b5-7fffe04ddd28` | `(?:refiner).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-repairshopr-1` | Active | `repairshoprPN0PiLzu2PwwLgoQaauxVDwGK8IdZI5PV$#Dk7xA97^r4zr040+ILHzbC2U!!BTb` | `(?:repairshopr).{0,40}\b([a-zA-Z0-9_.!+$#^*]{3,32})\b` |
-| `spdb-repairshopr-2` | Active | `repairshopr8y9Kn3L3RRZJNU4GWJDlhljKDmId2R90KAUX3FuZgdMvla2zPeenYEKH1X5sveGGQH8A3TJqaJajoiN0De3` | `(?:repairshopr).{0,40}\b([a-zA-Z0-9-]{51})\b` |
-| `spdb-restpack` | Active | `restpackFdKdijC0inRNXqFRLMKuOaSSAYOCcRXY5hv46SzUs1OlEm5zOKyFdDPvCuDQa9VaD775VgUj2I0dSWVI` | `(?:restpack).{0,40}\b([a-zA-Z0-9]{48})\b` |
-| `spdb-restpackhtmltopdfapi` | Active | `restpackgTayMbjyOP7Nkz0byeYyodP5LmGVVmq33hEUFH6Zxdeo6664L3Vw6x7XnWDpK9CDvG78Kj123PQ9w1Y2` | `(?:restpack).{0,40}\b([0-9A-Za-z]{48})\b` |
-| `spdb-rev-1` | Active | `revhBmjrqGmSLeiOzsXF2TSfECac2vjLrJBUl2vxRgg+b/K+kav7IBGOBPGNke= ` | `(?:rev).{0,40}\b([0-9a-zA-Z\/\+]{27}\=[ \r\n]{1})` |
-| `spdb-rev-2` | Active | `revNfNpFkszSu2l8o6Xz7aURvAdoc4mHcqaWVmRpYFhEHbfJNY3WV9c4cS0lya\r` | `(?:rev).{0,40}\b([0-9a-zA-Z\-]{27}[ \r\n]{1})` |
-| `spdb-revampcrm-1` | Active | `revampCBIGgNVE6CItXg7zbZEYhIlyzLs5gLL0DQAd1Fxz34UgOTXCirDl3fl4hWYSMCY2PO7RGY9Z` | `(?:revamp).{0,40}\b([a-zA-Z0-9]{40}\b)` |
-| `spdb-revampcrm-2` | Active | `revampzcn2pNjzHCvb1FkWLSEoNcyqWNWm2qlrQL6ISwY723F0xy2s8054Deib.wj4EY` | `(?:revamp).{0,40}\b([a-zA-Z0-9.-@]{25,30})\b` |
-| `spdb-ringcentral-1` | Active | `ringcentral7dAoQVw7iZtR6vz1hsXJ8R7jnxJPqWIdhttps://wwwG8hu1wQLK7sXX4QOeE0PiVb_--YkSOI5zpcom` | `(?:ringcentral).{0,40}\b(https://www.[0-9A-Za-z_-]{1,}.com)\b` |
-| `spdb-ringcentral-2` | Active | `ringcentralDdEgXV3RdZnjud8701RSadAvf2LvNjH42bs2meZQD-_aX8T0-nYxoS` | `(?:ringcentral).{0,40}\b([0-9A-Za-z_-]{22})\b` |
-| `spdb-ritekit` | Active | `ritekitg5XflyFz7CUq4AgzIQstm6UWhgtu2b4g2df66cd9d69c6e4c421a777b88c489d6c1c325f254f5` | `(?:ritekit).{0,40}\b([0-9a-f]{44})\b` |
-| `spdb-roaring` | Active | `roaringoX53Gc1XmChtGP8tE8dXsxk8rMtZw01US_Tni9QW27rI02x_UzeqEGv5xksT` | `(?:roaring).{0,40}\b([0-9A-Za-z_-]{28})\b` |
-| `spdb-rocketreach` | Active | `rocketreach5fS6T64ZS5nl8vhSMVmUbhAxwnqWDSebdepl0iuwozj0nmy9roc8l61or2ynbmzxx047jka` | `(?:rocketreach).{0,40}\b([a-z0-9-]{39})\b` |
-| `spdb-roninapp-1` | Active | `roninEwfAlvnHaOQYVhH4sncIo94JLhxGbYuan6YBWJ0bhJzHx74SjVjYPG91z7Iplngu` | `(?:ronin).{0,40}\b([0-9Aa-zA-Z]{3,32})\b` |
-| `spdb-roninapp-2` | Active | `roninc8n5E7xQ7rpiiVXTPeinHmtKZWpoELpgYxv3uOGFu0u8OOcfK6Uf9XybwF` | `(?:ronin).{0,40}\b([0-9a-zA-Z]{26})\b` |
-| `spdb-route4me` | Active | `route4meHo0qSEhQcIaf2orE3aOMcd0oC0xdtt8nOJ5IQWKJI7UDGB80UPSW201TO781EALE` | `(?:route4me).{0,40}\b([0-9A-Z]{32})\b` |
-| `spdb-rownd-1` | Active | `rowndlwaqlS0HRuuxZkC4tNK83wqxqDHF1JEIl0ouv3nu-bzms-3xzr-7bmy-hacxp74csxz7` | `(?:rownd).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12})\b` |
-| `spdb-rownd-2` | Active | `rowndHNXXVZLUOAttdQFCQMhf8kcVe1iGoa8fur3x4vu4717w1717w741dywryoihevof0087m0la34biqh3q` | `(?:rownd).{0,40}\b([a-z0-9]{48})\b` |
-| `spdb-rownd-3` | Active | `rowndB0wNsYDrzQgZ0aZUkd1KzjU9lLaHyxId436177161811089016` | `(?:rownd).{0,40}\b([0-9]{18})\b` |
-| `spdb-rubygems` | Active | `rubygems_nk065qe0mxgg3l90136y6pd79xwnsonskzzroltfkauinayl` | `\b(rubygems_[a-zA0-9]{48})\b` |
-| `spdb-runrunit-1` | Active | `runrunitWWQY8JzHYKGEvHRPsbs3a3vZu8fTb4Y40354cfe0d33f52ba1aef17f1ddc45c23` | `(?:runrunit).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-runrunit-2` | Active | `runrunitr6KyP0fUGKZXnAeSniyJG9URKs3EFFZKIy4Bm9jmQ2ccajgPtdlq` | `(?:runrunit).{0,40}\b([0-9A-Za-z]{18,20})\b` |
+| `spdb-readme` | Active | `readmepAni6xrcRkmqw904QyUC0dNp4Hd5xmzjJk9D8_MKSffFDV923U0QRaBH5PvLwB_I` | `(?:readme).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-reallysimplesystems` | Active | `eyuO5cC6WhiQt0jQO6l_Z_s14NaLGeyCF7Ksb-rA-7mej65JQDMGBmOYhxRYqn2nlwK6l5ADqSVu0OUOamcJNwkXY3LZOvuvQuY9EU0HUbrAD0h-zCyvPxPt9VWn80Vhdk9-M96I0tq5yqfaVd7efgRIB-kIeyARK2sxxB9MPu.XyVYF1UP4z0hxBb2XMsTsAI3Coh79QCAX8CSJq.W3eY5S9DA0YGBofmx9.ml2wz7rSTXss3lebN5n25nuGyxtsU64kT6vAbqJqc2m0KbjA0Xj_Bn9n2EbkfPJy4rbBMZSk3yFN24oz7tMLs1DqZvjgsFVpPBB4s9EEZ_byGaMa6KqBnro9sTCd1SDRlm4_uGb8AIohk5SJBWt7Sw.NBpIx4f8-d_uxIfWSJ1lfcAZNRn9wFsfgNu8q-.2GUU1uaJ-keNO7qz_vFQI63Hpb_vB7SDghzNiVpCtZmbbnpE-XRXfHjlszuXeGSIMrNI5MznH6E5LQ8x6JAGR-DwiZ--dueH2ffKhNko1-Dvdh7aC3Ir0VcyW2Qyok4.ntgb.UDKJ19mPnPY69DuEg9ICMq5JpT_pkhlRwYyTBBvRvUJdh70ruYqBkyUVQ6Hj0m2dtsu5vnoND9SvNfQlEExiS.1NILctZxA13fPniqAxgkK5EuLhe4Qrm8d65kiT.-TT.PdHNP_7P-rg93bwHGmzdmwOzexR4AnI00O4eU0AZUFJW8c-p-YDvOKhYcB5y.RWTQQdALTFTRQbrCxfEP7octBO1dABEttp0fy-0FSaik7A8YiGDdf-Yw1inpGtoMv.o3tFeyDmDsWgw5V-VSxnhComXV4Pamy9y7.UBDfyLzTRuQjm-DS0o5XrOo1fjmfre7xa8ObJmV.M4_Dez9dqlAnY7DiUN0-9VWfQlTIVt-q6151W5bmkThlGpEng62js0Ckp4FvDrJp2LcHsuS3_eyXRevfegY1oi1tiP_-Ja2VhohFrC2lAazj0.l-oWEb1AWvKB9DKKmgErmBH.q0H7rZtIZE.H-S3XAkrf5mFnrfWuPyqIuRFRLItS_waXqZVDvJDV7dyZt` | `\b(ey[a-zA-Z0-9-._]{153}.ey[a-zA-Z0-9-._]{916,1000})\b` |
+| `spdb-rebrandly` | Active | `rebrandlyGC9BGY2RPYLP9p8yOiYKxyLP7eAebKCoD5Fg2YY4Vi2_s5ccC2t_CubVLWVyHYoM` | `(?:rebrandly).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-refiner` | Active | `refinereQAHCdUD5N3jcYYHLj03z7WNaFB4yYBr033c50fd-b48c-c603-55c5-c1116051660d` | `(?:refiner).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-repairshopr-1` | Active | `repairshopr7jEJ0qHjSQ5GxY2manphBX94l8mb1HPSA!7^mMN0+dpiDTn4H6^9$6SydAfq7dK6` | `(?:repairshopr).{0,40}\b([a-zA-Z0-9_.!+$#^*]{3,32})\b` |
+| `spdb-repairshopr-2` | Active | `repairshopryPVP1NHFFtlUGb5yPaWPe0mmNrYTsukrxtdU51dR1nXTZJXi0vRq-52eS4-3bVEag1SSngy0bVfkb66fqwZ` | `(?:repairshopr).{0,40}\b([a-zA-Z0-9-]{51})\b` |
+| `spdb-restpack` | Active | `restpack1PHdwXZ1rEzI594IAFwsp0cNXYjdPbq16Plk4fP9cBXhlBRi7NZ03RIoq0Vk3IVSijo7RON5ZuG8wZJr` | `(?:restpack).{0,40}\b([a-zA-Z0-9]{48})\b` |
+| `spdb-restpackhtmltopdfapi` | Active | `restpackC6clj1QAN8vj1ZXoUKfu6HnxeZFABKWPm2XR1q10406Yi9LQbcX2xfCc4VoEv0IkLkY98TyHIG336pGb` | `(?:restpack).{0,40}\b([0-9A-Za-z]{48})\b` |
+| `spdb-rev-1` | Active | `revfBt3uWhPbr2gn5ybWBy7AaMi8KZWa0Ge3kqBO1IeX3Mbpgfzbhfsk0yJ0Yi=\r` | `(?:rev).{0,40}\b([0-9a-zA-Z\/\+]{27}\=[ \r\n]{1})` |
+| `spdb-rev-2` | Active | `revcmND2uYMoFPv90qjRuqETjhJMIzu1Lxs2bAd440xJM7L4ZCWoCFawMFNReW\n` | `(?:rev).{0,40}\b([0-9a-zA-Z\-]{27}[ \r\n]{1})` |
+| `spdb-revampcrm-1` | Active | `revamp9OYb9Qbp358YU9838Nl67Kw6KXpcShtwIHKrNmuAlzicnFpYXrFiChcTnuJIWsr7jh9vO1DB` | `(?:revamp).{0,40}\b([a-zA-Z0-9]{40}\b)` |
+| `spdb-revampcrm-2` | Active | <code>revampKnAiS7KcHntJZCYfwhCQUAbm5aBhEnR3uBdI2&gt;BN&gt;Cm1Sm@RXIIkGebJjQW86w</code> | `(?:revamp).{0,40}\b([a-zA-Z0-9.-@]{25,30})\b` |
+| `spdb-ringcentral-1` | Active | `ringcentralxEismAizhXi6HUAqrHBu39957WCWVgz5https://www3RYHrFaKTzzZ2-i1emkxImzkiP3ggTh4eQcom` | `(?:ringcentral).{0,40}\b(https://www.[0-9A-Za-z_-]{1,}.com)\b` |
+| `spdb-ringcentral-2` | Active | `ringcentralOIMpjtTvHHW8LNI2QXrktYB5y50g0AfOVUoCH33VpkUbsn2Cd5CNje` | `(?:ringcentral).{0,40}\b([0-9A-Za-z_-]{22})\b` |
+| `spdb-ritekit` | Active | `ritekitWwFYF7LUnTXvNXdqlJdcbFjOWVAjEEjX3621bddc2eabfe0a2dcafb038c4852e3225dfe5033eb` | `(?:ritekit).{0,40}\b([0-9a-f]{44})\b` |
+| `spdb-roaring` | Active | `roaringKYs7tYzLMuAQ72UBY0fBhumyuX4N2Csr6_dbuPwRbNSbr7V_PxsnwU-v24G7` | `(?:roaring).{0,40}\b([0-9A-Za-z_-]{28})\b` |
+| `spdb-rocketreach` | Active | `rocketreachx30rL5Rf5RUkhOHJyglf4hDtAYzFbDviuyf3qbzy9pd1xmnc-h5wlb0fks253g670oatpvc` | `(?:rocketreach).{0,40}\b([a-z0-9-]{39})\b` |
+| `spdb-roninapp-1` | Active | `roningGmWzyZ2isPNsAUn52GNBUDJ7Ak4cqu6JupPnkUtOQB3LAtkZHyUbA0zSqnWiKjk` | `(?:ronin).{0,40}\b([0-9Aa-zA-Z]{3,32})\b` |
+| `spdb-roninapp-2` | Active | `ronink5T85PEj4NRjD555xZvqtqg7EFwUkGIyfiyx7Q7CGyKThisqkhqCkkSpam` | `(?:ronin).{0,40}\b([0-9a-zA-Z]{26})\b` |
+| `spdb-route4me` | Active | `route4meOGBO3U8xuJCUFtT2tstsqsfAAnETmFfH5BAI93DWBF9UX45FZLU0M2S4BF9D41FT` | `(?:route4me).{0,40}\b([0-9A-Z]{32})\b` |
+| `spdb-rownd-1` | Active | `rowndyQ1dNzA5SPxfFn2qxetPZX7Xh5ZTLUW2t2ttt8xv-tb4s-jost-azm2-drcekozb6x3c` | `(?:rownd).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12})\b` |
+| `spdb-rownd-2` | Active | `rowndbpA2KbZ74qIYkiGO98dgXnfFnnSrgKwSkldj1bhn09pnid3qy4i3mu4l9wi6i8ln577hca0ek1lw5lfa` | `(?:rownd).{0,40}\b([a-z0-9]{48})\b` |
+| `spdb-rownd-3` | Active | `rowndugPMm38DsVe72UVcYNOU8Yw808ExqMi1976966868267762384` | `(?:rownd).{0,40}\b([0-9]{18})\b` |
+| `spdb-rubygems` | Active | `rubygems_rr37zxjcr15dmg0vsmhjm89qng1opkc2ejsgi60rilp705vq` | `\b(rubygems_[a-zA0-9]{48})\b` |
+| `spdb-runrunit-1` | Active | `runrunitQgnMoWMoq8BntgVjgK5PxzTKwWOGYQUf80dedbce2e73fa15e38a38a0bb750034` | `(?:runrunit).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-runrunit-2` | Active | `runrunitLDb9spjEDaErnvZcVGxdAKeUCZwUFfJGvxFr6uSlk0xYMha9zD9B` | `(?:runrunit).{0,40}\b([0-9A-Za-z]{18,20})\b` |
 | `spdb-ssh` | Active | `-----BEGIN OPENSSH PRIVATE KEY-----` | `-----BEGIN OPENSSH PRIVATE KEY-----` |
 | `spdb-ssh-dsa-private-key` | Active | `-----BEGIN DSA PRIVATE KEY-----` | `-----BEGIN DSA PRIVATE KEY-----` |
-| `spdb-salesblink` | Active | `salesblinkREqVIE0D4XSUpDVNuMEzTompKnDyc50lsNQdYAbGrKLILrUu` | `(?:salesblink).{0,40}\b([a-zA-Z]{16})\b` |
-| `spdb-salescookie` | Active | `salescookie4fXHIJAbED29ceMYqrgAHKk60VAwYr0p[U\\^OAdiuNvfdabkkCxgX^qHA5nm03Wt` | `(?:salescookie).{0,40}\b([a-zA-z0-9]{32})\b` |
-| `spdb-salesflare` | Active | `salesflare97wW8fZhQBBUkRyH0l5d5w2hzX8MrQtIfJFaAwpRFRlKYalX6iYiyrzgdp316RNGjbhvYUEJx0aeM` | `(?:salesflare).{0,40}\b([a-zA-Z0-9_]{45})\b` |
-| `spdb-satismeterprojectkey-1` | Active | `satismeterfvjBPMd2KSPjbfU2RBwzUH0NBANYEP8TXJCE0DQHvZXgeVJHqsb4@1hPsgJVwMcPZHebQvC1xzQjlw` | `(?:satismeter).{0,40}\b([a-zA-Z0-9]{4,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,12})\b` |
-| `spdb-satismeterprojectkey-2` | Active | `satismeterATydWEbhke8oMCAMVsqrMLONYuqPbPAnsCASJuHwX9GAEIMrcxBK5Zgw` | `(?:satismeter).{0,40}\b([a-zA-Z0-9]{24})\b` |
-| `spdb-satismeterprojectkey-3` | Active | `satismeterxytiOlNsz4EIseP3XQgzCj1BNRWDmNJW2Y@sM3kbYZW!GOLPToJuA$6fki%fhU1e` | `(?:satismeter).{0,40}\b([a-zA-Z0-9!=@#$%^]{6,32})` |
-| `spdb-satismeterwritekey` | Active | `satismeter7KcOxCkuyx6fL2OxwXeeWobrp9r1qg0mgrKAKMcMNu3iHWt4` | `(?:satismeter).{0,40}\b([a-z0-9A-Z]{16})\b` |
-| `spdb-saucelabs-1` | Active | `oauth-5sxkbrjesdg8kzsshsi4ahr90nv4ku03-uyp4x` | `\b(oauth\-[a-z0-9]{8,}\-[a-z0-9]{5})\b` |
-| `spdb-saucelabs-2` | Active | `saucelabsvrdSy1O2jXx03okJE33gnFxTMayReFuhk0iq574p-czpb-t9lv-yvsx-lefjgzmo0x72` | `(?:saucelabs).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12})\b` |
-| `spdb-scalewaykey` | Active | `scalewayC4uW54JYNCUxy9FbiRMpFJMvw6JOS3YS3xvv5zcb-qybd-fs6p-rxc4-0pk107odn92d` | `(?:scaleway).{0,40}\b([0-9a-z]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-scrapeowl` | Active | `scrapeowlV5wgygPw0i61Tb14R8GkmkOfwg2mT4x1isl6xu7wfos20i9fbobvq2sdwarhl9` | `(?:scrapeowl).{0,40}\b([0-9a-z]{30})\b` |
-| `spdb-scraperapi` | Active | `scraperapiMGassSmczWBkpvncRhYq2D0MIjRotYAhiova0sz2jreevg5vxp7wv94creucuyem` | `(?:scraperapi).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-scraperbox` | Active | `scraperboxXCVYLyEbfR95PJaNY1ZndVB48XXO1g40GYPZ2Z0MO7OVG61IRJ5QG9H7FL207MUJ` | `(?:scraperbox).{0,40}\b([A-Z0-9]{32})\b` |
-| `spdb-scrapersite` | Active | `scrapersiteGGxJHK86CKzAzHNfIMxehhNNfozFMFtfub2CAQ6TtMuDaVNhylHKsx2EPM0WWEQqKXv1trT8TOeCe` | `(?:scrapersite).{0,40}\b([a-zA-Z0-9]{45})\b` |
-| `spdb-scrapestack` | Active | `scrapestackYh2FInEz44F4V8vcfD9cuTLHG6VJmqhe10ok69md573mhbc2cs1wls5ynib8onlq` | `(?:scrapestack).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-scrapfly` | Active | `scrapflyoX6P8lJTZpd36H7qeDSAVHXRMYAYep1fqg3kezgo35uo6xuoqnpipgsr623dbwe0` | `(?:scrapfly).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-scrapingant` | Active | `scrapingant8k0izcQBivvFlSHbdQx57yuhx8PBeQcJ6nrwc7xv0yp39h9jholth71ybj0cav9d` | `(?:scrapingant).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-scrapingbee` | Active | `scrapingbeeZMp49LFntjx9HDdoQ2vr4CPhVYgWoWXKF851ICMKT048ZWHEAB9D7IXZIP2NA8XDLIUYC3LJJSX9ASZZQ2GRDM9NSY2ZXKAULYM7CQ8QV2B9LLGG` | `(?:scrapingbee).{0,40}\b([A-Z0-9]{80})\b` |
-| `spdb-screenshotapi` | Active | `screenshotapiGNlSrTEr74WkQqTJtFPZnWHWme2iTqaHF2GZKFO-S7FLUYV-31OEW45-FHUWDRM` | `(?:screenshotapi).{0,40}\b([0-9A-Z]{7}\-[0-9A-Z]{7}\-[0-9A-Z]{7}\-[0-9A-Z]{7})\b` |
-| `spdb-screenshotlayer` | Active | `screenshotlayer9FKMhKi9kyoe6HQZXWg9Nr6j321bRWmQEpHndHCpX6rHdl9zm_RHXvZIFDuK_3Ne` | `(?:screenshotlayer).{0,40}\b([a-zA-Z0-9_]{32})\b` |
-| `spdb-securitytrails` | Active | `securitytrailsHGgeSjfje81cXJm26EHlUNMZr8rtEwdMvGltSluBf7GSG8vimDpPSsmCCVvlqIEG` | `(?:securitytrails).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-segmentapikey` | Active | `segment3Ak5sK5odS60HPNvugc2zNgZ8zvABLZbdImICk9KsxA0YlLJPkQziLfNwHwUb87-kZHPCVLNw6F.hbpO6Gpe6pX8Y2xlY5X1DcHQzOFdqWkGJirWbn-nhMP` | `(?:segment).{0,40}\b([A-Za-z0-9_\-a-zA-Z]{43}\.[A-Za-z0-9_\-a-zA-Z]{43})\b` |
-| `spdb-selectpdf` | Active | `selectpdfBhxQJfxAZ49X4ex5bMKsISnoyyQoai5c34upyezqhi202t4f86n2scoxk2aa-q1ya18k` | `(?:selectpdf).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-semaphore` | Active | `semaphoreILCirueXAhWWKzBWRMNJjecBayYQvN5Vfqzy02ro714oridwfo3f0r2wx4okxu7v` | `(?:semaphore).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-sendgrid-api-key` | Active | `SG.--__---__-_-__---__---_-.--__---_-__-_-__--__--_-__-___-_-_-____` | `SG\.[\w\-_]{20,24}\.[\w\-_]{39,50}` |
-| `spdb-sendbird-1` | Active | `sendbirdY12ncAZo59D8fOzNCvI6c6g5MBraCzO79be406721d41a0082bb6aca11e15ebcff5c7081c` | `(?:sendbird).{0,40}\b([0-9a-f]{40})\b` |
-| `spdb-sendbird-2` | Active | `sendbirdj3mKQThXrq7IcHZ0pbWGlzzMuZMGC8ZQF02C63DE-AD5D-6C5C-8EC4-AB6EE8AF255A` | `(?:sendbird).{0,40}\b([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})\b` |
-| `spdb-sendbirdorganizationapi` | Active | `sendbirdFs0WSWJJRXxYYWncCOHThVH5Mo39FyjJd0dd3c57f812b4f680d1fb80` | `(?:sendbird).{0,40}\b([0-9a-f]{24})\b` |
-| `spdb-sendgrid` | Active | `SG.--_---___-----__--______._---_-__-__--_-__-_-_-_---___--__-__--_` | `(SG\.[\w\-_]{20,24}\.[\w\-_]{39,50})\b` |
-| `spdb-sendinbluev2` | Active | `xkeysib-WqOd_DF8htmBPfFeIeopwdm7OgjVmazCEmPySVHOMQdkiW7c4qOS-VdYPt6OXgiGMqK1EYDBqv4-rjYnw` | `\b(xkeysib\-[A-Za-z0-9_-]{81})\b` |
-| `spdb-sentiment-1` | Active | `sentiment6xZvnK8IflToL4Y87Rv5tpyebV2rcAVv88491984738948075` | `(?:sentiment).{0,40}\b([0-9]{17})\b` |
-| `spdb-sentiment-2` | Active | `sentimentcqlwYKItT3NLyClveUw4UG1oEXTr7tJUU1zQsgvnEXH1jnsHKWOn` | `(?:sentiment).{0,40}\b([a-zA-Z0-9]{20})\b` |
-| `spdb-sentrytoken` | Active | `sentryzrfgsiPXrPhov7wjJLCxQGZPGiLuIfKp99ef372206c39ce98924cc7f28493d36c3ea00713c3bef476fdebc2e8d82b307` | `(?:sentry).{0,40}\b([a-f0-9]{64})\b` |
-| `spdb-serphouse` | Active | `serphouseTV4cPXMKAxY4bGNZExZSNBQnopIaRtDQNwcUk9tikri8AltkNyHbhZ2MvQJQw4jzo15R8Xo7ATQUAQNoJ8hSe2m0tnjo` | `(?:serphouse).{0,40}\b([0-9A-Za-z]{60})\b` |
-| `spdb-serpstack` | Active | `serpstackvrbx9eRTOsLI03xOAgTm1ZdtEMjCCke0kmvy3hybe0eog8jyvjm3uhy8tu0fietb` | `(?:serpstack).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-sheety-1` | Active | `sheetyQjLATV6lPwGoOALGktBlg0115SktRcfZi46jui8bwjlhk452nd2uvtqgv6dh8tpx` | `(?:sheety).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-sheety-2` | Active | `sheetypLpAfqGgINjntLOyQCAb46k8LyWxgUuby2u92uqez46jcfv5o9bwvrn3rnkfb11hpkbapvrajote9wxd8xkcjcfez18iw45t` | `(?:sheety).{0,40}\b([0-9a-z]{64})\b` |
-| `spdb-sherpadesk` | Active | `sherpadeskpLcHrK5nIAd265gSQw4TfPYzG26mrCYP6luv4h6fro8fwpipd5hiyri9o4hnxby2` | `(?:sherpadesk).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-shipday` | Active | `shipdayY0gnuwX77NvPdZp8x71ETJRbcTA4H3Ruu4hQ.CZ4KFOGO5cbuk6K1Uz9ZszjADO` | `(?:shipday).{0,40}\b([a-zA-Z0-9.]{11}[a-zA-Z0-9]{20})\b` |
-| `spdb-shodankey` | Active | `shodandQfOFTlCoMNl71USC8kZsjyc1tbk8LOu2REuyeR0Zytws5eOMjchLFSVRonsfnTY` | `(?:shodan).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-shoppable-service-auth` | Active | `data-shoppable-auth-tokenaxTgdctdxm48ctD3bZFxPbCb3qCJddQA` | `data-shoppable-auth-token.+` |
-| `spdb-shortcut` | Active | `shortcutUfJ4jDATtMaUfhHWPpZi8HzkcGTZR3m93d1c2422fe7e-67e68b24-b91590d4f93e51` | `(?:shortcut).{0,40}\b([0-9a-f-]{36})\b` |
-| `spdb-shotstack` | Active | `shotstack6ySU7Uf5eA5AMcw6qYPBDnu8DanXTpdFzPBx2mjjlN5OE37XyxuCTdfwtaNrlqY5gCxkvBmn` | `(?:shotstack).{0,40}\b([a-zA-Z0-9]{40})\b` |
-| `spdb-shutterstock-1` | Active | `shutterstockpbOEZbTK7qV8SS0WldpiaZsnLQV5RpBF84Dpr0xCj53aVfuoTnh45Lj9C8yIyqBg` | `(?:shutterstock).{0,40}\b([0-9a-zA-Z]{32})\b` |
-| `spdb-shutterstock-2` | Active | `shutterstockAK9q4RoXv4zDHAcPwn63APvJ9qhMBY9t4Gc5SRaUodQuzjMR` | `(?:shutterstock).{0,40}\b([0-9a-zA-Z]{16})\b` |
-| `spdb-shutterstockoauth` | Active | `shutterstockVP4SB4LYi95fJnVMnvwuojA9X2jFEFVwv2/NCh2CUDUCnlaId8ctWJ3OmdngbncHgKtTfYOtsleZ9vsuu8BVtA5yWAWb4KrYjqqrOfKR92IpVTVZKUcsrbEAoaQxsieEJgpvH5mSGYE90y6U18EOkGd7pKrUrAoeQIVyeUqfCYKjsWdfN0yeSceARilOFlxUOHd3QFY4PjAycybxHvFPekEWbsJzwjcxl88VmW0ClNeuQA3K5fBn6UtpzgxwFphpUnvb6RxAOnYY5rogncu3gWmjNUmPaBGg4IClnz8r98usw0OZd3ZwW0iwuwfVyKzsi1ztwnHvidSg1luL5dg0V6YWjiBoJvBItDSFEuRKH9j4CQ0La7XVHWV99VC381DGA1btVG3ByFTvhsPTRJNOOLFB4h3i0f45b6Nt1sw` | `(?:shutterstock).{0,40}\b(v2/[0-9A-Za-z]{388})\b` |
-| `spdb-signalwire-1` | Active | `ne7mq96bmxggoi-lmfe91hpjd068lwk5KsignalwireHcom` | `\b([0-9a-z-]{3,64}.signalwire.com)\b` |
-| `spdb-signalwire-2` | Active | `signalwiret6loKb34JJRZsqPIcZo5jv38h6EWURzE8zdao3td-q8c7-txtf-a2yv-mfuvnm9zb7ww` | `(?:signalwire).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-signalwire-3` | Active | `signalwireAS2TVDehQHUNmtlirosXs3dK1GllgCq3qQhQ5OmiM0Y6NSNlH3UgaOjqacB3Zvm9fWhtvAa2s0Rn7R3ZE0` | `(?:signalwire).{0,40}\b([0-9A-Za-z]{50})\b` |
-| `spdb-signaturit` | Active | `signaturitZnrStPmmkBx0QZzeM5KMDBJPlKgTJGrgcd8h4WPdE6Jmt4QkfesCTK9ufOk1Ig4LqmVqIYCAzXamqUt5z9F4hmFoBBcsghoHeMns5Jog7jatVarOEyOjRx` | `(?:signaturit).{0,40}\b([0-9A-Za-z]{86})\b` |
-| `spdb-signupgenius` | Active | `signupgenius4QKqyh4taX44Lzc1FdlhryuitKkOdeeW56zTohkFeg3YvJXyZbvRQHHr8sIrT0v5` | `(?:signupgenius).{0,40}\b([0-9A-Za-z]{32})\b` |
-| `spdb-sigopt` | Active | `sigoptc8KRWQ9VDK8XnvIIMV4efBQegUopksPUKLA501EA7QEH934WW0BCKCY0AZMH606VVE7UV16D0ML4MBMF` | `(?:sigopt).{0,40}\b([A-Z0-9]{48})\b` |
-| `spdb-simplesat` | Active | `simplesatjonF2tcZAHEkDhaIuHk7198s4QTAfZxF78a9wglamio2p4qx47ju06nmlqa5avkcwch5jh0b` | `(?:simplesat).{0,40}\b([a-z0-9]{40})` |
-| `spdb-simplynoted` | Active | `simplynotedc5p2aSCwHislZeQD6QIs3i02lAHf3tN4A1BArMvcNL5RYqWxNvcxxZhy5cNzWRa0aC1ARnQegeYxTdT7a9aUlgwQ1j0kupMjanU7MwArdzs7OmbBZvXnEkhBgq3H5l0QIK7kQ1te5SzMuoObMMxiMUi3MPS5Evm602tdpSBT45JdoRt7HZPU2OXMFJvppPJXXvnr5mMB5jeeP2ZjLsz5fvt1GfmE219OueEU6ghWcVcKlZ7AHR8w9A9WxJOxPdfbTOiV1g7gkGMhM5y4YwWcyuwvrYJSWvgyH99VwCca9va7Het8xrJvvRVNetFGpbxmIOyFLqyegtaZDqEcakrJ5rsA7uRdI7gQfA9DQ2wRDo6DqC3HUCcA` | `(?:simplynoted).{0,40}\b([a-zA-Z0-9\S]{340,360})\b` |
-| `spdb-simvoly` | Active | `simvolyLbs6NSrN9P8KuaUb323MA53y0Pu5GB5riow1h29lglm4fm51b0b56zn7kioflov48` | `(?:simvoly).{0,40}\b([a-z0-9]{33})\b` |
-| `spdb-sinchmessage` | Active | `sinchX3XDVbA3hg0soXIwLeAcNdQ917zajTBZz3jmjgiqv19f8j88m9xsv8umvrtp6i1c` | `(?:sinch).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-sirv-1` | Active | `sirv6RYKk5cxNFhzNn8MjMDVellDptDKi3p6S4bJUytYyutmBoBabguEDo63pMHHpgkbS719kBwj8t7YvOiLF3QTTLOBDdXoyEVu1hsPW3VprM7WaGebRrVpOqBU` | `(?:sirv).{0,40}\b([a-zA-Z0-9\S]{88})` |
-| `spdb-sirv-2` | Active | `sirvwlCYegWyJkZfOdvyhLXiAMPzg3LJV0PAbYNv3DbJ1RmCQotg3o1qSgglJN` | `(?:sirv).{0,40}\b([a-zA-Z0-9]{26})\b` |
-| `spdb-siteleaf` | Active | `siteleafAj1yeZKc11UWGpXPyFVDB4lcRSHA5UPuaewb27umvd7t57meAj2pnz9wolwnr1te` | `(?:siteleaf).{0,40}\b([0-9Aa-z]{32})\b` |
-| `spdb-skrappio` | Active | `skrappo3bGrdIvsVG43KMa6yC0fBQm6o1LK3NrarDDIyKX9DA05t1WULkKXIgQd4ppsrAAcWGqg8lDqp` | `(?:skrapp).{0,40}\b([a-z0-9A-Z]{42})\b` |
-| `spdb-skybiometry` | Active | `skybiometryqeSuJylk0KMXr6gWErS7TLIyDBKUG9Iwcejkx91q1k4is4kimnufgxzjpw` | `(?:skybiometry).{0,40}\b([0-9a-z]{25,26})\b` |
-| `spdb-slack` | Active | `xoxr-eiCiIeqC55PC36A4pahKaJoEoyGcVeny` | `xox[baprs]-[0-9a-zA-Z-]{10,72}` |
-| `spdb-slack-token` | Active | `xoxa-886876035391-399055697452-327203172661-b6czei26chhiuwahu172dwlmn1fhkebi` | `(xox[pborsa]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})` |
-| `spdb-slack-user-token` | Active | `xoxp-OjheVzrceTzsntBBbuC48qygYWeZaGdh129yPHJh8Knvxt19ftgHaVpXdS8lhQ4BddyrK0hS` | `xoxp-[0-9A-Za-z\-]{72}` |
-| `spdb-slack-webhook` | Active | `https://hooksIslackFcom/services/TJWxcLmqUbG/BqpAf9q9eOuRN/bisZ8AD8xSGOQ07bNiu5sx_m` | `https://hooks.slack.com/services/T[a-zA-Z0-9_]{8,10}/B[a-zA-Z0-9_]{8,12}/[a-zA-Z0-9_]{23,24}` |
-| `spdb-slack-access-token` | Active | `xoxb-7KCx-G4lXc73ovPeqtVjCeiZ2HXIWZMPUzy9CHrdP17gqnwuzSC` | `xoxb-[0-9A-Za-z\-]{51}` |
-| `spdb-slackwebhook` | Active | `https://hooksLslackJcom/services/HN+Fcap5MhPkORr+BWAKlKR0oZvOhG1+bUUtZ22Az3Ll` | `(https:\/\/hooks.slack.com\/services\/[A-Za-z0-9+\/]{44,46})` |
-| `spdb-smartsheets` | Active | `smartsheetsgfRyOA2CJ13f16i3ieFeQQfSXOQSQevVuYtCv2vcrCBq4eYJhZvW5fB02pkVHeJDsgrO1` | `(?:smartsheets).{0,40}\b([a-zA-Z0-9]{37})\b` |
-| `spdb-smartystreets-1` | Active | `smartystreetsXgeq6iCq6E5lZ9Xp9YmU9ubieTjmWpZ5zrViEUOCm6TT72I1QEHP` | `(?:smartystreets).{0,40}\b([a-zA-Z0-9]{20})\b` |
-| `spdb-smartystreets-2` | Active | `smartystreetsianiBpb2XHCNb8WCehtGo9N0RF2bNd7ilw79wpq2dgul771r06bseazot7ki7qa5n2mt` | `(?:smartystreets).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-smooch-1` | Active | `smooch8aOmNKoEwa1J4zzOWKRvTDty2Y37MznPact_t0dnl1b9dn6rat6jmiqzkt2u` | `(?:smooch).{0,40}\b(act_[0-9a-z]{24})\b` |
-| `spdb-smooch-2` | Active | `smoochQZUTzz6kCNd9cDTf6ua38v8tfi7ZrUkmMHFMRXjQIDJRSf03iyhS6dcMyDHeZgjmb8lu25XBmbqoDuOdx4WaDE9k5c-iXvDQinGT2TE2KpJZ7sXPHJu404` | `(?:smooch).{0,40}\b([0-9a-zA-Z_-]{86})\b` |
-| `spdb-snipcart` | Active | `snipcartHp3PrEDhYPMLmyIxOV5U6JWIx3PDYHjgoOySI1KebxBuA5kd8RZi2SLW7e7BUjO0cIRkDDrT09SPuII5YcdpsmwSbhwIOUDYbI7tpBUBpJD` | `(?:snipcart).{0,40}\b([0-9A-Za-z_]{75})\b` |
-| `spdb-snykkey` | Active | `snyk2RTn2bjUE9JuXl2stBWyTPkHiVbqoMiHt7j2x0iu-2br7-kbar-229x-kamjynzfob43` | `(?:snyk).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
-| `spdb-sonarqube-token` | Active | `` sonarVnKY8KsWuWeo8u9rDN0DswWjhBrm8ypI'3b57934c45b0d53291ea5091b0f5d2c578cab5cf` `` | <code>sonar.{0,50}(?:"&#124;'&#124;`)?[0-9a-f]{40}(?:"&#124;'&#124;`)?</code> |
-| `spdb-splunkobservabilitytoken` | Active | `splunk7TjRFALh3Eliec85D9FYIuFkubqHpWmd9wXFMdZTUrPFgU351BLEmU` | `(?:splunk).{0,40}\b([a-z0-9A-Z]{22})\b` |
-| `spdb-spoonacular` | Active | `spoonacularLdXJ5EHDEk45Ya7WaEXBRiY2G9ePirrEi2hy9awrtpd46833tr4iqf15hb66cjwp` | `(?:spoonacular).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-sportsmonk` | Active | `sportsmonkC3YVb1f8xHSHLZjWdhCM6cIy4QjjpaSFoJN4u5jtxxWwvMw7ZyoDFDdRGPiSa7yA6wXpHdkDDkZHBAwVJNyqrIpfEPil` | `(?:sportsmonk).{0,40}\b([0-9a-zA-Z]{60})\b` |
-| `spdb-square` | Active | `squareVWk5XkpIioMhnWclnUMpc0xNixSfghvDEAAAe3wbLbfAGRZHCfEvQDq5xCayxEzIYY2W6Dtkn+97nQ8xndWXW0Hmus-NjUVj` | `(?:square).{0,40}(EAAA[a-zA-Z0-9\-\+\=]{60})` |
-| `spdb-square-api-key` | Active | `sq0atp-wk04vx18hwknnknh_cg1115e6d6fcs4a` | <code>sq0(atp&#124;csp)-[0-9a-z-_]{22,43}</code> |
-| `spdb-square-oauth-secret` | Active | `sq0csp--uZjm4fmSsfZVZEpN7bjL_HehrFQQeU4jS3tskJxc6N` | `sq0csp-[0-9A-Za-z\-_]{43}` |
-| `spdb-square-access-token` | Active | `sq0atp-84TW864OF0CWW2WJTdP1pe` | `sq0atp-[0-9A-Za-z\-_]{22}` |
-| `spdb-squareapp-1` | Active | `--------------------------------sq0irl-by7BrN-AoAcE-WVCU2LwZaBYyu6D_EOG` | `[\w\-]*sq0i[a-z]{2}-[0-9A-Za-z\-_]{22,43}` |
-| `spdb-squareapp-2` | Active | `--------------------------------sq0cvs-AdYXF5bzy0tUdD1PeilQgsoaRR1hOCEcgy49EBrr` | `[\w\-]*sq0c[a-z]{2}-[0-9A-Za-z\-_]{40,50}` |
-| `spdb-squarespace` | Active | `squarespaceK1TLmPWV9y5cGWB8a5G4JfUKzRX9NxTdA64b3fac-50ed-1974-59fd-bdec75f17f5b` | `(?:squarespace).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-squareup` | Active | `sq0idp-2XEsAChKff0mNJqf6ozEdn` | `\b(sq0idp-[0-9A-Za-z]{22})\b` |
-| `spdb-sslmate` | Active | `sslmatePyjF0kAjyH7O7BrAPSsmNtZtDOZD50RMEDKFqVDbjucKFSayJjTh6GOGfz2meyvnsCDb` | `(?:sslmate).{0,40}\b([a-zA-Z0-9]{36})\b` |
-| `spdb-stitchdata` | Active | `stitchdatawQa5hS721PoLyotvG5r82PjXwb3nZvQQrhp1sdng7ki4wl8lks807fsgt_w6rxcq9ie` | `(?:stitchdata).{0,40}\b([0-9a-z_]{35})\b` |
-| `spdb-stockdata` | Active | `stockdatasCif4DMwHLQDWtA3zFfuosNxHnWMOJQjbETQZbwgH2QsjzjrBvzbXAp81a8Z7iViF1wkMZlO` | `(?:stockdata).{0,40}\b([0-9A-Za-z]{40})\b` |
-| `spdb-storecove` | Active | `storecoveLrCKkpjgSZuiRQBGFEQu4MY5Oko6K38CzDdGDNvuDWqTsaJZqXQTC7pLkMvYo4zuiUEcBD3dTun` | `(?:storecove).{0,40}\b([a-zA-Z0-9_-]{43})\b` |
-| `spdb-stormglass` | Active | `stormglassGPBlvuxKC9uSCSt3H4KtgCX29dv3JjNnvqth7d3iv55asvAnfuAs81afrw-v6v6bzyk131u1acm1m1ur1A42plwx2utgdji43s46u6xj1` | `(?:stormglass).{0,40}\b([0-9Aa-z-]{73})\b` |
-| `spdb-storyblok` | Active | `storyblokZrbfWrLxExw4ShX0i9Bf3eK7WEtZLpTwuqHYjwO7pBQHEtjRx9KUortt` | `(?:storyblok).{0,40}\b([0-9A-Za-z]{22}t{2})\b` |
-| `spdb-storychief` | Active | `storychiefM0CTl9THWAjI4hrcnJ8yb3BiJQXhA6LtMS5R63N.Un5emdJKpuR1cN88UQFUa7BuY79EFDrrm3RqtgfkTNFd54Eaw.1G6Hp1mlNrCwYi.L5Ovuf_G0I4dp.c.0o2J1Oj7nFG44qOt.vbNsj_z1XGiKu.rj-GM_e6z2WrIwIr.ruk8kqrXCS-vIdXOTbd-Tffw4qIuChgfjtPWA6St5EDSgH5zkEHsAwVJpmaLIQeKL1qLPastGGT6Ci7L2FGblsfzhwDhzFvX21WOUH..ZxB9U6kky2OBuyU0C_QVuPveRFekcx3jqmOp1Fax1HRcyXHhqXOrph6wqL_iBwB1BPLjU.6bCAml8JCJvi_5Im9c_4Lx0NFGYtBwjVV51img_AcjX8IpYCJ4GkugvA3KRP.ebKjAgs5YhgOhMeuaeR_vvWb3m291XjsLmvKmkdakWGeNT9Q_NS_0s4vFOpYfWcRfnlDgXa1OUc2w-BbDKJecucf6XxiYZFo3DQ24pMjVq93DXgnq_FhprlFpvKohozRP1Ko79Jo_be73wV6-65ddjpTogJgGIyMFByUtPYtZX675E-UnPNU9S5hpx3QK5nE8hSmxj7mLiIUuTaULAWpa5yL4A1iQY76v-aVdS3IYIziXuol-VLAOaOixNNvHW-g0a0QcOUCVsQD7Ng9a9Us6JuF5_kKQA4Mwtz3utfE_ROecrKz7L0nALsDIEWZ.gwrvFBD96QYR_orOzl0c.f6zgs2F5Sn3PpbB.C--fphdB4sJqHz4QXzxBvAjvz7lgncxKRRUFmnBHbefWwOwM0dFisycsNc.ZzLr5bg9qORQ96.mki3iHL.RU3kAES2uNR-Kzj1PncV72AxK4HWzzID794Z7EBJzY-LyWFIx5UfGN24skd0qYhJqiGajGV3gZdLXPNb1gru_eGbpi2T0qZe1kZUxg-7db2VkB5tYYogN-6LGr4.ydb1X9wC` | `(?:storychief).{0,40}\b([a-zA-Z0-9_\-.]{940,1000})` |
-| `spdb-strava-1` | Active | `stravaBE8rpAy8w8scSNjo5ghyYVam1MZ9aXlz26937` | `(?:strava).{0,40}\b([0-9]{5})\b` |
-| `spdb-strava-2` | Active | `stravaNj0kXBV4cRV4yvxoblFF0cYyoJPiRoSlhqvk2m33i5v8twp507lneuv59tpcwwgkhhro5wmd` | `(?:strava).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-streak` | Active | `streakY4bzRMo0LKwld2IYTyE6LQBolb8Kz9pMA313683c81aadb1f6b1888b3e1c23a8d` | `(?:streak).{0,40}\b([0-9Aa-f]{32})\b` |
-| `spdb-stripe` | Active | `sk_live_ZCBxGGt8tYXUciV933jQ5z5Z6HCJPn` | `[rs]k_live_[a-zA-Z0-9]{20,30}` |
-| `spdb-stripe-api-key-1` | Active | `sk_live_Bg8P9oF2hV1tTHzxpUCWlSrL` | `sk_live_[0-9a-zA-Z]{24}` |
-| `spdb-stripe-api-key-2` | Active | `striperk_live_u326ggtZtbLRzDgJXoH7QrT5` | `stripe[sr]k_live_[0-9a-zA-Z]{24}` |
-| `spdb-stripe-api-key-3` | Active | `stripek_live_WfAcJ2t5h33Z2ViThm4FdEVc` | <code>stripe[sk&#124;rk]_live_[0-9a-zA-Z]{24}</code> |
-| `spdb-stripe-public-live-key` | Active | `pk_live_a83i5gfq5m70m5ex8jbzxhro` | `pk_live_[0-9a-z]{24}` |
-| `spdb-stripe-public-test-key` | Active | `pk_test_zspfd6ufz4sgqmfzmnh1q624` | `pk_test_[0-9a-z]{24}` |
-| `spdb-stripe-restriced-key` | Active | `rk_test_WXZb3vRBADK0OQSpmfeM8LLW` | <code>rk_(?:live&#124;test)_[0-9a-zA-Z]{24}</code> |
-| `spdb-stripe-restricted-api-key` | Active | `rk_live_6FzF8Rbei2SruLp0gxASRCi0` | `rk_live_[0-9a-zA-Z]{24}` |
-| `spdb-stripe-secret-key` | Active | `sk_test_M8CW2lCElAhhXlN0jpAt99P5` | <code>sk_(?:live&#124;test)_[0-9a-zA-Z]{24}</code> |
-| `spdb-stripe-secret-live-key` | Active | `sk_live_ehkfuh5uqqvzwfyyh2ygggje` | <code>(sk&#124;rk)_live_[0-9a-z]{24}</code> |
-| `spdb-stripe-secret-test-key` | Active | `sk_test_0rxztsshiw1s7h2b596v7hip` | <code>(sk&#124;rk)_test_[0-9a-z]{24}</code> |
-| `spdb-stytch-1` | Active | `stytch6sROqfC05vyAY7DNY3pnZ5nr4z2JOH9YRZK-IMhypjDNHR9-0s5SJ_NZn7j3N8ZXAT1eqUeeeN_SG3I=` | `(?:stytch).{0,40}\b([a-zA-Z0-9-_]{47}=)` |
-| `spdb-stytch-2` | Active | `stytchKINoSZOCmdbpJimTvXmRczb4f7S49UGp5k-1pmn4f7u6abs40zovqcpx9bpedmhodtsy3mv-xkthfp-ji` | `(?:stytch).{0,40}\b([a-z0-9-]{49})\b` |
-| `spdb-sugester-1` | Active | `sugesterDTyCh7QFbivEmh3xsJcRISqGtuPFDtu1!DI*vqybsB#aShhB#vwxjk#vdoLTo8Vw` | `(?:sugester).{0,40}\b([a-zA-Z0-9_.!+$#^*%]{3,32})\b` |
-| `spdb-sugester-2` | Active | `sugesterVWMPIYDQTeXBImuYxctUvcG2Ira0y4b99T87hIc8QBUPxCiPJr4sRrWAg19roWBB` | `(?:sugester).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-sumologickey-1` | Active | `sumoekMrC8cJusrc5FIFskPsaiDQql2KDiUXoTgcHB3bv080o4` | `(?:sumo).{0,40}\b([A-Za-z0-9]{14})\b` |
-| `spdb-sumologickey-2` | Active | `sumodlEy2q8MsLiLMZ5rTgiURv6rjhoEb4wrKhYxLhl8vNQbQhPfTzAM9LeCK7zhSbLlGvxITmzWwKEoxbvXlwZ5xkigXGOYboe6` | `(?:sumo).{0,40}\b([A-Za-z0-9]{64})\b` |
-| `spdb-supernotesapi` | Active | `supernotescV8U6oem54aPexsfV3UWRCOv4sjYiuR7\rNgZ1PzsyJN_W6FND3lFAu9c8UFZaYug79xNfH4gic7w ` | `(?:supernotes).{0,40}([ \r\n]{0,1}[0-9A-Za-z\-_]{43}[ \r\n]{1})` |
-| `spdb-surveyanyplace-1` | Active | `surveyR45tfHzKBXmGJ1KGw5jc9VNPpGU6UZdmcJMBAXuHdxM25vc8F0d7gTzUv1vOxeGtWjw9` | `(?:survey).{0,40}\b([a-z0-9A-Z-]{36})\b` |
-| `spdb-surveyanyplace-2` | Active | `survey1wn9roTu4KvdFDt727f5delOXCO4x7sncU7e99a3Wvr4DVMgIsYyem3kzAquSsPS` | `(?:survey).{0,40}\b([a-z0-9A-Z]{32})\b` |
-| `spdb-surveybot` | Active | `surveybotaXhrDl6yvMGDkCBgJAean2N7wiJvpTT7u-cwHoB5F8CEr9r1ErLOhg5LxVP-DWpKXyvfGyzO55LaxmVdv8Em9sHRspswpOps8YrIQ4i6KByBFpH6` | `(?:surveybot).{0,40}\b([A-Za-z0-9-]{80})\b` |
-| `spdb-surveysparrow` | Active | `surveysparrowszNFlDjxrfxwD5SgB8oNYXRei0TSfr7Yxok4Myb-ZLA9oWCfwvxgvxxe-CquwPfsx3Dw9sPo5GdrK_rR9O9o7Jt_TasQfsxH55hdxXfdbmZ7hVr-qYE79o2w` | `(?:surveysparrow).{0,40}\b([a-zA-Z0-9-_]{88})\b` |
-| `spdb-survicate` | Active | `survicateBPBDzIFDH85MV87t1ZiUoczsu2fSLVrx59r9kip1fquwqir5ztowverjwe8wab0y` | `(?:survicate).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-swell-1` | Active | `swellLrsOo6sIfu0hoVIlayoKUm6YDPMzNFvStpgnFqgkd5uolfZkcJzIWfW5` | `(?:swell).{0,40}\b([a-zA-Z0-9]{6,24})\b` |
-| `spdb-swell-2` | Active | `swell4cYpwwvx2FyZp5zdl9RjF3E7JBNzZ9CqN7FVvHWjQrWSWbvbgaNat0GZau3CyggQ` | `(?:swell).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-swiftype` | Active | `swiftypeG5BkbquTVS2ufpaYpXsCuJjKvWyToIkvnbj8io_d9rw3\\-lxO_OS` | `(?:swiftype).{0,40}\b([a-zA-z-0-9]{6}\_[a-zA-z-0-9]{6}\-[a-zA-z-0-9]{6})\b` |
-| `spdb-tallyfy` | Active | `tallyfy8cDsUXypXOI1SduI7tECzbwjaNXzFgFRSVMm8nm7t36aaNedSmuT2N4ilw1utbMIfBWH.eS8CfildkeBcXjJBPMlM9A8tUV8ll5ihF1wBQJD6FY2gKtSzsMIwMSMX0E1rS2BkN21c3Ci75FQHGKEutVXvsMoi9MIf7hWlIUd5liOgW3GCbBChT1JAMo2SSShrZ2uqgWIygUazNNOzUJYrJvn3EWsYNps5PnAJwxP7FWeRmqGHm6b6YdutcpgdaH3Gw6jhxV2ua08fjUT3xAg8uiwa3nNv3iv52fGMy7LCesZd6PjiyiXKDmbqSkoC7EACwwovNrvb9Yig.919SMa7Uvm1bDlPH3iSjuXvrld7hAvrNmy5GrxN7i16rJTR4dxWJ0RNPgbTedVkBB-aTUYYg0DpSqGDX4UyC-XkjUeCNW5UWZHaj2zdm0xSnZp3puQVfhbFHOYI_0kbTjKmDW8ChOYfUlbs3GD5pCJm2oNIXEm8kxvxuLPPSKkR2M0dOdvOXVWPghpkrtYDZA17_a2u81HmKgJ-ZoFAndYSXjUsLef2EqhJUlkmSdc0eRaxMOqaDLAx2IoArcl4Qyu1w3LV_nOOoLIvq4AfrwYvkRcOU3CKX6hpvYvQDbGh99u5q2JO3kvLhsPNvIvV1V2EIgYXVgibfevDPieGI1laYptkGqmUrWw8WBcnTa21loADKZvvUMQBiu3swk3H_pbO6OISIeQoU_vbecTiLhWkGpEoUKb1dnXbI2XF7Wj_0wRljtcrcE7hEs7kYnvH2Vda2WDPmG54P5wIAKhPuOTh1wNvaKArL9P0DmHctzTWv7GdQkNtXQ0RLtiPyZdgMRcJ11jd6rm66r9STjqoPDkIwesWsGtfpbPNOYY7W2HUlYFyAJggHTk94CZj0NNg6p2-U8jEFr6OH2Sq75rJIdqGQmNOgcUI2Gue7RkpXCfMl2M5LpJnj2e9le-g-a2M8xA7R2cCWfKL2fs5neouJAs1vEt8dao3FUqtuSz_61vE` | `(?:tallyfy).{0,40}\b([0-9A-Za-z]{36}\.[0-9A-Za-z]{264}\.[0-9A-Za-z\-\_]{683})\b` |
-| `spdb-tatumio` | Active | `tatumk1HsW430ssYY4gz0fPDSGjORdVMl4bTXiie2qyea8tu53vikz2124irw7ukiatjn33xa` | `(?:tatum).{0,40}\b([0-9a-z-]{36})\b` |
-| `spdb-taxjar` | Active | `taxjarYZehZHKrsrl97BH8trrSdXRrXyRjo01f6kxcqiec42a4308rnek2icd2u9wzh88e` | `(?:taxjar).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-teamgate-1` | Active | `teamgaterhIZhgDA3pmvFeb91YDm6wlXjq3uPhcSzr3rs6ip8hpoj96ktwhdoqdi28cd3jnz1ljlqx9t` | `(?:teamgate).{0,40}\b([a-z0-9]{40})\b` |
-| `spdb-teamgate-2` | Active | `teamgateUtttHplCNlsvq3rSD1GxS0UUUqn4TwneqKhezwEAgAJnWFMzPd8Y71Be0MuuFK5sGQEsfuleZted5dx0uF8TagmSNYv4Yzjp3PnNu6ZvWPd9j6uI` | `(?:teamgate).{0,40}\b([a-zA-Z0-9]{80})\b` |
-| `spdb-teamworkcrm` | Active | `teamwork3T6MDAiS3EqFk9vvQ0XpXSmOMezVqjYOtkn.v1_RGfaqRZfcajTIt0JRyLsLGz22uj0oViK8inmCfazNFlKy4oCwQOCaCSysaT1udY0OFezZZD=\r` | <code>(?:teamwork&#124;teamworkcrm).{0,40}\b(tkn\.v1_[0-9A-Za-z]{71}=[ \r\n]{1})</code> |
-| `spdb-teamworkdesk` | Active | `teamworkQ9I5z2GMwmnHay37arVuCWwkOepoA9EHtkn.v1_Cl88RwZQ0vDAQWFXPUpBGzsvUsiOy8uaTzHtHTcexPmDUlNEJoftULhLP8CG5op3CoWmxPp=\r` | <code>(?:teamwork&#124;teamworkdesk).{0,40}\b(tkn\.v1_[0-9A-Za-z]{71}=[ \r\n]{1})</code> |
-| `spdb-teamworkspaces` | Active | `teamworkUpKALkoJsH8l2X93oo0biBRoizWtXCPUtkn.v1_7aEdzMLWX5Yoy6PAOLqpJ4pdI3vkSkw00xRW3f7llHkXNhHa6tw9BwiQ5QTxHlB5Pbjzrx1=\r` | <code>(?:teamwork&#124;teamworkspaces).{0,40}\b(tkn\.v1_[0-9A-Za-z]{71}=[ \r\n]{1})</code> |
-| `spdb-technicalanalysisapi` | Active | `technicalanalysisapikfpxh9F5gjEHr6BbUxMzRvH4w2zBqwzlI5B56MW7D6MXTX3BFFIS5EOEHRDEFW234LZ4PJXGFQ518WM9` | `(?:technicalanalysisapi).{0,40}\b([A-Z0-9]{48})\b` |
-| `spdb-telegram-bot-api-key` | Active | `72745307211510547309205367869210:AAwDeNfKO_RKicL3wTl9OK761WL2kNRQjCp` | `[0-9]+:AA[0-9A-Za-z\-_]{33}` |
-| `spdb-telegram-secret` | Active | `dddddddddddddddddddddddddddddddd:Aq4l2c-uy95cbrospriun0lrn6t4yi2dlni` | `d{5,}:A[0-9a-z_-]{34,34}` |
-| `spdb-telegrambottoken` | Active | `telegram2dCyeO9LJmC0p6PLswYsV6Pwzi2lKzp30031065160:h_ZQOJC_fj_aBIU8wzYSOXW4unnE0EDKVFF` | `(?:telegram).{0,40}\b([0-9]{8,10}:[a-zA-Z0-9_-]{35})\b` |
-| `spdb-telnyx` | Active | `telnyxwtEIG0RUz8y2qjAXAh44Qb03M5bUgMLnKEYJpbMupUsMy8spFN6kVQGK545NILZZrdl8LDl36hSeEYR9dIprhehztx` | `(?:telnyx).{0,40}\b(KEY[0-9A-Za-z_-]{55})\b` |
-| `spdb-terraformcloudpersonaltoken` | Active | `igfKqFQGmJt0AiDatlasv1uSEmjcvsYu96t9N7WC3nDUYjOqk6OjkyA03tmU10rxRazN7ISnETZttfkPAGV7Ma38NA` | `\b([A-Za-z0-9]{14}.atlasv1.[A-Za-z0-9]{67})\b` |
-| `spdb-text2data` | Active | `text2datayYJMEXS7V8CNtXT1wiqzBOxCJJCZZlceBCD8B300-1BC7-0CCA-9C9F-C2F6C3AFF10E` | `(?:text2data).{0,40}\b([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})\b` |
-| `spdb-textmagic-1` | Active | `textmagicNx1t6u1pKeszMbQEPrsSUbGTMgeMIRwkDxE2ylJNplOI3sshHkysMoNz0dVCIt` | `(?:textmagic).{0,40}\b([0-9A-Za-z]{30})\b` |
-| `spdb-textmagic-2` | Active | `textmagic2DsTsV64xO63oDUJrvKxEcxrLd9cfh5SM0qn1xjKV9Kapuzx5dc8RQ92v` | `(?:textmagic).{0,40}\b([0-9A-Za-z]{1,25})\b` |
-| `spdb-theoddsapi` | Active | `theoddsapirtT3EOjC0WF2GBY64kCaIfO3ueX6zjcC567f853b31386245f622bb0dc6b1cb8a` | <code>(?:theoddsapi&#124;the-odds-api).{0,40}\b([0-9a-f]{32})\b</code> |
-| `spdb-thinkific-1` | Active | `thinkificlRSkobkqXEAW06gghzNv0kHWWxtqPuUhdc36f5cfce8bebd3b55b4091b469fc47` | `(?:thinkific).{0,40}\b([0-9a-f]{32})\b` |
-| `spdb-thinkific-2` | Active | `thinkificacL7NkHlHi3jbugj7Sn8E4eIu3KbtpJ4JAwMvQa6XeytlHy4F6WhnKPOQt5bnN4v` | `(?:thinkific).{0,40}\b([0-9A-Za-z]{4,40})\b` |
-| `spdb-thousandeyes-1` | Active | `thousandeyespBk2OmeMLibFWLfbFhbFvTT0nwtsNDkgLWh5gm6U1wdUPKRQgsezogxbZ9TOpKvq` | `(?:thousandeyes).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-thousandeyes-2` | Active | `thousandeyesKgkqgyN6RPZqsjzi3vuVmKaoN0EIwgDbDJCaaklm6Aw2ISS0MLuc@K89OxGuw3YbpTvbDOi` | `(?:thousandeyes).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
-| `spdb-ticketmaster` | Active | `ticketmaster5FWwRNEMEvf6JmqKcD7eWKdaelZStuOmo6qQW0SOZ7cdkrTu1aMyKJin9dbMwL4a` | `(?:ticketmaster).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-tiingo` | Active | `tiingo9vUZVMmqKXlRm0nFroFF3fvtkbZFPd7ier57in20k0ks1dku76jr5zdjed8lk2r7s4f6t6jb` | `(?:tiingo).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-timezoneapi` | Active | `timezoneapiwDVRzfyO9FnSCzuBAQ6vVvHDev1iJ2HiKbErlbnKBzAbm3l68NlX` | `(?:timezoneapi).{0,40}\b([a-zA-Z0-9]{20})\b` |
-| `spdb-tly` | Active | `tlyOn3WxTLLOs8jRblY1r8bkdKkElRHebbg8HRjaY2ik5hX7CqAxIAnA23YcY3rew3FGwuzOJKUapPEIAjQzecylA0bKCi7` | `(?:tly).{0,40}\b([0-9A-Za-z]{60})\b` |
-| `spdb-tmetric` | Active | `tmetricqPbK9zWV5Pxl2jC0RZXGXev9snBN85D0LF1GV7MMCURHO9S7JVS2XGFUTF46MJRKUM8KOVCNOQ342BER6EKLLAYJTHI55SCX` | `(?:tmetric).{0,40}\b([0-9A-Z]{64})\b` |
-| `spdb-todoist` | Active | `todoistOvk1VEzR6URMw4Vnt1Ux49aH07mVTUiNvt3bgi3v6aju7ito9odsxl47yqp4eksod4pomszr` | `(?:todoist).{0,40}\b([0-9a-z]{40})\b` |
-| `spdb-toggltrack` | Active | `togglFSurEhRG23qF4MH5mnQyLAk6sMSXbzSqm17dyuw2u4j3A2ttfhA5h12pxjpghaA2` | `(?:toggl).{0,40}\b([0-9Aa-z]{32})\b` |
-| `spdb-tomorrowio` | Active | `tomorrowTtAN6mft9Fd8Jt1MB5EvYm3teqOVUyzc09YOAPPEW0ZZGmee6zOMHC5PTEsHcnUQ` | `(?:tomorrow).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-tomtom` | Active | `tomtom9CJPTxOOnOrNfComHlxNn3eZgorIzv8qiy1GjnjqLkIPyQV6Z7xzTFh7vV1eM0xV` | `(?:tomtom).{0,40}\b([0-9Aa-zA-Z]{32})\b` |
-| `spdb-tradier` | Active | `tradierJyAas93VyE9NkqrzrMlh5nAVYk3Eq4xWufvwKb2NyYMVzBoZ3zvo3P121FNv` | `(?:tradier).{0,40}\b([a-zA-Z0-9]{28})\b` |
-| `spdb-travelpayouts` | Active | `travelpayoutsGTCeDQdWQRZMXyn84Iq8ZfrQpb7NmYFCspm8a3zrl3kyukukrg6dhw8f2qjt7u1m` | `(?:travelpayouts).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-travisci` | Active | `travisHnQ1dvdrpDMptwj1VyJEgx3Bpo35i3QXDElcmPhtKeHVoipudY12ER` | `(?:travis).{0,40}\b([a-zA-Z0-9A-Z_]{22})\b` |
-| `spdb-trello-url` | Active | `https://trelloPcom/b/m/agocdujx-hy8mxggseoj2nmpi7b_inq4` | `https://trello.com/b/[0-9a-z]/[0-9a-z_-]+` |
-| `spdb-trelloapikey-2` | Active | `trelloYp5QA55MBK5q4AYn7JOvZzE1haTUmbLRtYgP-dqei-2z5rgvVm7bpi2etuQsOmDn` | `(?:trello).{0,40}\b([a-zA-Z-0-9]{32})\b` |
-| `spdb-twelvedata` | Active | `twelvedataRCuZ1LOIYekFCHBspQMJcQ64MzGXfHlRbzo4hu16wiy7q0hfzipb6unhugdsj3zy` | `(?:twelvedata).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-twilio-1` | Active | `ACbd8e0462d8b08d0eb4d2eeee28356371` | `\bAC[0-9a-f]{32}\b` |
-| `spdb-twitter-access-token` | Active | `TwiTTeRyvqfgwxKHlgEAWwFHcJmFMN1ym1RuC8P215206800083085111442234766500373-CzLNEafdFbfm3yMC8QIngtrLTApaVSJppZ6ECxLZ` | `[tT][wW][iI][tT][tT][eE][rR].*[1-9][0-9]+-[0-9a-zA-Z]{40}` |
-| `spdb-twitter-client-id` | Active | `twitteryogp72p7fv13k5uht3643bg2s` | `twitter[0-9a-z]{18,25}` |
-| `spdb-twitter-oauth` | Active | <code>twitterbct4FpcIHCGr2XYAmY9XmvtziveAp5t0&#124;KeENA46153I0MGZ6eaiunciAANYsRMDuWWW&#124;</code> | <code>[tT][wW][iI][tT][tT][eE][rR].*[''&#124;"][0-9a-zA-Z]{35,44}[''&#124;"]</code> |
-| `spdb-twitter-secret-key` | Active | `twitterttzq8cbfiassdy5w4c6tc7m0ioojalam3jo` | `twitter[0-9a-z]{35,44}` |
-| `spdb-tyntec` | Active | `tyntecNKnRxDLJPp0A8naShTGsZ44gaPzkiSYEVwsheFBN12XjrHrsbRK6kHDt5lpx0lek` | `(?:tyntec).{0,40}\b([a-zA-Z0-9]{32})\b` |
-| `spdb-typeform` | Active | `typeformnRYLGEayrILTvlJb6MnJE1NTaWh0RwwMBFleEDiDvcI3oIv9up6MhX2BQQrB5mJOrVDMb6pEbPeL` | `(?:typeform).{0,40}\b([0-9A-Za-z]{44})\b` |
-| `spdb-ubidots` | Active | `BBFF-7P9krrf4ktd0MLBknxKYuLVVKhA9Lz` | `\b(BBFF-[0-9a-zA-Z]{30})\b` |
-| `spdb-unifyid` | Active | `unifykfmr7IkuRMS8pm0Os4KM2N01YoCxictDQxRyeoxDEQEi7ZtExfqKzbB7rH2a32MfpxZNBKe3CAUg` | `(?:unify).{0,40}\b([0-9A-Za-z_=-]{44})` |
-| `spdb-unplugg` | Active | `unpluSEhHSK009nqxKsuNSvSeuZnxKOPmtQ1knoxzm0vcatosm7dorujfco4bbme77ynoqow78if4zhamjn32nktlo36nhz839u4q` | `(?:unplu).{0,40}\b([a-z0-9]{64})\b` |
-| `spdb-unsplash` | Active | `unsplashSIgyknzKjLmCxCII1UqZZWDjWjEd1SXlShl9brfQl47jkcZQl0bDNDM9wAUKrdl85nIesXETEvf` | `(?:unsplash).{0,40}\b([0-9A-Za-z_]{43})\b` |
-| `spdb-upcdatabase` | Active | `upcdatabase4ld19Gl7ECKBOsvWSzlK5vR1IBaqY8gD1PPVQFUNJR0DBEDDYVF4ANNA5KINLYRB` | `(?:upcdatabase).{0,40}\b([A-Z0-9]{32})\b` |
-| `spdb-uplead` | Active | `upleadBeBJC4MAzNCYVcM3J3llRA5wTaOjut8is5gb977iel1fqursh1s0rne4xzaaw7yg` | `(?:uplead).{0,40}\b([a-z0-9-]{32})\b` |
-| `spdb-uploadcare` | Active | `uploadcarexJJfYefEHhrcSmVO4RT1gKtbEJ9vpnNs43j06rw5yxm0oulgv3vj` | `(?:uploadcare).{0,40}\b([a-z0-9]{20})\b` |
-| `spdb-upwave` | Active | `upwaveyfUvfn9uTNtmRpOgG0XqjcEQzT62tCCHfpzfi676vomfeijmvzssy29fgqm37yn4` | `(?:upwave).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-uri` | Active | `QYunlwBhRy://}}.--.%{{{--.%}-.%{}}--.%-%-...-:-..-..-%%---%.-..%.-%..--%%.-...@/-.%../-%/-/%/::::/.%-...:/%..%-` | `\b[a-zA-Z]{1,10}:?\/\/[-.%\w{}]{1,50}:([-.%\S]{3,50})@[-.%\w\/:]+\b` |
-| `spdb-urlscan` | Active | `urlscanCwY2PcbIi5w48oRv8W4pI4E8JjMkwWmAfl77b7o1e9tocp8l6897hmmn0izsmiqn-qrz` | `(?:urlscan).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-userstack` | Active | `userstack7KhGIhUD3y5UdA11jQc29nJK44g4CryA3g4sglx06i1yqppmy41gvphccw89xe3e` | `(?:userstack).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-vatlayer` | Active | `vatlayerKw2hZKtJhmER63sd97KESeddt215T56mh5usat1x86qq968a1cnj26orhrregfxi` | `(?:vatlayer).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-vercel` | Active | `vercel2LmNtl2ba60iL9g5V7hHaXbnKq2HIxqGCTb8BSSKmBi5XkEPNNaRk6UD` | `(?:vercel).{0,40}\b([a-zA-Z0-9]{24})\b` |
-| `spdb-verifier-1` | Active | `verifierDjaNSkjDaeTRmP5RiBVciiPLvrssvpzRoIHK6KU3F-rN8Zif@zKRmruV2DwFthlgn.mAYPxJ` | `(?:verifier).{0,40}\b([a-zA-Z-0-9-]{5,16}\@[a-zA-Z-0-9]{4,16}\.[a-zA-Z-0-9]{3,6})\b` |
-| `spdb-verifier-2` | Active | `verifierLtYhjh5ZTCykxRWukH0XIbMO1ywl1k9B8r2fc7a4ny94j2yjsqw3ahvzj0uhmyelpm9fhaf9lind6nxo8y9kw0t0urocyovcl3k2fuwlych4r171w6fum6f9lk0jomg4` | `(?:verifier).{0,40}\b([a-z0-9]{96})\b` |
-| `spdb-verimail` | Active | `verimailEIWAQPgEL9rvQ2yjYGvWtAnJEWToqHJmS0U6RD9MBPDT6KDRJ3XQAPC664GO68XO` | `(?:verimail).{0,40}\b([A-Z0-9]{32})\b` |
-| `spdb-veriphone` | Active | `veriphonerrakECA0Y5cNj0ZywmjDDyELOKy3e66KUXKM88OC2HVWQ8M7PMHYILRITFZQ43LW` | `(?:veriphone).{0,40}\b([0-9A-Z]{32})\b` |
-| `spdb-versioneye` | Active | `versioneyeD9du74qf5d85u6AszpW8G7Hd4D6lwiZMWEPoT9VmNFDAwOA8ktzGfn2IsArsggx1rVcnZ3AP` | `(?:versioneye).{0,40}\b([a-zA-Z0-9-]{40})\b` |
-| `spdb-viewneo` | Active | `viewneogxxOJwjwHn1pwiBYy2gv2hA94zL4iJd1nr2nOqX5oVSGflSUHsvhgjytHOYOhwiSaIvaGsa5SskKxBNND2mxh706xLm512kfomJLJfpXOdScTwi1VfnUlxsHTTBUZaW8XrHHNwLBDfOfmRBjcUWUWWkktkJEjv1H6EsbJqkvGOw8j02YSpKYY3EKSJQoABS9UtP4yxk917XP1IUs055c5pBts0rAXMBTGWp10UVjKMLVwSY6oNgTkGqF2whAyVIRY9H94K9O2HtRmCetHSmxR27QoH8ERXEksgeU2Ve2Dh2mCJeKrC2x4E8MCxT5bNxMxtqfOyGjLiyBMOxHmwMgwSZsoVpxTUMqRukUNZ7mMMTDqpQe_7dxPNV19K8jaExvV_KnlVik1cr8GO_RNSY13ukkWJwTGe8alwDmSE80-UNygnhYPqkZcfrxPWuJoygUNyjAAPoAsX9sZ9NZOlyJ0gZ_THSXR-myZJfnaOizEGmcN2ALwpfM1xQ0REBwl7I1P1f6-YsUfoHG_GOyi0Lm836IA6WuVTC1Glbr56I1VLetOz8cGWsSbkELQQ9hEluI8iMJmrtU-96o3LreBYIHpPrQjr1O8kfB-G1buEKaytm-orgoLDuQZ5ljhltqG5a8TxlzU_o5bBP4Jat9ymKwYH8UyK0zVo9CF28OI6YCKkEaXqfD3gar3-XKGqyQL7NyZavkkoUEfXZXKjNaXE6W-azu6x492knHeXavUEAIj-F7AonSLewLxHgprv12bFCZbt-OHrPPT5auq8W334D2uQO9EIF_dReRHBerKZPWbqdmqPbw8NYJAl7Wf77BBUK1hUfAta8iBsGVfCZrFfupLbE7uhxwESEaVUmYIKVMgUmnLsBSEqLGyVv9IUcE9am8vd_stdV3` | `(?:viewneo).{0,40}\b([a-z0-9A-Z]{120,300}.[a-z0-9A-Z]{150,300}.[a-z0-9A-Z-_]{600,800})` |
-| `spdb-virustotal` | Active | `virustotal61IPTHv2axtl73gCy3JdFBmrdJheqKiO8afd92304cd5559feac15e96af15ef54552135fca2637375942ef27142154fa8` | `(?:virustotal).{0,40}\b([a-f0-9]{64})\b` |
-| `spdb-visualcrossing` | Active | `visualcrossingLQSfoiS9vn6tRzsvXcsBYG7DCtdORRgUAQISJMXK6L9LCIBMMXEQVVR2F` | `(?:visualcrossing).{0,40}\b([0-9A-Z]{25})\b` |
-| `spdb-voicegain` | Active | `voicegain5Le5742RcHWSfB4APMS7MoYLNqyYqsV2eyhL2ALZItqMTBsfX-2SCZkXOXpnkyf13cXRFey_FZoqYjQV5jXZbRFIpp_-qgLUqmkqezNPRp0busjRoDefagIu4Fa4jQW0GPrH2K_WajPw4Fu1I6zaeVnJ82v9N1e_BUU43htIYcxV70v49V6rVzXeWIxF3x6UCjoJIWuSwEvexlyYPNjQSKDHphnkOu5` | `(?:voicegain).{0,40}\b(ey[0-9a-zA-Z_-]{34}.ey[0-9a-zA-Z_-]{108}.[0-9a-zA-Z_-]{43})\b` |
-| `spdb-vouchery-1` | Active | `voucheryX3Jm6MKdy3U6lDpBp1g0ek3M4EG6KJDN3inb5p78182q36yccxbdhesgn1r0l8vops8r` | `(?:vouchery).{0,40}\b([a-z0-9-]{36})\b` |
-| `spdb-vouchery-2` | Active | `vouchery5HgsXVV1oNicG20HEUxRpquNKhn9onQDQwO5GXCtPgUpVGaNuo1C` | `(?:vouchery).{0,40}\b([a-zA-Z0-9-\S]{2,20})\b` |
-| `spdb-vpnapi` | Active | `vpnapitaZkMVl7FlGdqqpvWCZxLbP590803AZZfJdicoqRqpD333ljmpMEksoYm89wIpR0` | `(?:vpnapi).{0,40}\b([a-z0-9A-Z]{32})\b` |
-| `spdb-vultrapikey` | Active | `vultrUDf9jBfBt87v6WLlnYmHpovMGJwaWBJ0 KKYK26CVOKE8KL7Y8G7TXBSGYR8Y1A0KT4GH` | `(?:vultr).{0,40} \b([A-Z0-9]{36})\b` |
-| `spdb-vyte` | Active | `vyteYMaVN78hlBuHTxdxUT6m00McuVtWrzTzclnwaorfzoovsbsfxmyszr9lx790xdlllc4lr5tcnvkteuun4l` | `(?:vyte).{0,40}\b([0-9a-z]{50})\b` |
-| `spdb-walkscore` | Active | `walkscoreFGFxV9B94tyO5uB3Piph91yO9LvmSOH1mmwszwi62frola3mg7yz65cva2drjh2b` | `(?:walkscore).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-weatherbit` | Active | `weatherbitZQl4IRHbyhiIJJo1I4C3uD9IRE17BkPSp0kjxd5e2vhnfj3i1u2qk18y1v583om5` | `(?:weatherbit).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-weatherstack` | Active | `weatherstackq0powsbn5Tre1CL2ItgTxxqAUjnTrKph8fpwz8br1lxvznlet8aofp5z5hwy507g` | `(?:weatherstack).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-webex-1` | Active | `errorGjPWqdIDNIwWonPhWcgtsCeWNcEbSsy5redirect_uri_mismatch` | `(?:error).{0,40}(redirect_uri_mismatch)` |
-| `spdb-webex-2` | Active | `webexijq9xbaCxwTiJUNVHqxikSZS9kreUEhXuZC2__3Qvu5S15Q8owTbx2VKLGEanYRWVmU1MeBfkM1nZmSiVrQl1irstzpTFCi1G` | `(?:webex).{0,40}\b([A-Za-z0-9_-]{65})\b` |
-| `spdb-webex-3` | Active | `webexraUBgHew2fgdOyr3cXDuoq38PJxIYLjkNefWglHQcRh8C3Chk4Au4UwzXDSXsdpxLIbViKsHLwJUIkL0ROUwLE3f_f9Keoo-` | `(?:webex).{0,40}\b([A-Za-z0-9_-]{64})\b` |
-| `spdb-webflow` | Active | `webflowJE1ymeC8KrDtJ8PAxUbizRa079DMSYFYwy9zvf2u93uwy4ap2611ccpbwewzwilzuj3x0ezt9cuafmlq8ox03vk5yfxtlwmj` | `(?:webflow).{0,40}\b([a-zA0-9]{64})\b` |
-| `spdb-webscraper` | Active | `webscraperw4ErOxT4SEfcTTD9ZNdQgIscshVXjQ2v2qTfYAOMGmAm0MsCG2EUzZ0RZ07Xunkek2ytqXVAWq3iWOPQCOnZj174VoCl` | `(?:webscraper).{0,40}\b([a-zA-Z0-9]{60})\b` |
-| `spdb-webscraping` | Active | `webscrapingsQON0s8kvU8m6xyOjNI5MT14S2lDOfz99mG4HuSH4wqDjHSrprQ8KJnLuN0HYaz4` | `(?:webscraping).{0,40}\b([0-9A-Za-z]{32})\b` |
-| `spdb-wepay-2` | Active | `wepayNIJcZwKqQJtSc9h3zOsQuG8TMxAu9kCpguI1x0VtzdXeGB?e4rUXnhjQKXh91hhos9IW7uvq5ERuCYb7uCZZ6pJT5Ft08M` | `(?:wepay).{0,40}\b([a-zA-Z0-9_?]{62})\b` |
-| `spdb-whoxy` | Active | `whoxy5H5HBctzCkxC83vdk1DZZzyP32p3Pp2Kyisw3r9sqr0wf1bdp08mcs891rvz7qti6` | `(?:whoxy).{0,40}\b([0-9a-z]{33})\b` |
-| `spdb-worksnaps` | Active | `worksnapsUEcxxmZy7NmXJtFUknM733Ujn8KCyoaKCNKmaqCOinIIdfwbjZy6fpqdIXAPyBx1Zli1kvjT` | `(?:worksnaps).{0,40}\b([0-9A-Za-z]{40})\b` |
-| `spdb-workstack` | Active | `workstackcl0A0WHT0maoWkPkgjx8Dk7GoG3549K8DzlGqpXrRw38eisL06qdQmTMUeucsqa0wnRCJLkaetuTu4v5ZWCCqK1rCHqx` | `(?:workstack).{0,40}\b([0-9Aa-zA-Z]{60})\b` |
-| `spdb-worldcoinindex` | Active | `worldcoinindexxC6LVnkb41QuYNnOYy9zechz4bQFGvGSxgsDn7CmUtI4KtDM26MINBy2Nb7jBSGM8rj` | `(?:worldcoinindex).{0,40}\b([a-zA-Z0-9]{35})\b` |
-| `spdb-worldweather` | Active | `worldweatherU0VqN8AIlTq4NtrO0L0LyF5J0sjeyCljwoy9iiwce5ar9b6nk5ud6cqqxrlpcfx` | `(?:worldweather).{0,40}\b([0-9a-z]{31})\b` |
-| `spdb-wrike` | Active | `wrikeodBOWAWuwfwbyXIoTSKmvdZUH5AOz2VyeysqN1I2QN2pvd.sMnxfT37mhU4IydqjUVqegLugswk55Izx5AmFxwOxwyR7.1KCvE9.kmbJAtNYy7VKfsSkCi73QkUMfR9WeqgfYFX01m4Baa2rK0tfqSBOvCAifnJ8dbtF34qctTLE0uFgaEjM2P1ru2tT2xEppYVMtTfpygvFs6_TXt3WD6lWB8ICgXwkffAq4e4kOnnYTURy8E57N.bVgk6AigR_yBMJmEmSEjNPrWy5b1hGmvHTvokd2FCWfj5Zq1IQEjXpKMw.OTzBcSxo9VCBaVDEHoZ_jptFjz6T4wOiC1_xi9H3bvVbrMkH_5glnHhuiFa4yUg` | `(?:wrike).{0,40}\b(ey[a-zA-Z0-9-._]{333})\b` |
-| `spdb-yandex` | Active | `yandexJQmQPeGGW4iSiWgzrcr9y7WJ8vTzPENa4oyZ3P2YbzVD5h.xaEbRQQJAhWV43iZcA6Ez.bLAASpDqtRFU4U8GH6zf4be6kiIK4FxYDtbJ.p8h6x41oz` | `(?:yandex).{0,40}\b([a-z0-9A-Z.]{83})\b` |
-| `spdb-youneedabudget` | Active | `youneedabudget3zucROvqnfVlHlvHHphUTaAb4gfDW0Xkef1a35d51dabfa84c645c0383ef29e2a55336e7509017571e5c0a314088e5128` | `(?:youneedabudget).{0,40}\b([0-9a-f]{64})\b` |
-| `spdb-yousign` | Active | `yousigngjnqQkMdAwgpWeJBPwMHvbLWrbMvLKKfzyvccxyj5r22abs5o1xzhs2xja23c5n5` | `(?:yousign).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-youtubeapikey-1` | Active | `youtubenv6NLu2eMxG5Kj2vsmaAVarmXgAEzuJq3SvMMHbqe1sMyk_4ECQtnnsYHcWMKazmVP7JDqS` | `(?:youtube).{0,40}\b([a-zA-Z-0-9_]{39})\b` |
-| `spdb-zapier-webhook` | Active | `https://wwwjhooks.zapier.com/hooks/catch/NC3pStLO8Vr46Oank4GENQz84mJMdFTM/yr6DokF5MOPzjhO7Lcf1E9SKR61hpqi5/` | `https://(?:www.)?hooks\.zapier\.com/hooks/catch/[A-Za-z0-9]+/[A-Za-z0-9]+/` |
-| `spdb-zapierwebhook` | Active | `https://hooksMzapierpcom/hooks/catch/gn8q5eUBFYUtGE8X` | `(https:\/\/hooks.zapier.com\/hooks\/catch\/[A-Za-z0-9\/]{16})` |
-| `spdb-zendeskapi-3` | Active | `zendesk0RZJNFcOIThPiMXlDUMvf9F2gbUUPyFkIKkqBR7Yg6H0czpmpYH3q-pw3Gx_HyZVzo0ZkT51` | `(?:zendesk).{0,40}([A-Za-z0-9_-]{40})` |
-| `spdb-zenkitapi` | Active | `zenkitvZ5i3hZFD1UNCM31gx8fJp5IpWnY0kLda0cryq56-mLrcRzLFcUGPdiBqh5HIPJJmdmQQcwwx` | `(?:zenkit).{0,40}\b([0-9a-z]{8}\-[0-9A-Za-z]{32})\b` |
-| `spdb-zenscrape` | Active | `zenscrape4NS7Bfy7AiF4iInLAnS6wuOEWEE1N1qB001cd324-d59e-0287-4847-f792842278f0` | `(?:zenscrape).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
-| `spdb-zenserp` | Active | `zenserpHrXfoHHTWcSGDZxXfniFaDUQ6k7JFuFJvel-0ag58ppw9pcedjfkqx5u-07m6z1qbif-` | `(?:zenserp).{0,40}\b([0-9a-z-]{36})\b` |
-| `spdb-zeplin` | Active | `zeplinJnEma9ZQZdXcvBBfLk9icaZiZVmaHUT1gcRTS34i.oFeA9PZmVt8tyqx1UYaQw5fSI1xTanIFS89aZ16cuKbzzSmcmqophSBtaMG.0SNQ3atweoovIipqH5XsqXYL8SSyePvwuNuotzxqVJwwP8JfFlUuWyxLWQMkeb9gtB9Y.N6cjga39gmOqA1Z3o321G1seFQN5bqY.HrKmFHaRBZUwnrVUJeirGnKXW0j4G8.IyMhnVmuw4gBsfkE6vq.u39FJgGqnBpY8WTrwYpy.VLLnoeF0R94YwfWYaIEcXteIT5dROMGCqzU5MFrQriUyajrCXDFQbdUg3h-zZjDSuQwtF5CSirC.d.Lms4A9R5pOYUgxlHVntPcxZU6fDjXZ` | `(?:zeplin).{0,40}\b([a-zA-Z0-9-.]{350,400})\b` |
-| `spdb-zerobounce` | Active | `zerobounceK6u9D7JAPlOAYym3T8UJxUkwNKtB9rGunpr7wdfjmmy0iacf0mk0aapw14u7ooif` | `(?:zerobounce).{0,40}\b([a-z0-9]{32})\b` |
-| `spdb-zipapi-1` | Active | `zipapiya3A1FrS4xA64HX8DXeMaPUwoF7h55dtO!#1nEw#$@ZsL=ATyN1gf@E^@QlD=XhL` | `(?:zipapi).{0,40}\b([a-zA-Z0-9!=@#$%^]{7,})` |
-| `spdb-zipapi-3` | Active | `zipapiPczmuXPIwTdwOymnOWSJBtLOmIMNC1xVrggqn0f5lgcqsbn3rrewezf9bnoglnhq` | `(?:zipapi).{0,40}\b([0-9a-z]{32})\b` |
-| `spdb-zipcodeapi` | Active | `zipcodeapikwXdtxGW542yzlH37PpOGJgkb3HHUBuhuw4NUzDBd8JNKT1vHQFLo5mi067UOFDnzEdsPRt0T7mI7tkikPPBN3b5yHSU1Yop` | `(?:zipcodeapi).{0,40}\b([a-zA-Z0-9]{64})\b` |
-| `spdb-zoho-webhook` | Active | `https://creator.zoho.com/api/Psx_I6MtOvVb2u69e4ucd6cwFhWcR8fD?authtoken=7O4W6skTfsQHaHqwvsqBo2VJDKNvX0of` | `https://creator\.zoho\.com/api/[A-Za-z0-9/\-_\.]+\?authtoken=[A-Za-z0-9]+` |
-| `spdb-zonkafeedback` | Active | `zonkarC4oTD19yEFPbGqOlmwicFn0VDxCNUfJ5v1GPRgE5v9rXGeKB9WEz0qwvKg9rTIFjSyJ` | `(?:zonka).{0,40}\b([A-Za-z0-9]{36})\b` |
-| `spdb-access-key-secret` | Active | `access_key-secret=` | <code>access[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-access-secret` | Active | `access_secret :` | <code>access[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-access-token` | Active | `access_token:` | <code>access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-account-sid` | Active | `account_sid=` | <code>account[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-admin-email` | Active | `admin_email:` | <code>admin[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-adzerk-api-key` | Active | `adzerk_api_key :` | <code>adzerk[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-admin-key-1` | Active | `algolia-admin-key_1=` | <code>algolia[_-]?admin[_-]?key[_-]?1(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-salesblink` | Active | `salesblinkwVzqmeLw22FXQlPSZdpnR8JsL8tpqh4gIaIJEiGGcmPANlvG` | `(?:salesblink).{0,40}\b([a-zA-Z]{16})\b` |
+| `spdb-salescookie` | Active | `salescookiea6A82Hb9A3d5NYboGxwucIOcpwYvUMSU9cyn1f01RbUVrr7gcLQo1kzrgWkTgfYe` | `(?:salescookie).{0,40}\b([a-zA-z0-9]{32})\b` |
+| `spdb-salesflare` | Active | `salesflareRQ5URqv9UYB2ITxwHaIEMPrOtG4BqCuL5CASo_bcO8bp5OJhjbgmSpmeLpoub4dmAAbtBDn588HsJ` | `(?:salesflare).{0,40}\b([a-zA-Z0-9_]{45})\b` |
+| `spdb-satismeterprojectkey-1` | Active | `satismeter1WUy7R4hmtEAaN3D35COYXNvcf3gFJ5p5NDpdSj4Tt6kA9jW3toj@Ff0erqNRj6VOzGbiW0qOz9kWx` | `(?:satismeter).{0,40}\b([a-zA-Z0-9]{4,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,12})\b` |
+| `spdb-satismeterprojectkey-2` | Active | `satismeternBBYckxKqJ2R1lzeMaEJzsx0MbtCkzxvGw8EsIyCkKcQWQpTLCEFlqYf` | `(?:satismeter).{0,40}\b([a-zA-Z0-9]{24})\b` |
+| `spdb-satismeterprojectkey-3` | Active | `satismeterqIpLhxQtpXfUTmLmFVcn1U7vxDLxEatsa@HNGJYQHXZgHAObAXFAVXgO9uQ^VZjh` | `(?:satismeter).{0,40}\b([a-zA-Z0-9!=@#$%^]{6,32})` |
+| `spdb-satismeterwritekey` | Active | `satismeterXHwsOznOvM3MzgaoDBDoQES4uuFLFxUu8lUTFM3ljndYxM2B` | `(?:satismeter).{0,40}\b([a-z0-9A-Z]{16})\b` |
+| `spdb-saucelabs-1` | Active | `oauth-gzt4c4dcndy2mbn6p5gt35cvrdbf8f18-hnl4w` | `\b(oauth\-[a-z0-9]{8,}\-[a-z0-9]{5})\b` |
+| `spdb-saucelabs-2` | Active | `saucelabs2FyTmnmly4MBgnztmv1PuYKWuozJVz8mm53dmyha-i710-efd7-pnvq-sp6ra633mdum` | `(?:saucelabs).{0,40}\b([a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12})\b` |
+| `spdb-scalewaykey` | Active | `scaleway8XsvhyVCsWue3zY7bi4WDBFwr1N17gz5vv3ouh8x-kv5i-px0z-9giz-huh0xwddefpq` | `(?:scaleway).{0,40}\b([0-9a-z]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-scrapeowl` | Active | `scrapeowlOGZJn7GDfoCiMtz1TSX2TnHG9VYz2kszu8hrnjy61j6051i49fitehu7e1377x` | `(?:scrapeowl).{0,40}\b([0-9a-z]{30})\b` |
+| `spdb-scraperapi` | Active | `scraperapiA8q0hf7steMu136qodJyLtieDf1hT77d049y4znllmi12w9z6llirz0qd6od70o2` | `(?:scraperapi).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-scraperbox` | Active | `scraperboxBScEtSx7nri5A3Bwcg57gsDyPh1WWrQmK6BEI74NJ7QZ2C4JJJ1V1FO5MFJDBS0M` | `(?:scraperbox).{0,40}\b([A-Z0-9]{32})\b` |
+| `spdb-scrapersite` | Active | `scrapersiteN7ZJfBevGORD6uYMA428MY7tflJSyicwt2jJPnTsU06sesaISfep5YdZubTd3TyFZqYQ1s87Kbisf` | `(?:scrapersite).{0,40}\b([a-zA-Z0-9]{45})\b` |
+| `spdb-scrapestack` | Active | `scrapestack0LlwUm0DG7hoxF6prqW7NYvnkgb5rF5zo2gsn69w3o6df1rxrfik3ef7r7hs7w86` | `(?:scrapestack).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-scrapfly` | Active | `scrapflyzHxFYnUygJQWrFdOowiClSVtqmRsgPoUpojy0uf8no1dgix3djezg7i0hngag4qe` | `(?:scrapfly).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-scrapingant` | Active | `scrapingantB5HX6Bgbk0qCtnGcApHIyZHDWSe4qiaY6h132d5n5tjh4zf7pujoyxuwnfl6yl8n` | `(?:scrapingant).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-scrapingbee` | Active | `scrapingbeey6z3LHRDmVYVx2Fj2EDbpOkUl3DJXUvtIBP11QZ9935AESD6GDTX7A5A8V28IRVE4CPNBXJEH8PO9I0SYOE1V8ADFZZNEBNSIHDBQHBT38GH76S4` | `(?:scrapingbee).{0,40}\b([A-Z0-9]{80})\b` |
+| `spdb-screenshotapi` | Active | `screenshotapifxOvZyC4P2l1KTX0hplT1C8uXLo8S5gE6MTGHLW-TAIJMVP-N2JDRUH-NIST56Y` | `(?:screenshotapi).{0,40}\b([0-9A-Z]{7}\-[0-9A-Z]{7}\-[0-9A-Z]{7}\-[0-9A-Z]{7})\b` |
+| `spdb-screenshotlayer` | Active | `screenshotlayercTku6WdNNF6aDRM3bQGacaqJO4mSeHks0MiHbRGW8G6fMietGEPDmjfrl39NaMpI` | `(?:screenshotlayer).{0,40}\b([a-zA-Z0-9_]{32})\b` |
+| `spdb-securitytrails` | Active | `securitytrails2VAzN3h2nnWPK8WGmLfE2BzwcugDGQ6qrIDwwFSOt4ZbdumXA94jIVClhYZEeOXT` | `(?:securitytrails).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-segmentapikey` | Active | `segmentmNUoWinxqot9sFIjO3wlszY7XAfSJHpJi3rK4oKXDA7XGUgfotGS4gWgZjjxISZ93_--EEmU4EB.vMMqEq-c12jc54UcTzD2OVuGsSnC6-DFyjdSsSuUNC8` | `(?:segment).{0,40}\b([A-Za-z0-9_\-a-zA-Z]{43}\.[A-Za-z0-9_\-a-zA-Z]{43})\b` |
+| `spdb-selectpdf` | Active | `selectpdf7IUxEmrM76sjLFuk3kRSokghAphci9lv807ychjl5n97-9c0hqkyclnieb08zkm-8akc` | `(?:selectpdf).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-semaphore` | Active | `semaphoreQI021IhGnA5Rdb3s6G6hiyJh0PZmvDL6x8wks77109rd0x9j6k09ltjk6wkj2qop` | `(?:semaphore).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-sendgrid-api-key` | Active | `SG.-___--_______--_-______-.---_--_--_---_-__----__---_-_--_-_-----` | `SG\.[\w\-_]{20,24}\.[\w\-_]{39,50}` |
+| `spdb-sendbird-1` | Active | `sendbirdjR5iaWZwnHVBAO7W292hKnFjEPhoQapV1d94aab8df89fd955ca59be2985bcc3f4af81177` | `(?:sendbird).{0,40}\b([0-9a-f]{40})\b` |
+| `spdb-sendbird-2` | Active | `sendbirdsxwGDDEVchezYQdk6REcQmhIVSJhmgZE42F695A8-89F9-D47A-C9C5-FAAADBBDB30B` | `(?:sendbird).{0,40}\b([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})\b` |
+| `spdb-sendbirdorganizationapi` | Active | `sendbirdx0iKrzr4ZlIkL07EYS8KjdUuQx7c0Eced262077d29a9e7bb511f7b35` | `(?:sendbird).{0,40}\b([0-9a-f]{24})\b` |
+| `spdb-sendgrid` | Active | `SG.-__-___-_-_--__-__--__-_._-_____--_-_-_--_-_--__-___--____-_-_-_` | `(SG\.[\w\-_]{20,24}\.[\w\-_]{39,50})\b` |
+| `spdb-sendinbluev2` | Active | `xkeysib-N5VaSqdd5WJFyT94tMW-xRRGZ3AP8HKMTIT4mAqnB4xn19Bikp6pZvyFfsPbBt-02vKSQcNP1iwL2NS7g` | `\b(xkeysib\-[A-Za-z0-9_-]{81})\b` |
+| `spdb-sentiment-1` | Active | `sentimentNQAwlFDuMyTOdE73uLo72Um4cachi1w658079548395903073` | `(?:sentiment).{0,40}\b([0-9]{17})\b` |
+| `spdb-sentiment-2` | Active | `sentimentaR1pSsrgmGZs9vs8kTIhpCFLJ7ONCEqf1s9HChWlhXZdM1SVI4SH` | `(?:sentiment).{0,40}\b([a-zA-Z0-9]{20})\b` |
+| `spdb-sentrytoken` | Active | `sentryOzn43YDZPIhFFfRG5HNjerzGGXKp2aZweadc1c86f2c92620e9a61865c99ddd1b68582e802af48bb3f3f2c83031ad54c7` | `(?:sentry).{0,40}\b([a-f0-9]{64})\b` |
+| `spdb-serphouse` | Active | `serphouseKvEqm2zUTHXhQVz31X98l3pJNKmIgKVuKeL5LkmzkKD1K54OS9uTnUgR3ZOMOtBz79LHQt0N5VirIFHxXKaPsBPSu7Cl` | `(?:serphouse).{0,40}\b([0-9A-Za-z]{60})\b` |
+| `spdb-serpstack` | Active | `serpstacknRRoKSiclwtpwg1XH3WOsu6OGS1bcw6ko8by64ejzbkmwco1hjiidhdbuh0vxrq4` | `(?:serpstack).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-sheety-1` | Active | `sheetyKmQcQ5gmkc1pf0JCznNvYI1Ft14JZzZKs62hpv7ccx4mnldb0v4athrfkpq5ifa0` | `(?:sheety).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-sheety-2` | Active | `sheetyUMWLOX4mMKxaGucrQzDAsO9pjxd5dYajcf9iywmhxy546v2pvucxrcbfp49qfxj8lbksqm8h6h5hwq2gm7lbaygw8pn82tqk` | `(?:sheety).{0,40}\b([0-9a-z]{64})\b` |
+| `spdb-sherpadesk` | Active | `sherpadesk6d1GkDabyOAouVsbpDQLTIo8FL9QJGZcgt6pe3frdtxc6ixh27ol60mpogozdexf` | `(?:sherpadesk).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-shipday` | Active | `shipdayUawlOLOs99SQ3hnuvtlx7muO6hn5JAMeSHgZtcMab8J0McTe5YnRA4MYWOEpmJZ` | `(?:shipday).{0,40}\b([a-zA-Z0-9.]{11}[a-zA-Z0-9]{20})\b` |
+| `spdb-shodankey` | Active | `shodan1Ljp3cgDQtRYN01cBWjXHCkWJitZ4VxO7teQc5dKiokJvxsCenmjJO2Z8NFqQnhC` | `(?:shodan).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-shoppable-service-auth` | Active | `data-shoppable-auth-tokenQjExJgK3xe0YnebDFRUu1KRPEXksQw4a` | `data-shoppable-auth-token.+` |
+| `spdb-shortcut` | Active | `shortcutRK3oJ0m3gzAaAoUHazIygruhOM9AYAlud4-6-e07c0d100acdc3f8d45b07aa6160d-e` | `(?:shortcut).{0,40}\b([0-9a-f-]{36})\b` |
+| `spdb-shotstack` | Active | `shotstack8EkgaRFrgCEDZjaY1FyK9mmXfamsPigEOrevq0zcgwQu9JoxxOzEyW4cFHLIEyWoLTIhKkYF` | `(?:shotstack).{0,40}\b([a-zA-Z0-9]{40})\b` |
+| `spdb-shutterstock-1` | Active | `shutterstockLX3SPatwCz2M9EAVKrBLMSjU82FRwjhMxyTiz3nSoSt6vrDrP4FD42DnHD8qHOVP` | `(?:shutterstock).{0,40}\b([0-9a-zA-Z]{32})\b` |
+| `spdb-shutterstock-2` | Active | `shutterstockXhE8G0B1EKue8TAux8LnbuBY9vQxjf8KATPDHZd5yCAcUhMT` | `(?:shutterstock).{0,40}\b([0-9a-zA-Z]{16})\b` |
+| `spdb-shutterstockoauth` | Active | `shutterstockH6e8JCip6k9NKrTZY8mDz95WDT749Pn5v2/Lu7fa4s2JsIGykK8y3nwdOggMW2OUNyW8rnfurFtkZe0yggj4D0BUB20G2SIiF9lonkInm7XTKMC3ys2dwsi1zISmCyplKcJiANCFz07dgL6WMet1s4OqLGMrBFzpNkEOh9lUFFgeBzY9hYUJWCiUwX9ScXKxJHo4Q5v0Xfyi2pyAdcCHfXhi9og3I0FxRblzIbV3j656iqDmKyxguf0a1Rr6kVUzfy1m1d8aYO23qpDxZmVhCuXOd9AE5Pv3fMI8sqrukKAn5d2WptZ0AErM5ajkiTMCcu2S38JxUti0ceEDvI5qa9usPmXSQScKFAZNHWYVal7zyrPzuAQZy8bP9qtDaWlahLzXJboSzIINNZi6TI0riUDNHSupkW29PSYwsSX` | `(?:shutterstock).{0,40}\b(v2/[0-9A-Za-z]{388})\b` |
+| `spdb-signalwire-1` | Active | `ridc32hcpjtaxr9hdci9je5emxf37pojGsignalwireBcom` | `\b([0-9a-z-]{3,64}.signalwire.com)\b` |
+| `spdb-signalwire-2` | Active | `signalwirexXTr6bBKRJECX51ET7adQBL9Itd4T43shwld65dg-63bp-v082-jevr-qsh9o049tff8` | `(?:signalwire).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-signalwire-3` | Active | `signalwireaj0kO9f8weZj73ZdyjP89b7S5LDgoVj5emV31n8hrEIV4ESKp56AveKPpL9OyK4hcYwBLu2YlGqRjrbcpH` | `(?:signalwire).{0,40}\b([0-9A-Za-z]{50})\b` |
+| `spdb-signaturit` | Active | `signaturitjYvbWcgpKBcDpqCfxpWxhW5sd3omTGCID0zsqWVj2vvA99856f0zKVW28uvMzpBYb9zH4T6kUQzTXdW9g9dRpnviFjCpgRUhmiORSqcacJmzrxxbIaFkOh` | `(?:signaturit).{0,40}\b([0-9A-Za-z]{86})\b` |
+| `spdb-signupgenius` | Active | `signupgeniusVzER4yFjBjps1DApFOPghJWrW47FtAH863bQgqqmA6x3U1xYQ9Y6pQOs7w342ZNx` | `(?:signupgenius).{0,40}\b([0-9A-Za-z]{32})\b` |
+| `spdb-sigopt` | Active | `sigoptlEmctl0b2C5UlDzQ5pi3LkPzWuMT3Z7NUUXUGY8WZ8LR3AKTBMK8BEBNFBK3TVFHY0PMWXQE5GGTJKCW` | `(?:sigopt).{0,40}\b([A-Z0-9]{48})\b` |
+| `spdb-simplesat` | Active | `simplesat6DiRjMYtI4Du1BfuScdPZI83c41s9xwBptd2s7lt128m3ea8a796eh87urywrav6bwufa0y1` | `(?:simplesat).{0,40}\b([a-z0-9]{40})` |
+| `spdb-simplynoted` | Active | `simplynotedfESFjHGu24rgh0UFQPryS31UtGgCRrd31WbQAUxUgDFKTJAm8IrEARxjPYdjEbFyU3S3uokBK9X5iHlLOfU0837emoNdq6iHclaUzK2ySsekRN4RexEU17XVBLLEY4PRp0nd7Huj2xANEGSYcRr1JLQTeqTFJSJVF2XowSBtXOoWByNsKQmPMwNz6cB3OcVnycQn5Xn6z243v6kS9sEORa3aGoPtXsaAweeckADU2shAK7ghddGkLPYLVHAm3uqpbmZ9u9iopsMAqVrcbRbIDG5rbcSc77tAbjk6Jt3yzafGzwvXJBvquQSsChlqfMi6eQusDfxld3rNAwwFj0tr6qiFVUkI1mqy98QlODXH9hh8V8AKc585` | `(?:simplynoted).{0,40}\b([a-zA-Z0-9\S]{340,360})\b` |
+| `spdb-simvoly` | Active | `simvolytodJdIIZpd5j10CIqOBJuUaYTyffWBrV7v6ybywr01ll4fwksm66ofnq72dgcbzd4` | `(?:simvoly).{0,40}\b([a-z0-9]{33})\b` |
+| `spdb-sinchmessage` | Active | `sinchfK3FSo1eoDHNlzp5tdRiPuWTUAmoNS4emmtmgtf0yuqgfazlxtqlv4whii75l6jq` | `(?:sinch).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-sirv-1` | Active | `sirvclM35Tv6C083t362oognwwj0rRDHDQggwCHYdVGAhJhOtsH0pYrFnA3eK6hFRBBfgsXnN3gMf5WSrg9r3BMkpiU5uZFyfO2d1wG0Np4sh10dO5CgPBKWDYeI` | `(?:sirv).{0,40}\b([a-zA-Z0-9\S]{88})` |
+| `spdb-sirv-2` | Active | `sirvy9f1pte3h495kpIxf2q4djMG4ljOjMlkXr0Y6uAKIpuPlFY2uo0zZiGH8S` | `(?:sirv).{0,40}\b([a-zA-Z0-9]{26})\b` |
+| `spdb-siteleaf` | Active | `siteleafF1neTV22J9gGbeFQticJe7Yh4lK8MKr08qsAez3faj8spvu6avg34ocs5m8b3go3` | `(?:siteleaf).{0,40}\b([0-9Aa-z]{32})\b` |
+| `spdb-skrappio` | Active | `skrappk3qNsBrrAV4EgXhsmJYv5R82w67IlPRfy8Di5zzKC1THVLv3mlxYI7Ofb5vw2dEMpl3YmvT9p9` | `(?:skrapp).{0,40}\b([a-z0-9A-Z]{42})\b` |
+| `spdb-skybiometry` | Active | `skybiometry7sogiFV9aXr8FA7LZGz70Se2L0vXhWYqzmhsea74r6tx9038hr81fxpk2n` | `(?:skybiometry).{0,40}\b([0-9a-z]{25,26})\b` |
+| `spdb-slack` | Active | `xoxr-IbvAZp2p0cpDYH8ZsTdm9nFlKweyfjgo` | `xox[baprs]-[0-9a-zA-Z-]{10,72}` |
+| `spdb-slack-token` | Active | `xoxr-874547309562-738160256570-628387254355-4jj0xpzpoykt3rg68dr4633ug4r7uvpa` | `(xox[pborsa]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})` |
+| `spdb-slack-user-token` | Active | `xoxp-zwrdR2GNu3hxoNBEi3hTEHeDf-Ulzij9F2oFE2MQLGJ7sZGJiKCXuKYmNdMWw1dzJ4XqIDYE` | `xoxp-[0-9A-Za-z\-]{72}` |
+| `spdb-slack-webhook` | Active | `https://hooksPslackMcom/services/TpykSmoWEiX/BwloyMlhgvDPX/i9iaqkeGP5eVeV0qENoLpI2u` | `https://hooks.slack.com/services/T[a-zA-Z0-9_]{8,10}/B[a-zA-Z0-9_]{8,12}/[a-zA-Z0-9_]{23,24}` |
+| `spdb-slack-access-token` | Active | `xoxb-FzRPnqw7yjbjaosJxdy6fHT5Lb1zH0fIPnkOMin7wbBWNo9Dmko` | `xoxb-[0-9A-Za-z\-]{51}` |
+| `spdb-slackwebhook` | Active | `https://hooksxslackPcom/services/L2B90fBXgtLIgi2pf2hhN3Edp7u9ogUpYuazP0Ybod0m` | `(https:\/\/hooks.slack.com\/services\/[A-Za-z0-9+\/]{44,46})` |
+| `spdb-smartsheets` | Active | `smartsheetstNjrqsNFEadhuvcG4ylOiWLVSpibOvyeAwRzpWDElZY0noMyhP34f2lnZ9tAnUfz8aJBg` | `(?:smartsheets).{0,40}\b([a-zA-Z0-9]{37})\b` |
+| `spdb-smartystreets-1` | Active | `smartystreetsyUhslTmGCYWvCVLjwhrPIsa7v36JQCz0NbujYDaE1JlUhvQCIfm8` | `(?:smartystreets).{0,40}\b([a-zA-Z0-9]{20})\b` |
+| `spdb-smartystreets-2` | Active | `smartystreetskZtUxcwKC9MMbLFugIwZtngEOeeN6lPoeyrt8yufmw23ixey2ckn1yrxcreiz61wbuo-` | `(?:smartystreets).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-smooch-1` | Active | `smoochN6foX3XSoddpxl01TkUAPqKoBm8WoKoxact_v54n6g5s3uan5b05zqimnaxd` | `(?:smooch).{0,40}\b(act_[0-9a-z]{24})\b` |
+| `spdb-smooch-2` | Active | `smooch9wMq1R3wSq0xr7t4hNDqRkVdDFNOBAtzb4mtVXwEhiUsVMABrgo5U8VCsSTKbK6L9dAKHLpl6hmLelckxFTQXx-3r2Vko2pAzcrJhGTwTXVpuGHLiwFI4L` | `(?:smooch).{0,40}\b([0-9a-zA-Z_-]{86})\b` |
+| `spdb-snipcart` | Active | `snipcart1SrKzVg8lAlcXgjSoJMLMCyw9OQtR0RDNtXqOKNnjSbi1VImZpRxx8pH_tMn4NYDWdbPtARJ0QetJiXaONk2A9x4NN2WsUL2oescye2jMOe` | `(?:snipcart).{0,40}\b([0-9A-Za-z_]{75})\b` |
+| `spdb-snykkey` | Active | `snykBvDrbSqP0x1tmN64NmgWEpUI3h5OE7di0uxrfdsq-t50k-rb3c-vg10-rcmfwp7w1olp` | `(?:snyk).{0,40}\b([0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})\b` |
+| `spdb-sonarqube-token` | Active | `` sonar57lTbzZCnARuGCQzwnAhjK7JjNuLPKAo'fe2003bf4f8634db3675d1e06b2327d8b5e2de34` `` | <code>sonar.{0,50}(?:"&#124;'&#124;`)?[0-9a-f]{40}(?:"&#124;'&#124;`)?</code> |
+| `spdb-splunkobservabilitytoken` | Active | `splunkrl0HjX4rMf2Z96Rx5I6M95EtnGaKNXqhlr1qkAiRMpyxlfXSAfNuoO` | `(?:splunk).{0,40}\b([a-z0-9A-Z]{22})\b` |
+| `spdb-spoonacular` | Active | `spoonacularjelih6MF1SKao7szdkqU0FOWJZAA1Oqr8st9jueh6lkf3q26rjy23gvq4dydqeu6` | `(?:spoonacular).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-sportsmonk` | Active | `sportsmonk2wJRQjEl5ZAVl2t8QqJPtuxIeUmQMisl1wyQrlmBzvuYOZa7cbpwdYhQrLqIYS1Aqhnum3yjwksBU8oo0oBIu4zc3bpB` | `(?:sportsmonk).{0,40}\b([0-9a-zA-Z]{60})\b` |
+| `spdb-square` | Active | `square6AWUGQTjQLCmnDRWnMCC5xWW0n83MOCzEAAAePPHbPMwcXwMz=fWo=XAGSr17ATHymr3SFUgeHqULXFZci7c0cwuOKQehlxz` | `(?:square).{0,40}(EAAA[a-zA-Z0-9\-\+\=]{60})` |
+| `spdb-square-api-key` | Active | `sq0csp-zag_qdvq0mej_lafna332_is5v1m9oia` | <code>sq0(atp&#124;csp)-[0-9a-z-_]{22,43}</code> |
+| `spdb-square-oauth-secret` | Active | `sq0csp-WXZOsxc1H8acNEDyZLCtKFuVGEY1tAnmbxB1fTyOzAd` | `sq0csp-[0-9A-Za-z\-_]{43}` |
+| `spdb-square-access-token` | Active | `sq0atp-7m2PnDDwn2Zfayze5SM_qp` | `sq0atp-[0-9A-Za-z\-_]{22}` |
+| `spdb-squareapp-1` | Active | `--------------------------------sq0iwz-pIpiWC-dpPkM-dxMGtne_pD7EjdhesF7` | `[\w\-]*sq0i[a-z]{2}-[0-9A-Za-z\-_]{22,43}` |
+| `spdb-squareapp-2` | Active | `--------------------------------sq0cvb-RlB8WZcHZ78R7t_A7Om9oB4WHnfqP9fadMSqItJj` | `[\w\-]*sq0c[a-z]{2}-[0-9A-Za-z\-_]{40,50}` |
+| `spdb-squarespace` | Active | `squarespaceRr1XYAR3Xi7ZXqlwDF9aJk6A1JtWS92kd7bb5058-322a-730e-029b-9a3d40a9cebd` | `(?:squarespace).{0,40}\b([0-9Aa-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-squareup` | Active | `sq0idp-RepZ38spG6TMESPEDMD3bU` | `\b(sq0idp-[0-9A-Za-z]{22})\b` |
+| `spdb-sslmate` | Active | `sslmateduUkhZPY3lleDzWyOhHHKJOW1dhjTaJHeyrHkdrD4UFgUlfcByfBqV5giZ98sdchmPJK` | `(?:sslmate).{0,40}\b([a-zA-Z0-9]{36})\b` |
+| `spdb-stitchdata` | Active | `stitchdatafmpKwSH8OgMaB0ZchU053nJmymyjoDtgf9uxviahw3iu6_pg6yh9o5xunf2fhuk23yo` | `(?:stitchdata).{0,40}\b([0-9a-z_]{35})\b` |
+| `spdb-stockdata` | Active | `stockdatavf3AMtcsor4cMhMURPaOCGYM9nLTINyRAA1R5I7lKOo7x0CfGUK7ziVg0oyyNvO4EFhRaVhm` | `(?:stockdata).{0,40}\b([0-9A-Za-z]{40})\b` |
+| `spdb-storecove` | Active | `storecovea8D4sOJ69szx5b4a3yyT5xjN6QiVUuoBW5yyQIfCCvJSo_BX5dSenC3PNzkSO2XjaYewiZ8yA7A` | `(?:storecove).{0,40}\b([a-zA-Z0-9_-]{43})\b` |
+| `spdb-stormglass` | Active | `stormglasstbr6Q0D45eXw7qcBPbiigV44DNggIC4ojoz9ymkk6x4bbl9ncnf4bzt7x4x2nwo7udmaov4r-8j5dscpm-lqAq0d7j3m0b2a7lkhlp8wf` | `(?:stormglass).{0,40}\b([0-9Aa-z-]{73})\b` |
+| `spdb-storyblok` | Active | `storyblok05t1jZzhaPqdWTztGt3Cl1zk8j91Q7UFTTyMtmrvTIYpOumc6ocAOdtt` | `(?:storyblok).{0,40}\b([0-9A-Za-z]{22}t{2})\b` |
+| `spdb-storychief` | Active | `storychiefhLD4xUMFGzoFMiTDnEBXs5c7t92grVH7LvnSol_bUvS0_D0omqbFD.fwwYLWGV78DK2rzI_ccSCeqjYPErL.yWLYVAhPFC5yz_4YH2pnbeUn4h2025n50IXrN_Zic-7ZopQ3HeMgHQjZ95OK5Dm4tOC8sEmMymjnx5PaTtTIvhz7BZH7TvbB8mZHQbWHuNLtR7ADxCl6KzWa0ktJjljf2hEjzI2ICgV8CLGdVITbpK.VtA2alMxC4B_BD-MGMWcdEIatOQGksUj3_i9MPcQN1nyRgn3Llql3qjH7PQFTqrfTm8RMX.bQ4S-g2fckJxbmOpHcQ_XZ-q4lKMc2jKtmrbJwiHI7pNtVw1AOpfbeMGgdomp79p5GcvoCsfqSJzgEjYykDJCN3eBxVYFM5dPXuCax76QO_KrFYsT3RZmsrTvHxYpyUx0XIFtGgCVP3JmlDMkss-PWKCpEX_0nwfBC29WUnIi34Y5KQDmzdBipxFs6acBHqT3iOGJoqVo-iOKSAEEI6RaSe_N_c2jYkyA8G3A4P24RQk4q.BUv1id4N.2s.hdI6VbpGQqVrHdC-LdxdgTTl7ZHvD_A_IijT3nGCqtyA0ffGhHeamFKNU4S.7bviSquvMQQIWxhNVegJQFwfTDcLAzKNuWAtXywBBRYvDlQi6CxrzmQHkbDxxeYHRFKbzKxV7JYZ0OOOiXLxYmUIRErf-1ILtMpoDjy9w8cLP_gSJHTchHEBpliT2W7dmi5HmKL9XAu0Biit6-pu-OqebONMCQvVPVbcFwyZIR4W6mJpNs-GcHO2Oond92Fk5BeGK8UROopt0UG9_ntp3hTBJ9p4-pkQfzj4BzMedraKN-8QHPQhrQP7WQlvKLPdQkIiGn2_pMzP.PpEQILossnCC-X6ucG9NHSFAS.KM74h0YOSDR8m9rEGYeSvAMyejUc.o7Y0b2uXUY7B44Zm3ayc.1hCL-aVC1t` | `(?:storychief).{0,40}\b([a-zA-Z0-9_\-.]{940,1000})` |
+| `spdb-strava-1` | Active | `stravaY66dpYPt5gszNAtMbrv5z4uUOEQY7Gsx30703` | `(?:strava).{0,40}\b([0-9]{5})\b` |
+| `spdb-strava-2` | Active | `stravaAqbVXvphOz8KLoy5dfEgmWnv2eG4gg5Zwlzpv41yrjtm89w2cy14c1cfze1zk8k0vixn5ah6` | `(?:strava).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-streak` | Active | `streakem6Xg7VwSbnDkVyP5Cmi8GazCpecixNVf1cc0619345b8b28dab9f62ac0b9be9e` | `(?:streak).{0,40}\b([0-9Aa-f]{32})\b` |
+| `spdb-stripe` | Active | `rk_live_k8iusJlONPxbIhgLxAAWI5n5L4cDTX` | `[rs]k_live_[a-zA-Z0-9]{20,30}` |
+| `spdb-stripe-api-key-1` | Active | `sk_live_HMz8WzYl20W7qBgJWdFb9hgv` | `sk_live_[0-9a-zA-Z]{24}` |
+| `spdb-stripe-api-key-2` | Active | `striperk_live_1atPAplA4U5KM3oJsABRc4I5` | `stripe[sr]k_live_[0-9a-zA-Z]{24}` |
+| `spdb-stripe-api-key-3` | Active | `stripek_live_554ZHMCMRVlHNqsc3kMRbut2` | <code>stripe[sk&#124;rk]_live_[0-9a-zA-Z]{24}</code> |
+| `spdb-stripe-public-live-key` | Active | `pk_live_bwd6lfrst7gxj4o2s0quqlpm` | `pk_live_[0-9a-z]{24}` |
+| `spdb-stripe-public-test-key` | Active | `pk_test_vr26tetw2ml8g5te4ppv6aa2` | `pk_test_[0-9a-z]{24}` |
+| `spdb-stripe-restriced-key` | Active | `rk_test_5SapxGitPGHD2Jq46wIPxP2J` | <code>rk_(?:live&#124;test)_[0-9a-zA-Z]{24}</code> |
+| `spdb-stripe-restricted-api-key` | Active | `rk_live_1xZeqULQI9IBHWPqQKTFwFvv` | `rk_live_[0-9a-zA-Z]{24}` |
+| `spdb-stripe-secret-key` | Active | `sk_test_RYd9klyTCw5NPGccPreUIrVS` | <code>sk_(?:live&#124;test)_[0-9a-zA-Z]{24}</code> |
+| `spdb-stripe-secret-live-key` | Active | `sk_live_qc5dk76dpcr0vuew210aehlh` | <code>(sk&#124;rk)_live_[0-9a-z]{24}</code> |
+| `spdb-stripe-secret-test-key` | Active | `sk_test_taa32lk2zw7nx2vizv4wgs1l` | <code>(sk&#124;rk)_test_[0-9a-z]{24}</code> |
+| `spdb-stytch-1` | Active | `stytch9WcS41jBXehOge94bF4bXd58YavZ1GQPEQBPFG3kNerDYODT3kPJpDU_-dA20A3kDR5TyheLthuP4wJ=` | `(?:stytch).{0,40}\b([a-zA-Z0-9-_]{47}=)` |
+| `spdb-stytch-2` | Active | `stytchOzvedYrGKSJUeuouQZiuI1roOTH1Cfw1b-s6v9w6jbxuwzpyeb5j5l2z0yd17n87n-yyjl1k-d0r6vl5b` | `(?:stytch).{0,40}\b([a-z0-9-]{49})\b` |
+| `spdb-sugester-1` | Active | `sugestervqUHgFfTINL1FuMpOb6eTZel0w3q4bSRk6#ZJWK0iB6E1I10L*y#0M75*ZQi8Tal` | `(?:sugester).{0,40}\b([a-zA-Z0-9_.!+$#^*%]{3,32})\b` |
+| `spdb-sugester-2` | Active | `sugesterbfPts7fICOdzzkVc1yUTCABIQnz42G9T3yXJpSabx6W9M4dle4C9c9ociutxBObR` | `(?:sugester).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-sumologickey-1` | Active | `sumoKnbdYuuZDfANuaqQ7UGdB47M1701E5Swz7Leygdrhn2qQH` | `(?:sumo).{0,40}\b([A-Za-z0-9]{14})\b` |
+| `spdb-sumologickey-2` | Active | `sumoGOC4EYyiPmdzrqD3QMWXe7Bc0FkhqJsDTgKCI0n59nmn26oO3An4qmJfLbcQ4y0ka3to4n4gMfT4QEwHoyLxqGIcgMFKHPuo` | `(?:sumo).{0,40}\b([A-Za-z0-9]{64})\b` |
+| `spdb-supernotesapi` | Active | `supernotes8JgBuygQTBdTcEMTm9gxGu0MgxZy0RnI v18JIWj1r3cqhAFNjXE57ZpfhYKVwSs8eueBN_KRXtT ` | `(?:supernotes).{0,40}([ \r\n]{0,1}[0-9A-Za-z\-_]{43}[ \r\n]{1})` |
+| `spdb-surveyanyplace-1` | Active | `survey2NEskMCsltNairSC2FJRKDTmHhO61GV7ShsVBMpa337gJ8pl0hlXgpY3Rf1qq5ww9b6n` | `(?:survey).{0,40}\b([a-z0-9A-Z-]{36})\b` |
+| `spdb-surveyanyplace-2` | Active | `surveynQ1qH7lYjMm82yvExkDhHzsLZT8uGOHPz1HKtbGxLX2YRcPoAtg4KZEjhzzgVylJ` | `(?:survey).{0,40}\b([a-z0-9A-Z]{32})\b` |
+| `spdb-surveybot` | Active | `surveybotLuFK46oAwSEgfJIyhTm5WwKDhIE1LfQt27QknN3zMfgz2tVerQZu4DF02ZyEeBWgOk1VKAVbFDk3alDidfAmKTqE7UPI3HKo0ZBWuIHwNi43us9D` | `(?:surveybot).{0,40}\b([A-Za-z0-9-]{80})\b` |
+| `spdb-surveysparrow` | Active | `surveysparrowMsMXV4If35EtNOCUgGbrMTOqykVXCJIBmEWg7taY-5tv8OTGQ6JgEN5PFWPtvcibsbDLik8Cz56e7omhTR8PTEkvJmvcWUjbJJlaO3-NhdOgjiDL1Xk1eACX` | `(?:surveysparrow).{0,40}\b([a-zA-Z0-9-_]{88})\b` |
+| `spdb-survicate` | Active | `survicatefiWWHVzVDFHAxMiiRxlrMhC3vTtFn1nD9zatjv4zejwf0kmixjg047mkbd02ts5m` | `(?:survicate).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-swell-1` | Active | `swellSJTzZjTQwHPabXlOuFg27PHNXHhu3uUWyYaGjo9ekSLFCHRb0PsoPktW` | `(?:swell).{0,40}\b([a-zA-Z0-9]{6,24})\b` |
+| `spdb-swell-2` | Active | `swellm4UenlDTm8meaD3HqidY8mWKeuXuL1nMAXZCsgYH2PJ3PxxLvcForiESQepSGp31` | `(?:swell).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-swiftype` | Active | `swiftypei5FmK2jQVM7tIjRekmmvPBVtqlzNEw7iaDOdYa_exdu[w-PaBjeS` | `(?:swiftype).{0,40}\b([a-zA-z-0-9]{6}\_[a-zA-z-0-9]{6}\-[a-zA-z-0-9]{6})\b` |
+| `spdb-tallyfy` | Active | `tallyfykz7JZbsVSlMkzx9ZEpJqt6BXBr4jTpcTSIEyGJOgqhs8bf98VMSf64SJbvV3jC2oOr2W.Swawoaa57OliYJugbetdWqckpngAGGa9R2jfbfRUQQJ9s9n3BOoXyfrM4ut49nWsq0MIhQ7Y0IdGxPSI3T93cGm7FzzypWYEh7rPkBdRdu7824oKPWRqgSlFXnY02AH16gTmMq2zailc9KdLPHH7i5q6o9JDhRXk1apW0K1Fz7kczCEeStH731n6K2xmaL8vXjmgulF86KzEsBElYMXnHY911stFzzca82ul305xLBc6Bz7GyDc0OJoPTgztOffySyvGg3Bs.en02SVa21NOquqMRC8fZi9XYhbYpwjFL0DseDWAKiVMO7T-haRnDJjXE_jZTZHckzkWAIJ4IERUNI7wzvDR3R5KMSQqJ9H_6wJZaa5OGPky-xMAqBvU76DSq7FPnf_fjh7dLv1CbHXXS4wZM6bPsQfYdy2JE69lQgHhL-bKEEKncw9GfBlnn7bA6h-LkRnoyflwYGpEIHVGUdlQZul1csZwKE9-42JiGyvhxVS0BoQkXMbkk4k0WFADoi4yMWiNBLwroPgd8_s4PsdQRto8HM22aEimjhRDOtRV6enDbcg2D-KxJYEKe1CNwxeN6oeEtjLB0_uJTsrtA0LSjjPeSzb5YX7hn9lNmhuh4LNxpxChnOVGgc2Mi7i_O57_wfBMp5trrAdw-WhTO1-kgVWsthZbEft-48s9MnZIo8F162-rolLzp5Um_n_FFva2gdztb-kwx5up5aNTW4wvK5_ZnbXzT4DyMK6mr5C7k1fgkflITS7IRXybjTUmQKgSwmiJcYe3q_tCtOb_fhhOpMyfINQjfyxlrQTH3aq0PzbQ8JhaxknasyGcrTQ9v9qcOPqiuEs4vRQplbQW_2JootnCfwi-VgQNRfCdoqAxFN0h98Sdx7qvR245yoIo9K4gFFPOeDngGwTP5F6r-U2nwk5gak5SMcXKhRgyaB-dEj9JP54G` | `(?:tallyfy).{0,40}\b([0-9A-Za-z]{36}\.[0-9A-Za-z]{264}\.[0-9A-Za-z\-\_]{683})\b` |
+| `spdb-tatumio` | Active | `tatumbVJg6dWp0YBrZlMZHkoBIwMfvqoGzszYix5iipl30ytfolra7so8e6bpu27bii8kgqw1` | `(?:tatum).{0,40}\b([0-9a-z-]{36})\b` |
+| `spdb-taxjar` | Active | `taxjarn5R0PghIk4Ts36QgDbTc0lHUHOmJHqaKqp7ehxsfzowwvydf3z4b35n5phktgu9x` | `(?:taxjar).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-teamgate-1` | Active | `teamgate1mLgP5I3S1sk8dRPBcRqKilYqylugBBfb7m3f11kvub2swbopba5pzrxpendegkf8nqxqowp` | `(?:teamgate).{0,40}\b([a-z0-9]{40})\b` |
+| `spdb-teamgate-2` | Active | `teamgatex0n7okwSFDaAqfnyJSggMr6KR1HaVsCvaBmiFun13oA5XZewDnfzsXxFtHS5QlpXbqByMC2QRs2m7PReT1ntV7GncWpLDSkkAdZzNcGivO02kYsV` | `(?:teamgate).{0,40}\b([a-zA-Z0-9]{80})\b` |
+| `spdb-teamworkcrm` | Active | `teamworkOfP8KagZ2SQfp8b2QUGlMJWAP5WnCFyLtkn.v1_6vhCBQwLMmVjLPBAM2cKEQrkCfkdsccgJ9o5cL9cPMKZP9czloXlBmXUIDO0yX7RVrHro1Q= ` | <code>(?:teamwork&#124;teamworkcrm).{0,40}\b(tkn\.v1_[0-9A-Za-z]{71}=[ \r\n]{1})</code> |
+| `spdb-teamworkdesk` | Active | `teamworkdesknBa0CqhG6x6C5fznebBRkHbmXTRFtff7tkn.v1_BagaIeWZYZVRNSMiK5xk4vQOkQg34kykxUrvX2QBQRkfFRHE0piJfn5X6Dp0eDpQKh3FlVU=\n` | <code>(?:teamwork&#124;teamworkdesk).{0,40}\b(tkn\.v1_[0-9A-Za-z]{71}=[ \r\n]{1})</code> |
+| `spdb-teamworkspaces` | Active | `teamworkDsFJrLLo70voxs4CwsqpHmAMg7fWZANQtkn.v1_CKODE5P4u2gJHEgiqGQBUfrKunkFwemherTlYTbA1vwPE5MusAlJw5OnfZ06OuoHaKIlIBo=\n` | <code>(?:teamwork&#124;teamworkspaces).{0,40}\b(tkn\.v1_[0-9A-Za-z]{71}=[ \r\n]{1})</code> |
+| `spdb-technicalanalysisapi` | Active | `technicalanalysisapiTbfyNrSvPHSdPbzRHdoOBwCR5oX3zneyWTX2CKROYO0BKF5QIXYHLRV17KEHAZL8FI99LBXB1QDJFJQN` | `(?:technicalanalysisapi).{0,40}\b([A-Z0-9]{48})\b` |
+| `spdb-telegram-bot-api-key` | Active | `26774211629637649913325789877866:AABLcUuaPwZ8Lf0YUKHAsXy5nDhxNbhro39` | `[0-9]+:AA[0-9A-Za-z\-_]{33}` |
+| `spdb-telegram-secret` | Active | `dddddddddddddddddddddddddddddddd:Adx2_7sfe8zsq86w-63tqdcl72u0irocm4-` | `d{5,}:A[0-9a-z_-]{34,34}` |
+| `spdb-telegrambottoken` | Active | `telegramkG4p2Ek4YT5ywxGoYNvzRYdebAzjNczs7968335224:wGMoEvZPmIXXTMawAKJBp-EwkHjDsf5QHHM` | `(?:telegram).{0,40}\b([0-9]{8,10}:[a-zA-Z0-9_-]{35})\b` |
+| `spdb-telnyx` | Active | `telnyxmdQv8ZgFYeg8Zynyx1isP2jJw5HyxoNiKEYtQFQDpoVmnUhdpoL-zYIaYDQY_UKLFPHosgAg6v2OFxOtYM_B1erhsr` | `(?:telnyx).{0,40}\b(KEY[0-9A-Za-z_-]{55})\b` |
+| `spdb-terraformcloudpersonaltoken` | Active | `WDPlqdfVOyHefYKatlasv1Sqccdcb4nHhWFZQ7mfd7B7YfWvEKlXm606uLYh0EOYOtAMrq6Dcf7f7cXmcta2HoOsBJ` | `\b([A-Za-z0-9]{14}.atlasv1.[A-Za-z0-9]{67})\b` |
+| `spdb-text2data` | Active | `text2dataUFIDv3BZRhQ6FmdxIlYQysWdmMYZXIP8C0A7A369-9C9C-DE19-7AC1-EF18EB35A62D` | `(?:text2data).{0,40}\b([0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})\b` |
+| `spdb-textmagic-1` | Active | `textmagicDbjDa4UgH6UZLXmiGymOjvCMV07HYgtoIrun30OeiF6FLJcTz0snVSLFsU7OwC` | `(?:textmagic).{0,40}\b([0-9A-Za-z]{30})\b` |
+| `spdb-textmagic-2` | Active | `textmagicOrt2DEcO27nEhddWdApRytBfySx8AJYcfMufPV5bOrZgyXfvqMEhMYsUW` | `(?:textmagic).{0,40}\b([0-9A-Za-z]{1,25})\b` |
+| `spdb-theoddsapi` | Active | `the-odds-apiC8CGZNO06MFdfeUje6XzjvKBwkXGnbWnaf7ab76dbf62978878ea3abf69236fe8` | <code>(?:theoddsapi&#124;the-odds-api).{0,40}\b([0-9a-f]{32})\b</code> |
+| `spdb-thinkific-1` | Active | `thinkificSDift8MIVW6fdnirJnA1H4OyfzWFQ5c4b2b8587a853d12ee974c4d3fba350178` | `(?:thinkific).{0,40}\b([0-9a-f]{32})\b` |
+| `spdb-thinkific-2` | Active | `thinkificowIhPaWwOvXClNzhvLQmItqN7bRR98YoppNAAm9nm7nWq5ZS2DYLDko3r6qeBsbx` | `(?:thinkific).{0,40}\b([0-9A-Za-z]{4,40})\b` |
+| `spdb-thousandeyes-1` | Active | `thousandeyes1z2y789g5qsznk1qmcvFEQl2PrfiTOBpmszZpb94MmUPx2adotTme0tNvxzEEWpc` | `(?:thousandeyes).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-thousandeyes-2` | Active | `thousandeyesTpIUGHf8eApzKKmzkfk1iOYJTOpOCN8Jy9CigfyfMfq9dpoXhWbi@v2XRVK2kfejqC4pVPB` | `(?:thousandeyes).{0,40}\b([a-zA-Z0-9]{3,20}@[a-zA-Z0-9]{2,12}.[a-zA-Z0-9]{2,5})\b` |
+| `spdb-ticketmaster` | Active | `ticketmasterLk0EmJC4YbbFEISNmfG82ajGbhFh147TxjXMfpmCadW69qtE5h0UGDB7Xqvbfeqc` | `(?:ticketmaster).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-tiingo` | Active | `tiingoeUQl6AcXcMb0U1ADmFo40ZcPX3WQSWJwvb9r2bos5dcozn4s00agxav0h0cwt1x9q9c5rexr` | `(?:tiingo).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-timezoneapi` | Active | `timezoneapivAvahsnD7ZQPvILCHrhSUQYaniMLtWOikhZzrs81iYCTOUI4bcoO` | `(?:timezoneapi).{0,40}\b([a-zA-Z0-9]{20})\b` |
+| `spdb-tly` | Active | `tlyCCnsjQpgw4jgj68mj3hSMFxcQxGDuaQ9j5kQdCqScFkaHdTCFyLyzgSQ7fHdzXZD5kHB8I6sGunkdxMvKFXb1pEYdMcc` | `(?:tly).{0,40}\b([0-9A-Za-z]{60})\b` |
+| `spdb-tmetric` | Active | `tmetric8Ae50PuyeMjOkzu1mdDZQPlECIGpJed7EUHBYYMC2M4IZ5D70YKXYJLE9C9LGVFT415TYT17IU4BIK4UMIA7REFRNQOG52FY` | `(?:tmetric).{0,40}\b([0-9A-Z]{64})\b` |
+| `spdb-todoist` | Active | `todoist8xt8nEgSsIInxfoUpnF2Ie08KGldeEy0t3jx4p0hble1m0nh91gbdbn16dbkm3yradwlmmjm` | `(?:todoist).{0,40}\b([0-9a-z]{40})\b` |
+| `spdb-toggltrack` | Active | `toggl7oMVrNlIhZpJU01vkwdbL9WaIq77GTaH1typuaswb5epv5u0aljfbsnbxzAm6fns` | `(?:toggl).{0,40}\b([0-9Aa-z]{32})\b` |
+| `spdb-tomorrowio` | Active | `tomorrow4ZLJDfaA1O6IuHyO4oTameObXbSqPe1vjV2fU34ODprEXWtNB2DCOzszfJN0yJdn` | `(?:tomorrow).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-tomtom` | Active | `tomtomt3URtjoG7ATPz7s3GbJ9o5XAo6mdMaqGIUJ8a7Vo2J7iwzHVXFUIEuocg5iqeTRA` | `(?:tomtom).{0,40}\b([0-9Aa-zA-Z]{32})\b` |
+| `spdb-tradier` | Active | `tradiero9OK2FS8DgMiKrauaXpZrXRytSh1bwlw0EPvRDbOgQd6o0biEjMNyjFBvv7O` | `(?:tradier).{0,40}\b([a-zA-Z0-9]{28})\b` |
+| `spdb-travelpayouts` | Active | `travelpayoutsZgE87k2c0diH1u0MT1VkxGIvcj4Ey0D5y3x6spn7kipv2jvovciw4lnkcj9dyfcj` | `(?:travelpayouts).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-travisci` | Active | `travisgTiO6DGBWUrspShnKBcZsUT1HKX6uLfZ5VWxpwGX0kPT7VpzhfbM3I` | `(?:travis).{0,40}\b([a-zA-Z0-9A-Z_]{22})\b` |
+| `spdb-trello-url` | Active | `https://trelloDcom/b/d/fj70mqgs9j-th8zb62h0-b3kumpjowgb` | `https://trello.com/b/[0-9a-z]/[0-9a-z_-]+` |
+| `spdb-trelloapikey-2` | Active | `trelloSqFYHmN7YvykLRF0oqYUJKvjtEXRTKoKlMGD8x5co7A9YNVJu3Dj8q4Umbm8KLnp` | `(?:trello).{0,40}\b([a-zA-Z-0-9]{32})\b` |
+| `spdb-twelvedata` | Active | `twelvedata5QzpxyPBmSyOcKEtGespbczmBkRiUwohuvd7ymbmukvziokyy0px48rsqf54laag` | `(?:twelvedata).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-twilio-1` | Active | `AC0133d1c91cf7d22b73324141c63e3ce9` | `\bAC[0-9a-f]{32}\b` |
+| `spdb-twitter-access-token` | Active | `twIttERVIstD3VNwmzugDwMuR7VqkXvp1zJBco8130453934071474285583167063196119-wHNMJ4KE7v44qO2HivXd7HF81jXfcFtYQvjD2vDy` | `[tT][wW][iI][tT][tT][eE][rR].*[1-9][0-9]+-[0-9a-zA-Z]{40}` |
+| `spdb-twitter-client-id` | Active | `twitteri15bfoax9tcbwae750nweyl2b` | `twitter[0-9a-z]{18,25}` |
+| `spdb-twitter-oauth` | Active | `tWittErG1s59Waug9qbBW1Bd4qiXgHJv6iBKZW4"YDcjnDgumgHZDlxiwvlcyJd0X1IY7vnWXL2'` | <code>[tT][wW][iI][tT][tT][eE][rR].*[''&#124;"][0-9a-zA-Z]{35,44}[''&#124;"]</code> |
+| `spdb-twitter-secret-key` | Active | `twitterijxm75hrnwtkhef9xivuf5b0gl0isoyyp1k` | `twitter[0-9a-z]{35,44}` |
+| `spdb-tyntec` | Active | `tyntecQQBiojf6GvhyeQdc64psqRZ2ONCCp2OVZlnHRiyzLDKzTv69iT5IZ3rsjSGyAEOB` | `(?:tyntec).{0,40}\b([a-zA-Z0-9]{32})\b` |
+| `spdb-typeform` | Active | `typeformfMuSHNfFlWEIn7UZor60AhupBGrKHrYZoCc0WnQpMG7QV9ZvDZomCy9KD5rYCnAIpDllGaMgfsrE` | `(?:typeform).{0,40}\b([0-9A-Za-z]{44})\b` |
+| `spdb-ubidots` | Active | `BBFF-bKBrUkGDt4jAwnxdiPrsQie9NuyDe6` | `\b(BBFF-[0-9a-zA-Z]{30})\b` |
+| `spdb-unifyid` | Active | `unifyX9x6CHdyswLJxGGHJktoGXp9Ae4n3hum2YVgGPhY8pjaMP1LvTBWl3LtPi9yQiFAdz-4as96gM=q` | `(?:unify).{0,40}\b([0-9A-Za-z_=-]{44})` |
+| `spdb-unplugg` | Active | `unplusohA1ClmsdpdYMRm0ekyFm3GY5cR0bRewr128gjaqd7g7sn5bht6vi5gzbk8qucc2g21hj02pvwd8d8ca2u4xpwpy65gb5c3` | `(?:unplu).{0,40}\b([a-z0-9]{64})\b` |
+| `spdb-unsplash` | Active | `unsplashNygSWXo9HiXlX6NL2gTzlFsHFNhr7tJiXHiJdeJ23fpfOuHQN4t3YnwYunSriH3ttdaco4R_W2v` | `(?:unsplash).{0,40}\b([0-9A-Za-z_]{43})\b` |
+| `spdb-upcdatabase` | Active | `upcdatabaseYtkAPlp51v3IEgATaTzx2Fy1a5qru0jpDDBPOBKEPYDHXWSBZ1JXKCWYL8LA5UK1` | `(?:upcdatabase).{0,40}\b([A-Z0-9]{32})\b` |
+| `spdb-uplead` | Active | `upleadDcpGgO7COOBF1CuucUBdyVt9FFTkCnhBd43sgwvb479p8bp1915t4byxsvr4bovd` | `(?:uplead).{0,40}\b([a-z0-9-]{32})\b` |
+| `spdb-uploadcare` | Active | `uploadcareDpQosvtXABKDjdLOqNkVLX5AaQxl3oh47dxfntkak2wb0s9m4d69` | `(?:uploadcare).{0,40}\b([a-z0-9]{20})\b` |
+| `spdb-upwave` | Active | `upwavevq3Bhl3wKiPfr9HbH67bCEHVeRgb7qNCq5q9xra0b9od0us5g1olklatcu571ko7` | `(?:upwave).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-uri` | Active | `DSfnFemTgT://}.{{-}}}%%.}-.%.}%}-}.{{%..-.{-%:-%-%--%%-.-.%%..%%---.%.%%-%%-.-@%.%..:::.::/../%/:-/%-%...:/%.-.` | `\b[a-zA-Z]{1,10}:?\/\/[-.%\w{}]{1,50}:([-.%\S]{3,50})@[-.%\w\/:]+\b` |
+| `spdb-urlscan` | Active | `urlscanaGWgGk9bo0aIdgziBVoC3bLZOSdOx3yL8unwr0lm31hbr6ljgwg0pf7mtaef00tt88fs` | `(?:urlscan).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-userstack` | Active | `userstackn873pXlv7q69fiuCm48weiFXbMFDWGbtqwe9mqky14ga7p2qwnd5d6nwv2g12k11` | `(?:userstack).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-vatlayer` | Active | `vatlayer5vnPGrefI46Nnibe192kGhTNCbFKg12Sbaxnr3zhifpn6ciq5rt95knn8fhrcehu` | `(?:vatlayer).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-vercel` | Active | `vercelEflItQCRFz3nzDUaoa4yf1Gdrt2NRoijqosK6sKXrzGPa4S6sM92pJ5R` | `(?:vercel).{0,40}\b([a-zA-Z0-9]{24})\b` |
+| `spdb-verifier-1` | Active | `verifier2EYZLBSfaY43A4dykxuDGmlwlOZ2eH91TXRVVOjR0JhxMmEb@20l5jFN-S8SfGyVi.IgQ85M` | `(?:verifier).{0,40}\b([a-zA-Z-0-9-]{5,16}\@[a-zA-Z-0-9]{4,16}\.[a-zA-Z-0-9]{3,6})\b` |
+| `spdb-verifier-2` | Active | `verifierPK7R3mdpgVFaveOkK0b0uSxwTPccmngbsgpf9oi9vbd5icwl71r3gr7t9614e6dmv3lncz2cgbj8f9b78wpc69dcyrwh19v7xjnt47pahdotbnckq28vli9uy0hj1isc` | `(?:verifier).{0,40}\b([a-z0-9]{96})\b` |
+| `spdb-verimail` | Active | `verimailxzDM2cvTer2wyOa9nZ6qe9YbFQuG006AZFVGYE5H98G0AITA1QCLY5N2TD7B8EO7` | `(?:verimail).{0,40}\b([A-Z0-9]{32})\b` |
+| `spdb-veriphone` | Active | `veriphoneMR2uZmsCfTqatbFn0NBFWQb7GOCcVd02H3S3J6F4SCL4U872UOMN9NRMIG3Z1TCP` | `(?:veriphone).{0,40}\b([0-9A-Z]{32})\b` |
+| `spdb-versioneye` | Active | `versioneye0qhF42UxtzKrMZTLLZhkQ4qXyjuyCawKs10Hok9uDE8YWcbndC6fQa0X7WcQyuPrHhKwJfrd` | `(?:versioneye).{0,40}\b([a-zA-Z0-9-]{40})\b` |
+| `spdb-viewneo` | Active | `viewneoBrNE7pXPT4m3vYABpkghSor0WXKhTetma7cH3rWEXUNcfIkK948lH33YYlLcYrln0QQZL28CYq3H74MEFWECm1XZLo2vkjM2NJVCAOEwACtuKM7c3iqwG74Wzbc3WJlhABXgJShMs2TykU0fTjTlEgmcwJDqTVLNLMpskgoH4IyLhNkWC8NfmeOEWwkyDrLcDY8N1Cr1G41NzUKMDLS9YfJ2JIxF7Q1qovyDklHjwqkWfJKu5TBOxqycdFEM2yeDaMBFd0cSfxGWvo8rMJAg6BBExQWIkCBF4yOglKlGCqnCaI5r-4oEv9XdTzfeSNedbH_Enonexet7UolV5o1Pewm-wJOOs0_C3SVrIq90DTs-SEaf2GaQyDIfRK1VZZqyjLCn4Wq6pBu5flC2cxirpASVCUK1z02ksZ3qxIBgup62P_wND19HyL-bAtOgUzE0tRIshj_0qPwXpWpKVVX2_LndPzR8JQN3eEfTACvflG9fkF763HN8xr2WvPWt_1fFVpszlORoeCtFrn0ORyoIl6w7MAZrMQvYKwPPUfDvCeztLyDdwbqwUyvqm9wn4fv7Fu3K32-Qyh7ybcuLJgeFhpL_9PK29EZWN3nDAIGfC-mbtDVdadiPfA07jhTp9o0K2Z9-lhrtHJ9QAyg028BzU6Cj31SWDzE7FXR9eT7aipjcNily03NyCRTyHcGI2vMl90uvF_Adv3VnronexMG4oJztpIz06JUOQjEoMF9QCV87XAVjN3-axpF0yKCVzqBMjCapN0jY3mAAbG9OYsdJhiIm_bfPKeyQ1N1lVcQcw1pSblRbkI0mgHOavIwOYYpqxcuopGgazb6WX08IGsvMz9Q9uOC6KMnDdua_EI2mp9K5izAxsszqJ9BVfN3Po2gbxti5NNS-` | `(?:viewneo).{0,40}\b([a-z0-9A-Z]{120,300}.[a-z0-9A-Z]{150,300}.[a-z0-9A-Z-_]{600,800})` |
+| `spdb-virustotal` | Active | `virustotalMJaOZxmPMDyixqIjYYfyz8rpejrcwC9uaae9b16437344ab20f44f191bda1f5fdf9cff5bb16cade06b3f6c4e969a15aae` | `(?:virustotal).{0,40}\b([a-f0-9]{64})\b` |
+| `spdb-visualcrossing` | Active | `visualcrossingLyL1E5S622YykKCF5tzPNIgpy5e4FuJECY32EF1MX2OMHZQRWQL43UHI9` | `(?:visualcrossing).{0,40}\b([0-9A-Z]{25})\b` |
+| `spdb-voicegain` | Active | `voicegaingxjhWm4zBrLwaWiHCbGsTpNwfym60uBfeyDgMolQDxAL4V1i96dabWvhWBlkHolFJszp8eye7ntp3o6Cg-kth7MWMbQ9qtE-4Ez9NJ71f97gUEt044l0_xwd0W4zLq-O37pEJzQeAAFekKMybFHVLEMuhZHF-wZ9NjOw06Kdb3pAAKFSX5ba2CALBSEWkfoh3g56bkPaTWpuN2uxRczEvaFSyzIet9C` | `(?:voicegain).{0,40}\b(ey[0-9a-zA-Z_-]{34}.ey[0-9a-zA-Z_-]{108}.[0-9a-zA-Z_-]{43})\b` |
+| `spdb-vouchery-1` | Active | `voucheryMI81JDzn0a6GiJLWs8SEulltHzyApM9zqc-qf53418tw5tvhei4u0po87fb9kxfh0q9m` | `(?:vouchery).{0,40}\b([a-z0-9-]{36})\b` |
+| `spdb-vouchery-2` | Active | `voucheryRJm09lOejxJ4wsk6AtCwe0UOXSEFINEING9QO-KvK3XpIFYS3slX` | `(?:vouchery).{0,40}\b([a-zA-Z0-9-\S]{2,20})\b` |
+| `spdb-vpnapi` | Active | `vpnapijKznr85DXdo7KSfdpZLtKf1GCM5DsMVMZYrqelxB3Lj3W3Ar9SVogY9cLXAnpmKC` | `(?:vpnapi).{0,40}\b([a-z0-9A-Z]{32})\b` |
+| `spdb-vultrapikey` | Active | `vultrObrvfbxI7SzUzJvqBcgN6yxgDNa735dT BNI982ARGUZK087CUW4SBRUDUUK5RHXT797Y` | `(?:vultr).{0,40} \b([A-Z0-9]{36})\b` |
+| `spdb-vyte` | Active | `vyteY2ihrzlfedPF1bII4iy7GgN8VfOaTXILbe9a7ap1lrmenj768ezsg1xjwgpfs1hquv2kdtfn545m7qiiey` | `(?:vyte).{0,40}\b([0-9a-z]{50})\b` |
+| `spdb-walkscore` | Active | `walkscorejmL5IxOt7rytciND8QJjegFG6NKFkQ4Dh78wyz1g4ukat4hef8ufk0og0l8ja8gk` | `(?:walkscore).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-weatherbit` | Active | `weatherbitlHdEngafHst4Ix4zsv7pcvaW14J7D0CTfe3rsqhxbro5z4oier479jq029nfrx1f` | `(?:weatherbit).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-weatherstack` | Active | `weatherstackUe5bprxZzobRBopKZNAXEuqi7LQ41zU9txy19xnjwjm2fr4mhoicgj25k6s1wiuj` | `(?:weatherstack).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-webex-1` | Active | `error5xK6NwZoo0oj93bV4bIy2gAIydjqSQKZredirect_uri_mismatch` | `(?:error).{0,40}(redirect_uri_mismatch)` |
+| `spdb-webex-2` | Active | `webexn4MHeSGUQ4drE8C2qOoSH8wkAlB6SDJFoL_wOnET2jPW2fanG5yFRVWaPqCt8AbCOsnUhBP9MWmVxAmf5rx_jiSUtm6zBHM0x` | `(?:webex).{0,40}\b([A-Za-z0-9_-]{65})\b` |
+| `spdb-webex-3` | Active | `webexRh2ZtiNhvTHWsG5HMo15Z1WlvxXpYWmSm6XB68EOYrkegtmdGeA-qKmLMIAcEKMF_6Wz6RPyoA823WLC4GDpbfKwrAi4mLij` | `(?:webex).{0,40}\b([A-Za-z0-9_-]{64})\b` |
+| `spdb-webflow` | Active | `webflowkpUQMCPuSM7yFDaWN4erK8cwFq3fkgj71ggacfv5oA4fe2Ak8foe7dqlf7csyvo7wdo405sc596jwspflo6gzqbh0md56b59` | `(?:webflow).{0,40}\b([a-zA0-9]{64})\b` |
+| `spdb-webscraper` | Active | `webscraperp1Hcbxmqc7tKZTGqAt6zWAShnibXOxgEfL52DHrKUrU4lmU90J1TKfb7HWb8fbnrXyvaqfIKB3KenbYpevoQy8HMa0kD` | `(?:webscraper).{0,40}\b([a-zA-Z0-9]{60})\b` |
+| `spdb-webscraping` | Active | `webscrapingM3B2IW9Wj1LGebmzxzd8ChOgNtqoB2gJRVwY4QZebnDosqpjxqoyoEr4A7tz20Cn` | `(?:webscraping).{0,40}\b([0-9A-Za-z]{32})\b` |
+| `spdb-wepay-2` | Active | `wepayTsf08SdzdkFm7QY9aG7e3k8CRfhr9bSAOBM0Jt49g8?2EhUp3SMTcJevBrPYgLNegLPoq3hpaeYTnbqjAdWS6cwbDlHvE6` | `(?:wepay).{0,40}\b([a-zA-Z0-9_?]{62})\b` |
+| `spdb-whoxy` | Active | `whoxyBGXvbCMZc6QoXCuQETR2hXNC0BdZsUXT7t8dk1nzvqbg6tffv8s231r1lxn6qwvw8` | `(?:whoxy).{0,40}\b([0-9a-z]{33})\b` |
+| `spdb-worksnaps` | Active | `worksnapsqQPbDsLQxJ6qhmMhoGxhG2ZqxPwIxQtggzfDGESAr2ObWSirFgLjggFrJlBGLou4ueKODgoj` | `(?:worksnaps).{0,40}\b([0-9A-Za-z]{40})\b` |
+| `spdb-workstack` | Active | `workstackoip3U5nICtPaceGcYu7MVPPRnumUiKelxcImWDJqAgE9tZjORMTidla6Sb1BX00TZeGFtvcDO5ACJNtkPmWRY0ebq9qe` | `(?:workstack).{0,40}\b([0-9Aa-zA-Z]{60})\b` |
+| `spdb-worldcoinindex` | Active | `worldcoinindexTz6ovvR296R2HkbDxDLKMcJyzW7GiDOmo0ueBjxBOm4BCIC877g9UqbqPE6Z9OZ3Cks` | `(?:worldcoinindex).{0,40}\b([a-zA-Z0-9]{35})\b` |
+| `spdb-worldweather` | Active | `worldweather39Yq0HOnWAuYTTK1bVI9PundX01qxTDyhy7opeij54jqmcxch97xoes0s6910jw` | `(?:worldweather).{0,40}\b([0-9a-z]{31})\b` |
+| `spdb-wrike` | Active | `wrikeMTuiIrurnlp1ZqM9VWMzTxzneyz06mDheyMSvTNNkw_AKWo8sb0IfAPsb74xSKKEDZhRvAyCcWcV37ALgYG0j3zwvgSft4DWsP9HRbwMT8vAt1J0ipk1zeN.wjD8tHKJ4qu.ziiO5usxAV0LTgjKpzewVcyfj7B77o7aaXcSbCgGPg4LFOwJVjGVeokQlis_Ot7FxJ2yhEvtsgt_J2_NaYT9AtxRN4dscrCSy33PRQLfaql98l7Zhjvqh2H7XHSsVZmAxPj3YkIqIGWLZR0j5Tv6bAciQTjuid8Lw3p.yCdj0xOeAJNw9WE0hlPLrP.sTpgz93bjvVOn0JtWnLyIXTt.W7NtS-KSVZTaS1DIoFKFLW5` | `(?:wrike).{0,40}\b(ey[a-zA-Z0-9-._]{333})\b` |
+| `spdb-yandex` | Active | `yandexlMDeKHGusbKxTjkTXKz7iceGjwgZ2JRw61T0iacXg87ceS1Vw2ZQDLulBYOJfefX.vSzyVEuJYPMX2gtoFhWkFfNIM9TXG08I.c2fQwEXRhMUPbFdOS` | `(?:yandex).{0,40}\b([a-z0-9A-Z.]{83})\b` |
+| `spdb-youneedabudget` | Active | `youneedabudget2Xz2lJzLkzylY92kXbcFIZreZz7hQf9W7c2f13f92bcbf0ab632e1d8a2a4f69d566a558000b8972b2f0909f61b5272971` | `(?:youneedabudget).{0,40}\b([0-9a-f]{64})\b` |
+| `spdb-yousign` | Active | `yousignlaKcdTsL3ofs8bmM3Se46WmzHgST8Hpvmi3ebq9yfmwdriqdj657os3540npjnv7` | `(?:yousign).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-youtubeapikey-1` | Active | `youtubeUqozNsnhhwtYbOXZMfHLkU2PiAgf2fDK5TfRh1jC2bFSI3AtrgnfDvAUMoXm9gS1gZ_UZfg` | `(?:youtube).{0,40}\b([a-zA-Z-0-9_]{39})\b` |
+| `spdb-zapier-webhook` | Active | `https://wwwNhooks.zapier.com/hooks/catch/2pJAhy3QhIRAZa6L3Sx8qHvR2bSgZILE/cNv1MwlazkErega7nqxIC4Y3JkqT1cZb/` | `https://(?:www.)?hooks\.zapier\.com/hooks/catch/[A-Za-z0-9]+/[A-Za-z0-9]+/` |
+| `spdb-zapierwebhook` | Active | `https://hooksYzapiervcom/hooks/catch/XZPYIC5Q28952Ch2` | `(https:\/\/hooks.zapier.com\/hooks\/catch\/[A-Za-z0-9\/]{16})` |
+| `spdb-zendeskapi-3` | Active | `zendeskj0q1jl4idUGwTxwxT0lqjvlDLv02Ld3PGByvmV_uMSFc4yjtLMC9b4htbZ7cJlbx-0lT-Rv9` | `(?:zendesk).{0,40}([A-Za-z0-9_-]{40})` |
+| `spdb-zenkitapi` | Active | `zenkitY89wHla0WOxcCVpnJ8IUlQECZIILH57Sjt85plcp-7fyXXtJjaHIrjhWuax6cznEu5hfX0Lrh` | `(?:zenkit).{0,40}\b([0-9a-z]{8}\-[0-9A-Za-z]{32})\b` |
+| `spdb-zenscrape` | Active | `zenscrapeiolQLWBDbLfLPElPNuQe7q3wchPtDTvsf259afee-30a0-06c0-4b99-578c5bc1e6bf` | `(?:zenscrape).{0,40}\b([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b` |
+| `spdb-zenserp` | Active | `zenserpkydVO0K8xqSrmSKlTC2c96VdYtcJdBSnjd1ou9uf9ii1nqycymnegdt3y3zmkcr9oagm` | `(?:zenserp).{0,40}\b([0-9a-z-]{36})\b` |
+| `spdb-zeplin` | Active | `zeplinh5RwYymVIenjXQmio59kCbrNVzqRx1aQaYyO7.9kA6jKfu6HI023GxV.9HV1Y6UMlAGnRGFJhYR7SHyiwahkkpqMaGsISYcKfwLD-DxI4.KlxnXzQ2Orh2ok6Ag-nFFYI03HJDZinTNgRUZojOcPAZE-kzanputSCzp4FSJxrE26.FP2YuEbttp.eXyQTljhJUafN08Gj5p1sCczj8apHrHUbwUvxdORv.d-P0.IHZExqb-0lKAYBiStm1ap0gnPGRtbD8ohpTZwZEDZrj-MxSLXADacUMGET.WrFaRt-mYQiaHcakkg9uBDzFnP1gI0sCrVsb4PsYEOLVmDeYD4VzhXeHYb5l2iVeRFfXCOgrCyix7ECjhbzMAu4CjJiO` | `(?:zeplin).{0,40}\b([a-zA-Z0-9-.]{350,400})\b` |
+| `spdb-zerobounce` | Active | `zerobounceZYSRpDxO9skubb9Id8WvrCjGWE3QI6Fqrv2aw2zpugairu51s37y968zm2gilr6i` | `(?:zerobounce).{0,40}\b([a-z0-9]{32})\b` |
+| `spdb-zipapi-1` | Active | `zipapilpAgGKt9Ifw81vzM62RGDe0WO0Imwv60at27iYgKfT^jBCmV0BVP@@YKlpNqdvrV` | `(?:zipapi).{0,40}\b([a-zA-Z0-9!=@#$%^]{7,})` |
+| `spdb-zipapi-3` | Active | `zipapiEezJKUymM0SddFj74oHVdUYmjtJXIhYZt4ejxxg7knbokj3n3rdhcbxr9yftjxzu` | `(?:zipapi).{0,40}\b([0-9a-z]{32})\b` |
+| `spdb-zipcodeapi` | Active | `zipcodeapizvoDL2gTZeb6WWoyQGHPkJRI0CfN6aYjeDMgBlpnuJTWrxfBPGsDssjfFgO83ONgSDITmjC5i8Yyfw5Swg9YEMfr5a8CxDot` | `(?:zipcodeapi).{0,40}\b([a-zA-Z0-9]{64})\b` |
+| `spdb-zoho-webhook` | Active | `https://creator.zoho.com/api/7O2nnCEnkWFhpuIklr/Se.f3rWCLXEmP?authtoken=uySlZqgcN68xEhAwuOhWjmNwS8a90rPV` | `https://creator\.zoho\.com/api/[A-Za-z0-9/\-_\.]+\?authtoken=[A-Za-z0-9]+` |
+| `spdb-zonkafeedback` | Active | `zonkaahfVqcIzMLvIKyYHdOogugo3KesKevxdGeK9X1CwVfZ0UbPyB8muG7gnnAC3qaGTlSfR` | `(?:zonka).{0,40}\b([A-Za-z0-9]{36})\b` |
+| `spdb-access-key-secret` | Active | `access_key_secret =` | <code>access[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-access-secret` | Active | `access_secret:` | <code>access[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-access-token` | Active | `access_token :` | <code>access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-account-sid` | Active | `account_sid:` | <code>account[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-admin-email` | Active | `admin-email=` | <code>admin[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-adzerk-api-key` | Active | `adzerk_api-key :` | <code>adzerk[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-admin-key-1` | Active | `algolia-admin-key_1:` | <code>algolia[_-]?admin[_-]?key[_-]?1(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-algolia-admin-key-2` | Active | `algolia_admin_key_2:` | <code>algolia[_-]?admin[_-]?key[_-]?2(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-admin-key-mcm` | Active | `algolia-admin_key-mcm =` | <code>algolia[_-]?admin[_-]?key[_-]?mcm(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-api-key` | Active | `algolia_api_key=` | <code>algolia[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-api-key-mcm` | Active | `algolia-api-key_mcm:` | <code>algolia[_-]?api[_-]?key[_-]?mcm(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-api-key-search` | Active | `algolia_api-key-search :` | <code>algolia[_-]?api[_-]?key[_-]?search(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-search-api-key` | Active | `algolia-search-api-key:` | <code>algolia[_-]?search[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-search-key` | Active | `algolia-search-key:` | <code>algolia[_-]?search[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-algolia-search-key-1` | Active | `algolia-search_key-1:` | <code>algolia[_-]?search[_-]?key[_-]?1(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-alias-pass` | Active | `alias_pass=` | <code>alias[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-alicloud-access-key` | Active | `alicloud_access-key :` | <code>alicloud[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-admin-key-mcm` | Active | `algolia-admin_key-mcm :` | <code>algolia[_-]?admin[_-]?key[_-]?mcm(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-api-key` | Active | `algolia-api-key :` | <code>algolia[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-api-key-mcm` | Active | `algolia_api-key-mcm=` | <code>algolia[_-]?api[_-]?key[_-]?mcm(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-api-key-search` | Active | `algolia-api_key_search =` | <code>algolia[_-]?api[_-]?key[_-]?search(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-search-api-key` | Active | `algolia_search-api-key:` | <code>algolia[_-]?search[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-search-key` | Active | `algolia-search_key =` | <code>algolia[_-]?search[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-algolia-search-key-1` | Active | `algolia-search-key_1 =` | <code>algolia[_-]?search[_-]?key[_-]?1(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-alias-pass` | Active | `alias_pass:` | <code>alias[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-alicloud-access-key` | Active | `alicloud-access_key:` | <code>alicloud[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-alicloud-secret-key` | Active | `alicloud-secret-key=` | <code>alicloud[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-amazon-bucket-name` | Active | `amazon-bucket_name :` | <code>amazon[_-]?bucket[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-amazon-secret-access-key` | Active | `amazon-secret_access_key =` | <code>amazon[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-anaconda-token` | Active | `anaconda-token=` | <code>anaconda[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-android-docs-deploy-token` | Active | `android_docs-deploy_token:` | <code>android[_-]?docs[_-]?deploy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ansible-vault-password` | Active | `ansible_vault_password:` | <code>ansible[_-]?vault[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aos-key` | Active | `aos-key=` | <code>aos[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aos-sec` | Active | `aos_sec=` | <code>aos[_-]?sec(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-api-key` | Active | `api-key:` | <code>api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-api-key-secret` | Active | `api_key_secret :` | <code>api[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-api-key-sid` | Active | `api_key_sid :` | <code>api[_-]?key[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-api-secret` | Active | `api_secret=` | <code>api[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-apiary-api-key` | Active | `apiary-api_key=` | <code>apiary[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-apigw-access-token` | Active | `apigw-access-token =` | <code>apigw[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-apikey-patterns` | Active | `apikey:'-V8sVrRFQgyT4T8gmjmaiYu5LFA0DVJw'` | <code>apikey[:](?:['"]?[a-zA-Z0-9-_&#124;]+['"]?)</code> |
-| `spdb-app-bucket-perm` | Active | `app-bucket_perm =` | <code>app[_-]?bucket[_-]?perm(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-app-report-token-key` | Active | `app-report-token_key :` | <code>app[_-]?report[_-]?token[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-app-secrete` | Active | `app_secrete =` | <code>app[_-]?secrete(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-app-token` | Active | `app_token =` | <code>app[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-amazon-secret-access-key` | Active | `amazon-secret-access_key :` | <code>amazon[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-anaconda-token` | Active | `anaconda-token :` | <code>anaconda[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-android-docs-deploy-token` | Active | `android_docs-deploy_token=` | <code>android[_-]?docs[_-]?deploy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ansible-vault-password` | Active | `ansible_vault-password:` | <code>ansible[_-]?vault[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aos-key` | Active | `aos-key :` | <code>aos[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aos-sec` | Active | `aos_sec:` | <code>aos[_-]?sec(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-api-key` | Active | `api_key :` | <code>api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-api-key-secret` | Active | `api_key_secret=` | <code>api[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-api-key-sid` | Active | `api-key-sid:` | <code>api[_-]?key[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-api-secret` | Active | `api-secret=` | <code>api[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-apiary-api-key` | Active | `apiary-api-key :` | <code>apiary[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-apigw-access-token` | Active | `apigw_access_token=` | <code>apigw[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-apikey-patterns` | Active | <code>apikey:"zOVBz&#124;VpU2ojsxc9ATFJ3bKTbGzNA1s-'</code> | <code>apikey[:](?:['"]?[a-zA-Z0-9-_&#124;]+['"]?)</code> |
+| `spdb-app-bucket-perm` | Active | `app_bucket_perm=` | <code>app[_-]?bucket[_-]?perm(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-app-report-token-key` | Active | `app_report-token-key =` | <code>app[_-]?report[_-]?token[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-app-secrete` | Active | `app-secrete:` | <code>app[_-]?secrete(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-app-token` | Active | `app_token=` | <code>app[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-appclientsecret` | Active | `appclientsecret=` | <code>appclientsecret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-apple-id-password` | Active | `apple-id-password:` | <code>apple[_-]?id[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-argos-token` | Active | `argos_token:` | <code>argos[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-artifactory` | Active | `artifactoryPLjKmHSVqtEfs5H7i0prxTLcjutPIi77"aGjqiLQKRKHx6erbIkQLwGHFPyTtVDOzoHh6iO3LIOzjFF7xXtBX7r3g4QbXuWXOpjZhI8x3YZ1S44a2P=8rZ9H0BB=xoW0GlZ4llPU38ZAN1xEW"` | <code>(artifactory.{0,50}("&#124;')?[a-zA-Z0-9=]{112}("&#124;')?)</code> |
-| `spdb-artifactory-key` | Active | `artifactory_key=` | <code>artifactory[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-artifacts-aws-access-key-id` | Active | `artifacts-aws-access-key_id:` | <code>artifacts[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-artifacts-aws-secret-access-key` | Active | `artifacts-aws-secret-access-key =` | <code>artifacts[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-artifacts-bucket` | Active | `artifacts_bucket =` | <code>artifacts[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-artifacts-key` | Active | `artifacts-key=` | <code>artifacts[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-artifacts-secret` | Active | `artifacts_secret:` | <code>artifacts[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-assistant-iam-apikey` | Active | `assistant_iam_apikey :` | <code>assistant[_-]?iam[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-auth0-api-clientsecret` | Active | `auth0_api_clientsecret =` | <code>auth0[_-]?api[_-]?clientsecret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-auth0-client-secret` | Active | `auth0-client-secret :` | <code>auth0[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-auth-token` | Active | `auth_token =` | <code>auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-author-email-addr` | Active | `author-email-addr =` | <code>author[_-]?email[_-]?addr(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-author-npm-api-key` | Active | `author_npm_api-key:` | <code>author[_-]?npm[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-access` | Active | `aws_access =` | <code>aws[_-]?access(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-access-key` | Active | `aws-access_key=` | <code>aws[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-access-key-id-1` | Active | `aws-access-key-id :` | <code>aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-config-accesskeyid` | Active | `aws-config-accesskeyid =` | <code>aws[_-]?config[_-]?accesskeyid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-config-secretaccesskey` | Active | `aws-config_secretaccesskey :` | <code>aws[_-]?config[_-]?secretaccesskey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-key` | Active | `aws-key :` | <code>aws[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-patterns` | Active | `aws_secret_access_key` | <code>(?:accesskeyid&#124;secretaccesskey&#124;aws_access_key_id&#124;aws_secret_access_key)</code> |
+| `spdb-apple-id-password` | Active | `apple-id-password =` | <code>apple[_-]?id[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-argos-token` | Active | `argos-token :` | <code>argos[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-artifactory` | Active | `artifactoryrKSfafjmagIC0yxqFnTZvz1tiTl59Hcs"apnAaPmXVPTbmy08LRSEiQghp3sGQksOTDnQBhHXspGqtb174wNmsiFowYHi7T3xVxiYViaeWwa01rXRA5mfBoq1jV4lJwW6rPEh1mVb5i85alVy'` | <code>(artifactory.{0,50}("&#124;')?[a-zA-Z0-9=]{112}("&#124;')?)</code> |
+| `spdb-artifactory-key` | Active | `artifactory-key:` | <code>artifactory[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-artifacts-aws-access-key-id` | Active | `artifacts-aws_access-key-id =` | <code>artifacts[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-artifacts-aws-secret-access-key` | Active | `artifacts-aws_secret_access-key =` | <code>artifacts[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-artifacts-bucket` | Active | `artifacts_bucket :` | <code>artifacts[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-artifacts-key` | Active | `artifacts_key=` | <code>artifacts[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-artifacts-secret` | Active | `artifacts_secret=` | <code>artifacts[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-assistant-iam-apikey` | Active | `assistant_iam-apikey =` | <code>assistant[_-]?iam[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-auth0-api-clientsecret` | Active | `auth0-api_clientsecret =` | <code>auth0[_-]?api[_-]?clientsecret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-auth0-client-secret` | Active | `auth0_client-secret :` | <code>auth0[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-auth-token` | Active | `auth_token=` | <code>auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-author-email-addr` | Active | `author_email-addr =` | <code>author[_-]?email[_-]?addr(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-author-npm-api-key` | Active | `author_npm-api-key=` | <code>author[_-]?npm[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-access` | Active | `aws_access=` | <code>aws[_-]?access(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-access-key` | Active | `aws_access_key =` | <code>aws[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-access-key-id-1` | Active | `aws-access-key-id=` | <code>aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-config-accesskeyid` | Active | `aws_config_accesskeyid =` | <code>aws[_-]?config[_-]?accesskeyid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-config-secretaccesskey` | Active | `aws-config-secretaccesskey=` | <code>aws[_-]?config[_-]?secretaccesskey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-key` | Active | `aws-key=` | <code>aws[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-patterns` | Active | `accesskeyid` | <code>(?:accesskeyid&#124;secretaccesskey&#124;aws_access_key_id&#124;aws_secret_access_key)</code> |
 | `spdb-aws-secret` | Active | `aws_secret :` | <code>aws[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-secret-access-key` | Active | `aws_secret-access_key =` | <code>aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-secret-key` | Active | `aws_secret_key:` | <code>aws[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-secrets` | Active | `aws-secrets :` | <code>aws[_-]?secrets(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-ses-access-key-id` | Active | `aws-ses-access_key_id:` | <code>aws[_-]?ses[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-aws-ses-secret-access-key` | Active | `aws_ses_secret_access_key:` | <code>aws[_-]?ses[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-secret-access-key` | Active | `aws_secret-access-key=` | <code>aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-secret-key` | Active | `aws-secret_key :` | <code>aws[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-secrets` | Active | `aws-secrets:` | <code>aws[_-]?secrets(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-ses-access-key-id` | Active | `aws-ses_access_key_id =` | <code>aws[_-]?ses[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-aws-ses-secret-access-key` | Active | `aws-ses_secret_access-key=` | <code>aws[_-]?ses[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-awsaccesskeyid` | Active | `awsaccesskeyid:` | <code>awsaccesskeyid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-awscn-access-key-id` | Active | `awscn_access-key_id :` | <code>awscn[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-awscn-secret-access-key` | Active | `awscn_secret-access-key=` | <code>awscn[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-awssecretkey` | Active | `awssecretkey =` | <code>awssecretkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-b2-app-key` | Active | `b2-app-key :` | <code>b2[_-]?app[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-b2-bucket` | Active | `b2_bucket=` | <code>b2[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-awscn-access-key-id` | Active | `awscn-access_key-id:` | <code>awscn[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-awscn-secret-access-key` | Active | `awscn-secret-access-key=` | <code>awscn[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-awssecretkey` | Active | `awssecretkey=` | <code>awssecretkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-b2-app-key` | Active | `b2-app_key =` | <code>b2[_-]?app[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-b2-bucket` | Active | `b2_bucket =` | <code>b2[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-bintray-api-key` | Active | `bintray_api-key :` | <code>bintray[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bintray-apikey` | Active | `bintray_apikey =` | <code>bintray[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bintray-gpg-password` | Active | `bintray_gpg_password :` | <code>bintray[_-]?gpg[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bintray-key` | Active | `bintray_key:` | <code>bintray[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bintray-token` | Active | `bintray_token :` | <code>bintray[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bintray-apikey` | Active | `bintray-apikey=` | <code>bintray[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bintray-gpg-password` | Active | `bintray_gpg-password:` | <code>bintray[_-]?gpg[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bintray-key` | Active | `bintray_key :` | <code>bintray[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bintray-token` | Active | `bintray_token:` | <code>bintray[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-bintraykey` | Active | `bintraykey:` | <code>bintraykey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bluemix-api-key` | Active | `bluemix_api_key=` | <code>bluemix[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bluemix-api-key` | Active | `bluemix_api-key:` | <code>bluemix[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-bluemix-auth` | Active | `bluemix-auth =` | <code>bluemix[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bluemix-pass` | Active | `bluemix_pass :` | <code>bluemix[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bluemix-pass-prod` | Active | `bluemix_pass_prod=` | <code>bluemix[_-]?pass[_-]?prod(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bluemix-password` | Active | `bluemix_password :` | <code>bluemix[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bluemix-pwd` | Active | `bluemix-pwd =` | <code>bluemix[_-]?pwd(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bluemix-username` | Active | `bluemix_username=` | <code>bluemix[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-brackets-repo-oauth-token` | Active | `brackets-repo_oauth-token :` | <code>brackets[_-]?repo[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-browser-stack-access-key` | Active | `browser_stack-access_key=` | <code>browser[_-]?stack[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-browserstack-access-key` | Active | `browserstack_access_key:` | <code>browserstack[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bucketeer-aws-access-key-id` | Active | `bucketeer_aws-access_key-id=` | <code>bucketeer[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bucketeer-aws-secret-access-key` | Active | `bucketeer-aws-secret-access-key =` | <code>bucketeer[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-built-branch-deploy-key` | Active | `built_branch_deploy_key =` | <code>built[_-]?branch[_-]?deploy[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bundlesize-github-token` | Active | `bundlesize_github_token :` | <code>bundlesize[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bx-password` | Active | `bx-password=` | <code>bx[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-bx-username` | Active | `bx-username:` | <code>bx[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cache-s3-secret-key` | Active | `cache-s3-secret_key =` | <code>cache[_-]?s3[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cargo-token` | Active | `cargo-token:` | <code>cargo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cattle-access-key` | Active | `cattle_access_key=` | <code>cattle[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bluemix-pass` | Active | `bluemix_pass=` | <code>bluemix[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bluemix-pass-prod` | Active | `bluemix_pass_prod:` | <code>bluemix[_-]?pass[_-]?prod(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bluemix-password` | Active | `bluemix-password :` | <code>bluemix[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bluemix-pwd` | Active | `bluemix_pwd:` | <code>bluemix[_-]?pwd(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bluemix-username` | Active | `bluemix-username=` | <code>bluemix[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-brackets-repo-oauth-token` | Active | `brackets-repo_oauth_token :` | <code>brackets[_-]?repo[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-browser-stack-access-key` | Active | `browser_stack_access_key =` | <code>browser[_-]?stack[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-browserstack-access-key` | Active | `browserstack-access_key=` | <code>browserstack[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bucketeer-aws-access-key-id` | Active | `bucketeer-aws-access_key-id :` | <code>bucketeer[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bucketeer-aws-secret-access-key` | Active | `bucketeer-aws-secret_access-key:` | <code>bucketeer[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-built-branch-deploy-key` | Active | `built-branch_deploy_key :` | <code>built[_-]?branch[_-]?deploy[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bundlesize-github-token` | Active | `bundlesize_github-token =` | <code>bundlesize[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bx-password` | Active | `bx_password :` | <code>bx[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-bx-username` | Active | `bx-username =` | <code>bx[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cache-s3-secret-key` | Active | `cache-s3_secret_key :` | <code>cache[_-]?s3[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cargo-token` | Active | `cargo-token =` | <code>cargo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cattle-access-key` | Active | `cattle-access_key:` | <code>cattle[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-cattle-agent-instance-auth` | Active | `cattle-agent-instance_auth:` | <code>cattle[_-]?agent[_-]?instance[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cattle-secret-key` | Active | `cattle-secret-key=` | <code>cattle[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-censys-secret` | Active | `censys-secret:` | <code>censys[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cattle-secret-key` | Active | `cattle_secret-key :` | <code>cattle[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-censys-secret` | Active | `censys_secret =` | <code>censys[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-certificate-password` | Active | `certificate_password=` | <code>certificate[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-cf-password` | Active | `cf-password :` | <code>cf[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cheverny-token` | Active | `cheverny-token:` | <code>cheverny[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-chrome-client-secret` | Active | `chrome-client-secret :` | <code>chrome[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cheverny-token` | Active | `cheverny_token =` | <code>cheverny[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-chrome-client-secret` | Active | `chrome_client-secret =` | <code>chrome[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-chrome-refresh-token` | Active | `chrome_refresh-token:` | <code>chrome[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ci-deploy-password` | Active | `ci-deploy-password =` | <code>ci[_-]?deploy[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ci-project-url` | Active | `ci-project-url =` | <code>ci[_-]?project[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ci-registry-user` | Active | `ci_registry-user:` | <code>ci[_-]?registry[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ci-server-name` | Active | `ci_server-name =` | <code>ci[_-]?server[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ci-user-token` | Active | `ci_user-token=` | <code>ci[_-]?user[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ci-deploy-password` | Active | `ci_deploy-password=` | <code>ci[_-]?deploy[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ci-project-url` | Active | `ci_project_url=` | <code>ci[_-]?project[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ci-registry-user` | Active | `ci-registry_user=` | <code>ci[_-]?registry[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ci-server-name` | Active | `ci-server-name=` | <code>ci[_-]?server[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ci-user-token` | Active | `ci_user_token=` | <code>ci[_-]?user[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-claimr-database` | Active | `claimr-database =` | <code>claimr[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-claimr-db` | Active | `claimr_db =` | <code>claimr[_-]?db(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-claimr-superuser` | Active | `claimr-superuser =` | <code>claimr[_-]?superuser(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-claimr-token` | Active | `claimr_token :` | <code>claimr[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cli-e2e-cma-token` | Active | `cli-e2e-cma_token :` | <code>cli[_-]?e2e[_-]?cma[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-claimr-db` | Active | `claimr_db=` | <code>claimr[_-]?db(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-claimr-superuser` | Active | `claimr_superuser =` | <code>claimr[_-]?superuser(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-claimr-token` | Active | `claimr-token:` | <code>claimr[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cli-e2e-cma-token` | Active | `cli-e2e_cma-token :` | <code>cli[_-]?e2e[_-]?cma[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-client-secret` | Active | `client_secret =` | <code>client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-clojars-password` | Active | `clojars_password =` | <code>clojars[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloud-api-key` | Active | `cloud-api_key:` | <code>cloud[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-archived-database` | Active | `cloudant_archived_database :` | <code>cloudant[_-]?archived[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-audited-database` | Active | `cloudant-audited_database:` | <code>cloudant[_-]?audited[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-database` | Active | `cloudant_database:` | <code>cloudant[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-instance` | Active | `cloudant_instance:` | <code>cloudant[_-]?instance(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-order-database` | Active | `cloudant-order-database =` | <code>cloudant[_-]?order[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-parsed-database` | Active | `cloudant_parsed_database:` | <code>cloudant[_-]?parsed[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-password` | Active | `cloudant-password=` | <code>cloudant[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-clojars-password` | Active | `clojars_password=` | <code>clojars[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloud-api-key` | Active | `cloud-api-key =` | <code>cloud[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-archived-database` | Active | `cloudant-archived_database =` | <code>cloudant[_-]?archived[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-audited-database` | Active | `cloudant_audited-database:` | <code>cloudant[_-]?audited[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-database` | Active | `cloudant-database=` | <code>cloudant[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-instance` | Active | `cloudant-instance:` | <code>cloudant[_-]?instance(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-order-database` | Active | `cloudant-order_database=` | <code>cloudant[_-]?order[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-parsed-database` | Active | `cloudant-parsed_database=` | <code>cloudant[_-]?parsed[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-password` | Active | `cloudant-password =` | <code>cloudant[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-cloudant-processed-database` | Active | `cloudant-processed_database =` | <code>cloudant[_-]?processed[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudant-service-database` | Active | `cloudant_service_database :` | <code>cloudant[_-]?service[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudflare-api-key` | Active | `cloudflare-api_key=` | <code>cloudflare[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudflare-auth-email` | Active | `cloudflare-auth_email:` | <code>cloudflare[_-]?auth[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudflare-auth-key` | Active | `cloudflare-auth_key :` | <code>cloudflare[_-]?auth[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudflare-email` | Active | `cloudflare-email=` | <code>cloudflare[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudinary-url` | Active | `cloudinary_url:` | <code>cloudinary[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cloudinary-url-staging` | Active | `cloudinary-url_staging=` | <code>cloudinary[_-]?url[_-]?staging(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-clu-repo-url` | Active | `clu-repo-url :` | <code>clu[_-]?repo[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-clu-ssh-private-key-base64` | Active | `clu-ssh-private_key-base64 =` | <code>clu[_-]?ssh[_-]?private[_-]?key[_-]?base64(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cn-access-key-id` | Active | `cn_access-key-id:` | <code>cn[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cn-secret-access-key` | Active | `cn-secret-access-key=` | <code>cn[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cocoapods-trunk-email` | Active | `cocoapods-trunk-email=` | <code>cocoapods[_-]?trunk[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudant-service-database` | Active | `cloudant-service_database =` | <code>cloudant[_-]?service[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudflare-api-key` | Active | `cloudflare-api-key :` | <code>cloudflare[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudflare-auth-email` | Active | `cloudflare_auth-email:` | <code>cloudflare[_-]?auth[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudflare-auth-key` | Active | `cloudflare-auth-key :` | <code>cloudflare[_-]?auth[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudflare-email` | Active | `cloudflare_email:` | <code>cloudflare[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudinary-url` | Active | `cloudinary-url =` | <code>cloudinary[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cloudinary-url-staging` | Active | `cloudinary_url-staging :` | <code>cloudinary[_-]?url[_-]?staging(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-clu-repo-url` | Active | `clu-repo-url =` | <code>clu[_-]?repo[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-clu-ssh-private-key-base64` | Active | `clu-ssh-private_key_base64 :` | <code>clu[_-]?ssh[_-]?private[_-]?key[_-]?base64(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cn-access-key-id` | Active | `cn-access_key_id =` | <code>cn[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cn-secret-access-key` | Active | `cn-secret_access-key =` | <code>cn[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cocoapods-trunk-email` | Active | `cocoapods-trunk-email:` | <code>cocoapods[_-]?trunk[_-]?email(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-cocoapods-trunk-token` | Active | `cocoapods-trunk-token:` | <code>cocoapods[_-]?trunk[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-codacy-project-token` | Active | `codacy-project_token =` | <code>codacy[_-]?project[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-codeclimate` | Active | `codeclimaCMoiGhHTlxhOuY8RN3Z62aovydokQSo2'99d104c8365f4d254639f6c8cc17415c8958f5a08e7a8078700b48e82f0a2c5b"` | <code>(codeclima.{0,50}("&#124;')?[0-9a-f]{64}("&#124;')?)</code> |
-| `spdb-codeclimate-repo-token` | Active | `codeclimate-repo_token:` | <code>codeclimate[_-]?repo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-codecov-token` | Active | `codecov_token=` | <code>codecov[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-coding-token` | Active | `coding_token=` | <code>coding[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-conekta-apikey` | Active | `conekta-apikey :` | <code>conekta[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-consumer-key` | Active | `consumer_key :` | <code>consumer[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-consumerkey` | Active | `consumerkey :` | <code>consumerkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-contentful-access-token` | Active | `contentful-access-token :` | <code>contentful[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-codacy-project-token` | Active | `codacy-project-token:` | <code>codacy[_-]?project[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-codeclimate` | Active | `codeclimarT3J2tdFwJaD2YPkieWdPGy8ISKAxE0P"352a25b73783c225d36fdf28e02dce88a7dbcef9e6f65784b9437c2b6a76ffd8'` | <code>(codeclima.{0,50}("&#124;')?[0-9a-f]{64}("&#124;')?)</code> |
+| `spdb-codeclimate-repo-token` | Active | `codeclimate-repo-token:` | <code>codeclimate[_-]?repo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-codecov-token` | Active | `codecov_token =` | <code>codecov[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-coding-token` | Active | `coding-token:` | <code>coding[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-conekta-apikey` | Active | `conekta-apikey:` | <code>conekta[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-consumer-key` | Active | `consumer-key=` | <code>consumer[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-consumerkey` | Active | `consumerkey:` | <code>consumerkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-contentful-access-token` | Active | `contentful_access_token:` | <code>contentful[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-contentful-cma-test-token` | Active | `contentful-cma-test-token:` | <code>contentful[_-]?cma[_-]?test[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-contentful-integration-management-token` | Active | `contentful_integration-management-token =` | <code>contentful[_-]?integration[_-]?management[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-contentful-php-management-test-token` | Active | `contentful-php_management_test-token =` | <code>contentful[_-]?php[_-]?management[_-]?test[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-contentful-test-org-cma-token` | Active | `contentful-test-org-cma_token:` | <code>contentful[_-]?test[_-]?org[_-]?cma[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-contentful-v2-access-token` | Active | `contentful_v2_access_token=` | <code>contentful[_-]?v2[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-conversation-password` | Active | `conversation_password =` | <code>conversation[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-conversation-username` | Active | `conversation-username:` | <code>conversation[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cos-secrets` | Active | `cos-secrets :` | <code>cos[_-]?secrets(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-coveralls-api-token` | Active | `coveralls-api_token:` | <code>coveralls[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-coveralls-repo-token` | Active | `coveralls-repo_token :` | <code>coveralls[_-]?repo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-coveralls-token` | Active | `coveralls_token =` | <code>coveralls[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-coverity-scan-token` | Active | `coverity-scan-token:` | <code>coverity[_-]?scan[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-cypress-record-key` | Active | `cypress-record-key :` | <code>cypress[_-]?record[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-danger-github-api-token` | Active | `danger-github-api_token =` | <code>danger[_-]?github[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-database-host` | Active | `database_host=` | <code>database[_-]?host(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-database-name` | Active | `database_name=` | <code>database[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-database-password` | Active | `database-password =` | <code>database[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-database-port` | Active | `database_port:` | <code>database[_-]?port(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-database-user` | Active | `database-user =` | <code>database[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-database-username` | Active | `database_username =` | <code>database[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-datadog-api-key` | Active | `datadog-api-key:` | <code>datadog[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-datadog-app-key` | Active | `datadog_app_key:` | <code>datadog[_-]?app[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-connection` | Active | `db-connection :` | <code>db[_-]?connection(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-database` | Active | `db-database =` | <code>db[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-host` | Active | `db_host =` | <code>db[_-]?host(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-password` | Active | `db_password:` | <code>db[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-pw` | Active | `db-pw=` | <code>db[_-]?pw(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-user` | Active | `db_user:` | <code>db[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-db-username` | Active | `db_username:` | <code>db[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-contentful-integration-management-token` | Active | `contentful-integration_management_token =` | <code>contentful[_-]?integration[_-]?management[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-contentful-php-management-test-token` | Active | `contentful_php-management_test_token =` | <code>contentful[_-]?php[_-]?management[_-]?test[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-contentful-test-org-cma-token` | Active | `contentful-test_org_cma_token :` | <code>contentful[_-]?test[_-]?org[_-]?cma[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-contentful-v2-access-token` | Active | `contentful_v2_access-token=` | <code>contentful[_-]?v2[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-conversation-password` | Active | `conversation-password =` | <code>conversation[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-conversation-username` | Active | `conversation-username=` | <code>conversation[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cos-secrets` | Active | `cos_secrets =` | <code>cos[_-]?secrets(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-coveralls-api-token` | Active | `coveralls_api_token :` | <code>coveralls[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-coveralls-repo-token` | Active | `coveralls-repo_token =` | <code>coveralls[_-]?repo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-coveralls-token` | Active | `coveralls_token:` | <code>coveralls[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-coverity-scan-token` | Active | `coverity-scan_token:` | <code>coverity[_-]?scan[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-cypress-record-key` | Active | `cypress-record_key =` | <code>cypress[_-]?record[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-danger-github-api-token` | Active | `danger_github_api-token :` | <code>danger[_-]?github[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-database-host` | Active | `database_host =` | <code>database[_-]?host(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-database-name` | Active | `database-name:` | <code>database[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-database-password` | Active | `database-password :` | <code>database[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-database-port` | Active | `database-port :` | <code>database[_-]?port(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-database-user` | Active | `database-user=` | <code>database[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-database-username` | Active | `database-username :` | <code>database[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-datadog-api-key` | Active | `datadog_api_key :` | <code>datadog[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-datadog-app-key` | Active | `datadog_app_key :` | <code>datadog[_-]?app[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-connection` | Active | `db_connection =` | <code>db[_-]?connection(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-database` | Active | `db-database :` | <code>db[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-host` | Active | `db-host=` | <code>db[_-]?host(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-password` | Active | `db-password:` | <code>db[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-pw` | Active | `db-pw:` | <code>db[_-]?pw(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-user` | Active | `db_user=` | <code>db[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-db-username` | Active | `db-username :` | <code>db[_-]?username(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-ddg-test-email` | Active | `ddg_test-email:` | <code>ddg[_-]?test[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ddg-test-email-pw` | Active | `ddg-test-email-pw =` | <code>ddg[_-]?test[_-]?email[_-]?pw(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ddgc-github-token` | Active | `ddgc_github_token :` | <code>ddgc[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-deploy-password` | Active | `deploy_password:` | <code>deploy[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-deploy-secure` | Active | `deploy-secure :` | <code>deploy[_-]?secure(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-deploy-token` | Active | `deploy-token =` | <code>deploy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-deploy-user` | Active | `deploy-user=` | <code>deploy[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ddg-test-email-pw` | Active | `ddg_test_email-pw:` | <code>ddg[_-]?test[_-]?email[_-]?pw(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ddgc-github-token` | Active | `ddgc-github-token:` | <code>ddgc[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-deploy-password` | Active | `deploy_password :` | <code>deploy[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-deploy-secure` | Active | `deploy_secure=` | <code>deploy[_-]?secure(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-deploy-token` | Active | `deploy-token :` | <code>deploy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-deploy-user` | Active | `deploy_user :` | <code>deploy[_-]?user(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-dgpg-passphrase` | Active | `dgpg_passphrase:` | <code>dgpg[_-]?passphrase(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-digitalocean-access-token` | Active | `digitalocean_access-token :` | <code>digitalocean[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-digitalocean-ssh-key-body` | Active | `digitalocean-ssh_key_body:` | <code>digitalocean[_-]?ssh[_-]?key[_-]?body(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-digitalocean-ssh-key-ids` | Active | `digitalocean-ssh-key-ids :` | <code>digitalocean[_-]?ssh[_-]?key[_-]?ids(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-hub-password` | Active | `docker-hub_password:` | <code>docker[_-]?hub[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-key` | Active | `docker_key :` | <code>docker[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-pass` | Active | `docker-pass =` | <code>docker[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-passwd` | Active | `docker-passwd=` | <code>docker[_-]?passwd(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-password` | Active | `docker_password =` | <code>docker[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-postgres-url` | Active | `docker-postgres_url =` | <code>docker[_-]?postgres[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-token` | Active | `docker-token :` | <code>docker[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-dockerhub-password` | Active | `dockerhub-password=` | <code>dockerhub[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-digitalocean-ssh-key-body` | Active | `digitalocean-ssh_key_body :` | <code>digitalocean[_-]?ssh[_-]?key[_-]?body(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-digitalocean-ssh-key-ids` | Active | `digitalocean-ssh-key-ids=` | <code>digitalocean[_-]?ssh[_-]?key[_-]?ids(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-hub-password` | Active | `docker_hub_password=` | <code>docker[_-]?hub[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-key` | Active | `docker-key :` | <code>docker[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-pass` | Active | `docker-pass :` | <code>docker[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-passwd` | Active | `docker-passwd:` | <code>docker[_-]?passwd(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-password` | Active | `docker-password:` | <code>docker[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-postgres-url` | Active | `docker-postgres-url :` | <code>docker[_-]?postgres[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-token` | Active | `docker_token :` | <code>docker[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-dockerhub-password` | Active | `dockerhub_password :` | <code>dockerhub[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-dockerhubpassword` | Active | `dockerhubpassword:` | <code>dockerhubpassword(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-doordash-auth-token` | Active | `doordash-auth_token :` | <code>doordash[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-dropbox-oauth-bearer` | Active | `dropbox_oauth-bearer =` | <code>dropbox[_-]?oauth[_-]?bearer(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-droplet-travis-password` | Active | `droplet-travis_password:` | <code>droplet[_-]?travis[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-dsonar-login` | Active | `dsonar_login:` | <code>dsonar[_-]?login(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-dsonar-projectkey` | Active | `dsonar_projectkey=` | <code>dsonar[_-]?projectkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-elastic-cloud-auth` | Active | `elastic_cloud-auth:` | <code>elastic[_-]?cloud[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-elasticsearch-password` | Active | `elasticsearch-password=` | <code>elasticsearch[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-encryption-password` | Active | `encryption_password=` | <code>encryption[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-doordash-auth-token` | Active | `doordash-auth_token =` | <code>doordash[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-dropbox-oauth-bearer` | Active | `dropbox_oauth_bearer:` | <code>dropbox[_-]?oauth[_-]?bearer(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-droplet-travis-password` | Active | `droplet-travis_password :` | <code>droplet[_-]?travis[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-dsonar-login` | Active | `dsonar_login=` | <code>dsonar[_-]?login(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-dsonar-projectkey` | Active | `dsonar-projectkey :` | <code>dsonar[_-]?projectkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-elastic-cloud-auth` | Active | `elastic_cloud-auth :` | <code>elastic[_-]?cloud[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-elasticsearch-password` | Active | `elasticsearch-password =` | <code>elasticsearch[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-encryption-password` | Active | `encryption_password:` | <code>encryption[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-end-user-password` | Active | `end-user-password:` | <code>end[_-]?user[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-env-github-oauth-token` | Active | `env-github-oauth_token :` | <code>env[_-]?github[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-env-heroku-api-key` | Active | `env-heroku-api-key=` | <code>env[_-]?heroku[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-env-key` | Active | `env_key:` | <code>env[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-env-secret` | Active | `env_secret=` | <code>env[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-env-secret-access-key` | Active | `env-secret_access-key=` | <code>env[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-env-sonatype-password` | Active | `env-sonatype-password=` | <code>env[_-]?sonatype[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-eureka-awssecretkey` | Active | `eureka_awssecretkey =` | <code>eureka[_-]?awssecretkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-exp-password` | Active | `exp-password=` | <code>exp[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-facebook-access-token-2` | Active | `EAACEdEose0cBAXwhkTgGOixMTHu0hJ2szZb5Pg2PwpmE1` | `(EAACEdEose0cBA[0-9A-Za-z]+)` |
-| `spdb-facebook-oauth-2` | Active | <code>f&#124;cEB&#124;okYOPJiyLCryQuQh8xrD1oiKPrclvJMw6D"e1c97cff9fb67b3affc4ff21d661462c"</code> | <code>[f&#124;F][a&#124;A][c&#124;C][e&#124;E][b&#124;B][o&#124;O][o&#124;O][k&#124;K].*[''&#124;"][0-9a-f]{32}[''&#124;"]</code> |
-| `spdb-file-password` | Active | `file_password =` | <code>file[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-firebase-api-json` | Active | `firebase_api_json:` | <code>firebase[_-]?api[_-]?json(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-firebase-api-token` | Active | `firebase-api_token :` | <code>firebase[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-firebase-key` | Active | `firebase-key :` | <code>firebase[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-firebase-project-develop` | Active | `firebase_project_develop :` | <code>firebase[_-]?project[_-]?develop(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-firebase-token` | Active | `firebase-token :` | <code>firebase[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-firefox-secret` | Active | `firefox-secret :` | <code>firefox[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-flask-secret-key` | Active | `flask_secret-key=` | <code>flask[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-flickr-api-key` | Active | `flickr_api_key=` | <code>flickr[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-flickr-api-secret` | Active | `flickr_api-secret:` | <code>flickr[_-]?api[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-fossa-api-key` | Active | `fossa-api-key:` | <code>fossa[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-env-github-oauth-token` | Active | `env_github_oauth-token :` | <code>env[_-]?github[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-env-heroku-api-key` | Active | `env_heroku-api_key=` | <code>env[_-]?heroku[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-env-key` | Active | `env-key=` | <code>env[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-env-secret` | Active | `env-secret:` | <code>env[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-env-secret-access-key` | Active | `env_secret_access_key :` | <code>env[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-env-sonatype-password` | Active | `env-sonatype-password:` | <code>env[_-]?sonatype[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-eureka-awssecretkey` | Active | `eureka_awssecretkey=` | <code>eureka[_-]?awssecretkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-exp-password` | Active | `exp_password:` | <code>exp[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-facebook-access-token-2` | Active | `EAACEdEose0cBALQRla8wVBWYEp1gMbAQ67iy8U9m268Zq` | `(EAACEdEose0cBA[0-9A-Za-z]+)` |
+| `spdb-facebook-oauth-2` | Active | <code>&#124;aCE&#124;&#124;&#124;KNv4A64O8XEucYvAyDi1bakuwhGvFHJnO'fd2a52e89d79fce70d75579af5390763"</code> | <code>[f&#124;F][a&#124;A][c&#124;C][e&#124;E][b&#124;B][o&#124;O][o&#124;O][k&#124;K].*[''&#124;"][0-9a-f]{32}[''&#124;"]</code> |
+| `spdb-file-password` | Active | `file_password :` | <code>file[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-firebase-api-json` | Active | `firebase-api_json:` | <code>firebase[_-]?api[_-]?json(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-firebase-api-token` | Active | `firebase-api-token:` | <code>firebase[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-firebase-key` | Active | `firebase_key :` | <code>firebase[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-firebase-project-develop` | Active | `firebase-project-develop =` | <code>firebase[_-]?project[_-]?develop(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-firebase-token` | Active | `firebase-token =` | <code>firebase[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-firefox-secret` | Active | `firefox-secret=` | <code>firefox[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-flask-secret-key` | Active | `flask-secret-key:` | <code>flask[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-flickr-api-key` | Active | `flickr_api-key:` | <code>flickr[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-flickr-api-secret` | Active | `flickr_api_secret:` | <code>flickr[_-]?api[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-fossa-api-key` | Active | `fossa_api-key =` | <code>fossa[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-ftp-host` | Active | `ftp_host=` | <code>ftp[_-]?host(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ftp-login` | Active | `ftp-login =` | <code>ftp[_-]?login(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ftp-password` | Active | `ftp-password =` | <code>ftp[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ftp-pw` | Active | `ftp-pw =` | <code>ftp[_-]?pw(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ftp-user` | Active | `ftp_user :` | <code>ftp[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ftp-login` | Active | `ftp_login:` | <code>ftp[_-]?login(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ftp-password` | Active | `ftp-password=` | <code>ftp[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ftp-pw` | Active | `ftp-pw :` | <code>ftp[_-]?pw(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ftp-user` | Active | `ftp-user:` | <code>ftp[_-]?user(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-ftp-username` | Active | `ftp_username:` | <code>ftp[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gcloud-bucket` | Active | `gcloud_bucket =` | <code>gcloud[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gcloud-project` | Active | `gcloud_project =` | <code>gcloud[_-]?project(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gcloud-service-key` | Active | `gcloud-service_key :` | <code>gcloud[_-]?service[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gcr-password` | Active | `gcr-password =` | <code>gcr[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gcs-bucket` | Active | `gcs-bucket :` | <code>gcs[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-api-key` | Active | `gh_api_key:` | <code>gh[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-email` | Active | `gh-email :` | <code>gh[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-next-oauth-client-secret` | Active | `gh_next_oauth-client_secret =` | <code>gh[_-]?next[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-next-unstable-oauth-client-id` | Active | `gh_next_unstable_oauth-client_id:` | <code>gh[_-]?next[_-]?unstable[_-]?oauth[_-]?client[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-next-unstable-oauth-client-secret` | Active | `gh-next-unstable-oauth-client-secret =` | <code>gh[_-]?next[_-]?unstable[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-oauth-client-secret` | Active | `gh-oauth_client_secret=` | <code>gh[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-oauth-token` | Active | `gh_oauth-token :` | <code>gh[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-repo-token` | Active | `gh-repo-token =` | <code>gh[_-]?repo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-token` | Active | `gh_token :` | <code>gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gh-unstable-oauth-client-secret` | Active | `gh-unstable_oauth-client_secret =` | <code>gh[_-]?unstable[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gcloud-bucket` | Active | `gcloud-bucket:` | <code>gcloud[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gcloud-project` | Active | `gcloud-project :` | <code>gcloud[_-]?project(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gcloud-service-key` | Active | `gcloud-service-key =` | <code>gcloud[_-]?service[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gcr-password` | Active | `gcr-password=` | <code>gcr[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gcs-bucket` | Active | `gcs_bucket=` | <code>gcs[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-api-key` | Active | `gh_api-key:` | <code>gh[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-email` | Active | `gh_email :` | <code>gh[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-next-oauth-client-secret` | Active | `gh_next-oauth_client-secret:` | <code>gh[_-]?next[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-next-unstable-oauth-client-id` | Active | `gh_next-unstable_oauth-client-id:` | <code>gh[_-]?next[_-]?unstable[_-]?oauth[_-]?client[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-next-unstable-oauth-client-secret` | Active | `gh-next-unstable_oauth-client-secret=` | <code>gh[_-]?next[_-]?unstable[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-oauth-client-secret` | Active | `gh-oauth-client-secret =` | <code>gh[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-oauth-token` | Active | `gh-oauth_token:` | <code>gh[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-repo-token` | Active | `gh-repo-token:` | <code>gh[_-]?repo[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-token` | Active | `gh_token=` | <code>gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gh-unstable-oauth-client-secret` | Active | `gh_unstable-oauth-client_secret :` | <code>gh[_-]?unstable[_-]?oauth[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-ghb-token` | Active | `ghb_token:` | <code>ghb[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ghost-api-key` | Active | `ghost_api_key=` | <code>ghost[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-git-author-email` | Active | `git-author_email :` | <code>git[_-]?author[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-git-author-name` | Active | `git_author-name=` | <code>git[_-]?author[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-git-committer-email` | Active | `git_committer_email :` | <code>git[_-]?committer[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-git-committer-name` | Active | `git-committer-name:` | <code>git[_-]?committer[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-git-email` | Active | `git-email :` | <code>git[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-git-name` | Active | `git_name =` | <code>git[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ghost-api-key` | Active | `ghost_api-key:` | <code>ghost[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-git-author-email` | Active | `git-author_email=` | <code>git[_-]?author[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-git-author-name` | Active | `git-author-name :` | <code>git[_-]?author[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-git-committer-email` | Active | `git-committer-email=` | <code>git[_-]?committer[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-git-committer-name` | Active | `git_committer_name :` | <code>git[_-]?committer[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-git-email` | Active | `git-email:` | <code>git[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-git-name` | Active | `git-name=` | <code>git[_-]?name(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-git-token` | Active | `git_token :` | <code>git[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-access-token-1` | Active | `github_access_token:` | <code>github[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-access-token-2` | Active | `AML0wACY_AcVvBS-7I1zyT22a2B-XnvG:_2B4h8kotmdsMvxCVBMcBArKJAi-d8eR@githubxcommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm` | `[a-zA-Z0-9_-]*:[a-zA-Z0-9_-]+@github.com*` |
-| `spdb-github-api-key` | Active | `github-api-key:` | <code>github[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-api-token` | Active | `github-api_token :` | <code>github[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-auth` | Active | `github-auth=` | <code>github[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-auth-token` | Active | `github-auth_token:` | <code>github[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-client-secret` | Active | `github-client_secret =` | <code>github[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-deploy-hb-doc-pass` | Active | `github_deploy_hb_doc-pass =` | <code>github[_-]?deploy[_-]?hb[_-]?doc[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-deployment-token` | Active | `github_deployment-token =` | <code>github[_-]?deployment[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-hunter-token` | Active | `github-hunter_token=` | <code>github[_-]?hunter[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-hunter-username` | Active | `github-hunter-username :` | <code>github[_-]?hunter[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-key` | Active | `github_key:` | <code>github[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-oauth` | Active | `github_oauth=` | <code>github[_-]?oauth(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-oauth-token` | Active | `github-oauth-token =` | <code>github[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-password` | Active | `github-password:` | <code>github[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-pwd` | Active | `github_pwd:` | <code>github[_-]?pwd(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-release-token` | Active | `github_release_token :` | <code>github[_-]?release[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-access-token-1` | Active | `github_access-token:` | <code>github[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-access-token-2` | Active | `q1cpVlCl1aG1bOGmAgTpxjAcHLHwS0Xf:kK4yiBBEobpz0pg53kQTyN0P4AZJEel9@githubAcommmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm` | `[a-zA-Z0-9_-]*:[a-zA-Z0-9_-]+@github.com*` |
+| `spdb-github-api-key` | Active | `github-api_key =` | <code>github[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-api-token` | Active | `github-api_token =` | <code>github[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-auth` | Active | `github-auth:` | <code>github[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-auth-token` | Active | `github_auth_token :` | <code>github[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-client-secret` | Active | `github_client_secret :` | <code>github[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-deploy-hb-doc-pass` | Active | `github-deploy-hb-doc_pass :` | <code>github[_-]?deploy[_-]?hb[_-]?doc[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-deployment-token` | Active | `github-deployment_token =` | <code>github[_-]?deployment[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-hunter-token` | Active | `github-hunter_token :` | <code>github[_-]?hunter[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-hunter-username` | Active | `github_hunter_username :` | <code>github[_-]?hunter[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-key` | Active | `github_key=` | <code>github[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-oauth` | Active | `github_oauth :` | <code>github[_-]?oauth(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-oauth-token` | Active | `github_oauth_token =` | <code>github[_-]?oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-password` | Active | `github_password :` | <code>github[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-pwd` | Active | `github-pwd:` | <code>github[_-]?pwd(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-release-token` | Active | `github-release_token:` | <code>github[_-]?release[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-github-repo` | Active | `github-repo=` | <code>github[_-]?repo(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-github-token` | Active | `github-token=` | <code>github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-github-tokens` | Active | `github_tokens =` | <code>github[_-]?tokens(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gitlab-user-email` | Active | `gitlab-user-email=` | <code>gitlab[_-]?user[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gogs-password` | Active | `gogs-password:` | <code>gogs[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-account-type` | Active | `google_account-type:` | <code>google[_-]?account[_-]?type(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-client-email` | Active | `google_client_email =` | <code>google[_-]?client[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-client-id` | Active | `google-client_id:` | <code>google[_-]?client[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-client-secret` | Active | `google-client-secret =` | <code>google[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-maps-api-key` | Active | `google-maps_api-key :` | <code>google[_-]?maps[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-oauth` | Active | `ya29EzeJ3evDhKc8XgkYSAp-MYOLrIoHaoy2P` | `(ya29.[0-9A-Za-z-_]+)` |
-| `spdb-google-patterns` | Active | `google_client_id` | <code>(?:google_client_id&#124;google_client_secret&#124;google_client_token)</code> |
-| `spdb-google-private-key` | Active | `google_private-key =` | <code>google[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-google-url` | Active | `719540019240-rzm5hdacqn5in304gtltzf414bet0q8h1apps2googleusercontentmcom` | `([0-9]{12}-[a-z0-9]{32}.apps.googleusercontent.com)` |
-| `spdb-gpg-key-name` | Active | `gpg_key_name :` | <code>gpg[_-]?key[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gpg-keyname` | Active | `gpg-keyname :` | <code>gpg[_-]?keyname(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gpg-ownertrust` | Active | `gpg_ownertrust=` | <code>gpg[_-]?ownertrust(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-github-tokens` | Active | `github_tokens :` | <code>github[_-]?tokens(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gitlab-user-email` | Active | `gitlab-user-email =` | <code>gitlab[_-]?user[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gogs-password` | Active | `gogs_password :` | <code>gogs[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-account-type` | Active | `google_account-type =` | <code>google[_-]?account[_-]?type(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-client-email` | Active | `google-client-email =` | <code>google[_-]?client[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-client-id` | Active | `google-client-id=` | <code>google[_-]?client[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-client-secret` | Active | `google-client_secret=` | <code>google[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-maps-api-key` | Active | `google-maps_api_key :` | <code>google[_-]?maps[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-oauth` | Active | `ya29v1Hneu20S14eEPQ7EN9DM1p7XS_El-OxV` | `(ya29.[0-9A-Za-z-_]+)` |
+| `spdb-google-patterns` | Active | `google_client_secret` | <code>(?:google_client_id&#124;google_client_secret&#124;google_client_token)</code> |
+| `spdb-google-private-key` | Active | `google_private-key:` | <code>google[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-google-url` | Active | `080099791751-ky5ar5jr2bzygx6hbhzq6c347l3p1ryqpappsegoogleusercontentdcom` | `([0-9]{12}-[a-z0-9]{32}.apps.googleusercontent.com)` |
+| `spdb-gpg-key-name` | Active | `gpg-key_name=` | <code>gpg[_-]?key[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gpg-keyname` | Active | `gpg_keyname :` | <code>gpg[_-]?keyname(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gpg-ownertrust` | Active | `gpg_ownertrust =` | <code>gpg[_-]?ownertrust(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-gpg-passphrase` | Active | `gpg-passphrase:` | <code>gpg[_-]?passphrase(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gpg-private-key` | Active | `gpg_private_key :` | <code>gpg[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gpg-secret-keys` | Active | `gpg-secret-keys :` | <code>gpg[_-]?secret[_-]?keys(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gradle-publish-key` | Active | `gradle-publish-key =` | <code>gradle[_-]?publish[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gradle-publish-secret` | Active | `gradle-publish-secret=` | <code>gradle[_-]?publish[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gradle-signing-key-id` | Active | `gradle-signing_key_id:` | <code>gradle[_-]?signing[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gradle-signing-password` | Active | `gradle-signing_password :` | <code>gradle[_-]?signing[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-gren-github-token` | Active | `gren-github_token:` | <code>gren[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-grgit-user` | Active | `grgit-user=` | <code>grgit[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-hab-auth-token` | Active | `hab_auth-token:` | <code>hab[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-hab-key` | Active | `hab_key =` | <code>hab[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-hb-codesign-gpg-pass` | Active | `hb-codesign_gpg-pass :` | <code>hb[_-]?codesign[_-]?gpg[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-hb-codesign-key-pass` | Active | `hb_codesign-key_pass:` | <code>hb[_-]?codesign[_-]?key[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-heroku-api-key` | Active | `heroku_api-key =` | <code>heroku[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-heroku-api-key-api-key` | Active | <code>&#124;&#124;ROkugDDEODo3yl6GXd7Oznm2zWwQiqFEiN57AEBBD6-EB18-DCD3-D187-8C91EE05E6A3</code> | <code>([h&#124;H][e&#124;E][r&#124;R][o&#124;O][k&#124;K][u&#124;U].{0,30}[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})</code> |
+| `spdb-gpg-private-key` | Active | `gpg_private-key =` | <code>gpg[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gpg-secret-keys` | Active | `gpg_secret_keys:` | <code>gpg[_-]?secret[_-]?keys(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gradle-publish-key` | Active | `gradle_publish_key =` | <code>gradle[_-]?publish[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gradle-publish-secret` | Active | `gradle_publish-secret =` | <code>gradle[_-]?publish[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gradle-signing-key-id` | Active | `gradle_signing_key_id:` | <code>gradle[_-]?signing[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gradle-signing-password` | Active | `gradle-signing-password=` | <code>gradle[_-]?signing[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-gren-github-token` | Active | `gren-github-token :` | <code>gren[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-grgit-user` | Active | `grgit_user:` | <code>grgit[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-hab-auth-token` | Active | `hab-auth-token=` | <code>hab[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-hab-key` | Active | `hab_key=` | <code>hab[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-hb-codesign-gpg-pass` | Active | `hb_codesign-gpg_pass =` | <code>hb[_-]?codesign[_-]?gpg[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-hb-codesign-key-pass` | Active | `hb_codesign-key_pass=` | <code>hb[_-]?codesign[_-]?key[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-heroku-api-key` | Active | `heroku_api-key=` | <code>heroku[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-heroku-api-key-api-key` | Active | `HerOKubFQyPn8MVXwwQeTX4hWlqfQg3kWFDtEF7A4D4B-8EEF-5C5C-89C3-ABA5F3F18AA8` | <code>([h&#124;H][e&#124;E][r&#124;R][o&#124;O][k&#124;K][u&#124;U].{0,30}[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})</code> |
 | `spdb-heroku-email` | Active | `heroku-email :` | <code>heroku[_-]?email(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-heroku-token` | Active | `heroku_token:` | <code>heroku[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-hockeyapp` | Active | `hockeyXaHhCMW0ME6q40PDaVgPUE0FDeqEVD9S'e74a0600725a0e3566f2cbd9f0785512'` | <code>hockey.{0,50}("&#124;')?[0-9a-f]{32}("&#124;')?</code> |
-| `spdb-hockeyapp-token` | Active | `hockeyapp-token :` | <code>hockeyapp[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-homebrew-github-api-token` | Active | `homebrew-github-api_token =` | <code>homebrew[_-]?github[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-hub-dxia2-password` | Active | `hub-dxia2_password =` | <code>hub[_-]?dxia2[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ij-repo-password` | Active | `ij-repo_password :` | <code>ij[_-]?repo[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ij-repo-username` | Active | `ij_repo_username =` | <code>ij[_-]?repo[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-index-name` | Active | `index-name=` | <code>index[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-integration-test-api-key` | Active | `integration-test-api-key:` | <code>integration[_-]?test[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-integration-test-appid` | Active | `integration-test_appid:` | <code>integration[_-]?test[_-]?appid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-internal-secrets` | Active | `internal-secrets=` | <code>internal[_-]?secrets(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ios-docs-deploy-token` | Active | `ios_docs-deploy_token:` | <code>ios[_-]?docs[_-]?deploy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-hockeyapp` | Active | `hockeyMsZ4FcXK4yjx0iUUanwfZqUVqPfPFWfh'bd468474074d1d5e5ca21ccaaed3a726"` | <code>hockey.{0,50}("&#124;')?[0-9a-f]{32}("&#124;')?</code> |
+| `spdb-hockeyapp-token` | Active | `hockeyapp_token :` | <code>hockeyapp[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-homebrew-github-api-token` | Active | `homebrew-github_api-token :` | <code>homebrew[_-]?github[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-hub-dxia2-password` | Active | `hub_dxia2-password =` | <code>hub[_-]?dxia2[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ij-repo-password` | Active | `ij_repo_password:` | <code>ij[_-]?repo[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ij-repo-username` | Active | `ij_repo_username:` | <code>ij[_-]?repo[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-index-name` | Active | `index_name =` | <code>index[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-integration-test-api-key` | Active | `integration_test_api_key :` | <code>integration[_-]?test[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-integration-test-appid` | Active | `integration-test-appid :` | <code>integration[_-]?test[_-]?appid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-internal-secrets` | Active | `internal_secrets:` | <code>internal[_-]?secrets(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ios-docs-deploy-token` | Active | `ios_docs_deploy_token=` | <code>ios[_-]?docs[_-]?deploy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-itest-gh-token` | Active | `itest_gh_token=` | <code>itest[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-jdbc` | Active | `mysql: jdbc:mysql:` | <code>mysql: jdbc:mysql(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-jdbc-databaseurl` | Active | `jdbc-databaseurl :` | <code>jdbc[_-]?databaseurl(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-jdbc-host` | Active | `jdbc_host=` | <code>jdbc[_-]?host(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-jwt-secret` | Active | `jwt-secret =` | <code>jwt[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-kafka-admin-url` | Active | `kafka_admin_url :` | <code>kafka[_-]?admin[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-kafka-instance-name` | Active | `kafka_instance_name:` | <code>kafka[_-]?instance[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-kafka-rest-url` | Active | `kafka_rest-url :` | <code>kafka[_-]?rest[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-keystore-pass` | Active | `keystore_pass=` | <code>keystore[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-kovan-private-key` | Active | `kovan_private_key =` | <code>kovan[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-kubecfg-s3-path` | Active | `kubecfg_s3_path:` | <code>kubecfg[_-]?s3[_-]?path(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-jdbc` | Active | `mysql: jdbc:mysql=` | <code>mysql: jdbc:mysql(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-jdbc-databaseurl` | Active | `jdbc-databaseurl:` | <code>jdbc[_-]?databaseurl(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-jdbc-host` | Active | `jdbc-host =` | <code>jdbc[_-]?host(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-jwt-secret` | Active | `jwt_secret=` | <code>jwt[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-kafka-admin-url` | Active | `kafka_admin_url=` | <code>kafka[_-]?admin[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-kafka-instance-name` | Active | `kafka-instance-name:` | <code>kafka[_-]?instance[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-kafka-rest-url` | Active | `kafka_rest_url:` | <code>kafka[_-]?rest[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-keystore-pass` | Active | `keystore-pass:` | <code>keystore[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-kovan-private-key` | Active | `kovan-private_key :` | <code>kovan[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-kubecfg-s3-path` | Active | `kubecfg-s3-path =` | <code>kubecfg[_-]?s3[_-]?path(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-kubeconfig` | Active | `kubeconfig=` | <code>kubeconfig(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-kxoltsn3vogdop92m` | Active | `kxoltsn3vogdop92m=` | <code>kxoltsn3vogdop92m(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-leanplum-key` | Active | `leanplum-key:` | <code>leanplum[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lektor-deploy-password` | Active | `lektor_deploy-password :` | <code>lektor[_-]?deploy[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lektor-deploy-username` | Active | `lektor_deploy-username=` | <code>lektor[_-]?deploy[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lighthouse-api-key` | Active | `lighthouse_api_key:` | <code>lighthouse[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-linux-signing-key` | Active | `linux_signing-key:` | <code>linux[_-]?signing[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ll-publish-url` | Active | `ll_publish-url=` | <code>ll[_-]?publish[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ll-shared-key` | Active | `ll-shared_key=` | <code>ll[_-]?shared[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-looker-test-runner-client-secret` | Active | `looker-test-runner_client_secret :` | <code>looker[_-]?test[_-]?runner[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lottie-happo-api-key` | Active | `lottie-happo-api_key:` | <code>lottie[_-]?happo[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lottie-happo-secret-key` | Active | `lottie-happo_secret_key =` | <code>lottie[_-]?happo[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lottie-s3-secret-key` | Active | `lottie_s3_secret_key =` | <code>lottie[_-]?s3[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lottie-upload-cert-key-password` | Active | `lottie-upload_cert_key-password :` | <code>lottie[_-]?upload[_-]?cert[_-]?key[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-lottie-upload-cert-key-store-password` | Active | `lottie_upload_cert_key-store_password=` | <code>lottie[_-]?upload[_-]?cert[_-]?key[_-]?store[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-magento-auth-password` | Active | `magento-auth_password=` | <code>magento[_-]?auth[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-magento-auth-username` | Active | `magento_auth_username  :` | <code>magento[_-]?auth[_-]?username (=&#124; =&#124;:&#124; :)</code> |
-| `spdb-magento-password` | Active | `magento-password :` | <code>magento[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mail-password` | Active | `mail_password :` | <code>mail[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailchimp` | Active | `W4b02fec33a43eaaec7df325118be6a53-us27a-zA-Z0-9` | `(W(?:[a-f0-9]{32}(-us[0-9]{1,2}))a-zA-Z0-9)` |
-| `spdb-mailchimp-api-key-2` | Active | `mailchimp-api-key=` | <code>mailchimp[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-kxoltsn3vogdop92m` | Active | `kxoltsn3vogdop92m:` | <code>kxoltsn3vogdop92m(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-leanplum-key` | Active | `leanplum-key=` | <code>leanplum[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lektor-deploy-password` | Active | `lektor_deploy_password=` | <code>lektor[_-]?deploy[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lektor-deploy-username` | Active | `lektor-deploy-username=` | <code>lektor[_-]?deploy[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lighthouse-api-key` | Active | `lighthouse_api-key=` | <code>lighthouse[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-linux-signing-key` | Active | `linux_signing-key =` | <code>linux[_-]?signing[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ll-publish-url` | Active | `ll-publish-url =` | <code>ll[_-]?publish[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ll-shared-key` | Active | `ll-shared-key:` | <code>ll[_-]?shared[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-looker-test-runner-client-secret` | Active | `looker-test_runner-client-secret=` | <code>looker[_-]?test[_-]?runner[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lottie-happo-api-key` | Active | `lottie-happo-api_key :` | <code>lottie[_-]?happo[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lottie-happo-secret-key` | Active | `lottie_happo_secret_key=` | <code>lottie[_-]?happo[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lottie-s3-secret-key` | Active | `lottie-s3-secret_key :` | <code>lottie[_-]?s3[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lottie-upload-cert-key-password` | Active | `lottie_upload_cert_key_password :` | <code>lottie[_-]?upload[_-]?cert[_-]?key[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-lottie-upload-cert-key-store-password` | Active | `lottie_upload_cert_key_store-password=` | <code>lottie[_-]?upload[_-]?cert[_-]?key[_-]?store[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-magento-auth-password` | Active | `magento_auth-password=` | <code>magento[_-]?auth[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-magento-auth-username` | Active | `magento-auth_username  =` | <code>magento[_-]?auth[_-]?username (=&#124; =&#124;:&#124; :)</code> |
+| `spdb-magento-password` | Active | `magento-password =` | <code>magento[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mail-password` | Active | `mail_password:` | <code>mail[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailchimp` | Active | `W8b6807652c6a576fb983fa54eea292b8-us72a-zA-Z0-9` | `(W(?:[a-f0-9]{32}(-us[0-9]{1,2}))a-zA-Z0-9)` |
+| `spdb-mailchimp-api-key-2` | Active | `mailchimp-api_key=` | <code>mailchimp[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-mailchimp-key` | Active | `mailchimp-key:` | <code>mailchimp[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailer-password` | Active | `mailer-password =` | <code>mailer[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun` | Active | `key-819743f83991b5829ffc2dd1eea03649` | `(key-[0-9a-f]{32})` |
-| `spdb-mailgun-api-key` | Active | `mailgun_api-key:` | <code>mailgun[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun-apikey` | Active | `mailgun_apikey=` | <code>mailgun[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun-password` | Active | `mailgun_password =` | <code>mailgun[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun-priv-key` | Active | `mailgun-priv-key :` | <code>mailgun[_-]?priv[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun-pub-apikey` | Active | `mailgun-pub-apikey=` | <code>mailgun[_-]?pub[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun-pub-key` | Active | `mailgun_pub-key=` | <code>mailgun[_-]?pub[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mailgun-secret-api-key` | Active | `mailgun-secret_api-key:` | <code>mailgun[_-]?secret[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-manage-key` | Active | `manage_key =` | <code>manage[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-manage-secret` | Active | `manage-secret :` | <code>manage[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-management-token` | Active | `management-token =` | <code>management[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailer-password` | Active | `mailer_password:` | <code>mailer[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun` | Active | `key-f240a273ea0501772a234424fe6be9ba` | `(key-[0-9a-f]{32})` |
+| `spdb-mailgun-api-key` | Active | `mailgun_api_key:` | <code>mailgun[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun-apikey` | Active | `mailgun-apikey =` | <code>mailgun[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun-password` | Active | `mailgun-password =` | <code>mailgun[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun-priv-key` | Active | `mailgun_priv_key:` | <code>mailgun[_-]?priv[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun-pub-apikey` | Active | `mailgun_pub-apikey =` | <code>mailgun[_-]?pub[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun-pub-key` | Active | `mailgun-pub_key=` | <code>mailgun[_-]?pub[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mailgun-secret-api-key` | Active | `mailgun_secret-api-key=` | <code>mailgun[_-]?secret[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-manage-key` | Active | `manage_key :` | <code>manage[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-manage-secret` | Active | `manage_secret=` | <code>manage[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-management-token` | Active | `management-token :` | <code>management[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-managementapiaccesstoken` | Active | `managementapiaccesstoken=` | <code>managementapiaccesstoken(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mandrill-api-key` | Active | `mandrill_api-key=` | <code>mandrill[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-manifest-app-token` | Active | `manifest-app_token =` | <code>manifest[_-]?app[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-manifest-app-url` | Active | `manifest-app_url:` | <code>manifest[_-]?app[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mapbox-access-token` | Active | `mapbox_access_token =` | <code>mapbox[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mapbox-api-token` | Active | `mapbox_api-token=` | <code>mapbox[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mapbox-aws-access-key-id` | Active | `mapbox_aws-access-key_id :` | <code>mapbox[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mapbox-aws-secret-access-key` | Active | `mapbox-aws_secret-access_key =` | <code>mapbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mapboxaccesstoken` | Active | `mapboxaccesstoken=` | <code>mapboxaccesstoken(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-master-password` | Active | `master_passwordrqe3JCFy52kzkN3cE1XK4UMb0SzyTWZW` | `(master_password).+` |
-| `spdb-mg-api-key` | Active | `mg_api-key=` | <code>mg[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mg-public-api-key` | Active | `mg-public-api-key=` | <code>mg[_-]?public[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mh-apikey` | Active | `mh-apikey :` | <code>mh[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mh-password` | Active | `mh_password :` | <code>mh[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mile-zero-key` | Active | `mile_zero_key :` | <code>mile[_-]?zero[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-minio-access-key` | Active | `minio-access-key :` | <code>minio[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-minio-secret-key` | Active | `minio-secret_key:` | <code>minio[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-multi-bob-sid` | Active | `multi_bob_sid =` | <code>multi[_-]?bob[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-multi-connect-sid` | Active | `multi-connect_sid =` | <code>multi[_-]?connect[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-multi-disconnect-sid` | Active | `multi_disconnect_sid :` | <code>multi[_-]?disconnect[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-multi-workflow-sid` | Active | `multi-workflow_sid=` | <code>multi[_-]?workflow[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-multi-workspace-sid` | Active | `multi_workspace-sid=` | <code>multi[_-]?workspace[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-my-secret-env` | Active | `my-secret-env :` | <code>my[_-]?secret[_-]?env(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysql-database` | Active | `mysql-database=` | <code>mysql[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysql-hostname` | Active | `mysql_hostname:` | <code>mysql[_-]?hostname(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysql-password` | Active | `mysql_password=` | <code>mysql[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysql-root-password` | Active | `mysql_root_password =` | <code>mysql[_-]?root[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysql-user` | Active | `mysql-user =` | <code>mysql[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysql-username` | Active | `mysql_username=` | <code>mysql[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysqlmasteruser` | Active | `mysqlmasteruser :` | <code>mysqlmasteruser(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-mysqlsecret` | Active | `mysqlsecret=` | <code>mysqlsecret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-nativeevents` | Active | `nativeevents:` | <code>nativeevents(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-netlify-api-key` | Active | `netlify_api-key:` | <code>netlify[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-new-relic-beta-token` | Active | `new-relic_beta_token:` | <code>new[_-]?relic[_-]?beta[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-nexus-password` | Active | `nexus-password =` | <code>nexus[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-nexuspassword` | Active | `nexuspassword:` | <code>nexuspassword(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ngrok-auth-token` | Active | `ngrok_auth_token =` | <code>ngrok[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ngrok-token` | Active | `ngrok-token :` | <code>ngrok[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-node-env` | Active | `node-env=` | <code>node[_-]?env(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-node-pre-gyp-accesskeyid` | Active | `node-pre_gyp_accesskeyid=` | <code>node[_-]?pre[_-]?gyp[_-]?accesskeyid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-node-pre-gyp-github-token` | Active | `node_pre-gyp-github_token:` | <code>node[_-]?pre[_-]?gyp[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-node-pre-gyp-secretaccesskey` | Active | `node-pre_gyp-secretaccesskey =` | <code>node[_-]?pre[_-]?gyp[_-]?secretaccesskey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-non-token` | Active | `non_token:` | <code>non[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-now-token` | Active | `now-token =` | <code>now[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-npm-api-key` | Active | `npm-api-key:` | <code>npm[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-npm-api-token` | Active | `npm-api-token:` | <code>npm[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mandrill-api-key` | Active | `mandrill-api_key =` | <code>mandrill[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-manifest-app-token` | Active | `manifest_app_token =` | <code>manifest[_-]?app[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-manifest-app-url` | Active | `manifest_app_url :` | <code>manifest[_-]?app[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mapbox-access-token` | Active | `mapbox-access_token=` | <code>mapbox[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mapbox-api-token` | Active | `mapbox-api_token :` | <code>mapbox[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mapbox-aws-access-key-id` | Active | `mapbox_aws_access-key_id :` | <code>mapbox[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mapbox-aws-secret-access-key` | Active | `mapbox_aws_secret_access-key =` | <code>mapbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mapboxaccesstoken` | Active | `mapboxaccesstoken :` | <code>mapboxaccesstoken(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-master-password` | Active | `master_password7D5XPGAolrobaPKS5qS4caGQoqLG0PTC` | `(master_password).+` |
+| `spdb-mg-api-key` | Active | `mg-api_key:` | <code>mg[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mg-public-api-key` | Active | `mg-public_api-key :` | <code>mg[_-]?public[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mh-apikey` | Active | `mh-apikey=` | <code>mh[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mh-password` | Active | `mh-password =` | <code>mh[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mile-zero-key` | Active | `mile_zero-key =` | <code>mile[_-]?zero[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-minio-access-key` | Active | `minio-access_key =` | <code>minio[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-minio-secret-key` | Active | `minio_secret-key=` | <code>minio[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-multi-bob-sid` | Active | `multi-bob-sid :` | <code>multi[_-]?bob[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-multi-connect-sid` | Active | `multi_connect_sid :` | <code>multi[_-]?connect[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-multi-disconnect-sid` | Active | `multi-disconnect_sid:` | <code>multi[_-]?disconnect[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-multi-workflow-sid` | Active | `multi-workflow_sid :` | <code>multi[_-]?workflow[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-multi-workspace-sid` | Active | `multi-workspace-sid:` | <code>multi[_-]?workspace[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-my-secret-env` | Active | `my_secret_env=` | <code>my[_-]?secret[_-]?env(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysql-database` | Active | `mysql-database :` | <code>mysql[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysql-hostname` | Active | `mysql-hostname=` | <code>mysql[_-]?hostname(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysql-password` | Active | `mysql-password=` | <code>mysql[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysql-root-password` | Active | `mysql_root_password :` | <code>mysql[_-]?root[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysql-user` | Active | `mysql-user:` | <code>mysql[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysql-username` | Active | `mysql-username :` | <code>mysql[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysqlmasteruser` | Active | `mysqlmasteruser:` | <code>mysqlmasteruser(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-mysqlsecret` | Active | `mysqlsecret:` | <code>mysqlsecret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-nativeevents` | Active | `nativeevents=` | <code>nativeevents(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-netlify-api-key` | Active | `netlify_api_key =` | <code>netlify[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-new-relic-beta-token` | Active | `new_relic-beta-token:` | <code>new[_-]?relic[_-]?beta[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-nexus-password` | Active | `nexus-password :` | <code>nexus[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-nexuspassword` | Active | `nexuspassword =` | <code>nexuspassword(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ngrok-auth-token` | Active | `ngrok-auth-token:` | <code>ngrok[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ngrok-token` | Active | `ngrok_token :` | <code>ngrok[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-node-env` | Active | `node_env:` | <code>node[_-]?env(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-node-pre-gyp-accesskeyid` | Active | `node_pre-gyp_accesskeyid =` | <code>node[_-]?pre[_-]?gyp[_-]?accesskeyid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-node-pre-gyp-github-token` | Active | `node-pre-gyp-github-token :` | <code>node[_-]?pre[_-]?gyp[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-node-pre-gyp-secretaccesskey` | Active | `node_pre_gyp-secretaccesskey =` | <code>node[_-]?pre[_-]?gyp[_-]?secretaccesskey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-non-token` | Active | `non_token=` | <code>non[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-now-token` | Active | `now-token :` | <code>now[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-npm-api-key` | Active | `npm-api_key=` | <code>npm[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-npm-api-token` | Active | `npm_api_token =` | <code>npm[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-npm-auth-token` | Active | `npm_auth-token =` | <code>npm[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-npm-email` | Active | `npm_email:` | <code>npm[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-npm-password` | Active | `npm_password =` | <code>npm[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-npm-secret-key` | Active | `npm_secret-key=` | <code>npm[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-npm-email` | Active | `npm-email=` | <code>npm[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-npm-password` | Active | `npm-password =` | <code>npm[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-npm-secret-key` | Active | `npm_secret-key =` | <code>npm[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-npm-token-1` | Active | `npm_token=` | <code>npm[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-nuget-api-key-1` | Active | `oy2qvb84cs6ffifrr938vb8eyk80i1mhfeups2oajzn30o` | `(oy2[a-z0-9]{43})` |
-| `spdb-nuget-api-key-2` | Active | `nuget-api-key =` | <code>nuget[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-numbers-service-pass` | Active | `numbers_service_pass=` | <code>numbers[_-]?service[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-oauth-token` | Active | `oauth-token =` | <code>oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-object-storage-password` | Active | `object-storage-password :` | <code>object[_-]?storage[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-object-storage-region-name` | Active | `object-storage-region_name:` | <code>object[_-]?storage[_-]?region[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-object-store-bucket` | Active | `object_store_bucket:` | <code>object[_-]?store[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-object-store-creds` | Active | `object-store-creds :` | <code>object[_-]?store[_-]?creds(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-oc-pass` | Active | `oc_pass :` | <code>oc[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-octest-app-password` | Active | `octest-app_password =` | <code>octest[_-]?app[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-nuget-api-key-1` | Active | `oy2z7em82whnb16fobkp9fhwb8myu9ve5wxw7s7943ou4c` | `(oy2[a-z0-9]{43})` |
+| `spdb-nuget-api-key-2` | Active | `nuget-api-key :` | <code>nuget[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-numbers-service-pass` | Active | `numbers-service-pass:` | <code>numbers[_-]?service[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-oauth-token` | Active | `oauth-token=` | <code>oauth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-object-storage-password` | Active | `object_storage-password =` | <code>object[_-]?storage[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-object-storage-region-name` | Active | `object_storage_region-name :` | <code>object[_-]?storage[_-]?region[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-object-store-bucket` | Active | `object_store-bucket :` | <code>object[_-]?store[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-object-store-creds` | Active | `object-store-creds =` | <code>object[_-]?store[_-]?creds(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-oc-pass` | Active | `oc_pass=` | <code>oc[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-octest-app-password` | Active | `octest_app_password:` | <code>octest[_-]?app[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-octest-app-username` | Active | `octest_app_username=` | <code>octest[_-]?app[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-octest-password` | Active | `octest_password:` | <code>octest[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ofta-key` | Active | `ofta-key=` | <code>ofta[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ofta-region` | Active | `ofta_region :` | <code>ofta[_-]?region(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ofta-secret` | Active | `ofta-secret=` | <code>ofta[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-okta-client-token` | Active | `okta_client-token:` | <code>okta[_-]?client[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-okta-oauth2-client-secret` | Active | `okta-oauth2-client-secret =` | <code>okta[_-]?oauth2[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-okta-oauth2-clientsecret` | Active | `okta-oauth2_clientsecret :` | <code>okta[_-]?oauth2[_-]?clientsecret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-omise-key` | Active | `omise_key:` | <code>omise[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-omise-pkey` | Active | `omise-pkey =` | <code>omise[_-]?pkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-omise-pubkey` | Active | `omise_pubkey =` | <code>omise[_-]?pubkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-omise-skey` | Active | `omise_skey=` | <code>omise[_-]?skey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-octest-password` | Active | `octest_password :` | <code>octest[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ofta-key` | Active | `ofta_key =` | <code>ofta[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ofta-region` | Active | `ofta-region:` | <code>ofta[_-]?region(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ofta-secret` | Active | `ofta-secret:` | <code>ofta[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-okta-client-token` | Active | `okta_client-token=` | <code>okta[_-]?client[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-okta-oauth2-client-secret` | Active | `okta_oauth2-client-secret =` | <code>okta[_-]?oauth2[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-okta-oauth2-clientsecret` | Active | `okta_oauth2-clientsecret :` | <code>okta[_-]?oauth2[_-]?clientsecret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-omise-key` | Active | `omise_key=` | <code>omise[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-omise-pkey` | Active | `omise_pkey:` | <code>omise[_-]?pkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-omise-pubkey` | Active | `omise-pubkey =` | <code>omise[_-]?pubkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-omise-skey` | Active | `omise-skey:` | <code>omise[_-]?skey(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-onesignal-api-key` | Active | `onesignal_api-key :` | <code>onesignal[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-onesignal-user-auth-key` | Active | `onesignal-user_auth_key :` | <code>onesignal[_-]?user[_-]?auth[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-open-whisk-key` | Active | `open_whisk_key =` | <code>open[_-]?whisk[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-openwhisk-key` | Active | `openwhisk_key =` | <code>openwhisk[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-os-auth-url` | Active | `os_auth_url =` | <code>os[_-]?auth[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-os-password` | Active | `os_password:` | <code>os[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ossrh-jira-password` | Active | `ossrh_jira-password :` | <code>ossrh[_-]?jira[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ossrh-pass` | Active | `ossrh_pass :` | <code>ossrh[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ossrh-password` | Active | `ossrh-password:` | <code>ossrh[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ossrh-secret` | Active | `ossrh_secret =` | <code>ossrh[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-onesignal-user-auth-key` | Active | `onesignal_user-auth_key:` | <code>onesignal[_-]?user[_-]?auth[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-open-whisk-key` | Active | `open-whisk-key=` | <code>open[_-]?whisk[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-openwhisk-key` | Active | `openwhisk-key:` | <code>openwhisk[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-os-auth-url` | Active | `os-auth_url :` | <code>os[_-]?auth[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-os-password` | Active | `os-password :` | <code>os[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ossrh-jira-password` | Active | `ossrh-jira-password =` | <code>ossrh[_-]?jira[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ossrh-pass` | Active | `ossrh_pass =` | <code>ossrh[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ossrh-password` | Active | `ossrh-password=` | <code>ossrh[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ossrh-secret` | Active | `ossrh-secret =` | <code>ossrh[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-ossrh-username` | Active | `ossrh_username:` | <code>ossrh[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-outlook-team` | Active | `https://outlookXoffice4com/webhook/d59239-7f504db04b644622efbadd5fdb8b6@` | `(https://outlook.office.com/webhook/[0-9a-f-]{36}@)` |
-| `spdb-packagecloud-token` | Active | `packagecloud-token=` | <code>packagecloud[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-pagerduty-apikey` | Active | `pagerduty-apikey=` | <code>pagerduty[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-parse-js-key` | Active | `parse_js_key =` | <code>parse[_-]?js[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-passwordtravis` | Active | `passwordtravis:` | <code>passwordtravis(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-paypal-braintree-access-token-2` | Active | `access_tokenproductionwoojknlpkajlww39694596c0dbfcb3929c37c9b85239b3ee` | `(access_token$production$[0-9a-z]{16}$[0-9a-f]{32})` |
-| `spdb-paypal-client-secret` | Active | `paypal-client-secret :` | <code>paypal[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-percy-project` | Active | `percy_project=` | <code>percy[_-]?project(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-percy-token` | Active | `percy_token=` | <code>percy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-personal-key` | Active | `personal-key=` | <code>personal[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-personal-secret` | Active | `personal-secret:` | <code>personal[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-pg-database` | Active | `pg_database:` | <code>pg[_-]?database(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-pg-host` | Active | `pg_host=` | <code>pg[_-]?host(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-places-api-key` | Active | `places_api-key:` | <code>places[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-outlook-team` | Active | `https://outlookNoffice1com/webhook/daaa0dafa5dd9e6bd31888-deab998--d07e@` | `(https://outlook.office.com/webhook/[0-9a-f-]{36}@)` |
+| `spdb-packagecloud-token` | Active | `packagecloud_token=` | <code>packagecloud[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-pagerduty-apikey` | Active | `pagerduty-apikey :` | <code>pagerduty[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-parse-js-key` | Active | `parse-js_key:` | <code>parse[_-]?js[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-passwordtravis` | Active | `passwordtravis :` | <code>passwordtravis(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-paypal-braintree-access-token-2` | Active | `access_tokenproductionorzt4reg7h19amg6623d3b0c63b39c866d4fb3ccaf07d29d` | `(access_token$production$[0-9a-z]{16}$[0-9a-f]{32})` |
+| `spdb-paypal-client-secret` | Active | `paypal_client_secret =` | <code>paypal[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-percy-project` | Active | `percy_project :` | <code>percy[_-]?project(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-percy-token` | Active | `percy-token :` | <code>percy[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-personal-key` | Active | `personal_key =` | <code>personal[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-personal-secret` | Active | `personal-secret=` | <code>personal[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-pg-database` | Active | `pg-database :` | <code>pg[_-]?database(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-pg-host` | Active | `pg-host=` | <code>pg[_-]?host(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-places-api-key` | Active | `places_api_key :` | <code>places[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-places-apikey` | Active | `places_apikey:` | <code>places[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-plotly-apikey` | Active | `plotly-apikey =` | <code>plotly[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-plugin-password` | Active | `plugin_password =` | <code>plugin[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-postgres-env-postgres-db` | Active | `postgres-env_postgres-db :` | <code>postgres[_-]?env[_-]?postgres[_-]?db(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-postgres-env-postgres-password` | Active | `postgres-env-postgres-password :` | <code>postgres[_-]?env[_-]?postgres[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-postgresql-db` | Active | `postgresql_db =` | <code>postgresql[_-]?db(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-plotly-apikey` | Active | `plotly_apikey :` | <code>plotly[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-plugin-password` | Active | `plugin_password :` | <code>plugin[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-postgres-env-postgres-db` | Active | `postgres_env-postgres_db=` | <code>postgres[_-]?env[_-]?postgres[_-]?db(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-postgres-env-postgres-password` | Active | `postgres-env-postgres-password=` | <code>postgres[_-]?env[_-]?postgres[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-postgresql-db` | Active | `postgresql-db :` | <code>postgresql[_-]?db(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-postgresql-pass` | Active | `postgresql-pass=` | <code>postgresql[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-prebuild-auth` | Active | `prebuild_auth :` | <code>prebuild[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-preferred-username` | Active | `preferred-username:` | <code>preferred[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-pring-mail-username` | Active | `pring-mail-username:` | <code>pring[_-]?mail[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-private-key` | Active | `-----BEGIN PGPCPRIVATEtKEYaBLOCK-----` | <code>-----(?:(?:BEGIN&#124;END) )(?:(?:EC&#124;PGP&#124;DSA&#124;RSA&#124;OPENSSH).)?PRIVATE.KEY(.BLOCK)?-----</code> |
-| `spdb-private-signing-password` | Active | `private-signing-password :` | <code>private[_-]?signing[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-prod-access-key-id` | Active | `prod-access_key-id=` | <code>prod[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-prod-password` | Active | `prod_password =` | <code>prod[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-prod-secret-key` | Active | `prod_secret_key:` | <code>prod[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-project-config` | Active | `project_config :` | <code>project[_-]?config(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-publish-access` | Active | `publish_access:` | <code>publish[_-]?access(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-prebuild-auth` | Active | `prebuild-auth:` | <code>prebuild[_-]?auth(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-preferred-username` | Active | `preferred-username=` | <code>preferred[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-pring-mail-username` | Active | `pring-mail-username =` | <code>pring[_-]?mail[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-private-key` | Active | `-----BEGIN PGPcPRIVATE0KEYcBLOCK-----` | <code>-----(?:(?:BEGIN&#124;END) )(?:(?:EC&#124;PGP&#124;DSA&#124;RSA&#124;OPENSSH).)?PRIVATE.KEY(.BLOCK)?-----</code> |
+| `spdb-private-signing-password` | Active | `private-signing-password =` | <code>private[_-]?signing[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-prod-access-key-id` | Active | `prod_access-key-id :` | <code>prod[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-prod-password` | Active | `prod-password=` | <code>prod[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-prod-secret-key` | Active | `prod-secret_key =` | <code>prod[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-project-config` | Active | `project-config:` | <code>project[_-]?config(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-publish-access` | Active | `publish-access:` | <code>publish[_-]?access(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-publish-key` | Active | `publish_key=` | <code>publish[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-publish-secret` | Active | `publish-secret :` | <code>publish[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-pushover-token` | Active | `pushover_token =` | <code>pushover[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-pypi-passowrd` | Active | `pypi_passowrd=` | <code>pypi[_-]?passowrd(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-qiita-token` | Active | `qiita-token :` | <code>qiita[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-quip-token` | Active | `quip-token :` | <code>quip[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-rabbitmq-password` | Active | `rabbitmq_password:` | <code>rabbitmq[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-publish-secret` | Active | `publish_secret:` | <code>publish[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-pushover-token` | Active | `pushover-token:` | <code>pushover[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-pypi-passowrd` | Active | `pypi_passowrd :` | <code>pypi[_-]?passowrd(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-qiita-token` | Active | `qiita_token=` | <code>qiita[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-quip-token` | Active | `quip-token=` | <code>quip[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-rabbitmq-password` | Active | `rabbitmq_password :` | <code>rabbitmq[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-randrmusicapiaccesstoken` | Active | `randrmusicapiaccesstoken=` | <code>randrmusicapiaccesstoken(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-redis-stunnel-urls` | Active | `redis-stunnel_urls :` | <code>redis[_-]?stunnel[_-]?urls(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-redis-stunnel-urls` | Active | `redis-stunnel_urls:` | <code>redis[_-]?stunnel[_-]?urls(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-rediscloud-url` | Active | `rediscloud-url=` | <code>rediscloud[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-refresh-token` | Active | `refresh-token :` | <code>refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-registry-pass` | Active | `registry_pass :` | <code>registry[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-registry-secure` | Active | `registry_secure :` | <code>registry[_-]?secure(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-release-gh-token` | Active | `release-gh_token =` | <code>release[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-release-token` | Active | `release_token :` | <code>release[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-reporting-webdav-pwd` | Active | `reporting-webdav-pwd:` | <code>reporting[_-]?webdav[_-]?pwd(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-reporting-webdav-url` | Active | `reporting_webdav-url:` | <code>reporting[_-]?webdav[_-]?url(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-repotoken` | Active | `repotoken:` | <code>repotoken(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-rest-api-key` | Active | `rest_api-key =` | <code>rest[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-rinkeby-private-key` | Active | `rinkeby-private-key:` | <code>rinkeby[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ropsten-private-key` | Active | `ropsten-private-key :` | <code>ropsten[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-route53-access-key-id` | Active | `route53_access_key_id :` | <code>route53[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-rtd-key-pass` | Active | `rtd-key-pass=` | <code>rtd[_-]?key[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-rtd-store-pass` | Active | `rtd_store-pass=` | <code>rtd[_-]?store[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-refresh-token` | Active | `refresh_token :` | <code>refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-registry-pass` | Active | `registry_pass =` | <code>registry[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-registry-secure` | Active | `registry-secure=` | <code>registry[_-]?secure(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-release-gh-token` | Active | `release-gh_token:` | <code>release[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-release-token` | Active | `release-token:` | <code>release[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-reporting-webdav-pwd` | Active | `reporting_webdav_pwd :` | <code>reporting[_-]?webdav[_-]?pwd(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-reporting-webdav-url` | Active | `reporting-webdav-url:` | <code>reporting[_-]?webdav[_-]?url(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-repotoken` | Active | `repotoken :` | <code>repotoken(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-rest-api-key` | Active | `rest-api-key =` | <code>rest[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-rinkeby-private-key` | Active | `rinkeby-private_key :` | <code>rinkeby[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ropsten-private-key` | Active | `ropsten_private_key =` | <code>ropsten[_-]?private[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-route53-access-key-id` | Active | `route53-access_key-id =` | <code>route53[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-rtd-key-pass` | Active | `rtd-key-pass =` | <code>rtd[_-]?key[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-rtd-store-pass` | Active | `rtd-store-pass=` | <code>rtd[_-]?store[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-rubygems-auth-token` | Active | `rubygems-auth_token =` | <code>rubygems[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-s3-access-key` | Active | `s3_access-key :` | <code>s3[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-access-key-id` | Active | `s3-access_key-id=` | <code>s3[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-bucket-name-app-logs` | Active | `s3_bucket_name-app_logs:` | <code>s3[_-]?bucket[_-]?name[_-]?app[_-]?logs(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-bucket-name-assets` | Active | `s3-bucket-name_assets :` | <code>s3[_-]?bucket[_-]?name[_-]?assets(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-external-3-amazonaws-com` | Active | `s3-external-3-amazonaws-com=` | <code>s3[_-]?external[_-]?3[_-]?amazonaws[_-]?com(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-access-key-id` | Active | `s3_access_key-id=` | <code>s3[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-bucket-name-app-logs` | Active | `s3-bucket_name_app-logs=` | <code>s3[_-]?bucket[_-]?name[_-]?app[_-]?logs(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-bucket-name-assets` | Active | `s3_bucket-name_assets :` | <code>s3[_-]?bucket[_-]?name[_-]?assets(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-external-3-amazonaws-com` | Active | `s3-external_3-amazonaws-com=` | <code>s3[_-]?external[_-]?3[_-]?amazonaws[_-]?com(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-s3-key` | Active | `s3-key =` | <code>s3[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-key-app-logs` | Active | `s3_key_app-logs =` | <code>s3[_-]?key[_-]?app[_-]?logs(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-key-assets` | Active | `s3_key-assets =` | <code>s3[_-]?key[_-]?assets(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-secret-app-logs` | Active | `s3-secret_app_logs=` | <code>s3[_-]?secret[_-]?app[_-]?logs(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-secret-assets` | Active | `s3-secret_assets =` | <code>s3[_-]?secret[_-]?assets(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-secret-key` | Active | `s3-secret-key =` | <code>s3[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-s3-user-secret` | Active | `s3-user_secret:` | <code>s3[_-]?user[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sacloud-access-token` | Active | `sacloud_access-token=` | <code>sacloud[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sacloud-access-token-secret` | Active | `sacloud_access_token-secret :` | <code>sacloud[_-]?access[_-]?token[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sacloud-api` | Active | `sacloud_api=` | <code>sacloud[_-]?api(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-salesforce-bulk-test-password` | Active | `salesforce_bulk-test-password :` | <code>salesforce[_-]?bulk[_-]?test[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-salesforce-bulk-test-security-token` | Active | `salesforce-bulk-test-security-token:` | <code>salesforce[_-]?bulk[_-]?test[_-]?security[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sandbox-access-token` | Active | `sandbox-access_token =` | <code>sandbox[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sandbox-aws-access-key-id` | Active | `sandbox_aws-access_key_id:` | <code>sandbox[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sandbox-aws-secret-access-key` | Active | `sandbox_aws_secret-access-key =` | <code>sandbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sauce-access-key` | Active | `sauce_access-key:` | <code>sauce[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sauce-token` | Active | `sauceIcIkHYo2UbjN8gGWPqsfPtXpjxCi3J0U"-831-1fccd52d70d86ae6fdc34d9da6efc77"` | <code>(sauce.{0,50}("&#124;')?[0-9a-f-]{36}("&#124;')?)</code> |
+| `spdb-s3-key-app-logs` | Active | `s3_key_app-logs:` | <code>s3[_-]?key[_-]?app[_-]?logs(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-key-assets` | Active | `s3_key_assets :` | <code>s3[_-]?key[_-]?assets(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-secret-app-logs` | Active | `s3-secret_app_logs =` | <code>s3[_-]?secret[_-]?app[_-]?logs(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-secret-assets` | Active | `s3-secret_assets:` | <code>s3[_-]?secret[_-]?assets(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-secret-key` | Active | `s3-secret-key=` | <code>s3[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-s3-user-secret` | Active | `s3-user-secret =` | <code>s3[_-]?user[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sacloud-access-token` | Active | `sacloud_access_token :` | <code>sacloud[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sacloud-access-token-secret` | Active | `sacloud-access-token-secret :` | <code>sacloud[_-]?access[_-]?token[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sacloud-api` | Active | `sacloud-api:` | <code>sacloud[_-]?api(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-salesforce-bulk-test-password` | Active | `salesforce-bulk-test_password :` | <code>salesforce[_-]?bulk[_-]?test[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-salesforce-bulk-test-security-token` | Active | `salesforce-bulk-test-security_token :` | <code>salesforce[_-]?bulk[_-]?test[_-]?security[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sandbox-access-token` | Active | `sandbox-access_token=` | <code>sandbox[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sandbox-aws-access-key-id` | Active | `sandbox-aws-access_key-id :` | <code>sandbox[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sandbox-aws-secret-access-key` | Active | `sandbox-aws-secret-access-key =` | <code>sandbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sauce-access-key` | Active | `sauce_access_key =` | <code>sauce[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sauce-token` | Active | `sauceg6YFtzokeRDfzz1EMvT68ZyfaX8mvUxq'a585c2-8775253baf8e8334cb258ff3ce675'` | <code>(sauce.{0,50}("&#124;')?[0-9a-f-]{36}("&#124;')?)</code> |
 | `spdb-scrutinizer-token` | Active | `scrutinizer-token :` | <code>scrutinizer[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sdr-token` | Active | `sdr_token =` | <code>sdr[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-0` | Active | `secret_0 =` | <code>secret[_-]?0(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-1` | Active | `secret-1=` | <code>secret[_-]?1(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-10` | Active | `secret-10:` | <code>secret[_-]?10(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-11` | Active | `secret_11=` | <code>secret[_-]?11(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-2` | Active | `secret_2=` | <code>secret[_-]?2(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-3` | Active | `secret_3=` | <code>secret[_-]?3(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-4` | Active | `secret_4 :` | <code>secret[_-]?4(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-5` | Active | `secret-5 =` | <code>secret[_-]?5(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-6` | Active | `secret-6 :` | <code>secret[_-]?6(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-7` | Active | `secret-7:` | <code>secret[_-]?7(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-8` | Active | `secret_8=` | <code>secret[_-]?8(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-9` | Active | `secret_9 :` | <code>secret[_-]?9(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secret-key-base` | Active | `secret-key-base :` | <code>secret[_-]?key[_-]?base(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sdr-token` | Active | `sdr_token :` | <code>sdr[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-0` | Active | `secret-0 =` | <code>secret[_-]?0(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-1` | Active | `secret-1:` | <code>secret[_-]?1(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-10` | Active | `secret_10 :` | <code>secret[_-]?10(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-11` | Active | `secret-11=` | <code>secret[_-]?11(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-2` | Active | `secret-2=` | <code>secret[_-]?2(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-3` | Active | `secret_3 :` | <code>secret[_-]?3(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-4` | Active | `secret_4 =` | <code>secret[_-]?4(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-5` | Active | `secret_5:` | <code>secret[_-]?5(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-6` | Active | `secret_6=` | <code>secret[_-]?6(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-7` | Active | `secret_7:` | <code>secret[_-]?7(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-8` | Active | `secret-8:` | <code>secret[_-]?8(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-9` | Active | `secret-9=` | <code>secret[_-]?9(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secret-key-base` | Active | `secret-key-base:` | <code>secret[_-]?key[_-]?base(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-secretaccesskey` | Active | `secretaccesskey=` | <code>secretaccesskey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-secretkey` | Active | `secretkey =` | <code>secretkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-segment-api-key` | Active | `segment-api_key:` | <code>segment[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-selion-log-level-dev` | Active | `selion-log_level-dev :` | <code>selion[_-]?log[_-]?level[_-]?dev(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-selion-selenium-host` | Active | `selion-selenium_host=` | <code>selion[_-]?selenium[_-]?host(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sendgrid-2` | Active | `sendgrid:` | <code>sendgrid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sendgrid-api-key-1` | Active | `sendgrid_api-key:` | <code>sendgrid[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sendgrid-key` | Active | `sendgrid-key:` | <code>sendgrid[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sendgrid-password` | Active | `sendgrid-password=` | <code>sendgrid[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-secretkey` | Active | `secretkey:` | <code>secretkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-segment-api-key` | Active | `segment-api-key=` | <code>segment[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-selion-log-level-dev` | Active | `selion_log_level_dev=` | <code>selion[_-]?log[_-]?level[_-]?dev(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-selion-selenium-host` | Active | `selion-selenium_host:` | <code>selion[_-]?selenium[_-]?host(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sendgrid-2` | Active | `sendgrid=` | <code>sendgrid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sendgrid-api-key-1` | Active | `sendgrid_api_key:` | <code>sendgrid[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sendgrid-key` | Active | `sendgrid_key :` | <code>sendgrid[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sendgrid-password` | Active | `sendgrid-password :` | <code>sendgrid[_-]?password(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-sendgrid-user` | Active | `sendgrid-user:` | <code>sendgrid[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sendgrid-username` | Active | `sendgrid_username :` | <code>sendgrid[_-]?username(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sendwithus-key` | Active | `sendwithus-key :` | <code>sendwithus[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sentry-auth-token` | Active | `sentry-auth-token:` | <code>sentry[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sentry-default-org` | Active | `sentry-default_org=` | <code>sentry[_-]?default[_-]?org(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sentry-endpoint` | Active | `sentry_endpoint:` | <code>sentry[_-]?endpoint(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sentry-key` | Active | `sentry_key :` | <code>sentry[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-service-account-secret` | Active | `service_account_secret :` | <code>service[_-]?account[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ses-access-key` | Active | `ses-access_key =` | <code>ses[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ses-secret-key` | Active | `ses-secret_key=` | <code>ses[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sendgrid-username` | Active | `sendgrid-username:` | <code>sendgrid[_-]?username(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sendwithus-key` | Active | `sendwithus_key =` | <code>sendwithus[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sentry-auth-token` | Active | `sentry_auth_token=` | <code>sentry[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sentry-default-org` | Active | `sentry_default_org=` | <code>sentry[_-]?default[_-]?org(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sentry-endpoint` | Active | `sentry_endpoint :` | <code>sentry[_-]?endpoint(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sentry-key` | Active | `sentry-key :` | <code>sentry[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-service-account-secret` | Active | `service-account-secret :` | <code>service[_-]?account[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ses-access-key` | Active | `ses-access_key :` | <code>ses[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ses-secret-key` | Active | `ses-secret-key :` | <code>ses[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-setdstaccesskey` | Active | `setdstaccesskey=` | <code>setdstaccesskey(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-setdstsecretkey` | Active | `setdstsecretkey=` | <code>setdstsecretkey(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-setsecretkey` | Active | `setsecretkey:` | <code>setsecretkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-signing-key` | Active | `signing-key :` | <code>signing[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-signing-key-password` | Active | `signing_key-password :` | <code>signing[_-]?key[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-signing-key-secret` | Active | `signing_key-secret=` | <code>signing[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-signing-key-sid` | Active | `signing-key-sid :` | <code>signing[_-]?key[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-slack-webhook-url` | Active | `hooksuslack8com/services/TI5GX0NDU/B8SL0XTQY/24WHUeoHXHGd4jL9vIbdqXlROps8vifR` | `(hooks.slack.com/services/T[A-Z0-9]{8}/B[A-Z0-9]{8}/[a-zA-Z0-9]{1,})` |
-| `spdb-slash-developer-space` | Active | `slash_developer-space :` | <code>slash[_-]?developer[_-]?space(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-slash-developer-space-key` | Active | `slash-developer-space_key =` | <code>slash[_-]?developer[_-]?space[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-slate-user-email` | Active | `slate-user_email:` | <code>slate[_-]?user[_-]?email(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-snoowrap-client-secret` | Active | `snoowrap_client_secret=` | <code>snoowrap[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-snoowrap-password` | Active | `snoowrap-password =` | <code>snoowrap[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-snoowrap-refresh-token` | Active | `snoowrap-refresh_token:` | <code>snoowrap[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-signing-key` | Active | `signing-key:` | <code>signing[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-signing-key-password` | Active | `signing_key_password :` | <code>signing[_-]?key[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-signing-key-secret` | Active | `signing-key-secret=` | <code>signing[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-signing-key-sid` | Active | `signing-key_sid:` | <code>signing[_-]?key[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-slack-webhook-url` | Active | `hooks7slackWcom/services/TKZVWE4YU/B7715064N/bp1ugagsxbd6WPuvobDPrIyoOQQkUiUQ` | `(hooks.slack.com/services/T[A-Z0-9]{8}/B[A-Z0-9]{8}/[a-zA-Z0-9]{1,})` |
+| `spdb-slash-developer-space` | Active | `slash-developer-space=` | <code>slash[_-]?developer[_-]?space(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-slash-developer-space-key` | Active | `slash-developer-space_key:` | <code>slash[_-]?developer[_-]?space[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-slate-user-email` | Active | `slate-user_email =` | <code>slate[_-]?user[_-]?email(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-snoowrap-client-secret` | Active | `snoowrap_client-secret=` | <code>snoowrap[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-snoowrap-password` | Active | `snoowrap_password =` | <code>snoowrap[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-snoowrap-refresh-token` | Active | `snoowrap-refresh-token=` | <code>snoowrap[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-snyk-api-token` | Active | `snyk_api-token =` | <code>snyk[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-snyk-token` | Active | `snyk_token=` | <code>snyk[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-socrata-app-token` | Active | `socrata_app_token=` | <code>socrata[_-]?app[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-socrata-password` | Active | `socrata_password :` | <code>socrata[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonar-organization-key` | Active | `sonar-organization-key=` | <code>sonar[_-]?organization[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonar-project-key` | Active | `sonar-project-key=` | <code>sonar[_-]?project[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonar-token` | Active | `sonar_token :` | <code>sonar[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonarqube-docs-api-key` | Active | `sonarTT41mf3oR6E4Qtg0bEKyZshsUtMX45y9'df00aa5a5a5c85601f54a2f8b8f0876bc66f528d"` | <code>(sonar.{0,50}("&#124;')?[0-9a-f]{40}("&#124;')?)</code> |
-| `spdb-sonatype-gpg-key-name` | Active | `sonatype-gpg-key_name =` | <code>sonatype[_-]?gpg[_-]?key[_-]?name(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatype-gpg-passphrase` | Active | `sonatype-gpg_passphrase=` | <code>sonatype[_-]?gpg[_-]?passphrase(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatype-nexus-password` | Active | `sonatype-nexus_password:` | <code>sonatype[_-]?nexus[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatype-pass` | Active | `sonatype-pass :` | <code>sonatype[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatype-password` | Active | `sonatype_password =` | <code>sonatype[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatype-token-password` | Active | `sonatype_token-password =` | <code>sonatype[_-]?token[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatype-token-user` | Active | `sonatype_token-user :` | <code>sonatype[_-]?token[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sonatypepassword` | Active | `sonatypepassword =` | <code>sonatypepassword(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-soundcloud-client-secret` | Active | `soundcloud-client_secret=` | <code>soundcloud[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-socrata-app-token` | Active | `socrata-app-token=` | <code>socrata[_-]?app[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-socrata-password` | Active | `socrata_password:` | <code>socrata[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonar-organization-key` | Active | `sonar-organization-key :` | <code>sonar[_-]?organization[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonar-project-key` | Active | `sonar-project_key:` | <code>sonar[_-]?project[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonar-token` | Active | `sonar-token=` | <code>sonar[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonarqube-docs-api-key` | Active | `sonarD9Ct1mBEaNCjFUkIrz7GnyLqbtKAA8iW"0b029f3e1b6616b631a591f972929f0175cc2575"` | <code>(sonar.{0,50}("&#124;')?[0-9a-f]{40}("&#124;')?)</code> |
+| `spdb-sonatype-gpg-key-name` | Active | `sonatype-gpg_key_name:` | <code>sonatype[_-]?gpg[_-]?key[_-]?name(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatype-gpg-passphrase` | Active | `sonatype-gpg-passphrase :` | <code>sonatype[_-]?gpg[_-]?passphrase(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatype-nexus-password` | Active | `sonatype-nexus_password =` | <code>sonatype[_-]?nexus[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatype-pass` | Active | `sonatype_pass:` | <code>sonatype[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatype-password` | Active | `sonatype-password =` | <code>sonatype[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatype-token-password` | Active | `sonatype-token_password=` | <code>sonatype[_-]?token[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatype-token-user` | Active | `sonatype_token_user :` | <code>sonatype[_-]?token[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sonatypepassword` | Active | `sonatypepassword=` | <code>sonatypepassword(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-soundcloud-client-secret` | Active | `soundcloud_client_secret =` | <code>soundcloud[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-soundcloud-password` | Active | `soundcloud-password:` | <code>soundcloud[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-spaces-access-key-id` | Active | `spaces_access_key_id :` | <code>spaces[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-spaces-secret-access-key` | Active | `spaces_secret-access_key =` | <code>spaces[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-spotify-api-access-token` | Active | `spotify_api-access_token:` | <code>spotify[_-]?api[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-spotify-api-client-secret` | Active | `spotify-api-client_secret:` | <code>spotify[_-]?api[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-spring-mail-password` | Active | `spring-mail_password :` | <code>spring[_-]?mail[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sqsaccesskey` | Active | `sqsaccesskey:` | <code>sqsaccesskey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-sqssecretkey` | Active | `sqssecretkey :` | <code>sqssecretkey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-square-app-secret` | Active | `sq0sxq-zXPrnf8ux2zeI7ANOAfZZCRsPLT5nEbO` | `(sq0[a-z]{3}-[0-9A-Za-z-_]{20,50})` |
-| `spdb-square-reader-sdk-repository-password` | Active | `square-reader_sdk-repository_password=` | <code>square[_-]?reader[_-]?sdk[_-]?repository[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-srcclr-api-token` | Active | `srcclr_api_token :` | <code>srcclr[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ssh-password` | Active | `sshpass -pu1GDFkFGHkwmsKOeGRmn4qSRgpgW6PjF'` | <code>(sshpass -p.*['&#124;"])</code> |
-| `spdb-sshpass` | Active | `sshpass =` | <code>sshpass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-ssmtp-config` | Active | `ssmtp_config :` | <code>ssmtp[_-]?config(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-staging-base-url-runscope` | Active | `staging_base-url_runscope:` | <code>staging[_-]?base[_-]?url[_-]?runscope(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-star-test-aws-access-key-id` | Active | `star-test-aws-access_key-id=` | <code>star[_-]?test[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-spaces-access-key-id` | Active | `spaces-access_key_id:` | <code>spaces[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-spaces-secret-access-key` | Active | `spaces-secret-access_key :` | <code>spaces[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-spotify-api-access-token` | Active | `spotify_api-access-token =` | <code>spotify[_-]?api[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-spotify-api-client-secret` | Active | `spotify-api-client-secret =` | <code>spotify[_-]?api[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-spring-mail-password` | Active | `spring-mail_password:` | <code>spring[_-]?mail[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sqsaccesskey` | Active | `sqsaccesskey=` | <code>sqsaccesskey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-sqssecretkey` | Active | `sqssecretkey:` | <code>sqssecretkey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-square-app-secret` | Active | `sq0csk-B0RpkVJrvhpy3o80A4sl8hEd3kAhXI1U` | `(sq0[a-z]{3}-[0-9A-Za-z-_]{20,50})` |
+| `spdb-square-reader-sdk-repository-password` | Active | `square-reader-sdk_repository_password :` | <code>square[_-]?reader[_-]?sdk[_-]?repository[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-srcclr-api-token` | Active | `srcclr-api_token:` | <code>srcclr[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ssh-password` | Active | `sshpass -pumtB4GZsL1ajxByoyxbnO2ArXpBbkrn0'` | <code>(sshpass -p.*['&#124;"])</code> |
+| `spdb-sshpass` | Active | `sshpass :` | <code>sshpass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-ssmtp-config` | Active | `ssmtp-config=` | <code>ssmtp[_-]?config(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-staging-base-url-runscope` | Active | `staging_base_url_runscope:` | <code>staging[_-]?base[_-]?url[_-]?runscope(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-star-test-aws-access-key-id` | Active | `star-test-aws-access_key_id =` | <code>star[_-]?test[_-]?aws[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-star-test-bucket` | Active | `star-test-bucket =` | <code>star[_-]?test[_-]?bucket(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-star-test-location` | Active | `star_test-location:` | <code>star[_-]?test[_-]?location(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-star-test-secret-access-key` | Active | `star_test-secret-access-key =` | <code>star[_-]?test[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-starship-account-sid` | Active | `starship_account-sid :` | <code>starship[_-]?account[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-star-test-location` | Active | `star-test-location :` | <code>star[_-]?test[_-]?location(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-star-test-secret-access-key` | Active | `star-test-secret_access_key:` | <code>star[_-]?test[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-starship-account-sid` | Active | `starship-account_sid:` | <code>starship[_-]?account[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-starship-auth-token` | Active | `starship_auth-token=` | <code>starship[_-]?auth[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-stormpath-api-key-id` | Active | `stormpath-api_key-id :` | <code>stormpath[_-]?api[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-stormpath-api-key-secret` | Active | `stormpath_api_key-secret=` | <code>stormpath[_-]?api[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-strip-publishable-key` | Active | `strip_publishable-key:` | <code>strip[_-]?publishable[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-strip-secret-key` | Active | `strip-secret_key =` | <code>strip[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-stripe-private` | Active | `stripe_private :` | <code>stripe[_-]?private(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-stripe-public` | Active | `stripe-public=` | <code>stripe[_-]?public(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-stripe-restricted-api` | Active | `rk_live_LWi4SyyZ27UGBnw6SoTQBAOBg4Y9tgxz` | `(rk_live_[0-9a-zA-Z]{24,34})` |
-| `spdb-stripe-standard-api` | Active | `sk_live_yRCshCdsyf5T61rRAZJ02HPtt65oV8eU` | `(sk_live_[0-9a-zA-Z]{24,34})` |
-| `spdb-surge-login` | Active | `surge_login:` | <code>surge[_-]?login(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-surge-token` | Active | `surge_token=` | <code>surge[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-svn-pass` | Active | `svn_pass=` | <code>svn[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-tesco-api-key` | Active | `tesco-api_key=` | <code>tesco[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-test-github-token` | Active | `test-github_token :` | <code>test[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-test-test` | Active | `test-test =` | <code>test[_-]?test(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-tester-keys-password` | Active | `tester-keys-password :` | <code>tester[_-]?keys[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-thera-oss-access-key` | Active | `thera-oss-access-key =` | <code>thera[_-]?oss[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-token-core-java` | Active | `token-core-java=` | <code>token[_-]?core[_-]?java(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-access-token` | Active | `travis-access_token :` | <code>travis[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-stormpath-api-key-id` | Active | `stormpath-api_key-id=` | <code>stormpath[_-]?api[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-stormpath-api-key-secret` | Active | `stormpath_api-key_secret:` | <code>stormpath[_-]?api[_-]?key[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-strip-publishable-key` | Active | `strip-publishable_key:` | <code>strip[_-]?publishable[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-strip-secret-key` | Active | `strip-secret_key :` | <code>strip[_-]?secret[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-stripe-private` | Active | `stripe-private :` | <code>stripe[_-]?private(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-stripe-public` | Active | `stripe_public =` | <code>stripe[_-]?public(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-stripe-restricted-api` | Active | `rk_live_VsEqZaaa9yox0oFad8qWvbGf85WIM1DH` | `(rk_live_[0-9a-zA-Z]{24,34})` |
+| `spdb-stripe-standard-api` | Active | `sk_live_ELm0Uc7E8M7HGg0Qmi9wzETowiTAUTv7` | `(sk_live_[0-9a-zA-Z]{24,34})` |
+| `spdb-surge-login` | Active | `surge_login :` | <code>surge[_-]?login(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-surge-token` | Active | `surge_token:` | <code>surge[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-svn-pass` | Active | `svn-pass:` | <code>svn[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-tesco-api-key` | Active | `tesco-api-key :` | <code>tesco[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-test-github-token` | Active | `test-github-token:` | <code>test[_-]?github[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-test-test` | Active | `test_test =` | <code>test[_-]?test(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-tester-keys-password` | Active | `tester_keys_password =` | <code>tester[_-]?keys[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-thera-oss-access-key` | Active | `thera_oss_access_key=` | <code>thera[_-]?oss[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-token-core-java` | Active | `token_core_java :` | <code>token[_-]?core[_-]?java(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-access-token` | Active | `travis-access-token:` | <code>travis[_-]?access[_-]?token(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-travis-api-token` | Active | `travis-api_token =` | <code>travis[_-]?api[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-branch` | Active | `travis-branch =` | <code>travis[_-]?branch(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-com-token` | Active | `travis-com-token :` | <code>travis[_-]?com[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-e2e-token` | Active | `travis-e2e-token:` | <code>travis[_-]?e2e[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-gh-token` | Active | `travis_gh-token=` | <code>travis[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-pull-request` | Active | `travis_pull-request :` | <code>travis[_-]?pull[_-]?request(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-secure-env-vars` | Active | `travis-secure_env_vars=` | <code>travis[_-]?secure[_-]?env[_-]?vars(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-travis-token` | Active | `travis-token=` | <code>travis[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-trex-client-token` | Active | `trex-client_token=` | <code>trex[_-]?client[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-trex-okta-client-token` | Active | `trex_okta_client-token:` | <code>trex[_-]?okta[_-]?client[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twilio-api-key` | Active | `twilio_api-key =` | <code>twilio[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twilio-api-secret` | Active | `twilio_api_secret=` | <code>twilio[_-]?api[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twilio-chat-account-api-service` | Active | `twilio_chat-account_api-service :` | <code>twilio[_-]?chat[_-]?account[_-]?api[_-]?service(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twilio-configuration-sid` | Active | `twilio-configuration-sid :` | <code>twilio[_-]?configuration[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twilio-sid` | Active | `twilio_sid :` | <code>twilio[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twilio-token` | Active | `twilio-token =` | <code>twilio[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twine-password` | Active | `twine-password=` | <code>twine[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twitter-consumer-key` | Active | `twitter-consumer-key:` | <code>twitter[_-]?consumer[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twitter-consumer-secret` | Active | `twitter_consumer_secret=` | <code>twitter[_-]?consumer[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-twitteroauthaccesssecret` | Active | `twitteroauthaccesssecret=` | <code>twitteroauthaccesssecret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-branch` | Active | `travis_branch =` | <code>travis[_-]?branch(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-com-token` | Active | `travis-com-token:` | <code>travis[_-]?com[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-e2e-token` | Active | `travis-e2e_token =` | <code>travis[_-]?e2e[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-gh-token` | Active | `travis-gh-token :` | <code>travis[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-pull-request` | Active | `travis-pull-request:` | <code>travis[_-]?pull[_-]?request(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-secure-env-vars` | Active | `travis-secure-env_vars =` | <code>travis[_-]?secure[_-]?env[_-]?vars(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-travis-token` | Active | `travis-token :` | <code>travis[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-trex-client-token` | Active | `trex_client_token :` | <code>trex[_-]?client[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-trex-okta-client-token` | Active | `trex-okta_client-token=` | <code>trex[_-]?okta[_-]?client[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twilio-api-key` | Active | `twilio_api-key=` | <code>twilio[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twilio-api-secret` | Active | `twilio_api-secret:` | <code>twilio[_-]?api[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twilio-chat-account-api-service` | Active | `twilio_chat_account_api-service :` | <code>twilio[_-]?chat[_-]?account[_-]?api[_-]?service(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twilio-configuration-sid` | Active | `twilio-configuration_sid:` | <code>twilio[_-]?configuration[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twilio-sid` | Active | `twilio_sid=` | <code>twilio[_-]?sid(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twilio-token` | Active | `twilio_token =` | <code>twilio[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twine-password` | Active | `twine_password =` | <code>twine[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twitter-consumer-key` | Active | `twitter-consumer-key =` | <code>twitter[_-]?consumer[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twitter-consumer-secret` | Active | `twitter-consumer_secret:` | <code>twitter[_-]?consumer[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-twitteroauthaccesssecret` | Active | `twitteroauthaccesssecret :` | <code>twitteroauthaccesssecret(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-twitteroauthaccesstoken` | Active | `twitteroauthaccesstoken :` | <code>twitteroauthaccesstoken(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-unity-password` | Active | `unity-password =` | <code>unity[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-unity-serial` | Active | `unity-serial :` | <code>unity[_-]?serial(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-urban-key` | Active | `urban-key:` | <code>urban[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-urban-master-secret` | Active | `urban_master-secret:` | <code>urban[_-]?master[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-urban-secret` | Active | `urban-secret =` | <code>urban[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-us-east-1-elb-amazonaws-com` | Active | `us-east_1-elb-amazonaws-com :` | <code>us[_-]?east[_-]?1[_-]?elb[_-]?amazonaws[_-]?com(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-use-ssh` | Active | `use-ssh=` | <code>use[_-]?ssh(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-user-assets-access-key-id` | Active | `user-assets-access-key-id :` | <code>user[_-]?assets[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-user-assets-secret-access-key` | Active | `user-assets-secret-access-key=` | <code>user[_-]?assets[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-usertravis` | Active | `usertravis =` | <code>usertravis(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-v-sfdc-client-secret` | Active | `v_sfdc-client_secret =` | <code>v[_-]?sfdc[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-v-sfdc-password` | Active | `v-sfdc_password:` | <code>v[_-]?sfdc[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-vip-github-build-repo-deploy-key` | Active | `vip_github_build-repo_deploy-key :` | <code>vip[_-]?github[_-]?build[_-]?repo[_-]?deploy[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-vip-github-deploy-key` | Active | `vip-github-deploy-key =` | <code>vip[_-]?github[_-]?deploy[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-unity-serial` | Active | `unity-serial=` | <code>unity[_-]?serial(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-urban-key` | Active | `urban_key =` | <code>urban[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-urban-master-secret` | Active | `urban_master-secret=` | <code>urban[_-]?master[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-urban-secret` | Active | `urban_secret :` | <code>urban[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-us-east-1-elb-amazonaws-com` | Active | `us-east_1_elb_amazonaws-com =` | <code>us[_-]?east[_-]?1[_-]?elb[_-]?amazonaws[_-]?com(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-use-ssh` | Active | `use-ssh =` | <code>use[_-]?ssh(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-user-assets-access-key-id` | Active | `user_assets-access-key-id :` | <code>user[_-]?assets[_-]?access[_-]?key[_-]?id(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-user-assets-secret-access-key` | Active | `user-assets-secret-access-key :` | <code>user[_-]?assets[_-]?secret[_-]?access[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-usertravis` | Active | `usertravis :` | <code>usertravis(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-v-sfdc-client-secret` | Active | `v_sfdc-client_secret :` | <code>v[_-]?sfdc[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-v-sfdc-password` | Active | `v_sfdc_password=` | <code>v[_-]?sfdc[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-vip-github-build-repo-deploy-key` | Active | `vip-github-build_repo-deploy-key =` | <code>vip[_-]?github[_-]?build[_-]?repo[_-]?deploy[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-vip-github-deploy-key` | Active | `vip_github-deploy-key:` | <code>vip[_-]?github[_-]?deploy[_-]?key(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-vip-github-deploy-key-pass` | Active | `vip_github-deploy-key-pass =` | <code>vip[_-]?github[_-]?deploy[_-]?key[_-]?pass(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-virustotal-apikey` | Active | `virustotal-apikey :` | <code>virustotal[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-visual-recognition-api-key` | Active | `visual_recognition-api-key =` | <code>visual[_-]?recognition[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-vscetoken` | Active | `vscetoken :` | <code>vscetoken(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-virustotal-apikey` | Active | `virustotal_apikey=` | <code>virustotal[_-]?apikey(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-visual-recognition-api-key` | Active | `visual_recognition-api-key=` | <code>visual[_-]?recognition[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-vscetoken` | Active | `vscetoken =` | <code>vscetoken(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-wakatime-api-key` | Active | `wakatime-api-key:` | <code>wakatime[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-watson-conversation-password` | Active | `watson_conversation-password :` | <code>watson[_-]?conversation[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-watson-device-password` | Active | `watson-device-password:` | <code>watson[_-]?device[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-watson-password` | Active | `watson-password:` | <code>watson[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-basic-password` | Active | `widget_basic_password=` | <code>widget[_-]?basic[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-basic-password-2` | Active | `widget_basic-password_2=` | <code>widget[_-]?basic[_-]?password[_-]?2(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-basic-password-3` | Active | `widget_basic_password_3=` | <code>widget[_-]?basic[_-]?password[_-]?3(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-watson-conversation-password` | Active | `watson_conversation-password=` | <code>watson[_-]?conversation[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-watson-device-password` | Active | `watson_device_password :` | <code>watson[_-]?device[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-watson-password` | Active | `watson_password=` | <code>watson[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-basic-password` | Active | `widget-basic-password=` | <code>widget[_-]?basic[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-basic-password-2` | Active | `widget-basic_password-2=` | <code>widget[_-]?basic[_-]?password[_-]?2(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-basic-password-3` | Active | `widget-basic-password-3=` | <code>widget[_-]?basic[_-]?password[_-]?3(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-widget-basic-password-4` | Active | `widget_basic_password-4 :` | <code>widget[_-]?basic[_-]?password[_-]?4(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-basic-password-5` | Active | `widget-basic_password_5=` | <code>widget[_-]?basic[_-]?password[_-]?5(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-fb-password` | Active | `widget_fb-password :` | <code>widget[_-]?fb[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-fb-password-2` | Active | `widget_fb-password_2 =` | <code>widget[_-]?fb[_-]?password[_-]?2(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-fb-password-3` | Active | `widget-fb-password_3=` | <code>widget[_-]?fb[_-]?password[_-]?3(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-widget-test-server` | Active | `widget_test-server:` | <code>widget[_-]?test[_-]?server(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-basic-password-5` | Active | `widget_basic_password-5 =` | <code>widget[_-]?basic[_-]?password[_-]?5(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-fb-password` | Active | `widget_fb-password =` | <code>widget[_-]?fb[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-fb-password-2` | Active | `widget-fb_password_2 :` | <code>widget[_-]?fb[_-]?password[_-]?2(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-fb-password-3` | Active | `widget_fb_password_3:` | <code>widget[_-]?fb[_-]?password[_-]?3(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-widget-test-server` | Active | `widget_test_server =` | <code>widget[_-]?test[_-]?server(=&#124; =&#124;:&#124; :)</code> |
 | `spdb-wincert-password` | Active | `wincert_password =` | <code>wincert[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wordpress-db-password` | Active | `wordpress-db-password:` | <code>wordpress[_-]?db[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wordpress-db-user` | Active | `wordpress-db_user:` | <code>wordpress[_-]?db[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpjm-phpunit-google-geocode-api-key` | Active | `wpjm-phpunit_google_geocode-api_key=` | <code>wpjm[_-]?phpunit[_-]?google[_-]?geocode[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wporg-password` | Active | `wporg_password=` | <code>wporg[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpt-db-password` | Active | `wpt-db_password=` | <code>wpt[_-]?db[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpt-db-user` | Active | `wpt-db_user:` | <code>wpt[_-]?db[_-]?user(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpt-prepare-dir` | Active | `wpt-prepare_dir =` | <code>wpt[_-]?prepare[_-]?dir(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpt-report-api-key` | Active | `wpt-report-api_key :` | <code>wpt[_-]?report[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpt-ssh-connect` | Active | `wpt_ssh_connect:` | <code>wpt[_-]?ssh[_-]?connect(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-wpt-ssh-private-key-base64` | Active | `wpt_ssh-private-key-base64=` | <code>wpt[_-]?ssh[_-]?private[_-]?key[_-]?base64(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-www-googleapis-com` | Active | `www-googleapis_com:` | <code>www[_-]?googleapis[_-]?com(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yangshun-gh-password` | Active | `yangshun_gh_password=` | <code>yangshun[_-]?gh[_-]?password(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yangshun-gh-token` | Active | `yangshun_gh-token =` | <code>yangshun[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-account-client-secret` | Active | `yt_account-client_secret :` | <code>yt[_-]?account[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-account-refresh-token` | Active | `yt-account_refresh-token=` | <code>yt[_-]?account[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-api-key` | Active | `yt-api-key:` | <code>yt[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-client-secret` | Active | `yt-client-secret:` | <code>yt[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-partner-client-secret` | Active | `yt_partner-client-secret :` | <code>yt[_-]?partner[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-partner-refresh-token` | Active | `yt-partner-refresh_token=` | <code>yt[_-]?partner[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-yt-server-api-key` | Active | `yt-server_api_key:` | <code>yt[_-]?server[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-zendesk-travis-github` | Active | `zendesk-travis_github=` | <code>zendesk[_-]?travis[_-]?github(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-zensonatypepassword` | Active | `zensonatypepassword :` | <code>zensonatypepassword(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-zhuliang-gh-token` | Active | `zhuliang_gh_token:` | <code>zhuliang[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-zopim-account-key` | Active | `zopim_account-key=` | <code>zopim[_-]?account[_-]?key(=&#124; =&#124;:&#124; :)</code> |
-| `spdb-docker-registry-auth` | Active | `auth":H0hHSuMNzex0SE4c7KkNPqWmwwJRdjPG"EyYzTwlE+oArUeR36cSXoezuQxjWGYZyponxWXet/SiB3Ol3zWAaUHiDLLCtrGYWEowngXMsvAy/R9qoluing5k85o8D2RnsXLwkLOb+B5EiMJ2UloIzBhfdUwp6fsqPlrGM` | <code>auth":.*"(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{4}&#124;[A-Za-z0-9+\/]{3}=&#124;[A-Za-z0-9+\/]{2}={2})</code> |
+| `spdb-wordpress-db-password` | Active | `wordpress_db-password=` | <code>wordpress[_-]?db[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wordpress-db-user` | Active | `wordpress-db_user =` | <code>wordpress[_-]?db[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpjm-phpunit-google-geocode-api-key` | Active | `wpjm-phpunit-google_geocode-api_key=` | <code>wpjm[_-]?phpunit[_-]?google[_-]?geocode[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wporg-password` | Active | `wporg-password :` | <code>wporg[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpt-db-password` | Active | `wpt_db_password =` | <code>wpt[_-]?db[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpt-db-user` | Active | `wpt_db-user =` | <code>wpt[_-]?db[_-]?user(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpt-prepare-dir` | Active | `wpt-prepare-dir=` | <code>wpt[_-]?prepare[_-]?dir(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpt-report-api-key` | Active | `wpt_report-api-key=` | <code>wpt[_-]?report[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpt-ssh-connect` | Active | `wpt_ssh_connect =` | <code>wpt[_-]?ssh[_-]?connect(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-wpt-ssh-private-key-base64` | Active | `wpt-ssh-private-key_base64 =` | <code>wpt[_-]?ssh[_-]?private[_-]?key[_-]?base64(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-www-googleapis-com` | Active | `www_googleapis-com:` | <code>www[_-]?googleapis[_-]?com(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yangshun-gh-password` | Active | `yangshun_gh_password :` | <code>yangshun[_-]?gh[_-]?password(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yangshun-gh-token` | Active | `yangshun_gh-token:` | <code>yangshun[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-account-client-secret` | Active | `yt-account-client_secret:` | <code>yt[_-]?account[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-account-refresh-token` | Active | `yt_account_refresh-token :` | <code>yt[_-]?account[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-api-key` | Active | `yt_api_key :` | <code>yt[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-client-secret` | Active | `yt_client-secret:` | <code>yt[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-partner-client-secret` | Active | `yt-partner_client-secret=` | <code>yt[_-]?partner[_-]?client[_-]?secret(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-partner-refresh-token` | Active | `yt_partner_refresh-token:` | <code>yt[_-]?partner[_-]?refresh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-yt-server-api-key` | Active | `yt-server_api-key :` | <code>yt[_-]?server[_-]?api[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-zendesk-travis-github` | Active | `zendesk-travis-github :` | <code>zendesk[_-]?travis[_-]?github(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-zensonatypepassword` | Active | `zensonatypepassword =` | <code>zensonatypepassword(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-zhuliang-gh-token` | Active | `zhuliang_gh-token :` | <code>zhuliang[_-]?gh[_-]?token(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-zopim-account-key` | Active | `zopim_account_key =` | <code>zopim[_-]?account[_-]?key(=&#124; =&#124;:&#124; :)</code> |
+| `spdb-docker-registry-auth` | Active | `auth":hnSCwYpyxL9JYzgUYDlw2LkJDQLn76qH"+mJLQ9W4sKH19PVZF2UlluLc4iNYSE5qBcn48tPpwYkRuhCu+rpnQTyQJzDDuQ8XPDoGqWPzChRz0mGrw0MPi7OlMeoTvUZuY3SnozVdErqTjk6I/hHT860mgea2U4g3axR=` | <code>auth":.*"(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{4}&#124;[A-Za-z0-9+\/]{3}=&#124;[A-Za-z0-9+\/]{2}={2})</code> |

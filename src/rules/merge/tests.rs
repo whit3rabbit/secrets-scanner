@@ -257,3 +257,22 @@ fn normalize_regex_strips_escaped_anchors_for_parity() {
     assert_eq!(normalize_regex(r"foo\^bar"), r"foo\bar");
     assert_eq!(normalize_regex(r"foo\$bar"), r"foo\bar");
 }
+
+#[test]
+fn merge_sources_reports_typed_source_toml_error() {
+    let err =
+        merge_sources(vec![src("bad", 10, "not valid toml = [")]).expect_err("invalid source TOML");
+
+    assert!(matches!(err, MergeError::SourceToml { source, .. } if source == "bad"));
+}
+
+#[test]
+fn merge_sources_reports_typed_non_table_error() {
+    let err =
+        table_from_value("array", toml::Value::Array(Vec::new())).expect_err("non-table source");
+
+    assert!(matches!(
+        err,
+        MergeError::SourceNotTable { source } if source == "array"
+    ));
+}

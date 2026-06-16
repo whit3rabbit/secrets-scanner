@@ -53,7 +53,7 @@ mod safe_display;
 /// High-performance parallel file scanner.
 pub mod scanner;
 
-pub use error::{ProxyError, ScannerError};
+pub use error::{CoverageError, ProxyError, ScannerError};
 pub use fingerprint::{finding_fingerprint, fnv1a_hex, location_fingerprint};
 pub use rules::engine::{CompiledRule, RuleEngine};
 pub use rules::validation::{AllowlistConfig, GlobalAllowlist, RuleConfig, RulesetConfig};

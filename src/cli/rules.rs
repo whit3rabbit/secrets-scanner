@@ -185,19 +185,10 @@ pub(super) fn handle_merge_rules(
     );
 
     if let Some(path) = report_path {
-        match serde_json::to_string_pretty(&report) {
-            Ok(json) => {
-                if let Some(parent) = std::path::Path::new(path).parent() {
-                    let _ = std::fs::create_dir_all(parent);
-                }
-                if let Err(e) = std::fs::write(path, json) {
-                    error!("Failed to write report {path}: {e}");
-                    std::process::exit(2);
-                }
-                println!("Wrote merge report to {path}");
-            }
+        match write_merge_report(std::path::Path::new(path), &report) {
+            Ok(()) => println!("Wrote merge report to {path}"),
             Err(e) => {
-                error!("Failed to serialize report: {e}");
+                error!("Failed to write report {path}: {e}");
                 std::process::exit(2);
             }
         }
@@ -224,6 +215,17 @@ pub(super) fn handle_merge_rules(
         std::process::exit(2);
     }
     println!("Wrote merged ruleset to {out}");
+}
+
+fn write_merge_report(
+    path: &std::path::Path,
+    report: &secrets_scanner::rules::merge::MergeReport,
+) -> std::io::Result<()> {
+    let json = serde_json::to_string_pretty(report).map_err(std::io::Error::other)?;
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    std::fs::write(path, json)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -312,5 +314,18 @@ mod tests {
         let status = super::check_ruleset_current(&missing, "merged rules").expect("check");
 
         assert_eq!(status, super::RulesetCheckStatus::Stale);
+    }
+
+    #[test]
+    fn write_merge_report_errors_when_parent_cannot_be_created() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let file_parent = dir.path().join("not-a-dir");
+        std::fs::write(&file_parent, "file").expect("file parent");
+        let report_path = file_parent.join("report.json");
+
+        let err = super::write_merge_report(&report_path, &Default::default())
+            .expect_err("report parent creation should fail");
+
+        assert_eq!(err.kind(), std::io::ErrorKind::AlreadyExists);
     }
 }

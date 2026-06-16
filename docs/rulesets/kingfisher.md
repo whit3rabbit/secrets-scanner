@@ -14,10 +14,10 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 
 | Rule | Status | Example | Regex |
 |---|---|---|---|
-| `kingfisher.ably.1` | Active | `ablyKEYwEDwGejg.7kOa0P6r:V5jIo8fKjYL9DFmYOwl_PkWo` | <code>(?xi)<br>\b<br>ably<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_-]{8}\.[A-Za-z0-9_-]{8}:[A-Za-z0-9_-]{24}<br>)<br>\b<br></code> |
-| `kingfisher.abstractapi.1` | Active | `abstractapiSECRETGBfNm2VaPB1qvPPfvewwVhwlLoUPeDqr` | <code>(?xi)<br>\b<br>abstractapi<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.abuseipdb.1` | Active | `abuseipdbTOKENVtz07ks22mD1oxBxwV5Bvfqii5sbghSw3tBEjFmb5BhR2BA2OC3VB5poQfnq0aQnB8x2fvR8bhffZag5` | <code>(?xi)<br>\b<br>abuseipdb<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{80}<br>)<br>\b<br></code> |
-| `kingfisher.adafruitio.1` | Active | `aio_IntE556Ml2QKwo8dhKbwjxIU89JU` | `(?x)
+| `kingfisher.ably.1` | Active | `ably\n\rffF\nw7DdhKi7\r7rq\rbT\nG\r\r\naMN\ni\nKEY\rE\n04\n\np\r1\nlwh\n\n\rC\r0\n\ry\rh\n\n\nzjy\r0i09Stvj.o3tfZDKy:Hm955MThvbcTwEnN1_xM6nGi` | <code>(?xi)<br>\b<br>ably<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_-]{8}\.[A-Za-z0-9_-]{8}:[A-Za-z0-9_-]{24}<br>)<br>\b<br></code> |
+| `kingfisher.abstractapi.1` | Active | `abstractapiA\r9EY\r\n\r5T\n\rp\nR\nPRIVATE4\r\n\n\r\n\nEHN\rWr\rXVmT2HelUJsy8X4HalgiCxFVbKpSVLk4GX` | <code>(?xi)<br>\b<br>abstractapi<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.abuseipdb.1` | Active | `abuseipdb\rrrJ\nJ\rb\r203\nk\n\nPRIVATER\nC\r\r\n0\r\rW\rZA\n\rO6Sod51jKF8ucKtqeNtocBLYmLj46XWgg8qw5Mli6aOnO7S63sgA5l5qByxAHYUWHpQDIlonXvQKEZupM` | <code>(?xi)<br>\b<br>abuseipdb<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{80}<br>)<br>\b<br></code> |
+| `kingfisher.adafruitio.1` | Active | `aio_qtFb86Fk74ZmxhYQWlccmqT6gxUf` | `(?x)
 \b
 (
   aio_
@@ -27,24 +27,24 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 )
 \b
 ` |
-| `kingfisher.adobe.1` | Active | `adobeACCESS6889AD7A5347BB3E29401BA5E870E67A` | <code>(?xi)                       <br>\b                         <br>adobe<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-F0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.adobe.3` | Active | `p8e-O0B6OPV5H96K8Q45US1WI-3UVH5IJSTZf` | `(?xi)
+| `kingfisher.adobe.1` | Active | `adobe\n\nd\ne5kxwqWdf\rLyKEY\rRv\r\rO1YB\ne\rvs\rs8L\rhEIP0\rJAbc\r\n\r703A1FF2901EC2ACE9FE6A1C56E47AB2` | <code>(?xi)                       <br>\b                         <br>adobe<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-F0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.adobe.3` | Active | `p8e-DBAL-RA58AS7CBG0JN7VPF9ROGE8ZS0X ` | `(?xi)
 \b
 (
   p8e-[A-Z0-9-]{32}
 )
 (?:[^A-Z0-9-])
 ` |
-| `kingfisher.age.4` | Active | `AGE-SECRET-KEY-PQ-1CDQL920Z10OYRFSX51QASNWWITGR05KU9QV77D71W7962F77585CYJVBHB` | `(?x)
+| `kingfisher.age.4` | Active | `AGE-SECRET-KEY-PQ-1P5IQ8IP0IWVAMNABI8K2U4OP5VWZB0X1QWARLV40T5DJF3SBBK8KE9IC4X` | `(?x)
 \b
 (
   AGE-SECRET-KEY-PQ-1[0-9A-Z]{58}
 )
 \b
 ` |
-| `kingfisher.agora.2` | Active | `agoraapp_certificate\t085c985b0c09fd8aad0c6ae531bd4102` | <code>(?xi)<br>\b<br>agora<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:app[_-]?certificate&#124;app[_-]?secret&#124;customer[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.ai21studio.1` | Active | `ai21cb77349e-bbe7-bac0-4ceb-f923b51bdb47` | <code>(?xi)                       <br>\b                         <br>ai21<br>(?:.&#124;[\n\r]){0,32}?<br>\b  <br>(               <br>  [0-9a-f]{8}  <br>  -          <br>  [0-9a-f]{4}  <br>  -              <br>  [0-9a-f]{4}<br>  -               <br>  [0-9a-f]{4}<br>  -              <br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.ai71.1` | Active | `ai71-api-a9e712eb-99b6-e7db-ac0e-428e344025cb` | `(?xi)
+| `kingfisher.agora.2` | Active | `agorad\n\rV\rD\r\r6\n\n\n\ra\n23\r\ru\nv\rQ\r\n\r\n\r\rp\rapp-certificate\n5\r\nKNhM\n\nYE\n40c\x0b45aec4ffcc48a36f456688c397b7f91a` | <code>(?xi)<br>\b<br>agora<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:app[_-]?certificate&#124;app[_-]?secret&#124;customer[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.ai21studio.1` | Active | `ai21gpxo\r\nRffh\r3\n\ry\rVJ\rz\n\n\r\n\n\n\r\r\nA\r\ncbf859f4-23bf-80ae-6d9d-26ed17898439` | <code>(?xi)                       <br>\b                         <br>ai21<br>(?:.&#124;[\n\r]){0,32}?<br>\b  <br>(               <br>  [0-9a-f]{8}  <br>  -          <br>  [0-9a-f]{4}  <br>  -              <br>  [0-9a-f]{4}<br>  -               <br>  [0-9a-f]{4}<br>  -              <br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.ai71.1` | Active | `ai71-api-bc5f0d3e-6748-3319-26a4-839c3d9b0dff` | `(?xi)
 \b
 (
   ai71-api-
@@ -56,22 +56,22 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 )
 \b
 ` |
-| `kingfisher.aikido.3` | Active | `AIK_SECRET_ZgiedkM7mEeHqQd0mPynxbjX0ZkqjRCHVIhrLDEPOisivziefgGWGVMcFFHo5eqJ` | `(?x)
+| `kingfisher.aikido.3` | Active | `AIK_SECRET_CkxgRkzDI7mEodOuWn0ZZqqyI8fnOFhbe5ZOXSyKbOZWtyxRqa3j2Yv42kl7dAok` | `(?x)
 \b
 (
   AIK_SECRET_[A-Za-z0-9]{64}
 )
 \b
 ` |
-| `kingfisher.aikido.1` | Active | `AIK_CI_4eSwFzcI3mgQgIslM0vECoCTRuePdhnM` | `(?x)
+| `kingfisher.aikido.1` | Active | `AIK_CI_yMPhM5xWI4N0hcmltTCitnBrMeJxAOYd` | `(?x)
 \b
 (
   AIK_CI_[A-Za-z0-9]{20,44}
 )
 \b
 ` |
-| `kingfisher.airbrake.1` | Active | `airbrakeXYN16IEO1TNSJKRWGJX90HNXYLLZQJCXBQ4UKNED` | <code>(?xi)<br>\b<br>airbrake<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [A-Z0-9-]{40}<br>)<br>\b<br></code> |
-| `kingfisher.airtable.1` | Active | `patMBfm2WZeE3FGsz.1d170080a1fa6fb57c57a7754475574dd7c1d3c2208e2a93dd3c021430d895e7` | `(?x)                    
+| `kingfisher.airbrake.1` | Active | `airbrake\rQl2cR\rxBk\nTr\rU\ri\ne\rOU\r\rxNZrhy\r\nDB40-RIRXU5NBQTL7L38XN1VZMTPPRZ0LHY0WXFQ` | <code>(?xi)<br>\b<br>airbrake<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [A-Z0-9-]{40}<br>)<br>\b<br></code> |
+| `kingfisher.airtable.1` | Active | `patn4QtJsAxK8gVUK.d8e8273705a0d2f66fa900c618321e59b02776268997846691c35018d0d5e71e` | `(?x)                    
 \b                       
 (                        
   pat
@@ -81,19 +81,19 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 )
 \b
 ` |
-| `kingfisher.airtable.2` | Active | `GY0GDP2U8SZ4BBCPXVPJ34A9RDBT9IF1.v1.90VZMPQFR1KIL-KQRUZTLGV3MI348PSE.b441af94815c3d3dea9f981f1f6ae186` | `(?xi)
+| `kingfisher.airtable.2` | Active | `Q6RDSP6N8D12OVCBIZI3LEAWIUVNQCU8.v1.7XTNJN3WY5QROX8077X9VLRDJI12ZVR9.9070f16dc549f454b0a1d6490f9bcdab` | `(?xi)
 (
   [A-Z0-9]+\.v1\.[A-Z0-9_-]+\.[a-f0-9]+
 )
 \b
 ` |
-| `kingfisher.aiven.1` | Active | `aivenx=5e6/6vgn3hb3aj5nei1+6bl0wx==vdprjtkss26bbv0+dmvou69re/fju7kw/ibrvuifugtcf75bx/+grzx+/kgjsrbxv59v6lo3mx=behey9o5fz5oa=zl7/xvmtc=fu4ckqey4j+ryj8dlrizap2+fd/n+k88xkmb4938x+w4e152=3ziz1cyrcsnd=ttxvmpjr/+0eezl2qc9ua3dawxdqiqgrquy2jvoj+7tdmr0qcvo3f2h9v/njevcr+ceammgifd//4a8g032fzo2c63ut26d+x44onftrcvfv57kko8czlqw6mo78fm/njiji6ny717tpd5iwg0g8=e/=up7ogcct0wgbbhdqw7=xqgeotq/7dA` | <code>(?xi)             <br>aiven<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9/+=]{372}      <br>)<br>(?:[^A-Za-z0-9/+=])<br></code> |
-| `kingfisher.akamai.2` | Active | `client_secret \n\x0c \x0c \x0c\t\x0c\x0b\t \r \n \n\x0c\n \r \n\x0b\r\n\r \x0b\x0b\n\n=\n\n\r\x0b\x0c\t\x0c\t\x0c\x0c\r\r\r\r\r\x0b\x0c\n\x0b \t\t\t\x0b \x0b\x0c\r\n\x0b\r\tenomS+=kpWMhOERgSHDXENF4vFBjixGU` | <code>(?x)<br>\b<br>(?i:client[_-]?mysecret&#124;client[_-]?secret)<br>\s*=\s*<br>(<br>  [A-Za-z0-9+/=-]{20,36}<br>)<br></code> |
-| `kingfisher.alchemy.1` | Active | `alchemyendpointjKhJ7Ve9h_7OzXpxZtvF8YiHMHhKk1yN` | <code>(?xi)<br>\balchemy<br>(?:.&#124;[\n\r]){0,96}?<br>(?:<br>  /v2/<br>  &#124;<br>  api[_-]?key&#124;key&#124;token&#124;secret&#124;url&#124;endpoint&#124;rpc<br>)<br>(?:.&#124;[\n\r]){0,96}?<br>\b<br>(<br>  [A-Za-z0-9_-]{24,64}<br>)<br>\b<br></code> |
-| `kingfisher.algolia.1` | Active | `algolia97ab5bz8kncf4ozxrs6c3lxfm6kxh55g` | <code>(?xi)<br>algolia<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.alibabacloud.2` | Active | `aliyunsecret"\t\t\n\t\x0b\x0b \x0c\r\x0b \x0c\n\x0c\t\t\n\x0b\x0b\n\r\n \x0c\x0c\t\r\t \x0c\n\x0c:\x0c\t\t\t \t\t\x0b  \x0c\r\r\x0b\x0c \x0b\x0c \x0b\r\r\x0b\x0c\t\x0c\t\t\x0b\x0c\r\x0b" \x0b\x0b\r\r\r\n\x0c\x0b\r \t\x0b \n  \n\x0c\n\n\t \x0c\x0c\n \x0b\x0c\x0b\r\x0c"bLuWQwj4skknkLgKPBOO1xz3jMcIWZ'` | <code>(?x)<br>\b<br>(?:<br>  (?i:alibaba&#124;alibaba[\s_-]*cloud&#124;aliyun)<br>  &#124;<br>  LTAI[A-Za-z0-9]{17,21}<br>)<br>(?:.&#124;[\n\r]){0,80}?<br>(?i:access[\s_-]*key[\s_-]*secret&#124;access[\s_-]*secret&#124;secret&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [A-Za-z0-9]{30}<br>)<br>\b<br>["']?<br></code> |
-| `kingfisher.alibabacloud.5` | Active | `alibabaaccess\x0b\x0b \n-\x0b- \t\n\t\r\t  \t \r -\t-\x0b\t\x0b\n\n\x0c_  \x0ckey\r--\x0b\r\t\n\t\x0b\x0b_--\r\x0b_\x0c\t\r-__\x0b\x0b\x0b\r \x0b\r\x0c\x0c-secret"\x0b\t\x0c\t\r\x0b\n  \x0c\x0b \t\n\r\t \r\t\x0b\x0c\t\x0b\t\n\x0b\r\x0c\r\r\x0c\t:  \x0b\n\x0b\n \x0c\r\r\x0b\n\x0b\t\x0c\r\x0c\x0b\x0b\t\t\x0b\x0b\n\x0b\t \x0c\n\x0b\x0b\n'\r\x0b\r\n   \r\x0c\n\t\x0c\x0b\r\x0b\x0b\r\x0b\x0c\n\x0b\x0c\t\r \x0b\x0b\t\r\x0c \t"6s2XURloZUMdJFMviNd3yOPKi0bFOLdF"` | <code>(?x)<br>\b<br>(?:<br>  (?i:alibaba&#124;alibaba[\s_-]*cloud&#124;aliyun&#124;sts)<br>  &#124;<br>  STS\.[A-Za-z0-9]{16,64}<br>)<br>(?:.&#124;[\n\r]){0,120}?<br>(?i:access[\s_-]*key[\s_-]*secret&#124;access[\s_-]*secret)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [A-Za-z0-9]{30,64}<br>)<br>\b<br>["']?<br></code> |
-| `kingfisher.amazonmws.1` | Active | `amzn.mws.a8040521-7bed-f859-fef6-956583dbfd3d` | `(?x)
+| `kingfisher.aiven.1` | Active | `aivenc\r\n\nNQX\ri\r9\ru\ns\r\n\n5AVy\n\r\r\r4\n\n4\rx3gijjnwcalad/ez/wrh8pyn9nsovhtm7aoep=kjung8o0wjummvzorcop9ux1ai/zugdcd3ry9k++9k=65/ni81wt739u9z3sgcbvdwvgt2rovumdqi959ge2q/w6ywrt1vfhpmyla/b=q04oyaqy/o07fd3n+oflre/hse1i0wcgbj6/pk047gqsrzqe1jb6gbpj0b1m7l+2a56o9q4hf2n15e=/r4zqrtw3ooh+f2nm8rhl/cpw0csader/3cpfl0r4wntzeo5jeef+xwwo5fpieois35rv7s0tfm93mt40c220iu24q=mfid1r/p0nno4y=/qacmngr/ir7qi/l=uvkx5r+xss87hv+dkr87arzbjdhpt_` | <code>(?xi)             <br>aiven<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9/+=]{372}      <br>)<br>(?:[^A-Za-z0-9/+=])<br></code> |
+| `kingfisher.akamai.2` | Active | `client_mysecret\n\r\x0b\x0b\n\x0b\r\t\n\t\n\x0b\t\n\r\r \x0b \t\r\x0c\x0c\t\t \x0b\t\r\x0b\x0b\t=\t\x0c\x0b\n\x0b\x0b\t\n\x0b\n \n\r\x0b \t\r\x0c\r\n\x0c\r\x0b\x0c \x0b\n\x0c\t\n\r\rUkiu6-TrgMZxS0tZZ7n=XB4nvRdmbMdr` | <code>(?x)<br>\b<br>(?i:client[_-]?mysecret&#124;client[_-]?secret)<br>\s*=\s*<br>(<br>  [A-Za-z0-9+/=-]{20,36}<br>)<br></code> |
+| `kingfisher.alchemy.1` | Active | `alchemy9\n\rXZ5\nk0\nf\n\rjY\n9ka\rbRpG\r\r\nn\rJ\r\nkeyJS9n\rlFr\n\r\nNUji\nsk\r\n\r\r\r\rm\nGTc\nw\nlA3xxi016wI4WY8iP2BP565vSmix8Cx4` | <code>(?xi)<br>\balchemy<br>(?:.&#124;[\n\r]){0,96}?<br>(?:<br>  /v2/<br>  &#124;<br>  api[_-]?key&#124;key&#124;token&#124;secret&#124;url&#124;endpoint&#124;rpc<br>)<br>(?:.&#124;[\n\r]){0,96}?<br>\b<br>(<br>  [A-Za-z0-9_-]{24,64}<br>)<br>\b<br></code> |
+| `kingfisher.algolia.1` | Active | `algolia4B2\r\n\n8\nS\r2\r\r\rh\nv\r4\nE\r\nta\n\r\n\ny7\recrj0ja1ptud6nl6lcnewyj2sbtwixmy` | <code>(?xi)<br>algolia<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.alibabacloud.2` | Active | `alibaba\t_\t\n\n\n_\n\x0c__\x0c\r-\n\r \n\x0b\n\r\x0c\x0c\x0b\x0b\n\n\t\r\r\t\rcloudQ\rE\r\n\n5Z\n\n\n\n\n\r2\rn\r6bV3fmp\r4\nV\rc\rtokenz\n61CF\n\r\r\n\n\ns\r\nM:\t\x0b\x0c\t\r\r\n\t\n\t\r\n\t  \x0b\x0c\x0c\r\t  \t\n\x0b\x0c \t\n\t \r"2BvBYeggVkT4SWhry5tpJGntK8dU09"` | <code>(?x)<br>\b<br>(?:<br>  (?i:alibaba&#124;alibaba[\s_-]*cloud&#124;aliyun)<br>  &#124;<br>  LTAI[A-Za-z0-9]{17,21}<br>)<br>(?:.&#124;[\n\r]){0,80}?<br>(?i:access[\s_-]*key[\s_-]*secret&#124;access[\s_-]*secret&#124;secret&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [A-Za-z0-9]{30}<br>)<br>\b<br>["']?<br></code> |
+| `kingfisher.alibabacloud.5` | Active | `STS.ae34ijWiWrbeIqtmzFmYIu55XTR9XMss04\ny\rmV\n\n\rW\rzLSp\r\nUc\r\rH\n\rc\r\nCDNeaccess\t\x0b\n\x0b\t_ \n\x0c__\n\x0b\r_\x0b\n_\r \x0b\r\r--\n\r-\x0b\r\r\rkey--_\n\x0b\x0c-\t\t\n\x0b_\t\x0b-\x0b\x0c\t\x0c\t\x0c\n\x0c\x0c__- \t\r-\tsecretEc\n\n\r\nh6\r\n\r\r3\r\n\r'\x0b\t\x0b\r\r\n \x0c\x0c \r\r\t\n\x0c\r\n\n\x0c\n\x0b   \n \x0c\t\t\t\n\n:\n\x0c\x0b\x0c\x0b\r\n\x0b\t\x0b\x0b\n\x0c \x0b \t \n\t\r\n \x0c \r\t\x0c\n\x0c \t'\n\t\n \x0c\x0b\t    \r\r\x0c\x0b\r\r\r \x0c\x0c\r\x0c\r\r\x0b\t\x0b\x0c\r\x0c\r'RDQkFUgBRbINlRdbzl2aq6SggfXuinkN'` | <code>(?x)<br>\b<br>(?:<br>  (?i:alibaba&#124;alibaba[\s_-]*cloud&#124;aliyun&#124;sts)<br>  &#124;<br>  STS\.[A-Za-z0-9]{16,64}<br>)<br>(?:.&#124;[\n\r]){0,120}?<br>(?i:access[\s_-]*key[\s_-]*secret&#124;access[\s_-]*secret)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [A-Za-z0-9]{30,64}<br>)<br>\b<br>["']?<br></code> |
+| `kingfisher.amazonmws.1` | Active | `amzn.mws.20f341f9-8549-1ac8-5352-caf4f71910b3` | `(?x)
 \b
 (
   amzn\.mws\.
@@ -105,15 +105,15 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 )
 \b
 ` |
-| `kingfisher.amazonoauth.1` | Active | `amzn1.application-oa2-client.2f6ba24f385476cfe1d31c99a3fa9de6` | `(?x)
+| `kingfisher.amazonoauth.1` | Active | `amzn1.application-oa2-client.1c76641a74f095861108c0d04d9a5ae1` | `(?x)
 \b
 (
   amzn1\.application-oa2-client\.[a-f0-9]{20,40}
 )
 \b
 ` |
-| `kingfisher.amplitude.1` | Active | `amplitudeACCESS19563bba5df2a2b77ac72013dc56b513` | <code>(?xi)<br>\b<br>amplitude<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTHORIZATION)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.anthropic.1` | Active | `sk-ant-api6079----------------------------------------------------------------------------------------------AA` | `(?x)
+| `kingfisher.amplitude.1` | Active | `amplitude\ny\n\r\nn\r\nQgGxR\n\nN\rW\nkea\r\r\rh\ru\n\r\n\rACCESS\n\nyB\nm\rN\r\r\r\nR0\n\rf1fec5e15990e750d284fd38f196d8f8` | <code>(?xi)<br>\b<br>amplitude<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTHORIZATION)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.anthropic.1` | Active | `sk-ant-api0712----------------------------------------------------------------------------------------------AA` | `(?x)
 (
   sk-ant-api
   \d{2,4}
@@ -122,37 +122,37 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
   AA
 )
 ` |
-| `kingfisher.anthropic.2` | Active | `sk-ant-admin9164-kSj-_4wtrtUyJ8o9IIeItjVZ0JwBYpVHLyFuKUKk4BNVAbmMpVseFzwMOwNH6Ktd3iFCRwb4TpkmFCJdM2HqNrjq7Cgq` | `(?x)
+| `kingfisher.anthropic.2` | Active | `sk-ant-admin7749-rY-vaVrDC_M-eyMv05I2D0Mv5SeKXsYET7F5W9NnPTUs98z_7QeRrGU3vWsmSIr68hP4txnC129auMDWPd81VBGZ7YED` | `(?x)
 \b
 (
   sk-ant-admin(?:\d{2,4})?-[A-Za-z0-9_-]{92,96}
 )
 ` |
-| `kingfisher.anypoint.1` | Active | `anypointTOKENkl589hk8-qk6t-o9xn-wcvp-dalzvj5bfke0` | <code>(?xi)               <br>anypoint<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                       <br>(                        <br>  [0-9a-z]{8}<br>  -<br>  [0-9a-z]{4}<br>  -<br>  [0-9a-z]{4}<br>  -<br>  [0-9a-z]{4}<br>  -<br>  [0-9a-z]{12}<br>)<br>\b<br></code> |
-| `kingfisher.anypoint.3` | Active | `anypointapp-\t-\t \x0c. \n\n.\t\x0c-\t\x0b\r-  \n\t\r.\n\n\t\n-\t \x0bsecretd96d6d34A2d3D255acb27459bBedc60A` | <code>(?xi)<br>\b<br>anypoint<br>(?:.&#124;[\n\r]){0,48}?<br>(?:<br>  client[\s_.-]*secret<br>  &#124;<br>  app[\s_.-]*secret<br>  &#124;<br>  connected[\s_.-]*app[\s_.-]*secret<br>  &#124;<br>  oauth[\s_.-]*secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9A-Fa-f]{32}<br>)<br>\b<br></code> |
-| `kingfisher.apify.1` | Active | `apify_api_1RS532YEFI9HPD7HF0XGW4Y4N7CZ2NT563` | `(?xi)
+| `kingfisher.anypoint.1` | Active | `anypointc2p\n\rq\npM7E\r\rAPD1E\r\r7\rz\n\n\n\rtcG\nfACCESSO\n\ra\nqgm\n\rI\nP\r\ns\r\r\nK6\r\r\r\n\r\r\r\n\n\n\nsgdi6y4i-o1rv-b3ir-evo2-ej3dt22ytcmh` | <code>(?xi)               <br>anypoint<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                       <br>(                        <br>  [0-9a-z]{8}<br>  -<br>  [0-9a-z]{4}<br>  -<br>  [0-9a-z]{4}<br>  -<br>  [0-9a-z]{4}<br>  -<br>  [0-9a-z]{12}<br>)<br>\b<br></code> |
+| `kingfisher.anypoint.3` | Active | `anypoint\n4N\n\rS\nWV\ny\r\n\n\ny\rQ\n\r\rPBz\nX\n\rP\nAHoauth_\x0c -\r-\x0b\n..\x0b\r\x0b \r\r.\x0b-\r. .\n \r_\t\x0c.-\x0csecret\r\n\nR\r\n\r\r\r\r4d\r\r\nD8050AC1E93C5d9fb2AdF3f2aCB5aF1aB` | <code>(?xi)<br>\b<br>anypoint<br>(?:.&#124;[\n\r]){0,48}?<br>(?:<br>  client[\s_.-]*secret<br>  &#124;<br>  app[\s_.-]*secret<br>  &#124;<br>  connected[\s_.-]*app[\s_.-]*secret<br>  &#124;<br>  oauth[\s_.-]*secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9A-Fa-f]{32}<br>)<br>\b<br></code> |
+| `kingfisher.apify.1` | Active | `apify_api_XGLAAAVU6N7I527XB62S03B5A6938LE0QY` | `(?xi)
 (
   apify_api_[A-Z0-9]{34,38}
 )
 \b
 ` |
-| `kingfisher.apollo.1` | Active | `apolloACCESSCYOBR6KY1WSGSRO0XW34P5` | <code>(?xi)<br>\b<br>apollo<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{22}<br>)<br>\b<br></code> |
-| `kingfisher.appcenter.1` | Active | `appcenterSECRET3c84ed2e2f41882d34aaa94b6abbcc34b4b416e5` | <code>(?xi)<br>(?:appcenter&#124;app[_-]?center)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;TOKEN&#124;KEY&#124;SECRET)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.arcjet.1` | Active | `ajkey_798drew27e3pvp0zrhu3x29pb1` | `(?x)
+| `kingfisher.apollo.1` | Active | `apolloT3O0\n\n\r\r\r6WH\n\n\rESECRETGMZH\r\rL\rNNx\r\ni\n\r\r\n\r\n\nvR7\re4z\r\n\r\rSHQJNNU66-S1Y5MBH68XY4` | <code>(?xi)<br>\b<br>apollo<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{22}<br>)<br>\b<br></code> |
+| `kingfisher.appcenter.1` | Active | `app-center\nTsjz\nUw\rSL\nn\nQZ\n\nsQ\nVdo\n\n\n\r2V\n\rKEYX\n\nD\nE\ny\n\nYM\nL\nHabfcb872bebfc7262bdce7f13055a68b0e850337` | <code>(?xi)<br>(?:appcenter&#124;app[_-]?center)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;TOKEN&#124;KEY&#124;SECRET)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.arcjet.1` | Active | `ajkey_v596xge9nkus52ra34fk5iyr3g` | `(?x)
 \b
 (
   ajkey_[a-z0-9]{26}
 )
 \b
 ` |
-| `kingfisher.artifactory.1` | Active | `AKCpQdXZQPeARUO9LpUJ9p2aUMEcf3u9aeDsRwjpjNACT1KTuItq4hJjegWNlgBIe1AjAPy0` | `(?x)
+| `kingfisher.artifactory.1` | Active | `AKCpuPKbc1woFDuzDXU3UD8NmdPnkVRclYrCuoseUkE5DS4cAY0yeP0CnOaC2RNRaf2R9PJ9` | `(?x)
 \b
 (
   AKCp[A-Za-z0-9]{68,70}
 )
 \b
 ` |
-| `kingfisher.artifactory.4` | Active | `//E3IqxIoTRE02-bCT5ejDqtmfq_WLFn:b/artifactory/api/npm/64QDnWO153IPnRIZlUFgQ5ZfJ3AqAioY/:_auth\x0c\r\n\x0c\r\r\x0c\r \x0c \x0c\x0b\n\x0c\x0c \x0b\r\t\x0c\x0c\x0b\r\x0c\t\x0c\n\n\r\x0c\t=\x0c\x0b   \n\t \t\r\r  \x0c \n\t\t\n\x0c\x0c\x0b\x0c  \n\x0c\x0c\x0b\n\x0c\x0cJJaf3SEkB4L2C0XdpFvNNbr+qASbmuhO==` | `(?x)
+| `kingfisher.artifactory.4` | Active | `//8d:OhBabf9TQF9jsb1ZZOOouH_cHZVwU/artifactory/api/npm/HbhKv/I2ta-hem7gjGWA8LwxVdDzM4Xr/:_auth\x0b \x0c\x0b \x0c\r\n\r\x0c\x0b\x0b\t\x0b\x0b\n\x0b\x0c\x0b\x0b\x0c\x0b\x0b\t\n\x0c \n \n\r\t=\t\r\r\r\r\x0b\t \x0c\n\r\x0c \x0b \t\x0c\n\t\x0c\n\x0b\x0c\x0b\x0c\n \r\n\x0c \nBPyEzh/xV8ATRyVN3ZJq2lph7AAtKMEQ==` | `(?x)
 // [A-Za-z0-9._:-]+
 /artifactory/api/npm/[A-Za-z0-9._\-/]+/:_auth
 \s*=\s*
@@ -161,190 +161,190 @@ Status is computed by loading this source with `secrets-scanner list-rules --rul
 )
 \b
 ` |
-| `kingfisher.asaas.1` | Active | `$aact_hmlg_b6HjKpU6bj2vbQ69GxerViSyNxnPut-t` | <code>(?x)<br>(<br>  \$aact_(?:prod&#124;hmlg)_[a-zA-Z0-9_-]{20,100}<br>)<br></code> |
-| `kingfisher.asana.1` | Active | `asana4749762696311892` | <code>(?xi)                       <br>\b                         <br>asana<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [0-9]{16}<br>)<br>\b<br></code> |
-| `kingfisher.asana.2` | Active | `asanabyqpu4kauvnb9099bb7nnd7y4sdh5ckh` | <code>(?xi)                       <br>\b                         <br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b                         <br>(<br>  [a-z0-9]{30,40}<br>)<br>\b<br></code> |
-| `kingfisher.asana.3` | Active | `asana0/83b6556268191376fdcab03d1f6c30dd` | <code>(?xi)<br>\b<br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  0/<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.asana.4` | Active | `asana1/6802749556995298:4fb593de614eaf4b26639f84910fda51` | <code>(?xi)<br>\b<br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  1/<br>  [0-9]{14,16}<br>  :<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.asana.5` | Active | `asana2/4892406226571632/4967987256750988:8452cce5d24e6fb82160f3f81c50096b` | <code>(?xi)<br>\b<br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(                          <br>  2/<br>  [0-9]{16}<br>  /<br>  [0-9]{16}<br>  :<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.assemblyai.1` | Active | `assemblyai14f2btzxxp05be9hk84a60ehfhqahigg` | <code>(?xi)        <br>\b<br>assemblyai<br>(?:.&#124;[\n\r]){0,32}?<br>\b  <br>(              <br>  [0-9a-z]{32}<br>)<br>\b<br></code> |
-| `kingfisher.atlassian.1` | Active | `atlassiannc65gbw6h2c8xotk5jamon0i` | <code>(?xi)                       <br>\b                         <br>atlassian<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [a-z0-9]{24}<br>)<br>\b<br></code> |
-| `kingfisher.atlassian.3` | Active | `api.atlassian.comATDMYFowlA37IPOCF5fj_eIXO38x8O1lhHYdko4i5P1lKiGevBw4auhgCJuH-w` | <code>(?x)<br>(?:atlassian&#124;api\.atlassian\.com)<br>(?:.&#124;[\n\r]){0,128}?<br>\b<br>(<br>  AT<br>  [A-Za-z0-9_\-=]{60,260}<br>)<br>\b<br></code> |
-| `kingfisher.auth.1` | Active | `Basic  \x0c \n\x0c\x0b \x0c \r\n\n\x0c\t \r\n \n\x0c\x0b  \r \x0c\x0b\t\x0b\x0b\t44YJ9sh29p9p/Euv4PTyNdzh7oNb+Nha==` | <code>(?x)<br>\b<br>Basic\s+<br>(<br>  [A-Za-z0-9+/]{12,}={0,2}<br>)<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
-| `kingfisher.auth.2` | Active | `Bearer\t \x0b  \n \x0b\x0b\t \x0c\n\r\x0c\x0c\t\x0b\r   \n \r\x0b \r\t\t\x0c aOPFornLxWCf0rokabwPm8I9pfvcDeLDA` | <code>(?x)<br>\b<br>Bearer\s+<br>(<br>  [A-Za-z0-9._\-]{32,}<br>)<br>(?:[^A-Za-z0-9._\-]&#124;$)<br></code> |
-| `kingfisher.auth0.2` | Active | `auth0ACCESS8j6l5kx7pwjfx__vi7qnvymf0wal0ldncp2ld-7wxc8-i6ra4upwb64awsnkbltq` | <code>(?xi)                       <br>\b                         <br>auth0<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,64}?<br>\b                         <br>(<br>  [a-z0-9_-]{64,}<br>) <br>\b                         <br></code> |
-| `kingfisher.authress.1` | Active | `ext_l03fzlv29ouy7pdysx3h7t9s39v8tq.wnub53.acc-6nku8565vmbdo3yzhglvqgkeay19mhcx.8aeanh=g=30nn28ud9lrccb3+v57sd+_` | <code>(?xi)<br>(<br>  (?:sc&#124;ext&#124;scauth&#124;authress)_[a-z0-9]{5,30}\.[a-z0-9]{4,6}\.acc[_-][a-z0-9-]{10,32}\.[a-z0-9+/_=-]{30,120}<br>)<br>\b<br></code> |
-| `kingfisher.aviationstack.1` | Active | `aviationstackACCESScXsu8Nd623fCsF5qvgrLx32AFElkgNpj` | <code>(?xi)<br>\b<br>aviationstack<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.aws.2` | Active | `_AWSANeKqzQt34kuBDEFJeNVUQ8xxSamKKPXM2jsH7d4rA` | <code>(?xi)<br>(?:<br>  (?:\b&#124;_)<br>  (?:AWS&#124;AMAZON&#124;AMZN&#124;A3T[A-Z0-9]&#124;AKIA&#124;ASIA)<br>  (?:.&#124;[\n\r]){0,64}?<br>  [^A-Za-z0-9_+!@\#$%^&amp;*()\]./]<br>  ([A-Za-z0-9/+]{40})<br>  [^A-Za-z0-9_+!@\#$%^&amp;*()\]./]<br>&#124;<br>  (?:\b&#124;_)(?:AWS&#124;AMAZON&#124;AMZN&#124;A3T[A-Z0-9]&#124;AKIA&#124;ASIA)<br>  (?:.&#124;[\n\r]){0,96}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS)<br>  (?:.&#124;[\n\r]){0,16}?<br>  (?:KEY&#124;TOKEN)<br>  (?:.&#124;[\n\r]){0,64}?<br>  \b<br>  ([A-Za-z0-9/+]{40})<br>  \b<br>)<br></code> |
-| `kingfisher.aws.4` | Active | `awsjtoken"\x0c \x0c\x0c\x0b \x0c\x0c\r\r\x0c\t\r\n\t\x0b\x0c\t \x0c \r\n\n\r\t\x0c\t\n\r:\x0c\x0b\r \x0b \x0b\t\r\r\t\r\t\t\x0c\x0b \t\r\x0b\n  \x0c\r\r\x0c\x0c\x0b "1jlpz2+oi=+zsui3p7l9me8kdy5toirzC` | <code>(?i)(?:aws.?session&#124;aws.?session.?token&#124;aws.?token)["'`]?\s{0,30}(?::&#124;=&gt;&#124;=)\s{0,30}["'`]?([a-z0-9/+=]{16,200})[^a-z0-9/+=]</code> |
-| `kingfisher.aws.bedrock.long_lived` | Active | `ABSKQmVkcm9ja0FQSUtleShw9NKDKtrG3YZADfG2wcZDRPvfzlICDOCzBlkfSoaCRccqmlPxANsawUYijVjjdqnJ5Dc7TUv7XF0+lWjXos/NbnnY5==` | `(?x)
+| `kingfisher.asaas.1` | Active | `$aact_prod_MAHlLOF6noEoVxJXdiksTg5fcnTMcSBj` | <code>(?x)<br>(<br>  \$aact_(?:prod&#124;hmlg)_[a-zA-Z0-9_-]{20,100}<br>)<br></code> |
+| `kingfisher.asana.1` | Active | `asana\r\nzbqh\r7\n\r\r\r4\rs\rJ3E\r\r\r\n\rp\n\r\rPr\nq9068650457481270` | <code>(?xi)                       <br>\b                         <br>asana<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [0-9]{16}<br>)<br>\b<br></code> |
+| `kingfisher.asana.2` | Active | `asanag\nR\r\n\rSw\rTojM7\n\rg\rY\n\nAm\n\n\r\n\r\ngG\ryt603jcl6x5ma2dwu9ic4h1o64yk85rf` | <code>(?xi)                       <br>\b                         <br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b                         <br>(<br>  [a-z0-9]{30,40}<br>)<br>\b<br></code> |
+| `kingfisher.asana.3` | Active | `asanaC\r\rj\nL6IF\rH\nFg\r\req\nkG\r\nT\n\nUgOwrP0/6a64d486c4c443482b5c77493f170f86` | <code>(?xi)<br>\b<br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  0/<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.asana.4` | Active | `asanar\ni6GH\n\n\r\n\n\nG\rm\nl\n\r4lY\n\n\r5Wgu\n\n41/2260992772743791:f17b2e01217cfe2f50383346c461ed94` | <code>(?xi)<br>\b<br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  1/<br>  [0-9]{14,16}<br>  :<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.asana.5` | Active | `asanak81XwIM\r\rlDb\rkA\nXFx5\rXjZa\n\r\r\r\r\r\n2/2101423410619329/4954543048014913:2cf4942268d78fd5a2ce8021b820d748` | <code>(?xi)<br>\b<br>asana<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(                          <br>  2/<br>  [0-9]{16}<br>  /<br>  [0-9]{16}<br>  :<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.assemblyai.1` | Active | `assemblyaiz\n\rD\r\nQ\rEN\n\n\nN8g\rtPSw\rdY\rzx\n\no\n\nslbpketc5y2e7vse8zjwwbbfjj2mye80` | <code>(?xi)        <br>\b<br>assemblyai<br>(?:.&#124;[\n\r]){0,32}?<br>\b  <br>(              <br>  [0-9a-z]{32}<br>)<br>\b<br></code> |
+| `kingfisher.atlassian.1` | Active | `atlassianis\r\r\n\r\nx\n6Z\ny\r12T\rg\n9a\n\nwz\nXdTB\rk0lsn0ld0uk1c4hfmxy1bkk3` | <code>(?xi)                       <br>\b                         <br>atlassian<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [a-z0-9]{24}<br>)<br>\b<br></code> |
+| `kingfisher.atlassian.3` | Active | `api.atlassian.come\r\rB\n\r\nx\rjQYE\n\n\n\rz\r\nl\rQO4VFR\nW\n8AT_1GuXQwJ1iNsJTy-nWmMyE_1cwiQExjRmq16s=6tWqS0JYjEViQ0aW1pMbiP` | <code>(?x)<br>(?:atlassian&#124;api\.atlassian\.com)<br>(?:.&#124;[\n\r]){0,128}?<br>\b<br>(<br>  AT<br>  [A-Za-z0-9_\-=]{60,260}<br>)<br>\b<br></code> |
+| `kingfisher.auth.1` | Active | `Basic\x0b\n\x0b\t\x0c\t\x0c  \t\x0c\r\n\x0c\t\n\x0b\t\r\x0c\x0c\n\t\x0c\n\r\n\x0b\n\x0c\r\tyfQ7lZrchcr6qxFhq5I1l9ssU4mODriy==:` | <code>(?x)<br>\b<br>Basic\s+<br>(<br>  [A-Za-z0-9+/]{12,}={0,2}<br>)<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
+| `kingfisher.auth.2` | Active | `Bearer\r\x0c\x0b\n\r\r\t\x0c\x0b\x0c \r\t\n \n\r\r\n \x0b\r\x0b\n\x0b\n\x0b\r\x0c\n\r\tXB8yjmIMahhtGmCGvzY9XUvJmPU5Dx73` | <code>(?x)<br>\b<br>Bearer\s+<br>(<br>  [A-Za-z0-9._\-]{32,}<br>)<br>(?:[^A-Za-z0-9._\-]&#124;$)<br></code> |
+| `kingfisher.auth0.2` | Active | `auth0S\n\n\r\rFsV\rtdA\n\nS\nACCESSO\nK\r8T7usr\nLA\nEs3\rEK\r\nrqTOq\n\rKCQimt13q3js-ycviiezagx_z2l_nl4b2qpwgbbnofcamqbsg1j72j-mtvkcjuz7vmj` | <code>(?xi)                       <br>\b                         <br>auth0<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,64}?<br>\b                         <br>(<br>  [a-z0-9_-]{64,}<br>) <br>\b                         <br></code> |
+| `kingfisher.authress.1` | Active | `ext_ay0nmknzm93uzdrq9hg53kcnnnruto.c04kna.acc-mhwgy3toxug925uek6p3vwluyiho81ku.1c45_k_v+6e-bl28--w5l7/p_m=nuqqx` | <code>(?xi)<br>(<br>  (?:sc&#124;ext&#124;scauth&#124;authress)_[a-z0-9]{5,30}\.[a-z0-9]{4,6}\.acc[_-][a-z0-9-]{10,32}\.[a-z0-9+/_=-]{30,120}<br>)<br>\b<br></code> |
+| `kingfisher.aviationstack.1` | Active | `aviationstacka\nPZ91Dp\rc\nN\ni\rNKEYfq\rk1Lrzzf\r5\r\r7\nPfWwqS1pwBT1S3dw610I4GuCFN5fLBph` | <code>(?xi)<br>\b<br>aviationstack<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.aws.2` | Active | `AMAZON\nQ\n\r\nRS\r\nI\r\n4A\ni1cuX\n\n9c\r\ri\rk\n\nVSECRET2\r\n\r\r\nuv\r\nw\r\rf\rVTOKEN3\rJT\n\rtQDw\rN1\rH\r\nx\r\r\n\n\n9VO\ni\r\r\nPqdBPdU9Q8JAe3yoBbtFSmWAM1sHgUFqhcoNrkPY3` | <code>(?xi)<br>(?:<br>  (?:\b&#124;_)<br>  (?:AWS&#124;AMAZON&#124;AMZN&#124;A3T[A-Z0-9]&#124;AKIA&#124;ASIA)<br>  (?:.&#124;[\n\r]){0,64}?<br>  [^A-Za-z0-9_+!@\#$%^&amp;*()\]./]<br>  ([A-Za-z0-9/+]{40})<br>  [^A-Za-z0-9_+!@\#$%^&amp;*()\]./]<br>&#124;<br>  (?:\b&#124;_)(?:AWS&#124;AMAZON&#124;AMZN&#124;A3T[A-Z0-9]&#124;AKIA&#124;ASIA)<br>  (?:.&#124;[\n\r]){0,96}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS)<br>  (?:.&#124;[\n\r]){0,16}?<br>  (?:KEY&#124;TOKEN)<br>  (?:.&#124;[\n\r]){0,64}?<br>  \b<br>  ([A-Za-z0-9/+]{40})<br>  \b<br>)<br></code> |
+| `kingfisher.aws.4` | Active | ``awsNsession"\n\x0c\r\x0b\n   \r\x0b \r\x0b\x0c\t\t  \t\x0c\x0b\r\x0b\x0b\t\x0c\t\t\n\x0c= \r\n \r\n\r\n\r\r\x0c\n\t\t\t\r \n\r \x0b\x0c \n\r\x0b\n  \r`=plt9gyw4ppq4eih8apisar6/u71703kH`` | <code>(?i)(?:aws.?session&#124;aws.?session.?token&#124;aws.?token)["'`]?\s{0,30}(?::&#124;=&gt;&#124;=)\s{0,30}["'`]?([a-z0-9/+=]{16,200})[^a-z0-9/+=]</code> |
+| `kingfisher.aws.bedrock.long_lived` | Active | `ABSKQmVkcm9ja0FQSUtleSOvHF3/N5m1k18nFCX6terhBj/0fzSQSO4qVwE1np7kEg4/AJeygWLNU3JTy+PWDPZUvQxknjOiMCJGRw96yWyhbAe5M==` | `(?x)
 (
   ABSKQmVkcm9ja0FQSUtleS[A-Za-z0-9+/]{91,121}={0,2}
 )
 ` |
-| `kingfisher.aws.6` | Active | `bedrock-api-key-YmVkcm9jay5hbWF6b25hd3MuY29tEEsixzYPDUMI++LKjQmPHiJUe9fRsDq5==` | `(?x)
+| `kingfisher.aws.6` | Active | `bedrock-api-key-YmVkcm9jay5hbWF6b25hd3MuY29te4LdCjmDTEwmtJBTU7T7vjxeUf4zdKCe==` | `(?x)
 (
   bedrock-api-key-YmVkcm9jay5hbWF6b25hd3MuY29t[A-Za-z0-9+/]+={0,2}
 )
 ` |
-| `kingfisher.axiom.1` | Active | `xaat-1919f0aa-a1b1-8380-0536-8aa16afbf3ec` | `(?x)
+| `kingfisher.axiom.1` | Active | `xaat-6dfeb10d-2c9b-c838-eab5-a6f952055e58` | `(?x)
 \b
 (
   xaat-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}
 )
 \b
 ` |
-| `kingfisher.axiom.2` | Active | `xapt-776fc91e-b59c-6b6b-8c7b-a2d6767bdf7c` | `(?x)
+| `kingfisher.axiom.2` | Active | `xapt-75f62719-6cd4-c1a1-4687-5926db29f30e` | `(?x)
 \b
 (
   xapt-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}
 )
 \b
 ` |
-| `kingfisher.azure.notificationhub.4` | Active | `Endpoint \r\x0b\n\x0b \r\n\t\t\t\n\x0b \x0b   \n  \r\r\r\r\r\x0b\n\x0c\n\x0c\t=\n\n\x0b\t\n\x0b\t\r\n  \t\x0c\t\x0c  \x0c\n \r\n\n\r\n\t \x0b\t\t\x0b sb://-1k57uyyb6cr0anjcws-6romlztwc66j.servicebus.windows.net/SharedAccessKey \x0b\r\t\t\t\r\x0b\r\x0b\x0b\x0c\r\t\x0c\t\n\r \t\x0c\t  \t\r\r\x0b\n\x0c\x0c\r=\r\x0c\t  \n\r\t\r\r\t\r\n\r\x0b\x0c\t\x0b\x0b \r\x0c\r\x0b\r\n\x0b\x0c \r\x0b "ySLJ3EbQZt66x+qiqHfLWwx8XENUivDR=="` | <code>(?xi)<br>(?:<br>  (?:notification\s*hub&#124;Endpoint\s*=\s*sb://[a-z0-9-]{2,63}\.servicebus\.windows\.net/?)<br>  (?:.&#124;[\n\r]){0,160}?<br>  SharedAccessKey<br>&#124;<br>  \b<br>  (?:hubAccessKey&#124;notificationHub(?:Access)?Key)<br>  \b<br>)<br>\s*[:=]\s*<br>["']?<br>(<br>  [A-Za-z0-9+/]{32,88}={0,2}<br>)<br>["']?<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
-| `kingfisher.azure.1` | Active | `AccountName\n\n\n\n\x0c\t \r\x0b \t\t\n \r\n\r\x0b\x0b \n\t \x0c \n\n\r\x0c\r\n\r=\t\r\x0b\t \t  \n\x0b\t\t\x0c\x0b\x0c\t\n\t\n \x0c\x0c\x0b\t \r\x0c\r  \r\tYgU8zpSPVQuzF48s2XUJMHE5XOmBsTSo \n \x0c\t\x0c \x0c\x0b \x0c\n   \x0b\r\t\n\t\t\r\x0b\x0c\x0b \n\n\x0c\x0b\n\x0b;\t \x0b\x0b\x0c\x0b \r\r\x0c\x0b\x0c\r\t\x0b   \r\t\r\x0b\r\n\x0b \r\t\x0c \x0b\x0ciC9Xs9HrVu\x0c \r\x0b\r\r\n\n\n\n \n\n\r\n\x0b\n\x0c\t\r\t \n\x0b\x0b \t\r \t\r\nSharedAccessKey\x0b\n\r  \n\r\r\n\r\n\x0b\t\x0b\x0b\t\t\n \t\x0c  \x0b\x0c \r\n\x0c\r\r\x0b=\x0c\r\x0c\t\t\t\n\n \r\t\n\n\x0c\r \t\r\r \r\t\x0b\r \x0b \x0b\n\n\r\x0bx0IIQq6GiuJEOoSKGOqUko97UVq2D5EE;` | <code>(?xi)<br>(?: AccountName &#124; SharedAccessKeyName &#124; SharedSecretIssuer) \s*=\s* ([^;]{1,80}) \s*;\s*<br>.{0,10}\s*<br>(?: AccountKey &#124; SharedAccessKey &#124; SharedSecretValue) \s*=\s* ([^;]{1,100})<br>(?: ;&#124;$ )<br></code> |
-| `kingfisher.azure.2` | Active | `https://U8NAM9HB9R94EDJ4L0VHVRXAT4ZQ1FQX.azconfig.io;Id=8dsf-mI-ao:OOWT0CZDU90I/DIVWBG66G;Secret=6GMJH/PJ7Y0PIVSR/59GHWWKK1KNV2E/VUZT=` | `(?xi)
+| `kingfisher.azure.notificationhub.4` | Active | `hubAccessKey\t \r\x0c\t\n\x0c\t\n\t\x0b\r \x0b \r \n \x0b  \t\t\t\t \t \x0b\x0c\x0b:\r\x0c\t\t\r\t\t\x0c \n\r\r\r\t \x0b\x0b\x0c  \r\n  \x0b \r\t\t\r\x0b 'Vp7DSdOlXYjFWhWh+ZcXJX6qMdg3AGhr=="_` | <code>(?xi)<br>(?:<br>  (?:notification\s*hub&#124;Endpoint\s*=\s*sb://[a-z0-9-]{2,63}\.servicebus\.windows\.net/?)<br>  (?:.&#124;[\n\r]){0,160}?<br>  SharedAccessKey<br>&#124;<br>  \b<br>  (?:hubAccessKey&#124;notificationHub(?:Access)?Key)<br>  \b<br>)<br>\s*[:=]\s*<br>["']?<br>(<br>  [A-Za-z0-9+/]{32,88}={0,2}<br>)<br>["']?<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
+| `kingfisher.azure.1` | Active | `SharedSecretIssuer\t\t\x0c  \x0b \x0c\r\t\n  \x0b\n\x0b \n\n\x0c\n \x0b\t \x0b\r\t \x0c\n\n=\n\t\x0c\x0b\r \r \n\r\t \x0b\r\x0b\n\t \x0c\n \x0b \t\t\x0c\n\r\r\t\r\nQpbBsjPQmWf1JPuVd6TgSkHc0ipYoyxv \r\n\x0b\x0b\n\x0b\x0c\t\n\r\x0c\x0c\x0b\t\n\t\r\x0c\t\n\x0b\x0c\r \t\t \x0b\n\n\t;\t \r\x0c \x0c\x0b \x0c\n\x0b\t\x0b\r\x0b\x0c\r\r  \x0b\x0c \x0b\x0c\x0c\t\t\n\x0c\x0b\x0bpATmzK2TUx \x0c\x0c\t\x0c \t\x0b\x0b\n \x0c\x0c\r \x0c\t \x0b\x0c\r\n\r\t\t \n\x0b\t\t\x0c\rSharedSecretValue\x0b\x0b\x0c\x0c\t\n \r\r\n\x0c\x0c\x0c\x0b \t\t\n\t\x0b\t\x0b \x0c   \x0c\t \t\t=\t\x0c\x0b \x0b\x0b\x0c\n\x0c \x0b\n\t\x0c\n\r\t\x0c\n\t \x0b\r\t \n\r\t\t\x0b\r T4Gg6dUMGvuNt5giTa9Hwz4EPkCYO2Pp` | <code>(?xi)<br>(?: AccountName &#124; SharedAccessKeyName &#124; SharedSecretIssuer) \s*=\s* ([^;]{1,80}) \s*;\s*<br>.{0,10}\s*<br>(?: AccountKey &#124; SharedAccessKey &#124; SharedSecretValue) \s*=\s* ([^;]{1,100})<br>(?: ;&#124;$ )<br></code> |
+| `kingfisher.azure.2` | Active | `https://LOMS-WP6AEYWXZNIM5NFQD0J2G11KWXS.azconfig.io;Id=OuS4-Oz-GD:R/MF8L6/QKBYFT+65TYZFX;Secret=VZTV8ECRJ261CN2LZV2TDVL+Q/HEOA2QMNNN=` | `(?xi)
 (https://[A-Z0-9-]+\.azconfig\.io);
 Id=(.{4}-.{2}-.{2}:[A-Z0-9+/]{18,22});
 Secret=([A-Z0-9+/]{36,50}=)
 ` |
-| `kingfisher.azure.3` | Active | `pat_token\x0c\n\r  \x0b \x0b\r \r \x0c\x0b\r\x0b\n \t\n\r\t\x0b\x0c\x0c\n\r \t\t\x0c\n=\t\x0c\n\r\r\n\x0b  \t \x0c  \x0c\x0c\r   \x0b\n\t\x0b\n\n\n\n\t\t\n\x0c'8xd646lvx9suzgav89kz5ghqs8s76vbmmkpdvfq4v9plulkpnfpj'` | <code>(?xi)<br>(?i: ADO_PAT &#124; pat_token &#124; personal_?access_?token &#124; \$token )<br>\s* = \s*<br>["']<br>([a-z0-9]{52})<br>["']<br></code> |
-| `kingfisher.azure.5` | Active | `ID37OL9YIN938N83UNIK9PERU2WQGDHPFER4XVPFZX+ACRLO3NAK` | `(?xi)
+| `kingfisher.azure.3` | Active | `pat_token\x0c\r \n\x0b\r\n\n\t\t\x0c \t\n\r\x0c\x0c\x0b\r\n\n\n\n\t \t\n\x0b \r\t\x0c=\n \x0c\r\t\x0c \x0c\r\x0b \n\x0c\t\n\x0b\x0b\x0b \x0b\n\x0c\n \x0c\x0b\x0b \x0c\r\x0b\x0b"5li8xfkx7oe9l01t2wgsvolthrdsym8m8vxh7wn7nsjzxmlqbpvj"` | <code>(?xi)<br>(?i: ADO_PAT &#124; pat_token &#124; personal_?access_?token &#124; \$token )<br>\s* = \s*<br>["']<br>([a-z0-9]{52})<br>["']<br></code> |
+| `kingfisher.azure.5` | Active | `JSBR8OVWK8WH/WDWP80CGN+23S5FAMFD2YZU8IUICC+ACR2IODS3` | `(?xi)
 \b
 (
   [A-Z0-9+/]{42}\+ACR[A-Z0-9]{6}
 )
 \b
 ` |
-| `kingfisher.azureapim.1` | Active | `apim\n\r\t\r\t-\n\n\x0b_\x0b\r\t\x0c\n\x0b\r  \r \x0b__-_-_\r\r\t\x0bsubscription_\x0c\x0c \n\r\r\n \t\t-\n_\x0c __\n\x0b\t\x0b\n\x0c\n\t\n\r-_-_key067cc2ba7fb9494e97ace4e09c5a8688` | <code>(?x)<br>\b<br>(?:<br>  (?i:(?:apim&#124;api[_\s-]*management)[_\s-]*(?:subscription[_\s-]*key&#124;key))<br>  &#124;<br>  (?i:Ocp-Apim-Subscription-Key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.azurebatch.1` | Active | `azure\x0c\n\t_\x0b \t\r_ \t_-\n\r\x0c-\r\n\x0c \x0b_\x0c-_\x0b \t\n-\x0bbatch\x0c _\t\t\x0c\n\t- --\r\n_-\r \t\t\t --\r\r_\x0c\n_ \taccount\n\n   \x0b -\x0c\r\t -\x0c\r__\n\n\x0b_\x0b-\n \t\n-\n\r  keyJGWZxZOPLmySMdtswxCIXxGW4+MpTPuZkmOcLmC+seAU1asXs74HfsIXK1CpepfC7i9loEFYiiorIZAqZGtA3p==` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*batch[_\s-]*(?:key&#124;account[_\s-]*key&#124;access[_\s-]*key))<br>  &#124;<br>  (?i:batch[_\s-]*account[_\s-]*key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/]{86}==<br>)<br></code> |
-| `kingfisher.azurecognitive.1` | Active | `azure-\n \t \r\t\n\x0c\t -\r-\t\x0c\x0c_ -_\n\t--\n\x0c\n\x0c\n\r\x0bface_\x0c\t\n\r \r \r_--\r\x0c\x0c\t_\n\x0c\n\r__\x0b\x0b\t\r\t\n\r\r-api\x0b\x0c\x0c\r\t\x0b_  \x0b\n--  \n\x0b \t\r -\x0b__\n-\t\n --api \n-\r\x0b- \x0c \n  _\x0b\x0c\t_-_-\x0b\x0c\x0b \x0c\r\r-\x0b-\x0b\nkey752c40e8c20c4b830152809d743fe22f` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*(?:cognitive&#124;ai)[_\s-]*(?:service&#124;key))<br>  &#124;<br>  (?i:cognitive[_\s-]*service[_\s-]*(?:key&#124;secret&#124;subscription))<br>  &#124;<br>  (?i:<br>    (?:azure[_\s-]*)?(?:anomaly[_\s-]*detector&#124;computer[_\s-]*vision&#124;content[_\s-]*moderator&#124;content[_\s-]*safety<br>      &#124;custom[_\s-]*vision&#124;face[_\s-]*(?:api)?&#124;form[_\s-]*recognizer&#124;document[_\s-]*intelligence<br>      &#124;immersive[_\s-]*reader&#124;language[_\s-]*understanding&#124;luis<br>      &#124;personalizer&#124;qna[_\s-]*maker&#124;text[_\s-]*analytics&#124;video[_\s-]*indexer<br>      &#124;metrics[_\s-]*advisor&#124;health[_\s-]*insights&#124;cognitive[_\s-]*service&#124;ai[_\s-]*service)<br>    [_\s-]*(?:key&#124;api[_\s-]*key&#124;subscription[_\s-]*key&#124;secret)<br>  )<br>)<br>\b<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.azurecommunication.1` | Active | `endpoint=https://f8qe0xpfodfcw3vmgx1b3k321w1ikx1c.communication.azure.com/;accesskey=EYBQRaNY9aeIcMVP5EJvXgi2NyMuOpu73kWgF7Fc==` | <code>(?x)<br>(?i:endpoint=https://(?:[a-z0-9-]+\.)?(?:communication&#124;comm)\.azure\.com/;accesskey=)<br>(<br>  [A-Za-z0-9+/]{40,90}={0,2}<br>)<br></code> |
-| `kingfisher.azurecosmosdb.1` | Active | `cosmosdb -\x0b--\x0c\t\n-\x0c\r\x0b\t\t\x0c\n_\t\r\n\x0c\x0c\t_\x0b\t\x0c\n\x0b\x0b\r\tprimary _\t \t\x0b\x0b\x0b -_\t-\x0b\n\x0c\t-\x0c\x0b\x0c\x0b\t \r\x0b\n \n \n_keyCg3P+JM0Av76UPkY24JE35mdkIxTnCM/JhhDmUjrXBGUtZCxph1gBClV+lUsm9BLmOiqZGO7vyjR9SMWVCsch2==` | <code>(?x)<br>\b<br>(?:<br>  (?i:cosmos(?:db)?[_\s-]*(?:key&#124;account[_\s-]*key&#124;primary[_\s-]*key&#124;secondary[_\s-]*key&#124;master[_\s-]*key))<br>  &#124;<br>  (?i:azure[_\s-]*cosmos(?:db)?[_\s-]*(?:key&#124;account_key&#124;primary_key&#124;master_key))<br>  &#124;<br>  (?i:documentdb(?:authkey&#124;key))<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/]{86}==<br>)<br></code> |
-| `kingfisher.azurecosmosdb.2` | Active | `AccountEndpoint=https://x68kmkq--ogmx47gnkqvq0jxvxf71chz.documents.azure.com:78006984336308528539039018161715/;AccountKey=+16p6yWZfVNMD9B1j5cm+YS0rtFxdj5V2lVflY67DKALW+oBatPF6ZGSPULQOloPRidhilYCTmOWtkqz7YOAbX==` | <code>(?x)<br>(?i:AccountEndpoint=(?P&lt;COSMOS_ENDPOINT&gt;https://[a-z0-9-]+\.documents\.azure\.com(?::\d+)?)/?;)<br>AccountKey=<br>(?P&lt;secret&gt;<br>  (?P&lt;TOKEN&gt;<br>    [A-Za-z0-9+/]{86}==<br>  )<br>)<br></code> |
-| `kingfisher.azure.devops.2` | Active | `vo9hivn345m4uge9hyj2hgp2yn0dpljwkhxguius6p2s0a5ax48iyz1dhuesazf96cz8ljpys7t0AZDOr04j9` | `(?xi)
+| `kingfisher.azureapim.1` | Active | `Ocp-Apim-Subscription-Keyo\n\rdx\ng9\rz\rL\rDuZ0ff0a563f8dc064df210763608d5915a` | <code>(?x)<br>\b<br>(?:<br>  (?i:(?:apim&#124;api[_\s-]*management)[_\s-]*(?:subscription[_\s-]*key&#124;key))<br>  &#124;<br>  (?i:Ocp-Apim-Subscription-Key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.azurebatch.1` | Active | `batch \r\r _\x0c\x0b\r\x0b  \x0b_\n\r\r_\r__  \t \x0c_\r-_\x0b\r\x0caccount\x0b-\t\t_\t\x0b\t-\r_\r\x0c \x0b- \n__\t_-\t \t_\r\r \x0b\tkeyVBM\r\n\rS\ra\r\r\r\n\ni\nwyVOLOdMbmxFrpKoxtZRS3wqST7utiDZAX0yK9xGGBtSs4Th+PuOoVfQzFnPuce6RDFGbhdbQCJEavCb59Txun==` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*batch[_\s-]*(?:key&#124;account[_\s-]*key&#124;access[_\s-]*key))<br>  &#124;<br>  (?i:batch[_\s-]*account[_\s-]*key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/]{86}==<br>)<br></code> |
+| `kingfisher.azurecognitive.1` | Active | `cognitive\x0b_\t\n \x0b\x0c \r\t\t\t\n_\r _\t-\r\r\x0c\x0b \t\n_\t\n\t_\nservice\x0b\x0b\n  _\t   \x0c-\n \t\r\x0b\n\t\x0c_-\n -\r\r\x0b\x0c\x0b\t\x0ckeyJI\r\rblA\n5fQu\r\r\ru4d43b9429eeafb54a04c48599430c92c` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*(?:cognitive&#124;ai)[_\s-]*(?:service&#124;key))<br>  &#124;<br>  (?i:cognitive[_\s-]*service[_\s-]*(?:key&#124;secret&#124;subscription))<br>  &#124;<br>  (?i:<br>    (?:azure[_\s-]*)?(?:anomaly[_\s-]*detector&#124;computer[_\s-]*vision&#124;content[_\s-]*moderator&#124;content[_\s-]*safety<br>      &#124;custom[_\s-]*vision&#124;face[_\s-]*(?:api)?&#124;form[_\s-]*recognizer&#124;document[_\s-]*intelligence<br>      &#124;immersive[_\s-]*reader&#124;language[_\s-]*understanding&#124;luis<br>      &#124;personalizer&#124;qna[_\s-]*maker&#124;text[_\s-]*analytics&#124;video[_\s-]*indexer<br>      &#124;metrics[_\s-]*advisor&#124;health[_\s-]*insights&#124;cognitive[_\s-]*service&#124;ai[_\s-]*service)<br>    [_\s-]*(?:key&#124;api[_\s-]*key&#124;subscription[_\s-]*key&#124;secret)<br>  )<br>)<br>\b<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.azurecommunication.1` | Active | `endpoint=https://r6eby3mwzjq3eph7bkri4uao123e9ngj.comm.azure.com/;accesskey=u7/1oK4OzeTEJrOgbcvxNIlXeZHeANkXPIKYfi8y==` | <code>(?x)<br>(?i:endpoint=https://(?:[a-z0-9-]+\.)?(?:communication&#124;comm)\.azure\.com/;accesskey=)<br>(<br>  [A-Za-z0-9+/]{40,90}={0,2}<br>)<br></code> |
+| `kingfisher.azurecosmosdb.1` | Active | `azure\t_\x0b\r\x0b\x0c\x0c\r\r\x0c \x0c\n\r \t\n_\r\r\x0c\r_\r-\r\r\n \r \ncosmosdb\x0c -\x0b_\t__\r\x0c\x0c\x0c_\n-  \x0c\r \n_\x0b\r-\t\x0b\x0c\n\t\x0c primary_key\n\n3A\r\n\r5cyH\rl\n\n\nxTp7GR6w5ZEcL+oTsjX4eZ187cB8bxdVKE41oJ+pKIW0PP8eGmP7aT/pA37/ZOZpuWsmnR+ECue6hvpFzzhIPF==` | <code>(?x)<br>\b<br>(?:<br>  (?i:cosmos(?:db)?[_\s-]*(?:key&#124;account[_\s-]*key&#124;primary[_\s-]*key&#124;secondary[_\s-]*key&#124;master[_\s-]*key))<br>  &#124;<br>  (?i:azure[_\s-]*cosmos(?:db)?[_\s-]*(?:key&#124;account_key&#124;primary_key&#124;master_key))<br>  &#124;<br>  (?i:documentdb(?:authkey&#124;key))<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/]{86}==<br>)<br></code> |
+| `kingfisher.azurecosmosdb.2` | Active | `AccountEndpoint=https://a6dkzld451pvz4wdka1xnbd0b-oqd51g.documents.azure.com:08749073535366296169191202798751/;AccountKey=iu1GvDmvDrU4y2JZg4VG6pTVyLp8QeoB8OcWeOebEnQxzs/8vBF7B+3DU8MhQVQvqvoI/u5Fo66eDcd8tbR4hq==` | <code>(?x)<br>(?i:AccountEndpoint=(?P&lt;COSMOS_ENDPOINT&gt;https://[a-z0-9-]+\.documents\.azure\.com(?::\d+)?)/?;)<br>AccountKey=<br>(?P&lt;secret&gt;<br>  (?P&lt;TOKEN&gt;<br>    [A-Za-z0-9+/]{86}==<br>  )<br>)<br></code> |
+| `kingfisher.azure.devops.2` | Active | `hkfyo1k4jgxibev2ik3vdw1nkitise2mszz626ss99ybc7wy4bhqcxpmm55qlwwr9o4g4e4buux3AZDOn2lb4` | `(?xi)
 \b
 (
   [a-z0-9]{76}AZDO[a-z0-9]{4,5}
 )
 \b
 ` |
-| `kingfisher.azureeventgrid.1` | Active | `azure_event_grid\x0b\r\x0b\x0c\x0b\n\n_ \x0c_\r--- \t\r\x0b\n\n\t\x0c_\r \x0c-\x0c -\rkeyiL0lsPD9ep4vS42PVpRo2Ee0EUxdcC+tzZ4D+l+U==` | <code>(?x)<br>\b<br>(?:<br>  (?i:event[_\s-]*grid[_\s-]*(?:key&#124;access[_\s-]*key&#124;topic[_\s-]*key))<br>  &#124;<br>  (?i:azure_event_grid[_\s-]*(?:key&#124;access_key&#124;topic_key))<br>  &#124;<br>  (?i:aeg-sas-key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/]{40,50}={0,2}<br>)<br></code> |
-| `kingfisher.azurefunctionkey.1` | Active | `https://wpi4a7k0ukhrs56pjth4ujxh068cfv1k.azurewebsites.net/api/LRwmU30tIcId0BwJOccP1hcC4qevUB_D?code=tkSfk5LH2HLyvQG85F88Ez0KCMRmL6vl` | `(?x)
+| `kingfisher.azureeventgrid.1` | Active | `aeg-sas-keyT\nIr\r\n\r\r\n\n\ne\n\r\n\nlvi/JcsSM4JGdtkRA5Ird0kABRup9TqBYoV4IbG7==` | <code>(?x)<br>\b<br>(?:<br>  (?i:event[_\s-]*grid[_\s-]*(?:key&#124;access[_\s-]*key&#124;topic[_\s-]*key))<br>  &#124;<br>  (?i:azure_event_grid[_\s-]*(?:key&#124;access_key&#124;topic_key))<br>  &#124;<br>  (?i:aeg-sas-key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/]{40,50}={0,2}<br>)<br></code> |
+| `kingfisher.azurefunctionkey.1` | Active | `https://eq0hl26uw2o289owc-r1ckcep09yoedn.azurewebsites.net/api/dtcwLM02ViM3yk6PK8KH3Hy9im961aWE?code=QbL+0rtmdGOMc/Aw_j9fOxjAXaQ_Y=3T` | `(?x)
 (
   (?i:https://[a-z0-9-]+\.azurewebsites\.net/api/)[a-zA-Z0-9_-]+
   (?i:\?code=)[a-zA-Z0-9_/+=-]{20,100}
 )
 ` |
-| `kingfisher.azurefunctionkey.2` | Active | `x-functions-keyv8A5dxXwUT=+y0DCL=bcapWOToGgrVHuiYzGM_c=` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*function[_\s-]*(?:key&#124;master[_\s-]*key&#124;host[_\s-]*key))<br>  &#124;<br>  (?i:x-functions-key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-zA-Z0-9_/+=-]{40,100}<br>)<br></code> |
-| `kingfisher.azurelogicapps.1` | Active | <code>https://y5kmxhlccmqgxfvkxgnd59fieoekpxkw.9oq9midof8s9qlgy0zw-d8ivu9qs6to8.kip1zh9kev4cvgsz-1hscn52-ph7i4m8.pl633b9g0bbdcw0rnx9-s1mtboklq4np.jeqafj5kjzbo6f-wziu07acrdbal-ra5.8as7cbg0jn7vpf9roge8zs0xwazfs0is.zas65kwxklsiuc4eyzf569la7b06k1v5.ea3fn-tpd2lluiuojsme7pdu8gu78q9b.1-rh322vvizhsi5f-1wbatfeh2qxtpuq.hhvq0csr0jq178xbwytqbpxvfz5na0q6.6xmp-97fghhsly9ani46y-cok7lc9-vx.ajf-ukkeev3a6s7yl7vxy86z22e-s41d.1l57ob9hg9dpcxgoz384kmafkfnhy1ey.fq73my4r9mc91673pztlsev-30c4g-5p.ttw7q-wpk03wv9mzw4rkt4i-ehw5rbv2.m17t1fn30co-rtr99jgtdfwkmgt77jy0.6u2s6so5rybu93t4eth5dmgllc-6r-di.e3owzzi5of714zoxsk1ozwr09y-3a-mp.7mwin72tc8bm4jaoy3w3belckciqzgxf.1okubcprvz-gstcispde8xxij6u40tlx.i6n78or7jhpysw8-0edb40-rirxu5nbq.tl7l38xn1vzmtpprz0lhy0wxfqqjak6v.ukg2j3q1-s1nwbngqlyz6lb4nnfyo2sr.p68ix-4cn9r01yrz365512vzy5oftwnp.2h9mgwi1o-iq6rdsp6n8d12ovcbizi3l.eawiuvnqcu87xtnjn3wy5qrox8077x9v.lrdji12zvr995m1mlpzhewu5lux-ucmb.oh-yu5mk5c-egbdfczr7zgvj87nd8k7q.80nitu7osrguv6cos01x8c4bfm0jpytp.4uwqttlzpsni0wdx3gijjnwcalad-ez-.wrh8pyn9nsovhtm7aoepkjung8o0wjum.mvzorcop9ux1ai-zugdcd3ry9k9k65-n.logic.azure.com:28654878586741009505514743553042/workflows/535DC82c6f40f8cd919eCDba0FA6A7c1/triggers/8DWbHWD0kh7BDkwJjoLi3q1TfmcsEv18/paths/invoke?api-version=814446416208103-26-0638297078384&amp;sp=8nk3z2/hH8YFILS5CCnj3AxInvdESZeK&amp;sv=0.014.97031264753.4613721.119555&amp;sig=C/kEqjDqK7_JQ-K1Nly7yM81e441rP58</code> | <code>(?x)<br>(<br>  (?i:https://(?:[a-z0-9-]+\.)+logic\.azure\.com)<br>  (?::\d+)?/workflows/[A-Fa-f0-9]+/triggers/[a-zA-Z0-9_-]+/paths/invoke<br>  (?i:\?api-version=)[0-9-]+<br>  (?i:&amp;sp=)[%a-zA-Z0-9/]+<br>  (?i:&amp;sv=)[0-9.]+<br>  (?i:&amp;sig=)[a-zA-Z0-9_/+=-]+<br>)<br></code> |
-| `kingfisher.azuremaps.1` | Active | `azure\r\n \t_\x0c\r\n\x0c\n\n\n-\x0c\r__\n\n \r\t\r\r\t\t\x0b\x0b\t\x0b-\rmaps\x0b\r\r \x0b_\t\r_\r\x0c_\t_ \n\r \n\n\t\r\x0c\r\x0c\t\x0b\t\x0b\t\r-secretppyZwtkE8CFGqRGlQ8dt04VYfTwN2-uK` | <code>(?x)<br>\b<br>(?i:azure[_\s-]*maps[_\s-]*(?:key&#124;subscription[_\s-]*key&#124;api[_\s-]*key&#124;secret))<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-zA-Z0-9_-]{32,44}<br>)<br>\b<br></code> |
-| `kingfisher.azuremixedreality.1` | Active | `azure\r\x0b-\t\x0b\r \n\x0c\t\x0c\x0b\n\n-\r\t_-\r\x0b\t\n\r\n \n\x0b \r\t-spatial\t  -\n \t_\r   -\t\x0b\r\n\t\t\r\n\n \t\t_\r\r\t_\t anchors\n\n\x0b\r\x0b-\r _\n-\x0b\t-\x0c\r\t\t_\t _\n\x0b\r\n\t\n-\n\r\x0caccess \x0b\x0c\x0b\t_\t\n\t\t\t\x0b\t\n\r_\t\x0b\x0b-_\r\x0c\x0c-\x0c\x0c\r\x0c_\n\x0ckey1ccbb61e5313a76627786c8f092d7ad8` | <code>(?x)<br>\b<br>(?:<br>  (?i:<br>    (?:azure[_\s-]*)?(?:mixed[_\s-]*reality&#124;spatial[_\s-]*anchors?&#124;remote[_\s-]*rendering)<br>    [_\s-]*(?:key&#124;account[_\s-]*key&#124;access[_\s-]*key)<br>  )<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.azureopenai.1` | Active | `azureopenaiKEY85e3269a680a7b995a91d51d75c54768` | <code>(?xi)<br>\b<br>azure<br>(?:.&#124;[\n\r]){0,8}?<br>(?:openai)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,8}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.azuresastoken.1` | Active | <code>SharedAccessSignature  \x0b\r\x0c\x0b\x0b  \n\x0b\n\n\t\x0b\x0b\n \t\r\n\n\n\x0c\t\x0b\t\n  \r\tsr=9475-81-79&amp;fama=7FYIseXcrjAjaBpt9udGnlGl74YYcnS4&amp;clme=50N4C9sbtS5VW3wPiOKx4mXyWf4BhyM5&amp;drfw=ijGBlxBPywW01PnFloalrHXipv8xXIMq&amp;wjee=LHR13Heo6VUphneQ68rrcEO3rIFBo4AL&amp;ztcz=Oh5kZKsYWcwUnWPw74ixLZUW9e4tJkWE&amp;tmdy=6P9GIRMrKUy0nnMIqA3l6kbJjVi3hfW5&amp;aghh=Cug40Ux7mOiVPCAncD8vYQ1PTFdzAOKi&amp;xuyf=6O3d1kC1jFBJgCCFrMt8g7E35J1XIYPj&amp;yzmr=efsVXwIwwaTOlM3VNKe0r5iHQZ3WiAEq&amp;gjzg=Ct6jgb4NUOFphgir9WHUbkqjd2za2bVb&amp;sig=X9=/QNKTtnv6OpK08TT38qlXqUMJUywx</code> | <code>(?x)<br>(<br>  (?i:(?:sv&#124;SharedAccessSignature\s+sr))=[0-9]{4}-[0-9]{2}-[0-9]{2}<br>  (?:&amp;(?i:[a-z]{2,4})=[^&amp;\s"']{1,200}){2,10}<br>  (?i:&amp;sig=)[a-zA-Z0-9%+/=]{20,100}<br>)<br></code> |
-| `kingfisher.azuresastoken.2` | Active | `https://-5dhy3tgmgqi3i35gvwbz9k7l-ip1qqk.queue.core.windows.net/Uoc7I2Qyt83XrOU7umHyGLUfBrocUyyB?hGnCbDbN1QbeMif3r4XjItXgGJzdKiO7sig=OWZrMB3KqXEhIBD89uC9GBDD562vKR/=RE7hKTLNUQgjtZ9BhYqCWNGsvgTvfKIx` | <code>(?x)<br>(<br>  (?i:https://[a-z0-9-]+\.(?:blob&#124;queue&#124;table&#124;file&#124;dfs)\.core\.windows\.net/)[^\s"']*<br>  \?[^\s"']*(?i:sig=)[a-zA-Z0-9%+/=]{20,100}[^\s"']*<br>)<br></code> |
-| `kingfisher.azuresearch.key.1` | Active | `azurePRIVATENLOOU25FYV6WZ9U02U5IEPTN4WD7W1JUL0IINIFOZZVS0JHVNWAV` | <code>(?xi)<br>\b<br>azure<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [0-9A-Z]{52}<br>)<br>\b<br></code> |
-| `kingfisher.azuresearch.url.1` | Active | `azurehttps://uh25rqbnrhhhx031g5abbmkkxwqlfj76.search.windows.net/indexes/e0j8qm63pah3bpjfk4zd2216psxvvt2s` | <code>(?xi)<br>\b<br>azure<br>(?:.&#124;[\n\r]){0,32}?<br>https:\/\/<br>(<br>  [0-9a-z]{5,40}<br>  \.search\.windows\.net<br>  \/indexes\/<br>  [0-9a-z]{5,40}<br>)<br>\b<br></code> |
-| `kingfisher.azuresignalr.1` | Active | `Endpoint=https://31n7yzyrdq-fu6br1inr310s665x8-nv.service.signalr.net;AccessKey=LD+PTG+mgURnHpwgVNXKyp/S9dFkHDsOdI2xwrcC==` | `(?x)
+| `kingfisher.azurefunctionkey.2` | Active | `x-functions-key\rwaPvcc\nU\nHcpa\nzRQTlPxPfZ77fLYeAtCCkDGc-ppjO6qHQMKHtiyvJ` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*function[_\s-]*(?:key&#124;master[_\s-]*key&#124;host[_\s-]*key))<br>  &#124;<br>  (?i:x-functions-key)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-zA-Z0-9_/+=-]{40,100}<br>)<br></code> |
+| `kingfisher.azurelogicapps.1` | Active | <code>https://ovnllcqxkkqrl9sbykp67l3t8l82scw3.d1-v1sbwch9vatih-ky-exikpr89che2.41ltpt05ltwgcsndta12ca8plw3vkyk2.fc3pk8j6o-ov-2jzb1rqfaja0xzq0zly.zl1yz4p98k5bjqtknmm7j3pdswhrligz.2dgl243zukpd6ihx7kchovzfdxpg2w79.ail4ksakjery7-q5s6y4mwkicma5q2pk.1dfnmh73x48wsfo4t7-1xv0peqccd2pv.1kwkj9syetsvfdd1q6huixbbvohwnxlm.6gpufz7jasuebel-w3yalp2xg3z1487o.-lpzseu-atxe6t9kadeaqn2jkya83qh7.xdh9aqyojqhwbjram2xz922ywq8m206w.rtxp9xjtzxzqiev85s8zpzzdcpzsussn.0vqz0sw7z2ttmq5-f3ili7r1kw1zvvjb.6ctrtqq5bmccsm-3mzgqz6slyvo929fx.v1nmmvr7xmgz4n7109nwce0yg2rkymfi.8453ozaf9ki8crj--9n5gvsr1w5uov3z.0qxlgk51eidlymi6a1crsm9uo06ye51e.h8610-iig0oyt6s2i0ivjg4d1hqt3to3.l2ujie97wghbracviwdbag555zji7-55.ntr28o7b-e7l4y567gwuv1jvgeucs52-.n9gruk8kbs1mbjbvoy3x19i2nlhd--rz.326aj-1z8rfw3f4hlcvk9ibd9hpm1n21.agnhdg-dy07amt84fyul075n9p9alesx.rj0zlrrc7wd6gvoahhipssq2vxofqutv.ad8uo33ssgu3cunbawwwurxirjkhuxez.6j2teluvzq4chyv2i2pd1rxaur1yvj19.85blya4712on313nuuofyspj0nkxf7c1.ao4z7brnfuk0ctizlnt9p68yh1s6el48.ea3rtdd-sarbz0himr4hkj5h5-fwp-8i.w81w8r0nywujx2eul8rb1kjzof3py73v.c2oypq1wq6a2k-psh-nw8th1aylhv-d8.logic.azure.com:46975061914639464247776820556708/workflows/56ee5AD8cEC0c9F1c12baFADB73A783D/triggers/Kjy8b2L-EZqy-wojJKBMdZNM2SXYv-FZ/paths/invoke?api-version=-56217657170675988-09119075232-7&amp;sp=FIbk50q8gknjc2NjaAom2JFt7u2TDx1k&amp;sv=12941642372.8106005.953357922444&amp;sig=LAYquShkGSy7LlYqR1E+SXibn2-r8GZ7</code> | <code>(?x)<br>(<br>  (?i:https://(?:[a-z0-9-]+\.)+logic\.azure\.com)<br>  (?::\d+)?/workflows/[A-Fa-f0-9]+/triggers/[a-zA-Z0-9_-]+/paths/invoke<br>  (?i:\?api-version=)[0-9-]+<br>  (?i:&amp;sp=)[%a-zA-Z0-9/]+<br>  (?i:&amp;sv=)[0-9.]+<br>  (?i:&amp;sig=)[a-zA-Z0-9_/+=-]+<br>)<br></code> |
+| `kingfisher.azuremaps.1` | Active | `azure\t\n\x0b\x0b\t\x0b -_-\t\r\t\t-\t\x0c\r\n\x0c \x0b\r-\r-  \x0c\n\r-maps-\r\x0c \n\r\x0c_\x0c\t\n \x0c\r_ _\r\r\x0c-\x0b\x0b_-\n\n \t _\tsubscription  \r\n--\x0b\r\r\x0b\x0b_\x0c\x0b\x0b__\t \r\r\n\r\n\n_\t\t\x0c \t-key\r\r\n\ro\ne\n2T\n\nJbF\ryU2If_QQ69OeMY6PGPHmwW02CBTFz1dz` | <code>(?x)<br>\b<br>(?i:azure[_\s-]*maps[_\s-]*(?:key&#124;subscription[_\s-]*key&#124;api[_\s-]*key&#124;secret))<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-zA-Z0-9_-]{32,44}<br>)<br>\b<br></code> |
+| `kingfisher.azuremixedreality.1` | Active | `azure\r-\n\n\x0b\x0b\x0c__-\x0b \x0c\x0c\x0b-_\t\t\t\x0c_\x0b\x0b\r   \r_\x0c\x0cmixed \r\x0b \x0b-\x0c\n\x0c\t\x0c\t\x0c\r\r\r_\x0c\n_\x0c\t\x0c\x0c\n \n_\r-\n reality\t\x0b_\r_ \r_\t\n\x0b\n\n\x0b \n_\r\t\t\x0c \x0c\x0c_\n\n\t\x0b\x0c\x0c account _\x0c\x0b\r_\x0c -\r_\r \x0c\r-\x0b \t \r_\x0b\r\x0c-_\r_-\r key32\r\n3FY\n\n\n\nx\r\nEtf86e21aa620597e819da6fae0b1b87b9` | <code>(?x)<br>\b<br>(?:<br>  (?i:<br>    (?:azure[_\s-]*)?(?:mixed[_\s-]*reality&#124;spatial[_\s-]*anchors?&#124;remote[_\s-]*rendering)<br>    [_\s-]*(?:key&#124;account[_\s-]*key&#124;access[_\s-]*key)<br>  )<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.azureopenai.1` | Active | `azure\nPm\n\r\na\nopenaiMud\r7\rPC\n\r\r\n\r\n\raSECRET\n2\n\rk\r\r\r1aa96cc0203c5556e4ec302e131bd16a` | <code>(?xi)<br>\b<br>azure<br>(?:.&#124;[\n\r]){0,8}?<br>(?:openai)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,8}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.azuresastoken.1` | Active | <code>SharedAccessSignature\x0b\x0b \t\x0c\x0b \x0b \x0c\x0c\x0b\t\x0b\r\x0b\t\r\t\x0c\r\t\r\x0b\r\x0b\x0c  \t\x0b\x0bsr=6439-85-74&amp;nkix==:iB=qv==i:_=:m:0=:KX8b=f5o::=::&amp;ogph===9o:e=:=:o:=4S::=T:9:::wEKE4T=E&amp;vynk=1v0:=::====:Yji==1:q6c=:nG:2==::&amp;fsjj=YS==d:db==::8=H_W:=3=:5:Ab==YZ=8&amp;benc==::_X:Uj:=:S===tpGI=5u::M===O=Sz&amp;tgcl========A::_kU:K::=df8_=B=qD:O===&amp;wcye=:7Ix:=gx===0=g=1:d===::UY=:7:==P&amp;dvfb=:P:Ux=je53::=:=1=:W:oj4=:=nnan:A&amp;fpdd==:n=5J=Zy6:696=n_Nr:ol=L5:==:=_C&amp;hryh=:==:=d::=:7p=QS9u=T:f:7R:=::A:=b&amp;sig=/YvzR3Gn7d93Jn5v3mcaytAKPTq3v90O</code> | <code>(?x)<br>(<br>  (?i:(?:sv&#124;SharedAccessSignature\s+sr))=[0-9]{4}-[0-9]{2}-[0-9]{2}<br>  (?:&amp;(?i:[a-z]{2,4})=[^&amp;\s"']{1,200}){2,10}<br>  (?i:&amp;sig=)[a-zA-Z0-9%+/=]{20,100}<br>)<br></code> |
+| `kingfisher.azuresastoken.2` | Active | `https://9-d04jcz9ee9ax-45jy3yah6hrspivzf.dfs.core.windows.net/K==:=ObX::T5i=DK:Y9:I:J==1:6=:==?::GoW=b=DT:ar=6=::W0k1:H=P=c6W:=sig=bDGdNkmIH2WR7/jG/i77jxMAZ%C%p/e5==S::=:g2Y1Pvj=Bl=0:Z=Z=:Wd==YE:` | <code>(?x)<br>(<br>  (?i:https://[a-z0-9-]+\.(?:blob&#124;queue&#124;table&#124;file&#124;dfs)\.core\.windows\.net/)[^\s"']*<br>  \?[^\s"']*(?i:sig=)[a-zA-Z0-9%+/=]{20,100}[^\s"']*<br>)<br></code> |
+| `kingfisher.azuresearch.key.1` | Active | `azure\r\n\r\r\rC\n\roO\n\nn\r\n\r\nsl\r\r\n\r\r\r\r\r\nVcR4KEYZ\nn5iJv2EYKq\r\n\rg\r\rwk\r\n\n\n\r\n2\nY\n\rKEQQMH7NCE7688J2O76OTGGRG9CF46NT43L414KR5832836FFI1C4` | <code>(?xi)<br>\b<br>azure<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [0-9A-Z]{52}<br>)<br>\b<br></code> |
+| `kingfisher.azuresearch.url.1` | Active | `azure\r\rDqBjqD\nau\rs\nsO\r\n\n\n\nxzT\rHpS\rH\n\nhttps://c87gunnia88f9kt5dlqc0mdsq0hs1g8s.search.windows.net/indexes/iozsw6ogpmtnnumx8mnk7g9989tjeumc` | <code>(?xi)<br>\b<br>azure<br>(?:.&#124;[\n\r]){0,32}?<br>https:\/\/<br>(<br>  [0-9a-z]{5,40}<br>  \.search\.windows\.net<br>  \/indexes\/<br>  [0-9a-z]{5,40}<br>)<br>\b<br></code> |
+| `kingfisher.azuresignalr.1` | Active | `Endpoint=https://moiwaxc-nqsaku36kiz39m-8088tcqro.service.signalr.net;AccessKey=5uPSsY46ZhllEdJdMt0erLWRGS2LHC/1AVOvZs+/==` | `(?x)
 (?i:Endpoint=https://(?:[a-z0-9-]+\.service\.signalr\.net);AccessKey=)
 (
   [A-Za-z0-9+/]{40,90}={0,2}
 )
 ` |
-| `kingfisher.azurespeech.2` | Active | `azure-speechapi_key95861108c0d04d9a5ae16c0620632000` | <code>(?xi)<br>\b<br>(?:<br>  speech<br>  &#124;<br>  azure[_-]?speech<br>)<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  key<br>  &#124;<br>  api[_-]?key<br>  &#124;<br>  subscription[_-]?key<br>  &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.azuresql.1` | Active | `Server=tcp:v20glhgb6cxf61mzfky4lqg8fkeeda38.database.windows.net,64867401760542759414457073260643;Password=dmxC9jNQuUqEBXZSWxrELUTQfMQVdRRb` | <code>(?x)<br>(?i:Server=tcp:(?:[a-z0-9-]+\.database\.windows\.net),\d+;)<br>(?:.&#124;[\n\r]){0,100}?<br>(?i:Password=)(<br>  [^;'"]{8,128}<br>)<br></code> |
-| `kingfisher.azuresql.2` | Active | `sql_admin_password=\r\x0b\n\x0c\t\t\t\t \x0c\n\x0b\t\t\n\r\x0c\r\t\x0c\t\r\n\x0b\x0c\t \x0c\n\r\n\t"sDkKpGFGygODlCbDfRVi8XkhPJjg6Xy9"` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*sql[_\s-]*password)<br>  &#124;<br>  (?i:sql_admin_password)<br>  &#124;<br>  (?i:mssql_sa_password)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,8}?<br>[=:]<br>\s*["']?<br>([^\s"']{8,128})<br>["']?<br></code> |
-| `kingfisher.azurestorage.2` | Active | `7storage-.\r\x0b\x0b\x0b \t\r\x0c \t\x0c-.\x0b-_\t\r\x0b\x0b\t\x0b\n\x0c\r _-\r\rkey'\n\n \t \r\t\x0b   \x0c\x0c\r \n\n\x0c\x0c\n\x0c\n\x0c\x0c\x0b\n\x0b\x0c \n\n\x0c:\t\x0c\t\t \x0c\x0b\r\x0b\r\x0b\x0b\x0b\t\t\r \t \x0c \t  \x0b\r\x0b\x0b\x0c\r\r\x0b"\x0c\x0c\x0b\t \t\t\x0c\r\x0c\n\x0b\t\t\r\r\x0c\x0c\x0b\x0c\x0c\r\t\n\t\n\n\r\r\n\x0b\n"/vaVrDC+M/eyMv05I2D0Mv5SeKXsYET7F5W9NnPTUs98z+7QeRrGU3vWsmSIr68hP4txnC129auMDWPd81VBGZ=="` | <code>(?x)<br># Avoid leading \b: env vars like MONGODB_..._AZURE_STORAGE_ACCOUNT_KEY have no<br># word break before AZURE (alnum or underscore). Consume a non-lowercase char (or<br># start-of-input) so we still block mid-camelCase (myAzureStorage...) without using<br># a lookbehind, which Vectorscan and the Rust regex crate both reject.<br>(?:\A&#124;[^a-z])<br>(?:<br>  (?i:azure)(?:[_\s-]*(?i:storage))?<br>  (?:[_\s-]*(?:account[_\s-]*key&#124;storage[_\s-]*key&#124;shared[_\s-]*key&#124;access[_\s-]*key&#124;accountkey))<br>  &#124;<br>  (?i:account)[_.\s-]*(?i:key)<br>  &#124;<br>  (?i:storage)[_.\s-]*(?i:key)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [A-Za-z0-9+/]{86}==<br>)<br>['"]?<br></code> |
-| `kingfisher.azuretranslator.2` | Active | `translatorkeyaebcb14e48b23e01f0b95624c71e8cc9` | <code>(?xi)<br>\b<br>(?:<br>  translator<br>  &#124;<br>  translation<br>  &#124;<br>  azure[_-]?(?:translator&#124;translation)<br>)<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  key<br>  &#124;<br>  api[_-]?key<br>  &#124;<br>  subscription[_-]?key<br>  &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.azurewebpubsub.1` | Active | `Endpoint=https://xqz64lz3iz3oshw9k6zvpt7jca6vkifw.webpubsub.azure.com;AccessKey=ElB2sGApHAgHNQZ8Z10D7Nf0irYZlgh5umWNO3pi==` | `(?x)
+| `kingfisher.azurespeech.2` | Active | `speechtqTaMo\n\nq\n\n\n8moMoB\r\rhH\n7subscription_keyGA8G\nMcqq2GOVv\nZa807f95fe29a1999be7cd36b1bf312b3` | <code>(?xi)<br>\b<br>(?:<br>  speech<br>  &#124;<br>  azure[_-]?speech<br>)<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  key<br>  &#124;<br>  api[_-]?key<br>  &#124;<br>  subscription[_-]?key<br>  &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.azuresql.1` | Active | `Server=tcp:k0nlhulu25wd1wj8aavtabm6fiqux649.database.windows.net,67689376886887838577873118539502;f\rpOy\r\rC\nS\nL\rDn\re6H\r\n0\nk\nyhk\n\r\nSPassword=CZ\tX\t mu h\t\t= ==l1t=vK= A=df=o:t` | <code>(?x)<br>(?i:Server=tcp:(?:[a-z0-9-]+\.database\.windows\.net),\d+;)<br>(?:.&#124;[\n\r]){0,100}?<br>(?i:Password=)(<br>  [^;'"]{8,128}<br>)<br></code> |
+| `kingfisher.azuresql.2` | Active | `mssql_sa_password\ra\r\n\n\rcr:\r  \x0b\x0b\x0b \n\n\r\x0b\x0b\t\r\n\x0b\t\r\x0c\n \n\x0b\r\x0c\x0c\x0b\t\r\t\x0c\r':VH:xWsV8=FYo==9==t:=G=RkZ:_b:I:'` | <code>(?x)<br>\b<br>(?:<br>  (?i:azure[_\s-]*sql[_\s-]*password)<br>  &#124;<br>  (?i:sql_admin_password)<br>  &#124;<br>  (?i:mssql_sa_password)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,8}?<br>[=:]<br>\s*["']?<br>([^\s"']{8,128})<br>["']?<br></code> |
+| `kingfisher.azurestorage.2` | Active | `Rstorage. \n\x0c-\r\r\t\t__\x0b\x0c\x0b.- \r\x0c-\x0c\t-\x0c_\n_-\x0c- .keygju8\r\rU\n\rO\nD\n\rVT1hAH\r\n5f"\x0b\x0b\t\x0c\x0b\x0c\x0b\n \x0c\x0b\t \x0b\r\x0c\t\t\n\n\x0b \t\t\x0b\t\n\n   \x0b:\n\t \t\x0b\r \x0b\r \x0c  \t\x0c\x0b\n\n\n\n\t\t \t\x0b\x0c\n\n\n\x0c\x0c\x0b"\r \x0c\n\r\r\n \r\r\r\x0c\n\r\n \x0c \x0c\n\n\r\t\n\x0b\n\t\n \x0c\r\n'6VQTNyOQhh3XWj1WxK2F6OPP9YRKSUHIdZ6WAga+uowGj4+da6GDTMx8jhVo6uN7uUQo6fwmcF31/3XFoc+eSc=="` | <code>(?x)<br># Avoid leading \b: env vars like MONGODB_..._AZURE_STORAGE_ACCOUNT_KEY have no<br># word break before AZURE (alnum or underscore). Consume a non-lowercase char (or<br># start-of-input) so we still block mid-camelCase (myAzureStorage...) without using<br># a lookbehind, which Vectorscan and the Rust regex crate both reject.<br>(?:\A&#124;[^a-z])<br>(?:<br>  (?i:azure)(?:[_\s-]*(?i:storage))?<br>  (?:[_\s-]*(?:account[_\s-]*key&#124;storage[_\s-]*key&#124;shared[_\s-]*key&#124;access[_\s-]*key&#124;accountkey))<br>  &#124;<br>  (?i:account)[_.\s-]*(?i:key)<br>  &#124;<br>  (?i:storage)[_.\s-]*(?i:key)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [A-Za-z0-9+/]{86}==<br>)<br>['"]?<br></code> |
+| `kingfisher.azuretranslator.2` | Active | `translation8Oq\n8\r\nxk\r\r7k\r\n\na\n\r\r\nz\n\napi-key\nt\n\r\rAW\rh\n\r8\rA\r\r51c370a518dd9f38ce05245f7fe3ef3f` | <code>(?xi)<br>\b<br>(?:<br>  translator<br>  &#124;<br>  translation<br>  &#124;<br>  azure[_-]?(?:translator&#124;translation)<br>)<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  key<br>  &#124;<br>  api[_-]?key<br>  &#124;<br>  subscription[_-]?key<br>  &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.azurewebpubsub.1` | Active | `Endpoint=https://tvh7sgt9uhjq0ui3p5dpav5rughvpne8.webpubsub.azure.com;AccessKey=ClcjDMypI4Us8hrE4elf89iZPjjBXTAbHeQnRg3A==` | `(?x)
 (?i:Endpoint=https://(?:[a-z0-9-]+\.webpubsub\.azure\.com);AccessKey=)
 (
   [A-Za-z0-9+/]{40,90}={0,2}
 )
 ` |
-| `kingfisher.baremetrics.1` | Active | `baremetrics140ubx5sxzv37kufxjvh2qnsg` | <code>(?xi)<br>\b<br>baremetrics<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [a-z0-9_-]{25}<br>)<br>\b<br></code> |
-| `kingfisher.baseten.1` | Active | `baseten1iES1x4z.sY5wBvb5lts4fLD9SyxbyOfl6YCOTDNd` | <code>(?x)       <br>\b<br>baseten<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(               <br>  [A-Za-z0-9]{8} <br>  \.             <br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.beamer.1` | Active | `beamerb_CC83MWR=QH/HB/7/XE8Z93/AR7NKD4EOY/X2Z=GXFXO7` | <code>(?xi)<br>\b<br>beamer<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  b_[A-Z0-9=_\\/\\\-+]{44}<br>)<br></code> |
-| `kingfisher.betterstack.1` | Active | `betterstackTOKENHwyzWuYx_04fS3GytXbvMn0K` | <code>(?xi)<br>\b<br>betterstack<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{24}<br>)<br>\b<br></code> |
-| `kingfisher.bitbucket.1` | Active | `bitbucketidcm0d73zwc7m9rl35tntann4t7p4c5jdn` | <code>(?xi)<br>\b<br>bitbucket<br>(?:.&#124;[\n\r]){0,16}?<br>(?:client&#124;id)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-z0-9]{30,40}<br>)<br>\b<br></code> |
-| `kingfisher.bitbucket.3` | Active | `bitbucketyhu5+7v_ss3jqakr+x2++jvy7t6y91rqsj_fdxuws65m` | <code>(?xi)<br>\b<br>bitbucket<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9+_\-+]{44}<br>)<br>\b<br></code> |
-| `kingfisher.bitfinex.2` | Active | `bitfinexapi-secret blbvZyd8Dth9SzkTMtR9J5euM6Eg4R895SeHz4wWSlG` | <code>(?xi)<br>\b<br>bitfinex<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-zA-Z0-9]{43}<br>)<br>\b<br></code> |
-| `kingfisher.bitly.1` | Active | `bitlyKEYb55dfaaa440e985a8378a9a8fc726cef02f2c524` | <code>(?xi)<br>\b<br>bitly<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.bitrise.1` | Active | `bitrisepersonal\r\x0c\r  _\r\t\r\t\x0b\x0b\t- \t\n\n \x0c\x0c\x0b\x0c\t\x0c\x0c_\n_\x0b\r\x0baccess6cjq0zR3HPZbYK4y_AfQby0PwighYQQYvHRP1LoGsAAPL2W_zdoVX8Z1Tgya` | <code>(?x)<br>\b<br>(?i:bitrise)<br>(?:.&#124;[\n\r]){0,24}?<br>(?i:token&#124;pat&#124;personal[_\s-]*access)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-zA-Z0-9_-]{60,120}<br>)<br>\b<br></code> |
-| `kingfisher.blockprotocol.1` | Active | `b10ck5.sijcz9UKTFN2opU8dwqJsfSOaLHud3J7.8pnIs56nHgQbZzgIRUxojsaQVuVb2hVgdYJ1` | `(?x)
+| `kingfisher.baremetrics.1` | Active | `baremetricsh\r\nq\rCx\n\r\rgPD1dr\n4\r\r\r\n\r\rbW\rcD\n\r\rjetisuc7rnr3m0stzy1i614ga` | <code>(?xi)<br>\b<br>baremetrics<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [a-z0-9_-]{25}<br>)<br>\b<br></code> |
+| `kingfisher.baseten.1` | Active | `baseten\ry\nnsB\n\n\nd\n\ns\n\r\n\r\rc3\n1\nxS\n\r\r\r\n\nNIZyQ9eyT.VmZgQCPH57P3B329TtPTfB9ts2RTnkMh` | <code>(?x)       <br>\b<br>baseten<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(               <br>  [A-Za-z0-9]{8} <br>  \.             <br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.beamer.1` | Active | `beamer8\n\n\r\r\n\n\nc\r\n79\n\rS\nzph\nf9F\n\r\n\n\n\n0\rb_B_IYZ_54WWTIR9_DB3=71VYG47_TZ_-COKZ3IE1RI/RO` | <code>(?xi)<br>\b<br>beamer<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  b_[A-Z0-9=_\\/\\\-+]{44}<br>)<br></code> |
+| `kingfisher.betterstack.1` | Active | `betterstackl\n\rCB\n9\n\n\r\r\n\r\rcgPRIVATET\r\ri\n\r\r\rPk\n\r\n\n\n\rSB6tRyIVKqhuhC4j-c9Md8Pp` | <code>(?xi)<br>\b<br>betterstack<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{24}<br>)<br>\b<br></code> |
+| `kingfisher.bitbucket.1` | Active | `bitbucketq\nC\rD\nb\nh\nH\n\r\n\n\nid\n\r\r\rzhyE\r\rA\n\r\nHrigvf6q5shte0ht53spxfwg430iwolznj` | <code>(?xi)<br>\b<br>bitbucket<br>(?:.&#124;[\n\r]){0,16}?<br>(?:client&#124;id)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-z0-9]{30,40}<br>)<br>\b<br></code> |
+| `kingfisher.bitbucket.3` | Active | `bitbucketZMY\n\n1O6\nMO\rbFwh\n\n2Vj9\n\rhC\n\rQ\r6Ze314hnv8355jhkjfh-aw9t-ifmuthhv17r3hok-7oc7q` | <code>(?xi)<br>\b<br>bitbucket<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9+_\-+]{44}<br>)<br>\b<br></code> |
+| `kingfisher.bitfinex.2` | Active | `bitfinex\nM\r\n\n\ntJ\n\n\nbESL\rR\n\r\n\r9wN\r8ov\r\r\rcapi-secret\rf\rM\n\rAD\r\rb14\rF\r"hPS3oSG0AVgArjzwDGX9zhl6kxBYScuqZBGKgeOSLtg` | <code>(?xi)<br>\b<br>bitfinex<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-zA-Z0-9]{43}<br>)<br>\b<br></code> |
+| `kingfisher.bitly.1` | Active | `bitlyxc\n\n21\nb\rX\r9f\r\r6\nJ\rC\rp\r\n\r\nNS0\rO8TOKEN\n9\n\rg73Bi88\n\n\rMpwIUoi\n\rXf\r\n1w\nmy3e971a1172fd2f2c65d7331ffaa2d113120f5961` | <code>(?xi)<br>\b<br>bitly<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.bitrise.1` | Active | `bitrisec\r\rB\n\r7on\n\rs\njSVs\rfisqb\ntoken\nIW\nb8\r\r\nUdW\r\n\nJS7lJ6MjsNRILYgs_sG1xUdipTxakU2-tN2HKgFgrODAVOoTo6QMWruF7QTH_` | <code>(?x)<br>\b<br>(?i:bitrise)<br>(?:.&#124;[\n\r]){0,24}?<br>(?i:token&#124;pat&#124;personal[_\s-]*access)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-zA-Z0-9_-]{60,120}<br>)<br>\b<br></code> |
+| `kingfisher.blockprotocol.1` | Active | `b10ck5.0ZIkzopo2uz887Guf5iduPjlsAMfuI8c.Icjd0QSfwRPbTS2EwaHoklGSkrBCdM9s6bMK` | `(?x)
 \b
 (
   b10ck5\.[a-zA-Z0-9]{32}\.[a-zA-Z0-9]{36}
 )
 \b
 ` |
-| `kingfisher.blynk.1` | Active | <code>https://lon1.blynk.cloud/external/api/OSK5E0OZ/RO6NTO55T6GTL6RLD3RAH46?token=4ALYXAZBAFXKK-1DF7BCLEC20RD_-IDK&amp;</code> | <code>(?xi)<br>https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/external/api/[A-Z0-9/]*\?token=<br>([A-Z0-9_\-]{32})<br>&amp;<br></code> |
-| `kingfisher.blynk.2` | Active | `https://blr1.blynk.cloud/api/F80RY\x0bRDGFJ\r806KP_\rSM\r\r\nX 6W\tBZ2-H \t\x0c\t\r\x0b\n\x0c\t\x0b\x0b\n\n\x0b\x0b\x0c\x0c\r\n\r\x0b\x0b\n  \x0b\t\t\n\n\r\x0b"Authorization:\r\n \r\r \t\x0c\x0b\r\t\r\x0b\n\r \x0c\t\t\r\r\x0c  \x0c \n\n\n \t\x0bBearer\r\t\x0b\x0b\n\n\r\x0b\r\x0c \x0c\x0c\x0c\r\n\x0b  \n\r \r\r\t \x0b\t\r \n\tR05RPJ47O6HQANNP4JIC4RWN0_MMHHUXD5OD7M7K"` | <code>(?xi)<br>https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/api/[A-Z0-9_\-\s/\\]*<br>-H\s*"Authorization:\s*Bearer\s*<br>([A-Z0-9_\-]{40})<br>"<br></code> |
-| `kingfisher.blynk.3` | Active | `-H\r\x0b\t \x0c\x0b\x0c\t\n\x0c\x0b \n\x0b\x0b \x0c\r\n\x0b\t\x0b\x0b\x0b\x0c\n\t\x0c\n\r\n\x0c"Authorization:\n\x0b \t \x0c\r\x0b \r\x0b\r\t\t\x0b \r \r\t\n\x0b \x0c\x0b \x0c\r\n\r\x0c\x0bBearer\x0b\t\x0b\x0b\n\x0b\x0c\x0b\x0b\x0c\x0b\x0b\t\n\x0c \n \n\r\t\t\r\r\r\r\x0b\t \x0c\n\rB9EOVNT76UG3THVAHZCZQ5YK4--AJIZKG1MEV1SU"\n\x0c\\\x0b\r \\\\ \n\x0b \x0b \x0c \t\x0c\t\n\t\n \n\x0c\n\\\t\r\\  https://lon1.blynk.cloud/api` | <code>(?xi)<br>-H\s*"Authorization:\s*Bearer\s*<br>([A-Z0-9_\-]{40})<br>"[\s\\]*https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/api<br></code> |
-| `kingfisher.blynk.8` | Active | <code>https://fra1.blynk.cloud/oauth2/XLRY\rBE\x0bFJWD2CB\rG=WTBWNEZ1VIGZ Poa2-client-id_B_FQAHWXJQI-ZU231QC2WDS31G9CH4W9&amp;client_secret=S9Y7YSYP34EP_4B1WSUIORUKBQAZ61WDSW5S7HJ4</code> | <code>(?xi)<br>https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/oauth2/[A-Z0-9_\-\s/\\?=&amp;]*<br>oa2-client-id_[A-Z0-9_\-]{32}<br>(?: : &#124; &amp;client_secret= )<br>([A-Z0-9_\-]{40})<br></code> |
-| `kingfisher.blynk.9` | Active | `oa2-client-id_CMG39BOXV-5IRX_KDWWR6JJOPJBOSPT5:EGX80-ERD8QFI0DM875G7QA4TQN7_0-40-K8NGH6\n\n\r\x0c\n\x0b\r\r\t\x0c\x0c \x0b\x0c\t\x0b\\\x0c\n\r\\\t \r \n\x0c\n\\\x0c\x0b\x0bhttps://lon1.blynk.cloud/oauth2` | <code>(?xi)<br>\b<br>oa2-client-id_[A-Z0-9_\-]{32}<br>:([A-Z0-9_\-]{40})<br>[\s\\]*https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/oauth2<br></code> |
-| `kingfisher.box.1` | Active | `boxACCESSeHub95O4geYKifRvFCcc9x7pt8uaRtSu` | <code>(?x)<br>\b<br>(?i:box)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:ACCESS&#124;TOKEN&#124;DEVELOPER)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.braintree.1` | Active | `braintreeKEYsandbox_yg9nab8i5u_tb74kl5gg7t10tmenq5b` | <code>(?x)<br>\b<br>(?i:braintree)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:KEY&#124;TOKEN&#124;TOKENIZATION)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:sandbox&#124;production)<br>  _<br>  [a-z0-9]{6,10}<br>  _<br>  [a-z0-9]{14,20}<br>)<br>\b<br></code> |
-| `kingfisher.branchio.1` | Active | `key_live_kkZeGFORrFmPmTLRsbzXp2PiUlgPGiOc` | `(?x)
+| `kingfisher.blynk.1` | Active | <code>https://lon1.blynk.cloud/external/api/UW7Y438IZGV555FQPYLY1GW1BHYVP34/?token=GC1HZN61-IBI4I6TQZ2AVSV5CHDH1U55&amp;</code> | <code>(?xi)<br>https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/external/api/[A-Z0-9/]*\?token=<br>([A-Z0-9_\-]{32})<br>&amp;<br></code> |
+| `kingfisher.blynk.2` | Active | `https://ny3.blynk.cloud/api/\\/4\t_BZ_1\rY\x0c5A8Y8ZP5GR5KVBT3C\x0c47-H\x0c\t\n \r\r\r\x0c\x0c\x0c\r\x0c\t\x0b\t\t\t\r\x0b\x0c\x0b\n\x0c\t \r\x0b  \t\x0c\n"Authorization:\t\x0b\n\n\r\x0c\r\t \n\r\t \r\n\n\n\x0c\r\x0b \x0b\r\x0b\n\n\t\r \n\n\rBearer \t\x0c \r\r\t\r\x0b\t\n \x0c\r\n\x0c\t\r\n \x0b \x0b\r \n\t\n\r\r\n\x0cUZ58XH98MOIYY7Z69QCBEZ49UX9INB478-9AW68O"` | <code>(?xi)<br>https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/api/[A-Z0-9_\-\s/\\]*<br>-H\s*"Authorization:\s*Bearer\s*<br>([A-Z0-9_\-]{40})<br>"<br></code> |
+| `kingfisher.blynk.3` | Active | `-H\t\n\t\x0b\x0b\t\x0b\t\x0c \r\r\r\x0c \t\x0b\n\n\n\x0b\x0c\x0c\x0c\x0b\r\t\r\x0c\n \n"Authorization:\x0b\x0b\n\t\n\x0c\r \t\t\x0b\t\n\x0b\r\r\n\r\x0b\x0c\x0b\x0b\x0b\r\t\x0b \t\x0b\x0b\x0c\nBearer\n\x0c\t \x0c\r\r\x0c\t\x0b\n\r\r\x0c\x0b\r\x0b\r\t\t\x0b\n\x0b  \x0c\x0c\x0b\x0b\t\x0b\t2DHDLEFZ4XTEYQN4MMSZDEXALYQL4N-13V1CHI5J"\n \x0b\x0b\r \x0c\n \r\\\n \t\t\\\x0c\t\x0b \t\\\t\t\n\x0b\x0b\\\\\n\r\\https://blr1.blynk.cloud/api` | <code>(?xi)<br>-H\s*"Authorization:\s*Bearer\s*<br>([A-Z0-9_\-]{40})<br>"[\s\\]*https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/api<br></code> |
+| `kingfisher.blynk.8` | Active | <code>https://ny3.blynk.cloud/oauth2/5_YPP7&amp;Q\x0bRJEL6\x0cTJA-FOF 8R\x0bN-M-OXoa2-client-id_XWGLMAQQLERRB8SH0RDH3NX47SFYOUTT&amp;client_secret=S0Y5TZ5Q7LVZ50GMSMV8JJV3EH-QNKLGT_FVCOHG</code> | <code>(?xi)<br>https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/oauth2/[A-Z0-9_\-\s/\\?=&amp;]*<br>oa2-client-id_[A-Z0-9_\-]{32}<br>(?: : &#124; &amp;client_secret= )<br>([A-Z0-9_\-]{40})<br></code> |
+| `kingfisher.blynk.9` | Active | `oa2-client-id_SA1YNUYYREF4BKQETEFHUGXI7J0NOXZF:TUGAII-X49EL_EOLINX7E16JIISW8M4PJSDWC9RL\\\x0c \r\t\x0b\t \t\\\\\x0c\t\n\t\r\x0b\r\n\x0c\r\x0c\t\n\x0b\n\r\n\n\n \rhttps://ny3.blynk.cloud/oauth2` | <code>(?xi)<br>\b<br>oa2-client-id_[A-Z0-9_\-]{32}<br>:([A-Z0-9_\-]{40})<br>[\s\\]*https://(?:fra1\.&#124;lon1\.&#124;ny3\.&#124;sgp1\.&#124;blr1\.)?blynk\.cloud/oauth2<br></code> |
+| `kingfisher.box.1` | Active | `boxGxD\n\nW\nTX\r\n\r\r\n\rYp\rp\r9\r4\r6\nYBNc\r4TOKEN\r\n\nM\rAx\n1\rUS\r\njF\nL\n\rmmjwE\n\r\rp\rT\r8wWmmFULuDfHxj4V6omuiWXzbmfhFmFs` | <code>(?x)<br>\b<br>(?i:box)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:ACCESS&#124;TOKEN&#124;DEVELOPER)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.braintree.1` | Active | `braintreezLhEi\n\nKP\nV\nf\r\r\r\rX\n\rH\rU\rFH\rJ\nK\r\rTOKENS8\rk\n\n\n\r\n\ru\rRR\nV\n73SJ\ru\rZaS\nM\n\r\rsandbox_irm91zau23_uvjuvl07bnc9hf3ql9nc` | <code>(?x)<br>\b<br>(?i:braintree)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:KEY&#124;TOKEN&#124;TOKENIZATION)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:sandbox&#124;production)<br>  _<br>  [a-z0-9]{6,10}<br>  _<br>  [a-z0-9]{14,20}<br>)<br>\b<br></code> |
+| `kingfisher.branchio.1` | Active | `key_live_4QSkHBIxuBBApdDvzhiVuTIRaswBfaLU` | `(?x)
 \b
 (
   key_live_[a-zA-Z0-9]{16,40}
 )
 \b
 ` |
-| `kingfisher.branchio.2` | Active | `key_test_w7ROmrgP7zbyugR7vCTSW6zPLTePufvu` | `(?x)
+| `kingfisher.branchio.2` | Active | `key_test_l9WNL1KsJdr31yL1xHPviVOrJvJPi9YW` | `(?x)
 \b
 (
   key_test_[a-zA-Z0-9]{16,40}
 )
 \b
 ` |
-| `kingfisher.brevo.1` | Active | `xkeysib-8DE2CbF7c817714E379Df7B51Af20ACEefebd4c4FA61A9531CbE9BC6B5c4048C-Q2gmHwfkly4W6gLJ` | `(?x)
+| `kingfisher.brevo.1` | Active | `xkeysib-758E8cabF42C8a7Ed3CDeEA076658454ff4Dcf27CA38fD2E853AEbaD64AA7184-dRaLxL9spUPSbLxn` | `(?x)
 \b
 (
   xkeysib-[a-fA-F0-9]{64}-[a-zA-Z0-9]{16}
 )
 \b
 ` |
-| `kingfisher.browserstack.1` | Active | `BROWSERSTACKtokenj4aldYBoEfrxc5OgWogn` | <code>(?xi)<br>\b(?:browserstack&#124;BROWSERSTACK)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:access[_-]?key&#124;key&#124;secret&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.browseruse.1` | Active | `bu_ogR9FIQQyHU_6R8nb4IWd3GjTbcgf0KURhXvYk6mmo` | `(?x)
+| `kingfisher.browserstack.1` | Active | `BROWSERSTACK\nC\rc\n\r\n\nXF\n9\n\n\nhX\rhyn\n\ruv\r\n\n\r\n\nUkeyIB\r1h\rG\rOyVYLk\n\nyVw\n\rxJ\ny\n2\n\rQ\nRkvtMu9JI6sv97Pn6mkXl` | <code>(?xi)<br>\b(?:browserstack&#124;BROWSERSTACK)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:access[_-]?key&#124;key&#124;secret&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.browseruse.1` | Active | `bu_kFgDJFABZgBmHbqsoDRHY6wqjCeV4kpuOxHpHZ5CcY` | `(?x)
 \b
 (
   bu_[A-Za-z0-9_-]{42,46}
 )
 \b
 ` |
-| `kingfisher.builderio.1` | Active | `bpk-6c461ed94dff1c15fc5244bfc8aa24cf` | `(?x)
+| `kingfisher.builderio.1` | Active | `bpk-bf0631683244528d89604d61e54bd2d1` | `(?x)
 \b
 (
   bpk-[a-f0-9]{32}
 )
 \b
 ` |
-| `kingfisher.buildkite.1` | Active | `bkua_c04lod5nxo0qapj6jfatmqqvxyurr71uyckecftl` | `(?xi)
+| `kingfisher.buildkite.1` | Active | `bkua_cdgbo47zpiy817zqyovf5o8gsg6p3vnt52xjkziz` | `(?xi)
 (
   bkua_[a-z0-9]{40}
 )
 \b
 ` |
-| `kingfisher.bunnynet.1` | Active | `bunny.netapi _\x0c \n\t\r\x0b\r\x0b\r\n_\r_ \r \n\r \t\x0b-\x0b\r\r\x0c- \x0c-keyfd5a2ce8-021b-820d-748f-9d27f86641e28d9e9a4b-5efe-ad52-f3ab-f582bbd92b60` | <code>(?xi)<br>\b<br>(?:bunny(?:\.net)?&#124;api\.bunny\.net)<br>(?:.&#124;[\n\r]){0,40}?<br>(?:access[_\s-]*key&#124;accesskey&#124;api[_\s-]*key&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,24}?<br>(<br>  [a-f0-9]{8}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -<br>  (?:<br>    [a-f0-9]{12}<br>    &#124;<br>    [a-f0-9]{20}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}<br>  )<br>)<br>\b<br></code> |
-| `kingfisher.buttercms.1` | Active | `butter_cmsTOKENd3kko2lue2vlzuo3mf8coh52oi9t66llpttcw8oi` | <code>(?xi)<br>\b(?:butter(?:cms&#124;_cms))<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?(?:KEY&#124;TOKEN)&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.calcom.1` | Active | `cal_live_AIIlDSrjWbgzX7qZ60wXOdXTJz7DXfkL` | `(?x)
+| `kingfisher.bunnynet.1` | Active | `bunny.netB4P\n\n\n\n\n\n\nN\r\r\r\np\nusV\n3\r\n\nAd7E\n8\naccesskey\r\rz\r\rEGJ\n\n\nJ\rO\r\n\nm\nMJj\nPa39b8243-99ad-6519-9e98-db0fe9d9eafbb65fedae-529b-4330-1562-9802ef9cc25f` | <code>(?xi)<br>\b<br>(?:bunny(?:\.net)?&#124;api\.bunny\.net)<br>(?:.&#124;[\n\r]){0,40}?<br>(?:access[_\s-]*key&#124;accesskey&#124;api[_\s-]*key&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,24}?<br>(<br>  [a-f0-9]{8}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -<br>  (?:<br>    [a-f0-9]{12}<br>    &#124;<br>    [a-f0-9]{20}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}<br>  )<br>)<br>\b<br></code> |
+| `kingfisher.buttercms.1` | Active | `butter_cms\r\n\r\rp\rS\n\niE\n\nA\r7C\ri\rE\nHhVp\nSm\n\n\nTOKENx\r\r\r\rl\nCV\rj\nMUS\nu65vn3195qek8llj72gs9y1mzm75zh6opvhogv9v` | <code>(?xi)<br>\b(?:butter(?:cms&#124;_cms))<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?(?:KEY&#124;TOKEN)&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.calcom.1` | Active | `cal_live_VaeUSNhkyONeG3XgHjlzQHWfc8GmsTxx` | `(?x)
 \b
 (
   cal(?:_live)?_[A-Za-z0-9]{32}
 )
 \b
 ` |
-| `kingfisher.calendly.1` | Active | `calendlyAPIeyJZ-MUw5pILIk8UMkHQPAgOqLTtYz1NOLH.eyJXQ2l8U0Wla1XH0pV2F8PLYuw2DVU6zOJ.lhlsW2mElstdKu3tYTKbP98S9doS4nHy` | <code>(?xi)<br>(?:calendly)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;TOKEN&#124;KEY&#124;SECRET&#124;BEARER&#124;PAT&#124;AUTH)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  eyJ[A-Za-z0-9_-]{30,200}<br>  \.<br>  eyJ[A-Za-z0-9_-]{30,1000}<br>  \.<br>  [A-Za-z0-9_-]{20,512}<br>)<br></code> |
-| `kingfisher.canva.1` | Active | `cnvca5YLjywY7sqfvf-pUkEUqk_1gUxqWj1InSjtY-NwMmYe_1CWIqeX` | `(?x)
+| `kingfisher.calendly.1` | Active | `calendly\n\nK\n\rG\rv\n8i\rh\ra\rk\rL\n\nG\r\r\r\n\rsb\r\n\rSECRETL\n\r\n\r\rp\n\rx\r\r\rE\n\reyJ5Bejkpnk2Mmf5U6mu6-bDGxcCj0ZwGxu.eyJrc20DYyqq9h4Ux7QNYV_RlvARwm2rS0q.QZpWkV1FuOxRMFAJJsNvS6bND27Eik6Z` | <code>(?xi)<br>(?:calendly)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;TOKEN&#124;KEY&#124;SECRET&#124;BEARER&#124;PAT&#124;AUTH)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  eyJ[A-Za-z0-9_-]{30,200}<br>  \.<br>  eyJ[A-Za-z0-9_-]{30,1000}<br>  \.<br>  [A-Za-z0-9_-]{20,512}<br>)<br></code> |
+| `kingfisher.canva.1` | Active | `cnvcaDU9ilE0UMgRYcWwlqJHFZOfaKZ7h6T_k_yG4xtoYh997pLlYIyG` | `(?x)
 \b
 (
   cnvca[a-zA-Z0-9_-]{51}
 )
 \b
 ` |
-| `kingfisher.carto.1` | Active | `eyJhbGciOiJIUzI1NiJ9.jRmq16s6tWqS0JYjEViQ0aW1pMbiPgbY.BEZ1jXhT2sZsxiqwcyfQ7lZrchcr6qxF` | `(?x)
+| `kingfisher.carto.1` | Active | `eyJhbGciOiJIUzI1NiJ9.K61L3Z1oLbD_NegVziTCUJx9dVjs0Wb5.Qf6qyWZ8nILXkZ5hBtvMEwMBJDPUMG84` | `(?x)
 \b
 (
   eyJhbGciOiJIUzI1NiJ9
@@ -355,22 +355,22 @@ Secret=([A-Z0-9+/]{36,50}=)
 )
 \b
 ` |
-| `kingfisher.censys.2` | Active | `censysKEY4VcohEaSjemwWWw3K603ylmkcTnH9B0V` | <code>(?xi)<br>\b<br>censys<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;API[_-]?SECRET&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.cerebras.1` | Active | `csk-rTzHpEo7pyOIqFy0n6TISgBpqbsz5AvgHyIuH4vKDRvDmlWN` | `(?x)
+| `kingfisher.censys.2` | Active | `censys\n\re\nU\n\n\n\n\r\r\n\ru\nxrd\nk8Qbm\r2Rr8iTsSECRETXI\rJNT\n\r8A\rT\r\nzd5mbMgODoEtyRSXWoOw7J643gfviEZH8d` | <code>(?xi)<br>\b<br>censys<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;API[_-]?SECRET&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.cerebras.1` | Active | `csk-evU5ZzcTavk16Py206KR2pbzo3fNUwbvrvopXA7mX1ZgR3o4` | `(?x)
 (
   csk-[a-zA-Z0-9]{48}
 )
 \b
 ` |
-| `kingfisher.cfxre.1` | Active | `cfxk_b8YJMimAHHTgMcgVZy9xuVjMpu5dX73U` | `(?x)
+| `kingfisher.cfxre.1` | Active | `cfxk_yf2z_umY27hEzwPkAPTk_v4rXbZrwyBQ` | `(?x)
 \b
 (
   cfxk_[a-zA-Z0-9_-]{20,100}
 )
 \b
 ` |
-| `kingfisher.chartmogul.1` | Active | `chartmogulAPI-KEYhymsr22d5asj3totldb00l38ic4auev9` | <code>(?xi)<br>\b<br>chartmogul<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.checkout.1` | Active | `sk_0b53c11a-4b3c-24cb-d780-e903078e9d66` | `(?x)
+| `kingfisher.chartmogul.1` | Active | `chartmogul\rR1z\rZ\rc\n\nL\n\r\nfWXW\n\rN\r\rW\n\r7Vtq\nKKEYz\nbx\n\nRwT\rT1\nF\rMm1cz6g5stnedgkuhqgmko1fg61papvz6` | <code>(?xi)<br>\b<br>chartmogul<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.checkout.1` | Active | `sk_2b9dbda4-9738-d1ea-9149-53606c4e6e5e` | `(?x)
 \b
 (
   sk_
@@ -382,7 +382,7 @@ Secret=([A-Z0-9+/]{36,50}=)
 )
 \b
 ` |
-| `kingfisher.checkout.2` | Active | `sk_test_6d02d2e1-123e-97a1-81e0-37828e36b4ee` | `(?x)
+| `kingfisher.checkout.2` | Active | `sk_test_2f000309-f470-10e1-fd23-af1648f03e4a` | `(?x)
 \b
 (
   sk_test_
@@ -394,7 +394,7 @@ Secret=([A-Z0-9+/]{36,50}=)
 )
 \b
 ` |
-| `kingfisher.circleci.1` | Active | `CCIPAT_e0zXag2xKzClKnlET25bSC_qpwgbbnofcamqbsg1j72jmtvkcjuz7vmj6kay0nm` | `(?x)                   
+| `kingfisher.circleci.1` | Active | `CCIPAT_paBxSVvVZpyji3wtBBh7sm_ewpxyrgtzt3s89pjk74rmqxxkbb32h51x2zleybc` | `(?x)                   
 \b                     
 (                      
   CCIPAT_
@@ -404,17 +404,17 @@ Secret=([A-Z0-9+/]{36,50}=)
 )                      
 \b
 ` |
-| `kingfisher.circleci.2` | Active | `circlecif060846b22dd98fb0002431b79f0a20d5d683154` | <code>(?xi)<br>\b                     <br>circleci<br>(?:.&#124;[\n\r]){0,64}?<br>(                      <br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.ciscomeraki.1` | Active | `meraki3efa257eab5ac437d5ad1ff5a205ebf5766a88b1` | <code>(?xi)<br>meraki<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [0-9a-f]{40}<br>)<br>\b<br></code> |
-| `kingfisher.clarifai.1` | Active | `clarifai0e710773e07ff11d43f344af6e52489b` | <code>(?xi)             <br>\b<br>clarifai<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(                  <br>  [0-9a-f]{32,36}<br>)<br>\b<br></code> |
-| `kingfisher.clay.1` | Active | `claycf0012a6a61c85c9682a` | <code>(?xi)<br>\b<br>clay<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-f0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.clearbit.1` | Active | `clearbitACCESSdfvmi1jit8625dvb1x_pbbp_wedjx1hjnf5` | <code>(?xi)<br>\b<br>clearbit<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-z_]{35}<br>)<br>\b<br></code> |
-| `kingfisher.clearout.1` | Active | `clearoutSECRETsaXdE6DiciVZJ3tL4ty80Na6e6n2` | <code>(?xi)<br>\b<br>clearout<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{28}<br>)<br>\b<br></code> |
-| `kingfisher.clerk.1` | Active | `clerkSECRETsk_test_ID18KC4JUgg7PxxxSOYqIiJ9ICeRduwW` | <code>(?xi)<br>\b<br>clerk<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  sk_(?:test&#124;live)_[A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.clickup.1` | Active | `clickuppk_127781273_RZB7F5GSN2PRHVQ39KW7LIKS9EMNWITH` | <code>(?x)<br>\b<br>(?i:clickup)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  pk_\d{8,9}_[0-9A-Z]{32}<br>)<br>\b<br></code> |
-| `kingfisher.clockwork.1` | Active | `clockworkSECRET95c70331f4c94d30f8b5671c580228bf525835f2` | <code>(?xi)<br>\b<br>(?:clockwork&#124;clockworksms)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.closecrm.1` | Active | `closeAPI-KEYapi_6vm9z7BB9mCvAoYnMDIrrvoRqx.UYpefOiokGplmVwOAkqiHOKeIt` | <code>(?xi)<br>\b<br>close<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  api_[A-Za-z0-9]{18,26}\.[A-Za-z0-9]{18,26}<br>)<br>\b<br></code> |
-| `kingfisher.cloudant.1` | Active | `https://3CAb10eA-af84-BEd6-FAD1-f5BcF9Be4cb8-bluemix:656eDedDa1A7ac816fBCD14B369FbBDE7177E9aEe89B1dD2e0e109fbFb3Cc1C7@bu0uag2plt9gyw4ppq4eih8apisar6-u.cloudantnosqldb.appdomain.cloud` | `(?xi)
+| `kingfisher.circleci.2` | Active | `circleciexT\ny\r\rS\rj\nvWxQy\r\rg\n\n\n\r\rj\nk3\n\n\rvcab3aedb7b633b0b03e4d6ea1764413f89383604` | <code>(?xi)<br>\b                     <br>circleci<br>(?:.&#124;[\n\r]){0,64}?<br>(                      <br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.ciscomeraki.1` | Active | `meraki5qe\n\n\nbw\rVzo\nl\n\ng\nYF\nT\rb\r\r\nO\r\r\rZc81b8fbf2f7de80fd6865d0d4f4a16497a03c11a` | <code>(?xi)<br>meraki<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [0-9a-f]{40}<br>)<br>\b<br></code> |
+| `kingfisher.clarifai.1` | Active | `clarifai\nk\rPOT\r\r\n\r\rqP\nB\nY\r\r\r4\r\rgi\r\naEW9ue8032654bd4ddf670d467f816560a078` | <code>(?xi)             <br>\b<br>clarifai<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(                  <br>  [0-9a-f]{32,36}<br>)<br>\b<br></code> |
+| `kingfisher.clay.1` | Active | `clay3op\r\nHT\n8N\nuXT6Z\nbdy\nHno02\r6\r1nBcbfa3b46091ccedcafc8` | <code>(?xi)<br>\b<br>clay<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-f0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.clearbit.1` | Active | `clearbit\n\n\nS\n9r\rZk\nCI\r\rEACCESSf\n\nA2j\r\rrSD\r\n\n\n\rw\r\rp\r\rs\n\r\r3R\n1\r\nfjn3hvuvbudi6ih4q6p74j1fyyw7on6_9u9` | <code>(?xi)<br>\b<br>clearbit<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-z_]{35}<br>)<br>\b<br></code> |
+| `kingfisher.clearout.1` | Active | `clearout\r\r\n\rF\nf\r\n\nA\r\rYInACCESS\r\ni\r9\r\nk\rp\n\r\r\nzfXWFBvFdyRpMo6QmngAec0Ssg2Suz` | <code>(?xi)<br>\b<br>clearout<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{28}<br>)<br>\b<br></code> |
+| `kingfisher.clerk.1` | Active | `clerk\n\nl2QN\r7j\n\ntv\r\n6\rP\r\nmg\nf\n\r\nv\rf\n\nKEY\rGwWewu\r\n\n\n\n\n\n\n1sk_live_MUST1lDqQY8Rsbia73xByUAN6Vib7899` | <code>(?xi)<br>\b<br>clerk<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  sk_(?:test&#124;live)_[A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.clickup.1` | Active | `clickupCK\rO\ny\rOB3\n\n\r\re9\n\r\res\n\n\r\rd\raTY\r7pk_555475819_KPLODGE00UTHLZHYCPZRV682BMYMDXRG` | <code>(?x)<br>\b<br>(?i:clickup)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  pk_\d{8,9}_[0-9A-Z]{32}<br>)<br>\b<br></code> |
+| `kingfisher.clockwork.1` | Active | `clockworksmsp\r\ne\r\n\r\r\r1\n\rT\r\r\rI\n\rqd\n\nc\rU\ny\rjN\nSECRETymW\n\r\n\r\nIr6\n\rA\n\nAM\r\n\nWlku\nx\r\n\r\r\n0e8e4650ef5f9785515183e1a292d391eb794b7c` | <code>(?xi)<br>\b<br>(?:clockwork&#124;clockworksms)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.closecrm.1` | Active | `closei\r\rV\r\r\n\n\nN\ny\n\n\rT\nl\n\r3\n\r\r\r980R\n4\rAPI_KEY1\r3\niwgsjDc\rh\rbPapi_Zzn2HPAMBkdl32AYzT7s6RExsM.sPlIbahmJL4U2WF5IUcqg3pQhn` | <code>(?xi)<br>\b<br>close<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  api_[A-Za-z0-9]{18,26}\.[A-Za-z0-9]{18,26}<br>)<br>\b<br></code> |
+| `kingfisher.cloudant.1` | Active | `https://17312471-DF87-3b10-B4F3-BD5e6acfec3A-bluemix:0DCBBECfDD44C6e49e56DbeCE6EBd86af94fB38fFFFd7cCE71Ec4eBAeB09Ef7E@q64j8-itz6cgoqbidwla1bo4m1a-k70i.cloudantnosqldb.appdomain.cloud` | `(?xi)
 https?://
 (
   [A-Fa-f0-9]{8}-
@@ -430,85 +430,85 @@ https?://
 [a-z0-9\-]+
 \.cloudantnosqldb\.appdomain\.cloud
 ` |
-| `kingfisher.cloudflare.1` | Active | `cloudflareTOKEN1703kphxdc15g2t09s0_4tcbl3w_pvqar50pzj` | <code>(?xi)                   <br>\b                     <br>cloudflare<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(<br>  [a-z0-9_-]{38,42}<br>)<br>\b<br></code> |
-| `kingfisher.cloudflare.2` | Active | `cloudflarev1.0-jh82v_kyc0tu83sc_7q25a-e7pzqlf.g9k_1e-jz5hlbhmk9xiy9strhr7gbediy7493z_lzqn8ap29gp6-2f7obrt8b_jc-yt-weajk3j93xryp8kp2zo9fb7p__7yhljdongrf5-de2s2.9jbcxayl59wrmxwj` | <code>(?xi)<br>\b                     <br>(?:cloudflare&#124;x-auth-user-service-key)<br>(?:.&#124;[\n\r]){0,64}?<br>(<br>  v1\.0-[a-z0-9._-]{160,}<br>)<br>\b      <br></code> |
-| `kingfisher.cloudflare.3` | Active | `cfut_u73tUzi2f9wIMrIeBcrw43u9gyMHi-WkaTwWWP9fu` | `(?x)
+| `kingfisher.cloudflare.1` | Active | `cloudflare\n\rN568o\n7TBdS\n\rOX\rNLc\n\r\nyWY\n\rDr\rPRIVATEm\n\rb0A\nDgY\r\n\n\n7\nbLkM\r\n\nD\r\rpT\r\ntF7jtk-y76_8mi1brk9qtcidhl7tggqn3q7n6dn9` | <code>(?xi)                   <br>\b                     <br>cloudflare<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(<br>  [a-z0-9_-]{38,42}<br>)<br>\b<br></code> |
+| `kingfisher.cloudflare.2` | Active | `cloudflareo\rG\r\n\r\n\r\n\n\n\r\r\n\n\niz\n\n\n\n\naL\rN\n\n\r\r3v1.0-8rkff443s680fihpm2p0h2dhwen51mjot.x5ide_jnvkzbznyx.2.e-k482nm-5g65d0nr.d-bsxfy3yadsm0990.gw-4gt-yotgz.quav6mjnasswan.41scy17456dapsluc38p8wuu7c1o3n9dfcq8bftxi20` | <code>(?xi)<br>\b                     <br>(?:cloudflare&#124;x-auth-user-service-key)<br>(?:.&#124;[\n\r]){0,64}?<br>(<br>  v1\.0-[a-z0-9._-]{160,}<br>)<br>\b      <br></code> |
+| `kingfisher.cloudflare.3` | Active | `cfut_XWy73yLQRa8U8LG6aSVF1BA5cvbfYJiIL5ETsUrFa` | `(?x)
 \b
 (
   cfut_[A-Za-z0-9_-]{41,64}
 )
 \b
 ` |
-| `kingfisher.cloudinary.1` | Active | `cloudinaryAPI SECRETUNmdA4mw6GZHxQD1g7B2GKNzILCODktk` | <code>(?xi)<br>\b<br>cloudinary<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API[_\s]?SECRET)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.cloudsight.1` | Active | `cloudsightSECRET1ol4kkas010jb78ad3qhg9f4` | <code>(?xi)                   <br>\b                     <br>cloudsight<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  [a-z0-9]{20,24}<br>)<br>\b<br></code> |
-| `kingfisher.cockroachlabs.1` | Active | `CCDB1_IKbmFdgs6mnKUdyBJoOHlw_tnqSL87wvM2RCzLQiLxQfM8OwLELr8nd0VzjGz6O` | `(?x)
+| `kingfisher.cloudinary.1` | Active | `cloudinary3\rBy\n\r4W\n\r\n8\rrW\ns\r\n\n\rv7I\r8i\r\nmjEPRIVATEHK\n0gG\r\nKX\n\r\r\nQ3\r\na\rD\n5c\n\r\r\nF\nz77DmvA2OaFTtKMFuDXJLvO5AScex9uTnm` | <code>(?xi)<br>\b<br>cloudinary<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API[_\s]?SECRET)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.cloudsight.1` | Active | `cloudsight\n\r\ngzuk\n\reZ\n\nN\r\nSF\nG0\r\r\na\r\rQ\n\nLvTOKENk8l8\n\n8On\nv\r2J\r2\n\n\n\nG\rM\nJ\r8zze\nT6g8nzt9vt2v03lbdddfjfmiw` | <code>(?xi)                   <br>\b                     <br>cloudsight<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  [a-z0-9]{20,24}<br>)<br>\b<br></code> |
+| `kingfisher.cockroachlabs.1` | Active | `CCDB1_hegb6fY6wfp7TXTMHEy9XZ_XvF4ADEbBKTo5BBBtgQdxtl5SWIUFvibXCIZ7Myq` | `(?x)
 \b
 (
   CCDB1_[A-Za-z0-9]{22}_[A-Za-z0-9]{40}
 )
 \b
 ` |
-| `kingfisher.codacy.1` | Active | `codacyTOKENGR0W3GXL9FJH9C071OEJ66XN` | <code>(?xi)<br>\b<br>codacy<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{20,24}<br>)<br>\b<br></code> |
-| `kingfisher.codeclimate.1` | Active | `CODECLIMATE244afc9fd42409a8d290d73fd5ddfe499f731a73e0c4bdfbe11654b74503605f` | <code>(?xi)<br>(?: CODECLIMATE&#124; CC_TEST_REPORTER_ID)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.codecov.1` | Active | `codecovKEYIV83BMKF9WTLMH5B6GTJ4720AAD9PPU76P0M` | <code>(?xi)<br>\b<br>codecov<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9-]{36}<br>)<br>\b<br></code> |
-| `kingfisher.coderabbit.1` | Active | `cr-06Fb8f8dB67Ea83bAc483E2eedC5BB05679eDc10F897beACe4A7c9cbb8` | `(?x)
+| `kingfisher.codacy.1` | Active | `codacy\n\no\r\r\rt\r\n\ni7p\niC\ri\n\rdSeE\n\r\n93z\n\rSECRET\n0t\nCQ\n\n\nGLq\naz2v\nNmIc6X\rjI\n\r\n\rg3TR0DYSI2ZRS2SQ72TNXPJJ6` | <code>(?xi)<br>\b<br>codacy<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{20,24}<br>)<br>\b<br></code> |
+| `kingfisher.codeclimate.1` | Active | `CODECLIMATE\n\n\nl\r\r\r\n\n\ra\r8O\n\n\r\n\r\rIuk\r\nx\n8X\ri\r07404f9eaa9e22845722485a69ab11c45d3adda6ab05d12300f609c9aa31039a` | <code>(?xi)<br>(?: CODECLIMATE&#124; CC_TEST_REPORTER_ID)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.codecov.1` | Active | `codecov\n\n\r9\nW\n\nORq\n\r\n\n\rXne\nCH\n\r\n\rw\n\rI\r\rACCESS\n\r\r\n\n\ri1pT\r\nYj\n\nt\rg\n\r7\n\ne\n\r\ry9\nbJG625M1ILZPZ95LW61PU2VBEOFH5JR8TUC7V` | <code>(?xi)<br>\b<br>codecov<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9-]{36}<br>)<br>\b<br></code> |
+| `kingfisher.coderabbit.1` | Active | `cr-42FdCC2E23A8c2ABFFdDfCEC5e74f6fB045D551F0Bd9d3435c50bEbEfE` | `(?x)
 \b
 (
   cr-[a-fA-F0-9]{58}
 )
 \b
 ` |
-| `kingfisher.cohere.1` | Active | `cohereNHMNJCQF8RMV0KSJE90PBR5LI64H6GD6VUTGIA7W` | <code>(?xi)<br>\b<br>cohere<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.coinbase.1` | Active | `coinbaseKEY3k1pyloms9wp5aeywxznim4nfqd-j1g0` | <code>(?xi)<br>\b<br>  coinbase<br>  (?:.&#124;[\n\r]){0,16}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>  (?:.&#124;[\n\r]){0,16}?<br>  \b<br>  (<br>    [a-z-0-9]{32}<br>  )<br>  \b<br></code> |
-| `kingfisher.coinbase.2` | Active | `"name"\r\t\n\n\x0c\n\x0c\n\x0c\x0c\r\x0b\r\n\x0b\t \x0c\x0c\x0b\t\x0b\x0c\x0b\x0c\n\x0c\t \r \x0b:\x0c\n\x0b\x0b\r\n\r\r \x0c\n\n\r\n\n\x0b  \n\t\r\x0b\r\x0c \x0c\t\r\x0c\t\r\n"organizations/e91a583270e866666d18e9975158cf9aa861/apiKeys/4a3d5b0e50c3b5b-29a32d-3f54b25b-725d"BtRC1w7gsVvolt9ZhQ1rdsyL1V07mI5Z"privateKey"\t\x0b\n\n \x0b\x0b\x0c\n\t\x0b\x0c\x0b\x0c\x0b\t\n\t\r\n\t\t\n \t\n\x0c\x0b\t \t\n: \n\x0c\x0b\x0c\t\n\n\t\x0b\n\x0c \x0b\n \n\t\x0c\x0b\x0c\x0c\r\x0b\x0c  \t\x0b\x0b\r\r"-----BEGIN\x0cEC\nPRIVATE\rKEY BLOCK----------END\x0cRSA\x0cPRIVATE\x0cKEY\tBLOCK-----` | <code>(?xims)<br>  "name"\s*:\s*"<br>  (?P&lt;CRED_NAME&gt;organizations/[0-9a-f-]{36}/apiKeys/[0-9a-f-]{36})"<br>  .*"privateKey"\s*:\s*"<br>  (?P&lt;PRIVATE_KEY&gt;<br>    -----BEGIN\sEC\s{0,1}<br>    PRIVATE\sKEY<br>    (\sBLOCK)?<br>    -----<br>    [a-z0-9 /+=\r\n\\n]{32,}?<br>    -----END\s<br>    (?:<br>      RSA &#124;<br>      PGP &#124;<br>      DSA &#124;<br>      OPENSSH &#124;<br>      ENCRYPTED &#124;<br>      EC<br>    )?<br>    \s{0,1}<br>    PRIVATE\sKEY<br>    (\sBLOCK)?<br>    -----<br>  )<br></code> |
-| `kingfisher.coinbase.3` | Active | `"id"  \r\r\r\n\x0b\t\n\t\x0c  \r\t\x0b\t \x0b\n\r\r\x0c\t\t\n\x0b \x0b\r\n\x0c:\t \t\n\x0b\r   \t\n\n\x0c\t\r\n\x0b\r\t\x0b\n\r\t\r \n\x0b \x0b\t\t\x0c"560bc95e326ca35876dc9c6e3bf7b0e28831""privateKey"\x0b\x0c\r\n\n\n \x0b \x0c\n \x0c\t\n\n\x0b \n    \x0c\t \r \x0b\n\r :\n\n\r\n\r\t\t \t\n\t\r\x0c\n \x0b\n\x0c\x0b\x0c\r \n\x0c\r \t \x0c \t "4=VITDmjPuQFc3Fk47O+wL3rDA934luj7=UxcNRzBwyVOLOdMbmxFrpKoxtZRS3wqST7utiDZAX0yK9xGGBtSs4T"` | <code>(?xis)<br>"id"\s*:\s*"(?P&lt;CRED_NAME&gt;[0-9a-f-]{36})"[^{]*?"privateKey"\s*:\s*"(?P&lt;PRIVATE_KEY&gt;[A-Za-z0-9+/=]{88})"<br></code> |
-| `kingfisher.coinlayer.1` | Active | `coinlayerTOKENlr1QfxHgX3vH4U8Kx4nPIZs3CTHX3O5P` | <code>(?xi)<br>\b<br>coinlayer<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.composio.1` | Active | `ak_6RDFGbhdbQCJEavCb59T` | `(?x)
+| `kingfisher.cohere.1` | Active | `cohereFg\rs\rG\n\r\nq\nli\nQ\nV4HLXPVA3CGNVGT4Z5C14ODIY35BDJ6C767HYZHZ` | <code>(?xi)<br>\b<br>cohere<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.coinbase.1` | Active | `coinbase\n6\ny\nw6fw\n\rhKQzfTOKEN\n\r2\rx3liOC\n\rv\n\rW17esemhjut2ks5uo0vl8910476axggp7` | <code>(?xi)<br>\b<br>  coinbase<br>  (?:.&#124;[\n\r]){0,16}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>  (?:.&#124;[\n\r]){0,16}?<br>  \b<br>  (<br>    [a-z-0-9]{32}<br>  )<br>  \b<br></code> |
+| `kingfisher.coinbase.2` | Active | `"name"\x0b \t  \r\x0b\x0c\r\r\x0b\x0b\r\x0b\n\t \x0c\x0b\x0c\n\x0c \n\x0c\t\x0b\x0b\x0b \t\x0b:\n\x0c\n\r\x0b\r\n\x0b\n\x0c\x0c\n\r\r\x0b\x0c    \x0b\n\x0c\x0b \r\n\t\n\x0b \x0b"organizations/dab29-8-5419428b9f03d358e0-51f7b0775/apiKeys/cfde25b8-e3c71b05031b982112e-a-c492b"2XLgLuyR5KNq7T2d6WwaW4IDFC5Zjlew"privateKey"\x0b \n\t\n\x0c\r\n \n\r\r\r \n \x0c\x0b\t\n\x0c\x0c\t\n\x0c\x0c\t\r\n\x0b \r: \n\x0c\t  \x0b\t\t\n \t \x0c\x0b\t\r\n\x0b\n\x0b  \t\t\x0b\t\x0b\x0c\t\x0b\x0b"-----BEGIN\tEC PRIVATE KEY\x0cBLOCK-----cv=t5 v7c3=r2=i72yd \\ckaxb/o4vdk-----END\rPGP\tPRIVATE KEY\nBLOCK-----` | <code>(?xims)<br>  "name"\s*:\s*"<br>  (?P&lt;CRED_NAME&gt;organizations/[0-9a-f-]{36}/apiKeys/[0-9a-f-]{36})"<br>  .*"privateKey"\s*:\s*"<br>  (?P&lt;PRIVATE_KEY&gt;<br>    -----BEGIN\sEC\s{0,1}<br>    PRIVATE\sKEY<br>    (\sBLOCK)?<br>    -----<br>    [a-z0-9 /+=\r\n\\n]{32,}?<br>    -----END\s<br>    (?:<br>      RSA &#124;<br>      PGP &#124;<br>      DSA &#124;<br>      OPENSSH &#124;<br>      ENCRYPTED &#124;<br>      EC<br>    )?<br>    \s{0,1}<br>    PRIVATE\sKEY<br>    (\sBLOCK)?<br>    -----<br>  )<br></code> |
+| `kingfisher.coinbase.3` | Active | `"id"\n\x0c\n\t\n\r\n\t \n\x0b\n\n\x0b\n\r\x0c\x0c \x0c\r  \t \n \x0b \t\x0b\x0c:\t\x0c\x0c\t\x0b \r\x0c\x0b\r\n\x0b  \n \t\n\r\t\x0b\n  \x0b\r \x0c\r\r\x0c\x0c"8d75b67051b85aecda7bc223f7af-a60227e"qBSmLBaLPpM77HnUKnHWIXaRNCQqx8Jn"privateKey"\t \x0c\x0b\n\x0b\x0c\x0b\t\r\x0b\n\r\x0c  \t\x0c\x0c\x0c\t\x0c\x0b\x0c \n\t\n\t\t\t\t:  \n \n\x0c\x0b \n\x0c\n\x0b \x0b\x0b\x0c\n  \n\n\n\n \r\n\t\n\r\x0c\r\n"nOghWIZ3Q/VnPKdtgnzErRpkr46a43UvUO94pzceB0=4Lf2f/TUdPNbnDn8ODzgw08h4tSqjFsO4G2bBee5As0mm"` | <code>(?xis)<br>"id"\s*:\s*"(?P&lt;CRED_NAME&gt;[0-9a-f-]{36})"[^{]*?"privateKey"\s*:\s*"(?P&lt;PRIVATE_KEY&gt;[A-Za-z0-9+/=]{88})"<br></code> |
+| `kingfisher.coinlayer.1` | Active | `coinlayer10\nf\nb\rmlb\r\nblv\nPRIVATE\r\n\r\n\rS\n\n\n\n\r\n\n\r\nZrIurDgEFIe8ihKAwa0K3XAE7KDQuj3xU` | <code>(?xi)<br>\b<br>coinlayer<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.composio.1` | Active | `ak_w91nnVi5rZxI3GGAPReC` | `(?x)
 \b
 (
   ak_[A-Za-z0-9_-]{20}
 )
 \b
 ` |
-| `kingfisher.composio.2` | Active | `ck_xunktCXeKv2NkRRUZAiJ` | `(?x)
+| `kingfisher.composio.2` | Active | `ck_MNrA0LNXKyZrWJHcS9nI` | `(?x)
 \b
 (
   ck_[A-Za-z0-9_-]{20}
 )
 \b
 ` |
-| `kingfisher.configcat.1` | Active | `configcatAPI_KEY=\x0b\x0b:\x0c\t'\n\r \n\r'\n \rtoYJMBQOMP29YPSkpdS3F8/eP9ihs3oS1VGO-t7nHCfWP` | <code>(?xi)<br>\b<br>configcat<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>[\s:=}"']{1,16}<br>(<br>  [A-Za-z0-9_-]{22}/[A-Za-z0-9_-]{22}<br>)<br>\b<br></code> |
-| `kingfisher.configcat.2` | Active | `configcat-sdk-1/03DKDLQTpjnympsQpqOrkG/9oi_SQCXHsrDZpIr4s--ol` | `(?xi)
+| `kingfisher.configcat.1` | Active | `configcat\r\n\n\nuYy5vu\r\n\r\n\nv\rnyKKS\rc9a\nt9\r\n\nAPI_KEY \x0b\n:\t:}\x0b\t:\t:= \x0b\x0cd8GIDGLgc0RxA2eaw_K17C/bioEME2-7S0iWTOhEQJzP1` | <code>(?xi)<br>\b<br>configcat<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>[\s:=}"']{1,16}<br>(<br>  [A-Za-z0-9_-]{22}/[A-Za-z0-9_-]{22}<br>)<br>\b<br></code> |
+| `kingfisher.configcat.2` | Active | `configcat-sdk-1/eMeqb2yxb-B4mdC-HVzmFR/KECJ6bREH-Q4CAa5nBdR4y` | `(?xi)
 \b
 (
   configcat-sdk-1/[A-Za-z0-9_-]{22}/[A-Za-z0-9_-]{22}
 )
 \b
 ` |
-| `kingfisher.confluence.1` | Active | `confluenceM9gLiJDw7YtyTh6IOnPCUjQ8oBd256JbMSsu7/1oK4Oz` | <code>(?x)<br>(?i:confluence&#124;wiki)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [MNO][A-Za-z0-9+/]{15}<br>  O[g-v]<br>  [A-Za-z0-9+/]{26}<br>)<br></code> |
-| `kingfisher.confluent.2` | Active | `ccloudPRIVATECE/VHQ/NOXYGE7S9L79/P9M7DPAGS6LHEFMPR4ZSJCXRW01TR1E196PRGKMA+QQY` | <code>(?xi)<br>(?:confluent&#124;ccloud&#124;cpdev&#124;kafka)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9\+/]{64}<br>)<br></code> |
-| `kingfisher.confluent.3` | Active | `cfltnDg4khdLhIb2K5sCRCGi201Fd7JPxjLaDvl6Ss1bQ0OjvdtZYa048gdtxEYE` | <code>(?xi)<br>\b<br>(<br>  cflt(?P&lt;body&gt;[A-Za-z0-9\+/]{54})(?P&lt;checksum&gt;[A-Za-z0-9\+/]{6})<br>)<br></code> |
-| `kingfisher.contentful.1` | Active | `contentfulTOKEN6NYB75QFLR89H9-46NUMY9JU93DI3Y2MC7OF5U-JWRL` | <code>(?xi)<br>\b<br>contentful<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{43,45}<br>)<br>\b<br></code> |
-| `kingfisher.contentful.2` | Active | `CFPAT-92PM043OA4NYOKFC20U7E5UF8EL07HH4P9DTH3NJ5UA` | `(?xi)
+| `kingfisher.confluence.1` | Active | `wikiNZ\nSj\rv\n3M\nm6J\r\rO0IeQmmadz3oSAFkOni6EjhyD1ove5CP4/FomEu4Y3SM` | <code>(?x)<br>(?i:confluence&#124;wiki)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [MNO][A-Za-z0-9+/]{15}<br>  O[g-v]<br>  [A-Za-z0-9+/]{26}<br>)<br></code> |
+| `kingfisher.confluent.2` | Active | `confluentc\rh8\n\rM7v\n8\rh\n0dd8\n\n\n\r\rxyEFE\r7\rSSECRET7P9aW0TwdzTJ\n\nTA\r2\rNNe\r\nJt\nSUW\ryWLO0EN8687HM+RTK2YYMVMV+RE+COBSNR6XNZJYJO7HMIAUZ77Z6YNF34GLO5Z2+` | <code>(?xi)<br>(?:confluent&#124;ccloud&#124;cpdev&#124;kafka)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9\+/]{64}<br>)<br></code> |
+| `kingfisher.confluent.3` | Active | `cfltms1DOa+lUp99lXq/8VLxVxg8zp9W7bFv1KPoeN6WM3T/SD4ZQ7hpBj5ggrtI` | <code>(?xi)<br>\b<br>(<br>  cflt(?P&lt;body&gt;[A-Za-z0-9\+/]{54})(?P&lt;checksum&gt;[A-Za-z0-9\+/]{6})<br>)<br></code> |
+| `kingfisher.contentful.1` | Active | `contentful\rhSF\r\n\nI\n\n\r3\n\nd\r\r\n\nqA4\r\r\nO\nS\n\n\rAPRIVATEL15h\ro\n\nwJ\n1m\r3ZOQ\r\r\r\nRK\n\r\rk\r\rK\n80W3BCNIQS-Z44IHZH6_Y3-776HTIDLO6HX5WVVSVC_` | <code>(?xi)<br>\b<br>contentful<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{43,45}<br>)<br>\b<br></code> |
+| `kingfisher.contentful.2` | Active | `CFPAT-8CURXHZJO5A7OI538IVL6H2UOSW382XMXXTAB_DLZ98` | `(?xi)
 (
   CFPAT-[A-Z0-9_-]{43}
 )
 ` |
-| `kingfisher.contentstack.1` | Active | `contentstackAUTH\nTOKENcs90d045f533e9ba518254b662cdbabf6f` | <code>(?xi)<br>\b<br>contentstack<br>(?:.&#124;[\n\r]){0,32}?<br>(?:MANAGEMENT[_\s]?TOKEN&#124;AUTH[_\s]?TOKEN&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  cs[a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.convex.1` | Active | <code>convexproject:1pvz4wdka1xnbd0b-oqd51gd62rc4ovo:xmzyjyg0-h-gjcl475wfrx0dxbtxbvk2&#124;eyJy2J-Zg4VG6pTVyLp8QeoB8OcWeOebEnQ</code> | <code>(?x)<br>\b<br>(?i:convex&#124;CONVEX_DEPLOY_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  (?:<br>    (?:prod&#124;dev):[a-z]+-[a-z]+-\d+<br>    &#124;<br>    (?:preview&#124;project):[a-z0-9-]+:[a-z0-9-]+<br>  )<br>  \&#124;eyJ[A-Za-z0-9\/._=-]{20,64}<br>)<br></code> |
-| `kingfisher.convex.2` | Active | `CONVEX_PATeyJ2MiI6Ixzs/8vBF7B+3DU8MhQVQvqvoI/u5Fo66eDcd8tbR4hqPUL=` | <code>(?x)<br>\b<br>(?i:convex&#124;CONVEX_TEAM_ACCESS_TOKEN&#124;CONVEX_PAT)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  eyJ2MiI6I[A-Za-z0-9+\/]{46}=<br>)<br></code> |
-| `kingfisher.couchbase.1` | Active | `capellaapisecretV9TNuQCIq5RU7rGs3aVRnRkI4Ylzz5lkwDFsw9DPhFueYY++gXstic9N9J8D==` | <code>(?xi)<br>\b<br>(?:couchbase&#124;capella)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api<br>  (?:.&#124;[\n\r]){0,12}?<br>  (?:key&#124;secret)<br>  &#124;<br>  key<br>  (?:.&#124;[\n\r]){0,12}?<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9+/]{60,120}={0,2}<br>)<br>\b<br></code> |
-| `kingfisher.courier.1` | Active | `courierAPIdk_test_wydNpctL4B5qetCt0mps5XF5` | <code>(?x)<br>(?i:courier)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:pk&#124;dk)_(?:prod&#124;test)_[A-Za-z0-9]{24}<br>)<br>\b<br></code> |
-| `kingfisher.coveralls.2` | Active | `coverallsPRIVATE8ER1Z8QD08UT2-2IXPUBNE9UNW0XA92ASXR5E` | <code>(?xi)<br>\b<br>coveralls<br>(?:.&#124;[\n\r]){0,1}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9-]{37}<br>)<br>\b<br></code> |
-| `kingfisher.coze.1` | Active | `cozepat_O9W866JG2EDOWSIA2E6VO0SAAIXU4JVAMUK28END3EQ0HL26UW2O289OWCR1CKCE` | <code>(?xi)<br>coze<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  pat_[A-Z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.cratesio.1` | Active | `cioPaj3YOEDNBJ8hBLSTabi0XET2bMxFgdU` | `(?x)
+| `kingfisher.contentstack.1` | Active | `contentstack\n\r\n\r\nD13vAv\r1\r4F\rG\nU\r\nML\n\r2\rZ62\rTOKEN\rn\n\rEDTT\r\r\rl\ng\r\n1d\n\r\r3ke\nu\n2y\r\n\rcsea0d7d13fa936384cc4ff054502a5d52` | <code>(?xi)<br>\b<br>contentstack<br>(?:.&#124;[\n\r]){0,32}?<br>(?:MANAGEMENT[_\s]?TOKEN&#124;AUTH[_\s]?TOKEN&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  cs[a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.convex.1` | Active | <code>convexS\r\rvA\n\r\r\nv7\rJ\r\r\n\nWJ8\r\ro\rBy2\ron\n0preview:z3qsxgickt0mkgp8jafqrzk18a0xubgd:vuus-3e409a27d57cpcj3b74z60po2m3&#124;eyJRBeB1HGYDoUbdQgtah=nTfst5shQWOg1</code> | <code>(?x)<br>\b<br>(?i:convex&#124;CONVEX_DEPLOY_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  (?:<br>    (?:prod&#124;dev):[a-z]+-[a-z]+-\d+<br>    &#124;<br>    (?:preview&#124;project):[a-z0-9-]+:[a-z0-9-]+<br>  )<br>  \&#124;eyJ[A-Za-z0-9\/._=-]{20,64}<br>)<br></code> |
+| `kingfisher.convex.2` | Active | `CONVEX_TEAM_ACCESS_TOKEN\rM\r0\rO\r\rJNJFD\r3\rK\rh\r\ri\r\r\n\rBQ\n\r\n\reyJ2MiI6IiUcFN0J1tDV71TYCWg7nc0EITPBZRl8u4T1J71Cvrcdcdw=` | <code>(?x)<br>\b<br>(?i:convex&#124;CONVEX_TEAM_ACCESS_TOKEN&#124;CONVEX_PAT)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  eyJ2MiI6I[A-Za-z0-9+\/]{46}=<br>)<br></code> |
+| `kingfisher.couchbase.1` | Active | `couchbaseA\nxmU\r\r\n\n\rNrSt\n\rz\rcD\r\rH4\n\r\r\rF\re\napih\rGa\nW\rX\nb\rzkeypJ\rpg7\r\nK\n\nR\n\rOq\n\r\rHplU\nq\r2\nL1p\r0ShJmPoKA0uRBs32vR5HM0UuNXSD+I/Grk8GACEL4gDELUGhbIjjjvfGjkbi==` | <code>(?xi)<br>\b<br>(?:couchbase&#124;capella)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api<br>  (?:.&#124;[\n\r]){0,12}?<br>  (?:key&#124;secret)<br>  &#124;<br>  key<br>  (?:.&#124;[\n\r]){0,12}?<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9+/]{60,120}={0,2}<br>)<br>\b<br></code> |
+| `kingfisher.courier.1` | Active | `courier\nq\ndJD\nLPK\nNVa\n9\n\nT\n\nb\n\rK\njfR\n\n\nTOKEN\n\r\n\rS\rueBlhLp\nQ\rpk_test_aeenINjnLjtKIvWIXqXn9SrX` | <code>(?x)<br>(?i:courier)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:pk&#124;dk)_(?:prod&#124;test)_[A-Za-z0-9]{24}<br>)<br>\b<br></code> |
+| `kingfisher.coveralls.2` | Active | `coveralls\rTOKEN\nq\rs\n\n\r\rA\nm\n\nBUa\n\rJ\rBXPgUXr\nx\n\r\r2-V7WX21B5GSFPWAF5BRNJP35EWGIF-137J2C` | <code>(?xi)<br>\b<br>coveralls<br>(?:.&#124;[\n\r]){0,1}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9-]{37}<br>)<br>\b<br></code> |
+| `kingfisher.coze.1` | Active | `coze\n2\na\n\n\n\r\r\n6\n\neT\r\rM3\rl\nfeP9e\n\n\r11pat_J77F2V8KTBC61A62GDONHCW8GHM90FXHCP9Y9BE8ZCKPWZ60S96SPW8EPYD5HTDZ` | <code>(?xi)<br>coze<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  pat_[A-Z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.cratesio.1` | Active | `ciov4dpCBUE79BhqdZtSxd6yrcYrDBajGwl` | `(?x)
 \b
 (
   cio[A-Za-z0-9]{32}
 )
 \b
 ` |
-| `kingfisher.credentials.1` | Active | `https://s4sq1qm4eg430ay9pvas60ijg9bqut-b:5n7l5e4culen~yav5z61wqz60hwbahnv@7ec8hczkd62876am7fc6npmavnpzvvwf/ulucz33cs_zcnjoofo/qb7hh7eu3i/qv` | `(?xi)
+| `kingfisher.credentials.1` | Active | `https://jo3q.d087fw9uxrk56dn7inia09985mp:xd27u6a3-k50x8.uzw7o_6mumgbazn5y@2lpku3.fqn3sjz-g9fpuuer144fxkat7/kjln8pb_4kloqagib/b69vc_b-z/ds2e` | `(?xi)
 https?:\/\/
 (
   [a-z0-9._~-]+
@@ -526,12 +526,12 @@ https?:\/\/
   [a-z0-9\/._~-]*
 )?
 ` |
-| `kingfisher.crossmint.1` | Active | `crossmintsk_production_iSQJyEsMk90uKu0ROVN33LLvCQvpXK6K` | <code>(?x)<br>(?i:crossmint)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  sk_(?:staging&#124;production)_[A-Za-z0-9]{24,48}<br>)<br>\b<br></code> |
-| `kingfisher.crossmint.2` | Active | `ck_production_RLjSBYKPghzLdTtmi6LvvricSCWdDbxk` | <code>(?x)<br>\b<br>(<br>  ck_(?:staging&#124;production)_[A-Za-z0-9]{24,48}<br>)<br>\b<br></code> |
-| `kingfisher.curl.1` | Active | `curl\nBsWbwXchJv8atihKkZyPOKXe9xik7pZr-u  \r\r\r\t\n\t\n\x0c\r\x0b\x0c\r\t\n\n  \n\x0c\t \n \r\r\x0b  \x0c\x0b'5X4lwDvQkykCfc39DOpNZkP6Ij3GoYKo:vKCZj8zUTbBrq2fVMajaAxzqAzSUlyz8'` | <code>(?i)\bcurl\s.*(?:-u&#124;--user)\s+['"]?(?P&lt;TOKEN&gt;[^:'"\s]+:[^'"\s]+)['"]?</code> |
-| `kingfisher.curl.2` | Active | `curl\ry0UVzEpJIkF0RbQ9jqtknm2mH3ZjDpd5--header\x0c\x0c\n\x0b \x0c\n\t\t\x0c \x0b\r\r\x0c\x0b  \t\x0c\r\x0c\r\r\r\x0c\n\t\t \x0b\t'Authorization:\x0c\n\x0b\t\x0b \x0c \x0b\t\n\r\x0c\x0c\x0c  \n\t \r\n\x0b\x0b\x0b \x0c\x0c\t\x0c\t\rBearer\n \t\t \n\x0c\r\x0c\x0b\x0b\n\r\n\x0b\x0b\r\r\t\n\t\t \x0c\x0c\t \r\n\r\t\t3gkAzp-7U8TLkC8N3UR0EjHeeg5ER3vT'` | <code>(?i)\bcurl\s.*(?:-H&#124;--header)\s+['"]Authorization:\s*(?:Bearer&#124;Basic&#124;Token)\s+(?P&lt;TOKEN&gt;[a-zA-Z0-9+/=_-]{20,})['"]</code> |
-| `kingfisher.currencylayer.1` | Active | `currencylayerPRIVATEjzvS1zYETS1VFDDb7435oQgH0UI6XBpB` | <code>(?xi)<br>\b<br>currencylayer<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.cursor.1` | Active | `key_aD73b6b5E6AD37a2DcA409a20D25Cbec05C7eb3ecdfBA7C57c92aC09b2A9B5DE` | `(?x)
+| `kingfisher.crossmint.1` | Active | `crossmintAh\n\nUS0\n\rR\nY\n\njT3D\nMwvPQ8oW\ny8B6sk_production_39juSArOJuwD4nHq0srOl1c3kJ7ek9ZE` | <code>(?x)<br>(?i:crossmint)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  sk_(?:staging&#124;production)_[A-Za-z0-9]{24,48}<br>)<br>\b<br></code> |
+| `kingfisher.crossmint.2` | Active | `ck_staging_hwm57F9YW2uqqnM07VNu9RfKARhSBzYP` | <code>(?x)<br>\b<br>(<br>  ck_(?:staging&#124;production)_[A-Za-z0-9]{24,48}<br>)<br>\b<br></code> |
+| `kingfisher.curl.1` | Active | `curl\x0bUXlEokOjKqPPkqcF3Is8xGjjdPAQSshn-u\n\x0c\x0b \x0b\x0b\t\x0b\n\x0b\n\x0b\t\n\n\t\t\n\r\x0b\x0b\x0b\r\x0c\t\t\n\n\x0b\t\r\x0c"9==yh==TL==Aa=0DA=t==rpUG==x=g=t:O=N=:eg=w==:=S:H:Oj::===:e_J===q'` | <code>(?i)\bcurl\s.*(?:-u&#124;--user)\s+['"]?(?P&lt;TOKEN&gt;[^:'"\s]+:[^'"\s]+)['"]?</code> |
+| `kingfisher.curl.2` | Active | `curl\rKV6ZZ2mMi3D1gg2STqfbKnQ3DzEQILN0-H \n\n\n\n\n \r\x0b\r\t \t\t\t\n\x0b\x0b \r\t\x0c\x0c \t\r \t\x0b\x0c\r 'Authorization:\x0b\n\x0b\x0c\r\t \r\x0c\n\r\x0c \x0c\x0c\r\r\t\r\r\r\r\t\x0b\t\r\n\x0c\n\t\x0b\nBasic\n\t\x0b\n\n\t\t\x0b \t \x0b\t\t\n\x0c\r\x0b\t\t\x0b \x0c\r\x0c\t\x0b\x0b\n\r \x0crgZi7txjQxHydcyKkv/rWEEsOgj+Xp_9"` | <code>(?i)\bcurl\s.*(?:-H&#124;--header)\s+['"]Authorization:\s*(?:Bearer&#124;Basic&#124;Token)\s+(?P&lt;TOKEN&gt;[a-zA-Z0-9+/=_-]{20,})['"]</code> |
+| `kingfisher.currencylayer.1` | Active | `currencylayer\n\r\ruP\ny\r\n0hpq\nEsPRIVATE\ndxgK\r\n\rd\rd\r\n\nN\nFBWIp08BSxejVJClt5v3NPyU0rHKdS8v` | <code>(?xi)<br>\b<br>currencylayer<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.cursor.1` | Active | `key_45509cEff451Aacd8D34cA0D7e2b33caAc1DBA00c0a49cdCA939D9272DC4aCF4` | `(?x)
 \b
 (
   key_
@@ -539,18 +539,18 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.customerio.1` | Active | `customer.ioSECRET2086e45c0e83b1308c74` | <code>(?xi)<br>\b<br>(?:customer(?:\.?io)?&#124;customerio&#124;cio&#124;tracking&#124;track)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API[_-]?KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{20}<br>)<br>\b<br></code> |
-| `kingfisher.customerio.2` | Active | `customerioAPI3b04806ebceecb86edb89b7b49cbc842` | <code>(?xi)<br>\b<br>(?:customer(?:\.?io)?&#124;customerio&#124;cio)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{32}<br>)<br>\b<br></code> |
-| `kingfisher.cypress.1` | Active | `cypressaf9c7cc1-17c9-a996-da8c-d9bce9968f2e` | <code>(?xi)<br>(?:cypress)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.daily.1` | Active | `dailyPRIVATELoInhRbKWbZ6V25nVJrBg2tlpmC4zwT11R19tTwuoQQfBMClCrSnM3k30rd5M1Z7` | <code>(?xi)<br>\b<br>daily<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.databento.1` | Active | `db-GQ3ZgSLYVOotoj6cj600uF4XVblNM` | `(?x)
+| `kingfisher.customerio.1` | Active | `track5\n\nn\nmluM\n\nU\n\r\r\n\ni\rRp\rux\nI\r\nK4\n1TOKEN\rH\n\rl\nrC\n\ra\n3\nkyfcbaff0129fbc20733a0` | <code>(?xi)<br>\b<br>(?:customer(?:\.?io)?&#124;customerio&#124;cio&#124;tracking&#124;track)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API[_-]?KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{20}<br>)<br>\b<br></code> |
+| `kingfisher.customerio.2` | Active | `customerio3\ne\rA\r\n\r\n7\r\nAI\r\r\rt\n9\nm\nV\nasoq\rM\rKEY\na\r6\n6F\rT\na5Y\rmg98188b6bc3d63a223040dd3462aad94a` | <code>(?xi)<br>\b<br>(?:customer(?:\.?io)?&#124;customerio&#124;cio)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{32}<br>)<br>\b<br></code> |
+| `kingfisher.cypress.1` | Active | `cypress5\nY\n3dx\nP\nlO\nv7\n0c91565b-cd95-f521-8228-4163c66e0c61` | <code>(?xi)<br>(?:cypress)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.daily.1` | Active | `daily\nij\nIr\rjb\r\n\r\no\r\nd\rFw\na\nb\r\nU\nM\n\rNPRIVATE\n\r7S\n\rqm8\n\n69l\n\n\r\nFaMT\nN\n\nKS\r\rc\r1iyYyvSEgXtQSNeSgAZM5yF0Xw4mbWZJSuAhhqZyVFwVsNW31HIpcHiVHyhJPe02` | <code>(?xi)<br>\b<br>daily<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.databento.1` | Active | `db-Tf5rdo3LtgmAGDYuOeFAxQ5EF0oWh` | `(?x)
 \b
 (
   db-[A-Za-z0-9]{29}
 )
 \b
 ` |
-| `kingfisher.databricks.1` | Active | `dapiAEC4FAd03A74115AFbc10d2Cf0Ace533` | `(?x)
+| `kingfisher.databricks.1` | Active | `dapiE5c7880a7FcA2E0Bd1A90e67e05060AB` | `(?x)
 \b
 (             
   dapi
@@ -558,27 +558,27 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.datadog.2` | Active | `dddd-api_keyF9KI8CRJ9N5GVSR1W5UOV3Z0QXLGK51E` | <code>(?xi)<br>\b(?:datadog&#124;dd)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;dd[_-]?api[_-]?key&#124;secret&#124;private&#124;access&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.datadog.3` | Active | `datadogtokenDL5Y28M4ozIgAzb6C2ttRSn9Mj4UOag3Y--Ewf24` | <code>(?xi)<br>\b(?:datadog&#124;dd)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:app(?:lication)?[_-]?key&#124;dd[_-]?application[_-]?key&#124;secret&#124;private&#124;access&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9-]{40}<br>)<br>\b<br></code> |
-| `kingfisher.datagov.1` | Active | `data.govKEYe49hMIPGP5BLAPKiigOAoUWytGXsCiA9i4vZjgEd` | <code>(?xi)<br>\b<br>data\.gov<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.db2.1` | Active | `as400password """'"'""'''"'''"''"'"''''""""''"Fn5t3rWCRIoHYbKeSHlEyFGHS61Ugwu5\r` | <code>(?xi)<br>\b<br>(?:db2&#124;as400)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:password&#124;passwd&#124;pass&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
-| `kingfisher.deepgram.1` | Active | `deepgramd4a32a19fe638a5509d6040a7cebd4e65318cee0` | <code>(?xi)    <br>\b<br>deepgram<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{40}    <br>)<br>\b<br></code> |
-| `kingfisher.deepl.1` | Active | `e762c58c-9dfb-4fea-bd10-7087ad0dbdb6:fx` | `(?x)
+| `kingfisher.datadog.2` | Active | `datadog\rzo6vp\n\n\n\ro\rp\n\n\nQ\n\rS\nmfX\r\r\n\ns\rO\napi-key\n\n\nW\n\r\rx\nIrz\n5\r\r\r\r\nHfNo\n\nI\r\n\n\rz\nDQB0WL4U4WP50BAQO6N0ONVU2JUWCRSX` | <code>(?xi)<br>\b(?:datadog&#124;dd)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;dd[_-]?api[_-]?key&#124;secret&#124;private&#124;access&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.datadog.3` | Active | `dd2M\rl\rkf\nG\neAj\rr\nyBx\nB\rugK\nN\nZwdaapplication_keyB\n\r\re\n\nBGBzmm\n\re\rW\rrX\rflw\rl\r\rC\n\rDbX2vKh5QujYKwDTPA8McV0717bx-vNM0oLpPzs0` | <code>(?xi)<br>\b(?:datadog&#124;dd)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:app(?:lication)?[_-]?key&#124;dd[_-]?application[_-]?key&#124;secret&#124;private&#124;access&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9-]{40}<br>)<br>\b<br></code> |
+| `kingfisher.datagov.1` | Active | `data.gov\nSou\r\n\n\rU2\n\rSVW\rQUk\r\n\rTV\r\nL\r\nGg\nACCESSDRlI\nk\nO5TWw\n\roL\n\r\nAt\n\n3\r\ry\r\rH\r7XSFVrE8KyvavRcMGKFHcwpChOBYMeDRJNk8AyZYF` | <code>(?xi)<br>\b<br>data\.gov<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.db2.1` | Active | `db2\n9\nTrq\r\ntG\r\n\n0\n\n\n\r\n\r\rW\nc\r\r0\rZ\r3\rpassworda\nGq\n\r\r4\rl7\r3\r\r\r\x0c"'''''""'""'''"'"""''''"'"""""""=n=qul==1:==rZ=:qDi=0w:F=o==:lwW\n` | <code>(?xi)<br>\b<br>(?:db2&#124;as400)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:password&#124;passwd&#124;pass&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
+| `kingfisher.deepgram.1` | Active | `deepgraml\n\rR\n\n\nm\n\ry\r\r\r\rt\r\n\r8\rc\r\r\nP\nAO\n5\n418de34e811aa4e844de3589bf55d53bbd1095f7` | <code>(?xi)    <br>\b<br>deepgram<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{40}    <br>)<br>\b<br></code> |
+| `kingfisher.deepl.1` | Active | `95794804-6178-81be-c64c-a58b273a625b:fx` | `(?x)
 \b
 (
   [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}:fx
 )
 \b
 ` |
-| `kingfisher.deepl.2` | Active | `deeplTOKENa039c64f-7901-afc3-52e7-6f22b5bd41ad` | <code>(?xi)<br>deepl<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;AUTH&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.deepseek.1` | Active | `sk-de13328451c2434ab418833d48b40aa5` | `(?x)
+| `kingfisher.deepl.2` | Active | `deepl0i\r\rX\r\r\n\r\nQ\rVFQ\r\r\n\nc\rqrP\r\rRgh\r\r\rAUTHzD\rm\r\rlB\r\nM\r\rCH\r58bb55f8-18a5-8466-9102-dfa50cf7f9e6` | <code>(?xi)<br>deepl<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;AUTH&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.deepseek.1` | Active | `sk-dcf984bd646d6b89feda3db394ab0117` | `(?x)
 \b
 (
   sk-[a-f0-9]{32}
 )
 \b
 ` |
-| `kingfisher.definednetworking.1` | Active | `dnkey-WWURXIRJKHUXEZ6J2TELUVZQ4C-HYV2I2PD1RXAUR1YVJ1985BLYA4712ON313NUUOFYSPJ0NKXF7C1` | `(?x)
+| `kingfisher.definednetworking.1` | Active | `dnkey-Y77B0L62ER03MBBFL8K6C9CH77-JCV3K57S0MN0NEE5Q9SQ0JYSPJ0Q3SKBCOIHB4M5IPYV5MDI4PDP` | `(?x)
 \b
 (
   dnkey-
@@ -588,66 +588,66 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.delighted.1` | Active | `delightedapi_key41EzHYb95rZnfukActXizl2nMt4JOpMG` | <code>(?xi)<br>\b(?:delighted)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;secret&#124;key&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{20,40}<br>)<br>\b<br></code> |
-| `kingfisher.deno.1` | Active | `ddp_viY0HbuSgELei44EAdvRTDorwyz9DkSA312R` | `(?x)
+| `kingfisher.delighted.1` | Active | `delighted3V\n\ny\n\nk\ru\nADF2\nK\nd\rl\r\ro7\nN\n03\n\nsecret\r\r\r\n\r\n\r\r\n5I5\n\r3\nuN7\r\nn50HK\n\nH\r\n8cEddAbB1HPsQTB08bem8AoD5KdbBM5an` | <code>(?xi)<br>\b(?:delighted)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;secret&#124;key&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{20,40}<br>)<br>\b<br></code> |
+| `kingfisher.deno.1` | Active | `ddp_WOdU7vzNav3gdg0f2gByQPJG2ErKlYLfHb5B` | `(?x)
 \b
 (
   ddp_[A-Za-z0-9]{36}
 )
 \b
 ` |
-| `kingfisher.dtrack.1` | Active | `odt_783BZaHwIwMReHlKJfHvfvtknFlW9m2P` | `(?x)
+| `kingfisher.dtrack.1` | Active | `odt_cXiVC2KbEshowsghDecQK1AFHFkWKc5E` | `(?x)
 \b
 (
   odt_[A-Za-z0-9]{32,255}
 )
 \b
 ` |
-| `kingfisher.detectify.1` | Active | `detectifySECRETbdb8d6cb-a4be-2a58-0d54-c72e7cea1e7c` | <code>(?xi)<br>\b<br>detectify<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.devcycle.1` | Active | `dvc_client_nPQbWoQv6gA4csKxkP86nzx3SHkNW7iT` | `(?x)
+| `kingfisher.detectify.1` | Active | `detectify\r\n\r\r\n2\nt\n\rgd\rZUk\nI\ng\r\rL\r\rrpA9\r\noTOKEN\r\ni\r\n\nK\nS\rmH\rHxkea791261-5777-c693-d07e-518e97894322` | <code>(?xi)<br>\b<br>detectify<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.devcycle.1` | Active | `dvc_client_SOuHCM4n4WkupiLQpQTGwKr3PgKagQSY` | `(?x)
 \b
 (
   dvc_client_[A-Za-z0-9]{8,32}
 )
 \b
 ` |
-| `kingfisher.devcycle.2` | Active | `dvc_mobile_Hn6bsAqYLvHVkDiTYl1cVB2aHolHSYOn` | `(?x)
+| `kingfisher.devcycle.2` | Active | `dvc_mobile_FDACSReg4QqD4J52yaKAweeVmYO4JGaS` | `(?x)
 \b
 (
   dvc_mobile_[A-Za-z0-9]{8,32}
 )
 \b
 ` |
-| `kingfisher.devcycle.3` | Active | `dvc_server_TbTKTv5wuftfyfZjJ9DU6oUwbfCojilV` | `(?x)
+| `kingfisher.devcycle.3` | Active | `dvc_server_rRObeCcAX8FOpbH1L8sPsTwOdNzXVwhh` | `(?x)
 \b
 (
   dvc_server_[A-Za-z0-9]{8,32}
 )
 \b
 ` |
-| `kingfisher.deviantart.1` | Active | `deviant_artaccess_tokenOq49jfzrQlUBrBWYDpnlVbg5dMEaNPF6hsemOQ2E` | <code>(?xi)<br>\b(?:deviantart&#124;deviant_art)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:access[_-]?token&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40,80}<br>)<br>\b<br></code> |
-| `kingfisher.devin.1` | Active | `apk_user_B2l/ezQY/WOJjkbmDznm2sxyV/fzowRP93p6K7D37pHLPA/pRYS9gjCL61R9HLOKD3oKBbPN3kgU8V3ueY2LJXnPzgXc5TMB1FBtveet9SSjlhlayQUsHKgs==` | `(?x)
+| `kingfisher.deviantart.1` | Active | `deviant_art\reH\r\n\r\r\n\r\r3o\r\rma\ne\r7\n\nmKWF\n\rJo\rctokenU\r\nQOJ\rgeeRbcWL\n\r\r\r5dIw4\r\nc\n\rg\n\riL38rlP59JMebkTzWbipgEznUxkE3x3U8QxoBukW` | <code>(?xi)<br>\b(?:deviantart&#124;deviant_art)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:access[_-]?token&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40,80}<br>)<br>\b<br></code> |
+| `kingfisher.devin.1` | Active | `apk_user_VlSsKPJfUSLfzqN7ob6wBHnmDEiVY25iQljf4P/hggPaARYjxx8cyxq4NzUMdr+pK52xDh9f2xJHos2eJFfnbX6X/l0Ew9tAZ0VuJs6sZ/59m7e7jDUb7ICU==` | `(?x)
 \b
 (
   apk_user_[A-Za-z0-9+/]{120,180}={0,2}
 )
 ` |
-| `kingfisher.devin.2` | Active | `apk_Y7lLyQr1esxIBN2R8gz7UeppQsL8H+QmVW/X1hcyOvh8k7PIzag56iwIZm1HzXbNyiCIEnhy7tpB4YeN==` | `(?x)
+| `kingfisher.devin.2` | Active | `apk_tGTK8B3GVgpslvanIgYiwQp9PdsFcBPA1I8kS8UnTy9O6Yflnolgj7jEELy5DnwjaASFxpeWXQYBFDxY==` | `(?x)
 \b
 (
   apk_[A-Za-z0-9+/]{80,100}={0,2}
 )
 ` |
-| `kingfisher.devin.3` | Active | `cog_lecjnggsp54xrrwxb2wuabkgtrntmpdjj2hl5wqyvtnwzpo5eie7` | `(?x)
+| `kingfisher.devin.3` | Active | `cog_xugiiebhcjywjdvpaoc7uviusj3m73qfhvcdqmp6fizd5r62arj6` | `(?x)
 \b
 (
   cog_[a-z2-7]{52}
 )
 \b
 ` |
-| `kingfisher.diffbot.1` | Active | `diffbotfx08g0ym15z619vkocnrh2vlltuk2jpt` | <code>(?xi)                       <br>\b                         <br>diffbot<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [0-9a-z]{32}<br>)<br>\b<br></code> |
-| `kingfisher.dify.1` | Active | `dify-api-keyapp-2df677105107a03900447aa9` | <code>(?xi)<br>(?:<br>  \b<br>  (?:dify&#124;dify[_-]?api(?:[_-]?key)?&#124;dify[_-]?app(?:[_-]?api(?:[_-]?key)?)?)<br>  \b<br>  (?:.&#124;[\n\r]){0,96}?<br>)<br>\b<br>(<br>  app-[a-f0-9]{24}<br>)<br>\b<br></code> |
-| `kingfisher.discord.1` | Active | `https://discordapp.com/api/webhooks/59166597022268905541/6_6h0xrp75jn7nspdwqap9pigg2pf3obooe6d1hvc7-9wk2_g26j1adkeck5` | `(?xi)
+| `kingfisher.diffbot.1` | Active | `diffbot\r\n\n\r\r\rW\rtVQ2\ni1\n\rR\rV\r4Mp1J9IP\n\rDjlhj6aoo2ux8cfdcpf3lm171fuyqli71` | <code>(?xi)                       <br>\b                         <br>diffbot<br>(?:.&#124;[\n\r]){0,32}?<br>\b                         <br>(<br>  [0-9a-z]{32}<br>)<br>\b<br></code> |
+| `kingfisher.dify.1` | Active | `difyFOY\rr0967w\nMY\n\nG\n\rn\n\r\r\nK\r\r\n\rK\n\nHapp-f0b61c1f3bc81fb5689d8db6` | <code>(?xi)<br>(?:<br>  \b<br>  (?:dify&#124;dify[_-]?api(?:[_-]?key)?&#124;dify[_-]?app(?:[_-]?api(?:[_-]?key)?)?)<br>  \b<br>  (?:.&#124;[\n\r]){0,96}?<br>)<br>\b<br>(<br>  app-[a-f0-9]{24}<br>)<br>\b<br></code> |
+| `kingfisher.discord.1` | Active | `https://discordapp.com/api/webhooks/03962756603766973727/9o7cyci70_bqytmqg8jz748rec4b67n0swu7oc9v53ezgu952lljtanlmu51` | `(?xi)
 (
   https://discord(app)?\.com/api/webhooks/
   [0-9]{17,20}
@@ -657,73 +657,73 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.discord.2` | Active | `M-ARIKYE9Y0CPNL8XZZEREB8.ZXQC1G.4TAQ6E61S2XFJFSBWTY2BRC2QHG` | `(?xi)
+| `kingfisher.discord.2` | Active | `N79AL0J40XWCX6NT_UA4A9FT.C-ASO-.CIEKTEKL4PLDMI92ELNIZ3NC0OQ` | `(?xi)
 (
   [MNO][A-Z0-9_-]{23}\.[A-Z0-9_-]{6}\.[A-Z0-9_-]{27}
 )  
 \b
 ` |
-| `kingfisher.disqus.1` | Active | `disqusTOKENJM6U0Ln26PG4OVySByIcb350iFkY6CiwgAm8tkTnxvVAPRDG9ZbkE8MJkt3XlUCy` | <code>(?xi)<br>\b<br>disqus<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.django.1` | Active | `JAAAAAAAASECRET_KEYjeBBzjZs80T4%e*MCwXDRbF%dH52F!wA#cUYsI!hvG-XA` | <code>(?x)<br>[DJANGO]\w{0,8}SECRET_KEY<br>.{1,16}?<br>(<br>  [A-Za-z0-9*!$@\#&amp;_%^-]{45,55}<br>)<br>\b<br></code> |
-| `kingfisher.docker.1` | Active | `"auths"\n\x0b\x0b\x0b  \x0b \n  \r\x0c\n\t\x0c\n\r \x0c\t\r\n\t\x0c\n\r\r\n\r\t\x0c:\n\x0c\x0c\x0c\x0b\x0c\x0b\x0c\x0c\n\x0b\r\t\x0c\r\x0c\r\x0b\t  \r \t\r\x0c\t\n\r \t\n{"https://vwu439oab9+94zefmrmtexwxyi+vif-t"\t\n\t\t\n\x0c\t  \t\x0c\r \x0b\r\x0b\x0b \t\x0c\x0b \x0b \x0c\x0c\x0b\t\x0b\r\x0b\t:\r\t\x0c\r\t\r\x0b\r\x0b\x0c  \t\x0b\x0b\r\x0c\n\t\x0c\x0b\x0b\n\r\n\r\n\n\x0c \r\x0b{"auth"\t\t \x0b\x0c\x0b\r\t\t\x0c \r\t \n\x0b \n\n\t  \x0c\t\x0c\t\n\r\n\n\t\x0c: \t\r\x0b\x0c\x0b\r\t\t \r\x0b\x0b\x0c\x0c\n\x0c \t\x0c\x0c\x0c\t\n\t\x0b\n\x0c\x0b\x0b\x0c\x0b"uUCv4fQL0dVkzL6MfVspKnz7b8dGrTLN"}}` | <code>(?xis)<br>"auths"\s*:\s*\{<br>  [^}]*?<br>  " (?P&lt;REG&gt; (?:https?:\/\/)? [a-z0-9.\-:+/]+ ) "\s*:\s*\{<br>    [^}]*?<br>    "auth"\s*:\s*"(?P&lt;B64&gt; [A-Za-z0-9+/=]{16,} )"<br>    [^}]*?<br>  \}<br>  [^}]*?<br>\}<br></code> |
-| `kingfisher.docker.2` | Active | `SWMTKN-1-aok6veindrs4zb9ng159omq1kdr5c0l20ba9cmfvqtyru8wv52-ww47g43pafx41uzvfcxdqimrvwif6b` | `(?x)
+| `kingfisher.disqus.1` | Active | `disqusW\nj\nI\nqQ\r\nBr\rs\r\r\n\n\n\nt\nvm\rVCI\r\r\r\rKEY2\ry7\rl\n\rG7\rhNg7jl\n\rDfTzpbV\n9\rMA4bbFokw0TAT8Yr62BliUp70GCkZPyi2ngPe4nYAvZSpQ6wPdRlDvki0y2qW5F1H1v` | <code>(?xi)<br>\b<br>disqus<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.django.1` | Active | <code>JAAAAAAAASECRET_KEY6DUsJeMOnS0rjty7$uSxgJ1gYevn&amp;hDfkwgw&amp;uepful3!4JRtcWal&amp;oQmYhVM</code> | <code>(?x)<br>[DJANGO]\w{0,8}SECRET_KEY<br>.{1,16}?<br>(<br>  [A-Za-z0-9*!$@\#&amp;_%^-]{45,55}<br>)<br>\b<br></code> |
+| `kingfisher.docker.1` | Active | `"auths"\x0b\x0c\x0b\x0c \x0c \x0c\x0b\x0c\r\n\x0c  \x0c \n\r\r\r\x0b\n\n\x0b\t\t  \x0c\x0c :\r\x0b\x0c\n\x0c \x0c\t\n \x0b\x0b\t\x0c\x0c\n\n\x0b\t\x0c \n\t\x0b\n \r\r\x0b  \x0c{tJengcKzhcb6bWtDJxbfSd0op3XCxTmU"https://if3/1se6w26fkwonoijdd7ck2zlgwo37"\r\n\t \t\r \x0b\t\x0c\r\t\x0b\x0b\n\x0c\x0c\t\r \r\n\x0c \t\n\t\t\t\n\t :\x0c\x0c\t \x0b\t\x0b \n\x0b\n\x0c\x0b\t\x0b\n\t\t\n\x0c \x0b \x0c\x0b\t\t \t\n\x0c\n{lvmluivznVPe8O1AkCXNtGT5zOOKnO04"auth"\x0b\x0c\x0b\r\r\x0c\r\t \n\x0c\t\t\x0b\t\x0b\t\x0b \x0c\n\r\n \t\x0c \n\x0b\x0c\n\t:\r\r\n \n\n\n \n\x0b\x0c\r\r\n \x0c\x0c\x0c \x0b \r\t\r\x0c \r\r\n\n \x0b"voWKQKkA3Gsqo47FRTQ4NtFPgZrtgzEy"dlbBWx7jSZoFpJ2MErCkKO5ka2nMRT7q}zTO3R6nyy9kmGmIlDmhydbYR406v6FqI}` | <code>(?xis)<br>"auths"\s*:\s*\{<br>  [^}]*?<br>  " (?P&lt;REG&gt; (?:https?:\/\/)? [a-z0-9.\-:+/]+ ) "\s*:\s*\{<br>    [^}]*?<br>    "auth"\s*:\s*"(?P&lt;B64&gt; [A-Za-z0-9+/=]{16,} )"<br>    [^}]*?<br>  \}<br>  [^}]*?<br>\}<br></code> |
+| `kingfisher.docker.2` | Active | `SWMTKN-1-gome7dcfbd10tessls6z58vvwn9x5s5pgcr8scyng7qgso7atq-ioi7ntd2r7p38p2rxyhinc2028qcbo` | `(?x)
 \b
 (
   SWMTKN-1-[a-z0-9]{50,60}-[a-z0-9]{24,30}
 )
 \b
 ` |
-| `kingfisher.docker.3` | Active | `SWMKEY-1-navGxIxQ5TSeRPebnELD8hPWE5vGIwXa99o1M0yG` | `(?x)
+| `kingfisher.docker.3` | Active | `SWMKEY-1-hYRlwhxv34VHEi3s8eOcXHG6mkmO0NxkiAx7Ndoo` | `(?x)
 \b
 (
   SWMKEY-1-[A-Za-z0-9+/]{40,50}
 )
 \b
 ` |
-| `kingfisher.dockerhub.1` | Active | `dckr_pat_UUU80L-STA5TUKVBLDBC0ID2B3D` | <code>(?xi)<br>\b<br>(<br>  dckr_pat_[A-Z0-9_-]{27}<br>)<br>(?: $ &#124; [^A-Z0-9_-] )<br></code> |
-| `kingfisher.dockerhub.3` | Active | `dckr_oat_0PI7Y1U35LRD77EMZLPMIVV00YI0BIIJ` | <code>(?xi)<br>\b<br>(<br>  dckr_oat_[A-Z0-9_-]{32}<br>)<br>(?: $ &#124; [^A-Z0-9_-] )<br></code> |
-| `kingfisher.docusign.1` | Active | `docusignsecret_key\x0c"'''"'"'""""'"""''"""'""""''''"'631bf70c-4775-834c-c9d5-c20960c5fdbc` | <code>(?xi)<br>\b<br>docusign<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:secret[_-]?key&#124;ds[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.doppler.1` | Active | `dp.ct.X5DT8LAcwEG31xtCN22Cv9aCLm2WBGoc2CqwKjBu` | `(?x)
+| `kingfisher.dockerhub.1` | Active | `dckr_pat_F55ZKN_83IP_Q3OYQO75A0XCVZBt` | <code>(?xi)<br>\b<br>(<br>  dckr_pat_[A-Z0-9_-]{27}<br>)<br>(?: $ &#124; [^A-Z0-9_-] )<br></code> |
+| `kingfisher.dockerhub.3` | Active | `dckr_oat_JLV4UC9R-8MWXG0LPQMIZTH4K6-FSXDC` | <code>(?xi)<br>\b<br>(<br>  dckr_oat_[A-Z0-9_-]{32}<br>)<br>(?: $ &#124; [^A-Z0-9_-] )<br></code> |
+| `kingfisher.docusign.1` | Active | `docusignR\r7\r\nD\r\ndW\r\nJ\rT\n2uT\rWg\r\r\n\r9\n\r\n\r\rsecret_key\n\n\n\rYJ\r\n\n\r\nd\r\n\n\r\x0c'"'""''"""""'""""'''""'""''""'""aba4ec36-0a4c-54ce-6837-0eeffdca13d1` | <code>(?xi)<br>\b<br>docusign<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:secret[_-]?key&#124;ds[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.doppler.1` | Active | `dp.ct.xgv9q7WIDxrCEZNI4Nz3hoRvNwxYgtjNJauqSjpc` | `(?x)
 \b
 (
   dp\.ct\.[A-Za-z0-9]{40,44}
 )
 \b
 ` |
-| `kingfisher.doppler.2` | Active | `dp.pt.4XU7WAU3UUI9DMFESEP1VNQ3MK16MEKDJTPEJQ74` | `(?xi)
+| `kingfisher.doppler.2` | Active | `dp.pt.CJBR6Z5GJ8OPP9Y2I8Q12WZ7LCYL8IREYZ9R7ZU7` | `(?xi)
 \b
 (dp\.pt\.[A-Z0-9]{40,44})
 \b
 ` |
-| `kingfisher.doppler.3` | Active | `dp.st._v8rx2-wu0g8gxqrh0ca0xekdsfugjld.GRR4DZNO5FENMWP1H4JT1VFA0SGI3HI7HKCI7RSO` | `(?xi)
+| `kingfisher.doppler.3` | Active | `dp.st.636-qxtkxbqbwn-2dcbpac46hhw8h4bj.GDEGA3TBP31PUC7C3C5GON7AS195VEBKF198ER4U` | `(?xi)
 \b
 (dp\.st\.(?:[a-z0-9\-_]{2,35}\.)?[A-Z0-9]{40,44})
 \b
 ` |
-| `kingfisher.doppler.4` | Active | `dp.sa.7QVXYREJJE5RYU3F1FBF0NOO54F3Q09Y0OJRPMWW` | `(?xi)
+| `kingfisher.doppler.4` | Active | `dp.sa.J06O7XW1S0RGW0Z8O9V30WM75JG06V7ASAH81SIP` | `(?xi)
 \b
 (dp\.sa\.[A-Z0-9]{40,44})
 \b
 ` |
-| `kingfisher.doppler.5` | Active | `dp.scim.2PKNNEARNB9RQ0L4HGBEOQHTCNFM89CGU93IP9Q6` | `(?xi)
+| `kingfisher.doppler.5` | Active | `dp.scim.4GF7COXZPJQMB9ENKDPVENX8NB4ILSP4UMXE8UE6` | `(?xi)
 \b
 (dp\.scim\.[A-Z0-9]{40,44})
 \b
 ` |
-| `kingfisher.doppler.6` | Active | `dp.audit.YJ35VZ254NQN26R0RMO4LOABU6RFUGGLHWXWNL62` | `(?xi)
+| `kingfisher.doppler.6` | Active | `dp.audit.Y8GHPFGX96EYIXOM7P47S4SART38F55QRTB11K0T` | `(?xi)
 \b
 (dp\.audit\.[A-Z0-9]{40,44})
 \b
 ` |
-| `kingfisher.drone.1` | Active | `droneTOKENeyQIhZyBHnAx8nH2GhG6WQxQiaiufHC-qp.rQkx_Lft_X1Tadgkgls91uyoLJCyVZr3.gN7D93jN5V3MCAYTakptQ3V90oH09SFz` | <code>(?xi)<br>\b                                    <br>(?:drone&#124;droneci&#124;drone[_-])<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                                                  <br>  ey[A-Za-z0-9_-]{30,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}  <br>  &#124;<br>  [a-f0-9]{32,64}                                   <br>)<br>\b<br></code> |
-| `kingfisher.dropbox.1` | Active | `sl.JJAu8-Tx6wBPOilfQryKfaAQAkhhhcACWzXHqRQnCv6Rmk2nglxOTQfJzRh8Zjx3dOi7LKYes5otYcE_DDmd7uxyAiplY7Nbosy8r8sCVxmzrCNhYeLF2spAtABdgDnKMi` | `(?x)
+| `kingfisher.drone.1` | Active | `drone\nIM\r\r\rI\rDIN\rE\r\r\nTOKEN6\n\nn\n\n\r\r\r\n\rdsAN\r01a137645d8e7d23f32e026a0b160efd` | <code>(?xi)<br>\b                                    <br>(?:drone&#124;droneci&#124;drone[_-])<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                                                  <br>  ey[A-Za-z0-9_-]{30,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}  <br>  &#124;<br>  [a-f0-9]{32,64}                                   <br>)<br>\b<br></code> |
+| `kingfisher.dropbox.1` | Active | `sl.4Ta0F0ohEpziwUAmTF309Ukrbs3pxBH6hufBfyvS8-8xFLrONJHb9MFdwjo2CyVsnQpNS4faUvOeaZ8Q5xHCeaLlyugPJk6hHKv8eL_KvsaQ02yU4yhBiz3zAp4LKfbqKK` | `(?x)
 \b
 (
   sl\.[A-Za-z0-9\-\_]{130,152}
 )
 \b
 ` |
-| `kingfisher.dropbox.2` | Active | `q1yv36eq6e3AAAAAAAAAA38eltnz_5o75h6c82t-i3ud_kunx0el7ovu068g8k8k` | `(?x)
+| `kingfisher.dropbox.2` | Active | `xvax10li5htAAAAAAAAAApi06x4sgt81lt8_uppunsgtup0et6ut0-veglwzl7ts` | `(?x)
 \b
 (
   [a-z0-9]{11}
@@ -732,25 +732,25 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.dryrunsecurity.1` | Active | `dryrunsec_y6f176pmNV9gJD9O4yb4iLCXK0Bup7bv` | `(?x)
+| `kingfisher.dryrunsecurity.1` | Active | `dryrunsec_7RXv3PhFSMAYFVMASF6rLUhd1sVMeDMj` | `(?x)
 \b
 (
   dryrunsec_[A-Za-z0-9]{32}
 )
 \b
 ` |
-| `kingfisher.dub.1` | Active | `dub_UzUfn01qGvrzKQBBSQodw8eD` | `(?x)
+| `kingfisher.dub.1` | Active | `dub_ucizZx1Piag3K0bYGyYvyfq6` | `(?x)
 \b
 (
   dub_[A-Za-z0-9]{24}
 )
 \b
 ` |
-| `kingfisher.duffel.1` | Active | `duffel_live_broa9h-Y60TiVHS_OWv5_rY-rDuJa5fiBM4KlZR2ymK` | <code>(?x)<br>\b<br>(<br>  duffel_(?:test&#124;live)_[a-zA-Z0-9_\-=]{43}<br>)<br>\b<br></code> |
-| `kingfisher.duo.2` | Active | `duosecret-key\x0bqqTvehlied7gC7d6jbR92xsVWTZcy1Uxatw5SECv` | <code>(?xi)<br>\b<br>(?:duo&#124;duosecurity)<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:secret[_-]?key&#124;skey)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.duplocloud.1` | Active | `duplocloudAQAAANCMnd8BFdERjHoCEbQ6J6QKbdYRCFqaD9NWIhg-tYmnTN2n-_FtbU7qnPkQxK10naLyHL3W5xXc01sjOuYdPNQQmEwOMx6hg3hTZeINu7JGqJDJp2KRGFQHMeelCYJrmiyP6Zgd2eTBgc64bEAfokgHkgSFlDk40P1buYmIUvWyNn9dCeAz7F0dvWZRPh8vvlVRReTo6Kbq0ZAsa40Bj4C` | <code>(?xi)<br>\b<br>duplocloud<br>(?:.&#124;[\n\r]){0,160}?<br>\b<br>(<br>  AQAAANCMnd8BFdERjHo<br>  [A-Za-z0-9_-]{200,900}<br>)<br>\b<br></code> |
-| `kingfisher.dwolla.2` | Active | `dwollaclient_secret\r"""'"""""""""'"""'"''''""'""''''J0L4rxA1kFX_lgPWoQC4xztVKfiIoUWp\n` | <code>(?xi)<br>\b<br>dwolla<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:secret&#124;client[_-]?secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [0-9a-zA-Z/+=_-]{28,48}<br>)<br>['"\s]<br></code> |
-| `kingfisher.dynatrace.1` | Active | `dt0S44.ghhCOjE3oOvGW9waPlVFL5gI.oDJbF59phtsnDkBfaxAK1jq3HXMWff0mvkIhDTDQPtLAAm0EOhWmPhgwW7iosi8M` | `(?x)
+| `kingfisher.duffel.1` | Active | `duffel_test_Nb0E5ttln-Ft12KvrOH4lO5GaqbRDS5wcZmxW77MKnh` | <code>(?x)<br>\b<br>(<br>  duffel_(?:test&#124;live)_[a-zA-Z0-9_\-=]{43}<br>)<br>\b<br></code> |
+| `kingfisher.duo.2` | Active | `duosecurity\r79\nb\no\n\rgc\nzr\r\rv7\n\rV\r\rjb\rQ\nx\n\nnskeyv\n\n\nL\rjLS8BG\r\nVc rkYvRYddRgWGjJJgMiYVrlBl0vGb5usrc7miVpfR` | <code>(?xi)<br>\b<br>(?:duo&#124;duosecurity)<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:secret[_-]?key&#124;skey)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.duplocloud.1` | Active | `duplocloud\r90\rpc\n\r\rl\n\n\njidZ\r\r\r\reD\n\r\nB\r\noCFAQAAANCMnd8BFdERjHo9cJGFGJ24KpF7yuWxMVvaIy2lBWVlxFWAqbXXYffIkbnERDE1-ZLajCJ2KExy0tCHqG0H__8YmMUGFK_3VB4072WJ8xAWDbJxbUoH7ryGsMzt6MxMAOQW56UQZc3z4soOetwBfkNngU41dWW6JyoPdeMXzWPlR8bYdZYhV9rP18zDx1EC93p8vnKXK9Nj27PWqNxnOUc` | <code>(?xi)<br>\b<br>duplocloud<br>(?:.&#124;[\n\r]){0,160}?<br>\b<br>(<br>  AQAAANCMnd8BFdERjHo<br>  [A-Za-z0-9_-]{200,900}<br>)<br>\b<br></code> |
+| `kingfisher.dwolla.2` | Active | `dwolla\rQn\nO\nw\n\rhO\rqMi\rA\rNy\rt\nlc\nU\nz1Z\nsecretaj\rrt\rD\r\r\n\roMs\rk\x0b"'"""'"'"''"'"''""'"'"''"''''"""TkIJrxbRuquRYyCRqHdQ+EUd+4DF1aut\n` | <code>(?xi)<br>\b<br>dwolla<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:secret&#124;client[_-]?secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [0-9a-zA-Z/+=_-]{28,48}<br>)<br>['"\s]<br></code> |
+| `kingfisher.dynatrace.1` | Active | `dt0v96.zznjIWfd9929ikYjEUYZPlMN.Egd7DveuwVxUjjElGztrDgwH1ahN1inNJvUvw43DIlmiOjrwGi6KWuecWcymYK02` | `(?x)
 \b
 (
   dt0[a-zA-Z][0-9]{2}
@@ -761,14 +761,14 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.e2b.1` | Active | `e2b_12314b60110e1bf1b76596fdd9af20ff7cd8fdfb` | `(?x)
+| `kingfisher.e2b.1` | Active | `e2b_9a951d19f715f38d433a7886bf7a6ec6e4885812` | `(?x)
 \b
 (
   e2b_[a-f0-9]{40}
 )
 \b
 ` |
-| `kingfisher.easypost.1` | Active | `EZAKQ4iqGQE23pCgvqAowJvvgHV2TLowFzAzc1n4NalLfi5rWmL1Jn51Qs` | `(?x)
+| `kingfisher.easypost.1` | Active | `EZAKd5iHiJGhggeFVW5QyanRPl4AquKK4uNAMWbA77gKeAXfTG6LukVF6K` | `(?x)
 \b
 (
   EZ[AT]K
@@ -776,31 +776,31 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.ebay.1` | Active | `-aC898hr1ipMWhChvNDJeLu1BwoPxP5_-Tg3TtaaRNadzlqHOV8392z7ZY4EO999F-PRD-cd405af1c26c-1aa63298f86e` | `(?x)
+| `kingfisher.ebay.1` | Active | `wYIIkKtMyOw1deqIsnm4ToLTWql5LrSn-Z2NctSNDvON-OsbGBXwWN_UwPLA5ytx--PRD-17d2af9e9568-3999c2bcca4c` | `(?x)
 \b
 (
   [a-zA-Z0-9_-]+-[a-zA-Z0-9_-]+-PRD-[a-f0-9]{8,12}-[a-f0-9]{8,12}
 )
 \b
 ` |
-| `kingfisher.ebay.2` | Active | `fMxC55a6kAM8zirhQ6Wum6FnuKnlXxoF-vWE3_Vck94h7X06mjydOyfbp49B65tNl-SBX-d03efac3a514-880fc74af9bc` | `(?x)
+| `kingfisher.ebay.2` | Active | `Wvaxh3RkCAHH8I-krPwsJ9wrYXdK4MRi-_mjBghlOdIqBqK5qS8YAeHw4JOhImwXd-SBX-323d873c09cb-eab297c97665` | `(?x)
 \b
 (
   [a-zA-Z0-9_-]+-[a-zA-Z0-9_-]+-SBX-[a-f0-9]{8,12}-[a-f0-9]{8,12}
 )
 \b
 ` |
-| `kingfisher.ebay.3` | Active | `PRD-01875329-da87-5c8c-96db-a247bdb35607` | <code>(?x)<br>\b<br>(<br>  (?:PRD&#124;SBX)-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4,12}<br>)<br>\b<br></code> |
-| `kingfisher.elastic.1` | Active | `EC_API_KEYQyoHl=1R2U0l7rKHAiIvekSnjF/Nc9aTPAVzPHSg` | <code>(?x)<br>\b<br>(?:<br>  (?i:elastic(?:[_\s-]*(?:search&#124;cloud))?)<br>  (?:.&#124;[\n\r]){0,24}?<br>  (?i:api[_\s-]*key&#124;apikey)<br>  &#124;<br>  (?i:EC_API_KEY)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/=]{40,120}<br>)<br></code> |
-| `kingfisher.elastic.2` | Active | `Authorization: \x0b\t\x0c\x0b\n \x0b\x0b\n \x0b \n\x0b\r\r\x0c \x0c\t\x0c\x0c \t\x0b\x0b \r\n\x0c\tApiKey \r\x0b\n\x0b \x0b\n\t\r\n\r \n\x0b \t\n\r\x0b\n\n\t\t  \r\x0b\r\r\x0b Tq97Y8GnD4TJIMPSKpN3w39XrR1jVuKT7yJ1vETC` | `(?x)
+| `kingfisher.ebay.3` | Active | `SBX-b8ee39cd-9b24-1ba9-a388-6daaae850c27` | <code>(?x)<br>\b<br>(<br>  (?:PRD&#124;SBX)-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4,12}<br>)<br>\b<br></code> |
+| `kingfisher.elastic.1` | Active | `EC_API_KEY\n\nI\nNrs\rY\n5MYr\r\rYiumS9knQ61I8/1U3/6TuBHMdzQ0CmnUsnhrilzX` | <code>(?x)<br>\b<br>(?:<br>  (?i:elastic(?:[_\s-]*(?:search&#124;cloud))?)<br>  (?:.&#124;[\n\r]){0,24}?<br>  (?i:api[_\s-]*key&#124;apikey)<br>  &#124;<br>  (?i:EC_API_KEY)<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9+/=]{40,120}<br>)<br></code> |
+| `kingfisher.elastic.2` | Active | `Authorization:\x0b \t\x0b\r\n\x0b\x0c\n\x0b\t \n \r\r\x0b\x0c \t\r\r\t\x0c\n\x0b\x0b\r \x0c \tApiKey\t\x0c\x0c\x0b\t\x0c\x0c \x0b\t \x0c \t\r\r \t\t  \x0c\n\t\t\n\t\x0c \x0c\x0c FxPbXDbZjs+GYjRbvBaX+qupK/ukcJPTCU88EfYr` | `(?x)
 \b
 (?i:Authorization:\s*ApiKey\s+)
 (
   [A-Za-z0-9+/=]{40,120}
 )
 ` |
-| `kingfisher.elasticemail.1` | Active | `elasticemailapi_key=71889ceb-c8ef-3d0d-8005-2c11142cdb40` | <code>(?xi)<br>\b<br>elasticemail<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?key&#124;apikey&#124;key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s&gt;]<br>\b<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.elevenlabs.1` | Active | `sk_35Bc1Be0E316FDb8b97514DFa88EED6c2beda3decbf92F1E` | `(?x)       
+| `kingfisher.elasticemail.1` | Active | `elasticemail\rQiq\r\rn\riCV\r\r\r1W\r\r\nd\r\r\nY\nW\r\nhBuHkey\r\r\n\rDK6B\nrc\nI\n\nm\t728a8df3-97bb-9496-615d-ad1b4623e130` | <code>(?xi)<br>\b<br>elasticemail<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?key&#124;apikey&#124;key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s&gt;]<br>\b<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.elevenlabs.1` | Active | `sk_9B9daAdeF83edBCDfe2f8f1fBD79b7E103c5c4E08cE1b1f7` | `(?x)       
 \b    
 (               
   sk_           
@@ -808,42 +808,42 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.endorlabs.2` | Active | `ENDOR_API_CREDENTIALS_SECRETendr+WXx3aJUnQJWDr5ZU` | <code>(?xi)<br>\b<br>ENDOR_API_CREDENTIALS_SECRET<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  endr\+[A-Za-z0-9-]{16}<br>)<br>\b<br></code> |
-| `kingfisher.equinix.1` | Active | `equinix "''''"''"""''""'"'"'"'''"'''''''poOMdL2AQ8Nf3XUYDRicfONidDBJz1GY\x0c` | <code>(?xi)<br>\b<br>(?:PACKET_API_TOKEN&#124;EQUINIX(?:_PACKET)?_API_TOKEN&#124;equinix)<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9]{28,36}<br>)<br>['"\s]<br></code> |
-| `kingfisher.eraser.1` | Active | `eraserAAAAAAAAAAAAAAAAACCESSAAAAAAAAAAAAAAAAy8hQKUd6lXGu56dzXoKg` | <code>(?xi)<br>\b<br>eraser<br>(?:[^A-Za-z0-9]{0,16})?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:[^A-Za-z0-9]{0,16})?<br>\b<br>(<br>  [A-Za-z0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.etsy.1` | Active | `etsykeystring3pyt9oc1051lcuo59pjoz4dc:ol0AQawx7DF850qV2aiQDx0wDXDKx1v8` | <code>(?xi)<br>\b<br>(?:<br>  etsy<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:<br>    api[_-]?key &#124;<br>    keystring &#124;<br>    x-api-key<br>  )<br>&#124;<br>  x-api-key<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-z0-9]{24}:[A-Za-z0-9]{10,64}<br>)<br>\b<br></code> |
-| `kingfisher.eventbrite.1` | Active | `eventbriteACCESSWVMZKADAKOR7N2D0RFPH` | <code>(?xi)<br>\b<br>eventbrite<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{20}<br>)<br>\b<br></code> |
-| `kingfisher.exa.1` | Active | `x-api-key41e68c5c-136c-a38f-7835-f7d25fd9c470` | <code>(?xi)<br>(?:<br>  \b(?:exa&#124;exa[_-]?api&#124;exa[_-]?key&#124;exa[_-]?api[_-]?key)\b<br>  (?:.&#124;[\n\r]){0,96}?<br>  &#124;<br>  \bx-api-key\b<br>  (?:\s*[:=]\s*&#124;(?:.&#124;[\n\r]){0,16}?)<br>)<br>\b<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.facebook.2` | Active | `fbTOKENSA\t\r\r\n\r\r\n\t\x0c \n\r\t\x0b\x0c \n\t\r\x0bSH  \r\x0c\t\n\r \t\x0b\t\n\n\n\x0c\n\t\r\t\t2Gt7jksktvh7sgt9uhjq0ui3p5dpav5rug` | <code>(?xi)<br>\b <br>(?: facebook &#124; fb )<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTH)<br>(?:.&#124;[\n\r]){0,48}?<br>.{0,2} \s{0,20} .{0,2} \s{0,20} .{0,2}<br>\b<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.facebook.3` | Active | `facebookaccess-tokenEAACEdEose0cBAPNE8BSORBGZUE2KW4QVC2PSP44RMHRRA` | <code>(?xi)<br>(?:<br>  \b<br>  (?:facebook&#124;fb\b)<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:access_token&#124;access[\s-]token)<br>  (?:.&#124;[\n\r]){0,32}?<br>)?<br>(<br>  EAACEdEose0cBA[A-Z0-9]{20,}<br>)<br>\b<br></code> |
-| `kingfisher.falai.1` | Active | `fal.aiTOKENa0b1e3e2-7add-355a-c299-f8b58f8529dd:e080eba25ca8733283d9343faa78abf8` | <code>(?xi)<br>\b<br>(?:<br>  (?:fal(?:\.ai)?&#124;falai)<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>  &#124;<br>  fal-api<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?P&lt;key_id&gt;<br>    [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>  )<br>  :<br>  (?P&lt;key_secret&gt;<br>    [a-f0-9]{16}[a-f0-9]{16}<br>  )<br>)<br>\b<br></code> |
-| `kingfisher.fastly.1` | Active | `fastlyTOKEN2i1z05jetisuc7rnr3m0stzy1i614gay` | <code>(?xi)<br>\b<br>fastly<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9_-]{32}<br>)<br>\b<br></code> |
-| `kingfisher.fernet.1` | Active | `AIRFLOW__CORE__FERNET_KEY=""''''"'""'"'"'''"'"''""'"""'"""zEEAxSamOeuHyCrlj9gjuFlLXQzg9nqygEeOeCnen-D=\n` | <code>(?xi)<br>\b<br>(?:fernet[_-]?key&#124;AIRFLOW__CORE__FERNET_KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9_-]{43}=<br>)<br>['"\s]<br></code> |
-| `kingfisher.figma.1` | Active | `figd_mYOhRjSxr5mkChSjHeEn9uYZR2SzxN4ddzCfcP` | `(?x)
+| `kingfisher.endorlabs.2` | Active | `ENDOR_API_CREDENTIALS_SECRETu\nk\r\nj\na\rQCM\ne7O\nG3Qo\n\r\n\nQ1hm\r\n9endr+VV1ZAYTvn1fGcHca` | <code>(?xi)<br>\b<br>ENDOR_API_CREDENTIALS_SECRET<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  endr\+[A-Za-z0-9-]{16}<br>)<br>\b<br></code> |
+| `kingfisher.equinix.1` | Active | `EQUINIX_PACKET_API_TOKENnBs\n\r8\nTW\r\rY\rte\n\ncg\n\n5\rF2BJi\r\rJy='"'"''""'''''''"'"''""""'''""'""hprJA6GQI2mZ1zpU0vqMXhJH6WOTAPak"` | <code>(?xi)<br>\b<br>(?:PACKET_API_TOKEN&#124;EQUINIX(?:_PACKET)?_API_TOKEN&#124;equinix)<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9]{28,36}<br>)<br>['"\s]<br></code> |
+| `kingfisher.eraser.1` | Active | `eraser_"__ :''__\t==\t\t=KEY ="_"_  \t__=_  _WRt6f5zHnSHGFz5EUhHl` | <code>(?xi)<br>\b<br>eraser<br>(?:[^A-Za-z0-9]{0,16})?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:[^A-Za-z0-9]{0,16})?<br>\b<br>(<br>  [A-Za-z0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.etsy.1` | Active | `x-api-keyH\re\n\nq\r\rZ\rB\rq2m314japi99ime2ud2zvfo6:QF8dqIqxub8JuemBOZxxVOgWQizPyVRX` | <code>(?xi)<br>\b<br>(?:<br>  etsy<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:<br>    api[_-]?key &#124;<br>    keystring &#124;<br>    x-api-key<br>  )<br>&#124;<br>  x-api-key<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-z0-9]{24}:[A-Za-z0-9]{10,64}<br>)<br>\b<br></code> |
+| `kingfisher.eventbrite.1` | Active | `eventbriteN\nT\rt\rny4\rkGqSf\rzXD9j\r\njgNw\rH\rZlACCESS\ns\nxV\r\rR1\rVPCX\r\r\nd4yGb\nD\n\rL\rc6N\rX7U3DHQICATUKSMVAFM0` | <code>(?xi)<br>\b<br>eventbrite<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{20}<br>)<br>\b<br></code> |
+| `kingfisher.exa.1` | Active | `exa\r89\n\r\n\n3\n\nsO\n\n\ns8\nm\rV\n\r\r\n\n\r\r\r\n\r\ra490f177-1bb7-939a-39c6-f2b0b41f04bb` | <code>(?xi)<br>(?:<br>  \b(?:exa&#124;exa[_-]?api&#124;exa[_-]?key&#124;exa[_-]?api[_-]?key)\b<br>  (?:.&#124;[\n\r]){0,96}?<br>  &#124;<br>  \bx-api-key\b<br>  (?:\s*[:=]\s*&#124;(?:.&#124;[\n\r]){0,16}?)<br>)<br>\b<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.facebook.2` | Active | `facebook\r\r\r\nw\n\nis\rObZkX\nGIn\r\rMwUhc3\nb5g\rTOKENX\nyn\r\n\ro\r\n\n9N17\r\rr\rn\nFN\rbKD\r\rZYMko\x0c\r   \r\n\x0c\x0b\x0b\t \n\r\x0c\n\x0c  \t3C\t\x0c\x0c\x0b \t\r\x0c\n\n \x0c\n\x0c\t\x0c\n  \nbJ947kbbbsz7ul8dwwf16ntt1qp1nxzyi4` | <code>(?xi)<br>\b <br>(?: facebook &#124; fb )<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTH)<br>(?:.&#124;[\n\r]){0,48}?<br>.{0,2} \s{0,20} .{0,2} \s{0,20} .{0,2}<br>\b<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.facebook.3` | Active | `facebookSLFDX\n\r\n\n\n\nm\r\nK\n\n\n\n\r\r\r\r\rAro\n\ng\r\naccess-tokenRI\n\rz4BK\nzOg\rnX4\roe\rjd\r\rH\r\nS\riI\rEAACEdEose0cBALZDUTP7GE2CCN5H5MHM8ERY2O624G0OY` | <code>(?xi)<br>(?:<br>  \b<br>  (?:facebook&#124;fb\b)<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:access_token&#124;access[\s-]token)<br>  (?:.&#124;[\n\r]){0,32}?<br>)?<br>(<br>  EAACEdEose0cBA[A-Z0-9]{20,}<br>)<br>\b<br></code> |
+| `kingfisher.falai.1` | Active | `fal.aiV6j1\rL\n\r\ro\r\n\r0y\n\r\n\n\n\n\rY\r\r\n\nfD\n\n\nKEYD2\rv\n\nx\n\r\rf\rk\nG\ne51b04be-f5cb-c4c6-180d-ef3579d58860:de287f0176452b48cb852921d8bd40a5` | <code>(?xi)<br>\b<br>(?:<br>  (?:fal(?:\.ai)?&#124;falai)<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>  &#124;<br>  fal-api<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?P&lt;key_id&gt;<br>    [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>  )<br>  :<br>  (?P&lt;key_secret&gt;<br>    [a-f0-9]{16}[a-f0-9]{16}<br>  )<br>)<br>\b<br></code> |
+| `kingfisher.fastly.1` | Active | `fastlyNj\n\r\r\n\n5c\n0\nDs\r\rqL\n\rX\r\raq\r\rcn\nPcKEYhif\rg\rv\r\nwu\n\n\n\nwl\nHk\nO\ncL\rJFT\rx\ne8wq8n-8ia71_oa5a7mrywrmt2ei4pm_` | <code>(?xi)<br>\b<br>fastly<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9_-]{32}<br>)<br>\b<br></code> |
+| `kingfisher.fernet.1` | Active | `fernet-key30y\r\n\n\nVKO\n\r\n\r\r\n\x0b'""'""""""""""'""""'"''"'"'"'''"mxFic5S-tcacttylgwTRely6pQQmIvIIF8e9DDfIPCB='` | <code>(?xi)<br>\b<br>(?:fernet[_-]?key&#124;AIRFLOW__CORE__FERNET_KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9_-]{43}=<br>)<br>['"\s]<br></code> |
+| `kingfisher.figma.1` | Active | `figd_q4dmFm40gspVzhaOvhO7XlQEyncjcfOWDx587Q` | `(?x)
 \b
 (
   figd_[A-Za-z0-9_-]{38,42}
 )
 \b
 ` |
-| `kingfisher.figma.2` | Active | `figmaE532-51FD7DAD-6D0D-7B41-AD04-CCFFBB94810E` | <code>(?xi)<br>figma<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [0-9A-F]{4}<br>  -[0-9A-F]{8}<br>  (?:-[0-9A-F]{4}){3}<br>  -[0-9A-F]{12}<br>)<br></code> |
-| `kingfisher.fileio.1` | Active | `fileioTOKEN71VYG47TZCOKZ3IE1RIR.O6ILX7C1QJ2J1ZFLUA73` | <code>(?xi)<br>\b<br>fileio<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9]{20}<br>  \.[A-Z0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.filezilla.1` | Active | <code>&lt;Pass3o095wVwXQwy6POAbDEJwHy2lcL3kgoQencoding\t\x0c\x0b\n\r\x0c\x0b\r\r \t\n\t\n\n\n\n\r\x0b\x0c\n\x0c \x0c\t\t\x0b\x0c\x0c\n\t\x0c=\x0c\r\r\x0c\r\t\r\t\n\t\x0b\r\r\x0b\t\x0b \r\n\x0c\x0b\x0b\t\r \t \n\n\n\x0c\x0b"radix64"LbH5RCrFQoKWK7EZ0gG9oIEhuUZJhqvQ&gt; \x0c \r\x0b\n\x0b\n\x0c\t\r\x0b\r\x0c\t\x0b  \n \t \n\t\t\x0b\x0c\x0b\x0b\r \n8nRvY1Y9tBlvh6xxMzNOTxc8m5slJ1rd==\r\x0c\n\x0c\x0b\r\x0b\t\x0b\t\x0b\x0b \n\t \n \x0b\n\r\n \n \r \n\r\r\x0b\n&lt;/Pass&gt;</code> | <code>&lt;Pass\b[^&gt;]*\bencoding\s*=\s*"(?:base64&#124;radix64)"[^&gt;]*&gt;\s*([A-Za-z0-9+/]{8,}={0,2})\s*&lt;/Pass&gt;</code> |
-| `kingfisher.filezilla.2` | Active | <code>&lt;Pass&gt;\x0c\t\n\x0b \n \r\r\x0b\r\t\n\t\x0b\x0c\t\r\t\t  \x0b\t\n \x0b\r \x0c  Oa6veYJTiMYJUoO3AyabhFQkwkhHyiAH \x0c\x0c\t \x0c\t\t\t\x0b\n\t\n\n\t \x0c\x0b \r\n\t\n\r\t\x0c\x0b\x0c\r\r\x0c &lt;/Pass&gt;</code> | <code>&lt;Pass&gt;\s*([^&lt;\r\n]{4,128})\s*&lt;/Pass&gt;</code> |
-| `kingfisher.finicity.1` | Active | `finicitySECRETc879d04899edfecda53ec043dd4728d1` | <code>(?xi)                     <br>\b                       <br>finicity<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                       <br>(                        <br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.finicity.2` | Active | `finicityk7oc7qypn4z61m4iwbpt` | <code>(?xi)                     <br>\b                       <br>finicity<br>(?:.&#124;[\n\r]){0,64}?<br>\b                       <br>(                        <br>  [a-z0-9]{20}<br>)                        <br>\b                       <br></code> |
-| `kingfisher.finnhub.1` | Active | `finnhubp9vc0e2lnbm47ko4qnxi` | <code>(?xi)<br>\b<br>finnhub<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [a-z0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.firebase.1` | Active | `AAAA_1rS-ld:APA91bHtQnyRTdBr2v9i6uaEBvlrdKsrJmT34X1V702r8BCQMm0B-y9UPc1N0jSzs6yOXVv3Foh3NJmMTuLFobrdYd6CDCx0Yx0HOK3t6oWrTB0ga4x6cf8ygarwmQA` | <code>(?x)<br>\b<br>(<br>  AAAA[A-Za-z0-9_-]{7}<br>  :<br>  APA91b[A-Za-z0-9_-]{120,180}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
-| `kingfisher.firebase.2` | Active | `RStjTM-bRtSsiUMdaF2CQP:APA91bHjMjd0qNQeNtfTedEQlQu1KFKnmtOCXtuAYYaxmT93fDfd3hUMjUiJxtP0lmfWWACjMcfncibXv_xcdEm4vwZ3odo7RMcLahKunfk8SNSHLLli2HLGRLkXgDA` | <code>(?x)<br>\b<br>(<br>  [A-Za-z0-9_-]{22}<br>  :<br>  APA91b[A-Za-z0-9_-]{120,180}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
-| `kingfisher.fireworks.1` | Active | `fw_T0nABon11VLBiIwVqJz1NBB8` | `(?x)
+| `kingfisher.figma.2` | Active | `figmasj\n0CUN\n\n\rFa\n\rWjA\rw8\n\r294\r\nLe\n352601-359A2403-EFC6-D9DA-1586-F4B2DAD44DB6` | <code>(?xi)<br>figma<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [0-9A-F]{4}<br>  -[0-9A-F]{8}<br>  (?:-[0-9A-F]{4}){3}<br>  -[0-9A-F]{12}<br>)<br></code> |
+| `kingfisher.fileio.1` | Active | `fileio\nPe\nlr\rAr\r3\n\nN\n9C\rE\nB\r\nyK\r\ritQ\n7TOKENoLb\rR\ro8I\r\n\r\rA\n\nQYZI021LSITEILT4UV5B.GKEC6R4UGOJOW5P8OWWM` | <code>(?xi)<br>\b<br>fileio<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9]{20}<br>  \.[A-Z0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.filezilla.1` | Active | <code>&lt;PasspxHL3eCUYfCGpzZlBzS7vmJ6WbwxPS5yencoding\n\x0b\x0b\x0b\x0b\r\x0b\r\t\r\x0c\t \t\n\t\n\x0b\n\n\n \r\n\x0b\n\t\t\x0c\r\x0c\x0c=\n\n\x0b\t\r\r\r\t  \x0b\t \r\x0c\t\r \t\r \r \r \t \t\x0b\n\x0b\x0c"radix64"sah2mHZR0AfiEUBkPF7m8BGhD1iabXyz&gt;\x0c\t\t\x0c\n \x0b\r\r\n\x0b\x0b\n\r\x0b\x0b\x0b\x0c\r\x0c\r\n\x0b\x0b\n\x0b\x0b\x0b\x0c\t\x0b\nBGMBHe9Nl1OG+qtweNBJzuQ9QtnOvXzp==\x0c\n\n\n\r\r\n\x0c  \x0b\r\x0b\x0b \n\t\n\x0b\r\x0b\t \t\x0c\r\x0b\t\n\t\x0c &lt;/Pass&gt;</code> | <code>&lt;Pass\b[^&gt;]*\bencoding\s*=\s*"(?:base64&#124;radix64)"[^&gt;]*&gt;\s*([A-Za-z0-9+/]{8,}={0,2})\s*&lt;/Pass&gt;</code> |
+| `kingfisher.filezilla.2` | Active | <code>&lt;Pass&gt;\x0c\t \r\x0c\t\t \t\r\r \r\x0b \x0c\r\x0c\t\r\x0b\n\r\r\r\t \x0b\x0c \x0c\n\t\tGIhF3': I3H"F=\tcKdB\tUZ:g'"G""G\x0c \t\x0b\n\x0b \r\n\t\t\r \t\n\t\x0c \t\r \n\r\t\x0b\x0c\r\r\x0c\r \t&lt;/Pass&gt;</code> | <code>&lt;Pass&gt;\s*([^&lt;\r\n]{4,128})\s*&lt;/Pass&gt;</code> |
+| `kingfisher.finicity.1` | Active | `finicityt\r\r\n\rF1vs\n\n\r\n\n88B\nRY\n1\nD\r\nhB\r\rY\nTOKENH9\r\n\nrh\n\rJa\n\n\n8\r\rE\r9\nVk\ngq\r\neq\n\nc7a5118f0ebf26653204809143d03b69` | <code>(?xi)                     <br>\b                       <br>finicity<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                       <br>(                        <br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.finicity.2` | Active | `finicityP\n\n\rKsiC\n\rl\rxC\rnq\n\no\n\r\nVyn5\n\riN\rddr47n8jrcul6sh6jr6f` | <code>(?xi)                     <br>\b                       <br>finicity<br>(?:.&#124;[\n\r]){0,64}?<br>\b                       <br>(                        <br>  [a-z0-9]{20}<br>)                        <br>\b                       <br></code> |
+| `kingfisher.finnhub.1` | Active | `finnhub\r\nX20\n\r6\n\n\r0\n\nZq\r\rH\r\rL\rcwh9n5s7mf07gh2rj5mvi` | <code>(?xi)<br>\b<br>finnhub<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [a-z0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.firebase.1` | Active | `AAAAmPjFDPz:APA91bn6tDfuLuEoAUOXopaeNHqSBdcDq1bW23uWYM8oXll4f_m-YoaZHF-wyhzhKiFcrsTr-6xrvOsRxxJkazW-dUcdFCW_oInJ1NN7WVSiVgxjURbaDvQNacnLl9:` | <code>(?x)<br>\b<br>(<br>  AAAA[A-Za-z0-9_-]{7}<br>  :<br>  APA91b[A-Za-z0-9_-]{120,180}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
+| `kingfisher.firebase.2` | Active | `iMxKMe0MF_phrhA2OPGzrU:APA91bJtWvPU40WnHhxo9Wn8YcAoIHk_w3ascoNk0u71ZpkXNThJYsm7qiVzG4QaYoqZ8Bq067QyYSop0ot4tfNLc64lsdjciHb42llXMJVRJTwPkxsRVJiwYetepn` | <code>(?x)<br>\b<br>(<br>  [A-Za-z0-9_-]{22}<br>  :<br>  APA91b[A-Za-z0-9_-]{120,180}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
+| `kingfisher.fireworks.1` | Active | `fw_syCbVLTKRdMrml0YfAC2pRkp` | `(?x)
 \b
 (
   fw_[A-Za-z0-9]{24}
 )
 \b
 ` |
-| `kingfisher.fixer.1` | Active | `fixerACCESSraYbstVqLEuADOwde432dK4bCGji5xjW` | <code>(?xi)<br>\b<br>fixer<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.flagsmith.1` | Active | `flagsmithds5FRdTk.mqkEjJTVRwSwZDnJf3JQa1Lv6XuBEwtH` | `(?xi)
+| `kingfisher.fixer.1` | Active | `fixer\n\r\r\ri\rU\n\r\r\r\n\n0\nVACCESS\nHq\n\n\ndF\r\n\r\n\nh\r\rApjziFKEmAwyeEWFE5caC5F7ljXvbdcT` | <code>(?xi)<br>\b<br>fixer<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.flagsmith.1` | Active | `flagsmith21\ta9 3o\t1zz=0C'2psTCRfW.qAUMOS5oO3N7gVV82LjAaB3jc027EyAG` | `(?xi)
 \b
 (?i:flagsmith)
 [^\n\r]{0,16}?
@@ -853,7 +853,7 @@ https?:\/\/
 )
 \b
 ` |
-| `kingfisher.flagsmith.2` | Active | `flagsmith5fac579e3723b1be41054d5d8436ef184529f611` | `(?xi)
+| `kingfisher.flagsmith.2` | Active | `flagsmith=FLj\t3=N'4\tGf="G5ef23d3d47f386dd9ba02437565c161970149e37` | `(?xi)
 \b
 flagsmith
 [^\n\r]{0,16}?
@@ -863,51 +863,51 @@ flagsmith
 )
 \b
 ` |
-| `kingfisher.fleetbase.1` | Active | `flb_live_SkpYYXwk5V83kF9biqC5kyY2y293QGI5` | <code>(?x)<br>\b<br>(<br>  flb_(?:live&#124;test)_[0-9a-zA-Z]{20,64}<br>)<br>\b<br></code> |
-| `kingfisher.flickr.1` | Active | `flickrACCESSa95a1fff278b3ae45698e6d4999c216f` | <code>(?xi)<br>\b<br>flickr<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.flickr.2` | Active | `flickrACCESS7d57ad64189db7d607eae9e3268a4349` | <code>(?xi)<br>\b<br>flickr<br>(?:.&#124;[\n\r]){0,32}?<br>(?:OAUTH&#124;ACCESS&#124;TOKEN)?<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{32}<br>)<br></code> |
-| `kingfisher.flutterwave.1` | Active | `FLWPUBK_TEST-bdbd749939a6769a6619d29f4a38b915-X` | `(?x)
+| `kingfisher.fleetbase.1` | Active | `flb_live_MzheYtL4YYRKOxgXrJ84JYetKPli2AqY` | <code>(?x)<br>\b<br>(<br>  flb_(?:live&#124;test)_[0-9a-zA-Z]{20,64}<br>)<br>\b<br></code> |
+| `kingfisher.flickr.1` | Active | `flickrNTNsKY\r\rd\rvi\rh\r\rKEYmuItE\r\n\na\n5MF\r\r\nA3\n\rI\n\r\rqE\nu\r\r\rw51194841ca7f7b1c4a950fd8ed546c3c` | <code>(?xi)<br>\b<br>flickr<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.flickr.2` | Active | `flickrOm\nyFYwU\n\n\rJAfKl\n7T\r\ru\nHvIL5bZo\nOAUTH\r8El\r9\r\n\r\r\nK\r\n\n0\n1\nZ\n\rW\n\rfRwB\r\nt53a7ec73e9a09fd33181517d8f674b0d` | <code>(?xi)<br>\b<br>flickr<br>(?:.&#124;[\n\r]){0,32}?<br>(?:OAUTH&#124;ACCESS&#124;TOKEN)?<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{32}<br>)<br></code> |
+| `kingfisher.flutterwave.1` | Active | `FLWPUBK_TEST-83a85eb74ef889ac44e7063e1869f490-X` | `(?x)
 \b
 (
   FLWPUBK(?:_TEST)?-[a-f0-9]{32}-X
 )
 \b
 ` |
-| `kingfisher.flutterwave.2` | Active | `FLWSECK_TEST-a98971011830d6ab12f4397fb38eb623-X` | `(?x)
+| `kingfisher.flutterwave.2` | Active | `FLWSECK_TEST-7c75f9f52b0bc74381684d78ca41fe1d-X` | `(?x)
 \b
 (
   FLWSECK(?:_TEST)?-[a-f0-9]{32}-X
 )
 \b
 ` |
-| `kingfisher.flyio.1` | Active | `FlyV1\nxG6voW_IqtzDbM0xc8UpK3sR_gGO_DrQl81hoy_vOZcQwx+y,gEDIz8ouQaD9/As-cena-Q/YP2=9IVlhm+6X2qJqnQg=PTW-Up+` | `(?x)
+| `kingfisher.flyio.1` | Active | `FlyV1\x0b45bclXCeg-o5RVegPjOtk3,MU,Saz408AM_LaIVZr5-4Ns=-IVS,hSNrjN=A14cUXed/d0An8vTCR4yXEZXJXDOPAS7d6mIu4Ck=` | `(?x)
 \b
 (
   FlyV1\s[A-Za-z0-9=_\-,/+]{100,}
 )
 \b
 ` |
-| `kingfisher.forestadmin.1` | Active | `forest-auth-secret \n\x0c\x0b\x0c\x0c\n"\x0b="\x0b\x0b\t '=\r\n'\x0c\t\r\n\x0b\n\x0b\n'"\x0c\t''''"''''''""""'""'"''""''"''""'9b36r2EOQ+ToHzPjF0hGReUNSYTvl7r+\x0b` | <code>(?xi)<br>\b<br>forest[_-]?auth[_-]?secret<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]+<br>['"]*<br>(<br>  [A-Za-z0-9+/]{20,96}<br>)<br>['"\s]<br></code> |
-| `kingfisher.foursquare.2` | Active | `foursquarePRIVATEFXGH94BWJ905E5YHDCENNM6BC0GGB4HH1YI7QH37TDNUXI5O` | <code>(?xi)<br>\b<br>foursquare<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9A-Z]{48}<br>)<br>\b<br></code> |
-| `kingfisher.frameio.1` | Active | `fio-u-CPMM3L1W_MY-HwRZ-1myLyRtsR7jpHAuxnMkRfDpmLb3WBOXWIil9cvGiNiloOmV` | `(?x)
+| `kingfisher.forestadmin.1` | Active | `forest-auth-secret\rnX\rEV\rD\n\n\nKf\nN7\t\r== \n\r\x0b\x0b=' =:"\x0b'\r\n\n\n\t\x0c" \r"\n:''''"'"'"'"""'"""'""'""'''""'''""""IqgOSY7lyzMt1TcLlShqauvwv73A64T4\n` | <code>(?xi)<br>\b<br>forest[_-]?auth[_-]?secret<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]+<br>['"]*<br>(<br>  [A-Za-z0-9+/]{20,96}<br>)<br>['"\s]<br></code> |
+| `kingfisher.foursquare.2` | Active | `foursquarejX\nI8\n\nS\r\rcX\nq\n\r\n7y\nZ8\r\rHrAh\r2\r\rKEY\nbg\rZy\r\r\rg\rH\nfbOSY9GEOO4X3NNZY4UK8Y9D2MWPIQW60TS51EYINTZZF8URYDE` | <code>(?xi)<br>\b<br>foursquare<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9A-Z]{48}<br>)<br>\b<br></code> |
+| `kingfisher.frameio.1` | Active | `fio-u-i6vwE7MPLky2uqmpPlpSwiYzESdhmUpb0Td9bkC6WEPMutCV9jaS4Wf38WYm7g7s` | `(?x)
 \b
 (
   fio-u-[a-zA-Z0-9\-_=]{64}
 )
 ` |
-| `kingfisher.freshbooks.1` | Active | `freshbooksi7j0noxzftugaiix49eleolinx7e16jiisw8m4pjsdwc9rlf4j8ihlmsk19ys5kv` | <code>(?xi)<br>\b<br>freshbooks<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.freshdesk.2` | Active | `freshdeskkeyGOKMJ2TLX8WAN2TUZ3N0` | <code>(?xi)<br>\b<br>freshdesk<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;secret&#124;private&#124;access&#124;key&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{20}<br>)<br>\b<br></code> |
-| `kingfisher.friendli.1` | Active | `flp_OwZ2PMtOxm2ifeZMf3U4TbWAik5vhVso52YEyxq5PP91Tx` | `(?x)
+| `kingfisher.freshbooks.1` | Active | `freshbooks\nO\rr\r\nKe\nq\n\nM\r\r\rC\n7x\n\nih\r\n\nU7\n\rjntvtme6kl3c2rngdsdf3ulmod2btlj1tiqqakg4qoddbd4kf59exfwjxj7jecdfv` | <code>(?xi)<br>\b<br>freshbooks<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.freshdesk.2` | Active | `freshdesk\r\r\n\noit\nn\r\r\rM8rAa\n\n\n\n\rfGqWQw\nsj4tokenvmOu\n\r\n\re\rD\rD\rlhLUf\r\r\roYWQW\r\n\nV\rW1N02KBSBLP41EZZIM7Y` | <code>(?xi)<br>\b<br>freshdesk<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;secret&#124;private&#124;access&#124;key&#124;token)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{20}<br>)<br>\b<br></code> |
+| `kingfisher.friendli.1` | Active | `flp_VcjHnD0IJ427qEVLbwbimfAZ2ie3xXgqGy3QJvaJAYfDuG` | `(?x)
 \b
 (
   flp_[A-Za-z0-9]{46}
 )
 \b
 ` |
-| `kingfisher.ftp.1` | Active | `ftps://XQCapNzXum9wwg4xXvYc6BjnY4T2pB7l:NoczLATi4B5wqxQn0D6kmM3QYutbA3ax@R19W7S9JTsZTGWSYbd1r7JEmUlSr7CBh:22179/w8hTUpLUGrKdR3IssgmOVGgm29jj83Wi` | <code>(?xi)<br>\b<br>(?P&lt;TOKEN&gt;<br>  (?P&lt;FTP_SCHEME&gt;ftps?)://<br>  (?P&lt;FTP_USERNAME&gt;[^:@\s]{1,64})<br>  :<br>  (?P&lt;FTP_PASSWORD&gt;[^@\s]{6,128})<br>  @<br>  (?P&lt;FTP_HOST&gt;[^\s/"':]{4,128})<br>  (?::(?P&lt;FTP_PORT&gt;\d{2,5}))?<br>  (?:/[^\s"']*)?<br>)<br></code> |
-| `kingfisher.fullcontact.1` | Active | `x-fullcontact-apikeyvqlhEeeGbn9qbTfKPZn4XJtiVixe8wWm` | <code>(?xi)<br>(?:<br>  \bfullcontact\b<br>  (?:.&#124;[\n\r]){0,64}?<br>  &#124;<br>  \bx-fullcontact-apikey\b<br>  (?:.&#124;[\n\r]){0,16}?<br>)<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.fullstory.1` | Active | `fullstory_apiSECRETeu1.LuDfHxj4V6omuiWXzbmfhFmFsmj017LZ` | <code>(?xi)<br>\b<br>(?:fullstory&#124;fs_api&#124;fullstory_api)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTHORIZATION&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:na1&#124;eu1)\.[A-Za-z0-9]{20,}<br>)<br>\b<br></code> |
-| `kingfisher.gamma.1` | Active | `sk-gamma-RAPd8ORiP2YKa4XF-eFL45jx3k-9bmausErvHqjP-JvuOgABi-ykiDRx6UU9AjFn` | `(?x)
+| `kingfisher.ftp.1` | Active | `ftps://DFx"""DQiD'xy"6=d"=Q'Ou==W"g0A"Q:==1z:L4x=::''zE="Y:z"=M3mo=""Q:7@bECX9cTve=C6=e3==Bez=F==E=n==Z=v:89486/:=0Z=:7=rPDm3:=:::r7=:=4:e==:JS:` | <code>(?xi)<br>\b<br>(?P&lt;TOKEN&gt;<br>  (?P&lt;FTP_SCHEME&gt;ftps?)://<br>  (?P&lt;FTP_USERNAME&gt;[^:@\s]{1,64})<br>  :<br>  (?P&lt;FTP_PASSWORD&gt;[^@\s]{6,128})<br>  @<br>  (?P&lt;FTP_HOST&gt;[^\s/"':]{4,128})<br>  (?::(?P&lt;FTP_PORT&gt;\d{2,5}))?<br>  (?:/[^\s"']*)?<br>)<br></code> |
+| `kingfisher.fullcontact.1` | Active | `fullcontacttq\rsj\r\r\nu\r\rQIY\n\r\rdw\n\r\r\n\r\nm\nrdX7\n5FBUfSVVFKhoZgDX35Fek0quQdcYnRiB` | <code>(?xi)<br>(?:<br>  \bfullcontact\b<br>  (?:.&#124;[\n\r]){0,64}?<br>  &#124;<br>  \bx-fullcontact-apikey\b<br>  (?:.&#124;[\n\r]){0,16}?<br>)<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.fullstory.1` | Active | `fullstoryB\rc9c\nf\r\n\nw\n\n\n\n\rl\n\nq\n\nG\r\r\r\nR\nYo\nAPI\rrD\n\r1E\r\r\rb\n0fzEna1.msJNatxAosCkT4ix2jeIgNulwgm98S84` | <code>(?xi)<br>\b<br>(?:fullstory&#124;fs_api&#124;fullstory_api)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTHORIZATION&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:na1&#124;eu1)\.[A-Za-z0-9]{20,}<br>)<br>\b<br></code> |
+| `kingfisher.gamma.1` | Active | `sk-gamma-mR6uVisb6mhfibOYU6VYUGe7798HKXdpQN0AYhWi9do9OsiYrBuCG8_9XZelpWTM` | `(?x)
 \b
 (
   sk-gamma-
@@ -916,7 +916,7 @@ flagsmith
 )
 \b
 ` |
-| `kingfisher.gcnotify.1` | Active | `ApiKey-v1 \n\r\x0b\n\t\r\r\t\n\r\x0c\x0c\r\t\x0c\x0c\x0b \x0c\x0b\x0b\n\t\x0b\x0c\t\x0c\r\x0b\t\x0cgcntfy-dmmm96793zduw1npac4dcugtyyyeirm9-dc0aeeaa-4aa5-d061-32e8-5615dbaddd71-eac34a09-bd20-5918-cba4-8a4a201be80a` | `(?xi)
+| `kingfisher.gcnotify.1` | Active | `ApiKey-v1\t\t\n\x0c\t\r\t\x0c\t\n\x0c \x0b\r\t \r\n \t\x0b\x0b\x0b \x0c\r\x0b\t\t\n\x0b\rgcntfy-6lc6_w78logz1du59xif9z6yt7dn2snh-90930b87-e4e6-09e8-82d2-34ca1334d161-d3540f06-bf2b-8cc8-0939-53e8a709038e` | `(?xi)
 \b
 (
   ApiKey-v1
@@ -929,11 +929,11 @@ flagsmith
 )
 \b
 ` |
-| `kingfisher.gcp.1` | Active | `{F6qtUiumzMLKJUOGJHlkGse9kDMX69qn"auth_provider_x509_cert_url":}` | <code>(?xims)<br>(<br>  \{[^{}]*<br>  \"auth_provider_x509_cert_url\":<br>  .{0,512}?<br>  }<br>)<br>&#124;<br>\{<br>  (?:[^{}]&#124;\{(?:[^{}]&#124;\{[^{}]*\})*\})*<br>  "auth_provider_x509_cert_url":\s*".+?"<br>  (?:[^{}]&#124;\{(?:[^{}]&#124;\{[^{}]*\})*\})*<br>\}<br></code> |
-| `kingfisher.gcp.3` | Active | `gcpsecretOksCu3PJFmvd=\n\x0b\x0b\t\t\x0b\r\x0c"0nif1ndgzo37stn22t2plp3i973vtbap3i8'` | <code>(?xi)<br>\b                     <br>gcp<br>(?:<br>  .{0,20}?<br>  (?:key&#124;secret)<br>)<br>.{0,12}<br>[=:]<br>\s{0,8}<br>["']?<br>(<br>  [0-9a-z]{35,40}<br>)<br>["']?<br>\b<br></code> |
-| `kingfisher.gemfury.1` | Active | `https://SbOKkiDPCwXbrSs3LpWq7s_X3Duo-ZhE@repo.fury.io/` | <code>(?xi)<br>https://<br>(<br>  [A-Za-z0-9_-]{20,36}<br>)<br>@<br>(?:repo&#124;push)\.fury\.io/<br></code> |
-| `kingfisher.gemfury.2` | Active | `https://ux4hNDiKb0QzXoI1uFHS1dIg:@gem.fury.io/` | <code>(?xi)<br>https://<br>(<br>  [A-Za-z0-9]{16,24}<br>)<br>:@<br>(?:pypi&#124;npm&#124;gem&#124;nuget)\.fury\.io/<br></code> |
-| `kingfisher.gemstash.1` | Active | `:gemstash-key:\x0b\x0b\x0b \x0c\x0b\t\r \x0c\t\t\x0b\t\t\x0c\r\t\r  \r \x0c\x0b\t\n\r\t\x0c\r\x0c305d5dd69b13c99a7aff4343400ff3b2` | `(?xi)
+| `kingfisher.gcp.1` | Active | `{{{:kp\t":=RmMe ""'Q'= S'\t2'G"1y:Ak'}{'02'="\tf"W\tmY\t"':'Q1=8DVy"q2g\t7b}{c\t"l\tK"b=\t"o:='t\tA=85"\th\t\tPNH3=A}\tt{'\t:qbi5_\tW4=" Kfa"wF "YTx:4""cu1}{1: a_\t 'o"E\t:L:V"B=Q\t=7=QnI:\tT:y}8{vhgR:\t:: =r"KA6:m"g :==l:FB'8 \tM}:"{ UQ4=h\tJu="7fxm"U":\t\t: : '\tq\t _ }{"vB=a"Ol=h:CFw= =\t\to:iw5\t=':=d\t=}=M{iJ'pXUB:=f=: Rz 8l":H="\tr\t f:"Is} '={\t u==P="6rF"n=p5V"3g'n'T'=BC:d=v}{xW\tOx=_x8K4:T:Yu:I'Y'VX:L =A:J==}"{a':'v"\t\t E\t2_hk' k\t3w6\t 42F:f\t9'}2'{BF7\t\tL:HE l"==j 5= 'TWl=38m":JMe}xd"{='  J\t 6g'cfP4z Emik9H=\tcIOs'="1}G=}{:"{:O S:oK ' 'UAh="e8 I43 =2Ubj="aG}{ ":':=r:t'=q0"i "\twD  =Qtt \tsPrg}S{T6K   :"\t"z"8a=y1c3ltbTDsC5\t2''B}{2='jz\t\tb'=2X=\t  "h"TH"=\tAA=49G'\t}  \t={W"2\t1W'7:SfuW :=wXnK U:'H"G'HT\t"}{S:X  l"Ymkh0 '4iN'W "i:d:\t:7Z :p}"y=={ \t  =\t:\tl GQ=RB3==\t"j=jL6:tc"Y"d}{= 7h='I:s" hS\tsO"9=UjR\t 'YTD= Z:}1G{UO rNV"l': x\tv\tWK:=\t\t J4'QAfC'\th}Qw{=Ml\t"WDy:L F:j'ED:V"u": zE\t:\t9w\t}2{":':u:::fcYmG:\t=Otr'":GVlAX\t= X:}{iFDvYV'I\t wtnZ3 SD=\th:g5VA:a "M\t}dZC{q8""1pDu:s t= =9NAxG\t\tu=:\tWUD z'}}Y{T{7' R4O=pi:fhG= 4 9 I='1I0"'=Tg\tA}'K{:::Xv'w\tc :lTt=_c  =gTEwXxm"=yEK}{vhFmka'= 5"22:N=:::"o'\tLUEJ::\tp }{=7'Y Y9E\t=OH__3Ma""\tOSQJG"B8"'bF}{'O1'L:0BnL:O"AMP'_'\t=: ''MF=Eh'7}:"{=4Q=pQxZ3C:"'mH'45=\t\tJl1 Mao2\tg:}={=n=\t '="\tH:Lb"\t3 F' 7i:pK" oA:kh}{O=g"AMS\tC:40B yy cK\t7g' O:'u"\t:'}{'\t"\t4S=amN=NT86ZaQQx'p v8" DK=C:}{wz:'\tD'oF"=rN=h"n:" =ect\t=L 8o\tV}{FB'GUGY6:jJf=:y'=r"Ffc\t"=qdjz9='}{zzX"Cg1oJ"p":=q\tWc"=Ol : 9  "xo8}S{"q3q\tH\ttj'_PL:\th8'J"=Q: o\tu'P7q:}\t{j\t:=\taw3z'SdM N\tTpSe" \tKi_Bb\t9"S}'{'I"\t5==y=:I"B:at8 DC""''3=SRVd3'}:g{=a='0w::=::i"'IxjqSX'y8"F"K ="l }{5 RAN'n\t:"TdaZj'7ZP:"=a 'N 6_P02}{seT: Edonc9qi"\t'p=z"P DIqA3kZd6Z}:{'J9'KY=ep5Cb\t'Jh : 'JQ'"":=U"li:}=}{Fl'{j:Fn=:X2e68Z :A7"\t''= 'R=T'85"'e}E"{b\t8 "' =d\t=\t 2wOtiT"==_3tf'_"S\tM}{Ui:H\t"A' G_" \t=M''""1c  "S 'da' }24E{'\t 2\td''84ey'=\t :N a6\t\tWd ="0= m} { ="XJA::Vkt""\t: "p LrD:= E::'==P}{MOJU:B=\tNP=:' ==\t"N"aV'C:s::\t1"q} '5:r{ r_::":t K"zF= ":==HE=NS8\t\ti 'Qk}{Xv\t:\t'y:2=  \t'I'\t\tA  :U:=s4\t"iC'}  {"upux:g_ =iPop\th5\t"w:=""= z oV"'}U{ IM'8io1\tx D4QkO=bX3::="= :l\t2fm}6'G{ 2\tF"5I G3\tcm=="9"=t:O:"5vZS\td:"}{d'5WL \t Rp'="wJEp:=:5"\t:"3=:\t"BC}}{{::"4= "jX' :  W=Mjw3s\t: :N  c :s}{'W="HC:Pi3 B"sE"e'=\tUe wC:ny2fxL}{ ""n:sO:1Dp::6Ba='7Z\t:_Cf'iaN\t5=}w{'s : \t:C2af_mY\tVk"o he"\tgW h\t:=V}"{m:":D=E=\t\t"4'=p 'y'=C' S:'\t"m9  }{':" :zYD=O S8:\t\t2i'=pixuz:4'EB=7}6{"=sS:X=Cv:G=bO=\t'TEmJ:'cc\tJcoo'f}jAW8{=J E ''"=AB D:\t\txJoy0\thC\tVN 6w'=}{La1:N:\tM" W alh\tB:=mh'r""6'Ldu'\t} "0{6:ZM\t="=U"rI0  :TLm=2=\t7b==\t'cd"}{5m:'B"=DO"'""q7::'"6JpF'""W"J:3\t}'e\t6K{=  = :\t"  '\t W\td"FH'T:\tW"'" o"=9}{G'\tq=Ne"c =\t\t== l Hd""5  u:: " '}{p:R"SU :a\t"K':o'\t : "\t 'Lk cE:2e}{"j""hHw'="=k: ="'Lcg5"f\t'=F2AuR0}{:Xk=:='fr\t1:h'Ru"y'j:= g6\tb zGD }{'\t=Rt=v=TD::4H9s\t\t D\t7 ==A"'=\t M}}El\tr\tSR{8{7\t7=o'g":=z0R8'B= "p""\t '8=z'3D3}"{:Yj\t=:brX\t5 =vt:ziP=: R8:lgKOmzl}'"{Uo"q\t"w ==''"9:'6AS:ng="w\t0\tw\t:"}{=O_='DU'  'R "wdiA'd's:\tT is'9:3}{iJXoo' \tA"\tA='=n"=\t'W::"\t"" h=w=}j If=k"{ u vt6 Dl:5ni'\tmm:kW"6q'\tV\tW4J1S}{V \t:pxZ:XM'9h\tV'\t:PW"==f  "='6XK} {EMiE=I"::C : d P:e92"ghU:" c51FH}{ZV'34:=\tR J\tY\t:t ':a="Dv='=:\t\tJd}dp\t{'c=Hd 3Ye ''\tB's=1A"xP\treR=u 6k'}{P IGv3'Km=Z\tv:=I=O:\t'Y=lWx:=zR:K}2{Yv=l"G2"MlQpk1Q=Hs:R7X=wMU=="":E}6'2'}{{ L"::"\tm='""7':: :g9Um:G==::="\t"}={RZ :3\tyMRwfxey''P  :1g:Q'=OA\t="'}b\t{"M"216:A'"'N:::'Gi'\t\t:QkSJQ::=Ey}={J"\t'd\tev':qS"pRV \tyk ""'=PDwDH "}{'f': fJYTVt='I 4==mH:":::xM'V"v:}{gOJ=H'm= K:I=p''"0'\t2D4= \t==mM \t}={3""R:c34a"HT= x1'"0z1CgyXvm\t1\t\t=}{cR'8\t"WMLSNp\trIrO6lNK: \toQS'===l}{\t'B'"pkEw\tOEcM9y='\t=\t8 'hm '\t1Ck}c{p'lLVGe0=1"\t: \t'":ZE= K6='L\t'\tD=}{hy= :TG W':i"==' "Doq"T1TkWtUUm=}'y{4MUb:U"\t\t2JDvkvW'Xg:='e\t\t==: 7"\t}{'BT\tRm"::aato'_4s\t98'"5APE:'\t"xK}{w "F'"n='\tz'q'\t Y:=:=':m_O:'wd=\t}'{ z"":ZT1:= \t=re' B'd': Rs:3'M"O3}=o{ ""==wkn3 '0:=\t''R"brOa'":"z'Rso}"{c  Fk":\tY'=ht \t'j=Q=w "h5\t c=\t6=}"{"f"Tr :oF"'z'G e=O:\tO\t6D"="35aS=} }h{{\t=t ::ah'=SKVm::"shf'::"w iSj\t:0}p{\t tz"::N="='iI\t63Aky:u7Yd h8""\t"}{TQ'7'b=fp="N8"\t'\tMQu"='j "'T""Fc}{'W7"T'\tg1 :'=:\tf\t\t::\tE\t'="L=iclU}{:''gTc'y\t'j:_="\ta qVb M\t4mB\t\t"='}{g===sk=:he0: Ls'FT"g=:ZJ "E=O"7b}{lp:"Ua" \t=M\tbC\t''S\t"5S:s :g=M== }{=\t"\t T'"'eJ9'' whpp\t =8C'w6\t""" }{k=hd5LF'\t:V"z"So h"4===w j: Hrnv}{='QBXLv06:"5B UE2K''K 'okWu ='sv}x\t{n"2Fl'2o "=EEzGju" XU"E\t==\tqx=q7}{h'5=c aQ:e"7nH01\t=\tLi'"a\t\tp:e=mk}{DCn'::C"99  Ag=RK6'o\t:\t=mS f"3=\t}{"mJM=T\t"K\t=es  bh'=m2'f=u:: =6h:}A'0{m'ATb:" =' =Ld"\t:"6"qqK  6xS\tdMa}{zKB6HjOQwvjU Jm ":e\t'Y=CmpK9=:"\t}{=\t'l"XF8i=y: '  " ZX:BEV= : 'jH\t}{dKY=w1\t \tKy\t=\t\t'EU'0R=k"1 lw=y'F} {E1au'p":iU"F"\tKm:\tw2S yXd \t'\t\tv"}pm{ =eQ2YjD="s'1N:\t'y'="=p:\tm:uH:C"}{:'r:=PLR2I'4p\tp'i\tQvM == 9"l==U:}{K='X E"=M"A""e'mNgg5=vI=48v='9=V} }u{:e{z:h'e"D''D_"'"6"_""A"="= ==aT\tS\t}nO= 7{=\t: \t6:Iyt'"J\t"Y= Qv0=\tx\t n:'\tD:}\tEa5{""xS1Ksy:2:==6  mkimG\tL\tW'e:bNW"}{:BY:='kh0J' mvz\t dc Wi0\tt\t\t\t6SYx}'j{y Q"ePG 'w :=u"":\ty:' =IF\tX "zz }T"{=::lS:Y=X'C: "u  n9':'PapIjp'T:\t}n{=Y\tPEF"Y8 \tF_=b=H'X 's s3d49  =\t}\t:'\tT{ R d =''U97yWD=s'z: \t'"n\t= =Ta"=}{qeQ'UG= =SL37"_==5Hm=4K'r"=4 :=m}{m A=" "NV5"9="ri"e\t\t" t' 'XWu\t0m}Z}{{NW'\t9:X"oW4a"'\t=aNn"xr=n8"2o65\t } {8'=:\t\t\txY\tW:r:h'=\t0"Qmvuvui'NHhT}N{"29Cqh70V\t'K=M0'P'nHT'6 q'8:Uk:3}{'Zmm\t\t:S:V='2"MVdI:gf4"'B\t"V= yL}{ SO"2" \t"=='TX"\t\ty :\t\taZ=:Y\t 1Kq}X{\tp:"0"= "'=J :"A"iMFXcL ''XR"96v}{ f C \tp::chS=s\t""t:'e=83:e\tdG " }={8r\t"S 6\t'g a\te:z::C:  :\t\t mhVIDj}:{"s= RW=Ia:: 'yc':c '"fe:Q=\t v:7K}=\t{esq""\tlI=f6bV=T_wC"B\tFlv6:r  SE'}Y=\t{'n''a=\t=::\t=jN"Rr"F:lF:v='6\tY\tMw}=\t'{:"_iS7A4"s'y":M:K"'i mE'sY"=='D\t}'={d":"m"md:KzN'F"\tG53ol"Do' zS4'\t5}3R{\t=m:8xy5Hu':Xx\to N TH1 "iD:='CV\t}i}F{\t{\t':U0"5C N"ns\tVu9z'=\ta=a='g"_a= }{'=q =Dp=m= :4:T4"'\t=Y yH x\tT\t\tD }mz{"L R ='u\t=:I"3Qc5"\tOq'':":y"'"Dk}=hr{1\t\t\t=\t' :'J":9LP\t"'=\tw' r=CYFbGl} {  Y "=Ta4V T \tj'' "hFF::X v" S't}7{QX8\tiq y:W =u:\tDh'"4ze=2\t=\tOE"Gh}{ \t""hqU:f'b'::P=Sz5 "\t\t:Ne  sVCe}{S:1pC8 n_ \tm"":=39'z '"'=n\t=4PlB}{t "'':=wMl':"'7''cV=n3"":\tf:tQ'0}=e5{\t":yM Wd=8='x \tI4\tbLc8vn6  _B \t\t}:rX\t'X{:3z:\t'""T":rYpA:1a :QOjLfQ\tkzl:=}j'Y{no=::"==Tu9'h6"Z' zy'x\tb'ro7"""U}}' {{\tXKp:p\tJD4n'U=Gy "Z'e'" : w\tNDK\t}A{nitC'UP:1k=\t"='I:7lpBM\tlS''8nw:a}{O=6:A8 = po ::\tqv\tZ n=AJP7k8 :=O}{3\t n:p Q3x =D=GK4e0l1=Z== \t:8:N'}Fa{U\t0\t_\t7W\t": :6  vf =I  zM=VN='W=} {A7m:P"c'=6m1s'\t:"H"D"'U'\tw'AAM8C}{:9JdsbqL :S:"\tR\t'T  :XNM":'y:fo:}{ka mhm:  b'F"::': "=h:HS:"BTd=Vg}{S'\tJ'' \tRK\tV 5 =:iCUe27S\t\tS Xx '}{: =Qb5i":s2 7= 6o=IzV\tBW\ty0"wI f}9{jiE=\tg:"":=Obmg=m'\t:=A7:q=1P' Jw}={'Bd\t9Uz:"'W'"w:X==U:"\t"9\t u"yz':}{x6'\t'wm""JsRoQ z"X G:=':" xn'r2 }{:S"E":8'Ni\t''"  ='HF='"=:r: :Vsh}"O{:'bK1Ny"um\tPga\t\t3:0= :h\tT:S cA2X}{91\t4b0=v8 T="Y='=N:9Y\ta'5:"b:"7'}{fKU"\tHk:2\t=9dh"pp== "nWu\t:=E'=G }"{f"::6M\taGZ L=:lu'=\t:=:=a\tb"\t'= \t}=YP{:\t5=1KY9L'Wx:'"O24Rf\tuQ'Fg=Cv"qu}{:\te2\tGG\t:Ta=4' e"YaP1myH\t::N\tEi\t}}:{{7"\tg"""iQYIP:'NLT\tn \t="j\tC"ZE 5v}7{bp":"4TjP qP=J=l:=0H""U"3"MU=\t'd}\t5{'=\t9=M Fi"u\t" 9N=:"B:\t\t"P"Hw:Y9J} '{:\t"=z"cTDzzK4\t"1e:\teS'I0X=Or"N1'}:N'1{G=':6v=="t"=N9 m"=\t=='2\tic 'yjqH}X"{'7 " ZCo:=T'\t:L9:ul 6Sq'w2YE\tc 5}{'=\tX='=:6:5 "Wv=oM i=l'\tkz:d'of'}\t"DF {flK""p6\tP ='="::::=ke:eQ\tVI"=fk }{O"" "L\t''\t :gGA ""P7  MdO"lK ggy}{:'= yZL:3J\t\t"XYpp9 Mvr:":S'=g  \t}{\tmUl1S:JAet\t=h3f=='H\t:"U tf\ti=C\t} {zxG:'"Kq"=Y''"7=hc"\tl:=:=g':cW h}"\tB}{==5 B{=::'A:=Wr'"hGX' W":Q'\t8y  \tGPr5:}d"{Pq::p\t5:lYiDW:AJ q\t\t"T"=9'ImK:C6}{ o"N=dSs: RR p:4'K"=L:\tnWds\tLs 0}L8{t '"fG'"': :'2":'":_p""lg"=\tD l7}j={Ep::teYdG'N:hc\t0I=O5Om\t"":Ns"S:S}{H: \ty="\tc'"=b7:am=MppfOHdn6A\tT'U}"I{\t'0tR"2Ox ":\tOm=v'::3=Z Q=:'m'Xk}\t{TEERk1G bg"jyu P =gl=":Xu"3U\t':=}:"LB\tM={e\t:=''q":OV\t"\t  HF0I:t=fu:\t7""I }:{YV d6"n\ti: \t\t  X8hMUT6=U :C"65\t }}{:{ p ":Mn"   sQ\t:O'\t=:Vf"z1'\t'4E\to}P z{=LR=8U\t5tLXy\t4:5E'hBZM'H"Dz"18\t } f{3"\t:G AQj\t"9 ' sW=k==g\t'NS\t" z==}={'pcgU:':'I'S=wn'7WLJ"5l2"=35=I8"}{k  "XFS ':PB""PMl' 'W'=""ur39q :} { 'd''w"e"Jo=BZJ =''B"X"\t: _8v'MA}{_E\t=xFbBj'':\t9=4'Q\t9 "=f"=BJ'Sg'}{Qf"\t :VQ"\t=wS"UY\tq"=H'"x\t=f\t \t\ta}{=:WK="_="D:===q"gi=9i'   R Y2 k:}{:Wr_'Woyc"cC"B"Y"w''m\t=":":GAQ"g}{"\t"YM" :n=7\tdnsGR"\ti\tTLS=f:ZLz  }{w ::: hW\tE\t''Q\t5XA'YJTI=M"'2 ZNq}{ \t4:\t0mr:Fi_ "\t'ov''RJn="vW==RTF}{ \tV3m "W'WB= csa:'=Ft'9\t=" Xtwd=} cM\t{\t: "\t=B==O"" El\t2=\tu:=RH5=:  'L"}{SqK'b \t'2z0'R  :G'F " \th"'Gwt2:=}{'''Y tLm ::\tF= 8'=D:'aVxJ_\t"t6' }{  "':=E'w iLiF3 \tsg h""=:P cD :"} {T4\tyR'=:l1AF \t5ndH 0r :TPd= '  "}} {{=RgJAO\tZL"\t':_=4'K"=A M='l:"7X"'}{ \t=m'i=f7"C=x=v"==v's=="\t\to"=YA"}a{\t_:nxr": 5 vcc'D\t'S G5C\t_\tK"\t'ed}{"6 \t'"lo=VKA=:\tuEw""  "4'' F:z':}{ :X xOF50:'ys:"jkNSZ1' if'=R:Gih}{UR"  N':Sb""=""\t_1OUDa=yS:1_Tn\tB}{zxJE y"\t:QN\tJP\tfb3'\t\te"" 1VN=A:_}_{\tZ 9"081:YqD ":=Ym" :WoW z\t MD\t=} g{"y UnW 8 M':'8x: 8='\t""=''W:"wf2}{"'\t\t '=zY=\t p'W8L'M'9"X'0\t=u:\td }{Pwr' V": j=uO\tLq=:=9:MM  "\t kwOD}={r"a=P :\t" O''Ra:= d:': s \tt=d dQ}{Jvq"K OVd:'=E0Z="YaU'mA"=M'TN:=m}{x"""KnnqB1o\t=C\t  LtINFt_:F:=6:: }wJ:{R:'""'6 \t='""L \t_=''::::ihUn G4m}jE\t{Zc'= ":"=' O:e'"=l:C=\t\tj :\tJ\t"0=}VC{1gn\t n \tbU\t\tP"'s:\tNsoEgbk: \t=4qp}=W}{ R{ \t :=K="LNn=S1'\t7=G:=:=rpq: = C'}B{"d=N:S2=1Id:AvL=Gkr""dl= 6NF"m"_}"{gsP'C:\tu'FxZ r: 5ED=\ta==A  XJJ: }'"{Vve:_1\t75i:"" m:j'v:g "d=l"\tf=' }y{ID0pdo_VlFj:"al9aK\t3='Z'LBjS7':\t}{:wJl03q:='VRw"\tB\t'a:'E _bLAYtZ":}{:VV\t6:Z='=MZ""6j=:NB:"=uUl":\t='I}9T=d{:'n' L=\t0CZgj4vWpjeccM7=\t4n qp S}'{== \t1\t=Dj\tq\t\t 7\tp'"s"9"KSzs= :F }{=i JB\thg:N'9=U'\tJN_h t"NHd'ypfO }J\tS{Ji9\t=:su'=f764'Ab"\tedS9Slc7'Gh'"}{ "AS :qb"t"7X'_:X  :u 'E"8"=u\tA }\t{:"Y==Egzqju"'q_\tr":E2\t:"K"WB"Nf }Y"\t}"auth_provider_x509_cert_url":  \r\t\n\n\n\n \n\t\r\x0b\x0c\x0b\t\x0c \x0c \x0c\x0c\t\n\n\x0c\r\x0b\t\r\x0b\x0b"sLqyzlPv8Iu8U8gJYa8ekFPQT2C0Ilui"{{I1j4\t'e\tB5:"G = Edr"x"\t" = z \tI }{ Q2\t8d":Y: :2C=y=W5Rr\t===k'\t\t ''}{:9 s''"=atpTSa"""='t:"54\tg  '"\t=}{=='=O35Z"':="3g\tX' A:ii:D' \t:"nO}_{cv :'\t":N\tgx=:D'e"f:":=v":'"F=\tl}{ Z\t "'i=:=h'N:4Ups\t== :2=8b"s'r }{ "=q"k'o:c\tg2=IqDw:lAOxxPf'P_1 \t}"{:Ci:=q=GGmM:=s80'=\tV" zH3=m\t:":P}'{J=7 4=:\t''vBO\tU7Js"B9k _\teBDS'''}" {3Xyn'Je:b_===\t:'\t\t' 'd3bNC=4w= 3}'{'':5'K =M\t" '::5: '5'"":\t e=="C4}{:u'\tI'""=26:_dRc\t :=:c=JXSjOI=kV}{Az:_'\ta"\t"A''=v1 cZl"tF:ioX=\tt _}v\t{8:=_=\t:MHFL:XN= 1sr"": \t=\to'u=6u}z':2{s"LGeq :MB::3"'\tR='EA\t'X267=:QZ\t}{\tk:UA X\t:e= M"'U:x I \tX"'Y"kNx'\t}'p\tP}{{Q:""vH"r"O=o x:\th:_  y":\t y7uZ"c}{  =QMfHXTO:Fu= oa': \tY:"N5\t p:lU}'{"WMY: j='"Z\tE' "_:n""\t:N"\tBi =Ic}{ 9d \t=\t\t =\t\t=iX:""'x\t'_u=\t:hqTub}{:"'=sF:lqWt'LRrtq  J""\tqc=jk:  '}{c h"j \t"T "BQr\t:'=Bz''9'=L2z:dU=}{=GG'Y"U' "=z::""Pz jZ:\t'c5= k'_'}{_c\t\t's:=" 'g":s7wh=8=B:h\twLVa Um}{Wb 'Ct593== JOtg b'Gj_::':sKe\t:w}{"\tWsilyAz=ue= =t'N'\tI\t\t"5W"SV:l }{=:\ta ::\t :='::sQ:"=\tZ' S9\tyg"\tJY}" {'\t :"\tQK'=\td:o"z"K=YV h=ZAQ"\tvc=}{v""7:=5:"=P:B=" \t ":VW="=\t ::\t: } {Uf\t''\tzQJx:'hH\t :'\tN ="X\t:'l''::}={_H\t"Y4 =""'=''\t \tems= "\t EV= 7w'}{="F"x:=gtVQNWYN 2 :r\tk\t= : \t: =:}'{:8=yLQA4Y\t8 1 :sg=A":6::\t\t4nh'E4}{  a"\t\t=:YlUc\t3i="" li GZ\t"EE'RPZ} jx{WB\t\tM t V"I _ :=A3 == n=q=\t"6ref}D""{ ":R g=AN0gbk9P=t=:n :Ju":Lsl=Sf}}l{{:9"'N7\t= :'\tSNNXF'h"ygrH v \t =v:}"6{8y\t'C'"\twz3\t'=1"'"""pw::4=b= :S\t}4{g:= 'EUEHhj0FVy\t'V\tT :W'S9'v':RX}c4\t{mHiF'Bp :gb\t= 'V"  hi:0'"\t  WE z}{ZGVX9Tpj4'='E" 3E'''"8"3t9Kh\t'='}I{4"iT'\t:='f3L:Pp9:3\t1I\t:'='JwZgA"}'p {:\tK =pd :Z':'PdL2OM=sQl'\t\t opI \t}{"43: pXgT=af:M "' "RC\t: \tatX' lu}{b"\t"'t: rOErIL' 9"5v14EAK\t"\t7nX"}\t={"c\t:\tHv"L1:":e5"qMX":\t"f"n="\t:=R}{d':\t\t 3pudJr'V6===pEO"  \tQ 8:V_k}{\tga'\t\t4g"E:9\t :'nQy"7s'C 4'QY: '}{"=p\td\tb=pc'"\t\t  ="7i'a2NKQntK':q}{\t:'o4="W\t7r'u: R'Y:Y \t GV"u 'YUG}X{Cl' Sv qA k  Ic'\t:9""K=t"Gh:A:=t}{\t":l= FVx'g7_:u:z \thO'"BAai':s \t}{ iIBL:":\tQR0EJ"q"cU="j:5Ar':\t':"}{AV"W:G'g::XY'u"Qz::L "=S_"tR"=''}{'X:\t h'e\ttD\tHK'z_:NfV'd "=5"Pq\tS}}{x{":q=U88' := r \td=2\t\tqd\tk px"y'\th}B={\tvwG\t\tJB\t4Ihe=D RCzY6Di':" \tQ':8}{ 1KQX_ 'u"e=E'V9'6'fz"L " "S'"Pw}{C_m"5Xjn':'F 7D x: kcv:6KX"_  '\t}{:\t:A'H="9Ty':'\tIhx\t"T N_8T\tS=x"a}zY{\tV4:Kq:'frHjE'h:yu= =rW"L: :==\ta} { v0=bdCQ=IpzXffS qQd"4mL \tztomlt}=o{'W 69\t_y '"Q\t 0_:7:G_J"'zs\t2gA="}"{=6\tr'=':i"='5:qFMp:g:zP"= g:=":'}{'M 1Q'wLb:"V t6\tr9:A dC5Rr\t'J\tH }{q\t=8' =39 X'z'\t:\tK=Q:'MPQgzUdI=m}{cT=''6 "V'MA'=t=N"uhe='fNH\t==3S'} P{:k\th=:"B"\t:"yWqa\t =\tCi=""XISNAN'}={whf'3==K"42OW1"f\t ""'GUa1V7:V9:Z}{' q=fyPG"= RR\t::"UGR"'Z3 \tyW=V1\t}{1 :G:'pY:StM":y=:r :q"t= :='":J:}{fodL"'""\ty= \t\tgd'I"qIQ'"4J::=BjX}{N:x\t==y=:"6'\t'1'x: 'jV"v"A\tL"9ev}{T: "=e9M _r=V6"'5'2=A'"iAhP:I:t2}V}{'"'{5ag\t\tQJ_=A"::9s:f:f2N7:nR=:gv"D4}zH5{BOQD"=vmn k=\t"k\t\t' p\t6\t="=:Wo=q\t}{UDi"b"nEG:6=Z2=v'cDz=ZyA:'"S\ty\t'}{ T::w=oDnP595':VRc\tr6H"'""ABz5c=}Rr={ rr:bb"M:ntF JO"G ea36\t"\t:'\t6\tj }c{\t1"Z::: dWZ'6T'=K= w \tDT:'Kfz=06}{M' :'\t\tp="w\t:3 D:":= dr"\trc2 Sb"}'\t=s{G F=""P'iu:1" " =W jN'1 ""4:m"t2}{=s\t6uCuagQG':b  \tP:B0A\t\tu:MjaYe }{\t62a= OAo=GFfy=n "= 6U\t'_ _"T= "}={ 2dYV::=uY" :4wC"fXXR=Bg E=Kx:\tC}{l\ts''\t=='3B sDO_=6""S QO\t\tim=C\tO}{:Pa" "="VQB_\t\tRe""1av =p'=\tLh" S}C{E=\tg 4\t\tFE"=kh:=Gu'A DFV\tb'' \td'}{='I :epEvP'"a:Y8o \t:'H=QH6 C=q:p}{"UJ8v:0H=N"E=f:Z""\t8L"="d'juIW\tS}}{{'Hq='l= Uj_"\t\tpF=jc L:\tML2\tn_A"A}{:Oc""yiag'g"'b:":=0'G3'I==\ta'iJv}k{iI:qIg=FB2_=Q S:Y f'==bAl_=0\tLb=}'\t:X{=VxQCpCSH\t"\tGC=x"ag \t: :W_=D' =:}{\t zPz1Q:=:"\t5\tid=t\t=E=n "R:\tY_''}{" R'w6"_:Eh=O'b9t=:b1E =="="Q87:}'V{N7U"'\t  "z=\t1X=t:7_\tI\tmY\tU7 ":'q}zw{\ti"=":P':"\t\te:duU'l:P:ew::'\t"""G}{fF:'f42R G "' g:\t'mC" D"'"Tq""JK}i {\tbf'' F2\tQ'W  8  'ces":yJ6 r"_'k}' {QX "a3VEt0\t":'wnrvw2fV="'K\t   ==}{cR=":9T\t"B=_=\t 6Vi lY\ty"8  i"':1}R{:"N= ::K":g: R:j=C"p"ch=DvkMD'yc}{f"43jbmwr"=Q==W:\tS\t "P'\tK\tV"w'="}{Y\tAT'j 'y\t0JKO:'\t =7=:'=Kp\t\t\tM:L}{\t'\t\tk\t'tl'' y::='uF"qp: c\tE::=:w}{ t'L=\t5MT3l==\ti1="u3x5:":LjWto1=}'}"f{{Vcf"'"zlA":g\t=N'L'k\tzF="c='q \t' }{C:T==j1"XK\tzXX' dF_ ='"Dr"'N \t= }A cq'=8{Hy\t ==Wzz7= v:::'\tuS:':e:Xj\t:l:X}{':":ErmoL:q0M\tr'K9 "sL"V:fbLT=g\t}7C{ 1t'pa:rf\tD:i=Df"5 Mf\tTN\t\tm:\tpI2}{:'8c7Egu xuGxaeG'::74=3=b31=Erx"}80=={:De:o4Q\tE::\td  5:bM'"=\t: "kR DF8}{L"5=GMJtJ2 ='x'kpeT jgFy\tB\t'o va}"Xu{d\t'P'_7""e6\t3=r\tN09:GA: 9:5'p ''}{T:w \tQ =Rt\t:= p'"3 ="TU==6ytz=GV}\t:\t'{:"=Nsm'I' 'P:m'':""='W8d8HoGx""Y}\t}{{2"'8IS'" \t"py5  CD" BZm =ShMabf"}lX{:e4"k_Mr'S C\t  : t' '\tK'\t=HO"'P"}Y'{c==n'uw=\t'o=o"'=LN=:J\t  "m==  ==}{J8N 6=2'W\t6=:_=j:  =='"I\tSf"''J\t}{=r::hH'\t'Xa"'P\tYOZ''\t\t:':=C 23Lt}"4{gb3\tQ\t j="=Yu4t='HE :\tkD'\tG"9c=7}{Hj"Ld= I= \t'"\t1:ng\t\tl=F=\tQ l" mJ}{'k "e\tp=_ =tDp=ueJ DM 8B_m"2zdq'}u\t{\t6F: " Ku :6elk\tg==Lmw'vA"  mq2"}{E\t:=9=1''yg:L:'t\thX"xs:i'Q\t  :"Y}='{GtGzHnd5::"=:=\t"'Je2=9\tSIAv6" rx}K{'=a"5cq"=B"PO=: vi""=TY==L'=V '0}Ks1{i"C1VKw:"eD \t:yj ='JL  4 \tRh\tR\tQ}dio{'za":":"0\tm"hz7 \t:cgY Dre:77=B:e}{K\t:xnvgN='":"=buyyg9="\tCm"NHc=" }}{p{8\tm 'x:=:\t=u2eC"he" F0q'"m8hix_X}{'"bA=SD"9HE_:xv"='g\tdt=Q'=s'C:MC}{:'\t':IkP 6iBGe"\t WGzhw:\tG\tkh:o "}p{_hs"'=Bd\tQZ2U JE"\t3=:=\t  v:y M"b}VL{x:4RD\t'Sq:bX n5Z:R\t6nL=5A0='Sne }It{v=1"u\ti6\tTidUP E_ocz'Cf' =h:8UDh}A{Kw:'=K:YxJUZH=J Yd= lfR"q'fy'\tIF}{:\t :"c\t'\t eI""v r sM2":am:"W=\t_:}{4: =:J:ZZK\t""U:R \t6Z\tL\t=ocf\t="YW}{k'JB:YU"p' 119=95=Q\tGJHwuoC'\t'pQ}\t\t8{\t':cUm: Jcfv:::=\t6"= t"=\t:p:3==n}K:"{_nzhP'"z:'lV \t=\tFK6:a':'2sERl"p=}:{=\tW:0'H:U'=\t'\t\ttn'_"'="'3\tG "B"e}{kpuzwG'=R'6:b 41 ='K2M "bAIN2= \t}{qc\t:\twVYr el7Q6OQXEth k = \tV2bX:}"{:=VX27e ':7 U\tN: jz\tF:SZ'RQ \t Xa}'}7='{{==K"'7:eC5'Z Q'4 "' 32 4\tOl _C' }K=:I{'\tqtwZmL"me iE":4m 9u"= Roj=":'n}e\t{=p't\tt"='5"k=I"i=\t\t=IY=0\t'= :X  }{S:::==Ahs _Ul==2n47 \t:r"I:j:V='W}7{'kC:Z=:e 91'Il HN:KO::a'5 Y x:"j}=x{M7h ":uq'no"O'UNGiI'RbUpP:31R1KC}2{GVcgl''Vm=L7ESqgD='T:u:: ="N"'' }qQ{a't 84:=:_W V"z'=:9CHn" qD=A:\t:'}'Us{_ \t K\teDP""'_  " " s'P\tEw'l Gb\tE}={i'=zy3m:46M"fBy jaOa:" c'\t'C6'\tQ}={Jg\tBP"\t:g_kg9\ts33: 9s\t G=::d"=Cy}{nTV"HUaf3L3h\t\tIss'':1H ":6b :2"d}{":z2'  o I\t1WpR THY'\tYfY::3pYRzX}{U \tz"   "'UHa'n":2'':=PX'2"=:tAs}{" i'\t=i:\t:o3 =\tYkb_::sbIP:H N6 \t}}G'{9{:5VY'"U"  nlC'7o Y'"G' "\tKLcCa2:}{="\tJ 'v\tr==8'=L\tzWx"\tW "0Ak9 'D\t}8:{ gn'D\tO:"o:\t'm  w' y\t9:z::3h=E=N}'{Kc=y=b"Z=epbgg:':gqkT\te:\tF:":""\t}"{='\t\ty9'Ie": pb:z =j0'LgF\tW'Z'F\te}{Uw"\tS=b6l":B   1="  'fO:'1\tg\tO=5}\t\t9{e8x 'K\tG6: B' 8=4V\t"t='JCCHzH8XS}{F1C= 71"""Qj"Mv"9m\tRWk: z'3\t \tRG}{D'u:"P:I"SG:"'0A8:k"\t:"bX 'k  Or}{  480'K31e= f=gV8"2gR\t "s C::W r}{=n:'BYv=':'"b \t J"\tS:gQkk4"EE" M}{hMSVHK"H:2tEa F""p=: 9'et"\trPB4f}{P:E_S='  'N=Z:4\t0:= ' :MIY X::Y'} { '\t:J"'"pw =M3L"\ta=:\txxtuv BE"9=}{\t  E:"\to=M'\tC\t t 'X'"GQ S_FA\t\t"u}{\t"'ldOg:R:a\tc1=Bt""vv:y_M"k:\tZ6"}{'CV='Q"5bP"TB_ \t 8P2d_=wx"":="X_}={nj\t4yoY2=glF1==A"  q:Xk a\t Tqs:=}{\t"d\t:Uj9D_E""k\t Oa=::"'"WX \t= A }{V'=CGF'=j'f\tP=:'6:q Vb7 vR C  a }{'m' :Y'u:"' :0C6k:=uQ\t"t"h:'l=:M}P}{{:S"=th= =S:fN':7W=Sk:k Y\tCA\tB'\tI}{_\tzqE FN4'=:'  jM\t\t\tWP\tL"G"T:_GF}{LE:'"'i'" "\t'R "n:i''g""e'"Mns= }{D5  "4Rx: o'Oh\tH:\t=5 X2"g : V':'}{Wo'=\tx m::='JmvX0 '6 a\tRemJ'='d'}{R= wE=b8= =cD\txG\tn :\t= 8g\t'w:f\t"}"{:"JUx 'RZVxctEWW'3t_  =UO8'"p"o\t}{"=6AZ=lq'1 \t66B"Fwf:=n39wO=G'=:N}{\tc'Lu='N =0'=\tQs=:\t"f\t::"lwF:"\t'}{  :\t=xV\tOW =7r=oI:='Edw'H\te:8 "'}{":\t=:= \t\t'\t\tR't4sO\tB1QV9UK:tk7 A}{DOA9"\tK'4"=\tn \tG'="0z=pp"::chX E}{T =U7k:= Nw :y" s=' 4U\t""f:':dca}{=NPe":Hn: Ox''\tB:b=S6:UV: q: "\ty} H{= h:_Ml"XTj sdTy6or'0r=oZ9\t"'\t' }:{lc0 "' "=bbfd\tkc=xhn  'a:"DY\t=c"}{==\t:=:'='=Lv'b= e\tV eEH" 9R'C' "}={\t\t9n=  \tL"G= '\t "q \txbF"VRT'=Qm"}=S:'B g'{K'2q'Ct9N"=\tg'j 59==g \tt:F"1'Fw=}}O'kf{LH"{gPr=\tlm=\tL'N:1z'_  '' Wyn'gNb1q"}p{:=:\t6: nNh \t9C'":\t\t'5'aq Pd=s R }{I \tkH a ctM"2wxM'=c"HthPG_\t:I "=}l7{NB=vl:=0W'EMtR lY= Mtg : "=" k\t }'{=KY\t\tkvS:LBt \t=M\tf\t4oT\t\t'a=\tb'Me}{=\t_ g4=FUI f =i261"=Sr=RTW=:M Q'}\t{\t: l'1n L=C: ::osb"''\t\t1bV= q'l"}"{:4  PX  ZU"X=E"7: =='1'=27= oN" }\t4{A\t =:g: :7\tvUd'=T=:IGK'5 EY:" I\t}:=M{ :U=" "oJH\tc\t=  :F":\tr" =S\t="ot7}{WfC3m 1=B"1=I'U=\tEn:9:7\tr"JN2zD"}P{=E'TwAI:E'p3'Ub\t5\t" SH=P"H"xndk=}\tq{:="I="F =2"gU'S"'\t lu9\tD"\t\t'Q \tM}{Rk:s  =\tz1"U:\t0 'f1"=:"a"B\tw"=Vo}{4= ==V=ha'TU"f":o='0"dk'=bHu= '6}}" {ap{t\tXCz7:O ':":\t='"5Qken=m xz"'9\t\t}{ u=ZXJ v=AZ==== LLtl:==P=G=zE==\t}{GpdZ "W:8:''' 5'0Psd'xx=F'T2'"='}{:G"_: 5v'j7NwuO\tjt"\tKb7\t"vF\tX=\t"}{::"\t'6:=wz=Ta_LBT=:e\tOg8==o=d  Q}2{ :xU\t': ZUQ:x\t9\tvkn\t: K"o'=::"" }T{v"\tUp="k'2aJN'\t=Vw\t7\tK95\t3s i:"z}{=M"::t=:=Jlva \t::30:y"Y:v':h'2PX}"{ uq \tn5Y519FF: xjk  hqod\t ='nG\t }x{3nPZgH_s"U2:"MC"Y Uz'M"g=Tq\t\tw =}:{zls6\tAi'\td\tpz":\tr:'"YTU "'K'hj"M}H{U'W\tv8OI:'=7m: bpl::TBEHpf8X =2=}\t{= Y'v"bt="\tdD="osAqed=   ndFsV3B}R  Yn'V8{=''_:"=R:AM=="Y:zTwWG:\tkA=J"DrL\t}p}m{oY\t={\thxm\tsid_"l"4p xu"5\t=I\t=F="4b\tmA}{' =8T4o:pQ2"=' f= '1::t"U'h":nI"}e{ :2=k\t"v' f:=\tY"JB " \t\tJ":2 1n'f}{= \tY9q' 6: mvhHO\tu:=='u\tTxT= Vb"}{""   GV\to'  \ta\t4"=K :\tC" \tq 6zk=}{"GviWQ8=P'k gM wX\tC='8j"RU':==Bo}\t{'2VcZ'y 8Pe 1S: d'  uq\tiO:'x'' =}{y='t" qHh 7mM=R D:: eue''"=EmQ\tJ}{9m\t'" Jcv' oDC:':L"E"\t '=F  \tHXt}{=A'=9=V  =1"=Zl ='mr\tv=J\ta ='ttx}{ :=KUOU6xvG'1b:'""li" :Lneq"  ="}{B=te:'kC= 7b\t '=8BT\t9S:FH"r\tkbK'}{"hfW:\t \t "x px=\t3iT\t 'Hab= cM\t:=}{h' V  "\tV\t:Su"'ei "G_P\tOS'=="sH5}{aq_A=' Z""IM:K8'V"T":uD\tZ=\t3=g G}:i{4:q "\t52bw" =Z0==K:ApP=E 0::==:N}N{\to\t'':UA'\t \t \toh="=:"ssh'Qs'PWR4}"{t='Zrd\t"''\t\t\t\t:VW=\t 3 d:'os n"A5}{=c'9x" E'2LT51 "\tN"B"N\t'M:e7G\tY"}{YH':  \ty''I=F\tOR\t 'K dl9::p=vZY }7=}{{": fs"v:== 'p'B=0 Go 79'\t b=I=\t"}{Sg "Y"D:"yauCnF'A:"":::T="Pr Kg }Z' {8':7zngO:\t Mvt"Sg8362A=v:"\tt"\t m}{Nf:=7pr_=\ta:76OOZ:"'::d="_:s:' w}{EY hq nfJRsPjv0\tP"k_=Q=G"D"AaH\ts}{bOxYaY ='"'\t"mH:'U\t" 3"\tP: 3=:qH}{dU7"G"'\t'L\tY4jB'T\tD= X"I\t:=igm5l}YMb{XYU':' co: w:\t:pN=V9=e6 ev" "" :} {S"  MV'"W:"Z\tZNq:u'm:i'u\t Cu8t3:}et{\t'f="P:\tz=' 8:s:0'=e""bY"ZP2 "\te}T{ """=L\t::t=f\t7':g "x=''=28P  LP=}\t{=lQ==:9w9=9PI5CK'"_sG":"\t ''5Cej}=' {M=' NDT8='Q=\tMQ'Xi=9Bx:'uk''0==N}\tf{"='E='\tl2=:W':=6YevNA'W"9=2a=:'"}{HeU Qm""q'"t=pR:=: 5v:kfh"P\tSOD2}"}{:={\t=E'u=3:VF"y'Eh"'"=::\t\tdMfD8E"qP}'{f'NcL R'=2S' 56Ha'1:\t'5w"x7gKH7O}:{GgKw  nB :k5C=\ttHZ\t:1' I\tO:ou"'B}h={8:ur:\t: : NbH=m"W8d\thZ=VMn8 :P :}1Kc9{:E h:==_2=\tS'2:XD='J8'=y"Gj9wldh}{_V 0=""FKrU'"'N"EVfMSe1QC=nND=2 }{\tA:=:8=i\tdE" XV_j9Ku'\t\t"\t\tAd4bMO}{\t='_="jD='"5pM:='1bA :: w=Y'0q\ty}:="{""\t = =\t\t:C\t2w:_:":2=2='s5":''c }r_{=  =\tPu0:mpLqf:= " \tk\t5I:'":\t'y:}{7"d\t2 'kbSwV":=tVGd Q=\tzx:p"o_C=}"{VRlnqI\t_"hCU'h 6U0K\tT\tsWE==x\t=1"}I{X" WnE '3w=c\ttR7E "= 3=yIj:'op1n}'{aYz==:\t \tl'"DI bW'"' :hPH=H' ':"}}}` | <code>(?xims)<br>(<br>  \{[^{}]*<br>  \"auth_provider_x509_cert_url\":<br>  .{0,512}?<br>  }<br>)<br>&#124;<br>\{<br>  (?:[^{}]&#124;\{(?:[^{}]&#124;\{[^{}]*\})*\})*<br>  "auth_provider_x509_cert_url":\s*".+?"<br>  (?:[^{}]&#124;\{(?:[^{}]&#124;\{[^{}]*\})*\})*<br>\}<br></code> |
+| `kingfisher.gcp.3` | Active | `gcpSZl53uiXC1CyZ2XKjlLHkeySFNc3MXgkE1E:   \t\x0b\n\x0b\r"f404p5zoztywrdg43aedx4r3xz94obeajxb"` | <code>(?xi)<br>\b                     <br>gcp<br>(?:<br>  .{0,20}?<br>  (?:key&#124;secret)<br>)<br>.{0,12}<br>[=:]<br>\s{0,8}<br>["']?<br>(<br>  [0-9a-z]{35,40}<br>)<br>["']?<br>\b<br></code> |
+| `kingfisher.gemfury.1` | Active | `https://tcap9zvpiiJWRRkXvElDVEx1OUe6pRKo@push.fury.io/` | <code>(?xi)<br>https://<br>(<br>  [A-Za-z0-9_-]{20,36}<br>)<br>@<br>(?:repo&#124;push)\.fury\.io/<br></code> |
+| `kingfisher.gemfury.2` | Active | `https://uBoIUFZSUO8Xd8LgNdO6Djos:@nuget.fury.io/` | <code>(?xi)<br>https://<br>(<br>  [A-Za-z0-9]{16,24}<br>)<br>:@<br>(?:pypi&#124;npm&#124;gem&#124;nuget)\.fury\.io/<br></code> |
+| `kingfisher.gemstash.1` | Active | `:gemstash-key: \x0b\n\r \n \x0b\x0c\x0b\x0b\x0c\n \t\n \x0c\x0c\x0c\r\t\n\x0b\x0b\x0b\n\t\r\n\r\n88348ee9d2cd88543106c02034602111` | `(?xi)
 :gemstash[_-]?key:
 \s*
 (
@@ -941,7 +941,7 @@ flagsmith
 )
 \b
 ` |
-| `kingfisher.generic.1` | Active | `secretbe7cS97a2am26qPaJtU7z3dxlmk18zy3cxtolh1fasixkxwn7o3k` | `(?xi)
+| `kingfisher.generic.1` | Active | `secret0Xvz5jiknebbFZT3GYkC7crmp2egkppsp2s226cis98fxjalo64e` | `(?xi)
 secret
 .{0,20}
 (
@@ -949,33 +949,33 @@ secret
 )
 \b
 ` |
-| `kingfisher.generic.2` | Active | `api_keycs1ec3bc-ojxfo_sjg.+_kkm.ht.6suxpd` | <code>(?xi)<br>(?: api_key &#124; apikey &#124; access_key &#124; accesskey )<br>(?:.&#124;[\n\r]){0,8}?<br>(<br>  [0-9a-z][0-9a-z\-._/+]{30,62}[0-9a-z]<br>)<br>\b<br></code> |
-| `kingfisher.generic.3` | Active | `userpassword'p3jxvcGTgrhNQJ6ZoM6cSd6gTboEH6'` | <code>(?xi)<br>(?: username &#124; user)<br>(?:.&#124;[\n\r]){0,16}?<br>(?: password &#124; pass )<br>(?:.&#124;[\n\r]){0,16}?<br>["'] ([^"']{5,30}) ["']<br></code> |
-| `kingfisher.generic.4` | Active | `usernamepasswordAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA` | <code>(?xi)<br>(?: username &#124; user)<br>(?:.&#124;[\n\r]){0,16}?<br>(?: password &#124; pass )<br>(?:.&#124;[\n\r]){0,16}?<br>(\S{5,30})<br>(?: \s &#124; $ )<br></code> |
-| `kingfisher.generic.6` | Active | `qwer689964` | <code>(?xi)<br>(<br>  blink\d{3,6}<br>  &#124;correcthorsebatterystaple\d{0,6}<br>  &#124;letmein\d{1,6}<br>  &#124;newpass\d{1,6}<br>  &#124;p@ssw0rd\d{0,6}<br>  &#124;pa55word\d{0,6}<br>  &#124;pass4now\d{0,6}<br>  &#124;password\d{1,6}<br>  &#124;qwer\d{4,6}<br>  &#124;qwerty\d{3,6}<br>  &#124;trustno\d{1,6}<br>)<br></code> |
-| `kingfisher.generic.8` | Active | `db_name'ovVfFoIgsgKG3TNNpD3vOn6tFC0xQjkz"db_pass"oBa481nPRyGPmKPWxKgCjWum6umx7jZM'` | <code>(?xi)<br>(?: db_user &#124; db_USERNAME &#124; db_name)<br>(?:.&#124;[\n\r]){0,8}?<br>["'] ([^"']{5,40}) ["']<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  db_password &#124; db_pass<br>  \b<br>  (?:.&#124;[\n\r]){0,16}?<br>  ["'] [^"']{5,40}<br>) ["']<br></code> |
-| `kingfisher.generic.9` | Active | `bk18r406wzqjip9vfpuds.dynku0-s-e+299j8f0bdjf4ubosim93rstjz159v63h:4M6I9UM9TI5KB91TA6WYUFV8C8FMWNO7` | <code>(?xi)<br>(                                  <br>  (?P&lt;USER&gt; [a-z0-9._-]+ \+ [a-z0-9._-]+ )  <br>  :<br>  (?P&lt;PASS&gt; [A-Z0-9]{32,80} )<br>)<br>\b<br></code> |
-| `kingfisher.geoapify.1` | Active | `geoapifySECRETjrtAJRDjrLpBSfDd7QUSwufjeBGZoXPe` | <code>(?xi)<br>\b<br>geoapify<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.ghost.1` | Active | `ghostf4feb31654f3f40511cb5430:4b8f1a9967bc8fe6845f228b59adf3dbde37a85e7f2541fc5f35dfb36ea954c9` | <code>(?xi)<br>\b<br>ghost<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{24}:[0-9a-f]{64}<br>)<br>\b<br></code> |
-| `kingfisher.ghost.2` | Active | `ghostAPId4423257e011682b68096ba9e9` | <code>(?xi)<br>\b(?:ghost&#124;content[_-]?api)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;API)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [0-9a-f]{26}<br>)<br>\b<br></code> |
-| `kingfisher.gitalk.1` | Active | `new\x0c\x0c\x0b\r\r\r\r\t\t\n\x0c \x0c \r\t\x0c\r\r\t\t\n\x0c\t\x0c\t\x0b\t\x0c\x0b\t\x0cGitalk\x0c\x0b\n\t\n\x0b\x0c\r\x0c\n\t\r\r\x0b\r\n \x0b\t\x0b\t\t\x0b\x0c\t\x0b\x0b\r\x0c \n\x0b(\x0c\r\r\x0c\t\r\t\x0b\r\r \x0b\t\t\n \t \n\x0b\x0c\n\n\r\r\n\n\t\x0b\x0b\t\t{\r \n\x0b \x0b\x0b\n \n\r\r \x0b\x0c\n\r\x0b\x0b\t\n\t\x0c\x0c \x0b\r \n\r\x0b\tclientID:\x0b\r\x0b\n\t\n\n  \t\t\r\n  \r\r\x0b\x0b  \r\x0b\x0b\r\t\t\x0c\x0b\x0b\x0b\r'9d5c71b6657938e63d3f', \n\n\x0c\r \n\n\r\t\x0b\n\x0c \r\r\n\t\n\r\n\n \t\x0c\n\t\x0b\n\x0b\x0c\nclientSecret: \n\r\n\n\n\n\x0c\x0c\x0b\r\t\r\n\x0b\t\x0c\r\r\r\x0c \t\x0c\n\n\x0b\x0c\n\x0c\n\n'7d318f835890ab61a2706b654177a0644928f68e',` | `(?x)
+| `kingfisher.generic.2` | Active | `accesskey\n9Rm\n\nq\ny.kgf7ev2btptpsrt_o9-+5_-adep3oq24` | <code>(?xi)<br>(?: api_key &#124; apikey &#124; access_key &#124; accesskey )<br>(?:.&#124;[\n\r]){0,8}?<br>(<br>  [0-9a-z][0-9a-z\-._/+]{30,62}[0-9a-z]<br>)<br>\b<br></code> |
+| `kingfisher.generic.3` | Active | `usernamegP\nss\rt7\rwg\r\rGg\rpasswordC\rJq\r\n\r\rG\nf\na0\n\r' :\tb\t\t\t:A=Nm\t:\t:=MOMHD\to: =C\tA'` | <code>(?xi)<br>(?: username &#124; user)<br>(?:.&#124;[\n\r]){0,16}?<br>(?: password &#124; pass )<br>(?:.&#124;[\n\r]){0,16}?<br>["'] ([^"']{5,30}) ["']<br></code> |
+| `kingfisher.generic.4` | Active | `username\r\rn\nQz\nL\rqv\nOY\r\npass\npi\n\nv\rL\r\r\rR\r\rFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA` | <code>(?xi)<br>(?: username &#124; user)<br>(?:.&#124;[\n\r]){0,16}?<br>(?: password &#124; pass )<br>(?:.&#124;[\n\r]){0,16}?<br>(\S{5,30})<br>(?: \s &#124; $ )<br></code> |
+| `kingfisher.generic.6` | Active | `letmein523234` | <code>(?xi)<br>(<br>  blink\d{3,6}<br>  &#124;correcthorsebatterystaple\d{0,6}<br>  &#124;letmein\d{1,6}<br>  &#124;newpass\d{1,6}<br>  &#124;p@ssw0rd\d{0,6}<br>  &#124;pa55word\d{0,6}<br>  &#124;pass4now\d{0,6}<br>  &#124;password\d{1,6}<br>  &#124;qwer\d{4,6}<br>  &#124;qwerty\d{3,6}<br>  &#124;trustno\d{1,6}<br>)<br></code> |
+| `kingfisher.generic.8` | Active | `db_name\rheEL\r\r\r'\tAE=9=c\tli\t f s0Z=B\t:L: :P04= _\t'\r\n\ra\nKdPd\r\rZY\r\r\r\r\n\ry4\n\nB\n\r\n\r\n\nE\ndb_password"` | <code>(?xi)<br>(?: db_user &#124; db_USERNAME &#124; db_name)<br>(?:.&#124;[\n\r]){0,8}?<br>["'] ([^"']{5,40}) ["']<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  db_password &#124; db_pass<br>  \b<br>  (?:.&#124;[\n\r]){0,16}?<br>  ["'] [^"']{5,40}<br>) ["']<br></code> |
+| `kingfisher.generic.9` | Active | `_qr71rz-b7vtf12.gdsh21n2.p1fh.yz+e0_m8nrb.tl-xllzv6lh3au-hnkuf82a:83Y2ZCGRKPNU5I0M8WV3754GZSICZHZP` | <code>(?xi)<br>(                                  <br>  (?P&lt;USER&gt; [a-z0-9._-]+ \+ [a-z0-9._-]+ )  <br>  :<br>  (?P&lt;PASS&gt; [A-Z0-9]{32,80} )<br>)<br>\b<br></code> |
+| `kingfisher.geoapify.1` | Active | `geoapify\nPq\rWk\n9B\nK\nNlmoTOKENx\r\nIA\nnT\nkw3\n\r\n\nJdWYiLpHyu5m7g7nQjVb6Q0F5W40cmEP` | <code>(?xi)<br>\b<br>geoapify<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.ghost.1` | Active | `ghost\nd\rf\r\no\nPnT\r\rI\r\r\nR\r\r5Yj\rX8ud\r\n\nz4db37ab35283000f06fc4eb4:f765c4e7ef2c35b21fd6f8aa49db8fd1f9ba4e1f89bd7a5cf1816c5066cf4a86` | <code>(?xi)<br>\b<br>ghost<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{24}:[0-9a-f]{64}<br>)<br>\b<br></code> |
+| `kingfisher.ghost.2` | Active | `ghostO\nOGc\n\rhwN\rw\r\nsq\r\n9\n\nH\nH\r\nq\n\nH\r1TOKEN\r\r\r2\n\n\r\r\niAn\riOww\nr\n\rV\ru83581a220731f2e23fbd26fe08` | <code>(?xi)<br>\b(?:ghost&#124;content[_-]?api)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;API)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [0-9a-f]{26}<br>)<br>\b<br></code> |
+| `kingfisher.gitalk.1` | Active | `new\t \x0b\x0c\n\x0c\t\t \n\x0b\t\x0c \r\r\t \n \x0b\r\r\t\t\x0c\t\n\x0c\t\n Gitalk\t\t\r\x0c   \x0b\t\x0b\t   \x0b\n \n\x0c \n\r\x0c  \t\t\r\x0b\x0c \x0c(\t\r\r\x0c\t \t  \x0c\x0c\n  \x0c\r\r\r\x0b\x0c\t\x0b\r \r\n\x0b \x0c\n \n{\x0b \n\n\x0c\t\t\n\x0b \x0b\x0c \r\n\x0c\t\n\x0b\x0b\t\t \n\n\x0c\r\x0b \t\t clientID:\n \r\n\t\n\t\x0c\r\x0b\x0b\n\r  \r\x0c\x0c \n\r \x0b\n\r\r \r\t\t \x0b'64bcbaa2b4f8472347d7',\x0c\x0c \r\x0c\x0c\t\x0c\x0b \n\x0b\n\x0b\r \n\r\t\n\r\n\t\r \t\n \r\n\n\x0bclientSecret:\n\x0b\t\n\n\t\r\t\x0c\n\t \n\t\t\t\r\x0c \r\n\t\t\x0c\n\t\x0c\x0b\r\t\x0b\x0b'bef9b07dd14abbab073268e9cae7bc727105e624',` | `(?x)
 \b
 new \s+ Gitalk \s* \( \s* \{ \s*
   clientID: \s* '([a-f0-9]{20})', \s*
   clientSecret: \s* '([a-f0-9]{40})',
 ` |
-| `kingfisher.gitea.1` | Active | `giteatoken0f9e35ae6374e74e04f3f7b5d6edbacc5d5e80da` | <code>(?xi)<br>\b<br>(?:gitea)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:token&#124;key&#124;secret&#124;pat&#124;access[_-]?token&#124;api[_-]?key)\b<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>    [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.github.1` | Active | `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` | <code>(?x)                 <br>(<br>  (?P&lt;body&gt;github_pat_[0-9][A-Za-z0-9]{21}_[A-Za-z0-9]{43})<br>  (?P&lt;checksum&gt;[A-Za-z2-7]{8})<br>  [A-Za-z0-9]{8}<br>)<br>\b<br></code> |
-| `kingfisher.github.5` | Active | `ghs_vjuuQ26ocoL9JHZDoeledHSjFZRMQFdavk3y` | <code>(?x)<br>(<br>  ghs_(?P&lt;body&gt;[A-Za-z0-9]{30})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br></code> |
-| `kingfisher.github.6` | Active | `ghr_51gFbMvl2jyaUFNjzysBfGPQr5nsKZRJ1BKjErY4qrvpweOKklxm63wRgWa2mmLNtc7vkIkPdVsh` | <code>(?x)<br>(<br>  ghr_(?P&lt;body&gt;[A-Za-z0-9]{70})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br></code> |
-| `kingfisher.github.8` | Active | `ghapi_keym4te8f9lsm2qawxgcygaebhkgd42zixzde4lkyc1` | <code>(?xi)<br>\b<br>(?:github&#124;gh)<br>(?:.&#124;[\n\r]){0,4}?<br>(?:oauth&#124;pat&#124;token&#124;key&#124;secret&#124;api[_-]?key&#124;access[_-]?token)\b<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>    [a-z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.github.9` | Active | `ghs_05285075674924781562250410978312_XMXDeY1wUfWjfIRfekGMT6kaaQwK-tUB.1o9L9yrFVyMG3ZdGIjkusdS_JyO6IrzE.AqUweDydLtCrircf1YMdYF2Z_UMy27He` | `(?x)
+| `kingfisher.gitea.1` | Active | `gitea4e\r\re\nj\nvkf\n\r\n\n\rkey\r\rn\rk\n\n\nvRZ\n\n\n\r\n\nS\n\ntK6\r\nRXGAz\r\r8124723ee7ce0b750d1542be164761c9223567af` | <code>(?xi)<br>\b<br>(?:gitea)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:token&#124;key&#124;secret&#124;pat&#124;access[_-]?token&#124;api[_-]?key)\b<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>    [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.github.1` | Active | `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` | <code>(?x)                 <br>(<br>  (?P&lt;body&gt;github_pat_[0-9][A-Za-z0-9]{21}_[A-Za-z0-9]{43})<br>  (?P&lt;checksum&gt;[A-Za-z2-7]{8})<br>  [A-Za-z0-9]{8}<br>)<br>\b<br></code> |
+| `kingfisher.github.5` | Active | `ghs_upwGtAplj2J21fl05gpBmHtPBeuSggqH6aTe` | <code>(?x)<br>(<br>  ghs_(?P&lt;body&gt;[A-Za-z0-9]{30})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br></code> |
+| `kingfisher.github.6` | Active | `ghr_yLhqcGib9rNztSGWLXuXjrcyNAyVwUCBNgFo0ORvmuv9QLC4UuYKIr5WSjBMiyDfW9vXpPbh4VR1` | <code>(?x)<br>(<br>  ghr_(?P&lt;body&gt;[A-Za-z0-9]{70})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br></code> |
+| `kingfisher.github.8` | Active | `ghz\nNqsecretTl\nQf\n\nw\n\n\n\nN\n\nG6\rYy0\nO\rV\ntrL\r1gtt4ljif4pk67fvzltyj4dgqv81r660r6fvfdwn16` | <code>(?xi)<br>\b<br>(?:github&#124;gh)<br>(?:.&#124;[\n\r]){0,4}?<br>(?:oauth&#124;pat&#124;token&#124;key&#124;secret&#124;api[_-]?key&#124;access[_-]?token)\b<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>    [a-z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.github.9` | Active | `ghs_13001947460015703238771006448929_An51XUTv7QGVrdzZFjSVoIRLykEumogY.qBdU19_SqI-hyPMNHi6KycBzrNnHQVrX.ceKqFO_xDm_UPiGE4tHjUd_LZVfVBPw3` | `(?x)
 (
   ghs_[0-9]+_
   [A-Za-z0-9_-]+ \. [A-Za-z0-9_-]+ \. [A-Za-z0-9_-]+
 )
 ` |
-| `kingfisher.gitlab.1` | Active | `glpat-PMfAQfjA_LuHn1pHMORg` | `(?x)
+| `kingfisher.gitlab.1` | Active | `glpat-TdWynaJ9bcQz5uboB3ZP` | `(?x)
 \b 
 (
   glpat-
@@ -983,47 +983,47 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.gitlab.2` | Active | `GR1348941gySRQp-mBkt35g7gPSk8` | `(?x)
+| `kingfisher.gitlab.2` | Active | `GR1348941cljPF1OHVRCVu8UiM31g` | `(?x)
 \b
 (
   GR1348941[0-9A-Za-z_-]{20}
 )
 \b
 ` |
-| `kingfisher.gitlab.3` | Active | `glptt-eafA2A126539DB7fb4Df8ef2f7Cc8760938f2B0C` | `(?x)
+| `kingfisher.gitlab.3` | Active | `glptt-DCdbB7Ee3Fc00Ecf8B26F32e7bFA8faCEc220CbE` | `(?x)
 \b
 (
   glptt-[0-9a-fA-F]{40}
 )
 ` |
 | `kingfisher.gitlab.4` | Active | _Unavailable_ | <code>(?x)<br>\b<br>(<br>  glpat-<br>  (?&lt;base64_payload&gt;[0-9A-Za-z_-]{27,300})<br>  \.<br>  (?&lt;version&gt;01)<br>  \.<br>  (?&lt;base36_payload_length&gt;[0-9a-zA-Z]{2})<br>  (?&lt;crc32&gt;[0-9a-z]{7})<br>)<br>\b<br></code> |
-| `kingfisher.gitlab.15` | Active | ` _gitlab_session=cd6301bf2a716b4eb54826fbf16d1c3f` | <code>(?x)<br>(?:^&#124;[;\s])<br>_gitlab_session=<br>(<br>  [0-9a-f]{32}<br>)<br>\b<br></code> |
-| `kingfisher.gitter.1` | Active | `gitterstne-dgkuhqgmko1fg61papvz6rd74h9dgav40s3` | <code>(?xi)<br>\b<br>gitter<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [a-z0-9_-]{40}<br>)<br>\b<br></code> |
-| `kingfisher.gocardless.1` | Active | `gocardlesslive__HP=IB885PV84WSYNZEV6JYI=XIQKMM=MTN5LU0MPM` | <code>(?xi)                     <br>\b<br>gocardless<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                              <br>  live_                     <br>  [A-Z0-9=_-]{16}         <br>  (?:[A-Z0-9=_-]{8}){3}     <br>  [A-Z0-9=_-]{0,2}<br>)<br>\b<br></code> |
-| `kingfisher.godaddy.1` | Active | `sso-key\t\t\x0c\x0b\t \n\n \t\x0b\t\x0c\r\x0b\n\r\t\t\n\x0b\t\n \t \r\n\x0c\x0c\n\x0cYJI3WTbbH7SME34WPXYRGTZvTd74SiyzmjP:y8q2vqJ4uKhleRMQXXK6Bu` | <code>(?xi)<br>\b<br>sso-key<br>\s+<br>(<br>  (?:[A-Za-z0-9_]{35}&#124;[A-Za-z0-9_]{37})<br>  :<br>  [A-Za-z0-9]{22}<br>)<br>\b<br></code> |
-| `kingfisher.google.2` | Active | `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` | <code>(?xi)<br>(GOCSPX-[A-Z0-9_-]{28})<br>(?:[^A-Z0-9_-] &#124; $)<br></code> |
-| `kingfisher.google.3` | Active | `client.secret:\t \t\t  \t  \t  \t  \t\t\t\t\t  \t \t \t \t\t\t\t'J5PJKL-UNQG1UDVEBCSBIHC0'` | <code>(?i)(?:client[_\-. ]?secret)(?:.&#124;[\n\r]){0,20}?[=:][ \t]*['"]?([A-Z0-9_-]{24})['"]?(?:[^A-Z0-9_-]&#124;$)</code> |
-| `kingfisher.google.4` | Active | `ya29.JI2C3CIX9K7-P91FRXOLLXFJBSU-YJTIm` | `(?xi)
+| `kingfisher.gitlab.15` | Active | `\r_gitlab_session=ed286242363d9a033cf06561ba078400` | <code>(?x)<br>(?:^&#124;[;\s])<br>_gitlab_session=<br>(<br>  [0-9a-f]{32}<br>)<br>\b<br></code> |
+| `kingfisher.gitter.1` | Active | `gitterCfKdr\n\rLBc\r\nf\ra\nd\r\rag\r\re9szgj8x4fw_cjkrr1oitvts68t1cvyi58-5wesqy` | <code>(?xi)<br>\b<br>gitter<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [a-z0-9_-]{40}<br>)<br>\b<br></code> |
+| `kingfisher.gocardless.1` | Active | `gocardless\r\r\rp\r\r\n\n\rUF\n\r\n\n\nlive_32JQNI_4W0Z5EOPSO7FGNMKYPL86ZJ05_YPFVCJFCE` | <code>(?xi)                     <br>\b<br>gocardless<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                              <br>  live_                     <br>  [A-Z0-9=_-]{16}         <br>  (?:[A-Z0-9=_-]{8}){3}     <br>  [A-Z0-9=_-]{0,2}<br>)<br>\b<br></code> |
+| `kingfisher.godaddy.1` | Active | `sso-key\x0c \n\x0c\n \r\x0c \n\t\x0b\x0b\r\t\r\t\x0b\x0c \x0c \r\t\x0c \n\n\r\x0b\x0b\n2AN0WpA5DUywRouVp7Bgq1Ggt8iMTpkuWo2FI:h51pb4AHRu5O3iJ1YNLsdR` | <code>(?xi)<br>\b<br>sso-key<br>\s+<br>(<br>  (?:[A-Za-z0-9_]{35}&#124;[A-Za-z0-9_]{37})<br>  :<br>  [A-Za-z0-9]{22}<br>)<br>\b<br></code> |
+| `kingfisher.google.2` | Active | `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` | <code>(?xi)<br>(GOCSPX-[A-Z0-9_-]{28})<br>(?:[^A-Z0-9_-] &#124; $)<br></code> |
+| `kingfisher.google.3` | Active | `client_secreti\r\rhO\n\r\r8aj\rtoKpGLt\n=\t   \t\t\t \t \t \t\t\t \t \t\t    \t\t\t \t\t \t"GZEJNPHWQZ1C1G87-WPVGTTR''` | <code>(?i)(?:client[_\-. ]?secret)(?:.&#124;[\n\r]){0,20}?[=:][ \t]*['"]?([A-Z0-9_-]{24})['"]?(?:[^A-Z0-9_-]&#124;$)</code> |
+| `kingfisher.google.4` | Active | `ya29.VPG4_NOG1UT6BBGDGW8GPECGBAY3NCLTx` | `(?xi)
 (ya29\.[0-9A-Z_-]{20,1024})
 (?: [^0-9A-Z_-])
 ` |
-| `kingfisher.google.6` | Active | `35304018799049073930059672368137-ajl1j_3fkg73bji5wod2yib1wv605k_a.apps.googleusercontent.comclient.secret:\t\t\t \t\t \t\t\t\t\t \t \t\t\t \t\t \t  \t \t \t \t'NI7-TOUB8-GY_CDVQGHKZ0OF'` | <code>(?is)([0-9]+-[a-z0-9_]{32}\.apps\.googleusercontent\.com)(?:.&#124;[\n\r]){0,120}?(?:GOCSPX-[A-Z0-9_-]{28}&#124;(?:client[_\-. ]?secret)(?:.&#124;[\n\r]){0,20}?[=:][ \t]*['"]?([A-Z0-9_-]{24})['"]?)(?:[^A-Z0-9_-]&#124;$)</code> |
-| `kingfisher.google.7` | Active | `AIzaSy6ys4Y60yvYhZzYH29Mdqt3g3leh8kuMMB` | `(?xi)           
+| `kingfisher.google.6` | Active | `10874965305486089080620500122681-nyy8u394inqjujwvhx4_tstdq7qymuy7.apps.googleusercontent.com\np\r\npy1M\rP\rqY\nLP\r5Ebr\n7RS\n\r2\r\n4wGOCSPX-JS3W8O524HIFFX8ANWNKKTG3Q-VS"` | <code>(?is)([0-9]+-[a-z0-9_]{32}\.apps\.googleusercontent\.com)(?:.&#124;[\n\r]){0,120}?(?:GOCSPX-[A-Z0-9_-]{28}&#124;(?:client[_\-. ]?secret)(?:.&#124;[\n\r]){0,20}?[=:][ \t]*['"]?([A-Z0-9_-]{24})['"]?)(?:[^A-Z0-9_-]&#124;$)</code> |
+| `kingfisher.google.7` | Active | `AIzaSyZWjiXLTN0AdXTeZFgArrmqSJtyv9hhXbx` | `(?xi)           
 \b
 (               
   AIzaSy
   [A-Za-z0-9_-]{33}
 )
 ` |
-| `kingfisher.google.oauth2.1` | Active | `ya29.rK2Winbt8lFbP7HbojAxsT1t128zFb2r` | `(?x)
+| `kingfisher.google.oauth2.1` | Active | `ya29.iFVzCIqrE6fEBT1mASE0Wqjz4h0DwVX5` | `(?x)
 \b
 (
   ya29\.(?i:[a-zA-Z0-9_-]{30,})
 )
 \b
 ` |
-| `kingfisher.gradle.1` | Active | `credentials\t\t\r\n\x0b\x0c \t\t\t \n \x0c\x0b\x0b\t\n \t\t\t\t\n\x0c\n\n  \x0b \x0c{\x0b\r\x0c\t\x0c \x0b\x0b \x0b\x0b\x0b\r\t\t\n\x0b\x0c \t\x0c\t\t\x0c\x0c\n \t \x0c\x0b //dhyCjIpHmndoMSd0Oj2AIJ3Swd6ZJMZD\x0b\n\t \t\x0b \r  \t \n \n\r\x0c\x0c\t\r\x0b\x0c\t \x0b \t \x0b\x0b  //XleD2RCQZpIx2bqZjcSTAe1Ll9GNorCU\n\x0c \x0b \t\x0b\r\x0b\t \r\x0c\x0c \x0b\n\r\x0b\n\r\x0c \r\n  \n \r \t//Ai2ejt8WTNE9tDirdSHXoDGYEBDpKA2H \r\x0c \n\r \n\r\r\r\x0c\r\t\t\n\n\x0c\n\n \n\n\t\r\n\r\x0b\x0b\r  //RFfn1Py2yTMCNJ9KnpUtxdr0FEFSl2En\x0b\n\x0b \n\n \x0c\x0b\r\x0c\x0c\x0b\x0b \x0b\r\x0b  \n \t\x0b\x0b\x0b \x0b\x0c\x0c\x0c\r//0x3gKYUMQjPES1jBNzCAD8cIyT5YNTzn\r\r   \n\r\x0c\n\t\r\t\x0b \r\r\x0b\x0b\r\n\x0b\x0b\r  \x0b \t\n\r\n\x0b//vVKLieiCtL9b9sOQFW1wQmW9ikuZ2DLb\t\x0b\r\t\r\x0c\x0b\r\r\x0b\r\r\t \r\t \n\n  \x0c \r\n\x0c\t\x0c\n\x0b\x0b\x0b//aEC0sSG2sUZEarmelQe264NZTOMLLZbQ\t\x0b\n\r\x0b \t\t\r\t\n\t\x0c\t\n \n\x0b\n\n\r\t\t\r\x0b\n\t\x0c\n\x0c\n\r//p5MKmmfgC1fMbftk19MtzG5qnivVNDEV\t \x0b\r\x0b \r\t\r\n\n\t\x0b\t\n\x0c\t  \x0b\t\n\t\n\x0c\x0b\x0c\n\n\r \n//fxNZaQrLiEZcZOVJZFiO24SA885Pab1F\t\n\n\n\x0b \x0c\n\r\n\x0c\r\x0b\r \n \t\n\x0b\r \r\x0b\x0c\t\x0b\n\x0c\n\x0b\x0c//eOKUIqlVTky2vR8SLB2XcOiBc3Mwp4Ae\n\x0c\x0b\n\r\n\t \t\x0b\n\t\x0b\n\x0b\n\n\n\t \x0c \n\n\x0c\t\n\t\n\x0b\x0b\x0b//uUtKMy9GpdVsvZJianTdYzXVGuk7Xvxu\n\r\n\x0b \x0c\x0b\x0b\x0b\n\r\n\x0c\r\t\n\x0b\t  \r\x0b\r\n\x0c\n\x0b\x0c\x0c\x0b\n\x0c//Imz6JBFLgKic1l2wI8XwV0nHBKPqIY7X\n\x0b\t\t\x0c\n\x0c\n\n\x0c   \r\n\n\x0b \x0b\x0c\n\r\x0c\r\n\x0b\r\r\x0c \r\x0c//mBUKM5CjTtQz9C9uC8YrlIwYa5zT841R\x0c\x0b\x0b\x0c\x0c\x0b\x0c\r\x0b\x0c \n\t \n\x0c \x0c\n\t\x0b\t \n\r\x0c \x0c\n\t \r//FNydjoNST9V0ApclyTK01cmoWVJIvV8K\x0c\x0b\t\x0b\r\n\x0b\x0b\n\x0c\t\x0b\x0c\x0c\n\n\x0c\r \t\x0b\x0c\t\n\x0b\x0b\x0c\x0b \n\t\x0b//qOAeAXtb8SrTUIIjeAaMuDxMYHb9uVhM\x0b\t \t\t\t \n\r\x0c \t\n\x0b\n\x0c\r\r \x0c\r\n\n\x0c\x0b\x0b\n\x0b\x0b\r\x0b\t//mW4j32GDivzwmUjHkwlF7ACwMw9ow1oD\n\t\t \x0b\x0b\n\x0b\x0b\r\n \x0c\x0b\x0b\n\r\t\x0b\x0b\t \r\r\x0c\n \x0c\x0b\x0b\r //O5RfiQwE1ZtzlVAqzQyw2nrctdkNKq0h \r\x0c\x0c\r\x0b\x0c \n\x0b\x0b \x0b\n\n\x0c \x0c\x0c\x0c\n \x0c \t\n \x0b\r\r \x0c//CHjq4USCZA4zOFPDG9n95322k8b0lROD\t\x0c\x0b\x0b\x0c \x0b\n\n\x0c \x0b \t\n\x0c\r\t\n\x0c\x0b\x0b\x0c\x0c\t\t\t\t\n  \t//s5NWLajgDfc8CQskh08RvqnblPzZN2hp \t \x0b\r\x0b \r\n\x0c\n \x0c\t\x0c\t\x0b\t\r\r\x0b\x0b\t\t\n\n \t\n\r\x0c\x0b//3PqHNAM4FBSDU7HMBhXlP0N6EoBZYVzd\x0b\x0c\t\r  \x0b\n\x0b\x0c\t\n\n\n\n\x0c\r \r \x0c   \t \n  \x0b\x0b //L8uHQv9IKhoufUiLjZcs1OLmxR7HV7wd\r\x0c\n\t\t\t\n\x0b\n \t\x0b\r\t\n\x0b\n  \n \r\x0c\t\n\x0b\t\x0c\x0b\n\x0b\r//jIKi6tzG4cgOoqb3idwl3aBboEXNmBa5\x0b\t\x0b\x0b\x0c\x0b\x0b\x0b\r\t\x0c\n\t\r\r\x0b \x0b\t\t \t\t\n \x0b\x0b\x0c\t\t\x0c\x0c//Y8bBhdMSUiSskwGRC2Y3gOJQ8XH6mXXv\r \x0b\t\x0b\x0b\x0b  \r \r\x0b\n\r\x0b\t\x0c \r\t \n\x0b\t\r\n\t\r\x0b\x0b\t//rFwopmUXC71nrx4obOa0kArnZmDjgmYz\r\x0c\n\t\n\x0c\t\n  \n \t  \x0b \t \x0b\x0c\x0b\r\r\x0c\n \r\t\t\r\n//2RDsrnpURZlTLysvXIcit5MbFHPjtQk1\x0c\x0b\x0c\r\x0b\x0b\x0b\x0b\t\t\r \n\t\x0b\n\x0c\n \t\x0c  \x0c\x0c\t\x0b\n  \x0c\x0c//qnDRqHnSNG3d9ZnJ3MPn0eo7MxuQiGAF\x0b\n\t\x0b\x0c\x0b\x0b\x0b\x0b\x0c\n\x0b\r\x0b\n \x0c\x0c\n\x0c\r\x0c\r \n\x0b\t\x0b\n \n\r//rqwauJGUkR6QZE9eaimzvpsluHfVQ22Y\n\t\x0c\x0b\n\x0b \t \x0b \x0b\r\x0c\n\t\x0b\x0c\n\x0b\t\x0b\n\t\x0b\r\r\n\n\t\x0c\x0b//rZ6SkPfNfE46ESDs6GISAfihpm4CYpXA \x0c\r  \x0c\n \t\r\r\x0c\t\t\x0c\t\n\x0b\n\r\t  \x0b\t\t\n\t\r \r\t//Z9yS29xKCKReMkE8ICSnZmM2PVFWgGFZ \x0c\r\x0c\x0c\x0c\t\n\x0b \x0b \n\n \r\r\x0c\r  \n\t\r\x0b\x0b\x0c\r\x0b \n\x0b//Egt5Myotgz6KquavGm5jna8sswa6QnKE\r\n\x0c\x0c \r\r\x0b\r\r\x0c\x0b  \t\n\t\n \x0c\r\x0b\t\x0b\n\n\n\x0c\x0b \r\t//DnPJd23fcqIVbU1ftxiSCA7lTIl5zDBz \t\x0b\t\x0c\x0b\x0c\t\r\x0c\x0c\t\r\x0b  \r\t\x0b\x0c\t\x0b\t \r\x0c\x0c  \r\x0b\t//xKn51pW0VmeQIre4P1fCc1VjW3w5S84k\n\x0c \x0b\t \r\x0b\n\t\r \r\r\x0c\t\n\n  \r\x0c\t\x0b\r\r\x0b\n\t \r\x0cpassword "VpWC2Hk8ds2RqB4wlN688tfT5YCzbv3a'\x0b\n\r\t \t\n\r\n\x0b \t\t\x0c \t \r\n\t\x0b \x0b\x0c\n\x0c\x0c \x0b\x0c \x0b//cgcGSNw4BF80okK5TIdXr4jq2uRs7wEH\t\x0c\x0b \x0c\t\x0c\r\n\x0c\r\x0c\t\x0b\t \n\n \r\x0b\n\x0c\t\t\t \r\t\r\n\r//DB1hjFNufpzn77dMVa2oAftTkmfUdxjl\x0c\t \n\r\r\x0c\n\x0b\x0b\r\t\r\r\x0b\r\t\x0b\t  \r\t\n\t\t\r \r\n  //fZtH7aApmNXKyvDh8ZiSXpFufkG4GRa0\x0b\r\r\n\x0b\n\x0c\r\t\x0c  \n\r\r\n\t\x0c\x0b\n\t\r\t\x0c\t\x0b\x0c \n\x0c\x0b\t//k7LOd8all84Ss8dWAdi86ULHhO1IhnHG\x0b\n\t\t\n\n\x0c\n \t\x0b\n\n\t\x0c\r\t\n\x0b\t\n\t\n\x0b\t\x0b\t\x0b\n\r \x0b//ZCVjXdJAMwHTY0QLc8ZpzSpzdeDnjTG0 \x0b\t\r\n\x0b\n\n\r\n\x0c\r\r\t     \t \t\x0c\t\x0c\n\x0b\r\x0b\r\r\r//6WFP7txtmheY9xzxVf4adeBbktO5bbbT\x0b\n\r\x0c\x0b\n\n\t\n \x0c\x0b\r\n \t\r\t\x0c\r\t\x0c\n\x0c\t \t\x0b\r\n\r\r//9yAH7dtxy3slr9hG19eil7gp7QWylQbi\x0c\x0b\t\r\n\x0c\r \t\r \r\n  \x0c\x0b \x0c\x0b\t \x0c\x0c\x0c \r\n \x0c\r\n//uMh1Yd9Hf3lzvhxPDgNsok05ptEh0I6V\x0c\t\r\t\x0c\r\t\x0c\x0c\n\x0c\t\x0c\r\t\x0c\t\x0b\x0c\t\x0b\x0b\t\n\n\t  \x0c \r\x0b//8c2jvN8v3XVGjXlNpm3XYiIpch68kXxu \t\t\x0b\r\x0c\t\r\r\r \n\r\x0c\t \x0c\x0c \r\r \t\x0b\x0b\x0b\r\n \x0b\r\r//Pc6Z8L98C3ATMhcD7xHzYMt2tgaKKwkF \r\t\x0b\t\t\n\x0b\n\x0c\n\r\x0c\r\r\x0c\n \n\x0b \n\n  \x0c\x0c\r\x0b\n \x0b//cOvgzn7QXtCCIMgJDUE60xXYtgIduLZN \t\n\x0b\x0c\n\n\x0b\t \n\n\x0b   \x0b\n\n \t\n\x0c\x0c\r\x0c\t\x0c\x0c\x0b\r\x0c//umQulFj3abEM34Jiqr9DQ4MuwHAqq6K9\x0c\x0b\n\r\n \r\r \x0b\x0c\x0b \t\x0c\x0b\t \n\n \n \x0b\x0c\x0c \x0c  \x0c\x0c//yHbdL5NQmx4YXNhWpqJQtnPmlzIIS2nF \r \x0c \n\t\t\x0c\n\x0c\x0b\x0c\x0c\r \r \x0b\x0b\r \n\n \n \x0b\x0b\x0b \n//oGHzXoHbO6IcRPnqAMdIR2BwPwewbN1q\n\t\x0b\x0b\x0c\x0c \t  \r \t\r\x0c\t\x0b\n \n\n\x0b\n\t\x0c\n\n\x0c\x0b\t\n\n//ervcIIySvyEuEpHDWzxqGRKCbLCVTm5B\x0b\x0c\r \t  \t\x0b\x0b\x0b\t\x0c\n\r\x0c\n\x0b\t\t\x0b \t\n\t\r\t\t\n\n\n\t//gRxYPpxwMh7qOlAm0Xpe4POtMeAy33Eq\t\r\x0c\x0b\t\x0b\n   \t\x0c \x0b\r\r\t\r\t\t\x0c\x0c\r\t\r\x0b\r\t\x0b\x0b\n\x0b//BpLuCvbeofWh8Q4ZF8jNMrItucHW2vHC\x0c\n \n\n\r\n\r\r\t\x0c \r\t\t\n\n \n\t\n\n\n\x0b\x0c\t\x0b\x0b\t\x0b\x0c\t//SpyHIsIJAxyphQg7EGEI6U6f4JZzdvcu\t\n\t\r\x0b\t \n\n \n\n\x0c\r\x0b\x0c\x0b\x0b\t\x0b\n\t\n\r\n\t\x0c\t\n\x0b\r\x0c//bilMaiEojQvgvEhlXxVVp5NvOYSa0KDc \x0c\x0c\x0c\t\n \x0c\n\x0c\r\r\r \r\r\x0c\x0b\x0b\t \x0c\t\r\r\r\x0c  \t\x0c\x0b//V80cHMLO2GH7hU28yzhZzVCQfLUGQp6D\x0c\x0b \x0b \r\n \x0c \n\t\x0b\x0b\t \x0c\x0c\t\n\n \r\n\t \t\x0b\t\x0c\t\r//ofJu5pB4Pzn20ZSTxzRKjx1d3JnldikO \r\r \n\n\t\n\r \x0c\x0b\n\n \x0c\x0c\x0c\r\x0b \n\x0c \t\x0c \t\n\n\r\x0c//kZ78sGT5M6uo1BvOlJVYKCT70BFI24TH \x0c\n  \t\x0b\x0b\x0b \t  \r\x0b\x0c\r\r\x0b\x0b\r\x0b\n\t \x0c\x0b\x0c\n\x0c \n//VpHGGcjLqP1XtAMF2rMqRO1rCEWKSgd9  \x0b\n\x0c\x0b \r\n\t\n\x0b \x0b\r\x0b\n\n \n\x0b\n\x0c\x0c\x0b\t\t \x0b\n\x0b\t//f86V282R6rKMw2sEQbOh01BVglqDaHkZ \r\t\x0c\n\x0c \x0b\t\t\t\r\r\x0c\x0b\x0b\r\r \x0c\t\n\x0b\n\x0b\x0c\x0c\r \x0c\r\t//MUJdwRblPaYhdwsXqfdcWe0CGvGyis8I\x0c \n\x0b \x0b\n\r\x0c\x0b\x0b\n\x0c \n \x0b\r\r\r\t\t \n\x0b \n\t\n\x0c\r\n//d1qz0DBgtW14aU7Ni4vTToXvT2ViFqHe\r \n\x0c\t  \x0b\t\t\n \t \x0c\x0b\t\r\n\x0b\n\x0b  \t\t\x0b\t\x0b\x0c\t\x0b//7GlaaRcvNtFKv2Hc1D2UNr9CNViHZCy1\x0c \x0b\x0c\x0c \t \n \x0b\t\r\n\x0c \t\r\t\t \n\n\x0c\n\t\n\r\n\t \n//6LtrH0tFOVfVAfdkarWbJhlGVjUOkNfE\x0c\x0b\r\n\x0b  \n \t\n\r\t\x0b\n  \x0b\r \x0c\r\r\x0c\x0c\n\r\t\t\x0c\x0b\x0c//x1L2QYm2Npa3lc7Iwq6luRCyBvpwzMfY  \x0c\r\x0c\t\n\r\x0b\n\t   \x0b\t\r\n\r\x0c\t\x0b\r \x0b\x0c\t\x0b\x0b\t\x0c\x0b//nHWIXaRNCQqx8JnicZYUMsM5TIiDLvBV  \t\x0c\x0c\x0c\t\x0c\x0b\x0c \n\t\n\t\t\t\t  \n \n\x0c\x0b \n\x0c\n\x0b \x0b//JPvddst35s5qeA6s9mwyVDxtH6hSSKKq\x0b\n\x0c\t \x0c\t\r\t\x0c\r\t\n  \t\x0c\n\n\n\x0b\x0b\r\x0c \n\t\x0c\n\n\x0c\n//NCDnN62CBW0Tk2TU4x3khEQS92CIuzo6\x0c\t \x0b\r\x0b\x0b\x0b\x0c\r\x0b\x0c \t\r\t\r\t\x0c\t\x0b\t  \t\n\x0b\x0b \n\r\x0cusername "7q75yAIEqCPWU6Xw8jvRrYcP5whC6XSL'` | <code>(?xi)<br>credentials \s* \{<br>  (?:\s*//.*)*<br>  \s* (?:username&#124;password) \s ['"]([^'"]{1,60})['"]<br>  (?:\s*//.*)*<br>  \s* (?:username&#124;password) \s ['"]([^'"]{1,60})['"]<br></code> |
-| `kingfisher.grafana.1` | Active | `eyJrIjoi2bBee5As0mmNTsaALwZcDxtSYMWYCtv2dFDNXHq4==` | `(?x)
+| `kingfisher.gradle.1` | Active | `credentials\x0b\x0b\r\t\n \n\x0b\x0c \x0c\n\x0c\x0b\t\n\x0b\x0b\x0c\x0c\x0b\t \x0b\t\r\r\x0b\x0c\r\r\t{\x0c\t\r\n\x0b\t \r\x0c\x0b\t\x0b \t\r\x0b\n\x0b\r\x0b\x0b\r\n\x0c \x0b\x0c\n \x0b\n\r//lmUOw3UKMpETXZSATq8GplnN5WLHqjYI\x0b \x0b \x0c\r\t\n \x0b \t\r\x0c\x0b\t\x0b\x0c\r\x0c\x0b\r\r\t\r \n\x0c\n\n \x0c//6f4uAwWtS8FE1HpAuo8b0zVGAh4ARcsq\r\r \n \n\t\r\n\r\x0c\x0c  \x0b\x0c \n\x0b\r\n\n\n\t \n \n\x0c\x0b \x0c//e3rUGRyuM8opsHKm02Efhxtl5Oxz4FrQ\x0b\t \x0c \n\t\x0b \r\t\t\r\n\n \r\n  \r \t\n\x0c\x0b\r  \n \x0c//xoXnaFVVcxw3VHZByuqZNwfdDuiuJVi7 \t\r\t\x0b\n\t\r\x0b\x0b\n\t\t\x0b\x0b  \x0b\n\t\x0c\x0c\x0c\x0c\r\r \x0c\r\x0c\r //Cth6SUw57PeRi5pEowBEgvRt814yzzVy \t\t\r\t\n\n \r \r \x0c\t \t\n\r\x0c\x0c\x0b\t \x0b\x0b\x0c\x0c\x0c \t\r\t//XjjUXsfaLW1nhJkrjIGRmkfGj0SFMK6j\x0b\t\x0c\r\x0b\x0c \n\x0b\r\x0b\r \r\n\n\x0b\x0c\x0b \n\n  \x0c\r\x0c\x0b\n\r\x0c //rJzDwQA22DWomR3qEaD0NSugEibul4ho\x0b\r\n\t\n \x0c\r\n\r\r\x0c\t \n\n \x0c\r\x0c\r\x0b\x0b\t\x0c\t\r\n\x0c\r\t\n//qZh7hrGmmO81Oql4iPeD9UPGLyZ7wEye\n\r\r \x0c\n\n \x0b\r \n\r\r\n \x0b\n\n\t\r\x0b\t\x0c\t\t\r\x0c\x0b\t\x0b\x0c//VxdydFZmX5tc5Qdc2P3KeJKxv9018Vjj\t\t\n\n\x0c\x0c\r\r\x0c  \x0b\x0c\x0c\t\t\t \r\n\r\r\x0c\t\t\x0c\r \x0c\x0b\x0c\n//4Legdk87w5GJ6ET3Y1q7DKPuZ7RQxdkT \x0c\n\r\t\n\x0b\x0c\r\x0c\n\n \t\t\x0b\r\r \r\n\t\t \x0c\n\t  \x0c\n\x0c//eB15LBI44qIfsWGF3tWWf9UuFXrJD7kt\x0b\x0b\r\t\r\x0b\r\t\t\x0c  \t\t\n\x0b \x0c\x0c\x0b\x0b\x0b \r \r\n\x0c\n\x0c\x0b\n//3VwFrKNNZBOgOSTasoBHEfnPUbKBDVbt  \x0c\x0c\r\x0b \r \r\x0c\t \r\n \n \t\t\n\r\n \r\n\n\n\n\n\x0b\x0b//2V4daRSlUPsESuDPqyvulT2Ong09z23h\x0c\x0b\t\t\t\x0b \x0b\n\r\x0c\r\x0b\t\t\x0c\t\x0c\r\x0c\r\x0c\x0b \t\x0b\n\x0b\x0b \r\n//3mrzw1tSjmh9n4Hlw2zv8ULyjZHaCbvl\x0b\r\r\x0c\r \t\r\n \x0c\r\x0b\r\r\r\t\n \t\r\x0b \n\r\n\x0c\r\n\n\x0c\x0c//287zLhmpVN8HSCDnKUuciAOJGNKaOBo4\x0c\x0c\r \r\r\x0c\x0c\n    \x0b\t\n\x0b\t\t \n\x0c\n\n\r\n\x0c\x0c\t\r\r\n//e31Q58p27JgFyTDYHe4NwajSSzLDzB3z\t \n\t\r \n\x0c\x0b\t\x0b\t\r\n\x0c\x0c \n\x0b\r \n\x0b\n\x0b\x0b\x0b  \n\x0b\r//vNZAdDizUWiopcpMxDxEplgnOHCg6MsX\t\x0b\r   \r\t\t \x0b  \n\x0c\t\r    \x0c\x0c\x0c\n\x0c\r\r\x0c\r \x0b//wMjxbYMybPtstnGqXBXqLkQ4MckWHWYm\t\x0c \r\t\x0b\x0c \n\n\r \x0b\x0c\x0b\r\t\r\x0b\x0c\x0b \x0b\x0c\t \r    \x0c//SUzcUHR8GMUyJ5yID7qyGy0EgCnlpyD5 \n\t \x0b\x0b\x0c \x0c  \n \t\r\x0b \r\r \t\r\r\x0b\t \r\n \r \t//Fa44EeCPwL5dEBLcwBcPAv1nqW9UpyEn\n\t\x0c\x0c\t\t\t\t\x0c\x0b\x0c\x0c\n\t\x0c\t\n\x0c \r\r\t\t\t\n \x0c \x0c\x0c\r\x0b//WGjg1BAnUhPhQjcB1gPHtVzlqTgVRx7e\t\n\x0c\x0b\x0c\t \r\r\t\r\n\x0c\r\n\r\x0c\x0b\x0c\t\x0c\t \r\t\t\x0c  \x0b\r //NHVVvR3HLoZrSQvFRMM0YbdEdARxH3nB\t\n\n\t\x0c\n\t\t\x0b \t\x0b\r\x0b\n \r\x0c \x0c\n\n\r\n\t \x0c\x0b\x0b\t\t\n//jRxnqk0FWSkreTHSpeBCw89MYWd0TG2Z\n\x0b\r\x0c\t\t\r\x0b\r\n\x0b\t\r \r\n\x0c\x0b\r\n\x0b\n\n\x0b \r\n\x0b\n\x0c\x0b\t//CbJWaQWhYpI6IkYUtOPCeeVvyZiyRw7Z \t\r\x0b\t\r\x0c\x0c\n\r\r\n\r  \t\x0c\t\x0c\x0c\r\r\r \r\x0c   \x0c\x0c\t//R7G9qoyCDG2LwZsyId17KGiKM6bcs7b5\r\n\x0b\r\x0b\x0c\r\t\t\t\t\t\x0c\n\r\n\n\x0b\t\x0b\x0c\r\x0b\n\n\n\x0b\x0c \n\r\t//psZJymn5b7UkbMQVpRbQOVmKecOSDbSa\n\n\r\x0b\t\t \x0c\x0b\t\t \r\t\r\x0b\n\t\x0c\x0c\n \r\x0c  \n\n\n\r\t\t//Tph4EAcrubts2HLu2XmQRIdZ77A8FSDx\t\r\r \t\x0b\r\r\r\t\x0b\x0c\t\x0c\r\n\x0b\x0b\n\n \r\n\r\r\x0b\t\r\x0b \t\x0c//9p3QrshyInwKtmBNgvQDvSbPwAp1TYZJ\r\r\x0c\r \r\x0c\x0c\r \r\t\x0c\n\x0b\x0b   \t\r\r\x0b\x0b\t\x0b\x0c\r\x0b\r\t\t//xYa9bI97gXi7wwHxCHKbujEOUKmyukpt\n\x0b \t\n\x0b \t\t\n\x0b\t \x0c\x0b \x0c\x0b\n\x0b\x0c\x0c\n\r  \n   \t\n//yZYxbojke1EZk8basyIFrEMJoRAyaTUH\x0b\t\x0b\r \x0b \n  \t\x0c\x0b\r\x0c\t\x0c \r\t\x0c\x0c\t\r\n\r\r\x0c\n\x0c\r\x0c//SPiahHWfHxKRxHcfu7dU0vTAQYp7KwhN\r\x0c\t\t\t\x0c\x0b\x0c\x0c\x0c\x0c\x0c\x0c\n \x0c\n\t  \t\x0b\r \t\x0c\x0b\x0c\r\r\t\n//gvCdjSBbjUisQ25futeSHO13gg2T3fBd\t\r  \r\x0c\t\t\x0b \n\x0c\n \x0b\x0b\n  \n \x0c\t\t \x0c\x0b\n\t\r\n\rusername\x0b' \tk3k\t o0v t==l\t= eV= :  \tb\tT=9T"\r\x0c\x0c\x0c\n\x0b\t\n\x0c \r\x0b\r\x0b\n\t\n\n\n \n\n\t \n \x0b  \n \n//cqmYuYPGJnA64bgjk5YHrqjut4Os2bbj\x0b\r\n\t\r\r\x0c  \n\r\x0c\x0c\r \t  \n\n\x0b\x0b\n\t \r\x0b\n\n\t\x0b\n//WjwshYu90ckIIty3u1TH8kjZ2nLhWHiN\x0b\x0c\n\r \r \x0c\n\r\t\x0c\r\x0b\x0c \n\x0c\x0c\n\r\x0b\x0c\r \t\x0b\n\r\n\n\t//tdGEFzEES70x16xdRsWCfgztwChzBdop\t\n\x0c\t\x0c\n\x0b\x0b \x0b\t \r\r\x0c  \x0b\t\t\t\x0c\x0b\r\t\n\x0c\x0b\r\x0b\r\n//icAOECd0kAFv3b3oq9RNYqKQoqf9NrRk\x0b\n\t\n\x0b\t \t\r\x0c \n\r\r\x0b\t\n\x0c\x0c\x0b\n\x0c\n \x0b\n\r\t\x0c\x0c\t\n//rs8TfPbFFFlNNlxIh7Xn20UriW8F1xf0\x0c\x0c\n\x0c\x0c   \t\r\r\x0c\r\t \n\n\r\n\t\x0b\t\n\x0c\t\t\r\x0c\r\x0c\n\x0b//7aIdyblnU6kOLRwO5ZodskNM501hfRm7\x0b\x0c\t\x0c\n\x0c\r\n\n \x0b\t\x0c\x0c\n\x0c\x0b \t\n\t \r\x0b\x0c   \t\x0b \x0c//kinwUfi4c8Vrpro56ExR0AZqZEh8F0UA\t\r\x0b\t\x0c \n\x0b\n\t\r \x0b\r\n\r\n\x0c\r\n\x0c\x0c\x0c \x0c\r\r\r\r\t\r\r//otnJbyny6lbO584BY6Y65tIMT58QK7U5\x0c\x0b\t\t\x0b\n\x0b\x0b\x0b\n\r\r\r\x0b\x0c\x0c \t \r\r\n \x0c\r\n\t\r\t\x0b\t\x0b//VXLbqaRyFU5wqSP7EWkyD8Hhjzc3CA7H\r\n\x0b\n\x0b\t\r\t\x0b\n \x0b\x0b\t \n\x0c\t\x0b\t\x0b  \t \r\x0b\r\n\x0c\n //b2IUNgyTKgRhsl5iHaHnt7RXEJ6xmvzz  \t\n\n  \n\r \x0c\n\t \x0b\t\n\t\x0b\r\x0b\t \r \x0c\x0b\x0b\r \r\x0c//HE8XzSrHaqGIpFuZVKYz9mjIeY9BMNoW\t\n\r\t\t\x0b\n\t\x0b\t\x0b \r\x0c\x0c\r\t\x0b\x0c\t\r\t\x0b\x0b\x0c\x0c \x0b\x0c\x0c\n //UTf3vPk6NMuQA0wA1qjduleyZbzmmKEf \r\n \t\t\n\x0c\x0b \t \x0c\x0c\r \x0b \x0c\r \r \r\t\x0b\t\x0c \n\r\x0c//OU411MUoMuCMvRme7j1pDLgbFhkkQGmz\n\r\t  \x0b\n\x0c\t \x0c\r\r\n\r \x0c\x0c \r \x0c\x0b\x0c\x0b\r\x0c\x0c\n\n\x0c //FPNDgmausFzBAxQcO66SfODVyaAqRiky\t\n\x0b\r\x0b\x0b\x0b\t\x0b\r\r  \x0c\r\n\r\n\r \n\n\t\x0c \x0c\t \x0c\x0c\x0c //6MACIdrKbDab3t7tJ7j0hYfWb3HFjLyq\x0b\x0c\n\n\x0c\x0b\x0b\t \n \x0c\x0c\x0c\r\x0b  \t\x0b\x0c\t \x0c\n\x0c\x0b\x0b\x0c\t\x0b\r//mTETYUeePb6iKTM6rnBtuvnqvohmPGxr\t\r\x0b\r \r\x0c\r\x0c\n \x0b\n \x0b \x0b\n\x0b\t\r\r\n\x0b\x0b\x0c\r\x0c\n\x0c\x0b\r//1QftPbldtr3Ean1hviyN6ehpbUniEtEW\x0b\x0c\x0b\n\t\n\t\r\r\x0b\t\x0b\t \x0b\r\n\t\t\n\r\r\r\x0c\t\x0c\n\x0c\t\x0b\r\x0b//GAFaC5lvcENBd5KyarNbr6MeJP1oNAYA\r\x0b\x0c\x0c\x0c \t\x0c\x0b\t\x0b\t\x0c\x0c\t\x0c \x0b\x0c\r\x0c\t\n\r \n\x0c\x0c\x0c\x0b \n//XcxwqU5nzf5Bm7nbO7xbbB8IplwAjsQY\n\x0c\t \t\x0b  \x0c\x0b\n \n\t\r\r\r\t\x0c\r\x0c\x0c\t\x0b\t\x0b\t\x0b\x0c\r \x0b//zh5kaM4ayZpTebEfBJ90J9m8uGdZ3B0t\x0b\x0c \t \x0b \x0c\r\r\n\n\t\n \x0c\n\x0b\r\r\t\n\r\t \n \x0b\x0c\x0c\x0b\r//nn1tBp9rr63W3y9syW1Jbt4mII9OiAY8\x0c\t\x0c \n\n\r\x0c\t\n\x0b\r \r\r \x0c\r\x0b\x0b \t\x0b\n\n\x0b\n \x0b\x0b\x0b\x0c//O7E4O4gpL25PA3J0ZlBnvUbsugr26Fkq\x0b\x0c \n\x0c\x0c\x0b\x0c \x0b\t \n\x0c\x0c\n\x0c\t\x0b\x0c\t\x0c\n \n\t\x0c\n \t\t //KHN2tsmQlCqTxELutCun4Nk25vcIQ6AH\n\r\r\x0c \x0c\x0c\x0b\n \x0c\r\t\n\t\x0b\n \x0b\r\x0b\t \n \n \t\x0b\r\n\t//28NMUBfcxpQDvsIG1M93vL8GBoIXzgb9\t\t\x0c\t\x0b\r\x0b\r \x0c\t\t\n\x0c\x0b\x0c\t\n\x0b\n\t \x0c\x0b\x0c\n\r \r \x0b\x0c//xdGhvOYqpHxdIlpbLUymAbDETJ5dyebL\x0c\r\x0c\n\r\n\r\x0b\r\x0c\x0b\x0b\n\n\r\t\t\x0c\t\x0c\x0b \r\x0b\x0b\r \x0c\x0c\x0c\x0b\r//gKfRVRmVLL3NaV8nxVRuGAM6JRJ6mAyW\n\x0b\n\r \r\x0b \x0c \t\n\r\x0c\n\n\x0c\r\t\n\n\r\r \n\n\n \n\t\r\x0c//orGwlXRnrwmlhjEgjqNgOiw5qcBxEstm\r\x0c\x0b\n \t\r\n\t\x0c\n\t\x0b\x0c\x0b\x0b \x0c\n \x0c\x0c\x0c  \x0c \x0b\t\r\x0c\x0b//kL8UlNAmDFzOCru5XMK9SdKmzUX5eQtv\x0b\x0b\x0b\x0c\n\x0b\t  \t\n\x0b\x0c\t\t\x0c  \x0c\x0c\n\n\x0c\x0b \t\r\x0b  \x0b\x0b//x0GbVOgVKKONKROHeQtPvi4rwJpQbBKo\x0b\r\x0b \t\x0c\r\x0b\x0b \t\x0c\x0c\r\x0c\r\x0c\n\x0b\n\t\n\n \x0c\r\x0c\r\r\r\n\x0b//GceoRSndC3vZhKkrt3IMroUzkWOyNv1A\x0b\n\t\r\n \x0c\x0b\n\r\r\n\x0b\x0c\x0c\r \t\t\x0c\x0c\r\x0c \r \x0b\x0b\n\t \r//oDdH9gCdxEhktDqG5e89TcqQTW5mM3Wb \x0b\t\x0b\x0b\x0c \t\r\x0c\n\x0b \x0c\n\n\x0c\t\t \t\n\t\x0b \n\n\x0c \n\r\t//BvpM07DOVqSfiBUEGb6cQKPmKWxCnXO0\r\t \x0b \x0c\n\t\t\x0c\t\n\t \x0c\x0c\x0b\x0c\x0c\r\t\t\x0b\n\x0b\t\x0b\x0b\t\x0c\n\tpassword "r=_\tABE=q= :E\t\tY=X\t\t =KF Kchen= '` | <code>(?xi)<br>credentials \s* \{<br>  (?:\s*//.*)*<br>  \s* (?:username&#124;password) \s ['"]([^'"]{1,60})['"]<br>  (?:\s*//.*)*<br>  \s* (?:username&#124;password) \s ['"]([^'"]{1,60})['"]<br></code> |
+| `kingfisher.grafana.1` | Active | `eyJrIjoi7fN2PChs+8Nn1PRwkUJlU+JYgYuovgtvmCCvmpeO==` | `(?x)
 \b
 (
   eyJrIjoi
@@ -1032,7 +1032,7 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.grafana.2` | Active | `glc_gos00/8dr2zg4zky86hv+ozeqlx01b1h9yyud8bi==` | `(?xi)
+| `kingfisher.grafana.2` | Active | `glc_5vl7zlrkrt4c80a8ffy9yjccuss8cp961qr/32gn==` | `(?xi)
 \b
 (
   glc_
@@ -1041,30 +1041,30 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.groq.1` | Active | `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` | `(?x)
+| `kingfisher.groq.1` | Active | `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` | `(?x)
 \b
 (
   gsk_[A-Za-z0-9]{52}
 )
 \b
 ` |
-| `kingfisher.guardian.1` | Active | `guardianSECRETd1103470-33a0-d235-2c6a-52174f92ccf6` | <code>(?xi)<br>\b<br>guardian<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.guardsquare.1` | Active | `gs_appsweep_Kx8fBOAtXzyRBP3NTzYJMm2rnR46qAzX` | `(?x)
+| `kingfisher.guardian.1` | Active | `guardian\n\r2\n\rE\n\no\n\rS\r\r\n\rp\n\r\rz\rRw\ro2BR4GbSECRET\n\r2j3d\r\n\rM\n\r\r\ri\r\r\rB0\n5\r\rxpv\nu1\r79930c284-b88e-fccf-40d8-473e671d2ed1` | <code>(?xi)<br>\b<br>guardian<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.guardsquare.1` | Active | `gs_appsweep_gDSSWrg8_BW34KgJ9TBsJRt03bo80qGu` | `(?x)
 \b
 (
   gs_appsweep_[a-zA-Z0-9_-]{24,48}
 )
 \b
 ` |
-| `kingfisher.gumroad.1` | Active | `gumroadSECRETd93fb1ca7e13a447f5cbcb3e7c63c7c68b2419bcabc217e6a71069c78a024bdb` | <code>(?xi)<br>\b<br>gumroad<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_TOKEN&#124;OAUTH)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(<br>  [a-f0-9]{64}<br>  &#124;<br>  [A-Z0-9-]{43}<br>)<br>\b<br></code> |
-| `kingfisher.hackclub.1` | Active | `sk-hc-v1-798e72fed2bec6d71d14076609a831a9bf63becbac80ebb9e8aa083a1e865dc2` | `(?x)
+| `kingfisher.gumroad.1` | Active | `gumroad\r\n\r\n\r\nVj\n\n0\nZ\n\r6a8XS\n4N\r4y\n\rTI\n\rSECRETiHr\r\n\rrG\r2\n\rM\rn\r\n\nY\nsfw\r\rN\rHy8\n\r7c43f3ed2a8c01fb4e83fef2395626641167b482317fb389966565b7a8a475df` | <code>(?xi)<br>\b<br>gumroad<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_TOKEN&#124;OAUTH)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(<br>  [a-f0-9]{64}<br>  &#124;<br>  [A-Z0-9-]{43}<br>)<br>\b<br></code> |
+| `kingfisher.hackclub.1` | Active | `sk-hc-v1-5e44ae3eed62210131b2b9eb54df21076640f8370f3dab6d6f3aad0f849bf2bd` | `(?x)
 \b
 (
   sk-hc-v1-[a-f0-9]{64}
 )
 \b
 ` |
-| `kingfisher.harness.pat.1` | Active | `pat.dTUSt5YqsPMF8RNZfXlnu2.dDF274996CC7cda4E0CA19D7.5Rd4CRhQ4s3yZ9BynapU` | `(?x)
+| `kingfisher.harness.pat.1` | Active | `pat.qhP_2LWPsvUVRLIYezD-sQ.598B73bc05cdadF4fB2d9CEb.V8njHKzzjLFB8phNKlLg` | `(?x)
 \b
 (
   pat\.
@@ -1076,9 +1076,9 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.pwhash.1` | Active | `$1$tc3AN29D$mkCs2W1QKLDCprHMDobxyT` | `(\$1\$[./A-Za-z0-9]{8}\$[./A-Za-z0-9]{22})` |
-| `kingfisher.pwhash.2` | Active | `$2b$05970368431861110800890782850736$fwsdtTvV6Q9O731Aj0ZNEYTP/ZVaGrCEMxZWkQ0UdDzx6W85TNXHm` | `(\$2[abxy]\$\d+\$[./A-Za-z0-9]{53})` |
-| `kingfisher.pwhash.3` | Active | `$5$rounds=97612814400390663652361388881394$kS2vvWoWogGDaBiZ$gtZwRuQbNWP/nxxvYJ57KUb8x3kqzBMY8jSn77jVo96` | `(?x)
+| `kingfisher.pwhash.1` | Active | `$1$HAfMaL4/$DIulqjfepij/k2VkHXnscm` | `(\$1\$[./A-Za-z0-9]{8}\$[./A-Za-z0-9]{22})` |
+| `kingfisher.pwhash.2` | Active | `$2b$66168562364739198389355051990558$XzOTzubAH9Lo65Of5l1YDPwgXPOERCEIOzhVWEqrQuGEH4tWIdk/i` | `(\$2[abxy]\$\d+\$[./A-Za-z0-9]{53})` |
+| `kingfisher.pwhash.3` | Active | `$5$rounds=36497516864832755294920005023521$.AbTNLFXjPjfsFCt$gf/PHtGDmLb8n7pAdrleCsY6UCtLBsvBgl6cXZfHzn1` | `(?x)
 (
 \$ 5
 (?: \$ rounds=\d+ )?
@@ -1086,7 +1086,7 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 \$ [./A-Za-z0-9]{43}
 )
 ` |
-| `kingfisher.pwhash.4` | Active | `$6$rounds=21626476578273056811531728196272$B2XO5fn/h3eeprGw$3NMBR9mu1/tVCuPkGw3E7ApQDFmrmyyFtJVfdzN3xs3sQ.6HS7E0/emQycKCRdN2iJb6a8ZLrdwdITX87ZcEQu` | `(?x)
+| `kingfisher.pwhash.4` | Active | `$6$rounds=55678635917976729277258760817447$2.fLY8NNfHKbTnTE$QoBU4/3P7hOdXK.tIF9nZmRVITdRO1mjlFABOJmAMqOELoVQdMtqQQUjlNUYJx1M26WFseW5zJKMPhUKv6HC2F` | `(?x)
 (
 \$ 6
 (?: \$ rounds=\d+ )?
@@ -1094,14 +1094,14 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 \$ [./A-Za-z0-9]{86}
 )
 ` |
-| `kingfisher.pwhash.5` | Active | `$8$t97i1gIBK9En3f0S$S3jr7DvFzr4ADYOeiw67PMxNv5MkOFUbMs9qoojoCDm` | `(?x)
+| `kingfisher.pwhash.5` | Active | `$8$/tgfkr39h/zIYBeH$TB6njcsqgcVEFfjZT/AdSKuSd9zsvYvMPWj/X080Leq` | `(?x)
 (
 \$ 8
 \$ [./A-Za-z0-9]{8,16}
 \$ [./A-Za-z0-9]{43}
 )
 ` |
-| `kingfisher.krb5.asrep.23.1` | Active | `$krb5asrep$23$rx4ThzjoFUaWHoiFDIRivlGhNCu6osw1:eeb6bb90015c80afb6aff52e235a0d1a$9b4ea42f984b05aae147968b3aa17298a82685cf4f4e05dedf9f15d733dee517` | `(?x)
+| `kingfisher.krb5.asrep.23.1` | Active | `$krb5asrep$23$L6bQ3aRFMCeuKyMVBACkEYvO9LqstMrY:178f6b368caa9ef244c99e74b381c54f$c6aa546030269f8087e8d32b72674d79539c78b52f420029d0c5f346a0a35765` | `(?x)
 (
 \$ krb5asrep
 \$ 23
@@ -1111,15 +1111,15 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 \$ [0-9a-f]{64,}
 )
 ` |
-| `kingfisher.hashicorp.1` | Active | `hashicorps.yU11owfdVLIrNSohMDbw21zd4vQDYO0M` | <code>(?x)<br>(?i: hashicorp &#124; vault &#124; token &#124; key &#124; secret )<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  s\.[A-Za-z0-9_-]{24,128}<br>)<br>\b<br></code> |
-| `kingfisher.hashicorp.2` | Active | `vault:' "=b.kwm4qKKoVXasqtZjDuOugaToy9mFqF1uA` | <code>(?x)<br>(?i: hashicorp &#124; vault &#124; token &#124; key &#124; secret )<br>["':=\ ]{0,5}<br>(b\.[A-Za-z0-9_-]{24,500})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
-| `kingfisher.hashicorp.3` | Active | `key ===:r.WSqDtoZh7947V2HMCM_kokecupG2PwG2` | <code>(?x)<br>(?i: hashicorp &#124; vault &#124; token &#124; key &#124; secret )<br>["':=\ ]{0,5}<br>(r\.[A-Za-z0-9_-]{24,500})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
-| `kingfisher.hashicorp.4` | Active | `hvs.NOLNcrpJK0dGZdQS77XGmx2ICKplTvazA` | <code>(?x)<br>(hvs\.[A-Za-z0-9]{24,130})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
-| `kingfisher.hashicorp.5` | Active | `hvb.VNeTBKgiyV3B0upCNHrpok6I90A4H-FfA` | <code>(?x)<br>(hvb\.[A-Za-z0-9_-]{24,500})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
-| `kingfisher.hashicorp.6` | Active | `hvr.Jd9mBqh9eZgaP6slOcu6MdIAPAanDlDMA` | <code>(?x)<br>(hvr\.[A-Za-z0-9]{24,130})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
-| `kingfisher.hashicorp.7` | Active | `unsealuknoiRWJqMTAHNtFST5SHqwoG1ZTLvP1C1YjSQ0UDjCs+m73He83i8` | <code>(?x)<br>(?i: unseal )<br>\b<br>.{1,10}<br>([a-zA-Z0-9+/]{44})<br>(?: [^a-zA-Z0-9+/] &#124; $ )<br></code> |
-| `kingfisher.hcaptcha.1` | Active | `0xdCD3Cce506F17CDe1379e1b98E68B0475895253a` | <code>(?x)<br>\b<br>(<br>  (?:<br>    0x[a-fA-F0-9]{40}<br>    &#124;<br>    ES_[a-fA-F0-9]{32}<br>  )<br>)<br>\b<br></code> |
-| `kingfisher.heartland.1` | Active | `skapi_cert_xmSSRKO8CiGaExsaWBKdaJMxBtLgQzdTpO` | `(?x)
+| `kingfisher.hashicorp.1` | Active | `vaulto\rj\r3Q\r\n\nB\n0\nuLahBo\nD\r\n\rH\rVYR\n\rns.px6zbGXipWExD8XGqtYuOzeVe4VSlL6i` | <code>(?x)<br>(?i: hashicorp &#124; vault &#124; token &#124; key &#124; secret )<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  s\.[A-Za-z0-9_-]{24,128}<br>)<br>\b<br></code> |
+| `kingfisher.hashicorp.2` | Active | `token: "  b.QwqvHZ6HEkfdh7tovRi5r7ZalAAbqGEf'` | <code>(?x)<br>(?i: hashicorp &#124; vault &#124; token &#124; key &#124; secret )<br>["':=\ ]{0,5}<br>(b\.[A-Za-z0-9_-]{24,500})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
+| `kingfisher.hashicorp.3` | Active | `vault:"" "r.xYwYzDL0oER_gxKSD6rwQV8prAke1OE3` | <code>(?x)<br>(?i: hashicorp &#124; vault &#124; token &#124; key &#124; secret )<br>["':=\ ]{0,5}<br>(r\.[A-Za-z0-9_-]{24,500})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
+| `kingfisher.hashicorp.4` | Active | `hvs.oM4uQ8mFf59esNEFDvek7awDD5pyYrcZ:` | <code>(?x)<br>(hvs\.[A-Za-z0-9]{24,130})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
+| `kingfisher.hashicorp.5` | Active | `hvb.yD7nOiSXYkrZcquIGdd27NerTiwTr4u5:` | <code>(?x)<br>(hvb\.[A-Za-z0-9_-]{24,500})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
+| `kingfisher.hashicorp.6` | Active | `hvr.CVlTudopjExyMIRQwc3SXjGdNwJSFtlH:` | <code>(?x)<br>(hvr\.[A-Za-z0-9]{24,130})<br>(?: [^A-Za-z0-9_-] &#124; $ )<br></code> |
+| `kingfisher.hashicorp.7` | Active | `unsealbFChBMvz40UgUSJpsbpXZywHug5AxCSzI3wtVkuQFa67awszSeD7GJ"` | <code>(?x)<br>(?i: unseal )<br>\b<br>.{1,10}<br>([a-zA-Z0-9+/]{44})<br>(?: [^a-zA-Z0-9+/] &#124; $ )<br></code> |
+| `kingfisher.hcaptcha.1` | Active | `ES_E9eb3E1099D8dB49CC2ae03A91d050fB` | <code>(?x)<br>\b<br>(<br>  (?:<br>    0x[a-fA-F0-9]{40}<br>    &#124;<br>    ES_[a-fA-F0-9]{32}<br>  )<br>)<br>\b<br></code> |
+| `kingfisher.heartland.1` | Active | `skapi_cert_N8r3I2VrLbQhwJ4X2dZ1FANoK7ivD6rnuf` | `(?x)
 \b
 (
   skapi_cert_
@@ -1127,16 +1127,16 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.helpscout.2` | Active | `helpscoutclient\t\n\t \r\n\x0b.\x0c.\n_\t.-_ \x0c\x0c\r\r\r\r_ \t_\x0c\n\n\x0c\rsecretMEuY5a0aUQrOyoQo1AtpVYpLnNREshtB` | <code>(?xi)<br>\b<br>(?:help[\s_-]?scout&#124;helpscout)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:<br>  client[\s_.-]*secret<br>&#124;<br>  app[\s_.-]*secret<br>&#124;<br>  oauth[\s_.-]*secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9]{24,64}<br>)<br>\b<br></code> |
-| `kingfisher.hereapi.1` | Active | `hereapiACCESS4ET5OZYXDC9P3XS_-1RB7OUEZZS7315E55SLE1AOMH6` | <code>(?xi)<br>\b<br>hereapi<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;APIKEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{43}<br>)<br>\b<br></code> |
-| `kingfisher.heroku.1` | Active | `heroku8c240e34-ce48-240b-c1c7-0768827731c9` | <code>(?xi)<br>\b                                <br>heroku<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(                                    <br>  [0-9a-f]{8}-[0-9a-f]{4}-         <br>  [0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.heroku.2` | Active | `HRKU-Z6LG_5D5BP58DZ2_HEQSI422YB7IPKL8MZ97FCQ7XSNRNENCPZR0JQETHU86` | `(?xi)
+| `kingfisher.helpscout.2` | Active | `help\tscoutEV\n\nA8\r2xX\rp\nM\r\n\rZ\np\rG\n\r\nxV\nXc\nSclient\x0c\x0c\t. \r\r\t\x0b \t_\n..\x0b._  \n\n\r\x0b-\t--\x0b--\x0bsecreth\rp\r\n\r2MMh\nMUP\rvPBadOZL1ZoCoSMQLydTLnc2oXuJPesxk` | <code>(?xi)<br>\b<br>(?:help[\s_-]?scout&#124;helpscout)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:<br>  client[\s_.-]*secret<br>&#124;<br>  app[\s_.-]*secret<br>&#124;<br>  oauth[\s_.-]*secret<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9]{24,64}<br>)<br>\b<br></code> |
+| `kingfisher.hereapi.1` | Active | `hereapixB\nKl1\n\rZ\n\r\r6\r\rGW\r\rT\rLfZ\r\rK\r\re\ndTOKEN\rg2\n0Y\r\rXkc\nN\rQT6\r\rH\n\r\r1wgi\r\rvucB87YSML2--IGU_JF80H4FGGY_5ENBKHJ8TFMLZBKUSC` | <code>(?xi)<br>\b<br>hereapi<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;APIKEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{43}<br>)<br>\b<br></code> |
+| `kingfisher.heroku.1` | Active | `heroku\r\n\rB\nak1P0k\rX\n\n\nUw\r\n\nSz\nw\r\n\n\rC\nabe22846c-9d0b-e3e0-dfb0-b90bd835b67e` | <code>(?xi)<br>\b                                <br>heroku<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(                                    <br>  [0-9a-f]{8}-[0-9a-f]{4}-         <br>  [0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.heroku.2` | Active | `HRKU-9E1NLHXAXTNWGM8P9P0KT4D3QVV3WR_0CCW2LK95G5BOCDENFDXTUR7S5R0A` | `(?xi)
 (
   HRKU-[A-Z0-9_]{60}
 )
 ` |
-| `kingfisher.hetzner.1` | Active | `hetznerA066XIAW11XI2DG0KXG67LJ9B5E5DVS64DABCF2QBCFKDQNERRRXPDR79SNR0AEQ` | <code>(?xi)<br>\b<br>(?:hetzner&#124;hcloud)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(<br>  [A-Z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.hex.1` | Active | `hxtp_0eb118300a09c1cda5c14c7cd703e0a917403cdedcd3b3b6b3b828f43a76c4cc070fcdbf14cc77b9799e0ffe5e553553` | `(?xi)
+| `kingfisher.hetzner.1` | Active | `hetzner\ne\nJsA8E\rSQ\r7\n\r\ni\n\rk\n\rb\r\r\rgT\rV\nLL68NGN8XMVH7YA2L749ELQZ3KSMD0HP202QFOC80C5ZNAI784BSOE69EACIV7DEN` | <code>(?xi)<br>\b<br>(?:hetzner&#124;hcloud)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(<br>  [A-Z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.hex.1` | Active | `hxtp_f5b7185d7526bac2caeb1468c3fef6b8bd5597e40f1fcbfa1b36f1e205c8282bbafba99977e0ae8eb2ed9ca03551c508` | `(?xi)
 \b
 (
   hxt[wp]_
@@ -1145,53 +1145,53 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.hexpm.1` | Active | `hexpmfd283038b809695e75bb03a9d07dea4c` | <code>(?xi)<br>\b<br>(?:<br>  mix \s+ hex\.organization \s+ (?:auth&#124;key)<br>  &#124;<br>  HEX_ORGANIZATION_KEY<br>  &#124;<br>  hexpm<br>  &#124;<br>  hex\.pm<br>)<br>(?:.&#124;[\n\r]){0,64}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.highnote.1` | Active | `highnotesk_live_a2V5Xz35XssR2DDXNLVRivASvlS948q5rtu43C+MkKfsBK+DjbTe7/JtMQL26T4FzNGmMSA9VjR==` | <code>(?x)<br>\b<br>(?i:highnote)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  sk_live_a2V5Xz[A-Za-z0-9+/]{69}={0,2}<br>)<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
-| `kingfisher.honeycomb.1` | Active | `honeycombPRIVATENntEJmp53WYvD7Pt2T147J` | <code>(?xi)<br>\b<br>honeycomb<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{32}&#124;<br>  [0-9a-zA-Z]{22}<br>)<br>\b<br></code> |
-| `kingfisher.hop.1` | Active | `ptk_MU5Qwl_RFwGDykriblyjNbZq9Mnttk4Q` | `(?x)
+| `kingfisher.hexpm.1` | Active | `hexpmV3bg\rw\r\r\nY\rD\n\n\n\nA\r\r2cv\r\r\r\r\n\n\nU\rn6a18f255cc83ea022361f83f633750be` | <code>(?xi)<br>\b<br>(?:<br>  mix \s+ hex\.organization \s+ (?:auth&#124;key)<br>  &#124;<br>  HEX_ORGANIZATION_KEY<br>  &#124;<br>  hexpm<br>  &#124;<br>  hex\.pm<br>)<br>(?:.&#124;[\n\r]){0,64}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.highnote.1` | Active | `highnoteo\r\nhJ\n\n\n\n\n\ncqcg1n\r\rOm\nCHsk_live_a2V5XzlnvUsgriv6DhoCIYVzN4luHUowvGAig2UnhPmiWvSGzcIOI5PtCJHK6prBkSSYiG1neX9==` | <code>(?x)<br>\b<br>(?i:highnote)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  sk_live_a2V5Xz[A-Za-z0-9+/]{69}={0,2}<br>)<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
+| `kingfisher.honeycomb.1` | Active | `honeycomb\r2\r\r\n\rb\rk8\rs\r\n\nWSECRETXa\nB\n\r\n\nlW\r\rj\nYC\nCrK\r\n\rkR\r\nB\r\rCGXtlu8Zk3uyOtHLdOi8ogJO` | <code>(?xi)<br>\b<br>honeycomb<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{32}&#124;<br>  [0-9a-zA-Z]{22}<br>)<br>\b<br></code> |
+| `kingfisher.hop.1` | Active | `ptk_RXytzgH1rgmaNCo8RMQTtV81ds_yJqjD` | `(?x)
 \b
 (
   ptk_[a-zA-Z0-9_-]{20,80}
 )
 \b
 ` |
-| `kingfisher.hop.2` | Active | `hop_pat_Mde3b5mgDApeSnpz0lUoeFXdiZfuESY0\x0c` | <code>(?x)<br>(?:^&#124;['"\x60\s&gt;=:(,])<br>(<br>  hop_pat_[a-zA-Z0-9_-]{20,80}<br>)<br>(?:$&#124;['"\x60\s&lt;),])<br></code> |
-| `kingfisher.http.1` | Active | `Authorization\t\n\x0b \t\r \r \x0b\x0c\x0c\n \r\x0c\r\x0c  \n  \x0b\x0c\r\r\x0c\n\r\x0c\ry{1,5}\x0c  \r\x0b \x0b\t\t\r\n\x0b \r\x0c\x0b\x0b \n\x0b\n\n\x0c\x0c\n\x0c\x0c\t\r\x0b\x0c Basic\t\x0b\t\t\t \x0c\r\x0b\x0c\x0b\x0b\x0c\r\t\t\n \r\x0b\n\x0b \r\x0b\t\r\x0c\r\n\x0b\x0boytcYoYNDBzb/w5WfUo6Kga6kSyMKfpo==A` | <code>(?x)(?i)<br>Authorization (?: :\s+ &#124; \s*.{1, 5}\s*) Basic \s+<br>( [A-Za-z0-9+/]{6,} ={0,2} )<br>(?: [^A-Za-z0-9+/=] &#124; $ )<br></code> |
-| `kingfisher.http.2` | Active | `Authorization\r\r\r \n\t \n\x0c\x0b\t\t\t\t\x0b\t \x0b\r\t\t\t\n  \t \x0b \x0b\x0b\nc{1,5}\x0b \x0c\r\x0b \n\r \t\r  \x0b\r\t\r\x0c\t\x0b\x0b \x0c \x0c\x0b\x0c \n \x0b\rBearer\r\t\x0c\n\t\x0b\t\r\t\x0c\r\x0c \t\t \x0c\x0c\x0c\x0c \t\r\x0c\n\x0b\t\x0b\x0c\t\x0b TCQq9gyxx1rkCle+bDAXaiq]gh\\n9Ka3================================A` | <code>(?x)(?i)<br>Authorization (?: :\s+ &#124; \s*.{1, 5}\s*) Bearer \s+<br>([a-zA-z0-9._~+/-]{6,} =*)<br>(?: [^a-zA-z0-9._~+/=-] &#124; $ )<br></code> |
-| `kingfisher.huawei.2` | Active | `huaweiclient_secret\x0cd18e96cec6504029fa23a61f91fe2f2b935eeb73d0e3d024f25ee5981033e651` | <code>(?xi)<br>\b<br>huawei<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.hubspot.1` | Active | `pat-nnk-72c73442-c077-5678-1dd0-67c24e2d1076` | `(?x)
+| `kingfisher.hop.2` | Active | `hop_pat_Z_8aQ08zeoDilzl52LnIV_Q-24zYvzpP` | <code>(?x)<br>(?:^&#124;['"\x60\s&gt;=:(,])<br>(<br>  hop_pat_[a-zA-Z0-9_-]{20,80}<br>)<br>(?:$&#124;['"\x60\s&lt;),])<br></code> |
+| `kingfisher.http.1` | Active | `Authorization: \t\x0c\x0b \x0c\t\x0c\x0c\r\x0c\t\r\r\r\x0c\x0b\t\t\t\n\x0c\x0b\x0c\x0b\t\t\x0c\r\x0c\n\rBasic \r\x0c\r\r\n\x0b\n\n\n\t\n\n\x0c\t\x0c\r\n\x0b\r\n\t\t\n\x0b\n\x0c\t\t\t\t eTJVH9JK+jv0Z+QvztXEIWC1eqNu87E9==_` | <code>(?x)(?i)<br>Authorization (?: :\s+ &#124; \s*.{1, 5}\s*) Basic \s+<br>( [A-Za-z0-9+/]{6,} ={0,2} )<br>(?: [^A-Za-z0-9+/=] &#124; $ )<br></code> |
+| `kingfisher.http.2` | Active | ``Authorization\r  \x0c\n\t\n\n\x0c\t\n \n\x0c\x0b\n\n\t  \n \n\x0c\x0c\r\n\x0c\t\r\x0b\tL{1,5}\x0b\n \r\n \t\t\r\n\n\x0b\x0c\x0b\t\x0b \x0b\n\r\x0b\x0b\x0c\r\n\x0b\n\x0b\x0b\x0c\r Bearer\t\x0c\r\n\r\r\t\r\n\r\n\x0c\n\n\t\x0b\t\t\x0c\r \x0c\r\x0b\t\n\r\r\r  \x0crrD_64+^aan\\36r`3Td.cg5jql_U_c7v================================`` | <code>(?x)(?i)<br>Authorization (?: :\s+ &#124; \s*.{1, 5}\s*) Bearer \s+<br>([a-zA-z0-9._~+/-]{6,} =*)<br>(?: [^a-zA-z0-9._~+/=-] &#124; $ )<br></code> |
+| `kingfisher.huawei.2` | Active | `huawei1i\ra8\rLn\rK\rg3\n\r97\rK\nWiB0rse\r2m\n\rclient_secretH\ne\r4\rqE5Amv\n\n\r\n\r76f3d6de46317bfd8d3087efebdacc0f87968911c7ced49256e18cab2a4b2586` | <code>(?xi)<br>\b<br>huawei<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.hubspot.1` | Active | `pat-wgm-a148d105-6e54-5505-e814-c0aea985e63d` | `(?x)
 \b
 (
   pat-[a-z0-9]{2,3}-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}
 )
 \b
 ` |
-| `kingfisher.huggingface.1` | Active | `hf_P1AEFHGFLOWONCJYQNKC6DEJYACG0D5MHX` | <code>(?xi)<br>(?:<br>  (<br>    (?:api_org&#124;hf)_<br>    (?:[0-9A-Z]{17}){2}<br>  )   <br>)<br>\b<br></code> |
-| `kingfisher.hunterio.1` | Active | `hunterSECRETsuGYQ3kG61WdYBWSw31HUHaFqGTsEeS43hYo1S4q` | <code>(?xi)<br>\b<br>hunter<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.ibm.1` | Active | `ibmcloudPRIVATE4AIKU-MB0K3TQ4IMP-O4CAZU7VD83BYRG7R_C8T66G` | <code>(?xi)<br>\b<br>(?:ibm(?:cloud)?&#124;bx)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(                             <br>  [0-9A-Z_-]{42,44}<br>)<br>\b<br></code> |
-| `kingfisher.imagekit.1` | Active | `imagekitSECRETprivate_B_N3Z48-EHSSXVUD263OELNJR8G0JGL1` | <code>(?xi)<br>\b<br>imagekit<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;PRIVATE_KEY)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  (?-i:private_)[A-Z0-9_-]{8,128}<br>)<br>\b<br></code> |
-| `kingfisher.infisical.1` | Active | `st.MRzMFhwZE4g9L44Yxx72cb4ktQtzqcpn.SQPTIVRo4RWGxZn0ERGzI7TXJqXhYDCY.3cf9e611e4bc96d933c7738d404db639` | <code>(?x)<br>\b<br>(<br>  st\.[A-Za-z0-9_-]{3,48}\.[A-Za-z0-9_-]{3,48}\.[a-f0-9]{8,64}<br>)<br>(?:\b&#124;$)<br></code> |
-| `kingfisher.influxdb.1` | Active | `influxdbtoken=HPdfEg8bX9YkZoUFHCvdMavyiW/kYGy+JG7yoJ5UUiLKDtQDk9rSEbfpOU7lTXUBnw++RWHrz1hPRwBf6LtMOzp=` | <code>(?xi)<br>(?:<br>  \binflux(?:db)?\b<br>  (?:.&#124;[\n\r]){0,64}?<br>  \b(?:token&#124;api[_-]?key)\b<br>  (?:.&#124;[\n\r]){0,32}?<br>)<br>[=:"'\s]<br>(<br>  [A-Za-z0-9+/=_-]{88,}<br>)<br></code> |
-| `kingfisher.infura.1` | Active | `infurap2yw11p1k8joqwj6ij5e58l8fjap5eds` | <code>(?xi)<br>\b<br>infura<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-z]{32}<br>)<br></code> |
-| `kingfisher.inngest.1` | Active | `signkey-kkmhlpudujsi69pvnt1u14btjei1vfmp-52a4d59dc859dfe90f77d2d530f4002b85133fa91c4e1f06965499abc3956ca1` | `(?x)
+| `kingfisher.huggingface.1` | Active | `hf_YO0VUIOTSJQ2JZD7I0CS2BF75T48D6M7TJ` | <code>(?xi)<br>(?:<br>  (<br>    (?:api_org&#124;hf)_<br>    (?:[0-9A-Z]{17}){2}<br>  )   <br>)<br>\b<br></code> |
+| `kingfisher.hunterio.1` | Active | `hunterr\r\n\nU\n\ri\nl\nQ\rL\n\nTOKEN\r\nAc1k\nY\r\r\r\n\nrK54vra3kYgq7vhhFDxbh2LUYV3MJ3oz8MkHlI4Ohsw` | <code>(?xi)<br>\b<br>hunter<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.ibm.1` | Active | `ibmcloud0\rvGpx\ru\n\n9\r\rW\n\nKsrkSrE5\rxt\r\r\r47TOKEN\n\rBx\rPx\n\n\r\n\n\nEXuv\nR\nDSK\r3\r\nj\rd\nmDAASRFMVPJ4WNBRSD3WDIWGO49QQG-EA26VVY1623F` | <code>(?xi)<br>\b<br>(?:ibm(?:cloud)?&#124;bx)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(                             <br>  [0-9A-Z_-]{42,44}<br>)<br>\b<br></code> |
+| `kingfisher.imagekit.1` | Active | `imagekit\nJ\nl\r\r\rgJ5\nAK\r\nR\nhP\r\rVR3\ru\n\rXVD\nPRIVATE_KEYfc\r\n\ri\r\rz\r\n\r\r1\n\rTT\rHQ\rsL\n\rbc\n\r\rNprivate_1NYVD5A4NAIN31DBEW1YZ78UZM72ZYL9` | <code>(?xi)<br>\b<br>imagekit<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;PRIVATE_KEY)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  (?-i:private_)[A-Z0-9_-]{8,128}<br>)<br>\b<br></code> |
+| `kingfisher.infisical.1` | Active | `st.jgeeU34HbkHWmhRX9fPpIs_t7ujCm3Qr.45MGjDj1cKc2s-cxEvoQ9y-LLTsksUoZ.85bd43012cd357a1fc6faaa114549e82` | <code>(?x)<br>\b<br>(<br>  st\.[A-Za-z0-9_-]{3,48}\.[A-Za-z0-9_-]{3,48}\.[a-f0-9]{8,64}<br>)<br>(?:\b&#124;$)<br></code> |
+| `kingfisher.influxdb.1` | Active | `influxdbPo5\n\n196i\nn\n7np\rs\n\rf\r\r\n\n\n\n\rlm3\n\napi-keyLFt\nU\ro\rg\na\r\n\r\r75\nw\n\r\r\rhzrM1\r\rw\r\x0boKPMo+7v+ldDKCplcjCeBpfrA0E9lByC_-TvTb937FaEjKy8VrOnonMehNuCGU+0dl_yy=uVEp57rl0=hUcQymOa` | <code>(?xi)<br>(?:<br>  \binflux(?:db)?\b<br>  (?:.&#124;[\n\r]){0,64}?<br>  \b(?:token&#124;api[_-]?key)\b<br>  (?:.&#124;[\n\r]){0,32}?<br>)<br>[=:"'\s]<br>(<br>  [A-Za-z0-9+/=_-]{88,}<br>)<br></code> |
+| `kingfisher.infura.1` | Active | `infuraU\n\r\n\rZC\r58\ntb\nV\rD\nx3\r\n\nn\n\rFj\n\rGMe4bs1cj5h36qmtkpr6s4q9s3t7boh9ot` | <code>(?xi)<br>\b<br>infura<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-z]{32}<br>)<br></code> |
+| `kingfisher.inngest.1` | Active | `signkey-fsmf_eh22br5kna9p4g0ofngls9zelw6-32cbe252cf5435af3b42ddcf8af58d795165230d9346c68a551c1dd380202772` | `(?x)
 \b
 (
   signkey-[a-z0-9_-]+-[a-f0-9]{64}
 )
 \b
 ` |
-| `kingfisher.inngest.2` | Active | `inngestEVENT\x0c \x0c \x0c \r\t\x0c\x0c\n_\x0c_\x0b\r\x0c\x0c\x0c\t\r_\x0b\x0c\t\r_ -\x0c\x0b\x0bKEY_qWnkcO-fFZoAC0FJBFkJcHg96T124-HOBmmEyJXR_30F8LABES5qQYMNmjFiitZswN0YNrJIPCRD13OSYIqo3` | <code>(?xi)<br>\b<br>(?:inngest&#124;INNGEST_EVENT_KEY)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(?:EVENT(?:[\s_-]*KEY)?&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{86}<br>)<br>\b<br></code> |
-| `kingfisher.instagram.1` | Active | `IGQVJmRoYjKf4dUeHaupFEyPLXCzVBqK4OCxlGWaXuw1nV_WLFgKLiR` | `(?x)
+| `kingfisher.inngest.2` | Active | `INNGEST_EVENT_KEYKmYz\ra\n\rDT\nt6\n\nA\r\n\n\nIF\r\rdsu\nl\riOEVENT \n\t\x0c\r-\x0c__\r-\x0b-_\r - \t\n\x0b_\x0b\x0b_\r \n_\x0c _KEY\nJTXBoIC\rd7Hc\n\r\nrJQ24J5J5bpzRpME_wmcj8fosKWXExTtLVP5DGaw_RoMjNv9SA7XY0-xgniN5Onj0x2vOgBnDa_Z-_-qIXdPPj` | <code>(?xi)<br>\b<br>(?:inngest&#124;INNGEST_EVENT_KEY)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(?:EVENT(?:[\s_-]*KEY)?&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{86}<br>)<br>\b<br></code> |
+| `kingfisher.instagram.1` | Active | `IGQVJ3fpYa7LWU-1BHnu75SdplH7W4433QRJ3iN91eJeHgPih8VRjZt` | `(?x)
 \b
 (
   IGQVJ[A-Za-z0-9_-]{50,256}
 )
 \b
 ` |
-| `kingfisher.instantly.1` | Active | `instantly.aiSECRETNHZMM3AYND8TDIILJ1I6D86PRY2GJNB6Q80UOQ3S6IMO+/W4ZOPD34O56AW5CFAWD+==` | <code>(?xi)<br>\b<br>instantly<br>(?:\.ai)?<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9+/]{66}==<br>)<br></code> |
-| `kingfisher.intercom.1` | Active | `intercomSECRETGJU61RB5K9PU6FU1OH40M4GN7G2CZ9++SW/FRD733B+ZOFQ/XYEQKID0VE0=` | <code>(?xi)  <br>(?:intercom&#124;ic)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                               <br>  [0-9A-Z+/]{59}=                <br>)<br></code> |
-| `kingfisher.intra42.2` | Active | `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` | <code>(?xi)<br>\b<br>(<br>  s-s4t2(?:ud&#124;af)-[a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.ionic.1` | Active | `ion_aXq5ef0OwHuJ4f4NPPya22TMVxfm6CvzpgBmQy41iK` | `(?x)
+| `kingfisher.instantly.1` | Active | `instantly.aido\rQ\na\n9\n\r\r\n8k\r\rPRIVATEd\r\nS\rP\r4\nv\rw\r\nd\nZTA5VY/GZ/QR2RNF1FGK3+XPN3780QCM3FXGN/4P8W1NZDF44FY1GI88B46HHV+M+0==` | <code>(?xi)<br>\b<br>instantly<br>(?:\.ai)?<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9+/]{66}==<br>)<br></code> |
+| `kingfisher.intercom.1` | Active | `intercom9\ro29i\n\n\rEo\r\r\ng\nPRIVATE\rClpM\rn\n\res\nn\n\r\nJGADC/7IYCR0QJ455VLV6CY18WZYY5IJLJCET5CK5N3CMNR5AHP2G6FDWK3=` | <code>(?xi)  <br>(?:intercom&#124;ic)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                               <br>  [0-9A-Z+/]{59}=                <br>)<br></code> |
+| `kingfisher.intra42.2` | Active | `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` | <code>(?xi)<br>\b<br>(<br>  s-s4t2(?:ud&#124;af)-[a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.ionic.1` | Active | `ion_SjtlHrBc0JO6C3t69xXB9jeRfZAWxcZYUV7xx2cGzi` | `(?x)
 \b                     
 (                      
   ion_
@@ -1199,58 +1199,58 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.ipstack.1` | Active | `ipstackTOKEN4ccc674895c0776a37d6d4c2ed77eb27` | <code>(?xi)<br>\b<br>ipstack<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[0-9a-f]{16}){2}<br>)<br>\b<br></code> |
-| `kingfisher.iterable.1` | Active | `iterableSECRETqJe4qgLkVBMqscIg7gXdLsU2xoHKMPF4` | <code>(?xi)<br>(?:iterable)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32,64}<br>)<br>\b<br></code> |
-| `kingfisher.iterative.1` | Active | `isat_rTRP1Lr0svKMYb1ze71x1a8nwPaUY_Mk` | `(?x)
+| `kingfisher.ipstack.1` | Active | `ipstack\r\nq\rK\r\r\n\rZUW\na\r\nip\n\n\na\rf\n\n\r\n\r\rQfTOKEN4DY\r\r\nW1I\r\r\nL\rU\r\n\n\rO\r\r\nPa\nq\nt\r\r\r8e1bd478b7bd16ed082438b316a23117` | <code>(?xi)<br>\b<br>ipstack<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[0-9a-f]{16}){2}<br>)<br>\b<br></code> |
+| `kingfisher.iterable.1` | Active | `iterablef\n\n\n\ny\rD7\r\r\rO\rh\rN\n\rsm\ny\r\rhq\n\r\n\ruSECRET\nR\n\r\n\rwBvF\n\r\r\rF\rzX6oP3Afe1n1FgsdZgbfiCudZcJMm0Zp` | <code>(?xi)<br>(?:iterable)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32,64}<br>)<br>\b<br></code> |
+| `kingfisher.iterative.1` | Active | `isat_u7YWY-xdWtevlRhgpinoSgChw9iOse3g` | `(?x)
 \b
 (
   isat_[a-zA-Z0-9_-]{20,80}
 )
 \b
 ` |
-| `kingfisher.jdbc.1` | Active | `jdbc:lwmi8grmzydevuv2yru5zpp7ifj9aorat:hm81t2k.xp4vaz0cdqb0wl4u4+wp50ba:qo+6n0onvu2ju-wc+rsxton-3z.jl1uc:kjf3mn61mfe9c0ej7s6-wgrsbgyo1lxv:ni1qrju+lg7c+tbp.vlhow9bdcafpe1v:g-3uttpe1j3lm1b6h1kzkmamzgw0de98:47yau2mrdrujfllew8+01cly01un2tjs:wd1xk7q9ykdtpam2v1nmlp.47pcaocuy:1xi63e1vjax6g9u+sekp5venmk0t1du3:ac4wz.9og.qu3di6pguhvf3njlj83g9-:kk5ohg9hlnw2fv2..poa.woyvwef0gt.:4-hsgm8ry4-2ly430ym7wyl5r4+yvavc:-6+57cwp2h1-e39k0y5cvdd2c-oer+.c:qqs65ebt-p6tx66tk9760ba84fxdtn-v:91zd-0t36xozkfczrxqf2ybu2eyuabau:kk6iq1or3q1g1w7llcy3b9uq.u6w59x.:5aaelp20dt5a8jh0ax3yd-.gppwfqx82:r7xyyqapwnu7cq6uuljko4on4prrk9ex:iirp4indz9q36ichhwuv8s6u5o+co0lx:el4gqvlwwrqfl1au36a1dy.eridm46a0:4fy20t2uqz95et7u0xlvrl449ocqy7v-:0v-l.8c3em07evglxhj+cr12hi3qd6du:9vj3r8i8j12h6k-6r7tw4ll07kh+xx19:dbsl4+6o--5x6.15u3nv+z7p132o8djf:y8v7fbx2cq19sbz7qxdgai+w2y5h.288:uyw64i47v+5nk146lf5du10zrkzi8lc.:3uhqbrittwuepg+kh-2qty.51kpze3rx:9kmv3wsnlk1rvwh.c-twwro2h7z.1x3c:dxxl3o2aw3+uyz5o7nrg7.+8k8bxm86e:+l1k5-izgf6k53vcgzvzgyd634kjhbtg:7dt4u+bcnop1y77b0l62er03mbbfl8k6:c9ch77+jcv3k57s0mn0nee5q-9sq0jys:+pj0q3skbcoihb4.m5i-pyv5mdi4pdpn:3oVPyGlW2DcdyEduofkwSWEeuN1uoaAf` | <code>(?xi)<br>(<br>  jdbc:<br>  [a-z][a-z0-9+.-]{2,32}<br>  (?:[:][a-z0-9+.-]{1,32})*<br>  :<br>  [^\s"'&lt;&gt;,(){}\[\]]{10,448}<br>)<br></code> |
-| `kingfisher.jenkins.1` | Active | `jenkinsDKfF5NPb2qcrumbe0U18NNZnKa7519815b9ef471e17a422c3e76ac8a9` | `(?i)jenkins.{0,10}(?:crumb)?.{0,10}\b([0-9a-f]{32,36})\b` |
-| `kingfisher.jfrog.2` | Active | `xraysecretESkxfS4p7N0sV4gSZ7vUXrAG596lkgwLi8G5ckEzRgSK3VM6HUMnE7QuiZZOpCNG5oD0oEh3K` | <code>(?xi)<br>\b<br>(?:<br>  jfrog &#124;<br>  artifactory &#124;<br>  bintray &#124;<br>  xray<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?key &#124;<br>  password &#124;<br>  token &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9]{73}<br>)<br>\b<br></code> |
-| `kingfisher.jfrog.3` | Active | `xrayaccess-tokenPGh8YiU9SM2A8CeDDaBb1hpSqtb08BEM8aOd5kDBbm5ANWOdU7vzNav3gdg0f2gB` | <code>(?xi)<br>\b<br>(?:<br>  jfrog &#124;<br>  artifactory &#124;<br>  bintray &#124;<br>  xray<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  identity[_-]?token &#124;<br>  access[_-]?token &#124;<br>  bearer &#124;<br>  token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.jina.1` | Active | `jina_Yqpjg2eRkLylFhB5bCxIvc2kBeSHOWSGHdECqk1afhfKwkC5eBPwsiwHAtyx` | `(?x)
+| `kingfisher.jdbc.1` | Active | `jdbc:m83ssa7jo2xxs42xnqx8odtr0bmx1alhz:uwhsfdf7ro1ob8rur2wra26qtwk4pdtj:mmg.8snzlgjbj4xcrnm9usrxap7t-vhu:h7vegsct09e3zuxxk2wedwlkh7phy1ot:5c84occz7f1.-a-mnhbcfx.22-7ekdeg:lbl9d6uc9l2hmhkqzchgpntj6mpbut94:pvr-0a2wndtjvk0xrhy63oyqaxkrmj57:0e2790g9mmpyftg+7m7hlef+fyewj-o8:saxr610+jggjob.zkdh-h7oir24tm0ui:h1unq7-x8z9y2dilp40vsaglgpthzlc6:vyee0m--wldj9vwcv7moj17pihxer+oc:3r422ik3nxpfs.m8.l5tl6ypdb+ti4.-:5q.pu6qfd3ykq0tqj5nq3b34.su3i8jv:d2op37o27thve02nf+xblmxivkv-c6-u:y.1tycvlwmg3.mwaibmaq20ax500ws2g:7s7n0odwrz.v024nancwiu-2qam3-mly:a5ce-wkwhol7+euquws2yk8c9vtrh-iv:9+gicm5i73jpu64d6q84ld1p+2a738k-:1571cei9oyxbqd.qjmkk+zgrhsqxz1oh:78+a0nqqko2ru2h+tcl8ki1cyws46ev-:runp5rgo-08fnljrgkl+e7m6fcdi1haa:amqx5havgagjd91qh+u2h0osqce5p9gt:g9172htvnynulf+cyon63-y0-gpyirq3:zui3fv0aei2foz75.zwhqhs8wh6cec4+:7509p97r2w23khbkl+jwxooe2q9j9yu-:m4bkrs2-.m5i05.cd3r2bkl1rkg54kf9:1y60mfqs9pvv-h5h69-+sde5a56nau-+:vwin63cdc7zojgi+mkonuo7.fdoi1vcu:4b7tggh7mwlyoo.0mba94x4r0yxn8qz0:3tb0cd9q9sbrlpwye4u+5032ekzdn5lr:5hdperyvx68m7ijxl-ezp9w1xrs4g.t7:+0fl4i23edhreneu.40.ilor+3zd8hy7:6hhkc1lxd94-60dpet-am-7iq7u5jhqi:T:===::yZc:JEhk:Bh5=Ak:=f:hcf:=k` | <code>(?xi)<br>(<br>  jdbc:<br>  [a-z][a-z0-9+.-]{2,32}<br>  (?:[:][a-z0-9+.-]{1,32})*<br>  :<br>  [^\s"'&lt;&gt;,(){}\[\]]{10,448}<br>)<br></code> |
+| `kingfisher.jenkins.1` | Active | `jenkinsDudkx8wszFcrumbBcMy07PIuT822e46094617dd76a47069b9c65f578e` | `(?i)jenkins.{0,10}(?:crumb)?.{0,10}\b([0-9a-f]{32,36})\b` |
+| `kingfisher.jfrog.2` | Active | `jfrog\n\r\nO\n\rR\nu0h\rYeP\n17\nm\n\nt\r3Z\n\n2P\r1password\r1\n\r\r\n\nxH\r\r6Dn0fV6G5DAZWfRemUmJgwklhALomKJhMwSeq3hMH3xbXrdWu5wOKrSCrF2uTnS8UABN5sOXq9` | <code>(?xi)<br>\b<br>(?:<br>  jfrog &#124;<br>  artifactory &#124;<br>  bintray &#124;<br>  xray<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?key &#124;<br>  password &#124;<br>  token &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9]{73}<br>)<br>\b<br></code> |
+| `kingfisher.jfrog.3` | Active | `jfrog\rKh\rm\rf\rd\r14\rScmZ\rGF\n\nY\rurav\n11paccess-token\rfaR\r4F\nt\n\rH7BR5cwdegQidV9ESFPUuyIO00UmfOQ8ctby9yLqOhS7pA1mmmkcWAv3P2MaeNlIT` | <code>(?xi)<br>\b<br>(?:<br>  jfrog &#124;<br>  artifactory &#124;<br>  bintray &#124;<br>  xray<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  identity[_-]?token &#124;<br>  access[_-]?token &#124;<br>  bearer &#124;<br>  token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.jina.1` | Active | `jina_3wdkwLGMLW0eDLsokGrDZaWngq6gHrNo4Aa2XXoHzCV4cv2WU8KEXYWyYvWo` | `(?x)
 \b
 (
   jina_[a-zA-Z0-9]{60}
 )
 \b
 ` |
-| `kingfisher.jira.2` | Active | `jiraTOKEN8cb2oltzl04dg-hdw-9tomik` | <code>(?xi)                   <br>\b                     <br>jira<br>(?:.&#124;[\n\r]){0,8}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;PASSWORD&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b                     <br>(                      <br>  [a-z0-9-]{24}<br>)<br>\b<br></code> |
-| `kingfisher.jira.3` | Active | `atlassianMJ3cMNqlyxHln5yXOoPfA0M0m1eXdsk+2JOQ/k1YnSGn` | <code>(?x)<br>(?i:jira&#124;atlassian)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [MNO][A-Za-z0-9+/]{15}<br>  O[g-v]<br>  [A-Za-z0-9+/]{26}<br>)<br></code> |
-| `kingfisher.jotform.1` | Active | `jotformapi_keyWIN6C6XTT9XANDATLFI24D3BEEFPCJ7R` | <code>(?xi)<br>\b<br>jotform<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;apikey&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{32}<br>)<br>\b<br></code> |
-| `kingfisher.jumpcloud.1` | Active | `jumpcloudSECRETpDlcrNDspNqtigfUesoUhcm4N4wKUPIlqPqtgWkR` | <code>(?xi)<br>\b<br>jumpcloud<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.kagi.1` | Active | `kagiGkAGqsyfdacsrEG4qQd4j52YAkaWEEvMXCtn0LID29e.5bUkC2oxEND7AVR7X2xiEGI3mPKYY0DN265ABD8Q69B` | <code>(?x)(?s)<br>(?: kagi &#124; KAGI )<br>.{0,100}<br>( [a-zA-Z0-9_-]{11}\.[a-zA-Z0-9_-]{43} )<br>(?: $ &#124; [^a-zA-Z0-9_-] )<br></code> |
-| `kingfisher.kairos.2` | Active | `kairosapi_key="'''""'"'"''''''""'""'''""''''""5afca98cd1ccc1fadbb04e255874ecb1'` | <code>(?xi)<br>\b<br>kairos<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{32}<br>)<br>['"\s]<br></code> |
-| `kingfisher.keenio.1` | Active | `keenWRITEaf62e9898ACB2a0fbDdDf1E6cF857CAF0AEbD30afF3f9fb1eFF5dE4f9CD45C5b` | <code>(?xi)<br>(?:keen)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;READ&#124;WRITE&#124;MASTER&#124;KEY&#124;SECRET&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Fa-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.keycloak.2` | Active | `keycloakcredentials-secret\x0bec164d84-086a-b33a-b2f0-782e3218d922` | <code>(?xi)<br>\b<br>keycloak<br>(?:.&#124;[\n\r]){0,96}?<br>\b(?:credentials?[._-]secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.kickbox.1` | Active | `kickboxTOKENQ9HNAIMRYY46O9ZYV2GZKGOV5U9F21YBQ4P1YEDUW1PECPTNL683L5S0CY48WAM0KXEW3W7M524T3P3RB8KN3EBKW7DJF4A1` | <code>(?xi)<br>\b<br>kickbox<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_]+[A-Z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.klaviyo.1` | Active | `klaviyopk_DKQ7UWSXNTEQMRYIU84HOWCOAHA08E4SJ4` | <code>(?xi)<br>\b<br>klaviyo<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  pk_[A-Z0-9]{34}<br>)<br>\b<br></code> |
-| `kingfisher.klingai.1` | Active | `klingakznKTtymo3mJZmeHdMP1r4puSTp9UsgSQaccesskeysecretdzRCCFZcBTYRkmiNjAJ7gC64Yp0UPLkL` | <code>(?xi)<br>\b<br>kling<br>(?:.&#124;[\n\r]){0,120}?<br>\b<br>(?:access[\s_-]*key&#124;accesskeyid&#124;ak)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(?P&lt;AKID&gt;<br>  [A-Za-z0-9]{32}<br>)<br>\b<br>(?:.&#124;[\n\r]){0,120}?<br>\b<br>(secret[\s_-]*key&#124;accesskeysecret&#124;sk)<br>\b<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(?P&lt;SECRET&gt;<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.kraken.1` | Active | `krakensecretYBFDxYvpNQQJCPETxtSGreBcF/prRplT3Z/3hKOqFHhZf9LRzH6i90BiT9kkrHxZ1/omkrdhxAmFDT9HA` | <code>(?xi)<br>\b<br>kraken<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?secret &#124;<br>  secret &#124;<br>  private[_-]?key &#124;<br>  token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9+/=_-]{80,90}<br>)<br>(?:[^A-Za-z0-9+/=_-]&#124;$)<br></code> |
-| `kingfisher.kubernetes.2` | Active | `bootstrap-tokent97bvr.c52mz6unklpfc99g` | <code>(?xi)<br>\b<br>(?:<br>  bootstrap(?:[-_ ]token)?<br>&#124;<br>  tls[-_ ]bootstrap[-_ ]token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-z0-9]{6}<br>  \.<br>  [a-z0-9]{16}<br>)<br>\b<br></code> |
-| `kingfisher.kubernetes.3` | Active | `token-id \x0b \x0c\n \x0b\x0b\x0b\x0c\n\r \r\x0c\x0b\n\n\n\x0b\x0b\x0c\n\x0b \x0c\t\x0b\x0b\r\r :\r\x0b\t\t\x0c\t\t\t\r\t\x0c \x0b\n\n   \t\r\x0c\x0b\r\n\n  \t\x0c\x0b \r9af85qtoken-secret\t\n\t\t \t\x0b\t\n\r\t\x0b\t\x0b \n \x0b\r \x0b\t\x0b\n\t\x0c\x0c\n\x0c\n\x0b\t:\t\r\x0b\x0c\x0c\x0c\x0c\x0b\x0c\t\x0c\x0b\x0b\x0b\x0c\n\n\r\r\r\x0c\x0b\x0c \x0b\t\x0b\n\r\x0c\n\rwdv0j3bxda7lmdyo` | <code>(?xis)<br>\btoken-id\b<br>\s*:\s*<br>(?P&lt;TOKEN_ID&gt;[a-z0-9]{6})<br>(?:.&#124;[\n\r]){0,24}?<br>\btoken-secret\b<br>\s*:\s*<br>(?P&lt;TOKEN_SECRET&gt;[a-z0-9]{16})<br>\b<br></code> |
-| `kingfisher.kucoin.1` | Active | `kucoinapi_keyf3bc81fb5689d8db6b17f947` | <code>(?xi)<br>\b<br>kucoin<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?key &#124;<br>  key<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-f0-9]{24}<br>)<br>\b<br></code> |
-| `kingfisher.kucoin.2` | Active | `kucoinsecretb0967919-e8e6-d003-daf7-8572e3dce710` | <code>(?xi)<br>\b<br>kucoin<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?secret &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.lacework.2` | Active | `lacework_api_secret:'"'""'"''"'''""'''""""'""""''"''_0j40xwcx6ntua4a9ftcasociektekl4\t` | <code>(?xi)<br>\b<br>lacework[_-]?api[_-]?secret<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  _[a-z0-9]{31}<br>)<br>['"\s]<br></code> |
-| `kingfisher.langchain.1` | Active | `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` | `(?xi)
+| `kingfisher.jira.2` | Active | `jirand\nPS\nX\nKEY\rnd\rla\r\n\n\n8U5O\n7c6fynay0k0p8-dhvehngfnnm` | <code>(?xi)                   <br>\b                     <br>jira<br>(?:.&#124;[\n\r]){0,8}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;PASSWORD&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b                     <br>(                      <br>  [a-z0-9-]{24}<br>)<br>\b<br></code> |
+| `kingfisher.jira.3` | Active | `jiraA\rdo\n\r\r\rPZqQWnV\nMFhTRDp3vH+Dw3lsOlLAJh+PYcTR8uXAHqs4KT84PS+2` | <code>(?x)<br>(?i:jira&#124;atlassian)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [MNO][A-Za-z0-9+/]{15}<br>  O[g-v]<br>  [A-Za-z0-9+/]{26}<br>)<br></code> |
+| `kingfisher.jotform.1` | Active | `jotformt\rr8GBUj\n\re9\nd\n\n4\n\n\n\rPNyi\n\r\n\nFD2key\nfW\r3b88x\r\n\r\n\ncD\n\n\rG1O\rq\nq\n\nMk\r\nIMDBZ927PI896SRO2IFFKAM7V6E69WAX` | <code>(?xi)<br>\b<br>jotform<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;apikey&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9A-Z]{32}<br>)<br>\b<br></code> |
+| `kingfisher.jumpcloud.1` | Active | `jumpcloud\r4\rYsY\n\r\n\n5H\nW\rP\r\r\rG\n\r\n\n\rd4M\nd\r\nTOKENQ9t7\r\n\n\n\nHt\rI\n\n6m\r8S8N1J\rt\nZI\nJ\nFeEc3iXPxZVWM6SMMLC6mVapbe2ZAKWGh9KM3ahY` | <code>(?xi)<br>\b<br>jumpcloud<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.kagi.1` | Active | `kagiWOgqqROLow4AZPvfu4Alo6THgSlEBoN4slPlPXcwHwt.GLseSie9huglDNWk7Rb4ss0j3GDIqSiWPU9bA-L2T8W` | <code>(?x)(?s)<br>(?: kagi &#124; KAGI )<br>.{0,100}<br>( [a-zA-Z0-9_-]{11}\.[a-zA-Z0-9_-]{43} )<br>(?: $ &#124; [^a-zA-Z0-9_-] )<br></code> |
+| `kingfisher.kairos.2` | Active | `kairosy\ncU\n\nr\rx\r\nc\r\r\rE\rk\n\rv\rH6\n\r\r\n\r\n8\napi_key\nac\n\ngBsm\rDKoAqg\n"'""""''"''''''''"'"'"'""'"'''''50e41c362136c13eae00450eeddcb5c8'` | <code>(?xi)<br>\b<br>kairos<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{32}<br>)<br>['"\s]<br></code> |
+| `kingfisher.keenio.1` | Active | `keenX\rol\nP\rRI\neGWqrQ\r9ps\nW9\rg\rd\nS\nB\rREADYS\rt\n1\rltC\nC\r\nr3d58e7BCc6e5D9bad453cea9EF96dd8eB9C3cd6Eb05CECF115e1Ff69A6F9aCe5B` | <code>(?xi)<br>(?:keen)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;READ&#124;WRITE&#124;MASTER&#124;KEY&#124;SECRET&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Fa-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.keycloak.2` | Active | `keycloak\rM1\n\n\n\rwD\rE\rr\rK\nX\n\rLt\r\nAr7E\r\nCPisecretF\rJnWA7\n\nQ\rpjK\r\n 3b3ac7d2-915b-a888-ec48-4d35c4359687` | <code>(?xi)<br>\b<br>keycloak<br>(?:.&#124;[\n\r]){0,96}?<br>\b(?:credentials?[._-]secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.kickbox.1` | Active | `kickbox\r\n\r\n\rcVg\rSy7\r\rW\n\nDW\n\nU\n\rnE\rz\rTf\nPRIVATE\r\nBOhc2\roM\n7U\rY\nu\r\r\r\r\n\ni\r\n\n\r\rj\r\nY26VK29OUYW9ODEIHYZOXE8YFM52ONKM5JWP531CVCISOSI4NJ0Y943MBHPFZ2PW5QY4TXPM8SQB1SJXE4Q32D1HOJXIGFKH` | <code>(?xi)<br>\b<br>kickbox<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_]+[A-Z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.klaviyo.1` | Active | `klaviyoY\n\r\nT\n\r\n\n\n\rBn\nuNpk_LYTLHG7A2G2X6GYHBI9F4JJJNUJDI0C55V` | <code>(?xi)<br>\b<br>klaviyo<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  pk_[A-Z0-9]{34}<br>)<br>\b<br></code> |
+| `kingfisher.klingai.1` | Active | `kling\n\n\rNt\nJhAs\n\n\r1X\riN\nwykH4tElk\r\n0qaccess\r\x0b\x0b_--\x0c\t -\x0c\r\x0c-\r-\r-\x0b\n\x0c\x0b\x0b\n\t\n\t\t_ _\rkeyx\n\n6\r32pb\rY\rTM\n\nm\n\njbv\r\r\nJ\nW\n\rIOStSPpo5KWoieoZzz0o84Pb8Buidv5qIs\r\nQ\r\rQu8\n\n5\n\rbS\n8\nKx\n\r\n\r\r\rU\n\rOAFsecret\x0c\x0b\x0c-\n_\t_\x0c\x0b \n\t\n\x0b_\r-\x0c -\t-\r\t_\x0b_\n\n\x0b-keyh\n\n\rp\r\r\n\np\nMmeO3\r\rY\nh\nA\nn\n\r\nh\r\r\nzgyLdUJtGYO7o9vMJJGAZ01Ygy5pOXki` | <code>(?xi)<br>\b<br>kling<br>(?:.&#124;[\n\r]){0,120}?<br>\b<br>(?:access[\s_-]*key&#124;accesskeyid&#124;ak)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(?P&lt;AKID&gt;<br>  [A-Za-z0-9]{32}<br>)<br>\b<br>(?:.&#124;[\n\r]){0,120}?<br>\b<br>(secret[\s_-]*key&#124;accesskeysecret&#124;sk)<br>\b<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(?P&lt;SECRET&gt;<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.kraken.1` | Active | `kraken\r\n\rC\r\n4\nm\rejT6C3F8LJAYfsc\r\rSo\rFOprivate_key\r\rb\r\r\n\r\n\nc\n\rc1w+zryBsuND4yXJcXCkbHC+o5W9ChHoc3oSvsrfyVhTx_fzkada4Dc/4nNTD/SpLu5cJq5WQNIL4cuZ:` | <code>(?xi)<br>\b<br>kraken<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?secret &#124;<br>  secret &#124;<br>  private[_-]?key &#124;<br>  token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9+/=_-]{80,90}<br>)<br>(?:[^A-Za-z0-9+/=_-]&#124;$)<br></code> |
+| `kingfisher.kubernetes.2` | Active | `bootstrap tokenv\r\r\r\nd\r\nPz\r02cx9e2.26uxiyyo4cdntuv3` | <code>(?xi)<br>\b<br>(?:<br>  bootstrap(?:[-_ ]token)?<br>&#124;<br>  tls[-_ ]bootstrap[-_ ]token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-z0-9]{6}<br>  \.<br>  [a-z0-9]{16}<br>)<br>\b<br></code> |
+| `kingfisher.kubernetes.3` | Active | `token-id\n\r\x0c \r\t\x0c\t \r \x0b\x0b\t \n\n\x0b\x0b\n\t\x0b\t\n\t\x0c\t\t\t\r\n\x0b:\n\x0b\n\t\t\t \x0b\r\n \x0c\r\x0b\x0b\t\x0b\x0b\r\r \r\x0b\t\r\x0c\n\x0b\n\t\t\t75aexwI\n\njx5\nf\r\r\n\n\rSd\rrWpxm\r\n\ntoken-secret\n\r \t\x0c\n  \n\t\x0b\x0b\r \x0b\x0b\x0c\t\r \t\t\r\x0b \n\r\n\r\n\t\x0b: \r\r\n\t\x0b\n\n\x0b\r\r\x0b \r\x0b \x0c\r\r  \r\t\x0c\x0b\r\n  \t\x0c\rs299p8x2gaukys9n` | <code>(?xis)<br>\btoken-id\b<br>\s*:\s*<br>(?P&lt;TOKEN_ID&gt;[a-z0-9]{6})<br>(?:.&#124;[\n\r]){0,24}?<br>\btoken-secret\b<br>\s*:\s*<br>(?P&lt;TOKEN_SECRET&gt;[a-z0-9]{16})<br>\b<br></code> |
+| `kingfisher.kucoin.1` | Active | `kucoin\nM\n\n\rSiW\r\r\nwV\n11\r\n\nEH\rniywP\n\r\nm\nkey\r\r\r\rW\r\n\r\n\n\rQ457062eec3677410fa65b298` | <code>(?xi)<br>\b<br>kucoin<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?key &#124;<br>  key<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-f0-9]{24}<br>)<br>\b<br></code> |
+| `kingfisher.kucoin.2` | Active | `kucoin\nvwF\nJx\r\rIU0\rF\r\rz\rK\rw\rx\rhF\n\ruZV\nsecretON\n\r\r2\ry6\n\n\r65ec0ef0-c2b3-373b-a77d-afa940f8a674` | <code>(?xi)<br>\b<br>kucoin<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?secret &#124;<br>  secret<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.lacework.2` | Active | `lacework-api-secretkrX\nwYHrl\rB4uv4\r'"""'"''"""'"""'""''""'""'""''"'"_rraniw2voqsxzcv7tytc5hxp9cv7t9p\t` | <code>(?xi)<br>\b<br>lacework[_-]?api[_-]?secret<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  _[a-z0-9]{31}<br>)<br>['"\s]<br></code> |
+| `kingfisher.langchain.1` | Active | `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` | `(?xi)
 \b
 (
   lsv2_(?:pt)_[0-9a-f]{32}_[0-9a-f]{10}
 )
 \b
 ` |
-| `kingfisher.langchain.2` | Active | `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` | `(?xi)
+| `kingfisher.langchain.2` | Active | `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` | `(?xi)
 \b
 (
   lsv2_sk_[0-9a-f]{32}_[0-9a-f]{10}
 )
 \b
 ` |
-| `kingfisher.langfuse.1` | Active | `sk-lf-75EFd7ff-2A5D-dd03-5D63-374FA05aDA5E` | `(?x)
+| `kingfisher.langfuse.1` | Active | `sk-lf-fAB9deb8-9c5A-DbeA-3F08-fe05FB6aad2b` | `(?x)
 \b
 (
   sk-lf
@@ -1262,23 +1262,23 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.laravel.1` | Active | `app-key\t'"''''"'''''"''""''"'''"''""""''base64:4VxQaNIa1qetGW6rVQwg/rZ7kIbiTnxuSxgJ1gYevnh='` | <code>(?xi)<br>\b<br>app[_-]?key<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  base64:<br>  [A-Za-z0-9+/]{43}=<br>  &#124;<br>  [A-Za-z0-9]{32}<br>)<br>['"\s]<br></code> |
-| `kingfisher.lark.1` | Active | `larkACCESSt-YQY7XPUP.XS152EIWOLNS7UITMQKG_DA` | <code>(?xi)<br>(?:lark&#124;larksuite)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  t-[A-Z0-9_.]{14,50}<br>)<br>\b<br></code> |
-| `kingfisher.lark.2` | Active | `larksuiteACCESSu-FFCQ202WRLJDDB48WCLVA_8IRTKDRJ.U` | <code>(?xi)<br>(?:lark&#124;larksuite)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  u-[A-Z0-9_.]{14,50}<br>)<br>\b<br></code> |
-| `kingfisher.lark.3` | Active | `larkKEYa-09BBT9ENGC_ZHCBBT39XBFDOP2XMIF31` | <code>(?xi)<br>(?:lark&#124;larksuite)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  a-[A-Z0-9_.]{30,35}<br>)<br>\b<br></code> |
-| `kingfisher.launchdarkly.1` | Active | `launchdarklyse6w26fkwonoijdd7ck2zlgwo373qidoyd_l1k-_` | <code>(?xi)<br>launchdarkly<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9_\-=]{40}<br>)<br></code> |
-| `kingfisher.ldap.2` | Active | `ldaps://X912uR87Ti9DaZzw4Sakw0im9p5t9l1f:S2R83oe3MiLewKX9wQH4i9Ku6lnwQhIb@THn1jbowOulvmluivznVPe8O1AkCXNtG:69389/EEVZAohxVjXoMpKmKeQqAq7alP5fqL5S` | <code>(?xi)<br>\b<br>(?P&lt;TOKEN&gt;<br>  (?P&lt;LDAP_SCHEME&gt;ldaps?)://<br>  (?P&lt;LDAP_BIND_DN&gt;[^:@\s]{1,128})<br>  :<br>  (?P&lt;LDAP_PASSWORD&gt;[^@\s]{6,128})<br>  @<br>  (?P&lt;LDAP_HOST&gt;[^\s/"':]{4,128})<br>  (?::(?P&lt;LDAP_PORT&gt;\d{2,5}))?<br>  (?:/[^\s"']*)?<br>)<br></code> |
-| `kingfisher.ldap.1` | Active | `ldaps-pwd\n""'"""'""""'''"'"'""""'""''''"'"dwvuC0S1DcSi1VIXjiXQQCg4Tw9chWU5\n` | <code>(?xi)<br>\b<br>ldap(?:s)?[_-]?(?:pass(?:word)?&#124;pwd&#124;secret&#124;bind[_-]?pw)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{8,128}<br>)<br>['"\s]<br></code> |
-| `kingfisher.lemonsqueezy.1` | Active | `lemonNsqueezyTOKENeyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.tgzEyGXD3uSc_e8i5VUBbgybxwUZZW7YOxGDr-gNcYJGFKDH31nIkkWky_rqtbu_k-fMEjlFwbNhNldBmgQdRbnH4ie7f4iuxPRb.E504gFDchYRlwhxv34VHEi3s8eOcXHG6mkmO0NxkiAx7NdooK--zVa7Qfg6cxgc_B1vErzCvTXq9pFjYtuN1XegZQznP8UKlvHFXZ-xJ2zjFM7n9sGAGFwg5SLi8Y9UFTpSkieFNu96xnUzgEqQtg_Wu685IahXuG9C09BKjtvT-dg2kEfHow8SzQ7jA2MmwSdk7mkuZ` | <code>(?x)<br>\b<br>(?i:lemon.?squeezy&#124;lemonsqueezy)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9<br>  \.<br>  [A-Za-z0-9_-]{100,500}<br>  \.<br>  [A-Za-z0-9_-]{200,700}<br>)<br></code> |
-| `kingfisher.lichess.1` | Active | `lip_BBAZylPkb8WZ1w8Cj5DvckE3s9HkRqDJ` | `(?x)
+| `kingfisher.laravel.1` | Active | `app-keyR\rF\r\nArg\n\nytsg75 "'"'"""'"""'""""'"'"""''''""""'"base64:3HY+RnmV6i2P2BzO8rSBLier/v+PNN7mdSSetGSaXI0="` | <code>(?xi)<br>\b<br>app[_-]?key<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  base64:<br>  [A-Za-z0-9+/]{43}=<br>  &#124;<br>  [A-Za-z0-9]{32}<br>)<br>['"\s]<br></code> |
+| `kingfisher.lark.1` | Active | `larksuiteB\rP\n\r\rA\n9GCH\rW\nE\r\nB\rH\n\r\roa\r\rZ\nX\nACCESS_KEYY\rCYY\r\r\rNo\rw8\n\nlK\n2\r\nM\n2\nn\r\n\rJjit-3E5D_DIJ2INQ5._UA02CHVZSL4MZ_Y5D` | <code>(?xi)<br>(?:lark&#124;larksuite)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  t-[A-Z0-9_.]{14,50}<br>)<br>\b<br></code> |
+| `kingfisher.lark.2` | Active | `larksuite\r\r9DU2STyj\n\n\n\nPGqRErJge\n\nHZ\nn\nucSECRET\r6Ih\nr\ni\r\n\rc\n\r\np\rSN\n\r\npw\r\r\r\npNFsu-ZULOZAV0DOCM7CQAWZRLPDJMEMAV8KX2` | <code>(?xi)<br>(?:lark&#124;larksuite)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  u-[A-Z0-9_.]{14,50}<br>)<br>\b<br></code> |
+| `kingfisher.lark.3` | Active | `larksuiteN\r\n\n\ny\rL\r1\r\n\n\r3lW\rnNz\r1\n\ny\n\n\r\r\rPKEY\n\n7K\r\neFe\n\n\n\n\r\n\nx\n0\rDL9d\r\n8T\nm\n\ra-755RXO6MJ9C4P3D4GDNJUDAD0VF.VJ7B` | <code>(?xi)<br>(?:lark&#124;larksuite)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  a-[A-Z0-9_.]{30,35}<br>)<br>\b<br></code> |
+| `kingfisher.launchdarkly.1` | Active | `launchdarkly\rL\r\nF\r\nGF\r\rgl\r\r\rz\r6g\r4ZA\nz\r\n\rR\n\nfd_upoow8q8ryjqt0mydzhek4e9ki4ko6cm2ht6t` | <code>(?xi)<br>launchdarkly<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9_\-=]{40}<br>)<br></code> |
+| `kingfisher.ldap.2` | Active | `ldaps://=x"Z'0"X'Q"=U="''Y'=xofTZn"'U"=":b:l"ojn"=lBrCn:x'Qa="H=s:Jxba=="@9j=w==7==Ti========jlH=_=fr=c===:36414/:Z=0OEqi:=:h==T7:=Hu=:8q:1I=:R::` | <code>(?xi)<br>\b<br>(?P&lt;TOKEN&gt;<br>  (?P&lt;LDAP_SCHEME&gt;ldaps?)://<br>  (?P&lt;LDAP_BIND_DN&gt;[^:@\s]{1,128})<br>  :<br>  (?P&lt;LDAP_PASSWORD&gt;[^@\s]{6,128})<br>  @<br>  (?P&lt;LDAP_HOST&gt;[^\s/"':]{4,128})<br>  (?::(?P&lt;LDAP_PORT&gt;\d{2,5}))?<br>  (?:/[^\s"']*)?<br>)<br></code> |
+| `kingfisher.ldap.1` | Active | `ldaps_secret\r\r7yaxL\n\r\r\rQ\rfc1"'''"""""""""""""""'""""''''"''""m=0=ih8:Y:Z_k:=H:q===1Og==BqUmxL"` | <code>(?xi)<br>\b<br>ldap(?:s)?[_-]?(?:pass(?:word)?&#124;pwd&#124;secret&#124;bind[_-]?pw)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{8,128}<br>)<br>['"\s]<br></code> |
+| `kingfisher.lemonsqueezy.1` | Active | `lemonsqueezy6\r\rWV\r2\nW\n\r\nL\na\nUyW\r\rs3\rT48kQ\r\n\nKEY\n4\rY\r\nT\n\r\nzh\rUASi\r\r\rlT\n\r\r\n\r\rmKD\neyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.WkG1DjjoL1D96EIhiN0V0sjf0u13oa9InF967cXx3QhawsKO32UwWGtPzimK_B1se_WBXRQxjzMGeTCPq9vAILrS2GSDK2sz2084.97qNJhlDOlNsEJDq4vzTXs0xH9DPVJc51kgiogC0bl51ot18iFv2MsvxnRXky9kINy5T27Y2ySm3KByzw_golptOjUa6FKIFHu1EFu4VpxuKusJJcDjejgNZNiFo7Rm8_kuVCiTJkHMUyllOlQ8BOj1br9Vp17pwe9uriHxTucV8Nb-vBwI-pPV1Qh_8fEyfCnXqxqlu` | <code>(?x)<br>\b<br>(?i:lemon.?squeezy&#124;lemonsqueezy)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9<br>  \.<br>  [A-Za-z0-9_-]{100,500}<br>  \.<br>  [A-Za-z0-9_-]{200,700}<br>)<br></code> |
+| `kingfisher.lichess.1` | Active | `lip_le_fj95gOzmOP6o33Ax3HQ827CC4uW54` | `(?x)
 \b
 (
   lip_[a-zA-Z0-9_]{16,60}
 )
 \b
 ` |
-| `kingfisher.line.1` | Active | `lineSECRET30L85JOC0K5WMK48PSJWRD89ZBB640EZI7EWM8324PD8DXHDOWZD9QIZS29/1HWPV69YEFFZOS8YGRSMPX/B2OBY8H4OPZ+HXPKXWTW+GNJAN1G1MD+S321F02UW77MY7U196346+0TJ1FTRFK2X/2T2/V6EDX0IRZV/L4+1A5R=` | <code>(?xi)                   <br>\b                     <br>line<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  (?:[0-9A-Z+/]{57}){3}=? <br>)<br></code> |
-| `kingfisher.linear.1` | Active | `lin_api_ZY4HUK9QWEXNMRIQH6MQPYEZLTQMCXV96QWLX0I0` | `(?xi)                   
+| `kingfisher.line.1` | Active | `line\r\riF\rH\r5l\r2f\n\na\rayxcV\n\n\n1mOw2T\r\rSECRET\nZ\r8sp0\n\rCGL\r\ns\nz\nvcY\rRt\no\n\r\rre\nVLN+FXMLZU2H4K2KO4CS/OU15Z0D3R66OFPSPQCEXEL6WR8H9VG6Z7X5BSQXCK9WWNZX+S+PQPX5YN4775EPVVJ5K1SQJKT07OBX+INUUG+LJH4S47VYDUPVL25T2K/XWZCG74RQEA/WZC3VXTC712S2IRMBIVOD81YEDBGEBZF=` | <code>(?xi)                   <br>\b                     <br>line<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  (?:[0-9A-Z+/]{57}){3}=? <br>)<br></code> |
+| `kingfisher.linear.1` | Active | `lin_api_3XG4TQXQ4F5G6TA4P6ETVKEWNKEGDF8F6IHWST31` | `(?xi)                   
 \b                     
 (                      
   lin_api_
@@ -1286,12 +1286,12 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.linkedin.1` | Active | `linkedin7apiIidentifier1s\t\x0b\t\r\x0b  \x0b\x0c \x0c\t\n\x0b\x0c\r\x0c\t\t\x0bUq\x0c\t \x0b \t\t \x0b\x0c\t\x0c\n \t\x0c\n\x0b\x0c\x0bnb4ilsp4umxe8ue6` | <code>(?xi)<br>linkedin<br>.?<br>(?: api &#124; app &#124; application &#124; client &#124; consumer &#124; customer )?<br>.?<br>(?: id &#124; identifier &#124; key )<br>.{0,2} \s{0,20} .{0,2} \s{0,20} .{0,2}<br>\b ([a-z0-9]{12,14}) \b<br></code> |
-| `kingfisher.linkedin.2` | Active | `linkedinSsecretIkeyhM\t  \x0c\x0c\n\x0b\x0b \r\t\n\x0c\t\t\x0b\x0b\t\r\x0bMX\n\r\x0c\n \n\n\r\x0b \r\r\x0c\n\n\n \r\r\tAtf7wdp8csztx2917b` | <code>(?xi)<br>linkedin<br>.?<br>(?: api &#124; app &#124; application &#124; client &#124; consumer &#124; customer &#124; secret &#124; key )<br>.?<br>(?: key &#124; oauth &#124; sec &#124; secret )?<br>.{0,2} \s{0,20} .{0,2} \s{0,20} .{0,2}<br>\b ([a-z0-9]{16}) \b<br></code> |
-| `kingfisher.linode.1` | Active | `linode\x0c\t-\n \r\r -\x0c\r\x0c\r-_ \r\t- _\n\r -\n\x0c\x0c\r\r\r\x0cpersonal-_\x0b\x0b _ \r_\x0c\t\x0c\x0b\x0c\n\n_\n\r\x0c\x0c\x0b\x0b -\t\x0c \r\r\t\raccess\r\t\n\r\x0c_\n_\n\x0c\n\t\t -\t\n\x0c_\x0c\x0b\r_\x0b\x0c\r\x0c\t_\r\t_token'\r\x0b\x0b\t\x0c\x0b\n\n\x0b\t\n\r\x0c\x0c\n\x0b\r  \x0c\r\n\n\t\x0c\x0b\x0c \t\r\x0c\n:\t\r\r\r\r\x0b  \x0b\n\x0c    \x0b\x0b\x0c\t\r  \t\r\n\n\x0b\x0c\r \x0c\r"\n\n\t\n\x0b \x0b\t\r\x0c\t\t\t\n \x0c\t\x0c\t\t\r\t\r\x0c\x0b\x0b\r  \t\t '652dc382bc591c9c550e776f862a2676a48cc104cc54a577fe9d31e7593d37f3` | <code>(?xi)<br>\b<br>(?:<br>  linode(?:[_\s-]*api)?(?:[_\s-]*(?:token&#124;key&#124;access))<br>  &#124;<br>  linode(?:[_\s-]*personal)?(?:[_\s-]*access)?(?:[_\s-]*token)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.liveblocks.1` | Active | `sk_dev_eepalNmpf0Inpm1rJMWszXmljvfKkZBxKrZAkKWp7qY8HZ5zf1U2wMw_HnB0e5TT` | <code>(?x)<br>\b<br>(<br>  sk_(?:prod&#124;dev)_[A-Za-z0-9_-]{64}<br>)<br>(?:\b&#124;$)<br></code> |
-| `kingfisher.livekit.2` | Active | `LIVEKIT_API_SECRET\r\t\x0b\t\x0c\r\x0b\r\x0b\x0b\n\t\t\x0c\n\n\x0c\r \x0b\n\r\n \x0b\x0b\x0c\t \x0c\n\x0c:\x0b\n\x0c\x0b\r\t\x0c \x0c\r \t\x0b\r\x0c\r\r\n\x0c\n\x0b \x0c \x0c\r\r\x0b\x0c\x0c\n\t'9VlDFByeODO4pfEYtYHGyFCRHxPZBRXzgcqc0SsqLVC"` | <code>(?xi)<br>\b<br>(?:<br>  LIVEKIT_API_SECRET<br>  &#124;<br>  livekit_api_secret<br>  &#124;<br>  livekit[-_]?secret<br>  &#124;<br>  livekitSecret<br>)<br>\s*[:=]\s*<br>['"]?<br>(<br>  [A-Za-z0-9]{43,44}<br>)<br>['"]?<br>\b<br></code> |
-| `kingfisher.llamacloud.1` | Active | `llx-M3zbX4Mvl4TedsYCJxGBUiZAqZDJXjQiKsZDszLNxXAV` | `(?x)
+| `kingfisher.linkedin.1` | Active | `linkedin0customer3identifiereA\t\t\r \x0c\r\t\n\n\r\t\x0c\x0b  \x0c\n\r\n x8\x0c\r \x0c \x0b\x0b\x0b\t\n\n \x0b\n\n\x0b\r\r\x0b\t8Z39h9jholth71yb` | <code>(?xi)<br>linkedin<br>.?<br>(?: api &#124; app &#124; application &#124; client &#124; consumer &#124; customer )?<br>.?<br>(?: id &#124; identifier &#124; key )<br>.{0,2} \s{0,20} .{0,2} \s{0,20} .{0,2}<br>\b ([a-z0-9]{12,14}) \b<br></code> |
+| `kingfisher.linkedin.2` | Active | `linkedinMapplication9secretca\n\x0c\x0b\x0c\x0c\x0b \x0b\t\x0b\r\t\n\t\n\x0b\r \t\x0c2v\n\r\x0c \x0c \t\x0b \x0c\x0b\r\r\x0b\x0b\x0b\t \x0c\tkt048zwheab9d7ixzi` | <code>(?xi)<br>linkedin<br>.?<br>(?: api &#124; app &#124; application &#124; client &#124; consumer &#124; customer &#124; secret &#124; key )<br>.?<br>(?: key &#124; oauth &#124; sec &#124; secret )?<br>.{0,2} \s{0,20} .{0,2} \s{0,20} .{0,2}<br>\b ([a-z0-9]{16}) \b<br></code> |
+| `kingfisher.linode.1` | Active | `linode-\n_\x0b_\t\t\x0b\x0c_-\t\t\t\r\x0b_\r\x0c\x0c\r- \r_\n\n\r\x0c-\x0c\x0bapi\t_\x0b\t\x0c\n_\r\r\x0b-_\t\t  \t\r-\r\t\r\r-\n\n \t\r_\n_access\ry\nX\r\n1\nf5\r8\r\n9ye9\nRQ\nd\n"\t\r\t\x0c\x0b\n\x0b\r\r\n\x0b\x0b \x0b\x0b  \x0c\t \t  \x0b\t\r\x0b\t\x0c\x0b\x0b\n:\n\n\r\n \x0b\n\x0b\t\n\x0c\t\n\r \x0b\x0c\x0b\n\t\t\r\t\x0c\x0c\n\t\r\r\x0c\n\t'\x0b\r\x0b\r\t\n\x0b\t \x0c\x0b\x0c\x0b\n\n  \r\x0b \r\n\r\r\x0b \t \x0b\x0b\x0c\n"a39c56a703ccd3e62c1d6b6f098930bdafcd68b204d8b4184f9076308f7a1be6` | <code>(?xi)<br>\b<br>(?:<br>  linode(?:[_\s-]*api)?(?:[_\s-]*(?:token&#124;key&#124;access))<br>  &#124;<br>  linode(?:[_\s-]*personal)?(?:[_\s-]*access)?(?:[_\s-]*token)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,24}?<br>(?:<br>  [=:]<br>  &#124;<br>  ["']\s*:\s*["']<br>)<br>\s*<br>["']?<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.liveblocks.1` | Active | `sk_prod_FdqWkGJirWbn-nhMP2OuLv1JvDladxxdARF78oexIzhOQ514n9Lb5lFcuV5AAg3x` | <code>(?x)<br>\b<br>(<br>  sk_(?:prod&#124;dev)_[A-Za-z0-9_-]{64}<br>)<br>(?:\b&#124;$)<br></code> |
+| `kingfisher.livekit.2` | Active | `livekitSecret\x0b\t\x0b\x0b\r\t\n\n \r \x0b\r\r\x0c\x0b\x0b\x0b\t  \r \r\x0c\n\x0b\x0c\t\r\x0c\x0b:\x0b\x0c\x0c \r\r   \r\r\n\x0c\t\x0b\t\x0b\x0b\r\x0b \t\x0c \r \x0b\x0c\x0b \x0b\r"4heyHfH9kEVTD3MnOrYgRO3U9j0v5zg0ttgxKXzo26k"` | <code>(?xi)<br>\b<br>(?:<br>  LIVEKIT_API_SECRET<br>  &#124;<br>  livekit_api_secret<br>  &#124;<br>  livekit[-_]?secret<br>  &#124;<br>  livekitSecret<br>)<br>\s*[:=]\s*<br>['"]?<br>(<br>  [A-Za-z0-9]{43,44}<br>)<br>['"]?<br>\b<br></code> |
+| `kingfisher.llamacloud.1` | Active | `llx-iNCvNQsy1aiIF4H0ZMtMDrhyfWmEmlwDpLbs5iJT8lbs` | `(?x)
 \b
 (
   llx-
@@ -1299,73 +1299,73 @@ new \s+ Gitalk \s* \( \s* \{ \s*
 )
 \b
 ` |
-| `kingfisher.lob.1` | Active | `lobtest_c209b092cefda07072411fb26268825dee0` | <code>(?xi)<br>lob<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  (?:live&#124;test)_[a-f0-9]{35}<br>)<br>\b<br></code> |
-| `kingfisher.lob.2` | Active | `loblive_pub_4ad7849224ed45c1ab2f9633af6e818` | <code>(?xi)<br>lob<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  (?:test&#124;live)_pub_[a-f0-9]{31}<br>)<br>\b<br></code> |
-| `kingfisher.localstack.1` | Active | `LSIAOJMIHDPU607W04412FEA30HTQ64GE186` | <code>(?x)<br>\b<br>(<br>  (?:LSIA&#124;LKIA)[A-Z0-9]{16,}<br>)<br>\b<br></code> |
-| `kingfisher.lokalise.1` | Active | `lokaliseKEY85db118d991cbbbc78c4b865f6df50c673aff36b` | <code>(?xi)<br>(?:lokalise)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;TOKEN&#124;KEY&#124;SECRET)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.looker.2` | Active | `lookerlavnllmppe7sntci9bc0` | <code>(?xi)<br>\blooker<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-z0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.looker.3` | Active | `looker5m7fnrbe1fcyz70wbdvd0d55` | <code>(?xi)<br>\b<br>looker<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-z0-9]{24}<br>)<br>\b<br></code> |
-| `kingfisher.loops.1` | Active | `loopsKEY6935112fd50eded52fc05062c65a1eac` | <code>(?xi)<br>\b<br>loops<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{32}<br>)<br>\b<br></code> |
-| `kingfisher.mailchimp.1` | Active | `mailchimpSECRETb3cbe3c30345ee5467dceba37bc07939-us48` | <code>(?xi)<br>\b<br>mailchimp<br>(?:.&#124;[\n\r]){0,128}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[0-9a-f]{8}){4}<br>  -us\d{1,2}<br>)<br>\b<br></code> |
-| `kingfisher.mailersend.1` | Active | `mlsn.SkUCK6AO1OoOOll8DeSUzNuhop3g8lQN` | `(?x)
+| `kingfisher.lob.1` | Active | `lobI\n\r4y\nqY\r3\r\n\n\n\r\rc\n\n\r\n5\rCtest_358ea01cb7eb4aa2c550464bb8bf85699f6` | <code>(?xi)<br>lob<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  (?:live&#124;test)_[a-f0-9]{35}<br>)<br>\b<br></code> |
+| `kingfisher.lob.2` | Active | `lob7qX\nKX\rHbz\r\r7zg\r\rH\n\n\r\ru\nlive_pub_8249cff49350b8d196e7a77d6f192bc` | <code>(?xi)<br>lob<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  (?:test&#124;live)_pub_[a-f0-9]{31}<br>)<br>\b<br></code> |
+| `kingfisher.localstack.1` | Active | `LKIAI4MQ9A0D5XRACF4G88BL4ZQI878MICK3` | <code>(?x)<br>\b<br>(<br>  (?:LSIA&#124;LKIA)[A-Z0-9]{16,}<br>)<br>\b<br></code> |
+| `kingfisher.lokalise.1` | Active | `lokalise\nD\r\r\rYPwq\n\rm\n\rzzN\nOt\r3C\n\rd\n\nFc\r\rAPI13pKu\rR\rq\n\n\nY\n\n1bdde132f8184de9f10d58df22bd4c7b0aa458942` | <code>(?xi)<br>(?:lokalise)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API&#124;TOKEN&#124;KEY&#124;SECRET)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.looker.2` | Active | `lookert\r\nlL\ryb\n\r\n\rG\n\rqw\r\n\n\n\r\r\n\n\nsz\nsP\novwj92x66iu8fp45jk7s` | <code>(?xi)<br>\blooker<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-z0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.looker.3` | Active | `looker\r\n\n\rYO\r\r\n7\n\r\r\n\rN\nnAV\n\nk\r\nif\n\n\rtAc0xb64x1nop8at3x4jikxr9c` | <code>(?xi)<br>\b<br>looker<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-z0-9]{24}<br>)<br>\b<br></code> |
+| `kingfisher.loops.1` | Active | `loops\r\rTf\nk\r\n\r\n\n3\rxR\r\n1t\n\rem\r\n\n6\ngy\nSKEY\n\r\ritQL\n\n\n\rgtf\ntf9459a8a221b61ffed8f3684ec77d283` | <code>(?xi)<br>\b<br>loops<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?KEY&#124;SECRET&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{32}<br>)<br>\b<br></code> |
+| `kingfisher.mailchimp.1` | Active | `mailchimpn\r\r48\rU\nEc\rJg\nF8\nG\r\n\r\nbL\r\nz\rt\rjOPRIVATE\n\noi\n5\nH\n\nS\n\n\rv\rrp\rp\r\n1\r\rW\n\rIYn\ra17bf01daa3ef10a5c9c4de12f5e75e5-us42` | <code>(?xi)<br>\b<br>mailchimp<br>(?:.&#124;[\n\r]){0,128}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[0-9a-f]{8}){4}<br>  -us\d{1,2}<br>)<br>\b<br></code> |
+| `kingfisher.mailersend.1` | Active | `mlsn.yc1tbk8LOu2REuyeR0Zytws5eOMjchLF` | `(?x)
 \b
 (
   mlsn\.[a-zA-Z0-9]{30,100}
 )
 \b
 ` |
-| `kingfisher.mailgun.1` | Active | `mailgunKEYB7I8UDCYEZCCGWAUL7QUP1OQ21UZRWZXKXUNJ5B5U6HYRTW7BL6OJ7AETT2ZZ4DU18I9AMXW` | <code>(?xi)<br>\b<br>mailgun<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  (?:[0-9A-Z-]{24}){3}<br>)<br></code> |
-| `kingfisher.mailgun.2` | Active | `mgkey-4ce535c928264fc4daf13cc939b42551` | <code>(?xi)<br>(?:mailgun&#124;mg)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(                      <br>  key-(?:[0-9a-f]{8}){4}<br>)<br>\b<br></code> |
-| `kingfisher.mailjet.1` | Active | `mailjetRMK60NKZMO77ZGBJALJ47Q6ARJT04J3U` | <code>(?xi)<br>\b<br>mailjet<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.mailjet.2` | Active | `mailjetTOKEN6ZTUZJ32DOOLSYVMK6YDZ6289X6MX7E7YKLYAQLKY74KSLRJAQJN8OLV2Z1KWWNQF0PN8P04RT0NVG05U92G5C8=` | <code>(?xi)<br>\b<br>mailjet<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{87}=<br>)<br></code> |
-| `kingfisher.mandrill.1` | Active | `mandrillACCESSK0_5FEJLOZ8MVTY_OZ4KOP` | <code>(?xi)                   <br>\b                     <br>mandrill<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  (?:[0-9A-Z_-]{11}){2}<br>)<br></code> |
-| `kingfisher.mapbox.1` | Active | `mapboxpLmneGD7dVEUWvXuJJeLgZTRdGWh1Apk.7n8=njudi+/8o9g8kw42w2/yk5b4xohp.5l1owks2hvts88a=++023y8cl0b/z8` | `(?i)(?s)mapbox.{0,30}(pk\.[a-z0-9\-+/=]{32,128}\.[a-z0-9\-+/=]{20,30})\b` |
-| `kingfisher.mapbox.2` | Active | `mapboxiPfXyK1jJv2DDIxCor7UmD5IhIjgHGsk.64fvwq0=rp+akknamw1a6k4ax5tgl-vf.k+lz7+6rrf=sjtm=ul0bcirjg7g686` | `(?xi)(?s)
+| `kingfisher.mailgun.1` | Active | `mailgunn\nTxdtx4t\n\rC3\rd\nD\rUhZ8\nG9M\n\n0f\rCTOKENp\n\ri\r9I\n\n\r4\n6\nA\n\r\ru\nXd\r\rjl\r\r\nw\n\nG6SNALRCDF1U1-GB3F80IDFRV84PR0XJ53AFUONH45J98YYQGQ-GELPTXQ2MDQLZG7RJ4C5A` | <code>(?xi)<br>\b<br>mailgun<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  (?:[0-9A-Z-]{24}){3}<br>)<br></code> |
+| `kingfisher.mailgun.2` | Active | `mg0\r\nJVv\rj\n\r\r\nm\n\n\n\n\r\r\nl\n8Gu\r\ns\r\r\nYkey-d7982e87403f047c83af5d9ff6ab0e5d` | <code>(?xi)<br>(?:mailgun&#124;mg)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(                      <br>  key-(?:[0-9a-f]{8}){4}<br>)<br>\b<br></code> |
+| `kingfisher.mailjet.1` | Active | `mailjet\n\r\n\nz8\n\n\nFm\rd\nXEZ\n\n\nQ\r\n\n\n1iyJS\r9R2BVFA5G86LTLSN2PO1URJEM0AVH75R6` | <code>(?xi)<br>\b<br>mailjet<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.mailjet.2` | Active | `mailjet\nFdbqb\rlD\r\r\r\rlRSPfx2\n3\rgW\r\r\r\n8b\rACCESSai\rK\nK3\rZ5v6\r\nPyDU\nh\rWc\rE\r\nLG\rhtLIROSSD6LLG2Q00FYWA8GX2XRD4YLD9J6KCA1H1D9OANRTMMK1XZE319LG96RGIE6ZOGTE0M3UJYBSEV5S8MK74=` | <code>(?xi)<br>\b<br>mailjet<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{87}=<br>)<br></code> |
+| `kingfisher.mandrill.1` | Active | `mandrill9pRYl\rtT\r8\r\r4\n\n\nh\r\n\neWg\nI\r\r\n\r5c\nACCESSf\nUpsYSF\rTX\n0\r\r\nky\n\n5\r\n\r\n\nEbUjn\r2QXUAT70YKXAIQ5NVXY0ZM` | <code>(?xi)                   <br>\b                     <br>mandrill<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                     <br>(                      <br>  (?:[0-9A-Z_-]{11}){2}<br>)<br></code> |
+| `kingfisher.mapbox.1` | Active | `mapboxgRPla6mi4oCpEqxEOHjuAGWUOnQYm8pk.lqa5avkcwch5jh0bcpa2w7isle38sil0.7ft=010r/vc=+qx=vcxxhyc=zaa20n` | `(?i)(?s)mapbox.{0,30}(pk\.[a-z0-9\-+/=]{32,128}\.[a-z0-9\-+/=]{20,30})\b` |
+| `kingfisher.mapbox.2` | Active | `mapboxQegeYxTdT7a9aUlgwQ1j0kupMjanU7sk./w0rdzsmb1vn4kh1gq7l8-ktez/uob//.xi/i/4vmtdp19dot7/59vpp9vnrm/1` | `(?xi)(?s)
 mapbox.{0,30}
 (
   sk\.[a-z0-9\-+/=]{32,128}\.[a-z0-9\-+/=]{20,30}
 )
 \b
 ` |
-| `kingfisher.mapbox.3` | Active | `mapboxIN9CwhTMswZyi735YQfMCsiwR5gMzBtk.tb9jwtoku7t5ujaqnylyt5xlusn2mj6l.5p0gq6al4i4wy3t+545e8q+8cefauf` | `(?i)(?s)mapbox.{0,30}(tk\.[a-z0-9\-+/=]{32,128}\.[a-z0-9\-+/=]{20,30})\b` |
-| `kingfisher.mappedin.1` | Active | `mik_yPPk8Ma3Ll2dBvM83TY5fGOKon` | `(?x)
+| `kingfisher.mapbox.3` | Active | `mapbox5jeeP2ZjLsz5fvt1GfmE219OueEU6gtk.hcc-l07w0x9xdfbiggk6/h/ywcyuwvr9.vgy7w2cava7etxr9vv=et56pbxm8y5` | `(?i)(?s)mapbox.{0,30}(tk\.[a-z0-9\-+/=]{32,128}\.[a-z0-9\-+/=]{20,30})\b` |
+| `kingfisher.mappedin.1` | Active | `mik_LqyegtaZDqEcakrJ5rsA7uRdI7` | `(?x)
 \b
 (
   mik_[a-zA-Z0-9]{26}
 )
 \b
 ` |
-| `kingfisher.mappedin.2` | Active | `mis_qqErFfiuKOKlYKjrEli7zY3ybSsCtveWFQge5nRX5ddfu8bVr9in` | `(?x)
+| `kingfisher.mappedin.2` | Active | `mis_gQfA9DQ2wRDo6DqC3HUCcALbs6NSrN9P8KuaUb323MA53y0Pu5GB` | `(?x)
 \b
 (
   mis_[a-zA-Z0-9]{52}
 )
 \b
 ` |
-| `kingfisher.mariadb.1` | Active | `mariadbpasswd "'"""''"'"""'"''"'"""'"""''"''''MLdqFJTIAeTFKBzJ4RYyMxvcWCYLiiVt\x0c` | <code>(?xi)<br>\b<br>maria(?:db)?<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:password&#124;passwd&#124;pass&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
-| `kingfisher.mastra.1` | Active | `msk_EHfyxyDRUmsPxCkyAfpBScnzcjsytZGABgBJdxi1XqNFgRbWvVxJ5bAlxAiVgihy` | `(?x)
+| `kingfisher.mariadb.1` | Active | `mariadb\nw\n\nlEVF\n\n\rHZL9lZ\r\n\n0\n\n\nQ\nT\r\nji\rpwdIL7\r\rP\r\nB65x\n\nM\n"'"'""'''"""""'"'"'''"""'''''''"":_=3TB=:s3rW=:O:=:Z==i:::bR==S=: ` | <code>(?xi)<br>\b<br>maria(?:db)?<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:password&#124;passwd&#124;pass&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
+| `kingfisher.mastra.1` | Active | `msk_1YEzkC11uwgPxpYfvdb4LCrsha5upUL0pP51hzMCHf09XgrxOHreFw7HX1PKU6Cp` | `(?x)
 \b
 (
   msk_[A-Za-z0-9]{32}(?:[A-Za-z0-9]{16}){0,2}
 )
 \b
 ` |
-| `kingfisher.mattermost.2` | Active | `mattermostTOKENEJAROS3QO3I8KDPMRXW4XMRXTJ` | <code>(?xi)<br>\b<br>mattermost<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{26}<br>)<br>\b<br></code> |
-| `kingfisher.mem0.1` | Active | `m0-eSTIdaE3efaKbfkdmiJwXwAqD4uGOnZr` | `(?x)
+| `kingfisher.mattermost.2` | Active | `mattermost\rN\r\rEoG\n\r6\rB61\n\r\r\rU0Ep\r6\nN\n\n\rk\n\rTOKEN\r\ro\rb\n\n\ru\r\rq\r\n\rAfgzrT\r5x\r\nuNS9v\r4QULML5IANG5J0YFB6CZEI26CH` | <code>(?xi)<br>\b<br>mattermost<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{26}<br>)<br>\b<br></code> |
+| `kingfisher.mem0.1` | Active | `m0-0qoHIUWAHnrUbvthcsDW7LMt7Nb3FHq8` | `(?x)
 \b
 (
   m0-[A-Za-z0-9]{24,44}
 )
 \b
 ` |
-| `kingfisher.mercadopago.1` | Active | `APP_USR-I9aBTTjKWTwQVRpj7SZL-nCIgcXhu9TgJE0X3CabgoDNYZ3M57uQn-n2cGtALM35po0iLs4pGhPEvHJ6YfHN26-PBBvS6JMWKt1E6pqFCYw2zmHNLBNM8Rz-WrfDM2RxI0NxylmXAN7mLf6VpouxX7UF` | `(?x)
+| `kingfisher.mercadopago.1` | Active | `APP_USR-KEBs3IYtrof91mod92x3-LLl4MEI08qigojkQnrBCJ8ZRTrIUx573-BJp3qRkfzhncIvraELnn81UArcifjwXC-lMQuBgQPaF9Q9EoUrnBISz8ad8Xsgoq0-7BnIU5SXMHUM7QEvhmHDy5Zo03ftMosj` | `(?x)
 \b
 (
   APP_USR-[A-Za-z0-9]{6,20}(?:-[A-Za-z0-9]{4,64}){2,4}
 )
 \b
 ` |
-| `kingfisher.mercury.1` | Active | `mercury_production_pzlujr_oSehU8jbSkEE3c3N5pmVSvrGJ8659xmQpiKGRfqy_yrucrem` | `(?x)
+| `kingfisher.mercury.1` | Active | `mercury_production_biqjqr_wzE98jmr1NzbhQ0X649CmLJdgMFP3cOWL6o3UnVU_yrucrem` | `(?x)
 \b
 (
   mercury_production_
@@ -1376,7 +1376,7 @@ mapbox.{0,30}
 )
 \b
 ` |
-| `kingfisher.mercury.2` | Active | `mercury_sandbox_ntlyxj_nnMJw4yaiGgCeVMHrQ4TF7tQLuDwSk18mWvZI7ry_yrucrem` | `(?x)
+| `kingfisher.mercury.2` | Active | `mercury_sandbox_kuztot_M6Xg2UYqh0shN19i4MRv3FalaPJfsWOYS9fHMLiA_yrucrem` | `(?x)
 \b
 (
   mercury_sandbox_
@@ -1387,7 +1387,7 @@ mapbox.{0,30}
 )
 \b
 ` |
-| `kingfisher.mergify.1` | Active | `mergify_application_key_1uJZG99rl-LcoML5qneNPS3HoTgqnrwFp-X7HMb2` | `(?x)
+| `kingfisher.mergify.1` | Active | `mergify_application_key_oZvOhG1_bUUtZ22Az3LlNLx04LRRJ-JLJrpm5rqE` | `(?x)
 \b
 (
   mergify_application_key_
@@ -1395,8 +1395,8 @@ mapbox.{0,30}
 )
 \b
 ` |
-| `kingfisher.messagebird.1` | Active | `message-birdaorecvgl8zcseomv0q2b26hk6` | <code>(?xi)<br>\b<br>message[_-]?bird<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{25}<br>)<br>\b<br></code> |
-| `kingfisher.msteams.1` | Active | `https://QtOEAcd3MGI36EIPuEyTyUKoG19HwgMG.office.com/webhook/17e2kohj-9ejd-jyir-lwrs-g7sryut5ugu2@vyeime20-7pbo-91hp-2m2u-eckiceaqsmwb/IncomingWebhook/a9o870mn69s7h7f4xe0t0aw34x7ejdos/p9g9fb17-7crp-j9dl-lp0o-jv6s7squ0ddr` | `(?xi)
+| `kingfisher.messagebird.1` | Active | `message-bird\r\nZ\n\nVJ\rre\n\r\n9U\nemZ\rE\n\nnBb\n\nt9\n7ilw79wpq2dgul771r06bseazo` | <code>(?xi)<br>\b<br>message[_-]?bird<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{25}<br>)<br>\b<br></code> |
+| `kingfisher.msteams.1` | Active | `https://tHkiHqaF20nZ4CNmt8aOmNKoEwa1J4zz.office.com/webhook/ltjopdt0-dnl1-b9dn-6rat-6jmiqzkt2upp@as32t5k0-lj58-haco-lkoz-qt9qmjmqr701/IncomingWebhook/9h8r36y6ohjl7uz89b54af12tib5dcjf/p6gzx2t5-jk4y-a26v-9xtw-fjq9blr1rk1n` | `(?xi)
 \b
 (
   https://
@@ -1422,7 +1422,7 @@ mapbox.{0,30}
   [0-9a-z]{12}
 )
 ` |
-| `kingfisher.microsoftteamswebhook.1` | Active | `https://7KSXA4XJ91D7DIU9VSQFWSCTIE39EWCN.webhook.office.com/webhookb2/CGGXBQCP-S4M5-MF1M-9NIX-Q42K9OYCFVN6@9SJG1TJ6-NKG6-ABAQ-K5CB-U3TWPEHQSMQY/IncomingWebhook/7JAGQIZUMX7JHWOTAP0H16BZK2M0NFDR/TVY9FK9H-PULV-0PJP-CF4I-Z1CHKNOZTUFX` | `(?xi)
+| `kingfisher.microsoftteamswebhook.1` | Active | `https://MW47DO3ZVWPCAC7PR43HMY8X98X37JGY.webhook.office.com/webhookb2/2SBULKFI-19C2-V6HH-L4YA-S1NN3AJ2ZSSF@82SY4N8S-HL4L-TNNB-J49U-LST1YK7IBQOI/IncomingWebhook/73HTC7AS4CL1HULK1CCJ7UKWT8X9PYLE/DNSUEOUR-33SW-JH1R-MYP8-UG7XKOSGJZ8J` | `(?xi)
 \b
 (
   https://[A-Z0-9]+\.webhook\.office\.com/webhookb2
@@ -1439,27 +1439,27 @@ mapbox.{0,30}
 )
 \b
 ` |
-| `kingfisher.midtrans.1` | Active | `SB-Mid-client-m1w7BH38CYO6ABSslMY6` | <code>(?x)<br>\b<br>(<br>  SB-Mid-(?:server&#124;client)-<br>  [A-Za-z0-9_]{10,20}<br>)<br>\b<br></code> |
-| `kingfisher.midtrans.2` | Active | `midtransclient-key\x0cMid-server-9qyYXnz82CHRC1x5XWRt` | <code>(?xi)<br>\b<br>(?:midtrans&#124;mid[_-]?)<br>(?:.&#124;[\n\r]){0,32}?<br>\b(?:server[_-]?key&#124;client[_-]?key&#124;api[_-]?key&#124;key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  Mid-(?:server&#124;client)-<br>  [A-Za-z0-9_]{10,20}<br>)<br>\b<br></code> |
-| `kingfisher.minimax.1` | Active | `MINIMAX-5HSHGFEU-7H94A7VV-JEW7H9UN-OQ6ZWZRL` | `(?x)
+| `kingfisher.midtrans.1` | Active | `SB-Mid-server-iWhA5bLH6g_5tFTr6qCn` | <code>(?x)<br>\b<br>(<br>  SB-Mid-(?:server&#124;client)-<br>  [A-Za-z0-9_]{10,20}<br>)<br>\b<br></code> |
+| `kingfisher.midtrans.2` | Active | `mid-UK\n\n\n\n\nq\r\n\rR\r3\ne8\r\ruqWd\n\n\r\nX\r\n7EkeyYPr\r\n\nR\r\ngRd\rZ\rb:Mid-client-9LGsGMTgZc3yvB1F8Xhs` | <code>(?xi)<br>\b<br>(?:midtrans&#124;mid[_-]?)<br>(?:.&#124;[\n\r]){0,32}?<br>\b(?:server[_-]?key&#124;client[_-]?key&#124;api[_-]?key&#124;key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  Mid-(?:server&#124;client)-<br>  [A-Za-z0-9_]{10,20}<br>)<br>\b<br></code> |
+| `kingfisher.minimax.1` | Active | `MINIMAX-7JDH2C8Y-JJPA5YE4-FT377656-H8YNSKH8` | `(?x)
 \b
 (
   MINIMAX-[A-Z0-9]{8}-[A-Z0-9]{8}-[A-Z0-9]{8}-[A-Z0-9]{8}
 )
 \b
 ` |
-| `kingfisher.mintlify.1` | Active | `mint_dsc_zk3VxdhCbt1Wha6QcMdbeJ7337wrpAPI` | `(?x)
+| `kingfisher.mintlify.1` | Active | `mint_dsc_kGg7ZrNUnnU9rlkg5txiabsZPozSVvwK` | `(?x)
 \b
 (
   mint_(?:dsc_)?[A-Za-z0-9]{24,44}
 )
 \b
 ` |
-| `kingfisher.miro.1` | Active | `miroTOKENeyJtaXJvjItME5cUDcZwlVzFuOgQF8dqIqxub8-J_8DdzqcsheqivK-HXgpWmv5ebExYysSUN` | <code>(?x)<br>\b<br>(?i:miro)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTH&#124;TOKEN))<br>(?:.&#124;[\n\r]){0,32}?<br>\b     <br>(<br>  eyJtaXJv<br>  [A-Za-z0-9-]{10,64}<br>  _<br>  [A-Za-z0-9_-]{20,64}<br>)<br>\b<br></code> |
-| `kingfisher.miro.2` | Active | `miroclient-secretriKsHFaVGZg0FxhLdK9qPJoZbWLDJ8hL` | <code>(?xi)<br>\b<br>miro<br>(?:.&#124;[\n\r]){0,40}?<br>(?:client[_-]?secret&#124;app[_-]?secret)<br>(?:.&#124;[\n\r]){0,20}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.mistral.1` | Active | `mistralSECRETE68PW5RG7Z4PJLQVDNS81AMXB3YR2B8M` | <code>(?xi)                       <br>\b                         <br>mistral<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.mixpanel.1` | Active | `mixpanelPROJECTDSECRETdff8c99393fcb1a6faa8d087f67037db` | <code>(?xis)<br>\b<br>mixpanel<br>.{0,32}?<br>(?:SECRET&#124;API.?SECRET&#124;API.?KEY&#124;PROJECT.?SECRET&#124;TOKEN)<br>.{0,32}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.mixpanel.2` | Active | `mp-service-accountH6BnhWut5ehrHeDN5RqvaSMKy1sde4Uc` | `(?xs)
+| `kingfisher.miro.1` | Active | `miroponlUc\n\nh\rB6O\nYN\r\r9pvi\nalm\r\r\rj0PTOKEN\r\n\rSb\r\r\nj\rx\n1\nFi\r\r\r\n\nTfgQp5\nF\r\rueyJtaXJv-zwYObpUvwRPRHZLDSxwW3Kz-pfjiIUV_1PaaoeEtcD32uT7mGXIEdgIGEYPAMggC` | <code>(?x)<br>\b<br>(?i:miro)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;AUTH&#124;TOKEN))<br>(?:.&#124;[\n\r]){0,32}?<br>\b     <br>(<br>  eyJtaXJv<br>  [A-Za-z0-9-]{10,64}<br>  _<br>  [A-Za-z0-9_-]{20,64}<br>)<br>\b<br></code> |
+| `kingfisher.miro.2` | Active | `miro\nM\n0\r8\n\r\n1f\r\r\n\n\nXv\r\nh2\r\r\nR\n\n\n\n\r6client_secretk\r\n\r\nF74y\r\rKx7WCF\n\r0V1j3GLOeAcHuFw4r6LDqt9Ne6qkmpFTR` | <code>(?xi)<br>\b<br>miro<br>(?:.&#124;[\n\r]){0,40}?<br>(?:client[_-]?secret&#124;app[_-]?secret)<br>(?:.&#124;[\n\r]){0,20}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.mistral.1` | Active | `mistral\ns\r2\n\nZu\rv\r\n5O\nh\r\nhA\n\n\nU\rZ\nzY\rb\rTOKENtTk\r\r\r\nM\nW\n\n2m\n\rYN\n\n\n\r\r\n\r\r\r\r\nuK\nY9JH66FZMEYVNS23BWAHOYOTV6RJWBNV` | <code>(?xi)                       <br>\b                         <br>mistral<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.mixpanel.1` | Active | `mixpanelQQBr942Z6zbZRTRCnY6xqhu84seGv1TiAPIuKEYCSZ2i2ahP7S2pCMqZDKGg1SZBORHm2ATe3138ec8583769c41350e1872b7ffeae` | <code>(?xis)<br>\b<br>mixpanel<br>.{0,32}?<br>(?:SECRET&#124;API.?SECRET&#124;API.?KEY&#124;PROJECT.?SECRET&#124;TOKEN)<br>.{0,32}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.mixpanel.2` | Active | `mp-service-accountJhSFSpb6UwJVyLrCKkpjgSZuiRQBGFEQU4my5oKO6k38chMOBQrOvtTK6KOYIW9x` | `(?xs)
 mp-service-account
 .{0,64}?
 \b
@@ -1468,10 +1468,10 @@ mp-service-account
 )
 \b
 ` |
-| `kingfisher.mixpanel.3` | Active | `API\x0b\n\r\t\x0b\t\n  \x0b \r\x0c\r  \r \r\x0b\n\n\t\r \x0c\t\r\x0b\x0c \rKeyd3c603c4c03d8fa04509f35947b90565` | <code>(?xis)<br>\b API \s+ (?:Key&#124;Secret) \b<br>.{0,20}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.modal.1` | Active | `as-Uvq73VQDYc9eyYlx4AVne8ak-KszOkpazgsznbuO6k1C7C6` | <code>(?x)<br>(?P&lt;TOKEN_ID&gt;<br>  (?:ak&#124;as)-[A-Za-z0-9]{22}<br>)<br>\b<br>(?:.&#124;[\n\r]){0,80}?<br>\b<br>(<br>  (?:ak&#124;as)-[A-Za-z0-9]{22}<br>)<br>\b<br></code> |
-| `kingfisher.monday.1` | Active | `mondayKEYeyJ8k9Cl9IyWjEZEqcVapGFWx364vuuEIt_.eyJQxSSRPksqOPDJAVS3QHCfa98mpBTtADPSEBgdDCLeNo0cjMJwA.ap2xL2iGc76na2eYPcb4phrKi6uTaiRS` | <code>(?xi)<br>\b<br>monday<br>(?:.&#124;[\n\r]){0,40}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,40}?<br>\b<br>(<br>  eyJ[A-Za-z0-9-_]{10,200}\.eyJ[A-Za-z0-9-_]{50,1000}\.[A-Za-z0-9-_]{20,500}<br>)<br>\b<br></code> |
-| `kingfisher.moneywave.1` | Active | `ts_5I5U9CBLG3Z26ZTBDBKO3BGG1R6JFX2R` | `(?x)
+| `kingfisher.mixpanel.3` | Active | `API\t \n\r\x0c\t\x0b\r\n\x0c\n\t\r \x0c\n \n\t\r \r\t\t\x0c\x0b\x0c\x0b \n\t KeyNWTTHoBbwYHOXT6k9gGP7f44584833d8b4e0793d1b3ccf8f629f` | <code>(?xis)<br>\b API \s+ (?:Key&#124;Secret) \b<br>.{0,20}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.modal.1` | Active | `as-sIxBLQchlngGogqmGoMukj\nb\nUxxF\nXc\rF\r2\rd\nFI\n\nW\r\r\n9\nK\rT\r\nak-aRO3tb7JUey1m0ctL9thwa` | <code>(?x)<br>(?P&lt;TOKEN_ID&gt;<br>  (?:ak&#124;as)-[A-Za-z0-9]{22}<br>)<br>\b<br>(?:.&#124;[\n\r]){0,80}?<br>\b<br>(<br>  (?:ak&#124;as)-[A-Za-z0-9]{22}<br>)<br>\b<br></code> |
+| `kingfisher.monday.1` | Active | `mondayIrn\n\nA\r\r\r\r\n\nb\rk\rQ\r\r\n\n\nz\rp3iB\ndf\rPRIVATEC\nWG\r\rAf\nl\n\r\nc\r\r\n0G\n\r\rDp\r\n\na\nFA\reyJIkURJ_gm-E6Z2wRiWiRRUK8KQRxcs_Vi.eyJDxotBD_tFFW4QiUcHGFJTpwa6sT5edsGh5ZKehSaWvjPMAliqE.kl1QlpASTggt6cI7l2fgBLSFZHWdHZfV` | <code>(?xi)<br>\b<br>monday<br>(?:.&#124;[\n\r]){0,40}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,40}?<br>\b<br>(<br>  eyJ[A-Za-z0-9-_]{10,200}\.eyJ[A-Za-z0-9-_]{50,1000}\.[A-Za-z0-9-_]{20,500}<br>)<br>\b<br></code> |
+| `kingfisher.moneywave.1` | Active | `ts_Y10YUXQ696ZLN4X3FFM178UNKMX0O5VX` | `(?x)
 \b
 (
   ts_
@@ -1479,20 +1479,20 @@ mp-service-account
 )
 \b
 ` |
-| `kingfisher.mongodb.1` | Active | `mongodb_authe4bA2FFc-E9A9-CcaC-a553-4f9aaa8D04Ef` | <code>(?xi)                     <br>(?:                     <br>  (?:\b&#124;_&#124;-&#124;\.)          <br>  (?:mongodb&#124;atlas)<br>  (?:\b&#124;_&#124;-&#124;\.)          <br>)<br>.{0,1000}?<br>(?:private&#124;priv&#124;secret&#124;auth&#124;pass&#124;key)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(                        <br>  [a-fA-F0-9]{8}<br>  -<br>  [a-fA-F0-9]{4}<br>  -<br>  [a-fA-F0-9]{4}<br>  -<br>  [a-fA-F0-9]{4}<br>  -<br>  [a-fA-F0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.mongodb.4` | Active | `mdb_sa_sk_Y3MM5RWDJJRGFRDNPO8UYB0B6V8T7WJDHYVJ1N7J` | `(?xi)                    
+| `kingfisher.mongodb.1` | Active | `_atlas_c0vpJcf87bRl9WBNUWe0igL55ZHXuhAKprivl\r\ny\nM\rhH\ns\nJn\n\rx\nnf\r9\nF\rET\r\n\rq\nA4fcFF52-1cdb-9368-Aac0-3Cd80BC2Cc8f` | <code>(?xi)                     <br>(?:                     <br>  (?:\b&#124;_&#124;-&#124;\.)          <br>  (?:mongodb&#124;atlas)<br>  (?:\b&#124;_&#124;-&#124;\.)          <br>)<br>.{0,1000}?<br>(?:private&#124;priv&#124;secret&#124;auth&#124;pass&#124;key)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(                        <br>  [a-fA-F0-9]{8}<br>  -<br>  [a-fA-F0-9]{4}<br>  -<br>  [a-fA-F0-9]{4}<br>  -<br>  [a-fA-F0-9]{4}<br>  -<br>  [a-fA-F0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.mongodb.4` | Active | `mdb_sa_sk_3ADZRILKW20I4D39SZP33K3J2A02LVAAO0R6RWUX` | `(?xi)                    
 \b                      
 (
   mdb_sa_sk_[0-9A-Z_-]{6}[0-9A-Z]{34}
 )
 ` |
-| `kingfisher.moralis.1` | Active | `moralisL0nLXWZ39cUkYwmiyWDNH79AjZ4AFjT4ndMRj4pXiVwlmuRooHvrqdqzPYahAGBe` | <code>(?xi)<br>\b<br>moralis<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-zA-Z]{64}<br>)<br>\b<br></code> |
-| `kingfisher.mssql.1` | Active | `mssql-password\r'''"""'"''"'""'"''"'"''"'''""'''XSp4WIuKLt5Plo1ce68U5Zy2tKbjnd3y\n` | <code>(?xi)<br>\b<br>(?:mssql&#124;sqlserver)[_-]?(?:password&#124;passwd&#124;pass&#124;pwd)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
-| `kingfisher.mux.1` | Active | `muxTOKENn9Cim5BAhmYRUhuXzHomfNJ4FEb/P+ZPZIjw5c59N1cxcadHRSMj9UrGvxjuTcolsF2gQWx8Xig` | <code>(?xi)<br>\b<br>mux<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9+/=]{75}<br>)<br></code> |
-| `kingfisher.mysql.1` | Active | `mysql://1o_2cv----n1a9r8.4m3r4u7z7erdifp:DFXRh4D9RVTW7oBoCfDn2vVU8CU6UbvC@[:836be6ceee:42a:c559.56:d34b.716]:85022/RK0Oxe8dZUfve2My6TM3TpO7TYU2IDnh?iltIwAIFZ88hNSxCDyngirWPDB0OkSmo` | <code>(?xi)<br>(<br>  mysql:\/\/<br>  (?:<br>    [a-z0-9._%+\-]+<br>  )<br>  :<br>  (?:<br>    [^\s:@]+<br>  )<br>  @<br>  (?:<br>    \[<br>      [0-9a-f:.]+<br>    \]<br>    &#124;<br>    [a-z0-9.-]+<br>  )<br>  (?::<br>    \d{2,5}<br>  )?<br>  (?:<br>    \/<br>    [^\s"'?:]+<br>  )?<br>  (?:<br>    \?<br>    [^\s"']*<br>  )?<br>)<br></code> |
-| `kingfisher.nasa.1` | Active | `nasa.gov/4AyIuxrKM7VQ1cTvWLDeMOd6CZwrRVF3ACCESSOH3CG9U8NAWKJJUEVYS0VOVCGDC65DO46A8H3IS4` | <code>(?xi)<br>\b<br>nasa\.gov/.{0,200}<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.neo4j.1` | Active | `neo4jpwd\rF6r5PGhqpLH3t2lWYFGwHfXCITRC1Hqr` | <code>(?xi)<br>\b<br>neo4j<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:password&#124;passwd&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>(<br>  [^\s"']{8,64}<br>)<br></code> |
-| `kingfisher.neon.1` | Active | `napi_LOdahqvqETrQIYdcknMCmiP7gcUSATihVoi1afBAJmg4H3vCRP2mvtJXu3E8iawT` | `(?x)
+| `kingfisher.moralis.1` | Active | `moralis\rW1\nI\nbTM\rN\r\r\r\r\n\nu7\n\n\nfSyA\rI\n\no\r21aZH12toExbU4TJMppfQ7reXZWRlGrs7Yj4Jn8uLrWMeJo3L68vfII3AZO7H85f` | <code>(?xi)<br>\b<br>moralis<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-zA-Z]{64}<br>)<br>\b<br></code> |
+| `kingfisher.mssql.1` | Active | `mssql_pass793v\r\n\r\n\nI\rx\r\rbS:"''"'""'"'''"'""'"""""'""'""""""=8sQ=:lO:gOrk:snVGa:=HevO5:==J:z\n` | <code>(?xi)<br>\b<br>(?:mssql&#124;sqlserver)[_-]?(?:password&#124;passwd&#124;pass&#124;pwd)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
+| `kingfisher.mux.1` | Active | `muxTyhY\r\n\n\nt\n\r\n\n\ru\n\n\n\rEN\rH\rp\rs\n\rjB7TOKENcF\r5i\n\r\ns40\n\r00Zpo\r\r\r65\nAPO\nj\n\rG3pPBb=c//FPHDb4SjQhZ4qxZXbVaJVZ7LGNCXkrrufMNbhBEFwWoWm0DfISYCSnC=zZlR5BG9Qo` | <code>(?xi)<br>\b<br>mux<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9+/=]{75}<br>)<br></code> |
+| `kingfisher.mysql.1` | Active | `mysql://vv436g+6fe1eqs6vx1f-npw1ktv59sme:PK=D="=r""="=y'1C''7t"==M"i=qB"T@[9ca90d145f18032dbd4c1d2cb.5:1fe0]:06518/P=z6=FDWi====p=cj===l===X=4===oi?S:FcP=:FL:f:=:3==G:r::SYzoK=YEQ=` | <code>(?xi)<br>(<br>  mysql:\/\/<br>  (?:<br>    [a-z0-9._%+\-]+<br>  )<br>  :<br>  (?:<br>    [^\s:@]+<br>  )<br>  @<br>  (?:<br>    \[<br>      [0-9a-f:.]+<br>    \]<br>    &#124;<br>    [a-z0-9.-]+<br>  )<br>  (?::<br>    \d{2,5}<br>  )?<br>  (?:<br>    \/<br>    [^\s"'?:]+<br>  )?<br>  (?:<br>    \?<br>    [^\s"']*<br>  )?<br>)<br></code> |
+| `kingfisher.nasa.1` | Active | `nasa.gov/b8Kz9pMugMd17gZmTrIPhJXA9q8c6w2P\r\nyP\r\rEAg\r\r\r\r\nVQ\rL\nyrD\r\r\ng\r\rV\r0\nPRIVATEKTDrd5\r\nOkNY\n\n\n\nwo1\n\r\r\n1EJC\r\n\r\n\nCE9ULD5AZWPOIG9ILOSC14ZAQ7SAXICVVRRVATZ3` | <code>(?xi)<br>\b<br>nasa\.gov/.{0,200}<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.neo4j.1` | Active | `neo4jjGo\rE\n\r\rI\n\r\roB\r\r\n\n\nf8Fr\r\rC\r\rnr\r\rpwd\r\nho\r\r\rC\r\r\n\n\r\r\n\r=x=:w:=O==:R=74G:kpnLf60b:=NqYc==` | <code>(?xi)<br>\b<br>neo4j<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:password&#124;passwd&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>(<br>  [^\s"']{8,64}<br>)<br></code> |
+| `kingfisher.neon.1` | Active | `napi_mh23odQtsyYWXDRmvVLKxkVPt8ShfpKNjiDTyCh7QFbivEmh3xsJcRISqGtuPFDt` | `(?x)
 \b
 (
   napi_
@@ -1500,86 +1500,86 @@ mp-service-account
 )
 \b
 ` |
-| `kingfisher.nessus.1` | Active | `nessuscliNESSUS_KEY=\r \x0c'\x0c \x0b\t"\r' \x0b"'  \x0c\t\t\x0c  "'\x0b\x0c" \x0c\t\n2d56ac520ea71a9a02652038ce91014d1f66961612bdbf9f385f82488eb43a39` | <code>(?xi)<br>\b<br>(?:nessuscli&#124;NESSUS_KEY&#124;nessusagent)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:--key=&#124;NESSUS_KEY=["'\s]*)<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.netlify.1` | Active | `netlifyKEY5535722d4252050a8d618d0b236b218e95101556326ee13684ee3c5ccb91` | <code>(?xi)<br>netlify<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{60,64}<br>)<br>\b<br></code> |
-| `kingfisher.netlify.2` | Active | `netlifyKEYB6BP9EHBABV2OTCT20Q9WU8K_ZQNH7XQ-H3L9SICZTO` | <code>(?xi)<br>\b<br>netlify<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{43,45}<br>)<br>\b<br></code> |
-| `kingfisher.netlify.3` | Active | `nfp_r2HQKW2opYhl146bU6NyCED5ibsgjqma02PO6dCO` | `(?x)
+| `kingfisher.nessus.1` | Active | `NESSUS_KEYr10NjHwdHZlfbs\n\rV\n\n\rt\n\n\nI8\r\n\r\r1\nNESSUS_KEY=\x0b' \n\x0c"\r\n\n"\x0c\x0c\n \n" \x0c\n \x0c \n\x0c'"\x0b" \x0c\x0b\n3e2de42ed19a52f6f0272193a0f9bf37fde35fc7565d1679b1c0ac53c843ee49` | <code>(?xi)<br>\b<br>(?:nessuscli&#124;NESSUS_KEY&#124;nessusagent)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:--key=&#124;NESSUS_KEY=["'\s]*)<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.netlify.1` | Active | `netlifyH\rm\r\n7\rSlb\nT\n\nh\r\r\nDK\nv\r4\n\n\rG\n9GmSECRET\n\r\rI\n3\r\r\n\n\r9\n\rF\r5eO\r\n4JD\r\n\rm\n\r\rXd28f648f87d7ca05e418dacbccf1f41b5f59d1f748cd216e2faacd369f8e` | <code>(?xi)<br>netlify<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{60,64}<br>)<br>\b<br></code> |
+| `kingfisher.netlify.2` | Active | `netlify\rx\rBNir85C\nZ\r\n\n\nUk16GT2W\nkujBR7\nACCESSC\ns\n\r\rD\n\r2vJl\r\nl\n3Kz\n\n\n\n\rBB\r\r\rUcZSUF-RX59R9KIP1FQUWQIR5ZTOWVERJWE8WAB0Y-RSO` | <code>(?xi)<br>\b<br>netlify<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_-]{43,45}<br>)<br>\b<br></code> |
+| `kingfisher.netlify.3` | Active | `nfp_6sIfu0hoVIlayoKUm6YDPMzNFvStpgnFqgkd5uol` | `(?x)
 \b
 (
   nfp_[a-zA-Z0-9]{40,48}
 )
 \b
 ` |
-| `kingfisher.netrc.1` | Active | `machine\x0c \x0b\r \x0c\x0c\n\x0c\t\x0b\r\x0c\n\x0c\x0c\x0b \r\t \x0b\n \r\r\x0c\t\t\t\t\rtuW8Udw90k8002E1gNPqtd2QVYa9Pn4E\n\n\t \x0b  \x0c\r\x0b\t\t\t\x0b \x0c\t   \t\n\n \t  \r\r\r\x0c\tlogin\x0c\x0c\r\x0c\x0c\n\x0c\r\x0b\n\x0c\x0c \t\n\t\r\t\n\x0c \r\n\x0b\r\t\x0b\t\r\n\t\x0cPNseiPlesGWR7nZilkrOBDInAI3VfrrU\x0c\r \n\x0c \r\x0c \x0b\x0c\t\x0b\x0c\n\x0b \t\t\r\n\x0c\n \r\r\x0c  \r\n\npassword\n\t\t\r\t\x0b\x0b\r\n\n\r\t\t \n\x0b\x0c\t\x0c\x0c\r \t\x0b \t \x0b  \n\x0cvlRqA0log86eIuQLYKt9TCnvWW9G4Vuq` | <code>(?xi)<br>( machine \s+ [^\s]+ &#124; default )<br>\s+<br>login \s+ ([^\s]+)<br>\s+<br>password \s+ ([^\s]+)<br></code> |
-| `kingfisher.newrelic.1` | Active | `newrelicACCESSL0UJ-ZGQYZI021LSITEILT4UV5BGKEC6R4UGOJOW5P8OW.W` | <code>(?xi)<br>\b<br>newrelic<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_.]{4}<br>  -<br>  [A-Z0-9_.]{42}<br>)<br>\b<br></code> |
-| `kingfisher.newsapi.1` | Active | `newsapiPRIVATEPXhl3EcuyFcgPZzLbZs7VMj6wBWXps5Y` | <code>(?xi)<br>\b<br>newsapi<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.ngrok.1` | Active | `ngrokACCESSak_l2nbpsivqusf5v7wno2ssi020pdd6l` | <code>(?xi)<br>\b<br>ngrok<br>(?:.&#124;[\\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  (?:[a-z0-9]{25,30}_\d[a-z0-9]{20}<br>  &#124;<br>  (?:cr_&#124;ak_)[a-z0-9]{25,30})<br>)<br>\b<br></code> |
-| `kingfisher.nightfall.1` | Active | `NF-dCVpEhmDhCfBYbmh1nLvK4TL5ssah2mH` | `(?x)
+| `kingfisher.netrc.1` | Active | `machine\t \x0b\r\x0b  \t\n\n\n\n\r\r\t\r \t\x0c\t\r\r\x0b\r\x0b\r\r\n\x0b\r\x0c\njWb==='=Gk"Sf:C:W:vDUK:lf'"D'="' \n\t \x0b\r\r \r\x0c\r\r\n\t   \x0b\x0b\n\x0c\x0b\r\r \n \x0c\x0c \x0b\nlogin\n\x0c\t\x0b\n\x0c\r\t\t\x0c\x0c\x0c\x0b\x0c\x0c\t\x0b\x0b\x0c\n\t\r\n\x0c\n\t\t\t\r\r\t\x0cSbA==3""='"=='q'2:=GEVQq:':='J"E\x0b\n\n\r\r\n\x0b\n \t\x0b\x0b\n \r\t\n\r \t\x0b\x0c\r\n\n \x0b \x0b\x0b\x0b\x0cpassword\x0b\x0b\n \n \x0c\x0c\r \x0b \t\x0c\x0c\r\r \t\x0c\t\x0c\x0b \n \x0c  \x0c\n\nh="'m:"L=eK7='=Om"w"R"v':44WL'==` | <code>(?xi)<br>( machine \s+ [^\s]+ &#124; default )<br>\s+<br>login \s+ ([^\s]+)<br>\s+<br>password \s+ ([^\s]+)<br></code> |
+| `kingfisher.newrelic.1` | Active | `newrelic\nnt\raSm\ru\n\nT\rp\r\nzK\nqZ7\n\r\rul\nX\rs\nKEY\rDy\r3\rp\r\nXrL\n\rwyqg\n\rx\riJO\ny7\nq6\nX323-27KMMOKXNBLATMT.2M6QPQMVV.ZX01RGR6F7AD5SB2` | <code>(?xi)<br>\b<br>newrelic<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_.]{4}<br>  -<br>  [A-Z0-9_.]{42}<br>)<br>\b<br></code> |
+| `kingfisher.newsapi.1` | Active | `newsapiLX5\n\n\r\nZ\r\n\rV\n\rh\rTOKENp\r\n\ruS\rIA\nYDj\n\r\njNise71oc9A2dBKnPfYj8MMZ6K2uvz9J` | <code>(?xi)<br>\b<br>newsapi<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.ngrok.1` | Active | `ngrok\r\\V\rnn\\\\7gq1nn\rg\\\rOCANmx\rv\r2CCQWPRIVATEGWv\r6\r\r\rm\r0a\r\r\rW\rA\rqQ\rsTV\rgR\r\n57w2b13x6bi5zsmdmjojunzp52sutowk_5qxi9zhzp9k9s8a9tyqsj` | <code>(?xi)<br>\b<br>ngrok<br>(?:.&#124;[\\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  (?:[a-z0-9]{25,30}_\d[a-z0-9]{20}<br>  &#124;<br>  (?:cr_&#124;ak_)[a-z0-9]{25,30})<br>)<br>\b<br></code> |
+| `kingfisher.nightfall.1` | Active | `NF-2bqOhd7qwFLaDnxwL41JBLPtYAtKhdv0` | `(?x)
 \b
 (
   NF-[a-zA-Z0-9]{32}
 )
 \b
 ` |
-| `kingfisher.notion.1` | Active | `notionsecret_0FI41K5M16H3IABYZNMSE20U86SY8804W8S87OWAD9G` | <code>(?xi)<br>notion<br>(?:.&#124;[\\n\r]){0,32}?<br>\b<br>(<br>  secret_[A-Z0-9]{43}<br>)<br>\b<br></code> |
-| `kingfisher.notion.3` | Active | `notionnrt_AD9P4GS0H7D5VWYPGA86E6ZX9I49IWTHXLZUQTQ0` | <code>(?xi)<br>notion<br>(?:.&#124;[\\n\r]){0,32}?<br>(<br>  nrt_[A-Z0-9_]{40,55}<br>)<br></code> |
-| `kingfisher.npm.2` | Active | `NPM_TOKEN933D1A58-C527-C5B7-371E-4506DC2C0D7E` | <code>(?xi)<br>(?:_authToken&#124;NPM_TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>  (                                  <br>    [0-9A-F]{8}                    <br>    (?:-[0-9A-F]{4}){3}       <br>    -[0-9A-F]{12}                     <br>  )  <br>\b<br></code> |
-| `kingfisher.nuget.1` | Active | `oy2vy2ylb9fvbcjp6987uh59nng9er14gx8g97w15a52gl` | `(?xi)
+| `kingfisher.notion.1` | Active | `notion3\rxn\\It\\\rm\\c8DRk\\\rR1\\\rC\rf\\mZySn\rsecret_8OQ2D98ITNXL1Q7NA9NK1WM4RTVL7NTJAAWTD0YDD80` | <code>(?xi)<br>notion<br>(?:.&#124;[\\n\r]){0,32}?<br>\b<br>(<br>  secret_[A-Z0-9]{43}<br>)<br>\b<br></code> |
+| `kingfisher.notion.3` | Active | `notionGo\r\r\rg\rDn\r\\\rn\\mnqiNnEj\r\\M\\Or\\l\\\\nrt_5PEWHH_0DMIBO0DC0JJT0INYLMVTPJBI2UDN8_XZ` | <code>(?xi)<br>notion<br>(?:.&#124;[\\n\r]){0,32}?<br>(<br>  nrt_[A-Z0-9_]{40,55}<br>)<br></code> |
+| `kingfisher.npm.2` | Active | `NPM_TOKENM\n\nOk\n\rI\n\r\r\r7e\nJ60938A55-0AD1-CACE-42D0-E3D299C037DD` | <code>(?xi)<br>(?:_authToken&#124;NPM_TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>  (                                  <br>    [0-9A-F]{8}                    <br>    (?:-[0-9A-F]{4}){3}       <br>    -[0-9A-F]{12}                     <br>  )  <br>\b<br></code> |
+| `kingfisher.nuget.1` | Active | `oy22o45da2hk7sssgzf36jdlbssoc08oki34fd5su9cbce` | `(?xi)
 \b
 (
   oy2[a-z0-9]{43}
 )
 \b
 ` |
-| `kingfisher.nuget.2` | Active | `nugetACCESS9cpad8v11qptdgurfky6kw4317a6gl6x6hzxmk1bowicpy` | <code>(?xi)<br>\b<br>nuget<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-z0-9]{46}<br>)<br></code> |
-| `kingfisher.numverify.1` | Active | `numverifySECRETXdN8i5ucepaEOJTxknoe7SfsfYvEWq1o` | <code>(?xi)<br>\b<br>numverify<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.nvidia.nim.1` | Active | `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` | `(?xi)
+| `kingfisher.nuget.2` | Active | `nuget\r1\r\n\r\n6Yh\r\n\r\rX\roGX\n\nc\rU\r\reCcC\r\nrSECRETg\rm\rb\n\nq\nS\r\r\n8p3Jt\no\nQ\nDn\r8l\r\r\rl2lsvqr36xqnwneqhezw40g09n5zd1euu5s64sfuleteddx` | <code>(?xi)<br>\b<br>nuget<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-z0-9]{46}<br>)<br></code> |
+| `kingfisher.numverify.1` | Active | `numverify\rgS\rpN\r96\n\rS\r\n\rXPRIVATEz\n\r\r\n\r\r\n4Y\rSP\n\n6aYMkMc82kdB4niAYPo9jjN9f5Hq9i5Z2` | <code>(?xi)<br>\b<br>numverify<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.nvidia.nim.1` | Active | `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` | `(?xi)
 (
   nvapi-[A-Z0-9_-]{60,70}
 )
 \b
 ` |
-| `kingfisher.nxcloud.1` | Active | `nx-cloud-token""''"''"'""'''"'"'"''""""'"""'"''bU4DKMMhr3kZKJIg0I5VL1Bscc7VZRHXhzwvmiar7a+eqkPYlEw8TscrL/nO== ` | <code>(?xi)<br>\b<br>nx[_-]?cloud[_-]?token<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9+/]{60,80}={0,2}<br>)<br>['"\s]<br></code> |
-| `kingfisher.nylas.1` | Active | `nylassecretnyk_I77E29TMQ3LL34CXN2564ANLQQIWMDOZOR5ULNGYFND28HZ717PIOUUDDR47N8JRCUL` | <code>(?xi)<br>\b<br>nylas<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;apikey&#124;secret&#124;private&#124;access&#124;token)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  nyk_[A-Z0-9]{67}   # common v3 API key format (71 chars total)<br>  &#124;<br>  [0-9A-Z]{30}       # legacy/older patterns seen in repos<br>)<br>\b<br></code> |
-| `kingfisher.nytimes.1` | Active | `new-york-timesr6=f1usbed9kvbz_0mxnrl684qmtlqhf` | <code>(?xi)<br>(?:nytimes&#124;new[- ]?york[- ]?times)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9_\-=]{32}<br>)<br>\b<br></code> |
-| `kingfisher.odbc.1` | Active | `User\n\x0c\n\n\n\n\x0c \x0b\x0b\r\n\x0c\r\x0c\n \x0b\n\r\t \x0b\n \x0b\t\r\n\x0c\x0b\t=\x0c \r\x0c\x0b  \r\n\x0c\x0c\t\x0b\r\t\n\t\n\x0c\x0b \n   \r\n\r\n \t\nSMfxcu4a7Rkhl2uuIOnp0gdLVO6PL4Mv\t \x0b\t\t \n\r\t\x0b\x0b\t\r\r\n\t\x0c\t \r\n\t\n\n\r\t\r\n\x0c\r\t\n;    \t\t\t\t\t\t \t  \t\t \t\t\t\t\t\t \t \t\t \t \tlFVoIkPToo   \t\t \t \t  \t   \t \t\t\t     \t    \t Pwd\x0b\r\t\t\t\n\x0b\n \r\x0b  \t\x0c\r  \r\n\x0c\n\n\n\x0b \x0c\x0b\r \x0c = \r\n\x0c\t\x0b \n\x0b\t\n \x0c\x0c\x0b\t\r\r\x0b\t\x0c\n \x0b\n\x0b\r\n\r\t\n\rmoSa0u0Weds82WFyBnLw73ouJTH6UgsA\x0b\x0b\x0b\n\x0b\x0c\x0b\x0b\x0b\r\r\x0c\x0b\t\x0b\n\x0b\n\x0c\x0b\x0c\t \t\x0b\n \t\x0b\n\x0b\n` | <code>(?xi)<br>(?: User &#124; User\ Id &#124; UserId &#124; Uid) \s*=\s* ([^\s;]{3,100}) \s* ;<br>[\ \t]* .{0,10} [\ \t]* <br>(?: Password &#124; Pwd) \s*=\s* ([^\t\ ;]{3,100}) \s* (?: [;] &#124; $)<br></code> |
-| `kingfisher.okta.1` | Active | `ssws00rkzd82inmuvm_4av033izmjuu0u_w2wpgfo328sw` | <code>(?xi)<br>(?s)<br>(?:okta&#124;ssws)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  00[a-z0-9_-]{39}[a-z0-9_]<br>)<br>\b<br></code> |
-| `kingfisher.ollama.1` | Active | `ollama1212b08733fdcfece6d365efc2601514.NIe2RwNvI7zW-afJOd69M5K6` | <code>(?xi)<br>\b<br>ollama<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{32}\.[a-zA-Z0-9_-]{24}<br>)<br></code> |
-| `kingfisher.onelogin.2` | Active | `one\r\n--_.\r_\t\x0c\x0c._\x0c\x0b\x0b\n\x0b\n\n\x0b\r \x0c.\t- --\n\x0blogin\tsecret\t=\n\x0b__=\x0b\x0b==_=\r-\x0b\n\t\r"\x0c\t_\x0c\t\x0b-\t\x0b'\r\x0bsecret_oh7yzvta98fkea4ewfe20cf9x132th1ivaw3ge09eocwswzlzfnae2qg8tcr5wau` | <code>(?xi)<br>\b<br>one[\s_.-]*login<br>(?:.&#124;[\n\r]){0,64}?<br>(?:<br>  api[\s_.-]*client[\s_.-]*secret<br>&#124;<br>  client[\s_.-]*secret<br>&#124;<br>  api[\s_.-]*secret<br>&#124;<br>  [\s_.\-:"'=]secret\b<br>)<br>(?:.&#124;[\n\r]){0,20}?<br>[=:"'\s_-]*<br>(?:secret[_-])?<br>(<br>  [a-z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.1password.1` | Active | `ops_eyjYdkdaqrXB1C4IBNImWG-SCubSe0pdu6yKaSy1KtTVjmOnPo1Vn6zOM8GBbirk0vyuLcye92bdp_Rl0Di` | `(?xi)
+| `kingfisher.nxcloud.1` | Active | `nx-cloud-tokenUK\nJ\noi\nz\rKN\rIzy\t"'"'"''"''"""'''"'"""''"'"'''"'"NS9j2Cvyrty3htzXR+D/YsGZvmv6CKLRk/JcIPjHJKs468Xz9fTvMKg+3tY4== ` | <code>(?xi)<br>\b<br>nx[_-]?cloud[_-]?token<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9+/]{60,80}={0,2}<br>)<br>['"\s]<br></code> |
+| `kingfisher.nylas.1` | Active | `nylas\r\nEWf\nv\rdQvy\reR\n\n\nFWw\nL\n\nkd9\nxMQapikey\n\rvm\nXl\r\r\r\rv\rD0\nv\rC\nC6\r\r\nK\n1oc\rO13XVPLKHEV24V0DHNUBCPMKOOSA66F` | <code>(?xi)<br>\b<br>nylas<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;apikey&#124;secret&#124;private&#124;access&#124;token)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  nyk_[A-Z0-9]{67}   # common v3 API key format (71 chars total)<br>  &#124;<br>  [0-9A-Z]{30}       # legacy/older patterns seen in repos<br>)<br>\b<br></code> |
+| `kingfisher.nytimes.1` | Active | `new-york-times\rp\r\r\rA\n0UMj\rW\rBU\n\rl9\nZkc56k\r\r\ng\ndvouhr8ne-tjz70vuv=413865kfqg=ja` | <code>(?xi)<br>(?:nytimes&#124;new[- ]?york[- ]?times)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9_\-=]{32}<br>)<br>\b<br></code> |
+| `kingfisher.odbc.1` | Active | `Uid\n\n \x0b\x0b\r\x0c\x0c\r\x0c\x0c\t\n \x0b \n\r\x0b\t\x0c\x0b\t\x0b\x0b \x0c\x0b\n\x0c\n\r=\t\t\n\x0b \n\r\x0c\x0c\r\x0b\t  \n\t\r\t \r\x0b\x0b\r\x0c\x0c\r\x0b\n\x0c\n\t\n"'l"6"=='a"M240'Z:Q'=77RaN"1==P=\x0b\x0c\x0b  \x0b\x0b\x0c\n\t\t\t \x0c\n\n\x0c\r\n \x0c\n\x0c\n\n \x0b\r\t\n\r\n;\t\t \t\t\t\t\t \t\t    \t  \t\t \t  \t\t   \t\t\tOjC0WF2GBY \t  \t \t  \t   \t\t  \t   \t    \t   \t\tPassword\r\x0c\x0c\r\t\n\x0c \r\n\n\n\t\x0c\x0c\t\t \t\n\r\r   \r\x0b\n\t\x0b\n\n=\n\x0c\n\x0c \x0c\r\r\x0c\x0b \x0c\t\r\t\r\r\r\r\n\x0b\x0c\x0b\x0c\n\r\n\x0b\r \x0b\n"adjs0'jp:H:=:4"b""K"p"'LeB::=='\n\x0c\x0c\t\n\n\n\x0b\r\t \x0b  \t\x0c\n \x0c\x0c\x0b\x0c\x0c \n \r\t \n \x0c;` | <code>(?xi)<br>(?: User &#124; User\ Id &#124; UserId &#124; Uid) \s*=\s* ([^\s;]{3,100}) \s* ;<br>[\ \t]* .{0,10} [\ \t]* <br>(?: Password &#124; Pwd) \s*=\s* ([^\t\ ;]{3,100}) \s* (?: [;] &#124; $)<br></code> |
+| `kingfisher.okta.1` | Active | `ssws\nqy\rz3\rKo\rDD\nkm\r\n\r\nT\n\n\r\r\nqDWal\ro00qcdkruay_9indbw-avmq_lmn5ro55fvtkb5dio1f` | <code>(?xi)<br>(?s)<br>(?:okta&#124;ssws)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  00[a-z0-9_-]{39}[a-z0-9_]<br>)<br>\b<br></code> |
+| `kingfisher.ollama.1` | Active | `ollamas\nY\n\rn\rg\rJtVRL\r6\n\n1D5\n\r\n\rS\r\r\r\rvJea92fa0767a0ff053eaf2afbf9fcaade.J3eloyuKvueghgEGXNO9YCLu` | <code>(?xi)<br>\b<br>ollama<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{32}\.[a-zA-Z0-9_-]{24}<br>)<br></code> |
+| `kingfisher.onelogin.2` | Active | `one_\n \x0c\r\t\x0b _\x0c\n\n.-\t\x0c\x0b\r_.\x0c\r \x0b.\t\x0c\x0c\r._\x0blogin\n\n\r\n\n\rew\r\r\n\r\n\r\nco\nT\r\n\r\rKM\n\n\r\n\rHVclient.. \n\x0b\x0b .\t\n\x0b.\t\x0b._\n_\r.-\x0c\t\t-__\t\r\x0c._secret5N\r\r\r\r\n\rn\r6\n\r\n0J\n\n\nc\r\r-  "-\x0c: ==\n\x0b\t\n  \x0c""=- \n\x0c': \r=\x0bsecret-14vmteqyzc046meez724s7cn29xnrf2om7lxnegor8zvqt9buyu1v9gh8sh6bpa8` | <code>(?xi)<br>\b<br>one[\s_.-]*login<br>(?:.&#124;[\n\r]){0,64}?<br>(?:<br>  api[\s_.-]*client[\s_.-]*secret<br>&#124;<br>  client[\s_.-]*secret<br>&#124;<br>  api[\s_.-]*secret<br>&#124;<br>  [\s_.\-:"'=]secret\b<br>)<br>(?:.&#124;[\n\r]){0,20}?<br>[=:"'\s_-]*<br>(?:secret[_-])?<br>(<br>  [a-z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.1password.1` | Active | `ops_eyjw1Bkw9VhizjXPa1U8hvoLqtCxz2dzrd_r4J7HwbhKjfCZ-5kfYA7ziX6VwoUoUiNGOtL5hSno2ZbHqHj` | `(?xi)
 \b
 (
   ops_eyj[A-Za-z0-9_-]{80,500}
 )
 \b
 ` |
-| `kingfisher.1password.2` | Active | `A3-3E7Q1I-EO3VSC-0PJC9-PS9BN-ZRYS7-DDW18` | `(?xi)
+| `kingfisher.1password.2` | Active | `A3-3PTWJY-94GX1P-OI34L-CMHTE-7OIPU-D4WKQ` | `(?xi)
 (
   A[0-9]-[A-Z0-9]{6}-[A-Z0-9]{6}-[A-Z0-9]{5}(?:-[A-Z0-9]{5}){3}
 )
 ` |
-| `kingfisher.onesignal.1` | Active | `onesignalPRIVATEVyuFIeaIHUmUubua24bgrk1PMi3BUtOi` | <code>(?xi)<br>\b<br>onesignal<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.openai.1` | Active | `sk-7ATM42YYN6QPGASAOAP5ZX93S7SDP0ARGSQD881M3X9YVKQI` | `(?xi)
+| `kingfisher.onesignal.1` | Active | `onesignal\nE\rw\r\n\r1\r\rl\r\n5\r\rPRIVATE\r\nTb\nqi\rv8p3t\rDRcUz1loiyEKfchbSPqmjCq64mZgxFhLr9` | <code>(?xi)<br>\b<br>onesignal<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.openai.1` | Active | `sk-BZO4HU16WIY7Q0HFZIPB6UNHUGDSJ3ZY6W0R93AJME0RWAQ1` | `(?xi)
 \b
 (
   sk-[A-Z0-9]{48}
 )
 \b
 ` |
-| `kingfisher.openai.2` | Active | `sk-svcacct-6XHJUX8RT352_DW-7XOP5V2UOFB0L0DOFVB4WNLG2IGWVZESEDHM7783FFYA5GBWJRLZOYR9D9-E0NFB_LL3JF_6C22XZGUVB7B7` | <code>(?xi)<br>\b<br>(<br>  (sk-(?:proj&#124;svcacct&#124;None)-[A-Z0-9_-]{100,})<br>)<br>\b<br></code> |
-| `kingfisher.openai.3` | Active | `sk-None-IVK8CICBO7MO4EL8S5KE4ALYSL1WWNZ2926WTIIZ76RQJXML` | `(?xi)
+| `kingfisher.openai.2` | Active | `sk-proj-63XI1E3222E6QHKMG8PCQKG40JXYVQFGWX_7LG40W57C9M5YMU2GGULBZ8CCC6MA6XEHHSTIIOQ20ZUAAN3O9KPNLPWD8IXQ31_Z` | <code>(?xi)<br>\b<br>(<br>  (sk-(?:proj&#124;svcacct&#124;None)-[A-Z0-9_-]{100,})<br>)<br>\b<br></code> |
+| `kingfisher.openai.3` | Active | `sk-None-KZZG78YQZHCZHP5BDUF4R3DGEDLQC26BIMC6FOGBCT5PC872` | `(?xi)
 \b
 (
   sk-None-[A-Z0-9]{48}
 )
 \b
 ` |
-| `kingfisher.openshift.2` | Active | `sha256~yCB2eGjXjlJiXk-KLNNsO3h88RemtnB1QJ3nT9DY_VN` | <code>(?x)<br>\b<br>(<br>  sha256~[A-Za-z0-9_-]{43}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
-| `kingfisher.openvsx.1` | Active | `ovsxp_181517d8-f674-b0d8-3a85-eb74ef889ac4` | <code>(?x)<br>\b<br>(<br>  (?:ovsxat&#124;ovsxp)_[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.openweather.1` | Active | `openweather1nztjo28z5ku5n1f0xk4lwqdmdf1vt3o` | <code>(?xi)<br>(?:pyowm&#124;openweather&#124;\bowm\b)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-z0-9]{32}<br>  &#124;<br>  APPID=<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.opsgenie.1` | Active | `opsgenieKEYea3de20a-7547-3ee6-7950-78ae4578383b` | <code>(?xi)<br>\b<br>opsgenie<br>(?:.&#124;[\\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.optimizely.1` | Active | `optimizelyIRW6AW9DPSQU06V5D4A:CLSWS6MVW4ZA9WG96LH6V0QSEABFEXEQ0J` | <code>(?xi)<br>\b<br>optimizely<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [0-9A-Z-:]{54}<br>)<br>\b<br></code> |
-| `kingfisher.oracle.1` | Active | `oracle://6ERTx8JjYbiYC4UzlPJc0mleSlbhhIaj:XSDoDtPexCbsFPCx1DqbnhX7w9RvQfEY@nV1tHKW2JDGRkDtoC7aBLeSLdKffy7lI` | `(?xi)
+| `kingfisher.openshift.2` | Active | `sha256~i1ZZrmyQqI0en1dIMCKHBNdUl9vYk48n660RYXfkV45\t` | <code>(?x)<br>\b<br>(<br>  sha256~[A-Za-z0-9_-]{43}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
+| `kingfisher.openvsx.1` | Active | `ovsxat_c0d80d5a-3663-f4f5-b360-58170ad3da6f` | <code>(?x)<br>\b<br>(<br>  (?:ovsxat&#124;ovsxp)_[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.openweather.1` | Active | `pyowm\r\nF\n\r\nH\rp\nkR\n\r\n6J\n0\rpn5\n\nwl\rf\r\n\nzvhju11peu3naux74rj9kfmr8kupmso2` | <code>(?xi)<br>(?:pyowm&#124;openweather&#124;\bowm\b)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-z0-9]{32}<br>  &#124;<br>  APPID=<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.opsgenie.1` | Active | `opsgenie\\t\\\rEn\\nwr\\n\\n3V\\Y\rYl\rn\\k\rgp\r\\q\rACCESS\ruxtnO\rA\nt4\nXN\rOcR\nZe\nqw8E\nUjD\nY957e63ce-af83-c56c-46eb-e8e44f15e4d2` | <code>(?xi)<br>\b<br>opsgenie<br>(?:.&#124;[\\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.optimizely.1` | Active | `optimizelyT\nxw6E\nX\n\nd7\r\r\rK\rqD\nv\n\nr\n3dy\n\nLaVA8DBOH1R4RZSQPS2ZBBQM09KJ8IV61ZXX84BR5GKHI7RIQHD:4UNP` | <code>(?xi)<br>\b<br>optimizely<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [0-9A-Z-:]{54}<br>)<br>\b<br></code> |
+| `kingfisher.oracle.1` | Active | `oracle://'7"'Y"r=41"'v'''KG'""'=D='=TmO"":Tt::s=':"FW=jK'=6Rxeu"'1H=w'=jOG@:=:=kn::=e::cF_Z:::j=2::EIB=m:=h` | `(?xi)
 \b
 oracle://
 [^:@\s]{1,64}
@@ -1588,19 +1588,19 @@ oracle://
 @
 [^\s/"']{4,128}
 ` |
-| `kingfisher.ory.1` | Active | `ory_pat_Tu4ADgy-FbiBKUe81wyoVj8Q1PcedcjM` | <code>(?x)<br>\b<br>(<br>  ory_(?:pat&#124;apikey&#124;wak)_[A-Za-z0-9_-]{24,48}<br>)<br>\b<br></code> |
-| `kingfisher.ory.2` | Active | `ory_st_yMtE8lgc_39U5rU0pfYZyraZArk7iIqg` | `(?x)
+| `kingfisher.ory.1` | Active | `ory_apikey_sECQtcqf8TUtY0LXDc2JndFfWOZZa0Rz` | <code>(?x)<br>\b<br>(<br>  ory_(?:pat&#124;apikey&#124;wak)_[A-Za-z0-9_-]{24,48}<br>)<br>\b<br></code> |
+| `kingfisher.ory.2` | Active | `ory_st_lYRgagjyPP6xH1SEbM4jw16M8kMXu0R2` | `(?x)
 \b
 (
   ory_st_[A-Za-z0-9_-]{24,48}
 )
 \b
 ` |
-| `kingfisher.ory.3` | Active | `ory_ac_OSY7lyzMt1TcLlShqauvwv73A64T4hIS` | <code>(?x)<br>\b<br>(<br>  ory_(?:at&#124;rt&#124;ac)_[A-Za-z0-9_-]{24,48}<br>)<br>\b<br></code> |
-| `kingfisher.ovh.2` | Active | `ovhapp_secret'iF8940cKdAGslY50fXo93zqu5ycwIC7I` | <code>(?xi)<br>\b<br>(?:ovh&#124;ovhcloud)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:application[_-]?secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.owlbot.1` | Active | `owlbotaccesseb29e366d1162e1f2367bb217ed78e253779cca1` | <code>(?xi)<br>\b<br>owlbot<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;secret&#124;private&#124;access&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.packagecloud.1` | Active | `packagecloudSECRET8e32c99ebef039a1b242502e487cc21bb2fa4461bc9d30ee` | <code>(?xi)<br>\b<br>packagecloud<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API[_-]?TOKEN&#124;AUTH)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{48}<br>)<br>\b<br></code> |
-| `kingfisher.paddle.1` | Active | `pdl_live_apikey_fbo8sx399pi418no8e3klp3tus_oFovMhxbKIGHUrFlHn9qtm_rxW` | `(?x)
+| `kingfisher.ory.3` | Active | `ory_rt_hffZx83MqfPEEtuI6IsOnPY9kG9JGHmY` | <code>(?x)<br>\b<br>(<br>  ory_(?:at&#124;rt&#124;ac)_[A-Za-z0-9_-]{24,48}<br>)<br>\b<br></code> |
+| `kingfisher.ovh.2` | Active | `ovh\r\n\r\r\n\nj\n\n\rgP\nN\naL5HXn\r\r8\n\nER6\rajapp_secretTPBiP\r\r\n\n\rf\n\r\r\rl:NMaypXjlTyHJH5ztcYKXrwUKh0xiBmo1` | <code>(?xi)<br>\b<br>(?:ovh&#124;ovhcloud)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:application[_-]?secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.owlbot.1` | Active | `owlbot\r19\r\nHES\rC\n\r\rh\rA\nM\npJ9aJidxI\n\r\r\rsecretyvU8\n\n\rT\n4\r\r\n\n5k\nmE\rE\r\n\r\n\n\n\r\rJbd3fb2e852a1b9d15122af987be650e88696c945ee` | <code>(?xi)<br>\b<br>owlbot<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;secret&#124;private&#124;access&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,64}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.packagecloud.1` | Active | `packagecloud\nZ\r\n\n\r\r\r\rV\nM\ru\n8\r\rW4\n\n\nN\r\r\n\rn\r\rgACCESS\nZ\n\r\n\nwB\n\n\rJ1r\n\r5l\rgy\n\nS\n\n\rU\rxH\r6fde52762711b4d265b908b2264155954ad9085ab4de7e79` | <code>(?xi)<br>\b<br>packagecloud<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API[_-]?TOKEN&#124;AUTH)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{48}<br>)<br>\b<br></code> |
+| `kingfisher.paddle.1` | Active | `pdl_live_apikey_4yxk9171s055c5pts0rp10jw6o_xG3KqQpcWHkY5s18jrjeuj_ycr` | `(?x)
 \b
 (
   pdl_live_apikey_
@@ -1612,20 +1612,20 @@ oracle://
 )
 \b
 ` |
-| `kingfisher.pagerduty.1` | Active | `pagerdutyAAAAAAAAAAAAAAAAAAAAPRIVATEc6015abd5da75a9ac186143fe159ca58` | <code>(?xi)                                                     <br>(?: <br>    pd[_-]? &#124;<br>    pagerduty[_-]? &#124;<br>    pagerduty<br>)<br>\W{0,20}<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?         <br>\b            <br>(                                                          <br>  u\+[A-Z0-9_+-]{18}         &#124;  # personal user token (20 chars)<br>  [A-Z0-9_-]{20}             &#124;  # legacy PAT (20 chars, mixed case)<br>  [a-f0-9]{32}                  # integration / routing key (32 hex, lower case)<br>)<br>\b<br></code> |
-| `kingfisher.pandadoc.1` | Active | `pandadocycBQ2EyzgVDd51D16Wjv3459eXpOHDFfrMs4r5OB` | <code>(?x)<br>\b<br>(?i:pandadoc)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.pangea.1` | Active | `pts_fdne2keqxd5ofxs814w2h2u9h8dmx5as` | `(?x)
+| `kingfisher.pagerduty.1` | Active | `pagerduty_AAAAAAAAAAAAAAAAAAAATOKENtx\nse\n\n\nKW\nLJ\r\rBu+AY9L9YLJIC-ZMVEXE6` | <code>(?xi)                                                     <br>(?: <br>    pd[_-]? &#124;<br>    pagerduty[_-]? &#124;<br>    pagerduty<br>)<br>\W{0,20}<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?         <br>\b            <br>(                                                          <br>  u\+[A-Z0-9_+-]{18}         &#124;  # personal user token (20 chars)<br>  [A-Z0-9_-]{20}             &#124;  # legacy PAT (20 chars, mixed case)<br>  [a-f0-9]{32}                  # integration / routing key (32 hex, lower case)<br>)<br>\b<br></code> |
+| `kingfisher.pandadoc.1` | Active | `pandadocS\r\n\nyXB\nM\n9\r\n\nO\r\ry\r\nAF\nz\rr\r4u70\rxgfU0HC4eZfnbirvzFAyUM2BNEnokYff18DwVl1B` | <code>(?x)<br>\b<br>(?i:pandadoc)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.pangea.1` | Active | `pts_vcra7fltg1ur9n52ymdgd4zif4bcilz3` | `(?x)
 \b
 (
   pts_[a-z0-9]{20,60}
 )
 \b
 ` |
-| `kingfisher.particleio.1` | Active | `https://api.particle.io/v1/H\nNIGHZT59"9D\\\tWOE\\I2O34\tDJNT_VTaccess_token=E6KL3C2RNGDSDF3ULMOD2BTLJ1TIQQAKG4QODDBD` | <code>(?xi)<br>https://api\.particle\.io/v1/[A-Z0-9_\-\s/"\\?]*<br>(?:access_token=&#124;Authorization:\s*Bearer\s*)<br>(<br>  [A-Z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.particleio.2` | Active | `Authorization:\t \r\x0b \x0c\n \x0c\n\t\n\t\x0b\x0c\x0b\t\x0b \x0c   \n\x0c\x0c\n\r\x0b\r\x0b\rBearer\n\x0c \n  \t\t\t\t\n\r\t \t\n\n\n\n\n\x0c\n \x0b\x0c  \n \r\x0c\tA1L75MXD9W9N0RAFG6GQDHJWZJNSMJIOV9IMBIUX \x0b\x0c\x0b\n"\x0c\n\t"\x0c\r\\\x0c\x0b \\\x0b" \n \t \r\n\t\x0b\x0c\\"\x0chttps://api.particle.io/v1` | <code>(?xi)<br>(?:access_token=&#124;Authorization:\s*Bearer\s*)<br>([A-Z0-9]{40})<br>\b<br>[\s"\\]*https://api\.particle\.io/v1<br></code> |
-| `kingfisher.pastebin.1` | Active | `pastebinKEYCOCAIIZ0VCU9LGT46BXACUL2LVZEBO99` | <code>(?xi)<br>\b<br>pastebin<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_]{32}<br>)<br>\b<br></code> |
-| `kingfisher.paypal.2` | Active | `paypalACCESSWH8V29HDIJEVL118-5AZ84X6GQJ0JAY5DGP395PXNKRQ5ZRU3MIW3Q4X_Y5Z_GHYKDO4XZF5Z-7U4L` | <code>(?xi)<br>paypal<br>(?:.&#124;[\n\r]){0,16}?              <br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?             <br>\b<br>(<br>  [A-Z0-9_.-]{78,120}        <br>)<br>\b<br></code> |
-| `kingfisher.paystack.1` | Active | `sk_hjyhxvybulqidinlbnwnvfdpbwfvmmpz_ITXGXEX8KAPPVH5NWZFZF4DEBUMUP16NZFS2IHWM` | `(?xi)
+| `kingfisher.particleio.1` | Active | `https://api.particle.io/v1/K"WHM\tD2Y\t \x0cM\nESSZHSJ39R?\tJ4?RY4Authorization: \t\x0c\n\t \r\r\r\x0c\n\r\r\x0c\x0c\x0b\x0b\r\r\x0c\x0b\x0c \x0c\t\r\n   \r Bearer\t\n\x0c\n \x0c \r\t\n\n\t\x0b  \x0b\x0b\r\t\t\r\x0b\t\r\n\n\t\x0c \n\n\tZNCQ584J2CHVV5VZMEN7XGROQWSQ3K621TNVFAIP` | <code>(?xi)<br>https://api\.particle\.io/v1/[A-Z0-9_\-\s/"\\?]*<br>(?:access_token=&#124;Authorization:\s*Bearer\s*)<br>(<br>  [A-Z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.particleio.2` | Active | `Authorization:\x0b\n\t\r\n \t\r\t\x0b\n \n\r\x0c\t\r  \x0c\n\n\r\r\x0b\x0b\x0b\n\x0c \n Bearer\x0c\x0b\x0c\t\n\n \r\n \t\t\r\r\n\n\x0b \t\x0b\x0c\x0b\n\t \x0c\x0c\x0c\n\r\n\x0bVHZI0EI9NZRFCS5VNAK6UXAMJG5HIDHXT8K04PFE \t\n\n\x0c\r \x0b"\n\t\r\\\\\t\r \x0b"\r\x0c \n\x0b\r\t\x0c\n\\\x0c\x0b\\https://api.particle.io/v1` | <code>(?xi)<br>(?:access_token=&#124;Authorization:\s*Bearer\s*)<br>([A-Z0-9]{40})<br>\b<br>[\s"\\]*https://api\.particle\.io/v1<br></code> |
+| `kingfisher.pastebin.1` | Active | `pastebin8\nC6\r\n\r\r\r\n\n\nt7NiF\r\nA\r\n\nf35\rV\r\ryDTOKEN\r\rmq8rfZ\n\nG\r\rR\r\r7T\rl\n\nH4na\r\nN\r\n\r1PAKIR3OO8PT9OK09_Z6RUWU57B0C0_V` | <code>(?xi)<br>\b<br>pastebin<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9_]{32}<br>)<br>\b<br></code> |
+| `kingfisher.paypal.2` | Active | `paypal\nx\r\nbi\nU\r\r\n\rq\r\r\nTOKENCU\nrsU\rt\n\nh\n\r7lT\r\n\r9\r\r\n\nxs\rY\rV\n\r2B7UR_AG79RK-9B5J79J-B62O87VAXTLG2Y9D51MRD9HEQ_I2BLG5RTMUFHWWX5L98IAFO_XJ48ZB.` | <code>(?xi)<br>paypal<br>(?:.&#124;[\n\r]){0,16}?              <br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?             <br>\b<br>(<br>  [A-Z0-9_.-]{78,120}        <br>)<br>\b<br></code> |
+| `kingfisher.paystack.1` | Active | `sk_fzhlqzefrlkltlixuhjlsfcaiwmutjsn_S1X4UR9IKQ0OUROXUKB3FOIVNTZSVCS1632TDGK0` | `(?xi)
 \b
 (
   sk_
@@ -1635,43 +1635,43 @@ oracle://
 )
 \b
 ` |
-| `kingfisher.pdflayer.1` | Active | `api.pdflayer.com/api/convert?olBcEgxCnTVu1QQgenXa75zbHyE5pCTmaccess_key\x0c \x0c\x0c\n\t \r\x0c\x0c \x0c\n\r \r\x0c\n\x0c\x0b \t\n\t \x0c \x0c\r\x0b \t=\r \x0b \r\n \n\r\t  \r\r\x0b\n\x0c\t \n  \x0c\x0c\t\x0c\t\r\x0b \n\x0bt60nx4w9hq6hrcd5l1xmr6q39mrl02vi` | <code>(?xi)<br>(?:<br>  \b<br>  pdflayer<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>  (?:.&#124;[\n\r]){0,32}?<br>  &#124;<br>  \bapi\.pdflayer\.com/api/convert\?[^ \t\r\n"'&lt;&gt;]*\baccess_key\s*=\s*<br>)<br>\b<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.pem.1` | Active | `-----BEGIN DlUVSBEDuQuNhr1k7tlc PRIVATE KEY 66vw48O9pi4CuRaelzWN-----\t \t \t \n\x0b\x0b\x0b\n\x0c\r\x0b\r\x0b\x0b\t\x0c \n \n\x0c\r\r \n \t\n\n\\r\\r\\rl\\r\\n\\n\\r\\n\\r\\r\\r\x0c\\n\r2W\\r\\n\\n\\n\\n\\r\\rgT\\rS\\r\\r\\r\\n\\rG\\r\\roUr\\rh\\nf\\n\\n\\rlP\\r\\r\n\n \t\x0b\x0c\r\x0b \n \r\x0b\x0c\x0c\n\r\r\r\x0b\n\x0b   \r\n\r\x0b   -----END 9ZdcNt3ijfE0t9FiSJEZ PRIVATE KEY HPgewRYxeMTF4Ooyo7Js-----` | <code>(?x)<br>-----BEGIN\ .{0,20}\ ?PRIVATE\ KEY\ ?.{0,20}-----<br>\s*<br>( (?: [a-zA-Z0-9+/=\s"',] &#124; \\r &#124; \\n ) {50,} )<br>\s*<br>-----END\ .{0,20}\ ?PRIVATE\ KEY\ ?.{0,20}-----<br></code> |
-| `kingfisher.pendo.1` | Active | `pendoTOKEN7kpx0hi30TqZOLf3EkTvIFQ1jeOWGpCg` | <code>(?xi)<br>\b<br>pendo<br>(?:.&#124;[\n\r]){0,32}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;INTEGRATION)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32,64}<br>)<br>\b<br></code> |
-| `kingfisher.pepipost.1` | Active | `pepipostACCESS4659530c4ac019e45a2f86f69ac96362` | <code>(?xi)<br>\b<br>pepipost<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.permitio.1` | Active | `permit_key_RO01Hq2wXzfCqA54PhDU4ci9DQjn0ei2aJuYnsZU8WDkbmWczyIyuvJ8nTNpAHeMDTJGFgHmDiXe7CAkzuvTA` | `(?x)
+| `kingfisher.pdflayer.1` | Active | `api.pdflayer.com/api/convert?:2=K:==F=552cS:SoN:=x:=n:=YIb3E9access_key\r\r\r\x0c\t\t\t\n    \r\x0b\r\r\r\n\x0b\r\t\x0b\t\r\x0c\x0b\t\r\r \x0b\x0c=\x0b\t\r\r \r\n\x0b\n\x0b\t\t\x0b\r\r\t\t\n\x0c\x0c\r\x0b\t\t\x0c\x0b\t\x0c\x0b\t \x0bryz0mafp8oj0mthhf7iwpc9ufcj03avz` | <code>(?xi)<br>(?:<br>  \b<br>  pdflayer<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>  (?:.&#124;[\n\r]){0,32}?<br>  &#124;<br>  \bapi\.pdflayer\.com/api/convert\?[^ \t\r\n"'&lt;&gt;]*\baccess_key\s*=\s*<br>)<br>\b<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.pem.1` | Active | `-----BEGIN Qnvbx34FDfjzq5c5Pupa PRIVATE KEY wdr3fhRICl4webpeyahF-----\n\x0c\r\r  \x0c\t\x0c\t\x0b\n\r \n\r\x0b  \t  \r \n\x0c\r\x0b\n\r\x0c\x0b6\\n\\r\\r\\n\\rH4\\n\\r\\n\\n\tT\\n\\n\\r\\r2\\r\\n\\r\\n,\\nHI\\r\\n\\r\\r0\\r\\r\\r\\rru\\rf\\n,W\\n62nu\\n\\r\x0b\x0b\x0b\r\x0b\x0c\r\x0c\t\t \r\t\x0b\x0b\x0b\r\x0b\r\n\x0c\r\x0b\r  \n   \x0c\x0c-----END e49sMgnBrAl5YIvoVPp7 PRIVATE KEY sIr5HgsXVV1oNicG20HE-----` | <code>(?x)<br>-----BEGIN\ .{0,20}\ ?PRIVATE\ KEY\ ?.{0,20}-----<br>\s*<br>( (?: [a-zA-Z0-9+/=\s"',] &#124; \\r &#124; \\n ) {50,} )<br>\s*<br>-----END\ .{0,20}\ ?PRIVATE\ KEY\ ?.{0,20}-----<br></code> |
+| `kingfisher.pendo.1` | Active | `pendo\n\rnn\r\rUVN\n\rZM7\nq\n\r\n\nio\rN\r\nmWs8I\nINTEGRATION\nBB\rnHo\rW\nN\n\n\nel0hYilGn7tuhTXB5uSGY4qRiYbAxasm6r` | <code>(?xi)<br>\b<br>pendo<br>(?:.&#124;[\n\r]){0,32}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;INTEGRATION)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32,64}<br>)<br>\b<br></code> |
+| `kingfisher.pepipost.1` | Active | `pepipost6\r1YVl\r\n\nu\r\rv\n\rR\r\rV\n\r\n\nav\rV2\rQ\n\rAPI\rT\r\n\r\r\r\r\nh\rS\r\rc5\r\n3\rIfFcB\rl4yi1\r897f6a430c1b92513b3a9b74aea9ceb6` | <code>(?xi)<br>\b<br>pepipost<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.permitio.1` | Active | `permit_key_gMdtpj5GqFEMI1DvjH4rSbsYJ6jNNGQk9DjHaF7v8FPWZu8BglRk1mLfvXtkVZywNLET8eAOFP5itZg5hHWYu` | `(?x)
 \b
 (
   permit_key_[0-9A-Za-z]{85,86}
 )
 \b
 ` |
-| `kingfisher.persona.1` | Active | `persona_production_kdp33744dflouig0amqlr4ou4hwrmvax` | <code>(?x)<br>\b<br>(<br>  persona_(?:production&#124;sandbox)_[a-z0-9_-]{20,80}<br>)<br>\b<br></code> |
-| `kingfisher.phpmailer.1` | Active | <code>$mail-&gt;Host\x0b \x0c \x0c\r\r\r\x0b\t\t\t\n\n\t\t \t\t\n\x0c\t\r\t\x0c\t\n\x0c \x0b\r\t= \r\n \t\x0b\x0b\x0b \x0c\r\x0b\t\t\n\x0b\r\x0b\x0c\x0c\t \x0c\x0c\x0b\x0b\n\x0b\x0b\t\t 'Uz4RZBduFY1JSTxPifJPzGRytHd3nCTs';\x0c\t \n \n \x0b \n\n\t\r\t\r\t\x0c\x0c\x0b \n\r\n\x0c\n\x0b\x0b\x0c \x0b\r //2LhjyuMJPQdVJ2ghjRB30dn5dVBW9gOG\t\t \r\x0c \x0c\t\x0b\n\r\x0b \n\n\r\r\n\x0b\x0b \n \n\t \r\n\n\x0c\t ZsbgqQDvrEaZqGLkQopDi8PnBEA0xlYm\r\x0c\x0b\t\x0c\x0c\x0b\x0c  \n\n  \r\r \r \x0b\x0b\x0c\t\x0c\r\r\x0b\r\x0c\t\n \x0c\x0b\x0c\n\r\x0b\r\x0b\x0c\x0c \n\x0b\x0b\n\t\r\x0c \t\r\r\n\x0c \r\x0b\t \x0b\r R8K70G92wMJcQlemYBFKQR5fwGDGCWCQ\x0c\x0c \t\x0b\t\r\x0c\n\r\n\x0c\x0b \r\n\r \x0b\x0c\n \t\x0c\t\r\x0c\r\x0c\x0b\x0b\r \r\x0c\r\n\x0c\t  \x0c\x0c\t\x0b  \x0c\x0b\r\r  \t\x0c\t\n\r\t\t \x0b\x0c\x0bKEFMgbb2mk4Rh44yHAoimqrmpxJL7tsj\x0c\x0b\n\r\r\x0c\t\x0c \x0c\r\t\r\n\r\x0c\t \r\x0c \n\x0c\t\x0c\t\x0b \x0b\x0c\r\n$mail-&gt;Username\t\x0b\n\r\x0b\t \x0b\x0c \x0c\x0b\n\n\n\r\x0b\t\x0c\x0c  \n\x0b\n\x0c\r \t\x0b\x0b\x0c= \r\r\x0c\t\t\r\t \r\r\r  \x0c\n\x0b \x0c\t \t\t\r\x0c\x0b\n \r\n \r'jXAQQYQTTOPxgaqJF4vwEBGCRc01uND1';\x0b\n\x0c\r\n\x0c\n\t\x0c  \x0b \x0b\x0c\n\n  \x0b\x0b\x0c \t\r\r\x0c\t\r \x0c\x0c//ufuQLzKr5HVrGEN0BvZ5m7mQrPOzho8Y\r\x0b\t\x0b\t\x0c\t\x0b\t\x0b\r \n \x0c\r\x0c\r\n\n \r\x0b\x0c\x0c \t\n \n\x0b\thJhgMcRvorF3QgjX2qpdteRboPkOfrDQ\r\x0b\n\x0b\x0c\r\n \t\n\t \r   \t\t\n\t\t \r\t\x0c\t\r\n\n\r\x0c\x0b\r\t\x0b\x0b \x0b  \x0c\x0b\x0b \t\x0c\n\t\n\n\r\r\n\n \x0b\r\x0c\x0c\x0b\x0c\x0b\r\tWhapT3OJ0TucS0Xnl6yTP7M7fKWxNEms\x0b\r\x0b\r\x0c\t\n\r\r\x0c\n \x0b\x0c\r\x0c \x0c\n\n  \n\n \n \r\t\x0b\r\x0c\x0c\n\n\r\t\x0c\n \r \n \r\n\x0b\r\n\x0c\r\t\r\t  \r\x0c\r\t\t\r\t\x0ceheUvMuCWF90wiyleFamejio5QaxS6lo\n\x0c\n\x0b\t\x0b\n\r\t\n\x0c \x0c\t\n\x0b\n\x0c\n\t\t\x0b\t  \t\x0c\r\x0c\t\x0c\t$mail-&gt;Password\n\t \x0c\x0b\r\x0c\t\t\x0c\x0b \x0b\x0b\x0c\t\n\x0c\x0b\r\r\r\r\n \x0b\t  \t\x0b\t=\r\r\n \x0b \x0c\x0b\x0c \r\t\n \x0c\t\n \r\n\n\n\x0c\x0b\t\n\t\n \r\t\t'VNrrFoOfwfRgfhprvrXyWwITIsjr3feA';</code> | <code>(?x)<br>\$mail-&gt;Host     \s* = \s* '([^'\n]{5,})'; \s* (?: //.* )?<br>(?: \s* .* \s* ){0,3}<br>\$mail-&gt;Username \s* = \s* '([^'\n]{5,})'; \s* (?: //.* )?<br>(?: \s* .* \s* ){0,3}<br>\$mail-&gt;Password \s* = \s* '([^'\n]{5,})';<br></code> |
-| `kingfisher.pinata.2` | Active | `pinata\x0b\t\r\t\x0b\n\r\x0c \r \x0c\x0b\n\t\n\t\t\t\x0b\x0c\n\t\n\n\r\x0c\x0b\n\x0b\r\rAPI\t \r\x0b\x0b\t \t\t\x0c\x0b\t \x0c\x0c\n\r\r\x0b\x0b \t\n\x0b\n\t\t\n\x0b\t\x0c\nSecret\n\x0b\r\t\x0b\n\r\x0c\r\r\n\n\x0b \t\r\t\r\n\x0c\x0b\n\r\n\x0b\n\r\t\x0c \x0c =\r \t\x0b\t\x0b\n\n\r\x0b\n\x0b \t \n\t\x0c\t\n\n\x0c\x0c \n\t\n\x0b\x0b\t\x0b\x0cb18f108b792161d42ab715bc51dc9102cb3babcf67aa220f5004a3d5d0715d9e` | <code>(?x)<br>(?:<br>  (?i:pinata)\s+API\s+Secret<br>  &#124;<br>  PINATA_API_SECRET<br>  &#124;<br>  API\s+Secret<br>)<br>\s*[:=]\s*<br>(<br>  [0-9a-f]{64}<br>)<br></code> |
-| `kingfisher.pinata.3` | Active | `pinataewogICLIrEl_vmILyMWB7YUpoM3I-8ZZi7uc90.eyEMXxM4LMeEYPTRLufkHLp6WPWZ3m9mek.JrXIIvdGHSD-5pUpWlJ0PLD3E-NcwlEnA` | <code>(?x)<br>(?i:pinata)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:ey&#124;ewogIC)[A-Za-z0-9_-]{12,512}<br>  \.<br>  ey[A-Za-z0-9_-]{0,512}<br>  \.<br>  [A-Za-z0-9_-]{24,512}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
-| `kingfisher.pinecone.1` | Active | `pineconeTOKENEBaacc1A-1f6B-485D-AAd0-7eDE01EBE92C` | <code>(?xi)<br>\b<br>pinecone<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}<br>)<br>\b<br></code> |
-| `kingfisher.pingdom.1` | Active | `pingdomSECRETSJ9dKO_Ab4ThVjZV05DjfhD69kycDJukZMvN_0OeV-4J60OfvLbUVnDS7e9wZBnT` | <code>(?xi)<br>\b<br>pingdom<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{64}<br>)<br>\b<br></code> |
-| `kingfisher.pingidentity.2` | Active | `pingoneclient-secret\x0b"'"''""'''"""'"'"''""'"""""'"'''yZs6XRBBEPvX2mnjnC3yljMcagbPVJ7H\x0c` | <code>(?xi)<br>\b<br>ping(?:one&#124;identity)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9.~_-]{28,48}<br>)<br>['"\s]<br></code> |
-| `kingfisher.pinterest.1` | Active | `pina_e0YHX9Kjm_0ZFZ4aMFrWZf0xSMTc7LX4` | `(?x)
+| `kingfisher.persona.1` | Active | `persona_production_ahq6jqd838wonhcgts2ec4bsyijqxba2` | <code>(?x)<br>\b<br>(<br>  persona_(?:production&#124;sandbox)_[a-z0-9_-]{20,80}<br>)<br>\b<br></code> |
+| `kingfisher.phpmailer.1` | Active | <code>$mail-&gt;Host\n\n\x0c\t\x0b\x0c\x0b\x0c\x0b\n\n\t\t\x0c\x0c\t\n \x0c\r \x0b\n\x0b\t\x0c \r\r\r\r\t=\n\n\r\x0b\t\r\r\x0b\x0b\t\x0c\r\x0b\n\x0c\r\x0b\t\x0c\x0b\t\r\r\x0c\x0b\t  \x0b \x0b\x0c'LtHJ=Vk_\t17I=3"\t\tJk:SrwWMjL "r" ';\n   \x0c\r\n \r\n\t\n\x0c\x0b\n\x0b\x0b\t\t \t\t\x0b\x0b\t\n\n \x0c\t\t\x0c//Niq934OTQEbL8Bb9qsCaOS1xQCWkXUXX\x0c\x0b\r\r\t\x0c \t\x0c\x0b\t\n\t\n\r\x0c  \t\t\n\x0c\x0b\x0b\x0b \n  \r \tesfAihkyfcBRTpFMpJEIHfpuu9FJE1ym \r\x0b\n\r\n\x0b\x0c\r\n\x0c \t\r\x0c \r\x0b\x0c\r\n\x0b\x0c\r\x0b\x0c\r\n \x0b\r\n\x0c\x0b\x0b\r\n\n\r\r \t\r\x0b\r\x0c\r  \t \n \n\x0c\r\n\t\x0c\t\r\n\t\r9xBezt3Kc92ZuafmMXNlSqJPoUx9BUSE\n\t\x0c\x0b\r \n\x0c\n\x0b\x0c\x0b\t\n\x0b\x0c\x0c\t\x0c\t\n\r\n\x0c\n\x0c\x0c\r  \x0c\x0c\r\x0b \x0c \x0b\n \n \x0c\t\x0c\n\n\x0c \r\x0c\x0b\x0b\t\r\t\x0b\n\r\x0b\r\x0c\r\x0cZ07Xunkek2ytqXVAWq3iWOPQCOnZj174\x0c\t\r\t\n\x0c\x0c\x0b\n\t\n\x0c\t\n\r\x0c\t\x0b\x0b\x0b\x0c\x0c\t\r\x0c \r\t\n \n\r$mail-&gt;Username\n \t\x0c\n\r\r\t\n\n\n\n \n\x0b\x0b \x0b\x0b\x0b \n\x0b\n\x0c\x0b\n\x0c  \r\x0c=\n\x0c\n\x0b\x0c\x0b\n\r\n\t\r\t \x0c\t\n\r\x0c\t\x0b\r\n\t\t\x0b \x0c\r \n\x0c\t' =" : \t7 "\t"==k"Q="hY:OpA:5c""v"';\r\r\x0c\t\x0c\t\x0b\x0b\n\x0c\r\x0b \r\t\r\r\r \x0b\t \x0c\t\t\x0b\r \x0c\t\x0c\n//XVmCMiYPL1jbBNTF9Jh1OADs9gUEcxxm\r\x0b\t\x0b\n\r\x0c\t\t\x0b\x0c\t\t\x0b\r\r\t \x0b\t\n\n\x0b\t\r\x0c\n\n\x0b\x0c\x0b\x0cJ8gPZ0NsHkz8l7bJVSbU5TDcl0A0WHT0\t \t\t\x0c\t \t\n\r\t\x0b\t\x0b\x0b\x0c\x0b\n\x0c\r\r\r\x0b \t\t\n\r  \r\t\n\t\r\t\r\r\t \x0b\r\x0b\x0c\n\t\t\r\r\r \x0b \x0b\x0b\r\x0c \r\x0b\x0c\r\x0b\nC6LVnkb41QuYNnOYy9zechz4bQFGvGSx \n\r\t\r\t\x0c\n\x0b\x0b\n\r\x0b\x0b\x0b\x0b\r\r\x0b \t\r\x0c\x0b\x0b\n\t\x0c\x0c\n\x0b\r\x0b\t\x0c\n\x0b\n\n\x0c\x0b\x0b\r\r\x0b\n\t \r\r\t\t\x0b\r\x0c\x0c\x0b\t\n\n\x0b\t\t\x0bWRf5QkBj8l8gXxWufEng5mVAAHZ91Bvz\t\t\x0b\t \r\x0c\r\n\n \n \r\x0b\t\x0c\x0c\x0b\t\n \x0c\x0b\r\x0c\r\x0c\r\t\t\n$mail-&gt;Password\x0c\r\n\r\n\n\x0c\x0c\r \t\x0c \x0b\x0b\r\x0c\t\x0b\n\x0c \x0b\t \n\x0c\x0b\r\r\x0b = \n\x0b\r\x0c\n\t \x0c\t\x0c\x0c\x0c \n\n\t  \x0b\x0c\n\t\x0b \x0b\t\t \x0b\r\r'=n==2M"V"o\t8  =t=:c  "X:7RG" ""G';</code> | <code>(?x)<br>\$mail-&gt;Host     \s* = \s* '([^'\n]{5,})'; \s* (?: //.* )?<br>(?: \s* .* \s* ){0,3}<br>\$mail-&gt;Username \s* = \s* '([^'\n]{5,})'; \s* (?: //.* )?<br>(?: \s* .* \s* ){0,3}<br>\$mail-&gt;Password \s* = \s* '([^'\n]{5,})';<br></code> |
+| `kingfisher.pinata.2` | Active | `API\x0b \r\x0c\t  \r\x0b\x0b\x0b\t\n\x0b\x0c\r\t\x0b\x0c \x0c\t\n\t\x0c\x0c\n\x0c\t\t\x0c\tSecret \x0b  \n\x0b\x0c\r\x0b  \x0c\t\x0b\x0c\t\r\r\t \x0b\x0b\t\n\x0c\x0c\n\t\r\t\t\x0c:\x0c \x0b\t \n\r\x0c\x0c\x0c\n\r\t\t\r\t\n\r\t\t\x0c\x0b  \r\n\x0b\n\t\n \x0b361574ebc4dc7e2c6f871c521164e1e2a33cbba6f7ee9f0b12e621a6698373b7` | <code>(?x)<br>(?:<br>  (?i:pinata)\s+API\s+Secret<br>  &#124;<br>  PINATA_API_SECRET<br>  &#124;<br>  API\s+Secret<br>)<br>\s*[:=]\s*<br>(<br>  [0-9a-f]{64}<br>)<br></code> |
+| `kingfisher.pinata.3` | Active | `pinatat\n\n\n\n\nP\rhVR\nye\rN\r\nO\n\rF\rnwh\rnxRq4ewogICJPTfJZ6t4WoIc1XI9h3BVvBRmKh5GLNh.eyHUIfA4YuGZIQRNyjEiwqz8A8cx74Dz_P.vADP86REzCegn8zL8DIVQ8umDeOu83cz` | <code>(?x)<br>(?i:pinata)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:ey&#124;ewogIC)[A-Za-z0-9_-]{12,512}<br>  \.<br>  ey[A-Za-z0-9_-]{0,512}<br>  \.<br>  [A-Za-z0-9_-]{24,512}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
+| `kingfisher.pinecone.1` | Active | `pinecone\n\rfHvhA4f\n\ruQY\nK\r\r\rT\nk\nO\n\rs\n\ngNDTOKENGGtSVk7D1\n\nWb\r\nf83468F5D-1db3-72Bd-EbDA-a0C80DaCCC2B` | <code>(?xi)<br>\b<br>pinecone<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}<br>)<br>\b<br></code> |
+| `kingfisher.pingdom.1` | Active | `pingdom\nH\n\n87Cy7\rS\ndXxnACCESS\n\n\ra\n\nA\r\r\rt\r7c\n\nK-5ecqTNNSyhCwmkAZMvp8jdQsTaFlWcrc0NIbgTY7KnZHLYcecX5-IkVjf9oDLx` | <code>(?xi)<br>\b<br>pingdom<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{64}<br>)<br>\b<br></code> |
+| `kingfisher.pingidentity.2` | Active | `pingidentitye\rOPMD\n\nU\res\nDT\rT\n\r\rW3\r\r\ry\n\nS\r\n\nclient-secret\r3Z\r\n\n5WYLkm\r1W\r\t'"""''""""""""'""'"''"'"""""""''-Hz3OKQ3Vm4BLjfRgTc8clJgRJJcj8Dj"` | <code>(?xi)<br>\b<br>ping(?:one&#124;identity)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9.~_-]{28,48}<br>)<br>['"\s]<br></code> |
+| `kingfisher.pinterest.1` | Active | `pina_De6UlAq-b6v_P--DQbuHlrYYsYyCANFP` | `(?x)
 \b
 (
   pina_[a-zA-Z0-9_-]{20,200}
 )
 \b
 ` |
-| `kingfisher.pinterest.2` | Active | `pinr_uc6Wdh134CzVfUs7YrmQcDdzz08TtPuC` | `(?x)
+| `kingfisher.pinterest.2` | Active | `pinr_0k9boSmc0xLFA8zageQ33kuqfbryagcR` | `(?x)
 \b
 (
   pinr_[a-zA-Z0-9._-]{20,500}
 )
 \b
 ` |
-| `kingfisher.pipedrive.1` | Active | `pipedrivex-api-tokenaba9d27828c0777795e81fdec23afaaaf2bc1040` | <code>(?xi)<br>\b<br>(?:<br>  pipedrive<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:api[_-]?token&#124;x-api-token&#124;token&#124;authorization&#124;key)<br>  &#124;<br>  x-api-token<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.pirsch.1` | Active | `pirschCLIENTpa_d7f2Cgq7E151wQTnpz7HG84Xg7srXF6u` | <code>(?xi)<br>pirsch<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;ACCESS&#124;KEY&#124;TOKEN&#124;CLIENT)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  pa_[A-Za-z0-9]{24,44}<br>)<br>\b<br></code> |
-| `kingfisher.plaid.2` | Active | `plaidACCESScfxwbimwmn73bcwp9qf77jh261sk7a` | <code>(?xi)<br>\b<br>plaid<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{30}<br>)<br>\b<br></code> |
-| `kingfisher.plaid.3` | Active | `plaidACCESS_KEYv3y4xvu5tfsxc7ly211muk78hr3tdm` | <code>(?xi)<br>\b<br>plaid<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{30}<br>)<br>\b<br></code> |
-| `kingfisher.plaid.4` | Active | `access-production-0a4e4360-15d4-5a11-0b8c-be50bd9a73fc` | `(?xi)
+| `kingfisher.pipedrive.1` | Active | `x-api-token\r\n\nUn\r\n\n\nYl\r\n\n\n\r7f5ad21599a678af3a005dadeddb50ea32975347` | <code>(?xi)<br>\b<br>(?:<br>  pipedrive<br>  (?:.&#124;[\n\r]){0,32}?<br>  (?:api[_-]?token&#124;x-api-token&#124;token&#124;authorization&#124;key)<br>  &#124;<br>  x-api-token<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.pirsch.1` | Active | `pirschIlhk\ni\r\ny\r\r\n7\nk\njVi\rl\r\nJxyMs\r\n0ESECRETn\r\r\n6a\r7uYZ\r\n\r\r\npa_9vC0PV6TcAt4nIq44Zj9fQ9ISlvGPQnt` | <code>(?xi)<br>pirsch<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;ACCESS&#124;KEY&#124;TOKEN&#124;CLIENT)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  pa_[A-Za-z0-9]{24,44}<br>)<br>\b<br></code> |
+| `kingfisher.plaid.2` | Active | `plaid2\n\r9i\r\ni\n\r\rZ\r\r\n\n9\nl\nj4p\n7\n\rY\n\nnzACCESS_KEY\r\nzOL\r\rh0A\r\r91\r5\nS\nQ\r\n\r\rRLU\r\nve\naeioyopva7bxd1d5mzeow7kvljp2ow` | <code>(?xi)<br>\b<br>plaid<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{30}<br>)<br>\b<br></code> |
+| `kingfisher.plaid.3` | Active | `plaid70P\n\rMW\n\r\n\r\nf\rNuNz\r1XN\r\r\n\r3\n\r\r\nrACCESS_KEY\nLKm\r0WRAPAaw\r\nPf\n\r\r\rMP\n\nt\r\nl\n\r69wmt90dc6p86vfo5ydsczmu8wdwymn` | <code>(?xi)<br>\b<br>plaid<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;ACCESS_KEY)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{30}<br>)<br>\b<br></code> |
+| `kingfisher.plaid.4` | Active | `access-production-d96ebd88-db07-2a86-de5b-1dd77745bc8a` | `(?xi)
 \b
 (
   access-production-
@@ -1683,7 +1683,7 @@ oracle://
 )
 \b
 ` |
-| `kingfisher.plaid.5` | Active | `access-sandbox-3c6a758a-6d82-4e28-23e5-e79ed5c31c6d` | `(?xi)
+| `kingfisher.plaid.5` | Active | `access-sandbox-b8d5b19b-cc57-350d-a3ab-ced1af764fe6` | `(?xi)
 \b
 (
   access-sandbox-
@@ -1695,67 +1695,67 @@ oracle://
 )
 \b
 ` |
-| `kingfisher.planetscale.1` | Active | `pscale_tkn_-162elsm0o4yejmtjj_ufar_tc4m4_ke` | `(?xi)
+| `kingfisher.planetscale.1` | Active | `pscale_tkn_z4dstm8tkik1by7ophwy6_-e3gwh7xkn` | `(?xi)
 \b
 (
   pscale_tkn_[a-z0-9-_]{32,64}
 )
 \b
 ` |
-| `kingfisher.plivo.2` | Active | `plivotoken\tGj9WUULi2PnXQ92ok4+RoNPiRlF778TUjLSxO0==` | <code>(?xi)<br>\b<br>plivo<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:auth[_-]?token&#124;token)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9+/]{38,42}[=]{0,2}<br>)<br>\b<br></code> |
-| `kingfisher.polar.1` | Active | `polar_at_bCN7-Db1n50dHoF6fsvaSIKu24x2HLWk` | <code>(?x)<br>\b<br>(<br>  polar_(?:at&#124;oat&#124;rt)_[a-zA-Z0-9_-]{20,100}<br>)<br>\b<br></code> |
-| `kingfisher.pollinations.1` | Active | `plln_sk_eP1xwAQR6viB7Q1WIkKdOtaF5nfUVf2S` | `(?x)
+| `kingfisher.plivo.2` | Active | `plivo\r\rN\ro\n\n\nPEb4\r\rAQO\nkV\r\rT\r\rG\nwc\n\r\nauth_token\n\n\n9\nG\nJ\nJ\nO\n\nk\n'z1zdMSRWs7alcNWM3rJvEt0y24ztl5nvYruQIQ==` | <code>(?xi)<br>\b<br>plivo<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:auth[_-]?token&#124;token)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9+/]{38,42}[=]{0,2}<br>)<br>\b<br></code> |
+| `kingfisher.polar.1` | Active | `polar_oat_0K4dVd-2jvAXpf0eSFkMGggmXPwgYmn4` | <code>(?x)<br>\b<br>(<br>  polar_(?:at&#124;oat&#124;rt)_[a-zA-Z0-9_-]{20,100}<br>)<br>\b<br></code> |
+| `kingfisher.pollinations.1` | Active | `plln_sk_bZfBcdSt8A9maFI7xWE4jxiv2pvXd3mw` | `(?x)
 \b
 (
   plln_sk_[a-zA-Z0-9]{24,48}
 )
 \b
 ` |
-| `kingfisher.pollinations.2` | Active | `plln_pk_vid3uJ604z9K9SQGaA4cf9uCfqLbo2PO` | `(?x)
+| `kingfisher.pollinations.2` | Active | `plln_pk_CwYE9XdgegY78NaeHzJkCPspP9nAoxrl` | `(?x)
 \b
 (
   plln_pk_[a-zA-Z0-9]{24,48}
 )
 \b
 ` |
-| `kingfisher.polymarket.3` | Active | `polymarketbuilderkeydba25470-9fa3-137f-8a6e-3434dd9273ed` | <code>(?xi)<br>\b<br>poly(?:market)?<br>(?:.&#124;[\n\r]){0,32}?<br>(?:builder&#124;api)?<br>(?:.&#124;[\n\r]){0,16}?<br>key<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.portainer.1` | Active | `ptr_/O8H7+Zjeq7p0Q8muXO2z=8ddYEp8sFW` | `(?x)
+| `kingfisher.polymarket.3` | Active | `polymarketq9F\n\nJky\rvKH\r\n\nr\nu\naqL\n\nQ\r\r\rH6O\napi\r\r\nX\nZI\n\r\rWZl\r\nYkey6\r\n\r\r\nn\n8\nzdf597d149-1ac7-4a03-dc24-892703c75671` | <code>(?xi)<br>\b<br>poly(?:market)?<br>(?:.&#124;[\n\r]){0,32}?<br>(?:builder&#124;api)?<br>(?:.&#124;[\n\r]){0,16}?<br>key<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.portainer.1` | Active | `ptr_1ZhLZNHig7wgALrPDAbsiH6NzW_92BQz` | `(?x)
 \b
 (
   ptr_[A-Za-z0-9/+_=-]{32,52}
 )
 \b
 ` |
-| `kingfisher.positionstack.1` | Active | `positionstackTOKENr2zzURFaNfSTqkazQ1ZUdVQYRF8ViGFz` | <code>(?xi)<br>\b<br>positionstack<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.postgres.1` | Active | `postgresql://AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:YT7m5dGq7tx9ODQp74ONQtIvroMGp1BF@wx6WGHuV4MlZ3A4mXpKUtO8mpKcT3XkT:56329737583398332719456413291614` | <code>(?xi)<br>(?:<br>  postgres<br>  (?:ql)?<br>  &#124; postgis<br>)<br>:\/\/<br>(?:<br>  [\w]+<br>)<br>:<br>(?:<br>  [^\@]+<br>)<br>@<br>(?:<br>  [^:\/]+<br>)<br>:<br>(?:<br>  \d+<br>)<br></code> |
-| `kingfisher.posthog.2` | Active | `phx_dWKLUpq7Hes14Q3xGin58Av23aTuX4cAVAGeqdlSmbE1` | `(?x)
+| `kingfisher.positionstack.1` | Active | `positionstack\rKe\rkXDR\n\rO02\nZ\nTOKENfC\n9tu\n\nnrN\n\n\r\r3r1PFP6LDn6CbrndHgmTynr2XSb7tMK3V` | <code>(?xi)<br>\b<br>positionstack<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.postgres.1` | Active | `postgis://AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:RkibU9Awd3G2w4OE9zbxvjS27f8VxF6F@Q"z9'\tj"' \tWm =o 'c\t===Di"Sw'XWk:24780513307959317925869916409395` | <code>(?xi)<br>(?:<br>  postgres<br>  (?:ql)?<br>  &#124; postgis<br>)<br>:\/\/<br>(?:<br>  [\w]+<br>)<br>:<br>(?:<br>  [^\@]+<br>)<br>@<br>(?:<br>  [^:\/]+<br>)<br>:<br>(?:<br>  \d+<br>)<br></code> |
+| `kingfisher.posthog.2` | Active | `phx_eL9gBn79vzZSveW62ULWJ0EbTVtSQSHvXX0A3c2ahTx1` | `(?x)
 (
   phx_[A-Za-z0-9]{44,48}
 )
 ` |
-| `kingfisher.posthog.3` | Active | `phs_40vO0jD1PptzJjPcZuWQ3X8R7fF0dw113OPgQdy8USVS` | `(?x)
+| `kingfisher.posthog.3` | Active | `phs_u0o8QBgOcmOIgHhtLXHoUy8rn3z62AOVYDOKqsO2YTSs` | `(?x)
 (
   phs_[A-Za-z0-9]{44,48}
 )
 ` |
-| `kingfisher.posthog.4` | Active | `pha_uDSWUCmzTGxOB5BS0P9o939nu9aoIXtlgGzpVgru` | `(?x)
+| `kingfisher.posthog.4` | Active | `pha_xawD52tBhJh00kYih4RHzjMjgv1h1tL2wfI8aE8i` | `(?x)
 (
   pha_[A-Za-z0-9]{40,43}
 )
 ` |
-| `kingfisher.posthog.5` | Active | `phr_UUVdIPo7Ufrtivw6euj5dbOGTZGDl8ChSybL6Ttl` | `(?x)
+| `kingfisher.posthog.5` | Active | `phr_kLqIk8kNGrTmfnqNZpRY5Yr1CPICKZRqSL06QejL` | `(?x)
 (
   phr_[A-Za-z0-9]{40,43}
 )
 ` |
-| `kingfisher.postman.1` | Active | `PMAK-WCF9KCRJLMP5IAVQFHH6BITG-TZH785CE8G9JP289QYE47SPUZG1B0ERH98` | `(?xi)
+| `kingfisher.postman.1` | Active | `PMAK-6UAQ2PURAPQOAAWJQ82Q9E5A-8UFYLXJWCXADEFX2H44ZR2ZXR9TLZVPUL7` | `(?xi)
 \b
 (
   PMAK-[A-Z0-9]{24}-[A-Z0-9]{34}
 )
 \b
 ` |
-| `kingfisher.postmark.1` | Active | `postmarkg6l_zm7snwwqqv3f_wn8cnihapwUHlb53c8fbb-9b5d-0ce0-d495-357057ff1629` | `(?xi)
+| `kingfisher.postmark.1` | Active | `postmarkownz52kxh_j6fbj-ku762NtQB8YBEl58f7d075-4949-45ff-cded-5ef58fd1565f` | `(?xi)
 postmark [a-z0-9_-]{0,20}
 .{0,10}
 \b
@@ -1764,8 +1764,8 @@ postmark [a-z0-9_-]{0,20}
 )
 \b
 ` |
-| `kingfisher.privateai.1` | Active | `private-aitokenv7dh35im6k2a2a70wiixcl404e80qvhz` | <code>(?xi)<br>\b<br>(?:<br>  private[_-]?ai<br>&#124;<br>  limina<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?key<br>&#124;<br>  x-api-key<br>&#124;<br>  token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.privkey.1` | Active | `-----BEGIN RSA\tPRIVATE\nKEY\x0cBLOCK-----\nProc-Type:ENCRYPTED\rDEK-INFO\n\r-----END\rRSA\nPRIVATE\nKEY\x0bBLOCK-----` | `(?xi)                   
+| `kingfisher.privateai.1` | Active | `private-ai\r\nZ06\rp\n\n\r\r\nf\n\r\rtk\n\r\nZ\r\r\rvy\n\ni\nOx-api-key\rv\n\n\n\n\n\nVs\r39g7brtqt3n3vzsb6avefsorg119fbm3e` | <code>(?xi)<br>\b<br>(?:<br>  private[_-]?ai<br>&#124;<br>  limina<br>)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  api[_-]?key<br>&#124;<br>  x-api-key<br>&#124;<br>  token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [a-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.privkey.1` | Active | `-----BEGIN\x0bRSA\x0cPRIVATE\x0cKEY\rBLOCK-----\nProc-Type:yS7wDr4aRtc29JLfzQcz6ZWobgsbH5QvENCRYPTED\rDEK-INFOeYOPJiyLCryQuQh8xrD1oiKPrclvJMw6\n\nd\r\rzn7/spy45s5wm9owhu5\\57z\\i+497-----END\x0cRSA\rPRIVATE KEY BLOCK-----` | `(?xi)                   
 (?msi)
 (
   -----BEGIN\s
@@ -1786,93 +1786,93 @@ PRIVATE\sKEY
 (\sBLOCK)?
 -----
 ` |
-| `kingfisher.privkey.2` | Active | `-----BEGIN\rPGP\tPRIVATE\tKEY\nBLOCK----------END\x0bRSA\x0cPRIVATE\rKEY\x0bBLOCK-----` | <code>(?xims)<br>(                       <br>  -----BEGIN\s<br>  (?:<br>    RSA &#124;<br>    PGP &#124;<br>    DSA &#124;<br>    OPENSSH &#124;<br>    ENCRYPTED &#124;<br>    EC<br>  )?<br>  \s{0,1}<br>  PRIVATE\sKEY<br>  (\sBLOCK)?<br>  -----<br>  [a-z0-9 /+=\r\n\\n]{32,}?<br>  -----END\s<br>  (?:<br>    RSA &#124;<br>    PGP &#124;<br>    DSA &#124;<br>    OPENSSH &#124;<br>    ENCRYPTED &#124;<br>    EC<br>  )?<br>  \s{0,1}<br>  PRIVATE\sKEY<br>  (\sBLOCK)?<br>  -----<br>)<br></code> |
-| `kingfisher.proof.1` | Active | `prf_cli_test_Yl9eVSlHbKEvvj_2A0RSbFw91b9vG-w8` | `(?x)
+| `kingfisher.privkey.2` | Active | `-----BEGIN\rPGP\tPRIVATE KEY\tBLOCK-----9me+ybi\\b8lutb4y75df012q+zks\\9ec-----END RSA\tPRIVATE\nKEY\nBLOCK-----` | <code>(?xims)<br>(                       <br>  -----BEGIN\s<br>  (?:<br>    RSA &#124;<br>    PGP &#124;<br>    DSA &#124;<br>    OPENSSH &#124;<br>    ENCRYPTED &#124;<br>    EC<br>  )?<br>  \s{0,1}<br>  PRIVATE\sKEY<br>  (\sBLOCK)?<br>  -----<br>  [a-z0-9 /+=\r\n\\n]{32,}?<br>  -----END\s<br>  (?:<br>    RSA &#124;<br>    PGP &#124;<br>    DSA &#124;<br>    OPENSSH &#124;<br>    ENCRYPTED &#124;<br>    EC<br>  )?<br>  \s{0,1}<br>  PRIVATE\sKEY<br>  (\sBLOCK)?<br>  -----<br>)<br></code> |
+| `kingfisher.proof.1` | Active | `prf_cli_test_LSHopTz_w_Ax4xNfxEyUD4Ix2_ACT4_m` | `(?x)
 \b
 (
   prf_(?:(?:cli_)?test_)?[a-zA-Z0-9_-]{20,80}
 )
 \b
 ` |
-| `kingfisher.pubnub.1` | Active | `pub-c-ag3rmzl2-v089-a6pm-4q1f-x4067b75156g` | `(?xi)
+| `kingfisher.pubnub.1` | Active | `pub-c-9oukof7m-b2du-r6tx-8qxm-2kpfev4w6zij` | `(?xi)
 \b
 (
   pub-c-[a-z0-9]{8}(?:-[a-z0-9]{4}){3}-[a-z0-9]{12}
 )
 \b
 ` |
-| `kingfisher.pubnub.2` | Active | `sub-c-npw1b1n9-jtyo-1r0p-hdf9-8vsc9p73vjnt` | `(?xi)
+| `kingfisher.pubnub.2` | Active | `sub-c-80rj4e77-nmsm-mduh-0hza-kj3vusxzkpa4` | `(?xi)
 \b
 (
   sub-c-[a-z0-9]{8}(?:-[a-z0-9]{4}){3}-[a-z0-9]{12}
 )
 \b
 ` |
-| `kingfisher.pushbullet.1` | Active | `o.TOn0EGIiU5ivSm94fVeKiweq7HQ5niv7` | `(?x)
+| `kingfisher.pushbullet.1` | Active | `o.yFvgBrXNTSaLwNOZzjfNxBXKNWfdkuqR` | `(?x)
 \b
 (
   o\.[A-Za-z0-9]{32}
 )
 \b
 ` |
-| `kingfisher.pusher.2` | Active | `beamsapp_secret\tc5d97241eebfe615f58b` | <code>(?xi)<br>\b<br>(?:pusher&#124;beams&#124;chatkit&#124;channels)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:app[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.pypi.1` | Active | `pypi-AgEIcHlwaS5vcmc5Sse9CxLYjwA3gcEQgNWLO9AcG5fNJyjDAYhS2SeaFZF1zyJLS` | `(?x)
+| `kingfisher.pusher.2` | Active | `channelsm\r\n\n\rQO\r\n\n\n7gUtIIxM\nnI\re\n\n\r\r\rG\rsapp-secret\n9ftf\n\nx\rxc\rr\n\nE\td4afe97d92f25fde4d53` | <code>(?xi)<br>\b<br>(?:pusher&#124;beams&#124;chatkit&#124;channels)<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:app[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.pypi.1` | Active | `pypi-AgEIcHlwaS5vcmckfmUm199oTDo5NrUmIhquicKz_WiYV1SyRky8CZLA3R-OsiBHM` | `(?x)
 (
   pypi-AgEIcHlwaS5vcmc[A-Za-z0-9_-]{50,}
 )
 \b
 ` |
-| `kingfisher.rabbitmq.1` | Active | `amqps://AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@-....-%%...%%%.--...%%..%-%-.-%%:70803/./.%.--/./-./%%%.-%/.%-////.%/%.` | <code>(?xi)<br>(?P&lt;TOKEN&gt;<br>  (?P&lt;RABBITMQ_SCHEME&gt;amqps?)<br>  :\/\/<br>  (?P&lt;RABBITMQ_USERNAME&gt;[\S]{3,50})<br>  :<br>  (?P&lt;RABBITMQ_PASSWORD&gt;[\S]{3,50})<br>  @<br>  (?P&lt;RABBITMQ_HOST&gt;[-.%\w]+)<br>  (?::(?P&lt;RABBITMQ_PORT&gt;\d{2,5}))?<br>  (?:\/(?P&lt;RABBITMQ_VHOST&gt;[-.%\w\/]+))?<br>)<br>\b<br></code> |
-| `kingfisher.rails.1` | Active | `rails-master_key\naed6e6abbf1853de3c3d6d3a4896cf40` | <code>(?xi)<br>\b<br>rails[_-]?master[_-]?key<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.rails.2` | Active | `secret-key_base:""'"'"''"''"'''"''"""'"'""""'"""bd8b1f1b8ee59e56d482a821c9bb9d1820ed699a0b398ba83e8cbf33150a3b71` | <code>(?xi)<br>\b<br>secret[_-]?key[_-]?base<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{64,128}<br>)<br>\b<br></code> |
-| `kingfisher.railway.1` | Active | `railwayKEYf5dff2a9-b42a-3699-c4b6-e80df2718c2c` | <code>(?xi)<br>\b<br>railway<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})<br>)<br>\b<br></code> |
-| `kingfisher.rainforestpay.1` | Active | `sbx_apikey_04024bce626be7656d6f68d1471668340e267bd8effa4ad2c5a47d75af84510a` | `(?x)
+| `kingfisher.rabbitmq.1` | Active | `amqps://AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@%-%.-%%..-.----.-.%--...-.%-..-.:67014//%-..-///.-/%-./%////.//-%.-%/./` | <code>(?xi)<br>(?P&lt;TOKEN&gt;<br>  (?P&lt;RABBITMQ_SCHEME&gt;amqps?)<br>  :\/\/<br>  (?P&lt;RABBITMQ_USERNAME&gt;[\S]{3,50})<br>  :<br>  (?P&lt;RABBITMQ_PASSWORD&gt;[\S]{3,50})<br>  @<br>  (?P&lt;RABBITMQ_HOST&gt;[-.%\w]+)<br>  (?::(?P&lt;RABBITMQ_PORT&gt;\d{2,5}))?<br>  (?:\/(?P&lt;RABBITMQ_VHOST&gt;[-.%\w\/]+))?<br>)<br>\b<br></code> |
+| `kingfisher.rails.1` | Active | `rails-master_key\rg\rGtz\n\n\n\n\rbD\r\n\n\x0bb60065e299ef148557085b2767d7b212` | <code>(?xi)<br>\b<br>rails[_-]?master[_-]?key<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.rails.2` | Active | `secret-key-baseC\nX\n\n\rN\nC\r\nP\r\n\r\r\x0b"''"'''''''"'"''''"'"""""''"''''43666106ce6d7dff8c28532122de8d5d0a2761b81fe9da3a371c0c1ea5dd65a4` | <code>(?xi)<br>\b<br>secret[_-]?key[_-]?base<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{64,128}<br>)<br>\b<br></code> |
+| `kingfisher.railway.1` | Active | `railway\n\np\n\rJ\n\nM\rj\r\n\rp8Ndvn\rPa\nzc7z\rN\rPPRIVATE\nf\rv\naVAk\r\nDj\n\r3\r\n\r\n\n\nh\r6\rx6\n\r\r2d1eea036-494b-9337-4c9f-ac23b387cb37` | <code>(?xi)<br>\b<br>railway<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})<br>)<br>\b<br></code> |
+| `kingfisher.rainforestpay.1` | Active | `sbx_apikey_9771bc7c40f4b5feed7d048187d6e0b22c896f6fb9a66c3c456b4916dd68874b` | `(?x)
 \b
 (
   (?:sbx_)?apikey_[a-f0-9]{64}
 )
 \b
 ` |
-| `kingfisher.ramp.1` | Active | `ramp_id_VlSUOPuBGAWkqQm3Ymqh9SV8HoIVRwtXLjyNIPHs` | `(?x)
+| `kingfisher.ramp.1` | Active | `ramp_id_semn63ueik2gDrpbeqbXR8wDBreT7Ioua1ddNjRl` | `(?x)
 \b
 (
   ramp_id_[a-zA-Z0-9]{40}
 )
 \b
 ` |
-| `kingfisher.ramp.2` | Active | `ramp_sec_P1aLEh2ujq432QNhOd8FEL6JrT1zAroWEQpkxm3c9ovvT2wu` | `(?x)
+| `kingfisher.ramp.2` | Active | `ramp_sec_xMMKW7jLlTWPH97f0ZCMgvnv9HS11uGS4vk6oqBmwN4QaGhU` | `(?x)
 \b
 (
   ramp_sec_[a-zA-Z0-9]{48}
 )
 \b
 ` |
-| `kingfisher.rapidapi.1` | Active | `rapidapiSECRETO89gKubm0-TotjK0SVpBs-yJHPdC8Ob3edJyA4RBERn2C8GQ2M` | <code>(?xi)<br>\b<br>rapidapi<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_-]{50}<br>)<br>\b<br></code> |
-| `kingfisher.razorpay.1` | Active | `rzp_live_PliUMzn9eiU5fA` | `(?xi)
+| `kingfisher.rapidapi.1` | Active | `rapidapiN\r\n\nU0N\r1\rva\rS\r\r\rX\nW\nk\nh\rI\n\nir\r\nTOKENyI\n\nQe\n\rMS8\n\r8\rTGVsC\r\rK\nu\r\n\rnbp\rOK06AHvs52nexb_Em-RZZPCY35iRZwLNeHbHSYciJlyXxyhUZT` | <code>(?xi)<br>\b<br>rapidapi<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_-]{50}<br>)<br>\b<br></code> |
+| `kingfisher.razorpay.1` | Active | `rzp_live_1Wx4b2LSu0EioG` | `(?xi)
 \b
 (
   rzp_live_[A-Za-z0-9]{14}
 )
 \b
 ` |
-| `kingfisher.razorpay.2` | Active | `rzp_test_co245CsMcq38Kq` | `(?xi)
+| `kingfisher.razorpay.2` | Active | `rzp_test_ShPipfoK4AIwtb` | `(?xi)
 \b
 (
   rzp_test_[A-Za-z0-9]{14}
 )
 \b
 ` |
-| `kingfisher.recaptcha.1` | Active | `recaptcha6lf3Lkke1sZAIsdBLzBs9WtIjaR7tVx8EWWfKDIo` | <code>(?xi)<br>recaptcha<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  6l[c-f][a-z0-9_-].{36}<br>)<br></code> |
-| `kingfisher.redirectpizza.1` | Active | `rpa_cazZKmaVFmNoxmxI3fII0gsgGruVv1` | `(?x)
+| `kingfisher.recaptcha.1` | Active | `recaptcha\nxZjTf\r\r\r1\r\r\n\n\ni6ldtGyyUtuLxv2zKUP4ukYt6OvGQ85GUdZjntN9i` | <code>(?xi)<br>recaptcha<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  6l[c-f][a-z0-9_-].{36}<br>)<br></code> |
+| `kingfisher.redirectpizza.1` | Active | `rpa_KSj2NYAtai60WegYWx6kvG7mTkESZH` | `(?x)
 \b
 (
   rpa_[A-Za-z0-9]{30}
 )
 \b
 ` |
-| `kingfisher.redis.1` | Active | `redis://h1p=slKRb$nmOtEFKbJqb=.;tTCVCDHU:v8pIIQR7qyL;f/=$2U.t$Hf4a(X.k*2X@MO.CL4jnWDoWwBEk.SgAz0Q3BsQ9LhE2:18100/19` | <code>(?xi)<br>(?P&lt;TOKEN&gt;<br>  (?: redis &#124; rediss &#124; redis\+sentinel ) ://<br>    (?: (?P&lt;username&gt;[a-zA-Z0-9%;._~!$&amp;'()*+,;=-]*)<br>      :<br>    )?<br>    (?P&lt;password&gt;[a-zA-Z0-9%;._~!$&amp;'()*+,;:=/+-]{8,})<br>  @ (?P&lt;host&gt;(?:\[[0-9a-fA-F:.]+\]&#124;[a-zA-Z0-9_.-]{1,})) (?: :(?P&lt;port&gt;\d{1,5}))?<br>  (?: / (?P&lt;db&gt;\d{1,2}))?<br>)<br>\b<br></code> |
-| `kingfisher.redis.3` | Active | <code>redis-token= \t\t\t\t     \t  \t  \t\t \t \t\t\t  \t\t \t  "e*sHvqo9o'1)VFVurY441n4lb6y&amp;H($1'</code> | <code>(?i)\b(?:redis[-_.]?(?:password&#124;pass&#124;passwd&#124;auth&#124;secret&#124;token)&#124;config\.redis\.auth)\b(?:.&#124;[\n\r]){0,24}?[=:][ \t]*['"]?([a-zA-Z0-9%;._~!$&amp;'()*+,;=/*+-]{8,64})['"]?</code> |
-| `kingfisher.redshift.1` | Active | `redshift://KsZ3Od6y60FZH3mtU1qxoVGWFJx9odIH:PK3ZYgGk9TePOpH85FCSEbzaX1UB10NR@bJUQhapaFQrodlyI95J8aQizMfLFdpBm` | `(?xi)
+| `kingfisher.redis.1` | Active | <code>redis://W*$N_V&amp;)Hx=ipNU~m77IR9xbBo7lTRcO:bgc!P*Ux:'R5rEq%gR4';GV%vC3lD3XT@JMtE4NaI.88kVdaxoiPh1qPda88B-Dzl:57470/51</code> | <code>(?xi)<br>(?P&lt;TOKEN&gt;<br>  (?: redis &#124; rediss &#124; redis\+sentinel ) ://<br>    (?: (?P&lt;username&gt;[a-zA-Z0-9%;._~!$&amp;'()*+,;=-]*)<br>      :<br>    )?<br>    (?P&lt;password&gt;[a-zA-Z0-9%;._~!$&amp;'()*+,;:=/+-]{8,})<br>  @ (?P&lt;host&gt;(?:\[[0-9a-fA-F:.]+\]&#124;[a-zA-Z0-9_.-]{1,})) (?: :(?P&lt;port&gt;\d{1,5}))?<br>  (?: / (?P&lt;db&gt;\d{1,2}))?<br>)<br>\b<br></code> |
+| `kingfisher.redis.3` | Active | `config.redis.authz\n\rN\n\rpY\r\r5\r\n\n\r\r\rk3\r\n0\n\n= \t\t\t \t   \t \t\t\t \t\t\t\t\t \t   \t  \t \t 'c+HfE7Rr-I)cHrTbECP9wm-cXX9NZY8I"` | <code>(?i)\b(?:redis[-_.]?(?:password&#124;pass&#124;passwd&#124;auth&#124;secret&#124;token)&#124;config\.redis\.auth)\b(?:.&#124;[\n\r]){0,24}?[=:][ \t]*['"]?([a-zA-Z0-9%;._~!$&amp;'()*+,;=/*+-]{8,64})['"]?</code> |
+| `kingfisher.redshift.1` | Active | `redshift://='=wkOW"=H2jg_s"j=09'=H"A'='qv62:'h":':q:K:4"::=:rN'f''isU:'ITVw"@:H:=0D:v=r=W:===R3==5srF=4:=ulx:` | `(?xi)
 \b
 redshift://
 [^:@\s]{1,64}
@@ -1881,8 +1881,8 @@ redshift://
 @
 [^\s/"']{4,128}
 ` |
-| `kingfisher.render.1` | Active | `renderACCESSrnd_W5Pj7uTtYwHLEICIz1VOJVOT9gM8rfNWL` | <code>(?xi)<br>\b<br>render<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;rnd_[A-Za-z0-9]{33})<br>)<br>\b<br></code> |
-| `kingfisher.replicate.1` | Active | `r8_Ec8lcxQJEzTnFfwkNGu4LXSVoBx8n2iElZ6os` | `(?x)
+| `kingfisher.render.1` | Active | `rendero4L\nqRs\nRC\r\nBM\nc\n\n\n\nfeo\r\n\ri\n3R\r0SECRET\r\n\r\r\rWX\rvuy\n1MFi\n\r\r\n\nw\nF3G\r0\rp\nWrnd_gO9nVsWsezgDyPoHwhdvJ7GcYP9SAB0QT` | <code>(?xi)<br>\b<br>render<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;rnd_[A-Za-z0-9]{33})<br>)<br>\b<br></code> |
+| `kingfisher.replicate.1` | Active | `r8_HO5zKfDQ4OOO6R9E7g80i9vhUQ7aGXh5SsgDZ` | `(?x)
 \b        
 (                 
   r8_            
@@ -1890,7 +1890,7 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.resend.api_key.1` | Active | `re_86zWxEWh_zRkkaoc7PObWXqRcgBN4gesL` | `(?x)
+| `kingfisher.resend.api_key.1` | Active | `re_qWYkugeQ_5MaYUqEcdxBqe3UJ4wnsu0DF` | `(?x)
 \b
 (
   re_
@@ -1900,22 +1900,22 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.retellai.1` | Active | `key_AF25EdfA87cBb4feECBAbf2a6eFe` | `(?x)
+| `kingfisher.retellai.1` | Active | `key_d5a62faA8b836Dabbb6571Cf39d6` | `(?x)
 \b
 (
   key_[0-9A-Fa-f]{28}
 )
 \b
 ` |
-| `kingfisher.ringcentral.2` | Active | `ringcentralCLIENTRSECRETx-aDplVBHVM3hpnC6f0GbY` | <code>(?x)<br>\b<br>(?i:ringcentral&#124;ring.?central)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:CLIENT.?SECRET&#124;APP.?SECRET)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_-]{22}<br>)<br>\b<br></code> |
-| `kingfisher.riot.2` | Active | `RGAPI-8s573mTN7rNJ-MznpFMkUc9O89jqoK5yp60n` | `(?x)
+| `kingfisher.ringcentral.2` | Active | `ringecentral\nhy\r\n\n\n\nn\ngFkB2\n\r\rL\n\r3x\n\r\nv\n\n\n\rLCLIENTFSECRETRO\r\nTF\n\nh\n\r8D\r\n\n3b\nR\rf\n4Q\nQc\n6\n\rf3q0k5kZjtAqd7mcVvR31_` | <code>(?x)<br>\b<br>(?i:ringcentral&#124;ring.?central)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:CLIENT.?SECRET&#124;APP.?SECRET)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_-]{22}<br>)<br>\b<br></code> |
+| `kingfisher.riot.2` | Active | `RGAPI-46Jd-gAG1YBijZd7kcryNJwIqzobj9l438X5` | `(?x)
 \b
 (
   RGAPI-[a-zA-Z0-9_-]{36}
 )
 \b
 ` |
-| `kingfisher.robinhood.1` | Active | `rh-api-aD6c0BAF-4acf-A2bA-Fff4-6D5DB0dB24d3` | `(?x)
+| `kingfisher.robinhood.1` | Active | `rh-api-7d8A6CB8-0bcA-aFDC-54D2-3f97ff9Ea7Bc` | `(?x)
 \b
 (
   rh-api-
@@ -1923,15 +1923,15 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.rollbar.1` | Active | `rollbartoken6cgD1j4CD1DaTBHRyZsWsS7GRa3lyRD1` | <code>(?xi)<br>\b<br>rollbar<br>(?:.&#124;[\n\r]){0,32}?<br>(?:access[_-]?token&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.rootly.1` | Active | `rootly_a34aee2f946d02bdd6b3383c62c305b0c06265fdeae1683b6ec7f111950c1aa0` | `(?x)
+| `kingfisher.rollbar.1` | Active | `rollbar\rW\n\r\r\n\r\r\r\r\nn\nAvVJ\n\r\r\nB\rG\rw\n\r\r6\r\rtoken\rfp\nVXbWg\r\nhH\rwpj2wwm69Te1xunnAEtBfWxiBwNthRQQTP` | <code>(?xi)<br>\b<br>rollbar<br>(?:.&#124;[\n\r]){0,32}?<br>(?:access[_-]?token&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.rootly.1` | Active | `rootly_25da5bb0b9ed90320f5918b141852a8d310bd51f306619d235294c826931a2a0` | `(?x)
 \b
 (
   rootly_[a-f0-9]{64}
 )
 \b
 ` |
-| `kingfisher.rubygems.1` | Active | `rubygems_lyhYe0AeKdyV9po0BSX4LJG7Agi10xv3s6bVPvk94t` | `(?x)
+| `kingfisher.rubygems.1` | Active | `rubygems_uvhgIKzbascPrcH0hHSuMNzex0SE4c7KkNPqWmwwJR` | `(?x)
 \b                     
 (                      
   rubygems_
@@ -1939,14 +1939,14 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.runpod.1` | Active | `rpa_AN5JVYT4V8USEBFP20PJMA4VRK3B6UI1IV1DW4YWLG79WI` | `(?x)
+| `kingfisher.runpod.1` | Active | `rpa_DJ68C6ZMZJYSC5U89AVKPI13OJLU6PZX7IYRLD974MM4Zh` | `(?x)
 \b
 (
   rpa_[A-Z0-9]{40}[A-Za-z0-9]{6}
 )
 \b
 ` |
-| `kingfisher.runway.1` | Active | `key_6cEa1eaE8d678e5a1c1fFd19C7b83DbDdefc71AcBF05bD58Ae2797353CAeCF52eff8ddFEeF1e2A8ecA38Ecae6AB1474CDaCBcCbc3DA3c6224ebFfF92E3f5Cde5` | `(?x)
+| `kingfisher.runway.1` | Active | `key_5ee5d0FFbf936EcA51Dd180FA77aFBcA7CCAfe4B97a98F89Be60d9cFDf957fA038E439eedfcdc2d32e7838A61E7dfFC608dC9Da3A27B9cDC1Fd7e5C70Ac49bb7` | `(?x)
 \b
 (               
   key_    
@@ -1954,14 +1954,14 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.saladcloud.1` | Active | `salad_cloud_0wpaOaO_aGPy9VMeBOrm57kVAlHJPBQpFpHXfAUE` | `(?x)
+| `kingfisher.saladcloud.1` | Active | `salad_cloud_AOKZTeb_FdML7oEIL36juFsbb22pLcnb1QBbmhE4` | `(?x)
 \b
 (
   salad_cloud_[0-9A-Za-z]{1,7}_[0-9A-Za-z]{7,40}
 )
 \b
 ` |
-| `kingfisher.salesforce.1` | Active | `00PXLM7EUIYBG9K!W-6VSEEGT5_YT6BYXJUEMJP3FVE4O-8S8RF8B50_U0OTERAIR5VFRXWKS81F05IS2ZK6PJFBRCTX1UOP` | `(?xi)
+| `kingfisher.salesforce.1` | Active | `00WZX5LMFMZYI8R!SULL55JY3IT5UJ_V22.OHAFASZ.09TN753RK1JZWR5P_ZAHX7TBA44GT80BQG.I1VP24M2YT-KG2X49V` | `(?xi)
 \b
 (
   00
@@ -1970,19 +1970,19 @@ redshift://
   [A-Z0-9._-]{80,260}
 )
 ` |
-| `kingfisher.salesforce.3` | Active | `consumerKeyJoWuWRp-M.YRG2hQcQd_eM=PZJxttnrS` | <code>(?x)(?s)<br>  \bconsumerKey\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (<br>    [A-Za-z0-9+/=._-]{16,256}<br>  )<br>  \b<br></code> |
-| `kingfisher.salesforce.4` | Active | `consumerSecretbDg2h/sS5C-zHlEPdixfEh0Lwfw=TRcV` | <code>(?xi)(?s)<br>  consumerSecret\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (<br>    [A-Za-z0-9+/=._-]{16,256}<br>  )<br></code> |
-| `kingfisher.salesforce.5` | Active | `sforceconsumerKeyHCD+3SNK_2DM/BLLOQTRJPOA0QOMLRCKconsumer\n\x0c\r\t\t\x0c\x0c\x0bsecretsCLtZS_zBR+Z=5uxG.r1K+PM/XUFE.yy` | <code>(?xi)(?s)<br>  (?:salesforce&#124;sforce)<br>  (?:.&#124;[\n\r]){0,256}?<br>  \bconsumerKey\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (?P&lt;CONSUMER_KEY&gt;<br>    [A-Z0-9+/=._-]{16,256}<br>  )<br>  \b.*?<br>  (?:.&#124;[\n\r]){0,256}?<br>  \bconsumer\s{0,8}secret\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (?P&lt;CONSUMER_SECRET&gt;<br>    [A-Za-z0-9+/=._-]{16,256}<br>  )<br></code> |
-| `kingfisher.salesforce.6` | Active | `salesforcerefresh\ntoken=\t\n\r\t\t\r\x0b\x0b\r\t\r\r\r\t\x0c\r\n\t\n\x0b \x0c\r \n\r \r\x0b\x0c\n\x0c5AFELDPCRM5194SDD~6Q_39AT4YDH7PU6ZJJ52~W8B"` | <code>(?xi)(?s)<br>  (?:salesforce&#124;sforce&#124;login\.salesforce\.com&#124;test\.salesforce\.com&#124;my\.salesforce\.com)<br>  (?:.&#124;[\n\r]){0,256}?<br>  \brefresh(?:_&#124;[\s-])token\b<br>  (?:.&#124;[\n\r]){0,24}?<br>  (?:<br>    [:=]<br>    &#124;<br>    ["']\s*:\s*["']<br>  )<br>  \s*<br>  (<br>    5A[A-Z0-9._~-]{40,510}<br>  )<br>  (?:<br>    \b<br>    &#124;<br>    ["']<br>  )<br></code> |
-| `kingfisher.salesforce.7` | Active | `3MVG92wlj6e.uNv_S7drii6P8QcZ5htpy13f5` | `(?x)(?s)
+| `kingfisher.salesforce.3` | Active | `consumerKeyp\r\rxYr\n\rr\n\rp\n\rA\nF\n\rmG\n\nF\r\r\nz\nWd\n8EhbOlc.lRNWfKTacnSHdgt9WDcr55Ou` | <code>(?x)(?s)<br>  \bconsumerKey\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (<br>    [A-Za-z0-9+/=._-]{16,256}<br>  )<br>  \b<br></code> |
+| `kingfisher.salesforce.4` | Active | `consumerSecret\r\r\r3EzWJ\rp\nz\n\r\r9\n\r\n9T\r\nqFc\r\r\nkh\newW+WTh2Z=O=XB1lWpV=v5OahhL0.GLe` | <code>(?xi)(?s)<br>  consumerSecret\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (<br>    [A-Za-z0-9+/=._-]{16,256}<br>  )<br></code> |
+| `kingfisher.salesforce.5` | Active | `salesforce\rG\nn\r\r\r\r\ru\nes\n\n\nw\rMu\nG\n\r\r\rm\rpJE6consumerKey\r\rkVo2\r\rNxP\r\r\nW2H98i\n\n\n\n\n\r\n\n\r\r\n13FRZUE+OASPF55H+.FY10C8DLZ8SGGVPqhjz0eCBssyfV7QM8Tk1KEK4W0qhLGcHF\n\rnP\rcC3y8\n\rzMo\r5\n\r\nEU\nJx5nNG\roconsumer\n\r  \x0c\r\n\x0bsecretZ\n\n\rflOR\n\nt\nI\rV\r\rzy\r\r\n\r\n\nt\raq\n0\nBNjlgtTHSEf=jXzUy+7.NP0X.+/L8lw-` | <code>(?xi)(?s)<br>  (?:salesforce&#124;sforce)<br>  (?:.&#124;[\n\r]){0,256}?<br>  \bconsumerKey\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (?P&lt;CONSUMER_KEY&gt;<br>    [A-Z0-9+/=._-]{16,256}<br>  )<br>  \b.*?<br>  (?:.&#124;[\n\r]){0,256}?<br>  \bconsumer\s{0,8}secret\b<br>  (?:.&#124;[\n\r]){0,32}?<br>  \b<br>  (?P&lt;CONSUMER_SECRET&gt;<br>    [A-Za-z0-9+/=._-]{16,256}<br>  )<br></code> |
+| `kingfisher.salesforce.6` | Active | `test.salesforce.comF\neV\nSk\r\n\n\n\rA\n\nr\nJwem\n\r\rIo8\razG\nrefresh\rtoken\rt\n\n\n\n\r\nDL\r\r\r\rfk\r6NlJ\r\r\n'\x0b\x0b\r \x0b \n\x0b \r \t\x0c\n\r\x0c\r\x0b\t   \r\x0c\r\r\x0b\r\n\n\n\x0b:\t\x0c\x0c\x0b\x0c\t\x0c\x0c\x0b\x0b \x0b\n \t\r\x0b\r\t\t \r\n\t \x0c\x0c\n \x0c \n"\r\n \n\t\x0b \n\t\t\t\t\n\x0c\x0c\x0b\t\n\x0b\x0c \x0c\n\n\x0b\t\x0b\t\t\x0b\n\r5ASGHHI_6YQCWRUQH7AMWUPEKKVQJ4WBUD4_I6E39T` | <code>(?xi)(?s)<br>  (?:salesforce&#124;sforce&#124;login\.salesforce\.com&#124;test\.salesforce\.com&#124;my\.salesforce\.com)<br>  (?:.&#124;[\n\r]){0,256}?<br>  \brefresh(?:_&#124;[\s-])token\b<br>  (?:.&#124;[\n\r]){0,24}?<br>  (?:<br>    [:=]<br>    &#124;<br>    ["']\s*:\s*["']<br>  )<br>  \s*<br>  (<br>    5A[A-Z0-9._~-]{40,510}<br>  )<br>  (?:<br>    \b<br>    &#124;<br>    ["']<br>  )<br></code> |
+| `kingfisher.salesforce.7` | Active | `3MVG9jNiKBeGNgiDpv59MSd1oaPRnQrSyA.-Q` | `(?x)(?s)
   \b
   (
     3MVG9[A-Za-z0-9._~-]{20,180}
   )
   \b
 ` |
-| `kingfisher.salesloft.1` | Active | `salesloftKEYak_Ea7D2dC0D0616ebaEa36ce9D7fc02CE7a1bd1AF7e9DFAD2382DafbCbF7e73BaF` | <code>(?xi)<br>\b<br>salesloft<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  ak_[a-fA-F0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.samsara.1` | Active | `samsara_api_3FwyCUxHM9yWwvSSVomjVwDPNWDe6Qhv` | `(?x)
+| `kingfisher.salesloft.1` | Active | `salesloft2\nrW36\rq4WS\n\n\nXJi\n\raR\rT\n\r\r\r\r\rO\r9APIf\r\r\r5\n\n9\rN\n\r\n\r\r\nak_BfB3325F8d4843770b1CBf450e999cF9affCC47af3f106fBeAcDA44bacAf5A04` | <code>(?xi)<br>\b<br>salesloft<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;API&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  ak_[a-fA-F0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.samsara.1` | Active | `samsara_api_yr8VDnDmslPZshC1TdQxbhaEf3fYvBqP` | `(?x)
 \b
 (
   samsara_api_
@@ -1990,10 +1990,10 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.samsara.2` | Active | `samsaratoken\raJR6Ipt6Iid3BCAjEbaQY5gSqoeHzdr2` | <code>(?xi)<br>\b<br>samsara<br>(?:.&#124;[\n\r]){0,32}?<br>\b(?:access[_-]?token&#124;api[_-]?token&#124;token)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{28,32}<br>)<br>\b<br></code> |
-| `kingfisher.sanity.1` | Active | `sanitySECRETskWiIYMWYvmIusnELjG8EW16cCT657T77NyTY582yzFqOXkwlizVNn` | <code>(?xi)<br>\b<br>sanity<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:sk[A-Za-z0-9]{52}&#124;sk[A-Za-z0-9]{78})<br>)<br>\b<br></code> |
-| `kingfisher.saucelabs.3` | Active | `sauceSECRETed7ce8f0-0026-3dde-5086-1a35a257a6e6` | <code>(?xi)<br>\b<br>sauce<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.scale.1` | Active | `live_75346292e244470d52748b899a43c493` | `(?x)
+| `kingfisher.samsara.2` | Active | `samsaramL\n\n\n8LyAn\rb\rekbc\rm\r\rK\nvv8d\n\n\r\n\raccess_token\nAkE\n\r\r\rh\r\nY\rsG\r\thTIVMOKgZHvzkewPSLLh7Y18vNwoRWOk` | <code>(?xi)<br>\b<br>samsara<br>(?:.&#124;[\n\r]){0,32}?<br>\b(?:access[_-]?token&#124;api[_-]?token&#124;token)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{28,32}<br>)<br>\b<br></code> |
+| `kingfisher.sanity.1` | Active | `sanity6\rs8B\nDY\n\n\rt\rQ\n\r\n\np\n\n\nxc\r\n\r\r\n\rZ\rSECRETtSMgX\n9\rXIHea\n\n\r\r\nAbtdiEQM\n\ry\rYFskMpL62O8NgZv8y5IpIwh8f3aI4OBkxxpoaDXLefFU6jq5rCNdvbcQ` | <code>(?xi)<br>\b<br>sanity<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:sk[A-Za-z0-9]{52}&#124;sk[A-Za-z0-9]{78})<br>)<br>\b<br></code> |
+| `kingfisher.saucelabs.3` | Active | `sauce\rme\nFg\r\r7u\r\n\r\r\rg\nc\rM\n\n\n\r\rU\n\n\rG\n\rPRIVATE\ne\nWj\rQLzt\nCp\n\n\r6\nQ\nSTt6JR\n\rCK\n\r4309de12-2f58-7e27-a898-595372c54bd3` | <code>(?xi)<br>\b<br>sauce<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.scale.1` | Active | `live_3b99341926652cd410d91677227a2485` | `(?x)
 \b
 (
   live_
@@ -2001,7 +2001,7 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.scale.2` | Active | `live_auth_c111fe90e102b264e054c723325cedd3` | `(?x)
+| `kingfisher.scale.2` | Active | `live_auth_cab5f11e27aed48c366c84c30784d869` | `(?x)
 \b
 (
   live_auth_ 
@@ -2009,7 +2009,7 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.scaleway.1` | Active | `scalewaytoken\x0cb9d33a20-ae90-888f-0058-a72438b4ed98` | <code>(?xi)<br>\b<br>scaleway<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:token&#124;secret[_-]?key&#124;auth)\b<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.scaleway.1` | Active | `scalewayY6\r\n3\r\rHU\r\r\rDFPJ\n\r\nR\rVO\n\rbTB8\r\rBsecret-keylAe\rW\ra\r8\r\n\n\n\n\nTc\n5\r\r\r4P\rB\nwrl\rL\ndad86444-9b3d-385d-7920-e71b686393a7` | <code>(?xi)<br>\b<br>scaleway<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:token&#124;secret[_-]?key&#124;auth)\b<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{8}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{4}-<br>  [a-f0-9]{12}<br>)<br>\b<br></code> |
 | `kingfisher.scalingo.1` | Active | `tk-us-------------------------------------------------` | `(?xi)
 \b
 (
@@ -2017,19 +2017,19 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.scalr.1` | Active | `scalr_token\t"""""""''"''"'""""''''"''"'''"""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ1c2VyIiwianRpIjoiYXQth_miK82Q0aXRQlRN0_GWqlbuQWDb5q_Y.pVJwadDETZ5dNR9ZwhFqQFSFy_EccyuLCTDf0OYR88E\t` | <code>(?xi)<br>\b<br>(?:SCALR_KEY&#124;scalr[_-]?(?:key&#124;token&#124;api[_-]?key))<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9<br>  \.<br>  eyJpc3MiOiJ1c2VyIiwianRpIjoiYXQt<br>  [A-Za-z0-9_-]{20,40}<br>  \.<br>  [A-Za-z0-9_-]{43}<br>)<br>['"\s]<br></code> |
-| `kingfisher.scraperapi.1` | Active | `scraper_apikey34v0cyflq8dw4e8k809w11hdl3lprjeb` | <code>(?xi)<br>\b(?:scraper(?:\s&#124;[_-])?api&#124;scraperapi)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:key&#124;token&#124;api[_-]?key)<br>(?:.&#124;[\n\r]){0,16}?<br>([a-z0-9]{32})<br>\b<br></code> |
-| `kingfisher.seam.1` | Active | `seam_liveZWJ93oPD_Rmu3roi8gxVWrjZpDgEUts2kemaP7qrb` | <code>(?x)<br>\b<br>(<br>  seam_(?:test2&#124;live)[a-zA-Z0-9]{1,8}_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{20,32}<br>)<br>\b<br></code> |
-| `kingfisher.segment.1` | Active | `sgp_IJ1-_AC4UHURWITKOY4HF3C2H1A6PLHC_S13IRXIFMHB9MRW43KY4K0I-4D_` | `(?xi)
+| `kingfisher.scalr.1` | Active | `scalr-tokenRFc\rHT\nbVQu\r\rl7u\x0c"'''"''''"'"""'''""""'"""""'"'''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ1c2VyIiwianRpIjoiYXQtwMw9VPXi2QAxKej6vzLuclu5jT2y44nH.m-uWsnIRXQf3AykWaqVdki-5xeOF5s29LGnxR4U57Jr\n` | <code>(?xi)<br>\b<br>(?:SCALR_KEY&#124;scalr[_-]?(?:key&#124;token&#124;api[_-]?key))<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9<br>  \.<br>  eyJpc3MiOiJ1c2VyIiwianRpIjoiYXQt<br>  [A-Za-z0-9_-]{20,40}<br>  \.<br>  [A-Za-z0-9_-]{43}<br>)<br>['"\s]<br></code> |
+| `kingfisher.scraperapi.1` | Active | `scraper\x0capim\n\n\ru4\r\n\ndJ\nYCWwbsh\r0NgZ\n3\r\ngnX\ntoken\rcZ\r\r\r\nOu7\r\rH\n\r7w6tj2bpzqcsii74qhr524gtvyl90z2ws` | <code>(?xi)<br>\b(?:scraper(?:\s&#124;[_-])?api&#124;scraperapi)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:key&#124;token&#124;api[_-]?key)<br>(?:.&#124;[\n\r]){0,16}?<br>([a-z0-9]{32})<br>\b<br></code> |
+| `kingfisher.seam.1` | Active | `seam_test2z9ZRW93t_h6CC8LxtZiU2DC7JmysWmx2hZyWEMNkF` | <code>(?x)<br>\b<br>(<br>  seam_(?:test2&#124;live)[a-zA-Z0-9]{1,8}_[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{20,32}<br>)<br>\b<br></code> |
+| `kingfisher.segment.1` | Active | `sgp_AZX9-31QU6XIMVXY6W0PNDFV144XCAQ4N-HG0N_6J2GI_DV3BN0V3U4PLI99` | `(?xi)
 \b
 (
   sgp_[A-Z0-9_-]{60,70}
 )
 \b
 ` |
-| `kingfisher.segment.2` | Active | `sgmtSECRET7QXDP8BOW72N4__0DVVQ13JIVLYJ3MG1ZART8TJ6.GSGPJX8-1MDK8LKKO2W7BWJNK-OMZJJ-C7LDVS33` | <code>(?xi)<br>(?:segment&#124;sgmt)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9_-]{40,50}\.[A-Z0-9_-]{40,50}<br>)<br></code> |
-| `kingfisher.sendbird.2` | Active | `sendbirdTOKEN50b5027a786fa8f9e77759920124d2ca716401f9` | <code>(?xi)<br>sendbird<br>(?:.&#124;[\\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.sendgrid.1` | Active | `SG.RNSJGO-XUNVZU1GZ2HWFEF24.Y5N1F_EO_LJ9U7M0RY8IB46EJUIUMM4I0OFGHT3` | `(?xi)
+| `kingfisher.segment.2` | Active | `sgmtHYkF\r\rH\nN\r\rFc\rc\nPRIVATE\r\r\r0pttg\no\r\nDE\r\n8TL3ONCFU32SFF5OO-3PTEQS_GG2Y18D4MMLE3S5.YGAZL2GJ2Y31LNMCS5TX69D8WXSJ1FSTVIK2NGG3` | <code>(?xi)<br>(?:segment&#124;sgmt)<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z0-9_-]{40,50}\.[A-Z0-9_-]{40,50}<br>)<br></code> |
+| `kingfisher.sendbird.2` | Active | `sendbird\r\\p\r\\nDBe\rs\\\\5m\rPn\rOnnNo\r\\1W\\\\6HSECRET\r5mBt\nR\n\n\r\n\r\n3\rs\n8\nG\r\n\n\r\rz\rx\nEFc626ba76251a0698c97fffaaec9678959130df8b2` | <code>(?xi)<br>sendbird<br>(?:.&#124;[\\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.sendgrid.1` | Active | `SG.T-KJLBYBJRH7441Y0C6FRTFA.9IQU603IAB-XH-8GDWCK_UAK4Q_N1S1E9XB5AD2` | `(?xi)
 \b
 (
   SG
@@ -2040,23 +2040,23 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.sendinblue.1` | Active | `xkeysib-8dbBbb2183942f67DaDe2deE117DF2FbdBe0CBf5FD744e5184cCddf9753cd73b-ddaANle8UzlOzEkq` | `(?x)
+| `kingfisher.sendinblue.1` | Active | `xkeysib-865E16cFC99DE0df1bBdaAd6BCFD7BAeA4FB7D1bbfCCD16C82DD29BaC41677a2-YH79H0pYlAObVbKr` | `(?x)
 \b
 (
   xkeysib-[a-fA-F0-9]{64}-[a-zA-Z0-9]{16}
 )
 \b
 ` |
-| `kingfisher.sentry.1` | Active | `sentryPRIVATEed5fec9bb9fb84d9db4b459f245a168afc331445699cec542add428b57e41452` | <code>(?xi)<br>\b<br>sentry<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.sentry.2` | Active | `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` | <code>(?x)<br>\b<br>(<br>  sntrys_eyJpYXQiO<br>  [a-zA-Z0-9+/]{10,192}<br>  (?:<br>    LCJyZWdpb25fdXJs<br>    &#124; InJlZ2lvbl91cmwi<br>    &#124; cmVnaW9uX3VybCI6<br>  )<br>  [a-zA-Z0-9+/]{10,192}<br>  ={0,2}<br>  _<br>  [a-zA-Z0-9+/]{43}<br>)<br>\b<br></code> |
-| `kingfisher.serpapi.1` | Active | `serpapikeyce34c913adfca3ad6f583c9acdbe6130ef74d0864d543d02db7b989db7f93137` | <code>(?xi)<br>\b<br>serp(?:api)?<br>(?:.&#124;[\n\r]){0,24}?<br>(?:api[_\s-]*key&#124;access[_\s-]*token&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.shodan.1` | Active | `shodanPRIVATEN2UW1FIDRE59I48HL7F0M4RHFXJ7FTM2` | <code>(?xi)<br>\b<br>shodan<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.shortcut.1` | Active | `clubhouseAPIc6570031-5d7b-e57c-9dd7-f6802ff576d8` | <code>(?x)<br>\b<br>(?i:shortcut&#124;clubhouse)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.shutterstock.1` | Active | `shutterstockv2/4VpQIbQcbDSGzprk6FEuc2gVruTRcIbVgJDjXDKj==` | <code>(?x)<br>\b<br>(?i:shutterstock)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  v2/[A-Za-z0-9+/]{40,512}={0,2}<br>)<br></code> |
-| `kingfisher.sidekiq.1` | Active | `BUNDLE_GEMS__CONTRIBSYS__COM \n\t\t\n\t\n\t\n\x0c\t\r\n\t\x0c\x0c\x0c\t\t\t\t\t\n\n\x0b \x0b\x0c\t\t\t\n:\x0b \n\x0b\n\x0c\x0c\t\x0b\r\t\t \r\n\x0b  \t\r\x0c\x0b\n \x0c\x0c\t\r\x0c\r\n\n'a95ad5ce:20bb7094'` | <code>(?xi)<br>\b<br>(?:<br>  BUNDLE_ENTERPRISE__CONTRIBSYS__COM<br>&#124;<br>  BUNDLE_GEMS__CONTRIBSYS__COM<br>)<br>\s*[:=]\s*<br>["']?<br>(<br>  [a-f0-9]{8}:[a-f0-9]{8}<br>)<br>["']?<br>\b<br></code> |
-| `kingfisher.sidekiq.2` | Active | `https://d4070ec3:e0d90f4a@enterprise.contribsys.com#BO7SVL0DdOO5weePiOZrF3Fsye0nLgO5` | <code>(?xi)<br>(<br>  https?://<br>  [a-f0-9]{8}:[a-f0-9]{8}<br>  @<br>  (?:<br>    gems\.contribsys\.com<br>  &#124;<br>    enterprise\.contribsys\.com<br>  )<br>  (?:<br>    /[^ \t\r\n"'&lt;&gt;]*<br>  &#124;<br>    \?[^ \t\r\n"'&lt;&gt;]*<br>  &#124;<br>    \#[^ \t\r\n"'&lt;&gt;]*<br>  &#124;<br>    :[0-9]{1,5}(?:/[^ \t\r\n"'&lt;&gt;]*)?<br>  )?<br>)<br></code> |
-| `kingfisher.signifyd.1` | Active | `signifydapi-key"CglWd0lud0lVCDGCHJgitErWaDBI` | <code>(?xi)<br>\b<br>signifyd<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?key&#124;apikey&#124;key&#124;token)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{24,28}<br>)<br>\b<br></code> |
-| `kingfisher.slack.1` | Active | `AP5wYcdPui4EAEu7KJndhbHW:\t\n\n\r\x0b\x0c\x0c\x0cxapp-490-8ibk14iq8uz3ete-e3xbs32dqnqpcq2-9c7wcsbod0o77a9t30xxj6hllme0s7vg` | `(?xi)
+| `kingfisher.sentry.1` | Active | `sentryf\n\r\r\n\r\nIOQD\rxt\n\ry\r\n\rm\r\r1T\n\nX\r\rG\nPRIVATEo\ro\rt\n\r3\r\r\r\nD\n\r4\n\rJLmi\r8er\nc\n3OU4adceb988169cf51c321ffcecff6c918a2f5531bee63b8f4ca3a37a89444201a` | <code>(?xi)<br>\b<br>sentry<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.sentry.2` | Active | `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` | <code>(?x)<br>\b<br>(<br>  sntrys_eyJpYXQiO<br>  [a-zA-Z0-9+/]{10,192}<br>  (?:<br>    LCJyZWdpb25fdXJs<br>    &#124; InJlZ2lvbl91cmwi<br>    &#124; cmVnaW9uX3VybCI6<br>  )<br>  [a-zA-Z0-9+/]{10,192}<br>  ={0,2}<br>  _<br>  [a-zA-Z0-9+/]{43}<br>)<br>\b<br></code> |
+| `kingfisher.serpapi.1` | Active | `serpapiWTTCO\n\rLFst\njE\n\ng\nwuhs\n9api_\x0b__\r\x0c\n\x0c-_\x0b\x0c-\r_\x0c\r_\x0b\t\r\n_\t\n\t\n\x0b\x0b\x0b\n\tkeyR\rMC7\nc5\rPrfmEJ\rd042cd8d0e4f8d732d6dec777cec3600aa96874ed1775a37a22cef2be477a762` | <code>(?xi)<br>\b<br>serp(?:api)?<br>(?:.&#124;[\n\r]){0,24}?<br>(?:api[_\s-]*key&#124;access[_\s-]*token&#124;token&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.shodan.1` | Active | `shodanS\nOu\r7\r\r0g\rIj\r\rX\rk\ri2\rL\rep\r\rP\n\niPRIVATEw\r\r\r7\nG\n\rz\r\r\n\rE\nKPI\r\nSeL\n\r40\nE\n\r1NMCZCNJTB83DCQXETF66J6AVLS6GDKP` | <code>(?xi)<br>\b<br>shodan<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.shortcut.1` | Active | `clubhouseZFGZ\nc\r\r\rju\rmO\r9\ri\r\n\n4\nK\ntx\rQ\nK9TOKEN\rpn3\rl\r\r\nXR8mw1d\r\r8U\r\n\rSa\rw\r\n\n\n\nb9dabb52-5309-5c97-8fae-de5b54a64638` | <code>(?x)<br>\b<br>(?i:shortcut&#124;clubhouse)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.shutterstock.1` | Active | `shutterstock\r\rh\nJ\nJ\n\nim26\rlRK\r\r\n\nWu\n2\n8\n4Z\nzv2/TBUu7xqco1gTfBbvvheEh6wYTBwlGkiUeRkPnFuv==` | <code>(?x)<br>\b<br>(?i:shutterstock)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  v2/[A-Za-z0-9+/]{40,512}={0,2}<br>)<br></code> |
+| `kingfisher.sidekiq.1` | Active | `BUNDLE_GEMS__CONTRIBSYS__COM\x0b\x0c\r\x0b\r \x0c\x0c \n\t\n\n \r\t\t \r\x0b\n\t\x0b\r\x0b\t\n\t\t  \x0c:\x0b\t  \t\x0b\r\r\r\n \x0c\x0c \n \n\x0b\t \x0c\x0b\x0c\t\r\x0b\t\n\r\r\n\t'e79644a5:089d0b0d"` | <code>(?xi)<br>\b<br>(?:<br>  BUNDLE_ENTERPRISE__CONTRIBSYS__COM<br>&#124;<br>  BUNDLE_GEMS__CONTRIBSYS__COM<br>)<br>\s*[:=]\s*<br>["']?<br>(<br>  [a-f0-9]{8}:[a-f0-9]{8}<br>)<br>["']?<br>\b<br></code> |
+| `kingfisher.sidekiq.2` | Active | `https://811b8fc3:007a2d5a@gems.contribsys.com/f:Bh=40S:=4:::Aj=c::::jvaL=f1j::` | <code>(?xi)<br>(<br>  https?://<br>  [a-f0-9]{8}:[a-f0-9]{8}<br>  @<br>  (?:<br>    gems\.contribsys\.com<br>  &#124;<br>    enterprise\.contribsys\.com<br>  )<br>  (?:<br>    /[^ \t\r\n"'&lt;&gt;]*<br>  &#124;<br>    \?[^ \t\r\n"'&lt;&gt;]*<br>  &#124;<br>    \#[^ \t\r\n"'&lt;&gt;]*<br>  &#124;<br>    :[0-9]{1,5}(?:/[^ \t\r\n"'&lt;&gt;]*)?<br>  )?<br>)<br></code> |
+| `kingfisher.signifyd.1` | Active | `signifyd\r7\ry\r\rjFz74\n\n9TwphY\ni\r\n\nOrs\nz\n\n5token\n\rX\nn\rN\n\n\npQET\rV"Sg37K6HEPJr4PW5RIH0bDUwOmCXn` | <code>(?xi)<br>\b<br>signifyd<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:api[_-]?key&#124;apikey&#124;key&#124;token)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{24,28}<br>)<br>\b<br></code> |
+| `kingfisher.slack.1` | Active | `VEyr9xZzVeMBXQO1EqiN5IL0:\n \n\t\x0b\t\x0c\x0bxapp-731-43tftd8b9wmgyq0-gcbkro1zou5ryct-wbdmwp2l9buy32gbyolpwlpw91ssflj7` | `(?xi)
 (?:
   .{0,24}[=:]
   \s{0,8}
@@ -2070,8 +2070,8 @@ redshift://
 )
 \b
 ` |
-| `kingfisher.slack.2` | Active | `xoxr275-kq7yh7beymobcb9-c5m1fy5q51f9fma-eb1nh5k5fj0k31kwi7k708sxammfcg7k` | <code>(?xi)<br>\b                         <br>(<br>  xox[pbarose]<br>  [-0-9]{0,3}-<br>  [0-9a-z]{6,15}-<br>  [0-9a-z]{6,15}-<br>  [-0-9a-z]{6,66}<br>)\b<br>&#124;<br>(<br>  xoxe\.xox[bparose]-<br>  \d-<br>  [A-Z0-9]{155,170}<br>)\b<br>&#124;<br>(<br>  xoxe-\d-<br>  [A-Z0-9]{140,150}<br>)<br>\b<br></code> |
-| `kingfisher.slack.4` | Active | `https://hooks.slack.com/services/T_l9mmwvtk15x/Bzaqcdkh2mk6v/9octdfocev_pxx8n-u89khb7mt7qrz` | `(?xi)
+| `kingfisher.slack.2` | Active | `xoxe.xoxb-0-S0I3VBBAY5WLWQTGGK11EMOYE7ISI1FF3JVFF62KZ6D71ZDNIOUQ6MHCMFHLNSRQUCZA9RM5TQU1KSK950F3N5LOEB6TAS7GDY36YAEH2F5PEZ63QG4GRY2JJN8VHZKB3KGV8XX5LL5F5FTFZ9OR6N85529` | <code>(?xi)<br>\b                         <br>(<br>  xox[pbarose]<br>  [-0-9]{0,3}-<br>  [0-9a-z]{6,15}-<br>  [0-9a-z]{6,15}-<br>  [-0-9a-z]{6,66}<br>)\b<br>&#124;<br>(<br>  xoxe\.xox[bparose]-<br>  \d-<br>  [A-Z0-9]{155,170}<br>)\b<br>&#124;<br>(<br>  xoxe-\d-<br>  [A-Z0-9]{140,150}<br>)<br>\b<br></code> |
+| `kingfisher.slack.4` | Active | `https://hooks.slack.com/services/T-0kgqzbijhpr/Bwxiu6tcm9h8-/mpidffxdhcdj7fojrak28tk3m87t_y` | `(?xi)
 \b
 (
   https://hooks\.slack\.com/services/
@@ -2080,7 +2080,7 @@ redshift://
   [a-z0-9_-]{20,30}
 )
 ` |
-| `kingfisher.smb.1` | Active | `smb://4YvMPPKDWo3ytVkvVlUZfl5gkUZaBzDg:XiDL8GG86JKXRuKbCChx7sENhM2ii9hE@qUoMxIhMCa1tdAsPFCkobn8ucJdRjdzO` | `(?xi)
+| `kingfisher.smb.1` | Active | `smb://'0v='F""=K"k81=x'"5"2'="b'Q"d==k:J'cF"S''Qwyv=":S'l3a:'i'"":u'::=@n::Z65BWN:b::=:6S:=T8Zx:FW=:qR:=` | `(?xi)
 \b
 smb://
 [^:@\s]{1,64}
@@ -2089,11 +2089,11 @@ smb://
 @
 [^\s/"']{4,128}
 ` |
-| `kingfisher.smtp.1` | Active | `email_host-password\x0b'''"'"'"'"''"'''''"""'"'''"""""'h8QLYRmaMBJq88T1BYxDTs22tMutfRbn"` | <code>(?xi)<br>\b<br>(?:email[_-]?host[_-]?password&#124;smtp[_-]?password&#124;smtp[_-]?pass)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
-| `kingfisher.snowflake.1` | Active | `snowflakeslskuaefbbpzpozakcfgf-sagyfgzyja://HOHeHH%eB09pvQDF4ga+2GcA@unJyMHg:@-1Yq2YJlx1U813i3urwDiuJpQoJ9AsVD.snowflakecomputing.com\r` | <code>(?xi)<br>\b<br>snowflake[a-z+.-]*<br>://<br>[A-Za-z0-9_.@%+!-]+       # username (non-capturing)<br>:<br>([^@\s"'&lt;&gt;]{6,128}?)        # password (captured)<br>@<br>[A-Za-z0-9_.-]+             # host<br>(?:\.snowflakecomputing\.com)?<br>[/\s"'?]<br></code> |
-| `kingfisher.snowflake.2` | Active | `SF_TOKEN:\x0c \x0c \t\x0b\x0b \x0b\t\n\n\r\x0b\x0b\x0c\x0b\x0b\t\t\t\r\t \t\x0c\x0c\x0c\n\r \n'AHt2yPx_POtEwbUXlR_DtZ3aJd1RlVwwqk2lp8hYxWETvoBjxLN_KFWFuNDoTgPbvTsBjtY4_kRX9AsPrB4cXX-orct1kODGQq6W"` | <code>(?x)<br>\b<br>(?:<br>  (?i:snowflake[_\s-]*(?:programmatic[_\s-]*)?(?:access[_\s-]*)?token)<br>  &#124;<br>  (?i:SF_TOKEN)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:]<br>\s*["']?<br>(<br>  [a-zA-Z0-9_-]{100,500}<br>)<br>["']?<br></code> |
-| `kingfisher.snyk.1` | Active | `snykSECRET8M3JOJH4-H3QE-QSWZ-ETXC-4TRGVMBITO6J` | <code>(?xi)<br>\b<br>snyk<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [A-Z0-9]{8}-(?:[A-Z0-9]{4}-){3}[A-Z0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.solr.1` | Active | `solr://Hmonoldqas6uzSpfX7yzIShCFOihejy3:2R8HZafavLx3H3jAXVUXyUaM4eRKWw1Z@fUMxI4e2tyhQXLlxZG0TPrgaa4bklq6Q` | `(?xi)
+| `kingfisher.smtp.1` | Active | `smtp_pass\n\n\r\nyr9\r\rtQ\n\nX\r\r\x0b"'''""'''"'''''""'"'"""'""''''''G==E=bTzmQ==WNo8::9:iSFU=DEz=:::\t` | <code>(?xi)<br>\b<br>(?:email[_-]?host[_-]?password&#124;smtp[_-]?password&#124;smtp[_-]?pass)<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
+| `kingfisher.snowflake.1` | Active | `snowflake.rfaufqkumcsux+pamkicsemsghqkhkk://Spsfj@mXPZtM_jRW@5Uwz5ix!j.R1Awv:=::=a::Zi==7Z0We====l::==XVT3C:S@etlJ_Op9ds2_ntZuIX2awYULjBDtRpZo.snowflakecomputing.com/` | <code>(?xi)<br>\b<br>snowflake[a-z+.-]*<br>://<br>[A-Za-z0-9_.@%+!-]+       # username (non-capturing)<br>:<br>([^@\s"'&lt;&gt;]{6,128}?)        # password (captured)<br>@<br>[A-Za-z0-9_.-]+             # host<br>(?:\.snowflakecomputing\.com)?<br>[/\s"'?]<br></code> |
+| `kingfisher.snowflake.2` | Active | `snowflake-\r \x0c\x0b-\x0c\t\x0c   \n\t\n\r_-\x0c\r-- \x0c_\t-\x0b\x0c\x0c\n\tprogrammatic \t\x0b-\x0b-\r_-_-\r  \r _\t-\x0b\r\t--\n\x0c\t_\x0c\x0b\t_access\t\n\t\n\x0c\r _\n\t\n\r\t\n-\n__\n\t-\r-\r\x0b\n _\x0b\t\n\x0ctokenc\r\n\r\n\r\rm\r1a\r\rMv\n=\r\x0b\n \x0c\x0b\t\n\x0c\x0b\t\x0c\t\r\t\r\x0c\x0c\t\x0b\t \x0b \r \x0c\r\t \x0c\r'hXsLjMh2nW0iiYC9UDWFrR8QjF6fGHSisWe8j_qFNkS-lOa_4a9_10rRWY_Qjx8WTq9O-noomrMIOr7b-DLHAwdLdln3Tk576t-J'` | <code>(?x)<br>\b<br>(?:<br>  (?i:snowflake[_\s-]*(?:programmatic[_\s-]*)?(?:access[_\s-]*)?token)<br>  &#124;<br>  (?i:SF_TOKEN)<br>)<br>\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:]<br>\s*["']?<br>(<br>  [a-zA-Z0-9_-]{100,500}<br>)<br>["']?<br></code> |
+| `kingfisher.snyk.1` | Active | `snyk\n7p6aWane4TDq\r\r1PbC3S3xUK\r\n\n\r\r\r\rSECRETt\r\r\n\r\rN5Hfk\r1\nwd0\n\r\n\n0I\ra\rNa9R\r\rWPF5DV3H-S2DB-4JGO-9BZI-NVTRZRTYYZRK` | <code>(?xi)<br>\b<br>snyk<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [A-Z0-9]{8}-(?:[A-Z0-9]{4}-){3}[A-Z0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.solr.1` | Active | `solr://'H'r=b"g"'"axc=""=Y"b''==fNpN'5z::'=0mGdD:K=1_":2="4E_::=O"=R'="l@:=T8::M:m6N::5:::==::=DG==9T8::=` | `(?xi)
 \b
 solr://
 [^:@\s]{1,64}
@@ -2102,8 +2102,8 @@ solr://
 @
 [^\s/"']{4,128}
 ` |
-| `kingfisher.sonarcloud.1` | Active | `sonarACCESS6pjqwp9siqibjh9nvf5111oestuusunmyxq2fpds` | <code>(?xi)                    <br>\b<br>sonar<br>(?:.&#124;[\n\r]){0,32}?       <br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-z]{40}            <br>)<br>\b<br></code> |
-| `kingfisher.sonarqube.1` | Active | `squ_lqmyqfuq0sqln7b6tia7tc5uwk6k96rsplvtjp6t` | `(?xi)
+| `kingfisher.sonarcloud.1` | Active | `sonarY3\n\rq\n\nBQYF\rI\r\r\nl\n\r\n\r\n\rvM\n\r3sZOYACCESSoL\r\n\nv\n2GK\r\r\rI\r\r\n\r\ro\r5\n\rF\r0F\r\r\r\r9xw893s1toh7akv3a7q6lt4ok75osh65lguaepfd` | <code>(?xi)                    <br>\b<br>sonar<br>(?:.&#124;[\n\r]){0,32}?       <br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-z]{40}            <br>)<br>\b<br></code> |
+| `kingfisher.sonarqube.1` | Active | `sqa_vainxbfoewks2ni49ydbhqbrvbzxyxw47d4uzy0m` | `(?xi)
 \b
 (
   (?:sq[pua])
@@ -2111,18 +2111,18 @@ solr://
 )
 \b
 ` |
-| `kingfisher.sonarqube.3` | Active | `sonarEP3yJlogin7kAPo\r\t\x0b\n\n\r\t \x0c \x0b\x0b\r  \t\x0c\x0c \x0b\n\r \x0b\n \n \n\n\x0c\t3910e83ac364fefa9677afaf9a8458d4d9562dc7` | `(?i)sonar.{0,5}login.{0,5}\s*\b([a-f0-9]{40})\b` |
-| `kingfisher.sourcegraph.1` | Active | `sgp_ADaddc5bfDE8A3A55fEc7aefb3A6A5434E21cDC2` | <code>(?x)<br>\b<br>(<br>  sgp_(?:[a-fA-F0-9]{16}&#124;local)_[a-fA-F0-9]{40}&#124;sgp_[a-fA-F0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.sourcegraph.2` | Active | `sourcegraphACCESSsgp_33570c294b158dc1_local_e20c06dde48a0f115b98dc5386fed8ab2e97f0eb` | <code>(?xi)<br>\b<br>sourcegraph<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  (?:sgp_(?:[a-f0-9]{16}_local_)?[a-f0-9]{40}&#124;[a-f0-9]{40})<br>)<br>\b<br></code> |
-| `kingfisher.sourcegraph.3` | Active | `slk_b4fae9d065a75d5b2f5a8844151e6c45d6919638dde6f404775c3e28b354a466` | `(?xi)
+| `kingfisher.sonarqube.3` | Active | `sonarHO42nlogingmoU9\t \x0b\x0b\x0b \x0b\x0b  \t\x0c\x0b \x0b\t\x0b \r\r\r \r\n\n\r\n\t\x0c\n\n\x0ce5bc33fa4a1f89a1984f1d9f301bb6d0ac40992d` | `(?i)sonar.{0,5}login.{0,5}\s*\b([a-f0-9]{40})\b` |
+| `kingfisher.sourcegraph.1` | Active | `sgp_2FdAbbB0cedbac8DBcbdab90Cd880482fcb9FEC8` | <code>(?x)<br>\b<br>(<br>  sgp_(?:[a-fA-F0-9]{16}&#124;local)_[a-fA-F0-9]{40}&#124;sgp_[a-fA-F0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.sourcegraph.2` | Active | `sourcegraphig\nCr\n\nK\n\n2\rgOG\n\r\r1\nX\rza\n\nU\n\r\n\n\rPRIVATE\n\rXtk\rN\r\nQN\n\n4\n\nM\rG3\n\r\r\rR\r\r\nFn\rHsgp_6102f042427cb9db_local_c29f1f82d81b54ce64644b6dd6bd02b5fd475bff` | <code>(?xi)<br>\b<br>sourcegraph<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  (?:sgp_(?:[a-f0-9]{16}_local_)?[a-f0-9]{40}&#124;[a-f0-9]{40})<br>)<br>\b<br></code> |
+| `kingfisher.sourcegraph.3` | Active | `slk_a29929bdc3dec145819d59c4b7fa1e7b1dfc508a643a8f3022c69ca8114ce440` | `(?xi)
 \b
 slk_[a-f0-9]{64}
 \b
 ` |
-| `kingfisher.sparkpost.1` | Active | `spark postsecretb13a22affadc489ae180432e4006f6f628070cdb` | <code>(?xi)<br>\b<br>spark(?:\s&#124;_&#124;-)?post<br>(?:.&#124;[\n\r]){0,24}?<br>(?:api[_\s-]*key&#124;authorization&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.splunk.1` | Active | `splunkhec6b4eFe3f-2184-c89b-3CB4-74810D2F195a` | <code>(?xi)<br>\b<br>splunk<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:token&#124;auth&#124;key&#124;hec)\b<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Fa-f0-9]{8}-<br>  [A-Fa-f0-9]{4}-<br>  [A-Fa-f0-9]{4}-<br>  [A-Fa-f0-9]{4}-<br>  [A-Fa-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.spotify.1` | Active | `spotifyBEARERzd3K6CUOZXAOf04VfEgwe-TWbVInXeV33edJnZ7JYxb5Pp8DcUgBYOW2JsWBtam79ZX_pPxxs_bSmMxhiU5MOBftmRi0zYq5XZN8` | <code>(?xi)<br>(?:spotify)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:TOKEN&#124;ACCESS&#124;SECRET&#124;KEY&#124;BEARER&#124;AUTH)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{100,256}<br>)<br>\b<br></code> |
-| `kingfisher.sqreen.1` | Active | `org_2ee1e784ed48591635535c9370e190dc4b42ea58ae13f93f502528a8` | `(?x)
+| `kingfisher.sparkpost.1` | Active | `spark\tpostO\nG\rL\r\nP\r\nS\r8BVIJ\n\rc\r9\rztoken\r\r\ru\r\r\n0k\r1L\r\n\r\r3eb7ebca45517dce984d5a0c48aea9b0fa692533` | <code>(?xi)<br>\b<br>spark(?:\s&#124;_&#124;-)?post<br>(?:.&#124;[\n\r]){0,24}?<br>(?:api[_\s-]*key&#124;authorization&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.splunk.1` | Active | `splunk\ny\rDwX\r\nr1\rSvQ\n1\r\r\r\rO\r\r\rjbs\n\nvy\rtokenb\n\r\r\nc\n06YO\r\n\r\nl\n\n\nvC\n7\r2\r\nm\n\n\rKEFACe35F-Df0A-3dD6-fF6d-ebcbf5FC5e46` | <code>(?xi)<br>\b<br>splunk<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:token&#124;auth&#124;key&#124;hec)\b<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Fa-f0-9]{8}-<br>  [A-Fa-f0-9]{4}-<br>  [A-Fa-f0-9]{4}-<br>  [A-Fa-f0-9]{4}-<br>  [A-Fa-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.spotify.1` | Active | `spotify\n\r\nVd\r\n\n\nPnWN\r\nXZ3\rL\noJry\nH\rG\n\ryACCESS\nE\rc4\n\nN\n\r3\r\rm\r\nPpSaniT7YqQZdRLNdEI4gjEc6u1ZW8cfdA4TAw7la-Qf4yuoqfS-uDpfFR20McxUX_6qLGj0TYMBGWPcG2FHbgq3K1e87NQskL5t` | <code>(?xi)<br>(?:spotify)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:TOKEN&#124;ACCESS&#124;SECRET&#124;KEY&#124;BEARER&#124;AUTH)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{100,256}<br>)<br>\b<br></code> |
+| `kingfisher.sqreen.1` | Active | `org_6e9e805263d16137e7600e5b7016a7cd80a993b05c2cb286fc24b135` | `(?x)
 \b
 (
   org_
@@ -2130,21 +2130,21 @@ slk_[a-f0-9]{64}
 )
 \b
 ` |
-| `kingfisher.square.1` | Active | `EAAAs6hzYTUQAgv9Z+wNgK2Uym+PPLTSaaJNCrD6eLyy+aL6=8T0pm9iKTP=Tb2V` | `(?x)
+| `kingfisher.square.1` | Active | `EAAACeGoJ5AUodP41d=KTIu3wK6=Ygm3ZBPsRfDF6aJc5fbYSGE5cZZxqiJEBhrr` | `(?x)
 \b
 (
   EAAA[a-zA-Z0-9\-\+=]{60}
 )
 \b
 ` |
-| `kingfisher.square.3` | Active | `sq0csp-WET_ng64H-mEmjXBuuv-46kYJK-GSxRjjWSZ_DcUGEQ` | `(?x)
+| `kingfisher.square.3` | Active | `sq0csp-kSMVO3Ow5oyvU9sz20AUtNnKRoGmQ-b__vVPRJmkAlG` | `(?x)
 \b
 (
   sq0csp-[a-zA-Z0-9_-]{43}
 )
 ` |
-| `kingfisher.squarespace.1` | Active | `squarespaceAPI9b659abd-bd11-0416-1080-30cd8fce8e8d` | <code>(?x)<br>\b<br>(?i:squarespace)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.sshpass.1` | Active | `sshpass\r\n \t\n \t\n\x0c \x0b\t\r\n\x0c \t\x0b\x0b\r\t \x0c\n\r\r\t\x0b   \x0b-p \n\n\n\n \x0c\x0c\x0c\x0b\r\n \x0c\n\x0b\r\r\x0c\x0b\n\x0b\n\r\x0b \x0c \x0c\t\r\t'1gHCoDf6hEsFgH47EnzpfpoYZwGVkjnN\r` | `(?xi)
+| `kingfisher.squarespace.1` | Active | `squarespace\rJs\r\r\r\nz\n\r0\r\r\rS\r\r\nD\r\rdY\n\r34T\nH\r\nKEY09\r4th\n\rlYa\n5Q\ny0R1\nz\nGXG3\n\nK\r\n\nca63a6ed-6b26-a4d2-f780-77b5267393a6` | <code>(?x)<br>\b<br>(?i:squarespace)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{8}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.sshpass.1` | Active | `sshpass\x0c\n \r\x0c\r\n\x0b\r\n\r\r\x0c   \n\r\r\x0b\r\t\t\x0c\r\t\n\n\t\r\n\x0b-p \t  \x0b\n\t\x0c\n\x0c \r\x0b\n\x0c\t  \n\x0c \r\n\x0c \n\t\x0c\n\x0b\x0b\n":V=6:=9l=:pN:KyRA:c:5m=:==:::T:T ` | `(?xi)
 \b
 sshpass\s+-p\s+
 ['"]?
@@ -2153,8 +2153,8 @@ sshpass\s+-p\s+
 )
 ['"\s]
 ` |
-| `kingfisher.sslmate.1` | Active | `sslmateSECRETPSRLJKQQ36JY9MKYBREWAA3Q21VEUWAZZPY7` | <code>(?xi)<br>\b<br>sslmate<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{36}<br>)<br>\b<br></code> |
-| `kingfisher.stabilityai.1` | Active | `sk-1HrnrS6VOLdhd4U3aCDOCI45GyYft5KCcaaUVMhuumyLh5lb` | `(?x)
+| `kingfisher.sslmate.1` | Active | `sslmate\rve\n3\n\rC\nG\r\n\rdU\n\n\rN0gSuWD\r\n\nh\r\nRPRIVATECPryq\r\r\n\rhE\r\nM\ndi\n\n\rt\n\n\n\nsdD2\ns\rLCRTIR2C3NBHEGFH0A182DJB49BQEV51216O` | <code>(?xi)<br>\b<br>sslmate<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{36}<br>)<br>\b<br></code> |
+| `kingfisher.stabilityai.1` | Active | `sk-mk1ibty8QbszLgIbXYnFMMl0WYQleYjf07Rw0ogJKGATOtB9` | `(?x)
 \b
 (                
   sk-     
@@ -2162,14 +2162,14 @@ sshpass\s+-p\s+
 )
 \b
 ` |
-| `kingfisher.stackhawk.1` | Active | `hawk.JWFfdB32xkVyIkPVCIRw.jt5j_ZF9rT20A5ITZAO4` | `(?x)
+| `kingfisher.stackhawk.1` | Active | `hawk.jDHFcKb0P39jtL98Chan.OunRe_oWmY2Q15EI9adG` | `(?x)
 \b
 (
   hawk\.[0-9A-Za-z_-]{20}\.[0-9A-Za-z_-]{20}
 )
 \b
 ` |
-| `kingfisher.statsig.1` | Active | `secret-c9avTX5xa2xFGnyczgthARMnDZBQMOumfIlywfIr` | `(?x)
+| `kingfisher.statsig.1` | Active | `secret-ZobbLBzojvuCgVLzVcZkpSHc5mppduyoWHHHLIZb` | `(?x)
 \b
 (
   secret-
@@ -2177,60 +2177,60 @@ sshpass\s+-p\s+
 )
 \b
 ` |
-| `kingfisher.statuscake.1` | Active | `statuscakeTOKENzSTGI5TddIvyniZ06xny` | <code>(?xi)<br>\b<br>statuscake<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{20}<br>)<br>\b<br></code> |
-| `kingfisher.statuspage.1` | Active | `statuspageKEY4e8ed60e5456606a3af605d9e34aa1ae0d3ac84965a801a3ed9c35259bb8b3c4` | <code>(?xi)<br>\b<br>statuspage<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(<br>  [0-9a-f]{64}<br>  &#124;<br>  # Legacy UUID-ish keys (seen in older configs)<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.storyblok.1` | Active | `storyblokACCESSSPBqYIh9shVJU6pQ1W000Ktt` | <code>(?xi)<br>\b<br>storyblok<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{22}tt<br>)<br>\b<br></code> |
-| `kingfisher.strava.1` | Active | `stravaACCESS7a2fb19c88c9881b3e51cfb4f045912d5bcd8a13` | <code>(?x)<br>\b<br>(?i:strava)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:ACCESS&#124;AUTH)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{40}<br>)<br>\b<br></code> |
-| `kingfisher.stream.2` | Active | `streamapi_secret'd1x20tt1y7dmjbbxupffapc3m3yyddw1z09bu7hum2qix669ja8eyo2v66q1kvzi` | <code>(?xi)<br>\b<br>(?:stream&#124;getstream)<br>(?:.&#124;[\n\r]){0,96}?<br>\b(?:api[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'(\s,]<br>\b<br>(<br>  [a-z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.stripe.1` | Active | `pk_live_fksCVCRm8Vw0Z7XydxktXVgdBplgG4A1` | `(?x)
+| `kingfisher.statuscake.1` | Active | `statuscakeZ\nMJ\rOZ\n\nb\rM\rc6\nSECRETn\nN\nf\n\na\n\n\rR\r3T9xliSNsXQJZ7Z-hVcKoa_` | <code>(?xi)<br>\b<br>statuscake<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9_-]{20}<br>)<br>\b<br></code> |
+| `kingfisher.statuspage.1` | Active | `statuspage\r5nJ\n\r\r\nX\r\n\rM\n\n\rb\n\nwm\nk\rBR\rV\r\n\nZACCESSn\ne\n\rUw\np\rSZ\rF\n\nWw\n\r\n1GL\r3\rvy\r\rS40a3e0e51fad6043b03646022532845695308482c1a5e1207f824d4b45992343` | <code>(?xi)<br>\b<br>statuspage<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,48}?<br>\b<br>(<br>  [0-9a-f]{64}<br>  &#124;<br>  # Legacy UUID-ish keys (seen in older configs)<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.storyblok.1` | Active | `storyblokI\rZMR\rR\nn\n\n\n\nec0Rkq\r\r\n\n\rc\n2\n\r\r\rdTOKENu4\n\r\r\n\rq\r\nC\rd\n\n1\rpJKIwp\nnC\rBqf\nEi3E9D8x86h96KfLu0o7K9vtt` | <code>(?xi)<br>\b<br>storyblok<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{22}tt<br>)<br>\b<br></code> |
+| `kingfisher.strava.1` | Active | `strava\rQBHOp\r\n3NSW\ra\r\r\r\ri\nX\n\r\rK\r\n73gqwACCESS\n\n0JJnU\r\rJm\r\r\n\nb\r\n\r\nB\r\naCHQu\r\nf\nd368a554ea6674130471a8d3a1e1b4fb0bfcedf3` | <code>(?x)<br>\b<br>(?i:strava)<br>(?:.&#124;[\n\r]){0,32}?<br>(?i:ACCESS&#124;AUTH)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{40}<br>)<br>\b<br></code> |
+| `kingfisher.stream.2` | Active | `streamc\r\ni\n\ndaf\ni\n\r\r\n\n\r\rB\r\nHJ\rXS9\n\n\nI\rsecretR\n8x\rj\r\n\n\n\r\rb\nPd'mddkls0s2r7p7nfa4m6nf1vmt9o8azfdob7swix3u9wnscmrosgqdg5jjp9n84x7` | <code>(?xi)<br>\b<br>(?:stream&#124;getstream)<br>(?:.&#124;[\n\r]){0,96}?<br>\b(?:api[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'(\s,]<br>\b<br>(<br>  [a-z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.stripe.1` | Active | `pk_live_fMmax5LFDPNsLSF0bBuevmD9109qG4iP` | `(?x)
 \b
 (
   pk_live_[A-Za-z0-9]{24,128}
 )
 \b
 ` |
-| `kingfisher.stytch.2` | Active | `secret-live-5Obzj4-Y-grSKKV0FksHlnZ8L-6vVBwWXeC=A` | <code>(?xi)<br>\b<br>(<br>  secret-(?:test&#124;live)-[A-Za-z0-9_-]{35}=?<br>)<br>(?:[^A-Za-z0-9_=-]&#124;$)<br></code> |
-| `kingfisher.sumologic.2` | Active | `sumoTOKENnChKL0luTfYwQPhfei9oGjyttDCAq8l1gYbYrMni9dJCh6T4jYuPPAdLLrx7AJ` | <code>(?xi)<br>\b<br>sumo<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{62,64}<br>)<br>\b<br></code> |
-| `kingfisher.supabase.1` | Active | `sbp_d_qagbweezw2m1xqqezv0kpg909-gmmozpmio6ws` | `(?xi)
+| `kingfisher.stytch.2` | Active | `secret-live-blvvS5mO0QMGRlIsc5lcGbmCoIwz62Bt2sk=` | <code>(?xi)<br>\b<br>(<br>  secret-(?:test&#124;live)-[A-Za-z0-9_-]{35}=?<br>)<br>(?:[^A-Za-z0-9_=-]&#124;$)<br></code> |
+| `kingfisher.sumologic.2` | Active | `sumo5zQB\r\n8\r\rP\n\n\rv\rp\rFhNaY\n\rI\nQ\r\r8ANKEY\rMOx\r\nhK\nEQ8\n6WO\riEq0\r\r\n\r\r\rG\ra\ndHceeA3D3XDGuT4gNjAGFZ6veBu47RxtJcVmlMutD2iRU1BpO2ScmhgIIXkkqVc` | <code>(?xi)<br>\b<br>sumo<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{62,64}<br>)<br>\b<br></code> |
+| `kingfisher.supabase.1` | Active | `sbp_xa7cyg-rxcol5r6brg8y29m5ky26n-byiv1y5oz9` | `(?xi)
 (
   sbp_[a-z0-9_-]{40}
 )
 ` |
-| `kingfisher.supabase.4` | Active | `sb_publishable_vjrQQpigdYGmBgKKKh-ZsZZnlUCiDNQL` | `(?x)
+| `kingfisher.supabase.4` | Active | `sb_publishable_kygkeKBxufiE-8e42i_3ACWJ7B_9tVC3` | `(?x)
 \b
 (
   sb_publishable_[a-zA-Z0-9_-]{24,40}
 )
 \b
 ` |
-| `kingfisher.surge.1` | Active | `SURGE_TOKEN:""'"""''"""'"'"'"'"'""''""""''""df6fda8990591a7fd537df821d110b32\t` | <code>(?xi)<br>\b<br>SURGE[_-]TOKEN<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{32}<br>)<br>['"\s]<br></code> |
-| `kingfisher.svix.1` | Active | `whsec_LXmMG4zRQ+I8UuIUEUB3AWJh4+qJ44tP` | <code>(?x)<br>\b<br>(<br>  whsec_(?:[A-Za-z0-9+/]{32}&#124;[A-Za-z0-9+/]{43}=&#124;[A-Za-z0-9+/]{42}==)<br>)<br>(?:\b&#124;$)<br></code> |
-| `kingfisher.tableau.1` | Active | `PersonalAccessTokenAuthrOeQfvYkGkU4jUxshl9N4do5==:J9iIJ2mUDJbOH4u/K0pg3tQ6DwzZJ+ed` | <code>(?xi)<br>(?:<br>  \btableau\b<br>  (?:.&#124;[\n\r]){0,96}?<br>  &#124;<br>  PersonalAccessTokenAuth<br>  (?:.&#124;[\n\r]){0,32}?<br>  &#124;<br>  X-Tableau-Auth<br>  (?:.&#124;[\n\r]){0,16}?<br>)<br>(?:<br>  (?P&lt;TABLEAU_PAT_NAME&gt;[A-Za-z0-9+/]{12,24}<br>  (?:={1,2})?<br>  )<br>  :<br>  (?P&lt;TOKEN&gt;[A-Za-z0-9+/=_-]{24,48})<br>)<br></code> |
-| `kingfisher.tailscale.1` | Active | `tskey-mxbqdbooxe-37MWPNAW49ACJUQVS7DY78URNYVQ1IIK` | `(?xi)
+| `kingfisher.surge.1` | Active | `SURGE_TOKEN\nk\n\r\n\r9T70\rv\r\r3v=''"''''""'""''""''""""""''""''''ef2114a22eeaa074ba5081a492d72070"` | <code>(?xi)<br>\b<br>SURGE[_-]TOKEN<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{32}<br>)<br>['"\s]<br></code> |
+| `kingfisher.svix.1` | Active | `whsec_ZQWvR0ZDnlXxBBzD8HJKDPoVztrF+yH7Zu/lISFaUl==` | <code>(?x)<br>\b<br>(<br>  whsec_(?:[A-Za-z0-9+/]{32}&#124;[A-Za-z0-9+/]{43}=&#124;[A-Za-z0-9+/]{42}==)<br>)<br>(?:\b&#124;$)<br></code> |
+| `kingfisher.tableau.1` | Active | `tableauE\r\r\r9\n\rM\r\rs\n\r\nqa\r\n\n\nd\rpHx\rJ\ny\r\n\r7+042n3NSYENL+FF/c77gsLH==:Qx2ExWoK8PbN0I_xJ3o5s=VObW2GkQ6I` | <code>(?xi)<br>(?:<br>  \btableau\b<br>  (?:.&#124;[\n\r]){0,96}?<br>  &#124;<br>  PersonalAccessTokenAuth<br>  (?:.&#124;[\n\r]){0,32}?<br>  &#124;<br>  X-Tableau-Auth<br>  (?:.&#124;[\n\r]){0,16}?<br>)<br>(?:<br>  (?P&lt;TABLEAU_PAT_NAME&gt;[A-Za-z0-9+/]{12,24}<br>  (?:={1,2})?<br>  )<br>  :<br>  (?P&lt;TOKEN&gt;[A-Za-z0-9+/=_-]{24,48})<br>)<br></code> |
+| `kingfisher.tailscale.1` | Active | `tskey-dcckdomrdm-B2E0-ZW_W575ZC525A3_CBM61YCQKCEF` | `(?xi)
 \b
 (
   tskey-[a-z]{3,10}-[A-Z0-9_-]{20,36}
 )
 \b
 ` |
-| `kingfisher.tavily.1` | Active | `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` | `(?x)
+| `kingfisher.tavily.1` | Active | `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` | `(?x)
 \b
 (
   tvly-[a-zA-Z0-9]{32}
 )
 \b
 ` |
-| `kingfisher.tavus.1` | Active | `tavusapi.comsecreta8956996aaafc15f432dcf1c34a5c240` | <code>(?xi)<br>\b<br>(?:tavus&#124;tavusapi\.com)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:x-api-key&#124;api[_\s-]*key&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,24}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.telegram.1` | Active | `tgram:2767826092:OVGF2914N48S48WZ67WJU1WYL0C0-X594PM` | <code>(?xi)<br>\b<br>(?:telegram&#124;tgram:)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>    [0-9]{7,10}<br>    :<br>    [A-Z0-9_-]{35}<br>)<br>\b<br></code> |
-| `kingfisher.telnyx.1` | Active | `KEYrTD1P0aXkoTsWjkEkpIT42z5O0Vlh8ao6QKgJWBV_qGPc8nA1T-fRUn` | `(?x)
+| `kingfisher.tavus.1` | Active | `tavusapi.com\nOz\r\nqGo\n\n\no9\n\nK\n\rjgdZ3\n\rkL\rIS\r\rsecrethvU\r\n\r\r\n\n\r\rjE\n5ZZN\r\n\n\n\r\nf197d2e060a54147d58ceda385eb9bb7` | <code>(?xi)<br>\b<br>(?:tavus&#124;tavusapi\.com)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:x-api-key&#124;api[_\s-]*key&#124;token&#124;secret&#124;key)<br>(?:.&#124;[\n\r]){0,24}?<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.telegram.1` | Active | `telegramgH\r\r\rvm\n\rc\n\n6zZNat\nk\r\nA\n\nlU5\r\no57197281970:LZHDD04MA-XV23OSFCN-VXWTYLS9UGYNRAR` | <code>(?xi)<br>\b<br>(?:telegram&#124;tgram:)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>    [0-9]{7,10}<br>    :<br>    [A-Z0-9_-]{35}<br>)<br>\b<br></code> |
+| `kingfisher.telnyx.1` | Active | `KEYSKIULVGGBuqN12DxtnnkTzlsNrDSemmSF6bDjX0XRkggw38-EB2jofY` | `(?x)
 \b
 (
   KEY[0-9A-Za-z_-]{55}
 )
 \b
 ` |
-| `kingfisher.tencent.2` | Active | `tencentsecret-key\t9nEFaI7YMkJKS4ld46c9yNfoidSIIR9E` | <code>(?xi)<br>\b<br>tencent<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:secret[_-]?key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s&gt;]<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.terraform.1` | Active | `ca6xe9G97r9eAXv9GhPaoGUFIsYrswkL.atlasv1.1HdeMCBqx7hRGYSmDLXV2bV22sp80Yjmbim1611UIkauEFJCPWK_sbuZRwlK` | `(?x)
+| `kingfisher.tencent.2` | Active | `tencentAPHW\n\r3\n\nQ\r\n\nKCb\nsqB4\nCCUB\r\n\nkE\nsecret-keyZ\ri\r\n\n\nF\r\re\rk\n\n\n\rKehSqZBwLuYOb7HAw71IQ72brpltsleI` | <code>(?xi)<br>\b<br>tencent<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:secret[_-]?key)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s&gt;]<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.terraform.1` | Active | `jGIEjPXuCPrv1FcKELjd8cdzpkzYug9m.atlasv1.JE8BAQ9qcr-w2EfzuqA_n1a0aZ_1-ewCUz-AtufTtxXqq84wyOaG3QYnFNOw` | `(?x)
 \b
 (
   [A-Za-z0-9]{1,32}
@@ -2239,14 +2239,14 @@ sshpass\s+-p\s+
 )
 \b
 ` |
-| `kingfisher.testkube.1` | Active | `tkcapi_wo8u1qmtj8gqiphkxg0i5d6m648mmpt0` | `(?xi)
+| `kingfisher.testkube.1` | Active | `tkcapi_dm3pk7mwu67ech5hxmymoj7lunim6o1n` | `(?xi)
 \b
 (
   tkcapi_[a-z0-9]{30,64}
 )
 \b
 ` |
-| `kingfisher.thingsboard.1` | Active | `thingsboard.cloud/api/v1/dbsx2y3c35n5pvdufm7d` | `(?x)
+| `kingfisher.thingsboard.1` | Active | `thingsboard.cloud/api/v1/qjqj18touyw49rc7d8yq` | `(?x)
 \b
 thingsboard\.cloud/api/v1/
 (
@@ -2254,62 +2254,62 @@ thingsboard\.cloud/api/v1/
 )
 \b
 ` |
-| `kingfisher.thingsboard.2` | Active | `"provisionDeviceKey"\n\t\r\r\t\x0c\n\x0c\n\r\t\r\t\t\t\r\x0b\n\x0b\t\n\x0c\x0b \n \n \t\n\n\x0c: \x0c\x0b \x0c\x0b\r \n\x0b\n\r\x0b\x0b\r\x0b\x0c\n\x0b\x0b\n\t\x0c\x0c\t\x0c\x0b\r\n\x0c\n\n"jr2c9mr5bcm2pau4e2qu` | `(?x)
+| `kingfisher.thingsboard.2` | Active | `"provisionDeviceKey"\n\x0c\x0b\r\x0b\r \x0b\t \t\x0b\x0c\x0c\x0b\t\x0c\r\x0c\r\t\n\x0b\r \x0b\x0b \t  \x0c:\n\t\x0b \x0c\t\x0c \x0c\x0b\x0c\x0b\n\x0c  \t\n\n\n\x0b\r\x0b\x0c\n\r\t\x0c\r\r\x0b\x0b"apz6t7qodp148uv83yp3` | `(?x)
 "provisionDeviceKey"\s*:\s*"
 (
   [a-z0-9]{20}
 )
 \b
 ` |
-| `kingfisher.thingsboard.3` | Active | `"provisionDeviceSecret"\r\x0b \n\x0c\t\x0b\r\x0b \t\x0c\t\t\x0c\x0b\x0b\x0b\n\t\t\t\x0b\n\n\x0b\r\n\t\x0c\n\t:\n\t  \x0c\r\n\x0b \t \n\r\x0c\t\x0c\x0b\r\x0b\n\x0c\x0b\t\r\t\t\r\r\x0b\n\t "35qftxa5p530gabbs14m` | `(?x)
+| `kingfisher.thingsboard.3` | Active | `"provisionDeviceSecret"\x0c\x0c\n\x0b\x0c\x0c\t\x0b\t\x0c\n \x0c \t\n\r\x0b\x0c \r\x0c\x0c\x0c \r\n  \n \x0c:\x0b\t\x0c \n\r\r\n\x0c \r\x0b\t\x0c\x0b\t\x0c\r\x0c\r\x0b \x0b\t\r\x0b\t\x0c\r\x0b \x0c"v0skstd02029iwccd9se` | `(?x)
 "provisionDeviceSecret"\s*:\s*"
 (
   [a-z0-9]{20}
 )
 \b
 ` |
-| `kingfisher.thunderstore.1` | Active | `tss_1mtKGfrI6nBsQNdHgTXSrSCeHZayVYW6` | `(?x)
+| `kingfisher.thunderstore.1` | Active | `tss_jUFogqPqtnMZjgORSrDqF4yEE0u5IdVW` | `(?x)
 \b
 (
   tss_[a-zA-Z0-9_-]{20,80}
 )
 \b
 ` |
-| `kingfisher.thycotic.1` | Active | `delineapassword:'""'""""'"'''"'""'''''''"'''""''Fjv91gvPQEK14da8Vum7Mipi8WDpx6Xx ` | <code>(?xi)<br>\b<br>(?:secretserver&#124;thycotic&#124;delinea)<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:password&#124;passwd&#124;pass&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
-| `kingfisher.tigris.2` | Active | `tsec_vK9+sy8FSZ5u7JsvDMwaWG1BmSBUCqUyZFeAZ5zP0UUJ9xT2T7PsaBM9xkzNYzrA7VxfLe` | `(?x)
+| `kingfisher.thycotic.1` | Active | `thycotic\r\n\n\n\n\rt\n\n\n8\n\n\niKu\rO\nE\rDJ\rZ\nr\n\r\nQpassB\nQP\r\n\r\rZ\r\rg\r1\rZ:''""'"""""""""''"'''""'""'""'"''t:U:=:9:k::1d===s:=cx:1:=:==:BE:"` | <code>(?xi)<br>\b<br>(?:secretserver&#124;thycotic&#124;delinea)<br>(?:.&#124;[\n\r]){0,128}?<br>\b(?:password&#124;passwd&#124;pass&#124;pwd)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [^\s"']{6,128}<br>)<br>['"\s]<br></code> |
+| `kingfisher.tigris.2` | Active | `tsec_E5c_HKaRc6HPfJBWmGKrDBafSBCR2yaMU7mbFzHy4N2BcTi7R9WHG_3Q0iodivGksilBv2` | `(?x)
 \b
 (
   tsec_[A-Za-z0-9_+-]{70}
 )
 \b
 ` |
-| `kingfisher.tinybird.1` | Active | `p.eyJ1IeXSV6mb3fGfnfZsamzopYuO5DUx46VgW_iMm6ZhwKVOfxfH_QmeqcLRCFaQ-THJA7X5QIZcwEl3Ry2TM.KTuOHN8U4KZDg90Zj_EyWI8pZ4dMNHzTaquXwUC3iqYA` | <code>(?x)<br>\b<br>(<br>  p\.eyJ1I[A-Za-z0-9_-]{80,260}\.[A-Za-z0-9_-]{43}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
-| `kingfisher.todoist.1` | Active | `todoist02574779a32ab78984f2fc69c3ed29fe276fe4c1` | <code>(?x)<br>\b<br>(?i:todoist)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{40}<br>)<br>\b<br></code> |
-| `kingfisher.together.1` | Active | `tgp_v1_9wRKL7lG8_LB-1nS9U8XzQ3-5ZGK9XNZBAX3tjfIaaO` | `(?x)
+| `kingfisher.tinybird.1` | Active | `p.eyJ1IfqczP3PGB54xxRuB0NAxNnfBedzUooSesQOcrF8cbo_2vbU3FlvktgNdBISbgpni08YNqy_2-lmZALnj.KrI8oPpikOxoJdcHYjE7j5KBG2INhx_xFhleN7rA5Ne=` | <code>(?x)<br>\b<br>(<br>  p\.eyJ1I[A-Za-z0-9_-]{80,260}\.[A-Za-z0-9_-]{43}<br>)<br>(?:[^A-Za-z0-9_-]&#124;$)<br></code> |
+| `kingfisher.todoist.1` | Active | `todoist\nuM\nHs\rE\rH\r\r\rZbpgmNs\nhK\r\nQbV\r\r\rr924abbb2d1ece890875d32c7086105ddfea9066a` | <code>(?x)<br>\b<br>(?i:todoist)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [0-9a-f]{40}<br>)<br>\b<br></code> |
+| `kingfisher.together.1` | Active | `tgp_v1_dofWopGD3W3n0vyawK14PO2WEUlSCgavz67mccAogAS` | `(?x)
 \b
 (
   tgp_v1_[A-Za-z0-9_-]{43}
 )
 ` |
-| `kingfisher.tolgee.1` | Active | `tgpak_lq9me1cm1ipzz4tp7ce1juv8ytvjcy36a9p9lyoj` | `(?x)
+| `kingfisher.tolgee.1` | Active | `tgpak_c8oppwe2is3bhjglovhs8j4lmbra2rmefsq82xqv` | `(?x)
 \b
 (
   tgpak_[a-z0-9]{40,64}
 )
 \b
 ` |
-| `kingfisher.tolgee.2` | Active | `tgpat_tihec8vt1jlox45dun5q0os3h8ql1kh4m7a9il4a` | `(?x)
+| `kingfisher.tolgee.2` | Active | `tgpat_lac67prpphn6723a5yo6lphjtl92b7dmsdnmfmhs` | `(?x)
 \b
 (
   tgpat_[a-z0-9]{40,64}
 )
 \b
 ` |
-| `kingfisher.travisci.1` | Active | `travisKEYAN_KXEGK88FSIYTW71SSIP` | <code>(?xi)<br>\b<br>travis<br>(?:.&#124;[\\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z-_0-9]{22}<br>)<br>\b<br></code> |
-| `kingfisher.travisci.2` | Active | `script:\rsecure:\x0c  \r \x0b\t\x0c\t\x0b \t\x0c\t\x0b\r\x0c\x0b\x0b\n\x0c\x0c\t\r\x0b\x0c  \t\x0b\n\x0b"DLn148VWp2XrreOb9VO7mf0jCZriznmO"\t \t \t\n  \t\x0b\r\t\x0c\t\n\n\x0c  \x0c\t\n\x0c\x0c\t\x0b\t\x0c\x0b\x0b\x0b\n` | <code>(?xis)<br>(?:language&#124;env&#124;deploy&#124;script):[\r\n]<br>(?:.&#124;[\\n\r]){0,256}?<br>(<br>  secure:\s*"?[A-Za-z0-9+/=\\]+"?\s*<br>)<br>\b<br></code> |
-| `kingfisher.trello.1` | Active | `trellotokenIj3gNzcJclDYRZDnuqM0YAEoLpvFgXtC` | <code>(?xi)<br>\b<br>trello<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  token &#124;<br>  api[_-]?token &#124;<br>  access[_-]?token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.trendmicro.1` | Active | `deepsecurity\x0b6ffEACBf-dbFE-e1d3-b2be-a640c9dCB7fA:12E75328-72Ba-b380-0E0a-CE7Fb03B2bB7:oplVWiq6wwcmLc5XTvDJMW18o1OaBP5aO1t8oGQB==` | <code>(?xi)<br>(?:deepsecurity&#124;api[_-]?secret[_-]?key)<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}<br>  :<br>  [A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}<br>  :<br>  [A-Za-z0-9+/]{40,60}={0,2}<br>)<br></code> |
-| `kingfisher.trendmicro.2` | Active | `tmc16qPntipuJuWPFl7nwptbsxRFSrkC7fN1:0UQCNgUyK6551q8Fp10eqnfUsbmxyhC8ZbHQgqqTfjefkOpBNTJoQhBPko0x` | `(?x)
+| `kingfisher.travisci.1` | Active | `travisK\\qTn\rk\\ljX\r\\\\V4SECRETF\n\nkH\r6Qk\nP\nf\rmsXSWPJYUE5AWTU39DR_2RSF` | <code>(?xi)<br>\b<br>travis<br>(?:.&#124;[\\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Z-_0-9]{22}<br>)<br>\b<br></code> |
+| `kingfisher.travisci.2` | Active | `env:\nDv6u\\\\\\wnhn3nr\\\r\r\\W6n58nrD4\\nn\\\\secure:\n\r\x0b\n\r\x0c\n\x0b\t\t\x0c\r\x0c\r\t\x0b\x0b\t\r\x0b\x0c\t\r\x0b\r\x0c\x0c\n\t \r\n"NEgM=2L\\5qusVxQ55PYWJ1EIst4ynxKP"  \n \t\r\t\t\n\x0c\r\x0c\x0c\r\n\t\n\n  \x0b \t\n\n\r\r\r\n\x0c\r\x0c` | <code>(?xis)<br>(?:language&#124;env&#124;deploy&#124;script):[\r\n]<br>(?:.&#124;[\\n\r]){0,256}?<br>(<br>  secure:\s*"?[A-Za-z0-9+/=\\]+"?\s*<br>)<br>\b<br></code> |
+| `kingfisher.trello.1` | Active | `trello\n\r1\r\r\nQU\n\n\n\n\n\nPMiyr\r8\r\n\rb\nCwen\nXtoken\r\n\r\nE\n\n6P\rW\rM5h5hnWxmSzzAqhqwWLkyWFpRBMZMnqr` | <code>(?xi)<br>\b<br>trello<br>(?:.&#124;[\n\r]){0,32}?<br>(?:<br>  token &#124;<br>  api[_-]?token &#124;<br>  access[_-]?token<br>)<br>(?:.&#124;[\n\r]){0,12}?<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.trendmicro.1` | Active | `deepsecurityv\r\r\rO\rE\nY\ru\n\nP\rp\r\n\r\rH\nHNa8E\rj\r\nK\t4a2C87f4-40E0-3aCE-dabf-Ae1fbc4dBc6B:ee7aCe4d-0845-c791-CBF2-F8d952d2cB5C:JAq0mCmTO9s0uqUL/vqBuV2QTSw106VhkglhS0sh==` | <code>(?xi)<br>(?:deepsecurity&#124;api[_-]?secret[_-]?key)<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}<br>  :<br>  [A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}<br>  :<br>  [A-Za-z0-9+/]{40,60}={0,2}<br>)<br></code> |
+| `kingfisher.trendmicro.2` | Active | `tmc17BRW8NUNvCZIUkXYHy5rCnWRZ8Xqfv6y:B6y2tsVWJroce73iqaSUVcVPvUyVL8JIzQHK49nKcfnT45LgSKBsmQA2yVpw` | `(?x)
 \b
 (
   tmc1
@@ -2319,28 +2319,28 @@ thingsboard\.cloud/api/v1/
 )
 \b
 ` |
-| `kingfisher.triggerdev.1` | Active | `tr_prod_6GUxwzgkNSEbHhwSpR3m` | <code>(?x)<br>\b<br>(<br>  tr_(?:dev&#124;prod&#124;stg)_[A-Za-z0-9]{20}<br>)<br>\b<br></code> |
-| `kingfisher.triggerdev.2` | Active | `tr_pat_UD9x4ot9GpAOdBKIJekr` | `(?x)
+| `kingfisher.triggerdev.1` | Active | `tr_dev_8XYoWWCl4VsYzfwP92yq` | <code>(?x)<br>\b<br>(<br>  tr_(?:dev&#124;prod&#124;stg)_[A-Za-z0-9]{20}<br>)<br>\b<br></code> |
+| `kingfisher.triggerdev.2` | Active | `tr_pat_kKoYrnmyBC7XRWq3zijG` | `(?x)
 \b
 (
   tr_pat_[A-Za-z0-9]{20}
 )
 \b
 ` |
-| `kingfisher.truenas.1` | Active | `"params" \r\n\x0c\t \x0c\n\x0b\x0b\t\r\n\x0b\t\t\x0c\x0c\t\x0c\r\x0c\x0c\n\t\x0b \x0b\n\x0c\t\x0c: \x0c \r\t  \n\t \t\x0b  \x0b\x0c\r\x0c\r\x0b\r\x0b\n\r \n\r\t\x0c\t\t\n[\n\n\x0b \r\r \n\t \t\t\x0c\n\x0b\t\x0b\r\x0c \t\r\x0c\n\x0c\t\n\r \n\t\t"02765139949499137806846371143209-Gq3YK7stD77sIXoBHjZI5TDHXsmuolLp402KliN5zrsS6BnukL4ehcCHxE1kNmHB"\x0c\t\t  \r \x0b\t\n\n\r\n\r \n\x0c\r\x0b\x0b\x0b\r\x0c\x0c\n\r\r\x0c\r\n\t ]` | `(?x)
+| `kingfisher.truenas.1` | Active | `"params"\t\r\t\n\x0c\t\t\t \r\x0b \n\x0b\t\r  \x0b\x0b\r\n\n \t \t\x0b\n\x0c\x0c\x0c:\n\r\x0b\r\r\r\t\x0b\n\t\n\t\x0b\x0b \r\x0b\x0b\r \x0b\n\n\r\n\x0c\n\t\t \r\n[\x0b \t\t\x0c\r\t \r\t\t\n\t \r\t \t\t\t\r\t\t \x0c\t\t\x0b\t\n\r\n"34475830986193887414636243486354-MzCFeT5SMYyHjZ8PpicaFMwDQWrQFy6bOakUpluCkkaER3WGJ4pPLy0NmRDt4Vmz"\t\x0c\x0b\t\x0b\x0b\t\n\n \x0b\r\r\r\r\r\x0b \x0b\n\n\r\x0c\t\x0c  \r\x0b\x0b\t\r]` | `(?x)
 "params"\s*:\s*\[\s*"
 (\d+-[a-zA-Z0-9]{64})
 "\s*\]
 ` |
-| `kingfisher.truenas.2` | Active | `/api/v2.0Bearer\t\r\x0c\n\x0c\t\t\x0c\r \n\n\x0c\r\x0c\r \r\t\r \x0c\x0c\n \x0b   \n \x0b80523333449496348701541467338860-lHCdhHCYSz5mUyaHZN2Vnf09y6ex8BrFkn8KnQS8C4yYy2PeoPP6IN5uSSbMh40b` | <code>(?x)<br>/api/v2\.0<br>(?:.&#124;[\n\r]){0,256}?<br>Bearer\s+<br>(\d+-[a-zA-Z0-9]{64})<br>\b<br></code> |
-| `kingfisher.truenas.4` | Active | `truenaspassword17204933525432591526345644251528-opmC32THo0oH69z7GQ8om5rv52uLjv8uuGDieuMMgNQkHR1hGJTT2l4lNtuaCV02` | <code>(?xi)<br>\b(?:truenas&#124;true[_-]nas&#124;tn[_-])<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;api[_-]?token&#124;key&#124;token&#124;secret&#124;password&#124;auth)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  \d+-[a-zA-Z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.twilio.2` | Active | `twilioACCESS2fqhy62iehmohp70r68bjn7asn7ddhqm` | <code>(?xi)                <br>\b                  <br>twilio<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                  <br>(<br>  [a-z0-9]{32}<br>)<br></code> |
-| `kingfisher.twitch.1` | Active | `twitchvdqkmxnrd96m8m4khxer5o4qwiw6wx` | <code>(?xi)<br>\b<br>twitch<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{30}<br>)<br>\b<br></code> |
-| `kingfisher.twitter.1` | Active | `xRcomSECRETAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMGV9NmNNLok2xL33PH3mPeSL-xEmu8IBJhxUnk0Z` | <code>(?xi)           <br>\b                       <br>(?:twitter&#124;x.com&#124;twtr)?<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;BEARER)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                                      <br>  A{10,}[A-Za-z0-9_\-]{40,200}         <br>)<br>\b<br></code> |
-| `kingfisher.twitter.3` | Active | `twitterSECRETBTZNWL2IS27BWRE0URZKY2SH2VXZNGGA3NTJFR66RNYBOVQ8J5` | <code>(?xi)<br>\b<br>twitter<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [A-Z0-9]{50}<br>)<br></code> |
-| `kingfisher.typeform.1` | Active | `typeformtfp_5krpww003av5mon43gy0x.2jq91zg5xa-y902c4li4=5.yc7-sdl6_s_ng4` | <code>(?xi)<br>\b<br>typeform<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  tfp_[a-z0-9_\-=\.]{59}<br>)<br></code> |
-| `kingfisher.uber.1` | Active | `uberserver_token\t""'"'"'"""'"'"'""""'''""'"'"'"''4LnlNuyJmR7uIxLGnxKNt9-2KUnV6yiqr6Co'` | <code>(?xi)<br>\b<br>uber<br>(?:.&#124;[\n\r]){0,32}?<br>\bserver[_-]?token\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9_-]{36,44}<br>)<br>['"\s]<br></code> |
-| `kingfisher.ubidots.1` | Active | `BBUS-vF6ArKwy13m2GXb1G1PAN2oiYEIqS8bZ` | `(?x)
+| `kingfisher.truenas.2` | Active | `/api/v2.0\ru\rX\n\rB6\r\n\n\n\r\rU\nZLS\n1\r\nm\r\r\r\nG3\n7Bearer\x0c\t \x0c\n \r\n \r\x0b\x0c\x0c\n\t\n\x0c\t\x0c\x0c\x0c\x0b\r\r\x0b \r\n \r \t99907757436295167346424547079102-Qyyduhm3RMnLJ1bR3lZI7xmu1bJjkicRMGzI33qXsoKCGJSIgkUIk5mxxRCfOp2U` | <code>(?x)<br>/api/v2\.0<br>(?:.&#124;[\n\r]){0,256}?<br>Bearer\s+<br>(\d+-[a-zA-Z0-9]{64})<br>\b<br></code> |
+| `kingfisher.truenas.4` | Active | `truenas\nwI\nRs\r2Be\nUwG\r7\rV\n\n\rt\nw\n\n\nRfeZwkey\n\rS\ruR\n\r\rd8x2\n\nk\nL\r\r\rT\n\n\n\r\n0XtO108277869814761180447633485843308-Bsh6Bg9bSep8nXGw8kFH94GEBvft1BExi0MNZg1gYp01tj4v2k1R5pxRYHltQ2VG` | <code>(?xi)<br>\b(?:truenas&#124;true[_-]nas&#124;tn[_-])<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_-]?key&#124;api[_-]?token&#124;key&#124;token&#124;secret&#124;password&#124;auth)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  \d+-[a-zA-Z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.twilio.2` | Active | `twiliofK3S\rn\rb\n\n\rpq\n4qC\rjA0yG\rk\rb\r\rxw\nACCESSFR2hW\r\n\ng\nB0PxMk\r\n\nDHpa\r\rL\n\r\r\rEgr2usk10vc6ay0x1c6ddts5mr8ziwkf2x` | <code>(?xi)                <br>\b                  <br>twilio<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b                  <br>(<br>  [a-z0-9]{32}<br>)<br></code> |
+| `kingfisher.twitch.1` | Active | `twitch\noLs\r\n\r\reKyZkqwg\r\n\r\r\r\rIxK\rc\rBvq\r3s7dk8qli78zpr5vv3fwjnrh9z6tj7` | <code>(?xi)<br>\b<br>twitch<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-z0-9]{30}<br>)<br>\b<br></code> |
+| `kingfisher.twitter.1` | Active | `xLcom5rSKy\r\n\n\nT\rS70\r\nKEYLQQJ\n\r\n\r\n\r\n\rdT\n\rAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA_4kZ53oM2CS5tYAN14iw3d0bBczVnjpfleG_AhQx` | <code>(?xi)           <br>\b                       <br>(?:twitter&#124;x.com&#124;twtr)?<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;BEARER)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(                                      <br>  A{10,}[A-Za-z0-9_\-]{40,200}         <br>)<br>\b<br></code> |
+| `kingfisher.twitter.3` | Active | `twitter\rW\rU\r\nmII\rPT\r\nx0\raFq\r4\nV\n\nJ\n\n\nhgSECRET\n2I\nY\nz\nJ\nS\n\n\rQG\r\r\r\n\rh\r\nh\n\n\r\nJ\r\r5YRZ0IOV00PG0P3HREDWUEXL603J2NVGDZWOCKHWC3G1DRPF95` | <code>(?xi)<br>\b<br>twitter<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [A-Z0-9]{50}<br>)<br></code> |
+| `kingfisher.typeform.1` | Active | `typeformKBC\nN\nNE\nLc\r\n\r\r3\r\r8g\n\r\rA7Np\r\r\r\n\rtfp_fyybrq-0530hpreb1ypimve1_gatlo0g65q07--2h233kwmr4bb4pdznx2s` | <code>(?xi)<br>\b<br>typeform<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  tfp_[a-z0-9_\-=\.]{59}<br>)<br></code> |
+| `kingfisher.uber.1` | Active | `uber\n\rxq\ry\n\r\n4VQ\niBZ\r\n\n\rMg\n\nNX87EM\r\nserver_tokenoF\n\nSG\r\n\r\r\n\rKk\rt\x0c"'"'"''"""''""'"""''""'''""""'""12NNiaZTvksDZ3OKSqQvv5WuWwLPAIgNANJs\r` | <code>(?xi)<br>\b<br>uber<br>(?:.&#124;[\n\r]){0,32}?<br>\bserver[_-]?token\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [A-Za-z0-9_-]{36,44}<br>)<br>['"\s]<br></code> |
+| `kingfisher.ubidots.1` | Active | `BBUS-k4uz95fgeAtl46aeuaUryuyB1tgHamoH` | `(?x)
 \b
 (
   BBUS-
@@ -2348,46 +2348,46 @@ thingsboard\.cloud/api/v1/
 )
 \b
 ` |
-| `kingfisher.unkey.2` | Active | `key_MMTFyRu6cR1RcrDdVGHEVOAvWOoHxBx9` | `(?x)
+| `kingfisher.unkey.2` | Active | `key_9tlms6ZVPq1BjKUPjIYWePG4UYvQRe0A` | `(?x)
 \b
 (
   key_[A-Za-z0-9]{10,48}
 )
 \b
 ` |
-| `kingfisher.unkey.3` | Active | `unkey_plaintext_key_secret\x0c\x0b\x0c\r\x0b\x0c\r\x0c\t \n\t\n\n\r\r \n\r\x0b\t\r\t \x0c\x0c\r\t\t\x0b\x0b\x0c=\t\r\n\n \n\n\x0b \t\x0b\x0b\r\r\x0c\x0b \n\t\x0b \x0c\n  \r\x0b  \x0c\x0b\t"lF89ERjSyPqSfwOSnpJfH3DVaWR7Q7pR'` | <code>(?xi)<br>unkey<br>(?:_(?:secret&#124;plaintext&#124;key&#124;create)){1,3}<br>\s* [=:] \s*<br>['"]?<br>(?P&lt;secret&gt;[A-Za-z0-9]{20,48})<br>['"]?<br>\b<br></code> |
-| `kingfisher.unleash.1` | Active | `unleashTOKEN*:eam85ces6jqoh5krz2vlo83an2fb7qbaj.be75fad7cf357ae1a683f0021fc41859b76d9e0d161f0d90a45f785a` | <code>(?xi)<br>\b<br>unleash<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?TOKEN&#124;CLIENT[_-]?KEY&#124;ADMIN[_-]?TOKEN&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  (?:\*&#124;\[\]&#124;[a-z][a-z0-9-]*)<br>  :<br>  [a-z][a-z0-9-]*<br>  \.<br>  [0-9a-f]{56}<br>)<br>\b<br></code> |
-| `kingfisher.unleash.2` | Active | `unleashuser:290189734441f381dcfe956fa9a226221bab825b3d51121b06921f4d` | <code>(?xi)<br>\b<br>unleash<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  user:[0-9a-f]{56}<br>)<br>\b<br></code> |
-| `kingfisher.unsplash.1` | Active | `unsplashin4JZajPSWh2nuVYd2aQqR3FmI9VzxkR2fPyxh9lIPK` | <code>(?xi)<br>\b<br>unsplash<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_]{43}<br>)<br>\b<br></code> |
-| `kingfisher.upcloud.1` | Active | `ucat_4CKY0QVJJAZTD9EPEXX4TQ8CAK` | `(?xi)
+| `kingfisher.unkey.3` | Active | `unkey_create_key_plaintext\n\r\t\r\x0c\r\t\t\x0b\t\x0b\n \x0b\r \n \n\r\t\x0b \r\t\t\t\n\n \t\t=\x0b\x0b\x0b\t\x0b\r\x0b \t \n\r\r\x0c\t\x0c\x0b\r\t\x0b\x0b\x0c\t\n\x0b\x0c\r\n\r\x0c\t\r'KKgi0Px4szVzwrbms2nBFQPKWYHaEGXC'` | <code>(?xi)<br>unkey<br>(?:_(?:secret&#124;plaintext&#124;key&#124;create)){1,3}<br>\s* [=:] \s*<br>['"]?<br>(?P&lt;secret&gt;[A-Za-z0-9]{20,48})<br>['"]?<br>\b<br></code> |
+| `kingfisher.unleash.1` | Active | `unleashocu\rF\n\ryqm1\nxh\n\nDB2\ni\n\r\r\nq\rR\nZ5\nAPI-TOKENE\nUGdl2\r0m\n\rn\r\n\n*:mrb1a-8s0x2vfaca2klfr5mwindpi1z6w.e22e85ab72afab897f0df65b6583d1a6b23900a243f8e9f3428078e7` | <code>(?xi)<br>\b<br>unleash<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?TOKEN&#124;CLIENT[_-]?KEY&#124;ADMIN[_-]?TOKEN&#124;TOKEN&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  (?:\*&#124;\[\]&#124;[a-z][a-z0-9-]*)<br>  :<br>  [a-z][a-z0-9-]*<br>  \.<br>  [0-9a-f]{56}<br>)<br>\b<br></code> |
+| `kingfisher.unleash.2` | Active | `unleash\rqF\nv\ra\r\r9\r\n\n\nz\n\n\rP\nmB\r\r\n\rUm\n\rrmuser:ae7d342ff894a8943195f45e1c2921b53693b89244069c7e1c67aebe` | <code>(?xi)<br>\b<br>unleash<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  user:[0-9a-f]{56}<br>)<br>\b<br></code> |
+| `kingfisher.unsplash.1` | Active | `unsplashB\rvU\r\r\n\ne\n\nmdk0mUEF\n\r\nD6vkaL\n6J\reyztbMBM8NzIWohCKMyaxOipi57RtQZ5S5FBsjXL8YL` | <code>(?xi)<br>\b<br>unsplash<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9_]{43}<br>)<br>\b<br></code> |
+| `kingfisher.upcloud.1` | Active | `ucat_A7MT112B0TBWP9535E9XR1XPB0` | `(?xi)
 \b
 (
   ucat_[0-9A-HJKMNP-TV-Z]{26}
 )
 \b
 ` |
-| `kingfisher.upstash.1` | Active | `UPSTASH_REDIS_REST_TOKENYCcUAWWqcnNMKo7cufMlDcUUoIkmqZuw` | <code>(?x)<br>\b<br>(?:<br>  UPSTASH_REDIS_REST_TOKEN<br>  &#124;<br>  (?i:upstash)<br>  (?:.&#124;[\n\r]){0,40}?<br>  (?i:(?:redis&#124;rest))<br>  (?:.&#124;[\n\r]){0,40}?<br>  (?i:token)<br>)<br>(?:.&#124;[\n\r]){0,24}?<br>(<br>  (?:<br>    [A-Za-z0-9]{32,48}<br>    &#124;<br>    AYNgAS[A-Za-z0-9+/_-]{26,90}={0,2}<br>  )<br>)<br>\b<br></code> |
-| `kingfisher.upstash.4` | Active | `upstash7cf64d95-1758-40da-be7b-9370c1636a7f` | <code>(?xi)<br>\b<br>(?i:upstash)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [0-9a-f]{8}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  4[0-9a-f]{3}<br>  -<br>  [89ab][0-9a-f]{3}<br>  -<br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.uptimerobot.1` | Active | `uptimerobotACCESSpqbdN6aMfzV0c8p7XhvYnj529h51` | <code>(?xi)<br>\b<br>uptimerobot<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:ur[A-Za-z0-9-]{29}&#124;[A-Za-z0-9]{28})<br>)<br>\b<br></code> |
-| `kingfisher.uri.1` | Active | <code>https://U%b4%d4%3edIj%81~%b36%C4%B1%Bar%DF%ebAE%E1%df%EE%a8%5ey%E3%00%0Cu%74$%A6%5B:IS%06%50b%c3.gEp%28Em,%923!7T%7AcZ%1F%67%aF%F7%a5%46%CF_%e5%e3@[veuhgGA6RiAC)YAz-O07D;sLGsJpWQ$o9y]:32149483793560875620981409390400/284sswtfzt6$R307=UZtBeRPb!ir7UU-/nzmYwz0H:wLe9llr(v'g.Xj0:~;~kXnw/S$6:aoD_sye:VBiNYe4)k-4Cn~=hXEJz/L475BQUHgcTDa&amp;1qFd!TOA6Q9L0fA5;S/c:s;3Hug2*P7.,.MqVpskD$Zrw3dN,2D/s)*vm$I=ruJv5FQgYJLwEbhvQDlWpGqe/%6SPd;pyyIJznU_jFo3d.f!F84t7_6Ol/YGBTwl1f3LPwgfmlkK4$Dpk=ptWVsbxa/D*_y)2qJkO3sNe2sW@JLL9M~0kr5pJ-./dn_Qf,*54UAwb_3EIG_Y7g5-X6ULn0ch/M8Y_ynG7B(tW.d6)99ctb7rk6Q2W@d2y/'XmUBkJ.3U~rC;mcuj'X)s*:Wc8!m8oZ/9T.&amp;H8,zT~EuQkdQbd2U5yIaukKMsk~s/nMQ~WG0dXCJE(PnppT.92nuKwF=xKN,P/HSW:yfp':&amp;6uZAlf-$:~oY(uCC;F&amp;'rz/b'MweHKF:(B3DMCancquN%jZr&amp;QIeq:G/tvP@gjyWizI'xL29;1%j97hNlj*yeB1G/iAC,M9rrN;S8,LdcRVUby0XTpvfM1SQs/$(E!qaZdoQR4jm9pp0.9SWaS@bpIss$&amp;/PvA--z@eH%Ky%hxN~!vNX1Dna,4j;cNI/i7k.j0%O20'W7,Jy.XtR_F)=fSkeP$_'/@7%bZl,,T0Q(!_wFIZwOR,zI5e,XWxUF/NoifHH:1t5b77*d)P0m)nb,3Rym582=p/Wh)V-SsO2zOVbPD=_$3rm=XUf2a:WcW=/Jo@m~!ybs9,nA-@Fe'vWg11J46YyGIfm/cYsPGiA!qiBzhCqi*3BF_Oad2WU1(P:m/VvsFxkm0WTq8vMtJbsreF*Eg;~vEE4(f/b6uf$~X*&amp;IIXq3X)e%YaicRvM4sTpvEC/jjz65!J.NB1oHPCe*gf!4h5V2q*s4YHj/StFyGYPVqL.MfR&amp;kXHVkE4z,:ZQY4@A&amp;/eP;GM2eEjG8t0j_yYX-tJw5EEbXZu=ZP/lh;@BSg0ib.5%V6wK6H7P;=LPE!sm-&amp;1/?@60:CS4spIpd&amp;'@tG=TlQC;h!,c-N5Mm#qRkjsh1c1?!GjU~(EmKINUtig/Y:Owzb</code> | <code>(?xi)<br>(<br>  (?:https?)://<br>  [A-Za-z](?:[A-Za-z0-9+\-._~!$&amp;'()*+,;=]&#124;%[0-9A-Fa-f]{2})*<br>  :<br>  (?:[A-Za-z0-9\-._~!$&amp;'()*+,;=]&#124;%[0-9A-Fa-f]{2})+<br>  @<br>  (?:[A-Za-z0-9\-._~%]+&#124;\[[A-Fa-f0-9:.]+\]&#124;\[v[A-Fa-f0-9][A-Za-z0-9\-._~%!$&amp;'()*,;=:]+\])<br>  (:?[0-9]+)?<br>  (?:/[A-Za-z0-9\-._~%!$&amp;'()*,;=:@%]*)*<br>  /?<br>  (?:\?[A-Za-z0-9\-._~%!$&amp;'()*,;=:@/?%]*)?<br>  (?:\#[A-Za-z0-9\-._~%!$&amp;'()*,;=:@/?%]*)?<br>)<br></code> |
-| `kingfisher.urlscan.1` | Active | `urlscanKEYUj0kuYa8UyEFlCOOiUbnxKtEAVLyDrTMoUHr` | <code>(?xi)<br>\b<br>urlscan<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;[A-Za-z0-9]{36})<br>)<br>\b<br></code> |
-| `kingfisher.valtown.1` | Active | `vtwn_2yBPhOkVi1dNI-_8YZS7RlH4qxPfugUD` | `(?x)
+| `kingfisher.upstash.1` | Active | `upstash\n\nU\rXsv5mR\n\rz\rzi\r\r\rf\n\r\nP\n\rg\n\n\r\rsredisvD6a\r\rST\n\r\r8w\nX\n2z\r\n\r\r\r\n\rI\n\rFZ\rLtokenc\n\n\n2\nIOjEUP\r\r\r\nKZ\r\n\r\r\n\ryo9mPSfsPRqDPWSsEciBqyooYAcu9NUc` | <code>(?x)<br>\b<br>(?:<br>  UPSTASH_REDIS_REST_TOKEN<br>  &#124;<br>  (?i:upstash)<br>  (?:.&#124;[\n\r]){0,40}?<br>  (?i:(?:redis&#124;rest))<br>  (?:.&#124;[\n\r]){0,40}?<br>  (?i:token)<br>)<br>(?:.&#124;[\n\r]){0,24}?<br>(<br>  (?:<br>    [A-Za-z0-9]{32,48}<br>    &#124;<br>    AYNgAS[A-Za-z0-9+/_-]{26,90}={0,2}<br>  )<br>)<br>\b<br></code> |
+| `kingfisher.upstash.4` | Active | `upstash\nLRF\rH\rTv\rt3E\r\n\nh\r\rCv\nl\r7b9ccfb1-c06d-42c6-ac8f-bd4e41e63812` | <code>(?xi)<br>\b<br>(?i:upstash)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  [0-9a-f]{8}<br>  -<br>  [0-9a-f]{4}<br>  -<br>  4[0-9a-f]{3}<br>  -<br>  [89ab][0-9a-f]{3}<br>  -<br>  [0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.uptimerobot.1` | Active | `uptimerobot\rgif9fOI\rX\n\n\r\n9\rACCESSt\rt\rs\nw\nm\n\r\r\nAve00uSAPxducTSSS6JhFHesYHxMC1F` | <code>(?xi)<br>\b<br>uptimerobot<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:ur[A-Za-z0-9-]{29}&#124;[A-Za-z0-9]{28})<br>)<br>\b<br></code> |
+| `kingfisher.uri.1` | Active | <code>https://e%58%aD%6fN%cBD%E5H%7D)Eo%bfX_o%79H%81N5e%06L%C0%11%C6h%9C%9At%71:ll%82%3Cvw+%345;j+b~p%A0%a9AOW;%7D8%Ea%925LK%F3%8F7%92@.CsbYkTB~sG-Rmfwd7izW49z8rKXApQb:82579221933701629668098705250679/zb,rY$=mw-h5sMwf:eb.8csE$QQV:FH./whcwAQu)YIk!MzL8O:h_1J95ywH8%bI;/CF=.uctq-DS)BcJdRiceV;lKcpIf3wo!/K%,7C*qn9'W*2VD'3A6~8DM;_:ob,wsI/_D7nCAHnqGv.L.KFIsV-nZaR(J*4ff2&amp;/:jLovfH$mqW&amp;Q~LC_y@!VbMt*;f&amp;HLm!/ayTmi.pD1ANNEm.fiMAirAK$Q,zp.M$c/L5yaTXNuj*QX8*OBCZwUbRHP1g!Opynj/z8D1oa5Z-(4SO;OXzNrH,4v8yU(NElWi/TSVQMOX)wp.%TlkEw0UV'BGZtq-q;86@/O504S2:*tNqud4!=g4:M;U3,FBgUmic~/ENc8vQsLH&amp;yg5jA3=u10,r1Fa2!$uIla/%&amp;U3$e$L-;f'1WFci7QO!j!o;Tr~(*Np/=ei,6@CQ&amp;YmDu!Uz'flZJ(Lu1f3-Y18U/zJ'KuJ%zNEA%K@cmOG(FESl7mIw%~xq*/6HgKd7*Zm6SWhbm9BF7yN$n'v~uAMYHr/KTh6PIGne$RUuuG.lB,6y&amp;@oJK0BdC2'/C9sMd7_u!fged!AFCh~Dig,m1*m*oZ~H/.I*&amp;_Kwk!F,It(P=6;*4ce3vTU!!UOIe/fDE*3MqYuNp-2MnVc-&amp;,OXd8OEW.*tJe/pqmYVm53K@4y,5Z3iVk=08Mo=xU6$LW0/TctC'slyhkqY%Rydcp-Ww1;'n!Sh6=A%/$4J!2-e=LSQGfDzW.Hgk6XvUSWH3L:Jw/XID95l3Pz7JSIQ1qrhP@am.5lnJ:yl~'/i*YBGpn0XrdZ~:-E;p-kAhn.(LVu,ZnZ/0H)W1N$O@7xdREy@UsG6)Vy4iNBMMxuK/!o2gQ.&amp;.mdkm-9$E~g&amp;=1kv:m4JHJNyG/b8T0AyZZiBWY6hu'Fr1ok;FkPJ_s4j%u/AuH@X1h4Mr1~vE48'Ijri:*ygaIZL@IK/Ht2*$z9rT6NqqnuxDfnqbWIxx9Vfgb7*/BP,B$12lHd~nGkYYnhEt&amp;b@4LCk_9$uL/hO=X0E8__'oC-EDBcBDuwP8@gSAfrL,(/?U%yjXGFIicghgZ=h2@OqFcwBV4/NyVK(#64;kk8~yAbAOOMDsWD*8/-yYP$r1Ug.Y</code> | <code>(?xi)<br>(<br>  (?:https?)://<br>  [A-Za-z](?:[A-Za-z0-9+\-._~!$&amp;'()*+,;=]&#124;%[0-9A-Fa-f]{2})*<br>  :<br>  (?:[A-Za-z0-9\-._~!$&amp;'()*+,;=]&#124;%[0-9A-Fa-f]{2})+<br>  @<br>  (?:[A-Za-z0-9\-._~%]+&#124;\[[A-Fa-f0-9:.]+\]&#124;\[v[A-Fa-f0-9][A-Za-z0-9\-._~%!$&amp;'()*,;=:]+\])<br>  (:?[0-9]+)?<br>  (?:/[A-Za-z0-9\-._~%!$&amp;'()*,;=:@%]*)*<br>  /?<br>  (?:\?[A-Za-z0-9\-._~%!$&amp;'()*,;=:@/?%]*)?<br>  (?:\#[A-Za-z0-9\-._~%!$&amp;'()*,;=:@/?%]*)?<br>)<br></code> |
+| `kingfisher.urlscan.1` | Active | `urlscan\n\n2q3\r\ri\r\n8\r1\rJLPRIVATE\nHQa\nFaz\r\r\r\r\nP\nVnfm5qCiIzNlwzkbtlFB1JyU0Xy8GSA15` | <code>(?xi)<br>\b<br>urlscan<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;[A-Za-z0-9]{36})<br>)<br>\b<br></code> |
+| `kingfisher.valtown.1` | Active | `vtwn_mBzpSxM5DjDvuHRS52f6DkJayfCPBaxU` | `(?x)
 \b
 (
   vtwn_[a-zA-Z0-9_-]{20,80}
 )
 \b
 ` |
-| `kingfisher.vapi.1` | Active | `api.vapi.aipublic_\n  \x0b--\x0c\r \x0c\t\x0c_ \t\n\t \x0b \x0b\t\x0b-\t\n  \n \nkey7a9b9b51-83ec-8cfa-479e-cd69550ac25d` | <code>(?xi)<br>\b<br>(?:vapi&#124;api\.vapi\.ai)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_\s-]*key&#124;private[_\s-]*key&#124;public[_\s-]*key&#124;web[_\s-]*token&#124;token&#124;authorization)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{8}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{12}<br>)<br>\b<br></code> |
-| `kingfisher.vastai.1` | Active | `vast.aiACCESS52babfd0a9e78f64d3b9a80bc3121637735d617658abcf26bee19b04dce57084` | <code>(?xi)<br>\b<br>vast(?:\.ai)?<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.vercel.1` | Active | `vercelQ3FFT3NQOB6MVG4IMS72TVLO` | <code>(?xi)<br>\b<br>vercel<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{24}<br>)<br>\b<br></code> |
-| `kingfisher.vercel.2` | Active | `vcp_Z07aqgP1W5AfiPDsQoS8Y3HVP9qyFwmMt4PrIY4tpvQW_UsvYyFJoAJ8` | <code>(?x)<br>\b<br>(<br>  vcp_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
-| `kingfisher.vercel.3` | Active | `vci_0d2kFpjD98x5yq_tr_yuN6chbssZF1rA2lcgOyy_4jCUTs-W_wWTWWbA` | <code>(?x)<br>\b<br>(<br>  vci_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
-| `kingfisher.vercel.4` | Active | `vca_Dvbaei0A9RosAS0I8a6xEjOE3RKLNNqwdjNijE7oZXH2d-UyQ5W22leb` | <code>(?x)<br>\b<br>(<br>  vca_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
-| `kingfisher.vercel.5` | Active | `vcr_3AW_kjcNrrGwioblPetz9VHnbyvCkwDMS2wu8oYESxNlBElEXAIQwo0P` | <code>(?x)<br>\b<br>(<br>  vcr_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
-| `kingfisher.vercel.6` | Active | `vck_Kb17ARnMPGeJOs2RgDYEL0r1BuAaD0WrZIOKEHRMl5_ViW3U7n0A97ty` | <code>(?x)<br>\b<br>(<br>  vck_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
-| `kingfisher.virustotal.1` | Active | `virustotalx_apikeyVYn9a5YZRSid6nBLxxRH0ZuQ7Y9kiq8bkWFlOkqVuCEw5cdtr6nhgjKRSWzf2JR9` | <code>(?xi)<br>\b<br>virustotal<br>(?:.&#124;[\n\r]){0,32}?<br>(?:api[_-]?key&#124;x[_-]?apikey&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.vkontakte.1` | Active | `vk1.a.vVWQlHO8jzefGT3pfk7AD0b_pJ9NrSY9NqX9BEFIT8xnLr1yoAuXrMBqyP1leWgCpXjoG8VKftzoH6cWmsgbBBFIChP5nBe_e3Pc` | `(?x)
+| `kingfisher.vapi.1` | Active | `vapi\n\n\rlhi\r\r9\r4\rcH\rfe\nh\rfoZ\rz\n\nfy\rH\nauthorization2TS\nlgfS3s\rym\nl\rycxA\r\rj\r\rTE\n\n\r\n\n3dc51e81-3e9d-0297-f88e-608a57db4690` | <code>(?xi)<br>\b<br>(?:vapi&#124;api\.vapi\.ai)<br>(?:.&#124;[\n\r]){0,64}?<br>(?:api[_\s-]*key&#124;private[_\s-]*key&#124;public[_\s-]*key&#124;web[_\s-]*token&#124;token&#124;authorization)<br>(?:.&#124;[\n\r]){0,32}?<br>(<br>  [a-f0-9]{8}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{4}<br>  -[a-f0-9]{12}<br>)<br>\b<br></code> |
+| `kingfisher.vastai.1` | Active | `vast.aim\r\nN\r\rR1\r\r\r\n\na\rzPRIVATE\n\r\r6\r\r\n\ncQ\r\n\nT90ce7ce948d852226f7214a94e7a777959af4dc1814fa398ee989c67c33e0d5ad2` | <code>(?xi)<br>\b<br>vast(?:\.ai)?<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.vercel.1` | Active | `vercelW\newKMZCLI\r\rX3qe\r\rc\r1\nv\r\nO\n5\r\nA93GEOX4GF3FYUV42IEFWZ5YBC` | <code>(?xi)<br>\b<br>vercel<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9]{24}<br>)<br>\b<br></code> |
+| `kingfisher.vercel.2` | Active | `vcp_JnfNSpAGRtXt5nTMwDJ4Oh2AXhM_D4f_jpP5uRlFul0HQa1KwBfbjGvQ` | <code>(?x)<br>\b<br>(<br>  vcp_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
+| `kingfisher.vercel.3` | Active | `vci_KtzgtXtUkaIk2SzWHxgSv0_oRQUyZoXmtZ9Jt_Q4-o5v23YKbeub3R5a` | <code>(?x)<br>\b<br>(<br>  vci_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
+| `kingfisher.vercel.4` | Active | `vca_WqdeAr3QnTqTWdAzQ5WdjmaE_BVaVBiC-RBJAMiBhUr3Q5jjfVnVckqQ` | <code>(?x)<br>\b<br>(<br>  vca_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
+| `kingfisher.vercel.5` | Active | `vcr_txikqZ6zSm1be-QUkGy-EGi_OZu8V6GU1l2eqlSYY4bo9fOypHs2G1iw` | <code>(?x)<br>\b<br>(<br>  vcr_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
+| `kingfisher.vercel.6` | Active | `vck_KnvUVtDyBiBanHdJ-eNvzYibwDH5T0elwESJ_XXgNlTrCPE_tcJE8DaV` | <code>(?x)<br>\b<br>(<br>  vck_(?P&lt;body&gt;[A-Za-z0-9_-]{50})(?P&lt;checksum&gt;[A-Za-z0-9]{6})<br>)<br>\b<br></code> |
+| `kingfisher.virustotal.1` | Active | `virustotala\n\r\nSk\nx\n\rb\r\nPF\r\n\nThW4T4\njZn\r\nN9x_apikey\nx\r\r\r\nC18Xo8\r\rXTL9hyE6sw8Ujm4anVSeBV5oRu7uMOTUE5xBbtlweZee2RDxxy7ecueEQewFkLiAOf` | <code>(?xi)<br>\b<br>virustotal<br>(?:.&#124;[\n\r]){0,32}?<br>(?:api[_-]?key&#124;x[_-]?apikey&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.vkontakte.1` | Active | `vk1.a.BhUD6g3cel1QL8GiJPT2XY5yBH2vcXzUg9LaFkJE8ao2FMzIOyA913c92Gr6tT9usPh9pBuLWbH_156LD-wwRVlh_FtlBfwadrxI` | `(?x)
 \b
 (
   vk1\.a\.
@@ -2395,7 +2395,7 @@ thingsboard\.cloud/api/v1/
 )
 \b
 ` |
-| `kingfisher.voiceflow.1` | Active | `VF.DM.f727226a7b922663f7bb2bba.j5BlosL0EPQSN8UO` | `(?xi)
+| `kingfisher.voiceflow.1` | Active | `VF.DM.398591f22f3cfdf070d6b49c.rdNQjy80y8Sq0ash` | `(?xi)
 \b
 (
   VF\.DM\.
@@ -2405,93 +2405,93 @@ thingsboard\.cloud/api/v1/
 )
 \b
 ` |
-| `kingfisher.volcengine.1` | Active | `volcengineAKLTJblhPeE-mmE7sE4VR9-0HIO7oGGmjwzDeWyO9afLz_yLHa` | <code>(?x)<br>\b<br>(?i:volcengine)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  AKLT[a-zA-Z0-9_-]{46,48}<br>)<br>\b<br></code> |
-| `kingfisher.vonage.2` | Active | `nexmoapi-secret\x0bcyzy1iAocpk111IM` | <code>(?xi)<br>\b<br>(?:nexmo&#124;vonage)<br>(?:.&#124;[\n\r]){0,96}?<br>\bapi[_-]?secret\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{16}<br>)<br>\b<br></code> |
-| `kingfisher.voyageai.api_key` | Active | `pa-RXlDxdUbHwzW8Tr77zGLUMTw_zXnBZ4T57G-RqBvd9Y` | `(?x)
+| `kingfisher.volcengine.1` | Active | `volcengine\nb\n\n\nX\nw\r\rg\r\ny\nCiTc6\rs1\r\r\n\rc\r\r7gAKLTZn1HzGU79ElsvJhMrYEmSocVb8KWNy9jg06KzzEchFH6XU` | <code>(?x)<br>\b<br>(?i:volcengine)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  AKLT[a-zA-Z0-9_-]{46,48}<br>)<br>\b<br></code> |
+| `kingfisher.vonage.2` | Active | `vonage\n\n\r\n\n7CyDs\r\nI\ruKX\r\nb\n5\rGT\r\r\r\rdvkapi_secret\nq\nl\n\n4\n\n\rNMO6lH'7hjJTmUOrESsnCPH` | <code>(?xi)<br>\b<br>(?:nexmo&#124;vonage)<br>(?:.&#124;[\n\r]){0,96}?<br>\bapi[_-]?secret\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{16}<br>)<br>\b<br></code> |
+| `kingfisher.voyageai.api_key` | Active | `pa-irYuBOgRn-bchHh9SakJm4lgESZldrg9fg0pg2-8bOQ` | `(?x)
 \b
 (
   pa-[a-zA-Z0-9\-_]{43}
 )
 \b
 ` |
-| `kingfisher.voyageai.api_key.2` | Active | `al-HgmtvHACWi9vy97tPFy5o8I823lxQwP44cHE7ZlMWA0` | `(?x)
+| `kingfisher.voyageai.api_key.2` | Active | `al-Vg6wEIxIkRiqq2hQ9KBmNImR1mxcWLEyRXou-kg9OuT` | `(?x)
 \b
 (
   al-[a-zA-Z0-9\-_]{43}
 )
 \b
 ` |
-| `kingfisher.vultr.1` | Active | `vultrtokeneea200a9ef482bb1b847d91982569218dbdf` | <code>(?xi)<br>\b<br>vultr<br>(?:.&#124;[\n\r]){0,24}?<br>(?:api[_\s-]*key&#124;token&#124;authorization&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{36}<br>)<br>\b<br></code> |
-| `kingfisher.wakatime.1` | Active | `wakatimeTOKEN1cefa767-2d5d-720f-4aad-3a3c7ce17a71` | <code>(?xi)<br>(?:wakatime&#124;waka_time&#124;WAKATIME)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
-| `kingfisher.wakatime.2` | Active | `waka_uvcd21fewk0cbs0xwu387w4uwv9p1a7jpzbx` | `(?xi)
+| `kingfisher.vultr.1` | Active | `vultri8\rN0kfSKuY\rx\nK\nh\n\nk\r\r\n\nkeyul2n\r\n\rV\nB\nAPJ8\rf4ac2d4e51907f32991cec44ac4b46ea2693` | <code>(?xi)<br>\b<br>vultr<br>(?:.&#124;[\n\r]){0,24}?<br>(?:api[_\s-]*key&#124;token&#124;authorization&#124;key)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [a-f0-9]{36}<br>)<br>\b<br></code> |
+| `kingfisher.wakatime.1` | Active | `waka_time\rPOTAy\rxc\n\r\r\r\n\r\rWE\r5M\nwJ\nbggfm\r\nKEY\r\rsK\n0\nE2\nq\ni8\n\n3b62e259-bd49-0ecb-db87-4ee05d0492ba` | <code>(?xi)<br>(?:wakatime&#124;waka_time&#124;WAKATIME)<br>(?:.&#124;[\n\r]){0,32}?<br>(?:KEY&#124;TOKEN&#124;SECRET&#124;API)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br>)<br>\b<br></code> |
+| `kingfisher.wakatime.2` | Active | `waka_i2k8z8wfh58vvavzkt3vhwnfi02isszul3tj` | `(?xi)
 \b
 (
   waka_[a-z0-9]{36,64}
 )
 \b
 ` |
-| `kingfisher.warpstream.1` | Active | `aks_46d684e68c80b586169e45f83c4732c1e8e2f26894ccff3ac39b32c1ee70554b` | `(?x)
+| `kingfisher.warpstream.1` | Active | `aks_bb195adbe25fd94f492db24704b9c1c817a7a695f4ce24623d99e70c40546def` | `(?x)
 \b
 (
   aks_[a-f0-9]{64}
 )
 \b
 ` |
-| `kingfisher.weatherapi.1` | Active | `weatherapiSECRETIEQNdh4f2DTan34cWF0PuZnr9U9BCMQB` | <code>(?xi)<br>\b<br>weatherapi<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.webex.2` | Active | `webexsecret 2b2BCF3E16Bde8ECBcDc78E04Ec14CaaB911D672BD60eAdd2bFDf2dE8370c9Ec` | <code>(?xi)<br>\b<br>webex<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Fa-f0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.webflow.1` | Active | `webflowTOKENxQtuUzHLN6Gok61DswXQZhz8hcWh28Yy` | <code>(?xi)<br>\b<br>webflow<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;[A-Za-z0-9]{36})<br>)<br>\b<br></code> |
-| `kingfisher.wechat.2` | Active | `wechatsecret\r2bf7c731b0dbdcfa4fe8446282da7462` | <code>(?xi)<br>\b<br>(?:wechat&#124;weixin)<br>(?:.&#124;[\n\r]){0,32}?<br>\b(?:key&#124;secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.wandb.1` | Active | `wandb317aeab1cfc65bf673be1ccfc187d48b9cd8b8c5` | <code>(?xi)<br>(?:wandb&#124;weightsandbiases)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.wandb.2` | Active | `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` | `(?x)
+| `kingfisher.weatherapi.1` | Active | `weatherapi\nYZ\n\r\r\nZs\r0\r\nB0gSECRET\r77v6\nVn\r\n38wNclEtk1JjtFTBC4OPCNFoBwZUjJvbFmefhR` | <code>(?xi)<br>\b<br>weatherapi<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.webex.2` | Active | `webexNwP\n\rC\r\n4EP\n\nFQ\r\n\nw\n\r\n\rnmpC\nkd\r\rsecret\nW\n1\rsD\r\nrdy\nB\r\n"03E82Da6F34125EA49dDfa05eF008C33a1dCE3831822fbf38Ea5e57Acabf36D2` | <code>(?xi)<br>\b<br>webex<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Fa-f0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.webflow.1` | Active | `webflowvP\n\r\rioOH2\n\nOF\r5Dvl\r\r\r\r\n\r\r\n8a\noTSECRET\r8\r\r\rrXtI\rTR\ru\r70xb\nA\nL\r\r\nu\nC\rAWoR0TA07i69vri9gmJcMm5VQHZngPM35MuhRs` | <code>(?xi)<br>\b<br>webflow<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN&#124;API)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  (?:[A-Za-z0-9]{32}&#124;[A-Za-z0-9]{36})<br>)<br>\b<br></code> |
+| `kingfisher.wechat.2` | Active | `wechat\r\re\n\r\naT\r4C0\r\n3\rAvW4PMCh\r\nKG1l\n\rsecret\n\nL\nO\r\rC0\reC\n\nGh'8870057d855d2135c20dda1fd6d7e356` | <code>(?xi)<br>\b<br>(?:wechat&#124;weixin)<br>(?:.&#124;[\n\r]){0,32}?<br>\b(?:key&#124;secret&#124;app[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>\b<br>(<br>  [a-f0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.wandb.1` | Active | `wandb\rml\r\n\n\rcaq\r0ouZ\n4807eec840ff8fa73cba686485ae0307ac432b79` | <code>(?xi)<br>(?:wandb&#124;weightsandbiases)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [a-f0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.wandb.2` | Active | `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` | `(?x)
 \b
 (
   wandb_v1_[A-Za-z0-9_]{77}
 )
 \b
 ` |
-| `kingfisher.wepay.1` | Active | `PRODUCTION_db529562e99cc3c50c8d5a590ca33ba43fddd1e5d7ee6b18d2132e501713` | <code>(?x)<br>\b<br>(<br>  (?:STAGE&#124;PRODUCTION)_<br>  [0-9a-f]{60,68}<br>)<br>\b<br></code> |
-| `kingfisher.wireguard.1` | Active | `PrivateKey\x0b\n \x0b\r\r \n\t\x0b\t\t\r\x0c \r\x0c\x0b\x0b \n\n\x0c\n\x0c\x0c\x0b\n\x0b\x0c\r\t=\x0c \x0c\r\x0b\t\x0b\x0c \t \t\x0b\t \x0b\x0b\n\n\n\n\r\r\n\n\n\r \r\n\x0b\rFz9fMeHwN4fh2OuZhWPvr41JlmxC2ATO+LL/f0xViBy=` | `PrivateKey\s*=\s*([A-Za-z0-9+/]{43}=)` |
-| `kingfisher.wireguard.2` | Active | `PresharedKey\r\x0c\t\r\n\r\x0b\r\x0c\x0c\r  \r\n\x0c \r\x0c\x0c\x0b\r\t \t\r\r \x0c \t =\r\x0c\n\r\x0b \n \x0b\r\n\n\r\n\x0b\r\t\r \x0b\x0c\n \t\r \t\t\x0c\x0c\t rYBzQmepOhFZl0c5WijUMTaCnshWMMsosFhLOMa3O1R=` | `PresharedKey\s*=\s*([A-Za-z0-9+/]{43}=)` |
-| `kingfisher.wistia.1` | Active | `wistiaKEYdd3e9575625936df06383eb1db9a6be8c5d372301bc4a2892cec1152fe836b80` | <code>(?xi)<br>\b<br>wistia<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?(?:KEY&#124;TOKEN&#124;PASSWORD)&#124;TOKEN&#124;SECRET&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{64}<br>)<br>\b<br></code> |
-| `kingfisher.wiz.2` | Active | `wizJRdeAjAQy9fP2qqfmwn3tPDpilRTs5bvv1llMmY7uiI4DWNWfq3v8AWZJa5cYVqC` | <code>(?x)<br>\b<br>(?i:wiz)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{64}<br>)<br>\b<br></code> |
-| `kingfisher.woocommerce.1` | Active | `cs_927a71e979e350e828255d1e9871bb8f3735bbab` | `(?x)
+| `kingfisher.wepay.1` | Active | `STAGE_20deb415363aa69c740aaf6e18aed382c6766cdbf7491e5e2fae5e50405a` | <code>(?x)<br>\b<br>(<br>  (?:STAGE&#124;PRODUCTION)_<br>  [0-9a-f]{60,68}<br>)<br>\b<br></code> |
+| `kingfisher.wireguard.1` | Active | `PrivateKey\x0b\n\r\t \t\x0c\r \t\r\x0b\r\r\x0b\x0b\x0c\x0c\n\t\n\t\n\t\n\x0c \r\n\x0b\x0b\x0b=\n\t \x0b\r  \r\t\x0b\r\r \x0c\t\n \t\x0c\n\n\t\n\n\x0c\x0b\n\n \r\x0c\x0bYfi2DZjNiAiqa7FFNX27iI6HI/tOZCxP/DlLVUyyQLO=` | `PrivateKey\s*=\s*([A-Za-z0-9+/]{43}=)` |
+| `kingfisher.wireguard.2` | Active | `PresharedKey\t\n\x0c\t\x0c\t\n\x0b\r\n\n\x0c\x0b\n\x0c\r\x0b\r\t\n \x0c  \r\r \x0b\x0b\x0c\r =\r\r\x0c \r  \x0b\n \r\t \r\t\n\x0c \x0c \n\t\x0c\r\x0c\n\x0c\r \x0c\x0c 5QLunkgwF/XgEs4TzBZ7DEhFa8yBs5W2GpSj3KB5FYc=` | `PresharedKey\s*=\s*([A-Za-z0-9+/]{43}=)` |
+| `kingfisher.wistia.1` | Active | `wistia\n\nj64IgQ\r\n\nA\r\n\n\n\noXT\nt8i\nl\n\nF\n\nNKEY\nwoMCX\r\n\n\ri\r6\r\n\r30c0c72680a40f71546e48854a411bf3af2bfa72048807a7fc1701127dc7df04` | <code>(?xi)<br>\b<br>wistia<br>(?:.&#124;[\n\r]){0,32}?<br>(?:API[_-]?(?:KEY&#124;TOKEN&#124;PASSWORD)&#124;TOKEN&#124;SECRET&#124;KEY)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [0-9a-f]{64}<br>)<br>\b<br></code> |
+| `kingfisher.wiz.2` | Active | `wiz266e\n\rTyJEOZ\r\rz\ne0H\nLd\rlM\nI\r\n\nc\nsnoShy5XpnwbldL3j8beCTPt1RN14oC2KmsvsCXzOEi9j6HnoBNXbzmUx1UicTLt` | <code>(?x)<br>\b<br>(?i:wiz)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9]{64}<br>)<br>\b<br></code> |
+| `kingfisher.woocommerce.1` | Active | `cs_9eb4998af8a8dbcf2559742a8dff6aef2246d34b` | `(?x)
 \b
 (
   cs_[a-f0-9]{40}
 )
 \b
 ` |
-| `kingfisher.woocommerce.2` | Active | `ck_619f2d234e751f68320c5b63a3dadf2044c32c2a` | `(?x)
+| `kingfisher.woocommerce.2` | Active | `ck_56e568a125146b7f408878c52646191a221547cd` | `(?x)
 \b
 (
   ck_[a-f0-9]{40}
 )
 \b
 ` |
-| `kingfisher.workato.1` | Active | `wrkasf-eyJzLIlzU_y6Z2hGKOMur2y70kwEPi7Gkje.UC5Dh7WDN218GYKpF6nKXb_SC8ne-R9e.okBqnIJddGSjghOEZ2YTV7-ZdEz_s1dGlvVlO9P6tmm_ubGo8uHmxBYfqq1qOE3k` | <code>(?x)<br>\b<br>(<br>  wrka<br>  (?P&lt;REGION&gt;[a-z]{2})?<br>  -<br>  eyJ[A-Za-z0-9_-]{8,}<br>  \.<br>  [A-Za-z0-9_-]{16,}<br>  \.<br>  [A-Za-z0-9_-]{64,}<br>)<br>\b<br></code> |
-| `kingfisher.workos.1` | Active | `workossk_live_a2V5Xzu88iRCTguBZE7QeeLm/uGai0nJatVMK4TXvNTcmbGxOvwSMr8MuZYVYHdrnd/JmkvxDag==A` | <code>(?x)<br>\b<br>(?i:workos)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  sk_live_a2V5Xz[A-Za-z0-9+/]{69}={0,2}<br>)<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
-| `kingfisher.wpengine.1` | Active | `wpengine-api_secret\t\n\x0c\n\n\x0c\x0b\t\t\x0b\t\t\x0b\x0c\t\n\x0c\n\x0c \x0c\r\n\r\x0c\t\x0c\x0c\x0c\t\x0c\n=  \x0c \n  \r\r\x0b\n\t \r\x0b \n\n \x0c \x0c\r \r\x0b\t   \t\t"5NRkab5U0cxgdUde3bqB3zsuHuMKnAv7` | <code>(?xi)<br>\b<br>(?:<br>  wpengine(?:[_.-]?api)?[_.-]?(?:key&#124;secret&#124;token)<br>  &#124;<br>  wpe(?:[_.-]?api)?[_.-]?(?:key&#124;secret&#124;token)<br>)<br>\b<br>\s* [=:] \s* ["']?<br>\b<br>(<br>  [A-Za-z0-9]{24,64}<br>)<br>\b<br></code> |
-| `kingfisher.xai.1` | Active | `xai-nPJRUWrU2xSF3MT_eAFJXyFIiSQqqFflZEg03rkg4Vytf7DRIOb-FO_2jRhmpqaKtoGGp8` | `(?x)
+| `kingfisher.workato.1` | Active | `wrkacu-eyJ6cepAjrku28ISxohyZQvlON3179b5p8U.yW8XSkHx5kS4c68QwSHL4kjXTsmHfdqt.2FYeenWFXVVFCTVWaDpssMRghHaz5S29RYZSyylwNA-cH8wUKrgBrbb7X02i9Enl` | <code>(?x)<br>\b<br>(<br>  wrka<br>  (?P&lt;REGION&gt;[a-z]{2})?<br>  -<br>  eyJ[A-Za-z0-9_-]{8,}<br>  \.<br>  [A-Za-z0-9_-]{16,}<br>  \.<br>  [A-Za-z0-9_-]{64,}<br>)<br>\b<br></code> |
+| `kingfisher.workos.1` | Active | `workos\rl\n\n3\n5sWcN\n\nSZNp\r\nkbQ\rUsk_live_a2V5XzN0KJhXG4vrHQ8gJrfz80unNIlK7JkfW2GsdxkjxXliIrSZfQnZ+qbypBg6JWF+nqOIuSQ==` | <code>(?x)<br>\b<br>(?i:workos)<br>(?:.&#124;[\n\r]){0,24}?<br>\b<br>(<br>  sk_live_a2V5Xz[A-Za-z0-9+/]{69}={0,2}<br>)<br>(?:[^A-Za-z0-9+/=]&#124;$)<br></code> |
+| `kingfisher.wpengine.1` | Active | `wpe.api.secret\n\n\r\x0b \t\x0c\x0c\t\r\t\n\x0b\n\t\r\r\n\x0b\t\r\t\r\n\t\r\t\x0c\t \x0c\t:\x0c \x0b\r\x0b\n\n\t\n\x0b \x0c\n\x0c\r\r\x0c\t\t\n\r \n \t\n \t\r\x0c\x0c "mDSWTKMJDq0N2EeaW89RDxUNNztV1c3N` | <code>(?xi)<br>\b<br>(?:<br>  wpengine(?:[_.-]?api)?[_.-]?(?:key&#124;secret&#124;token)<br>  &#124;<br>  wpe(?:[_.-]?api)?[_.-]?(?:key&#124;secret&#124;token)<br>)<br>\b<br>\s* [=:] \s* ["']?<br>\b<br>(<br>  [A-Za-z0-9]{24,64}<br>)<br>\b<br></code> |
+| `kingfisher.xai.1` | Active | `xai-E71g7UjIYrVEKFkovsWOPEAF3fpGrNpz_QdeutGsySjiengFhOHcWTL0MthQicm-NIilpi` | `(?x)
 \b
 (
   xai-[A-Za-z0-9_-]{70,120}
 )
 \b
 ` |
-| `kingfisher.xata.1` | Active | `xau_Yvhk7QBcKid3riR0G7MFp7VqVuDyxcvAw` | `(?x)
+| `kingfisher.xata.1` | Active | `xau_xxevm8LYnFNaYfjAzZsFHzjtDBFMRboGq` | `(?x)
 \b
 (
   xau_[A-Za-z0-9]{33}
 )
 \b
 ` |
-| `kingfisher.xendit.1` | Active | `xnd_production_80DsO6MXZFNCnu2oITZRLVAMpsPCvCxDET47Gguxtv8pSH6Tm1Hucto3` | <code>(?x)<br>\b<br>(<br>  xnd_(?:production&#124;development)_[A-Za-z0-9]{56,72}<br>)<br>(?:\b&#124;$)<br></code> |
-| `kingfisher.yahoo.2` | Active | `yahooclient_secret\x0c"'"""""'""'"''"'"'""""'"'"'""'""6cf8084342b9f1d16baaae65092fdecdc34b25fc\r` | <code>(?xi)<br>\b<br>yahoo<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [0-9a-f]{40}<br>)<br>['"\s]<br></code> |
-| `kingfisher.yandex.1` | Active | `yandexPRIVATEP.LHPTEO0Z2LJ9KYAOW41T8ZYMUE4JRZ.X4V8H1CJXT87J1103ZU5JFHL3CJTCD9F0304SI0QQ6GF0JZPSG` | <code>(?xi)<br>\b<br>yandex<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9.]{83}<br>)<br>\b<br></code> |
-| `kingfisher.yelp.1` | Active | `yelpKEYgz_hOEPCoL_5FuDtPHqmmDGbFBLbgWF5bYEuz2SrC6pA_WFednhRLQ5.nG6.Q\\S6JzTtArv-P4vi0w4LZbzEcdB=zYm93u8UeTnm7I_qoDEOM=Tf2BfWLi8Sxno.Fa6.` | <code>(?xi)<br>\b<br>yelp<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9_\\=.\\-]{128}<br>)<br>\b<br></code> |
-| `kingfisher.yousign.1` | Active | `yousign_api_key\r'"""'"'""""''''"'''"''"'"'""'"''f691f907c3a61baa0717c28820548d8a\r` | <code>(?xi)<br>\b<br>yousign[_-]?api[_-]?key<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{32}<br>)<br>['"\s]<br></code> |
-| `kingfisher.youtube.1` | Active | `youtubeAIzabHP019xpbzVY-5c-2sLBtuPPTLty5jWei1m` | <code>(?x)<br>\b<br>(?i:youtube)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  AIza[a-zA-Z0-9_\-\\]{35}<br>)<br>\b<br></code> |
-| `kingfisher.zapier.1` | Active | `https://hooks.zapier.com/hooks/catch/3146712665/93o4gp1whtfo/` | `(?x)
+| `kingfisher.xendit.1` | Active | `xnd_development_B5lt4qx9zsumK3pTLtCsdNCxwChmDqL2WBEHmiBFJjuoFvatf44SlHo7` | <code>(?x)<br>\b<br>(<br>  xnd_(?:production&#124;development)_[A-Za-z0-9]{56,72}<br>)<br>(?:\b&#124;$)<br></code> |
+| `kingfisher.yahoo.2` | Active | `yahoo\r\n\r7\r\rUh\n3\rC\n\r\r\n4\rgL\nP\nz\n\r\n\n\n\n0\nsecret\r\rp\n\rHaAmrvaM\n\n\n''"''"""""'"'''''"''"'"''"'""''"'2e2f90b212d93329e53ea9c5bbc155d5acf728cd\x0c` | <code>(?xi)<br>\b<br>yahoo<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;secret)\b<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [0-9a-f]{40}<br>)<br>['"\s]<br></code> |
+| `kingfisher.yandex.1` | Active | `yandex\n61\rjCWrwX\r\r\nn\n\rK\r9\rH\n\n123\nI\nC\rATOKEN\r\n8s\r\r\n\nJb\r\rW8\n\nO\rO\nk\n\n\r\r\n\r\r\n\r\n\n00FLEGCJDTI3KQEVCC5ZTE2O9J5JSV4YYW9B2N.1N09XN1KUAA5U.E4XRT1XWPN9WMLJ66EH.SGSH5SASNW` | <code>(?xi)<br>\b<br>yandex<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Z0-9.]{83}<br>)<br>\b<br></code> |
+| `kingfisher.yelp.1` | Active | `yelp\ro\rYIw\r96\nf\r\r\n\n\ncM\n\r\r\nmqwR\r\r9vH\rACCESScqvyl5\r\ri\r\r\n\r\r\r8XBO\n\n\n4X\nOV\r\nU\n\rr572toLIpMG-l4IyxFfOy.AsnMqtGgVZPeLA_xa-5VbAZM9PHiKaW6yxQsyraQVYbNqA6VAg2cpZDF7ai--WLXVSepd7JUybvPwaR3rt8mYT58SmNs\\UVIO\\1nI3appT` | <code>(?xi)<br>\b<br>yelp<br>(?:.&#124;[\n\r]){0,32}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [a-zA-Z0-9_\\=.\\-]{128}<br>)<br>\b<br></code> |
+| `kingfisher.yousign.1` | Active | `yousign-api_key\n\r\nMZ\r\n7V\r\r\rlDH\r"'"""''""'""''"'"""'"'"''""""'"''eb4004164dddf11c84413dfa63ddd187"` | <code>(?xi)<br>\b<br>yousign[_-]?api[_-]?key<br>(?:.&#124;[\n\r]){0,16}?<br>[=:"'\s]<br>['"]*<br>(<br>  [a-f0-9]{32}<br>)<br>['"\s]<br></code> |
+| `kingfisher.youtube.1` | Active | `youtubeOKnk\r\r\r0\r\r\ngP\nRq\r\rP\rjx\rY\r\n\r\nG\nA8AIzaG8Psh7Em8I83cGn5b6F449RQqbCoIogyitu` | <code>(?x)<br>\b<br>(?i:youtube)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  AIza[a-zA-Z0-9_\-\\]{35}<br>)<br>\b<br></code> |
+| `kingfisher.zapier.1` | Active | `https://hooks.zapier.com/hooks/catch/4341515031/54mlcoxte6w3/` | `(?x)
 \b
 (
   https://hooks\.zapier\.com/hooks/catch/
@@ -2501,10 +2501,10 @@ thingsboard\.cloud/api/v1/
   /?
 )
 ` |
-| `kingfisher.zendesk.3` | Active | `zdapi- \x0c\t._\x0b-\t_.\x0c\n\x0c-\t.\x0c.\n \x0b__.\r\n-\n-_.tokenicbamKXJsqJuMtcFAP90va7CdToXu7tqFAroWdkw` | <code>(?xi)<br>\b<br>(?:zendesk&#124;zd)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:<br>  api[\s_.-]*token<br>&#124;<br>  token<br>&#124;<br>  api[\s_.-]*key<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9]{40}<br>)<br>\b<br></code> |
-| `kingfisher.zerobounce.1` | Active | `zerobouncePRIVATEEFRxwwtPkU5KCmc0DWNIDHb79dHxWasK` | <code>(?xi)<br>\b<br>zerobounce<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.zerotier.1` | Active | `zerotierTIBlLq2QDgY2IGlWIWYN5J972IBnkRRC` | <code>(?xi)<br>\b<br>(?:zerotier&#124;zt)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.zhipu.1` | Active | `C6BF0B1BA41DF7134E74032233156B08.ZGC2BQY1F7Z0GOZW` | `(?xi)
+| `kingfisher.zendesk.3` | Active | `zendesk1J\n\rQ\n\n\n\n\r\r\nQ\n4Ec\n\rH\r\n6\rR\na\rCX4\ntoken\nU\r9\r2UC8\n\n\r\n\rSO7ZKIzy2elocc0oPGqO7KnLAABG6Tdb7kP9LVU17F` | <code>(?xi)<br>\b<br>(?:zendesk&#124;zd)<br>(?:.&#124;[\n\r]){0,48}?<br>(?:<br>  api[\s_.-]*token<br>&#124;<br>  token<br>&#124;<br>  api[\s_.-]*key<br>)<br>(?:.&#124;[\n\r]){0,16}?<br>(<br>  [A-Za-z0-9]{40}<br>)<br>\b<br></code> |
+| `kingfisher.zerobounce.1` | Active | `zerobounce\r\r\n\ns\rCCU\rI\ns\rHuTOKENgfDV\n\n7TW\rz\r\n\n\n\rGxIfAqmI3SjUpSbhvUIl1WT6hSXAO3mF` | <code>(?xi)<br>\b<br>zerobounce<br>(?:.&#124;[\n\r]){0,16}?<br>(?:SECRET&#124;PRIVATE&#124;ACCESS&#124;KEY&#124;TOKEN)<br>(?:.&#124;[\n\r]){0,16}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.zerotier.1` | Active | `zerotier\r\nJr0z\rc\rxu\r\n\n\nH\rP\r\rpEFU\rI\rF8\nT\nsDyJGkKD36GJ323yqKdvJMgulronDsmp` | <code>(?xi)<br>\b<br>(?:zerotier&#124;zt)<br>(?:.&#124;[\n\r]){0,32}?<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.zhipu.1` | Active | `AB9113750FB416CAF7006B7DD754A554.VOCQ00HCH1EAI38V` | `(?xi)
 \b
 (
   [A-F0-9]{32}
@@ -2513,12 +2513,12 @@ thingsboard\.cloud/api/v1/
 )
 \b
 ` |
-| `kingfisher.zohocrm.1` | Active | `1000.3ca05a1c854598457564d8d365f06b55.469dc262704ce134b03460b4e92aec97` | `(?xi)
+| `kingfisher.zohocrm.1` | Active | `1000.3b646d124a36df033f9b6dd12ffaeb09.601c899b52c9c812395250c55e8b6cad` | `(?xi)
 \b
 (
   1000\.[a-f0-9]{32}\.[a-f0-9]{32}
 )
 \b
 ` |
-| `kingfisher.zoom.2` | Active | `zoomapi_secret\x0c99ZJjEJoBapUWHbBbhUD761TTxUZk9Ax` | <code>(?xi)<br>\b<br>zoom<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;api[_-]?secret&#124;auth[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
-| `kingfisher.zuplo.1` | Active | `zpka_hk4gr4sff4t57nl0fc9oe81o302htxut_1df38d6c` | <code>(?xi)<br>\b<br>(<br>  zpka_(?P&lt;body&gt;[a-z0-9]{32})_(?P&lt;checksum&gt;[0-9a-f]{8})<br>)<br></code> |
+| `kingfisher.zoom.2` | Active | `zoom\r\ro\n\r\r2\rABU7L\ro\rg\r\n\r\n\rrCO\n7I\ra\n\nclient-secretk\neb\nL\rTNr\r7kV\n\r\rWmjH\rO\nI\rW\nb4GS\x0c7akoomQtQSnuMCOZioO9PS3i6iZpRLMd` | <code>(?xi)<br>\b<br>zoom<br>(?:.&#124;[\n\r]){0,64}?<br>\b(?:client[_-]?secret&#124;api[_-]?secret&#124;auth[_-]?secret)\b<br>(?:.&#124;[\n\r]){0,32}?<br>[=:"'\s]<br>\b<br>(<br>  [A-Za-z0-9]{32}<br>)<br>\b<br></code> |
+| `kingfisher.zuplo.1` | Active | `zpka_6i02uq4zo3kcqykrshywzni6itb7mvy9_e835ca0f` | <code>(?xi)<br>\b<br>(<br>  zpka_(?P&lt;body&gt;[a-z0-9]{32})_(?P&lt;checksum&gt;[0-9a-f]{8})<br>)<br></code> |

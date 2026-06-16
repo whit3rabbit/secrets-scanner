@@ -8,6 +8,8 @@
 //  3. Compiled-in default (assets/gitleaks.toml embedded at build time)
 
 use log::{info, warn};
+#[cfg(feature = "updater")]
+use std::path::PathBuf;
 
 use crate::error::ScannerError;
 
@@ -38,22 +40,78 @@ pub const BUNDLED_RULES: &str = include_str!(concat!(env!("OUT_DIR"), "/secrets-
 /// The local custom ruleset compiled into the binary.
 pub const BUNDLED_LOCAL_RULES: &str = include_str!("../../assets/local.toml");
 
-/// Helper to load custom/local rules from disk, falling back to the bundled one.
 #[cfg(feature = "updater")]
-pub(crate) fn load_local_rules_for_merge() -> String {
-    if let Ok(content) = std::fs::read_to_string("local.toml") {
-        return content;
-    }
-    if let Ok(content) = std::fs::read_to_string("assets/local.toml") {
-        return content;
-    }
-    if let Some(dir) = updater::data_dir() {
-        let path = dir.join("local.toml");
-        if let Ok(content) = std::fs::read_to_string(&path) {
-            return content;
+#[derive(Debug)]
+pub(crate) enum LocalRulesStatus {
+    #[allow(dead_code)]
+    Found {
+        path: PathBuf,
+        content: String,
+    },
+    NotFoundUsingBundled {
+        content: String,
+    },
+}
+
+#[cfg(feature = "updater")]
+impl LocalRulesStatus {
+    pub(crate) fn into_content(self) -> String {
+        match self {
+            Self::Found { content, .. } | Self::NotFoundUsingBundled { content } => content,
         }
     }
-    BUNDLED_LOCAL_RULES.to_string()
+}
+
+#[cfg(feature = "updater")]
+#[derive(Debug, thiserror::Error)]
+/// Errors from strict local rules loading during runtime updates.
+pub enum LocalRulesError {
+    /// A local rules file exists but could not be read.
+    #[error("local rules file exists but could not be read: {path}: {source}")]
+    Unreadable {
+        /// Path to the local rules file.
+        path: PathBuf,
+        /// Underlying read error.
+        #[source]
+        source: std::io::Error,
+    },
+    /// A local rules file exists but failed scanner validation.
+    #[error("local rules file is invalid: {path}:\n- {}", .errors.join("\n- "))]
+    Invalid {
+        /// Path to the local rules file.
+        path: PathBuf,
+        /// Validation errors.
+        errors: Vec<String>,
+    },
+}
+
+/// Helper to load custom/local rules from disk, falling back to the bundled one.
+#[cfg(feature = "updater")]
+pub(crate) fn load_local_rules_for_merge() -> Result<LocalRulesStatus, LocalRulesError> {
+    let mut candidates = vec![
+        PathBuf::from("local.toml"),
+        PathBuf::from("assets/local.toml"),
+    ];
+    if let Some(dir) = updater::data_dir() {
+        candidates.push(dir.join("local.toml"));
+    }
+
+    for path in candidates {
+        match std::fs::read_to_string(&path) {
+            Ok(content) => {
+                if let Err(errors) = validation::validate_rules_toml(&content) {
+                    return Err(LocalRulesError::Invalid { path, errors });
+                }
+                return Ok(LocalRulesStatus::Found { path, content });
+            }
+            Err(source) if source.kind() == std::io::ErrorKind::NotFound => {}
+            Err(source) => return Err(LocalRulesError::Unreadable { path, source }),
+        }
+    }
+
+    Ok(LocalRulesStatus::NotFoundUsingBundled {
+        content: BUNDLED_LOCAL_RULES.to_string(),
+    })
 }
 
 /// Return the active TOML rule content as a string, following the priority

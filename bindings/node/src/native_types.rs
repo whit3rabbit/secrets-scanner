@@ -64,6 +64,7 @@ pub struct NativeScanStats {
     pub errored: f64,
     pub git_fallback: bool,
     pub git_failed: bool,
+    pub history_timed_out: bool,
     pub findings_truncated: bool,
 }
 
@@ -203,6 +204,7 @@ fn stats_to_native(stats: ScanStats) -> Result<NativeScanStats> {
         errored: to_js_number("errored", stats.errored)?,
         git_fallback: stats.git_fallback,
         git_failed: stats.git_failed,
+        history_timed_out: stats.history_timed_out,
         findings_truncated: stats.findings_truncated,
     })
 }

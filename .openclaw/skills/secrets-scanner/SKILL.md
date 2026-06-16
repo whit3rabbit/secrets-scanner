@@ -22,7 +22,7 @@ bash "{baseDir}/scripts/install.sh"
 ```
 
 Or pick one directly:
-- macOS/Linux (Homebrew): `brew install whit3rabbit/tap/secrets-scanner`
+- macOS/Linux (Homebrew): `brew install --cask whit3rabbit/tap/secrets-scanner`
 - Any platform with Rust: `cargo install secrets_scanner` (or `cargo binstall secrets_scanner`)
 - Official one-liner: `curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | bash`
 - Windows: run `install.ps1` from the repo.
@@ -86,7 +86,7 @@ Exit codes: `0` clean, `1` findings, `2` runtime error, `3` invalid config/rules
 For untrusted in-memory content such as LLM prompts or tool payloads, use the
 hardened library entry points documented in `REFERENCE.md`: Rust
 `Scanner::scan_proxy` or Node `scanProxyAsync`. A skill can guide agents to call
-those APIs, but it cannot transparently intercept every Hermes/OpenClaw message
+those APIs, but it cannot transparently intercept every agent or gateway message
 without a separate runtime integration.
 
 ## References

@@ -65,18 +65,18 @@ pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig
     }
 
     if let Some(max_file_size) = config.max_file_size {
-        rust.max_file_size = number_to_u64("maxFileSize", max_file_size)?;
+        rust.max_file_size = positive_number_to_u64("maxFileSize", max_file_size)?;
     }
 
     if let Some(max_findings_per_file) = config.max_findings_per_file {
-        rust.max_findings_per_file = Some(number_to_usize(
+        rust.max_findings_per_file = Some(positive_number_to_usize(
             "maxFindingsPerFile",
             max_findings_per_file,
         )?);
     }
 
     if let Some(max_matched_len) = config.max_matched_len {
-        rust.max_matched_len = Some(number_to_usize("maxMatchedLen", max_matched_len)?);
+        rust.max_matched_len = Some(positive_number_to_usize("maxMatchedLen", max_matched_len)?);
     }
 
     if let Some(binary_policy) = config.binary_policy {
@@ -84,11 +84,11 @@ pub fn config_to_rust(config: Option<NativeScanConfig>) -> Result<RustScanConfig
     }
 
     if let Some(max_files) = config.max_files {
-        rust.max_files = Some(number_to_usize("maxFiles", max_files)?);
+        rust.max_files = Some(positive_number_to_usize("maxFiles", max_files)?);
     }
 
     if let Some(max_findings) = config.max_findings {
-        rust.max_findings = Some(number_to_usize("maxFindings", max_findings)?);
+        rust.max_findings = Some(positive_number_to_usize("maxFindings", max_findings)?);
     }
 
     rust.git_tracked = config.git_tracked.unwrap_or(false);
@@ -241,6 +241,28 @@ pub fn number_to_usize(field: &str, value: f64) -> Result<usize> {
         ));
     }
     Ok(value as usize)
+}
+
+fn positive_number_to_u64(field: &str, value: f64) -> Result<u64> {
+    let converted = number_to_u64(field, value)?;
+    if converted == 0 {
+        return Err(napi_error(
+            "INVALID_CONFIG",
+            &format!("{field} must be a positive safe integer"),
+        ));
+    }
+    Ok(converted)
+}
+
+fn positive_number_to_usize(field: &str, value: f64) -> Result<usize> {
+    let converted = number_to_usize(field, value)?;
+    if converted == 0 {
+        return Err(napi_error(
+            "INVALID_CONFIG",
+            &format!("{field} must be a positive safe integer"),
+        ));
+    }
+    Ok(converted)
 }
 
 fn is_safe_integer(value: f64) -> bool {

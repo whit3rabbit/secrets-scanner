@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "rsecrets-scanner-mcp": "./bin/rsecrets-scanner-mcp.js"
+    "rsecrets-scanner-mcp": "bin/rsecrets-scanner-mcp.js"
   },
   "exports": {
     ".": "./src/server.js"
@@ -23,7 +23,8 @@
   },
   "scripts": {
     "test": "vitest run",
-    "pack:dry": "npm pack --dry-run"
+    "pack:dry": "npm pack --dry-run",
+    "prepublishOnly": "npm test && npm run pack:dry"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

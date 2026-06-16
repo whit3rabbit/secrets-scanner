@@ -11,6 +11,7 @@ import {
   mergeCaps,
   parseArgs,
   resolveInsideRoot,
+  runTextTool,
   safeFinding,
 } from "../src/server.js";
 
@@ -76,7 +77,7 @@ describe("@whit3rabbit/rsecrets-scanner-mcp", () => {
     );
   });
 
-  it("serializes findings without raw matches or context lines", () => {
+  it("serializes findings without raw matches, context lines, or fingerprints", () => {
     const finding = safeFinding(
       {
         file: path.join("/tmp/root", "secret.env"),
@@ -103,7 +104,60 @@ describe("@whit3rabbit/rsecrets-scanner-mcp", () => {
     expect(finding.file).toBe("secret.env");
     expect(finding).not.toHaveProperty("matched");
     expect(finding).not.toHaveProperty("contextLines");
+    expect(finding).not.toHaveProperty("fingerprint");
     expect(JSON.stringify(finding)).not.toContain(SECRET);
+    expect(JSON.stringify(finding)).not.toContain("sha256:test");
+  });
+
+  it("rejects zero startup caps except history timeout", () => {
+    for (const flag of [
+      "--max-file-size",
+      "--max-files",
+      "--max-findings",
+      "--max-findings-per-file",
+      "--max-matched-len",
+    ]) {
+      expect(() => parseArgs(["--root", "/tmp/project", flag, "0"])).toThrowError(
+        /positive safe integer/
+      );
+    }
+
+    expect(parseArgs(["--root", "/tmp/project", "--history-timeout-secs", "0"]))
+      .toMatchObject({ historyTimeoutSecs: 0 });
+  });
+
+  it("rejects oversized text before allocating a Buffer", async () => {
+    const originalFrom = Buffer.from;
+    let bufferFromCalled = false;
+    Buffer.from = (() => {
+      bufferFromCalled = true;
+      throw new Error("Buffer.from should not be called");
+    });
+
+    try {
+      const result = await runTextTool(
+        {
+          root: "/tmp/root",
+          limits: {
+            maxFileSize: 1,
+            maxFindingsPerFile: 10,
+            maxMatchedLen: 256,
+          },
+        },
+        { content: "xx" },
+        { includeRedacted: false }
+      );
+      const payload = parsePayload(result);
+
+      expect(result.isError).toBe(true);
+      expect(payload).toMatchObject({
+        status: "error",
+        code: "INPUT_TOO_LARGE",
+      });
+      expect(bufferFromCalled).toBe(false);
+    } finally {
+      Buffer.from = originalFrom;
+    }
   });
 
   it("lists tools and redacts text over stdio", async () => {
@@ -129,6 +183,7 @@ describe("@whit3rabbit/rsecrets-scanner-mcp", () => {
     expect(payload.redacted).toBe("API_TOKEN=[REDACTED_SECRET]");
     expect(JSON.stringify(payload)).not.toContain(SECRET);
     expect(payload.findings[0]).not.toHaveProperty("matched");
+    expect(payload.findings[0]).not.toHaveProperty("fingerprint");
   });
 
   it("scans a file under root and rejects git history when disabled", async () => {

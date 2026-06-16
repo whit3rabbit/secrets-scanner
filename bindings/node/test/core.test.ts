@@ -1,9 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { Scanner } from "../index.js";
+
+const require = createRequire(import.meta.url);
+const { mapPathScanResult } = require("../lib/mapping.js");
+const { nativeCandidates, nativeBindingNotFound } = require("../lib/loader.js");
 
 const RULES = String.raw`
 title = "node binding tests"
@@ -203,6 +208,20 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     expect(() =>
       Scanner.proxy({ maxFileSize: Number.MAX_SAFE_INTEGER + 1 })
     ).toThrowError(expect.objectContaining({ code: "INVALID_CONFIG" }));
+    for (const config of [
+      { maxFileSize: 0 },
+      { maxFiles: 0 },
+      { maxFindings: 0 },
+      { maxFindingsPerFile: 0 },
+      { maxMatchedLen: 0 },
+    ]) {
+      expect(() => Scanner.fromToml(RULES, config)).toThrowError(
+        expect.objectContaining({ code: "INVALID_CONFIG" })
+      );
+    }
+    expect(() =>
+      Scanner.fromToml(RULES, { gitHistory: true, historyTimeoutSecs: 0 })
+    ).not.toThrow();
     expect(() => Scanner.proxy({ redact: false } as never)).toThrowError(
       expect.objectContaining({ code: "INVALID_CONFIG" })
     );
@@ -281,6 +300,23 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
     const scanner = Scanner.fromToml(RULES);
 
     await expect(scanner.scanProxyAsync(Buffer.from(SECRET, "utf8"))).rejects.toMatchObject({
+      code: "NOT_HARDENED",
+    });
+  });
+
+  it("reports NOT_HARDENED (not INPUT_TOO_LARGE) for a non-hardened scanner with oversize input", async () => {
+    // The hardened-posture gate must win over the size gate on both proxy paths.
+    // Previously the JS wrapper size-checked before calling native, so oversize
+    // input on a non-hardened scanner leaked INPUT_TOO_LARGE and the careful
+    // native NotHardened-first ordering was unobservable through the JS API.
+    const scanner = Scanner.fromToml(RULES, { maxFileSize: 8 });
+    const oversize = Buffer.from(SECRET, "utf8");
+    expect(Buffer.byteLength(SECRET)).toBeGreaterThan(8);
+
+    expect(() => scanner.scanProxy(oversize)).toThrowError(
+      expect.objectContaining({ code: "NOT_HARDENED" })
+    );
+    await expect(scanner.scanProxyAsync(oversize)).rejects.toMatchObject({
       code: "NOT_HARDENED",
     });
   });
@@ -538,4 +574,57 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
       rmSync(dir, { recursive: true, force: true });
     }
   });
+
+  it("maps history timeout stats for incomplete scan errors", () => {
+    const result = mapPathScanResult({
+      findings: [],
+      incomplete: true,
+      skippedByPolicy: false,
+      hasFindings: false,
+      findingsTruncated: true,
+      stats: {
+        filesScanned: 1,
+        binarySkipped: 0,
+        oversizedSkipped: 0,
+        filesOverCap: 0,
+        errored: 0,
+        gitFallback: false,
+        gitFailed: false,
+        history_timed_out: true,
+        findingsTruncated: true,
+      },
+    });
+
+    expect(result.stats.historyTimedOut).toBe(true);
+    expect(() => scannerComplete(result)).toThrowError(
+      expect.objectContaining({
+        code: "INCOMPLETE_SCAN",
+        details: {
+          stats: expect.objectContaining({ historyTimedOut: true }),
+        },
+      })
+    );
+  });
+
+  it("prefers platform-specific native artifacts and reports attempted candidates", () => {
+    const candidates = nativeCandidates("/pkg", "darwin", "arm64");
+
+    expect(candidates).toEqual([
+      join("/pkg", "secrets_scanner_core.darwin-arm64.node"),
+      join("/pkg", "secrets_scanner_core.darwin.node"),
+      join("/pkg", "secrets_scanner_core.node"),
+    ]);
+
+    const error = nativeBindingNotFound(candidates, new Error("bad arch"));
+    expect(error).toMatchObject({
+      code: "NATIVE_BINDING_NOT_FOUND",
+      details: { candidates },
+    });
+    expect(error.cause).toBeInstanceOf(Error);
+  });
 });
+
+function scannerComplete(result: unknown) {
+  const { requireCompleteScan } = require("../lib/mapping.js");
+  return requireCompleteScan(result);
+}

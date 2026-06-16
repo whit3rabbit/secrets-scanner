@@ -69,6 +69,9 @@ function mapStats(stats) {
     errored: stats.errored,
     gitFallback: Boolean(stats.gitFallback ?? stats.git_fallback),
     gitFailed: Boolean(stats.gitFailed ?? stats.git_failed),
+    historyTimedOut: Boolean(
+      stats.historyTimedOut ?? stats.history_timed_out
+    ),
     findingsTruncated: Boolean(
       stats.findingsTruncated ?? stats.findings_truncated
     ),
@@ -121,4 +124,5 @@ module.exports = {
   mapPathScanResult,
   requireCompleteScan,
   mapFinding,
+  mapStats,
 };

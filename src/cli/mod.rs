@@ -2,6 +2,7 @@ mod args;
 mod completions;
 mod rules;
 mod scan;
+mod skill;
 
 use clap::Parser;
 
@@ -30,5 +31,13 @@ pub(crate) fn run() {
             rules::handle_list_rules(rules_path.as_deref());
         }
         Commands::Completions { shell } => completions::handle(shell),
+        Commands::InstallSkill {
+            agents,
+            local,
+            dry_run,
+        } => skill::handle_install(&agents, local.as_deref(), dry_run),
+        Commands::UninstallSkill { agents, local } => {
+            skill::handle_uninstall(&agents, local.as_deref())
+        }
     }
 }

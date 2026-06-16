@@ -27,11 +27,17 @@ const nonNegativeSafeInteger = z
   .nonnegative()
   .max(Number.MAX_SAFE_INTEGER);
 
+const positiveSafeInteger = z
+  .number()
+  .int()
+  .positive()
+  .max(Number.MAX_SAFE_INTEGER);
+
 const capInputSchema = {
-  maxFileSize: nonNegativeSafeInteger.optional(),
-  maxFiles: nonNegativeSafeInteger.optional(),
-  maxFindings: nonNegativeSafeInteger.optional(),
-  maxFindingsPerFile: nonNegativeSafeInteger.optional(),
+  maxFileSize: positiveSafeInteger.optional(),
+  maxFiles: positiveSafeInteger.optional(),
+  maxFindings: positiveSafeInteger.optional(),
+  maxFindingsPerFile: positiveSafeInteger.optional(),
 };
 
 const binaryPolicySchema = z.enum(BINARY_POLICIES);
@@ -74,7 +80,10 @@ export function parseArgs(argv, cwd = process.cwd(), env = process.env) {
         parsed.maxMatchedLen = parseLimit(readValue(argv, ++index, arg), arg);
         break;
       case "--history-timeout-secs":
-        parsed.historyTimeoutSecs = parseLimit(readValue(argv, ++index, arg), arg);
+        parsed.historyTimeoutSecs = parseNonNegativeLimit(
+          readValue(argv, ++index, arg),
+          arg
+        );
         break;
       case "--help":
       case "-h":
@@ -93,7 +102,7 @@ export function parseArgs(argv, cwd = process.cwd(), env = process.env) {
     "RSECRETS_MAX_FINDINGS_PER_FILE"
   );
   parsed.maxMatchedLen ??= envLimit(env.RSECRETS_MAX_MATCHED_LEN, "RSECRETS_MAX_MATCHED_LEN");
-  parsed.historyTimeoutSecs ??= envLimit(
+  parsed.historyTimeoutSecs ??= envNonNegativeLimit(
     env.RSECRETS_HISTORY_TIMEOUT_SECS,
     "RSECRETS_HISTORY_TIMEOUT_SECS"
   );
@@ -143,8 +152,8 @@ export function createServer(rawOptions = {}) {
       inputSchema: {
         content: z.string(),
         pathHint: z.string().optional(),
-        maxFileSize: nonNegativeSafeInteger.optional(),
-        maxFindingsPerFile: nonNegativeSafeInteger.optional(),
+        maxFileSize: positiveSafeInteger.optional(),
+        maxFindingsPerFile: positiveSafeInteger.optional(),
       },
     },
     async (input) => runTextTool(options, input, { includeRedacted: true })
@@ -157,8 +166,8 @@ export function createServer(rawOptions = {}) {
       inputSchema: {
         content: z.string(),
         pathHint: z.string().optional(),
-        maxFileSize: nonNegativeSafeInteger.optional(),
-        maxFindingsPerFile: nonNegativeSafeInteger.optional(),
+        maxFileSize: positiveSafeInteger.optional(),
+        maxFindingsPerFile: positiveSafeInteger.optional(),
       },
     },
     async (input) => runTextTool(options, input, { includeRedacted: false })
@@ -240,13 +249,20 @@ Options:
 `;
 }
 
-async function runTextTool(options, input, { includeRedacted }) {
+export async function runTextTool(options, input, { includeRedacted }) {
   try {
     const caps = mergeCaps(options.limits, input, [
       "maxFileSize",
       "maxFindingsPerFile",
       "maxMatchedLen",
     ]);
+    const size = Buffer.byteLength(input.content, "utf8");
+    if (size > caps.maxFileSize) {
+      throw scannerToolError(
+        "INPUT_TOO_LARGE",
+        "input exceeds configured maxFileSize"
+      );
+    }
     const scanner = buildScanner(options, {
       proxy: true,
       maxFileSize: caps.maxFileSize,
@@ -426,7 +442,6 @@ export function safeFinding(finding, options = {}) {
     endOffset: finding.endOffset,
     secretStartOffset: finding.secretStartOffset,
     secretEndOffset: finding.secretEndOffset,
-    fingerprint: finding.fingerprint,
     commit: finding.commit,
   };
 }
@@ -538,6 +553,14 @@ function readValue(argv, index, flag, { allowHyphen = false } = {}) {
 
 function parseLimit(value, name) {
   const parsed = Number(value);
+  if (!Number.isSafeInteger(parsed) || parsed < 1) {
+    throw new Error(`${name} must be a positive safe integer`);
+  }
+  return parsed;
+}
+
+function parseNonNegativeLimit(value, name) {
+  const parsed = Number(value);
   if (!Number.isSafeInteger(parsed) || parsed < 0) {
     throw new Error(`${name} must be a non-negative safe integer`);
   }
@@ -549,6 +572,13 @@ function envLimit(value, name) {
     return undefined;
   }
   return parseLimit(value, name);
+}
+
+function envNonNegativeLimit(value, name) {
+  if (value == null || value === "") {
+    return undefined;
+  }
+  return parseNonNegativeLimit(value, name);
 }
 
 function realpathIfExists(value) {

@@ -52,6 +52,25 @@ fn git_tracked_conflicts_with_changed_files() {
 }
 
 #[test]
+fn git_tracked_conflicts_with_base() {
+    // `--base` implies `--changed-files` at runtime, which would silently win
+    // over `--git-tracked` and narrow coverage to changed files. The
+    // combination must be a parse error, not a quiet scope reduction.
+    assert!(
+        Cli::try_parse_from([
+            "secrets-scanner",
+            "scan",
+            ".",
+            "--git-tracked",
+            "--base",
+            "origin/main",
+        ])
+        .is_err(),
+        "--git-tracked --base must conflict"
+    );
+}
+
+#[test]
 fn git_history_conflicts_with_other_git_modes() {
     for other in ["--git-tracked", "--changed-files", "--staged"] {
         assert!(

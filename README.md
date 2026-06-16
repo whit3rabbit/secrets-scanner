@@ -57,227 +57,147 @@ secrets-scanner scan --format sarif . > results.sarif
 
 ### 3. Use as a Library
 
-To integrate `secrets-scanner` into your Rust codebase, add it to your `Cargo.toml`:
+Add the crate to your `Cargo.toml`:
 
 ```toml
 [dependencies]
 secrets-scanner = "0.1.0"
 ```
 
-#### Parallel Directory Scanning
-Scan a directory tree in parallel using default rules:
+`Scanner::new()` loads rules in priority order (`SECRETS_SCANNER_RULES` env → cached
+in user-data → bundled fallback). Every snippet below is a complete body for a
+function returning `Result<_, Box<dyn std::error::Error>>`.
+
+#### Scan a directory tree (parallel)
 
 ```rust
 use secrets_scanner::Scanner;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Load rules (priority: SECRETS_SCANNER_RULES env -> cached in user-data -> bundled fallback)
-    let scanner = Scanner::new()?;
-
-    // Scan a directory tree
-    let findings = scanner.scan_path("./src");
-
-    for f in &findings {
-        println!("{}:{} [{}] {}", f.file, f.line, f.rule_id, f.matched);
-    }
-    Ok(())
+let scanner = Scanner::new()?;
+for f in scanner.scan_path("./src") {
+    println!("{}:{} [{}] {}", f.file, f.line, f.rule_id, f.matched);
 }
 ```
 
-#### In-Memory Scan & Redaction
-Check for secrets and redact them from a string or file content:
+#### Redact secrets from in-memory content
 
 ```rust
 use secrets_scanner::Scanner;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let scanner = Scanner::new()?;
-    let content = "export STRIPE_KEY=sk_live_51234567890abcdefghijklmnopqrstuvwxyz";
-
-    let output = scanner.scan_and_redact_content("config.env", content);
-    if output.has_findings() {
-        println!("Redacted content:\n{}", output.redacted);
-    }
-    Ok(())
+let scanner = Scanner::new()?;
+let out = scanner.scan_and_redact_content("config.env", "STRIPE_KEY=sk_live_51abc...");
+if out.has_findings() {
+    println!("{}", out.redacted); // safe to log/forward
 }
 ```
 
-#### Hardened LLM / Proxy Integration
-For untrusted inputs (e.g. proxying user prompts or LLM generated payloads), use the hardened `scan_proxy` interface. This API is **fail-closed** (returns an error on oversized input) and enforces a hardened `ScanConfig::proxy()` setup (enforces redaction, disables allow markers, caps maximum findings, and limits matched length to prevent memory amplification/bypass attacks).
+#### Filter untrusted LLM / proxy traffic (hardened)
+
+`scan_proxy` is **fail-closed**: oversized input returns `ProxyError::InputTooLarge`,
+and a non-hardened config returns `ProxyError::NotHardened`. `ScanConfig::proxy()`
+enforces redaction, disables allow-markers, and caps findings/matched length.
 
 ```rust
 use secrets_scanner::{ScanConfig, Scanner};
 
-fn handle_untrusted_input(payload: &[u8]) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
-    // Create a scanner configured for proxy hardened mode.
-    let scanner = Scanner::from_bundled()?.with_config(ScanConfig::proxy());
-
-    // scan_proxy returns Err(ProxyError::InputTooLarge) if input exceeds config.max_file_size
-    // It also fails with Err(ProxyError::NotHardened) if the config is not secure.
-    let output = scanner.scan_proxy(payload)?;
-
-    // If findings were detected, the output contains redacted bytes
-    if output.has_findings() {
-        eprintln!("Detected and redacted {} secret(s).", output.findings.len());
-    }
-
-    // Return the safe, redacted payload
-    Ok(output.redacted)
-}
+let scanner = Scanner::from_bundled()?.with_config(ScanConfig::proxy());
+let out = scanner.scan_proxy(payload)?; // payload: &[u8]
+// Forward out.redacted instead of the raw input.
 ```
 
-#### Loading Custom Rules
-Load a scanner from your own gitleaks-style TOML instead of the bundled rules.
-`from_file` / `from_toml` use a strict gate: they fail loudly on an empty/duplicate
-rule id or an uncompilable regex (`ScannerError::InvalidRules`), rather than silently
-scanning with a reduced rule set.
+#### Load your own rules
+
+`from_file` / `from_toml` fail loudly (`ScannerError::InvalidRules`) on a duplicate
+id or uncompilable regex, rather than silently scanning with fewer rules.
 
 ```rust
 use secrets_scanner::{Scanner, ScannerError};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // From a path on disk...
-    let scanner = Scanner::from_file("my-rules.toml")?;
-
-    // ...or from an in-memory TOML string.
-    let toml = r#"
-        title = "custom rules"
-
-        [[rules]]
-        id = "acme-api-key"
-        description = "ACME service API key"
-        regex = 'ACME_[A-Za-z0-9]{32}'
-        keywords = ["acme_"]
-        entropy = 3.5
-    "#;
-    match Scanner::from_toml(toml) {
-        Ok(s) => { let _ = s.scan_path("./src"); }
-        // InvalidRules carries one message per rejected rule.
-        Err(ScannerError::InvalidRules(issues)) => {
-            for issue in issues {
-                eprintln!("rejected rule: {issue}");
-            }
-        }
-        Err(e) => return Err(e.into()),
-    }
-
-    let _ = scanner;
-    Ok(())
+let toml = r#"
+    [[rules]]
+    id = "acme-api-key"
+    regex = 'ACME_[A-Za-z0-9]{32}'
+    keywords = ["acme_"]
+    entropy = 3.5
+"#;
+match Scanner::from_toml(toml) {
+    Ok(scanner) => { scanner.scan_path("./src"); }
+    Err(ScannerError::InvalidRules(issues)) => issues.iter().for_each(|i| eprintln!("{i}")),
+    Err(e) => return Err(e.into()),
 }
 ```
 
-#### Custom Scan Configuration
-Tune scan behavior with [`ScanConfig`] and attach it via `with_config`. Every field
-has a safe default; override only what you need.
+#### Tune scan behavior
+
+Every `ScanConfig` field has a safe default; override only what you need and attach
+it with `with_config`.
 
 ```rust
 use secrets_scanner::{BinaryPolicy, ScanConfig, Scanner};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let config = ScanConfig {
-        // Only *raise* a rule's entropy threshold (never weakens a stricter rule).
-        min_entropy_override: Some(4.0),
-        // Skip files larger than 1 MiB.
-        max_file_size: 1024 * 1024,
-        // Never skip on binary detection (still honors size/symlink guards).
-        binary_policy: BinaryPolicy::Scan,
-        // Bound the result set for hostile/huge inputs.
-        max_findings: Some(500),
-        max_findings_per_file: Some(50),
-        ..ScanConfig::default()
-    };
-
-    let scanner = Scanner::new()?.with_config(config);
-    let findings = scanner.scan_path("./");
-    println!("{} finding(s)", findings.len());
-    Ok(())
-}
+let scanner = Scanner::new()?.with_config(ScanConfig {
+    min_entropy_override: Some(4.0), // only *raises* a rule's threshold
+    max_file_size: 1024 * 1024,
+    binary_policy: BinaryPolicy::Scan,
+    max_findings: Some(500),
+    ..ScanConfig::default()
+});
+let findings = scanner.scan_path(".");
 ```
 
-#### Git-Aware Scanning
-The same `git ls-files` / `git log -p` modes the CLI exposes are available from the
-library through `ScanConfig`. Explicit git modes fail closed on git error unless you
-set `git_fallback_walk`.
+#### Git-aware scanning
+
+The CLI's `git ls-files` / `git log -p` modes are available via `ScanConfig`.
+Explicit git modes fail closed on git error unless you set `git_fallback_walk`.
 
 ```rust
 use secrets_scanner::{ScanConfig, Scanner};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Scan only git-tracked working-tree content.
-    let tracked = Scanner::new()?.with_config(ScanConfig {
-        git_tracked: true,
-        ..ScanConfig::default()
-    });
-    for f in tracked.scan_path(".") {
-        println!("{}:{} [{}]", f.file, f.line, f.rule_id);
-    }
+// Working-tree content of git-tracked files only.
+Scanner::new()?.with_config(ScanConfig { git_tracked: true, ..Default::default() })
+    .scan_path(".");
 
-    // Scan full history; each finding is attributed to the commit that ADDED it
-    // (catches secrets committed then later removed).
-    let history = Scanner::new()?.with_config(ScanConfig {
-        git_history: true,
-        // Optional wall-clock budget; 0 = unlimited.
-        history_timeout_secs: 30,
-        ..ScanConfig::default()
-    });
-    for f in history.scan_path(".") {
-        if let Some(commit) = &f.commit {
-            println!("{commit} {}:{} [{}]", f.file, f.line, f.rule_id);
-        }
-    }
-    Ok(())
+// Full history; each finding carries the commit that ADDED it (catches removed secrets).
+let history = Scanner::new()?.with_config(ScanConfig {
+    git_history: true,
+    history_timeout_secs: 30, // wall-clock budget; 0 = unlimited
+    ..Default::default()
+});
+for f in history.scan_path(".") {
+    if let Some(c) = &f.commit { println!("{c} {}:{}", f.file, f.line); }
 }
 ```
 
-#### CI Summary with Scan Stats
-`scan_path_with_stats` returns file-level [`ScanStats`] alongside findings, so a CI
-job can print a safe summary (counts only, no secret material) and distinguish a
-scanned-and-clean file from one that was skipped or unreadable.
+#### CI summary with scan stats
+
+`scan_path_with_stats` returns file-level [`ScanStats`] so CI can print a
+secret-free summary and tell a scanned-clean file from a skipped or unreadable one.
 
 ```rust
 use secrets_scanner::Scanner;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let scanner = Scanner::new()?;
-    let (findings, stats) = scanner.scan_path_with_stats("./src");
-
-    eprintln!(
-        "scanned {} file(s): {} finding(s), {} binary, {} oversized, {} unreadable",
-        stats.files_scanned,
-        findings.len(),
-        stats.binary_skipped,
-        stats.oversized_skipped,
-        stats.errored,
-    );
-
-    // `errored > 0` means coverage was incomplete: treat it as a hard failure
-    // rather than a clean result.
-    if stats.errored > 0 {
-        std::process::exit(2);
-    }
-    Ok(())
-}
+let (findings, stats) = Scanner::new()?.scan_path_with_stats("./src");
+eprintln!(
+    "{} file(s), {} finding(s), {} binary, {} oversized, {} unreadable",
+    stats.files_scanned, findings.len(),
+    stats.binary_skipped, stats.oversized_skipped, stats.errored,
+);
+// errored > 0 means incomplete coverage: fail rather than report clean.
+if stats.errored > 0 { std::process::exit(2); }
 ```
 
-#### Inspecting Findings
-Each [`Finding`] carries full location and identity metadata. The `fingerprint`
-(line-tolerant SHA-256 over rule id + file + raw secret) is the stable key used for
-baseline suppression and SARIF `partialFingerprints`.
+#### Inspect a finding
+
+Each [`Finding`] carries location, identity, and a `fingerprint` (line-tolerant
+SHA-256 over rule id + file + raw secret) — the stable key for baselines and SARIF.
 
 ```rust
 use secrets_scanner::Scanner;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let scanner = Scanner::new()?;
-    for f in scanner.scan_content("config.env", "AWS_SECRET=AKIAIOSFODNN7EXAMPLE") {
-        println!("rule        : {} ({})", f.rule_id, f.rule_description);
-        println!("location    : {}:{}:{}", f.file, f.line, f.col);
-        println!("entropy     : {:.2}", f.entropy);
-        println!("fingerprint : {}", f.fingerprint);
-        // `matched` is redacted by default; build with `redact: false` for raw text.
-        println!("matched     : {}", f.matched);
-    }
-    Ok(())
+for f in Scanner::new()?.scan_content("config.env", "AWS_SECRET=AKIAIOSFODNN7EXAMPLE") {
+    println!("{} ({}) {}:{}:{}", f.rule_id, f.rule_description, f.file, f.line, f.col);
+    println!("entropy {:.2}  fingerprint {}", f.entropy, f.fingerprint);
+    println!("matched {}", f.matched); // redacted by default
 }
 ```
 
@@ -857,6 +777,25 @@ then removed from the working tree is still caught.
 ## Agent Skills and Plugins
 
 This repository bundles compatible agent skills and `SOUL.md` personality core rules for multiple AI agent runtimes to prevent secrets from being leaked during agent-assisted development:
+
+### Built-in skill installer (`install-skill`)
+The binary can install its own agent skill into 20+ runtimes via the [`agent-config`](https://crates.io/crates/agent-config) library, with atomic writes, first-touch `.bak` backups, an ownership ledger, idempotent reinstalls, and reversible uninstall:
+
+```bash
+# Install into your user home (default scope), repeatable --agent
+secrets-scanner install-skill --agent claude --agent codex
+
+# Install into a specific project instead of home
+secrets-scanner install-skill --agent claude --local /path/to/repo
+
+# Preview without writing anything
+secrets-scanner install-skill --agent claude --dry-run
+
+# Remove (only skills this tool owns)
+secrets-scanner uninstall-skill --agent claude
+```
+
+`--agent` is required and validated against the agent-config registry (run with an unknown id to print the supported list, e.g. `claude`, `codex`, `hermes`, `openclaw`, `cursor`, `gemini`, …). Each runtime's skill lands in its own location (`claude` → `.claude/skills/`, `codex`/`openclaw` → `.agents/skills/`, etc.). This renders one shared `SKILL.md` per runtime; the hand-tuned committed copies under `.claude/`/`.codex/`/`.hermes/`/`.openclaw/` are maintained separately.
 
 ### Claude Code Plugin
 This repo doubles as a [Claude Code](https://claude.com/claude-code) plugin marketplace. Install the plugin and Claude can install/uninstall the scanner, set up a fail-closed git pre-commit hook, or run scans on request:

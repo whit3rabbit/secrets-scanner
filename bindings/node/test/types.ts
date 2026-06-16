@@ -69,6 +69,7 @@ const proxyResult: BytesRedactionResult = proxyScanner.scanProxy(
   new Uint8Array([1, 2, 3])
 );
 const stats: ScanStats = scanner.scanPath(".").stats;
+const historyTimedOut: boolean = stats.historyTimedOut;
 const pathResult: PathScanResult = scanner.scanFile("input.txt");
 const strictFileResult: PathScanResult = scanner.scanFileStrict("input.txt");
 const strictPathResult: PathScanResult = scanner.scanPathStrict(".");
@@ -96,6 +97,7 @@ void textTruncated;
 void redactedBytes;
 void proxyResult;
 void stats;
+void historyTimedOut;
 void pathResult;
 void strictFileResult;
 void strictPathResult;

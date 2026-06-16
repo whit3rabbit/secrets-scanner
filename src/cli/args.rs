@@ -116,6 +116,37 @@ pub(super) enum Commands {
         #[arg(value_enum)]
         shell: Shell,
     },
+
+    /// Install the secrets-scanner agent skill into one or more agent runtimes.
+    #[command(name = "install-skill")]
+    InstallSkill {
+        /// Agent runtime id (repeatable), e.g. claude, codex, hermes, openclaw.
+        /// Validated at runtime against the agent-config registry.
+        #[arg(long = "agent", value_name = "ID", required = true, action = clap::ArgAction::Append)]
+        agents: Vec<String>,
+
+        /// Install into a project directory instead of the user home. With no
+        /// value, defaults to the current directory.
+        #[arg(long, value_name = "PATH", num_args = 0..=1, default_missing_value = ".")]
+        local: Option<String>,
+
+        /// Preview the changes without writing anything.
+        #[arg(long)]
+        dry_run: bool,
+    },
+
+    /// Remove the secrets-scanner agent skill (only skills owned by this tool).
+    #[command(name = "uninstall-skill")]
+    UninstallSkill {
+        /// Agent runtime id (repeatable), e.g. claude, codex, hermes, openclaw.
+        #[arg(long = "agent", value_name = "ID", required = true, action = clap::ArgAction::Append)]
+        agents: Vec<String>,
+
+        /// Uninstall from a project directory instead of the user home. With no
+        /// value, defaults to the current directory.
+        #[arg(long, value_name = "PATH", num_args = 0..=1, default_missing_value = ".")]
+        local: Option<String>,
+    },
 }
 
 /// Arguments for the `scan` subcommand.
@@ -190,7 +221,11 @@ pub(super) struct ScanArgs {
     /// current working-tree content of tracked files, NOT git history (a secret
     /// committed then removed from the tree is invisible here; use
     /// `--git-history`).
-    #[arg(long, conflicts_with = "changed_files")]
+    // `--base` implies `--changed-files` at runtime (`resolve_changed_files`),
+    // and that branch silently wins over `--git-tracked` in `collect_git_paths`.
+    // Conflicting with `base` too turns the coverage-narrowing combination into a
+    // parse error instead, matching the Node binding's `validate_git_mode_config`.
+    #[arg(long, conflicts_with_all = ["changed_files", "base"])]
     pub(super) git_tracked: bool,
 
     /// Scan only the current working-tree content of files changed relative to a

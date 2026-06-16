@@ -153,8 +153,12 @@ class Scanner {
   }
 
   scanProxy(content) {
+    // Pass the full buffer (no JS-side size check) so the native scan_proxy
+    // enforces the hardened-posture gate BEFORE the size gate: a non-hardened
+    // scanner must report NOT_HARDENED regardless of input size. toBuffer with no
+    // max is a zero-copy view, so this does not regress bounded memory.
     return wrapNative(() =>
-      mapByteRedactionResult(this.nativeScanner.scanProxy(toBuffer(content, this.maxFileSize)))
+      mapByteRedactionResult(this.nativeScanner.scanProxy(toBuffer(content)))
     );
   }
 
@@ -242,9 +246,12 @@ class Scanner {
   }
 
   scanProxyAsync(content) {
+    // See scanProxy: full buffer (no JS-side size check) so native checks the
+    // hardened gate before the size gate. The async native path only copies the
+    // buffer (to_vec) after both gates pass, so bounded memory is preserved.
     return wrapNativeAsync(async () =>
       mapByteRedactionResult(
-        await this.nativeScanner.scanProxyAsync(toBuffer(content, this.maxFileSize))
+        await this.nativeScanner.scanProxyAsync(toBuffer(content))
       )
     );
   }

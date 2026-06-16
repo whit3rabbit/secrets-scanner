@@ -161,6 +161,7 @@ export interface ScanStats {
   errored: number;
   gitFallback: boolean;
   gitFailed: boolean;
+  historyTimedOut: boolean;
   findingsTruncated: boolean;
 }
 
@@ -168,7 +169,8 @@ export interface PathScanResult extends ScanResult {
   stats: ScanStats;
   /**
    * True when coverage is incomplete: unreadable files, oversized skips,
-   * `maxFiles` cap, git failure, or git fallback. Strict scans throw on this.
+   * `maxFiles` cap, git failure, git fallback, or history timeout. Strict scans
+   * throw on this.
    */
   incomplete: boolean;
   /**

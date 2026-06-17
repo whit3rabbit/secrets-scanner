@@ -577,8 +577,8 @@ Essentials (details in `docs/RELEASE.md`):
   Docker, Homebrew) **and** `publish.yml` (multi-platform npm). A release is done
   only when both are green.
 - Bump `vX.Y.Z` in **all** version locations: `Cargo.toml`, `Dockerfile`, both
-  `Cargo.lock` files, `bindings/node/package.json` (incl. its
-  `optionalDependencies` pins), `bindings/node/Cargo.toml`, and `CHANGELOG.md`.
+  `Cargo.lock` files, `bindings/node/package.json`,
+  `bindings/node/Cargo.toml`, and `CHANGELOG.md`.
   `release.yml` rejects a tag that mismatches `Cargo.toml`/`Dockerfile`; a stale
   node version makes the npm publish reject an already-published version.
 - Gate locally: `make ci` + `cargo publish --dry-run --locked` (clean commit) +

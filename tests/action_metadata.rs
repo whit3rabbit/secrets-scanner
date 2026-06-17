@@ -1,6 +1,9 @@
 fn action_yml() -> String {
+    // Normalize CRLF so the `\n`-containing substring assertions below hold
+    // regardless of how git checked the file out (Windows autocrlf -> CRLF).
     std::fs::read_to_string(format!("{}/action.yml", env!("CARGO_MANIFEST_DIR")))
         .expect("action.yml should be readable")
+        .replace("\r\n", "\n")
 }
 
 #[test]

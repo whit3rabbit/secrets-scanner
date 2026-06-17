@@ -1,0 +1,7 @@
+# Normalize all text files to LF in the working tree on every platform (Windows
+# included), so files compiled into the binary (skill markdown/scripts) or read
+# and string-matched by tests (e.g. action.yml) never carry CRLF under
+# core.autocrlf. Git keeps detected-binary files (and the rules below) untouched.
+* text=auto eol=lf
+*.sh text eol=lf
+*.node binary

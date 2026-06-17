@@ -39,7 +39,7 @@ Pre-conditions:
 | `Cargo.toml` | `[package].version` | `release.yml` `check-version` asserts `tag == vCargo.toml`. |
 | `Dockerfile` | `LABEL version="…"` | `release.yml` `check-version` asserts `tag == vDockerfile`. |
 | `Cargo.lock` | `secrets_scanner` package entry | Refresh with `cargo check` (do not hand-edit if avoidable). |
-| `bindings/node/package.json` | `version` **and** every `optionalDependencies` pin | A stale node version makes npm **republish an existing version and fail**. |
+| `bindings/node/package.json` | `version` | A stale node version makes npm **republish an existing version and fail**. |
 | `bindings/node/Cargo.toml` | `version` | Keep in lockstep (crate is `publish = false`, but keep consistent). |
 | `bindings/node/package-lock.json` | root `version` (two places) | npm here may not auto-sync it; verify by reading the file. |
 | `CHANGELOG.md` | new `## vX.Y.Z (DATE)` section | Use an absolute date. |
@@ -57,7 +57,7 @@ make ci                              # fmt, clippy, tests, rule drift, full buil
 cargo publish --dry-run --locked     # crates.io packaging (needs a CLEAN commit; commit first)
 
 # Node binding (NOT covered by make ci) — run inside bindings/node/:
-npm install --no-workspaces          # see npm gotchas below
+npm install
 npm run build && npm run typecheck && npm test
 cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test
 ```
@@ -67,40 +67,42 @@ then dry-run (use `--allow-dirty` only for a throwaway check).
 
 ## npm / node binding
 
-The node binding publishes as a **multi-platform NAPI-RS package**: a thin main
-package (`@whit3rabbit/rsecrets-scanner`, ships no binary) plus one
-`optionalDependency` per platform (`-darwin-arm64`, `-darwin-x64`,
-`-linux-x64-gnu`, `-linux-arm64-gnu`, `-win32-x64-msvc`). `publish.yml` builds
-each target on a native runner, then `napi create-npm-dirs` / `napi artifacts` /
-`napi pre-publish` publish the platform packages and the main package. See
-`bindings/node/CLAUDE.md` for the loader and packaging internals.
+The node binding publishes as a single **"fat" package**
+(`@whit3rabbit/rsecrets-scanner`) bundling **all** platform binaries
+(`secrets_scanner_core.<platform>-<arch>[-abi].node`). `publish.yml` builds each
+target on a native runner, uploads each `.node`, then the publish job downloads
+them all into the package root and runs ONE `npm publish`. `lib/loader.js` picks
+the matching binary at runtime. One npm package = one trusted publisher, no
+per-platform packages. See `bindings/node/CLAUDE.md` for internals.
 
-Hard-won gotchas (each one broke a publish):
+**Auth: npm trusted publishing (OIDC), no token.** Configure a trusted publisher
+on npmjs.com for `@whit3rabbit/rsecrets-scanner` (GitHub Actions, repo
+`whit3rabbit/secrets-scanner`, workflow `publish.yml`). The job needs
+`id-token: write` (set) and npm >= 11.5.1 — `setup-node` pins node 24 and the job
+runs `npm install -g npm@latest`. Provenance is automatic (public repo + public
+package). Do **not** set `NODE_AUTH_TOKEN`. **Renaming `publish.yml` breaks the
+trusted-publisher config.**
 
-- **Always run the dry-run first.** `publish.yml` has a `workflow_dispatch` mode
-  that is **fail-safe**: any dispatch is a dry run unless it is a tag push (or an
-  explicit `dry-run=false`). Trigger it on your branch and confirm **all 5
-  targets** build before tagging:
+Gotchas (each one broke a publish at least once):
+
+- **Run the dry-run first.** `publish.yml`'s `workflow_dispatch` is fail-safe:
+  any dispatch is a dry run unless it is a tag push (or `dry-run=false`). Confirm
+  all 5 targets build before tagging:
   ```bash
-  gh workflow run publish.yml --ref <branch>     # no inputs needed; defaults to dry-run
+  gh workflow run publish.yml --ref <branch>   # no inputs; defaults to dry-run
   ```
-  Note: `workflow_dispatch` inputs are read from the **default branch**, so a new
-  input you added on a feature branch won't be accepted via `-f` until it's on
-  `main` — rely on the fail-safe default instead.
-- **`npm install`, not `npm ci`.** The per-platform `optionalDependencies` do not
-  exist on the registry until the first publish, so npm cannot record them in the
-  lockfile and `npm ci` fails the sync check.
-- **`--no-workspaces`.** `bindings/` is an npm workspace root
-  (`workspaces: ["node", "node-mcp"]`). Without `--no-workspaces`, an install in
-  `bindings/node` pulls in the sibling `node-mcp`, which depends on the published
-  `@whit3rabbit/rsecrets-scanner@<old>` — `EBADPLATFORM` on any runner whose
-  platform doesn't match that old package's `os`/`cpu`.
-- **`EBADPLATFORM` on the main package** means the main `package.json` `os`/`cpu`
-  is too narrow for the publish/build runner. The main package should allow all
-  shipped platforms; only the per-platform sub-packages pin `os`/`cpu`.
-- **Provenance** needs `id-token: write` (set) and `NPM_CONFIG_PROVENANCE=true`
-  (set on the publish job). The main package publishes with `--ignore-scripts`
-  (the publish runner has no Rust toolchain, so skip the `prepack` rebuild).
+  The dry-run does **not** exercise the real OIDC publish (it skips `npm
+  publish`), so a trusted-publisher/registry problem only surfaces on the real
+  run. Also: `workflow_dispatch` inputs are read from the **default branch**, so
+  a new input on a feature branch isn't accepted via `-f` until it's on `main`.
+- **`os`/`cpu` must list every shipped platform** in `package.json`
+  (darwin/linux/win32, x64/arm64), or npm rejects the install elsewhere
+  (`EBADPLATFORM`).
+- **`x86_64-apple-darwin` is cross-built on the arm64 mac** (macos-14); its
+  self-test is skipped (an x86_64 binary can't load in arm64 node). Avoids the
+  scarce macos-13 Intel runner.
+- **`--ignore-scripts` on publish** skips the host-only `prepack` rebuild (the
+  publish runner has no Rust), so only the downloaded matrix `.node` files ship.
 
 ## Updating GitHub Actions versions
 
@@ -153,7 +155,7 @@ Confirm:
 - `publish.yml`: every target built and the npm packages published.
 - `gh release view vX.Y.Z`
 - crates.io: `cargo search secrets_scanner --limit 3`
-- npm: the new version + its `optionalDependencies` show on the registry.
+- npm: the new version shows on the registry with all platform binaries bundled.
 - Homebrew (public repo): `gh api 'repos/whit3rabbit/homebrew-tap/contents/Casks/secrets-scanner.rb?ref=main'`
 
 A run can be `failure` overall while most artifacts succeeded (e.g. only the

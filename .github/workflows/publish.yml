@@ -38,8 +38,12 @@ jobs:
         include:
           - target: aarch64-apple-darwin
             runner: macos-14
+          # x86_64 cross-compiled on the arm64 mac (Apple toolchain handles it,
+          # and the scarce macos-13 Intel runner queues for ages). Skip the
+          # self-test: an x86_64 .node can't load in the runner's arm64 node.
           - target: x86_64-apple-darwin
-            runner: macos-13
+            runner: macos-14
+            skip-test: true
           - target: x86_64-unknown-linux-gnu
             runner: ubuntu-22.04
           - target: aarch64-unknown-linux-gnu
@@ -85,9 +89,11 @@ jobs:
       - name: Build ${{ matrix.target }}
         run: npm run build:ci -- --target ${{ matrix.target }} -- --locked
 
-      # Each runner is native to its target, so the freshly built binary loads
-      # here; this proves the artifact actually works before publishing.
+      # Each native-target runner can load its freshly built binary; this proves
+      # the artifact works before publishing. Skipped for cross-compiled targets
+      # (the host arch differs, so the binary can't load here).
       - name: Test built artifact
+        if: ${{ !matrix.skip-test }}
         run: npm test
 
       - name: Upload artifact

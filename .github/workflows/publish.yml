@@ -1,8 +1,9 @@
 name: Publish Node Bindings to NPM
 
 # Multi-platform NAPI-RS publish: build the native addon for each target on a
-# native runner, then publish one per-platform package per target plus a thin
-# main package whose optionalDependencies select the right binary at install.
+# native runner, then publish ONE "fat" package bundling all platform binaries
+# (the loader picks the matching one at runtime). One npm package = one trusted
+# publisher, no per-platform packages.
 #
 # Triggers:
 #   - tag push v* -> real publish (alongside release.yml).
@@ -126,25 +127,14 @@ jobs:
       - name: Ensure OIDC-capable npm
         run: npm install -g npm@latest
 
-      # `npm install`, not `npm ci`: the main package declares optionalDependencies
-      # on the per-platform packages, which do not exist on the registry until the
-      # first successful publish, so npm cannot record them in the lockfile and
-      # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
-      # so installs stay reproducible. Missing optional deps are non-fatal.
-      # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
-      # workspace (whose node-mcp member depends on the published darwin/arm64-only
-      # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
-      # --no-package-lock too: the committed bindings/node/package-lock.json was
-      # generated inside the bindings/ workspace and is inconsistent when read
-      # standalone (ENOVERSIONS). devDependencies are exact-pinned, so a fresh
-      # resolve is still deterministic.
-      - name: Install Node dependencies
-        run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
-
+      # The single "fat" package bundles every platform's binary. Drop all built
+      # .node files into the package root so `files: ["*.node"]` includes them.
+      # No `npm install` here: we only `npm publish` (and --ignore-scripts skips
+      # the prepack rebuild), so no devDeps/toolchain are needed.
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          path: bindings/node/artifacts
+          path: bindings/node
           pattern: bindings-*
           merge-multiple: true
 
@@ -159,23 +149,15 @@ jobs:
             echo "dry=" >> "$GITHUB_OUTPUT"
           else
             echo "dry=--dry-run" >> "$GITHUB_OUTPUT"
-            echo "::notice::Dry run: building and packaging all targets, no publish."
+            echo "::notice::Dry run: packaging the fat package, no publish."
           fi
 
-      # napi via `npm run` (see the build job for why not `npx`).
-      - name: Create per-platform package dirs
-        run: npm run napi:create-dirs
+      - name: Verify bundled binaries
+        run: ls -l secrets_scanner_core.*.node
 
-      - name: Move artifacts into platform packages
-        run: npm run napi:artifacts
-
-      # Publishes the per-platform optionalDependency packages and syncs the main
-      # package.json. No --gh-release (release.yml already creates the release).
-      - name: Publish platform packages
-        run: npm run napi:prepublish -- ${{ steps.mode.outputs.dry }}
-
-      # --ignore-scripts: the main package ships no binary, so skip the prepack
-      # rebuild (the publish runner has no Rust toolchain). --access public is
-      # required for a scoped package; provenance is automatic under OIDC.
-      - name: Publish main package
+      # One package containing every platform's binary; the loader picks the right
+      # one at runtime. --ignore-scripts skips the prepack rebuild (we publish the
+      # downloaded matrix artifacts, not a host rebuild). --access public for the
+      # scoped package; OIDC trusted publishing (no token), provenance automatic.
+      - name: Publish
         run: npm publish --access public --ignore-scripts ${{ steps.mode.outputs.dry }}

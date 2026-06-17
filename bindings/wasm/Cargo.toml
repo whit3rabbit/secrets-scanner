@@ -1,0 +1,24 @@
+[package]
+name = "rsecrets-scanner-wasm"
+version = "0.2.1"
+edition = "2021"
+description = "Browser and edge WebAssembly bindings for secrets-scanner"
+license = "MIT"
+repository = "https://github.com/whit3rabbit/secrets-scanner"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+js-sys = "0.3"
+secrets_scanner = { path = "../..", default-features = false }
+wasm-bindgen = "0.2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O4"]

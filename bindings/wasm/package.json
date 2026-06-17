@@ -1,0 +1,10 @@
+{
+  "name": "@whit3rabbit/rsecrets-scanner-wasm-source",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "wasm-pack build --target web --scope whit3rabbit --out-dir pkg --out-name rsecrets_scanner_wasm",
+    "build:node": "wasm-pack build --target nodejs --scope whit3rabbit --out-dir pkg-node --out-name rsecrets_scanner_wasm",
+    "test": "npm run build:node && node --test tests/*.test.cjs"
+  }
+}

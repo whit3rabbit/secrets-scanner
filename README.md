@@ -15,7 +15,7 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 - **Git-aware scanning**: Scan git-tracked files (`--git-tracked`), changed files (`--changed-files` / `--base`), full history patches (`--git-history`, finds secrets committed then removed), staged index blobs (`--staged`), or untracked files (`--include-untracked`). Explicit git modes fail closed on git error (opt back in with `--git-fallback=walk`).
 - **CI-friendly output**: Exports to text, JSON, JSONL, and SARIF formats. Supports suppressions, baselines, and scan scope limits.
 - **CLI and automation**: Complete CLI toolset with completions, GitHub Action, pre-commit hook, Docker image, and Homebrew cask packaging.
-- **Rust and Node.js libraries**: Use the Rust crate directly or install the Node.js binding package `@whit3rabbit/rsecrets-scanner`.
+- **Rust, Node.js, and WASM libraries**: Use the Rust crate directly, install the native Node.js binding package `@whit3rabbit/rsecrets-scanner`, or use the browser/edge WASM package `@whit3rabbit/rsecrets-scanner-wasm`.
 - **Optional runtime updates**: Download and update rule configurations dynamically to the OS user-data directory via the `--features updater` build.
 - **Developer tooling**: Includes built-in rule validation, merge check validation, duplicate-rule detectors, benchmarks, and fuzz targets.
 
@@ -229,6 +229,38 @@ if (result.hasFindings) {
 maps to Rust `Scanner::scan_proxy()`: oversized input and non-hardened configs
 fail closed. See [`bindings/node/README.md`](bindings/node/README.md) for the
 full Node API, source-build instructions, and current native packaging limits.
+
+### 5. Use from Browser / Edge WASM
+
+The browser/edge WASM package is `@whit3rabbit/rsecrets-scanner-wasm`. It exposes
+only in-memory scanning and redaction APIs. It does not read files, shell out to
+git, use the rules cache, run the updater, or provide a CLI.
+
+```bash
+npm install @whit3rabbit/rsecrets-scanner-wasm
+```
+
+```js
+import init, { Scanner } from "@whit3rabbit/rsecrets-scanner-wasm";
+
+await init();
+
+const scanner = Scanner.proxy({ maxFileSize: 1024 * 1024 });
+const payload = new TextEncoder().encode("key=value");
+const result = scanner.scanProxy(payload);
+
+if (result.hasFindings) {
+  const safePayload = new TextDecoder().decode(result.redacted);
+  // Forward safePayload instead of the original input.
+}
+```
+
+Use `Scanner.bundled()` once and reuse it; compiling the full bundled ruleset is
+memory-heavy in browser runtimes. For constrained contexts, prefer
+`Scanner.fromToml()` with a focused ruleset when full bundled coverage is not
+required. See [`bindings/wasm/README.md`](bindings/wasm/README.md) for the API
+and [`bindings/wasm/FUTURE.md`](bindings/wasm/FUTURE.md) for the measured size,
+memory, speed, and security follow-ups.
 
 ---
 

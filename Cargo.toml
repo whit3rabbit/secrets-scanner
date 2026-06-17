@@ -18,7 +18,23 @@ path = "src/lib.rs"
 # `updater` — enables the runtime rule-update mechanism (downloads via ureq).
 # Build with:  cargo build --features updater
 [features]
-updater = ["dep:ureq"]
+default = ["native"]
+
+# `native` — enables filesystem, git, CLI, updater, and agent-skill installer
+# integrations. WASM bindings disable default features and keep only in-memory
+# scanning/redaction APIs.
+native = [
+    "dep:agent-config",
+    "dep:clap",
+    "dep:clap_complete",
+    "dep:env_logger",
+    "dep:libc",
+    "dep:rayon",
+    "dep:serde_json",
+    "dep:walkdir",
+]
+
+updater = ["native", "dep:ureq"]
 
 # `full-ruleset` — embed the opt-in rulesets (secrets-patterns-db, …) into the
 # binary in addition to gitleaks+local. Pure build-time switch: build.rs reads it
@@ -35,10 +51,10 @@ bench = []
 aho-corasick = "1.1"
 regex        = "1.10"
 memchr       = "2.7"        # SIMD byte search
-rayon        = "1.9"        # parallel file scanning
-walkdir      = "2.4"        # recursive directory walk
-clap         = { version = "4.5", features = ["derive"] }
-clap_complete = "4"
+rayon        = { version = "1.9", optional = true }        # parallel file scanning
+walkdir      = { version = "2.4", optional = true }        # recursive directory walk
+clap         = { version = "4.5", features = ["derive"], optional = true }
+clap_complete = { version = "4", optional = true }
 
 # Rule-set parsing (gitleaks TOML format)
 serde        = { version = "1", features = ["derive"] }
@@ -46,13 +62,13 @@ toml         = "0.8"
 
 # Logging facade
 log          = "0.4"
-env_logger   = "0.11"
+env_logger   = { version = "0.11", optional = true }
 
 # Typed error enum for library callers (distinguish IO vs invalid-rules, etc.)
 thiserror    = "1"
 
 # JSON serialization (baseline comparison)
-serde_json   = "1"
+serde_json   = { version = "1", optional = true }
 
 # SHA-256 verification for cached updater rules.
 sha2         = "0.10"
@@ -62,7 +78,7 @@ hex          = "0.4"
 hmac         = "0.12"
 
 # Unix no-follow opens for hostile repository scans.
-libc         = "0.2"
+libc         = { version = "0.2", optional = true }
 
 # Optional: runtime rule updater (HTTP download)
 ureq         = { version = "2", optional = true }
@@ -70,7 +86,7 @@ ureq         = { version = "2", optional = true }
 # Cross-runtime agent-skill installer (powers `install-skill`/`uninstall-skill`):
 # owns per-harness paths, atomic writes, .bak backups, ownership ledger, and
 # reversible uninstall. Effective MSRV floor is agent-config's (1.95).
-agent-config = "0.3"
+agent-config = { version = "0.3", optional = true }
 
 [dev-dependencies]
 tempfile = "3"
@@ -95,3 +111,4 @@ log          = "0.4"
 [[bin]]
 name = "secrets-scanner"
 path = "src/main.rs"
+required-features = ["native"]

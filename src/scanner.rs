@@ -32,6 +32,7 @@ mod matching;
 mod output;
 mod redaction;
 mod types;
+#[cfg(feature = "native")]
 mod walk;
 pub use types::{
     BinaryPolicy, Finding, RedactionMode, ScanConfig, ScanOutput, ScanResult, ScanStats,
@@ -156,6 +157,7 @@ impl Scanner {
     ///
     /// Files are filtered by extension, directory, size, and global path allowlist
     /// before scanning. The scan uses all available CPU cores via rayon's work-stealing.
+    #[cfg(feature = "native")]
     pub fn scan_path(&self, root: &str) -> Vec<Finding> {
         self.scan_path_with_stats(root).0
     }
@@ -163,6 +165,7 @@ impl Scanner {
     /// Like [`scan_path`](Self::scan_path) but also returns file-level
     /// [`ScanStats`] (files scanned, binary/oversized skipped, capped) so a
     /// caller can print a safe summary without echoing secret material.
+    #[cfg(feature = "native")]
     pub fn scan_path_with_stats(&self, root: &str) -> (Vec<Finding>, ScanStats) {
         walk::scan_path(self, root)
     }
@@ -172,6 +175,7 @@ impl Scanner {
     /// This uses the same hardened file-read path as directory walks: symlinks
     /// are rejected, reads are bounded by `max_file_size`, and binary content is
     /// skipped according to the configured [`BinaryPolicy`].
+    #[cfg(feature = "native")]
     pub fn scan_file_with_stats(&self, path: &str) -> (Vec<Finding>, ScanStats) {
         walk::scan_file(self, path)
     }

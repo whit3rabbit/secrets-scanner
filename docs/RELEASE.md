@@ -22,7 +22,7 @@ Pushing a tag matching `v[0-9]*` triggers **two** workflows in parallel:
 | Workflow | Publishes | Key secrets |
 |---|---|---|
 | `.github/workflows/release.yml` | crates.io crate, 4 prebuilt binaries + GitHub Release, Docker Hub image, Homebrew cask | `CARGO_REGISTRY_TOKEN`, `DOCKERHUB_USERNAME`/`DOCKERHUB_TOKEN`, `HOMEBREW_TAP_TOKEN` |
-| `.github/workflows/publish.yml` | npm package `@whit3rabbit/rsecrets-scanner` (5 per-platform packages + thin main) | `NPM_TOKEN` |
+| `.github/workflows/publish.yml` | npm package `@whit3rabbit/rsecrets-scanner` (single "fat" package, all platform binaries) | none — OIDC trusted publishing |
 
 Both fire on the **same tag**, so a release is only "done" when both are green.
 Pre-conditions:
@@ -103,6 +103,12 @@ Gotchas (each one broke a publish at least once):
   scarce macos-13 Intel runner.
 - **`--ignore-scripts` on publish** skips the host-only `prepack` rebuild (the
   publish runner has no Rust), so only the downloaded matrix `.node` files ship.
+- **`package.json` must have a `repository` field** matching the repo URL, or
+  OIDC provenance verification rejects the publish (`E422 ... repository.url is
+  ""`). The dry-run can't catch this (it skips the real publish).
+- **First-publish bootstrap.** A brand-new package name has no trusted publisher
+  yet (you configure it on an existing package). The fat package keeps this to a
+  single one-time concern instead of one per platform.
 
 ## Updating GitHub Actions versions
 
@@ -162,11 +168,32 @@ A run can be `failure` overall while most artifacts succeeded (e.g. only the
 Docker job failed on a missing secret). Inspect **per-job** conclusions and fix
 the specific gap; do not assume a red run means nothing published.
 
+## Cross-platform CI
+
+`ci.yml` runs the test suite on **ubuntu, macOS, and Windows**. Two classes of
+Windows-only breakage to keep in mind:
+
+- **CRLF.** Under `core.autocrlf`, a Windows checkout turns LF files into CRLF.
+  Code/tests that `include_str!` or `read_to_string` a repo file and then match
+  `\n`-containing substrings (e.g. `SKILL.md` frontmatter, `action.yml`) break.
+  `.gitattributes` (`* text=auto eol=lf`) normalizes all committed text to LF on
+  checkout; parsers/tests that take untrusted content should also tolerate CRLF.
+- **Filesystem limits.** Windows rejects newlines and `:` in filenames. Tests
+  that create such paths must be `#[cfg(unix)]` (as are the symlink/0600 tests).
+
 ## Prior failures (so they aren't repeated)
 
 - **v0.1.0**: Docker job failed at *Login to Docker Hub* (missing Docker Hub
   secrets); the npm publish shipped a broken darwin/arm64-only package.
 - **v0.2.0**: npm publish failed `EBADPLATFORM` — the node `package.json` pinned
   `os/cpu` to darwin/arm64 while building/publishing on Linux, and the node
-  version was not bumped. Fixed by the multi-platform `publish.yml` + lockstep
-  node version bump in v0.2.1.
+  version was not bumped.
+- **v0.2.1** (npm took several CI-only iterations to land):
+  - `npm ci` can't bootstrap not-yet-published per-platform optionalDependencies,
+    so the design moved to a single fat package (one trusted publisher).
+  - OIDC trusted publishing needs **npm >= 11.5.1 / node >= 22.14**; node 20 /
+    npm 10 silently fell back to (empty) token auth → `E404`.
+  - Provenance verification needs a `repository` field in `package.json` → `E422`
+    without it.
+  - Windows CI had three latent failures (CRLF in `SKILL.md` + `action.yml`, a
+    newline-in-filename test) fixed per the **Cross-platform CI** section above.

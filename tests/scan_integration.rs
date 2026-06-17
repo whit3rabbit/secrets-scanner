@@ -536,6 +536,10 @@ keywords = ["akia"]
     );
 }
 
+// Windows filesystems reject newlines in filenames, so this Unix-specific
+// behavior (NUL-delimited git output preserving newline-bearing paths) can only
+// be exercised on Unix.
+#[cfg(unix)]
 #[test]
 fn git_mode_handles_paths_containing_newlines() {
     let toml = r#"

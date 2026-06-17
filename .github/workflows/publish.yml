@@ -22,7 +22,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write # Required for NPM provenance publishing
+  id-token: write # Required for npm trusted publishing (OIDC) + automatic provenance
 
 defaults:
   run:
@@ -107,9 +107,9 @@ jobs:
     name: Publish to NPM
     needs: build
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      NPM_CONFIG_PROVENANCE: "true"
+    # Trusted publishing via OIDC -- no NPM_TOKEN. Auth comes from the id-token
+    # (workflow-level permission above); provenance is generated automatically
+    # for a public repo + public package. Requires npm >= 11.5.1 (installed below).
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -117,8 +117,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           registry-url: "https://registry.npmjs.org/"
+          package-manager-cache: false # never cache in a release build
+
+      # node 24's bundled npm can be < 11.5.1; trusted publishing (OIDC) needs
+      # >= 11.5.1, so pin the latest.
+      - name: Ensure OIDC-capable npm
+        run: npm install -g npm@latest
 
       # `npm install`, not `npm ci`: the main package declares optionalDependencies
       # on the per-platform packages, which do not exist on the registry until the
@@ -169,6 +175,7 @@ jobs:
         run: npm run napi:prepublish -- ${{ steps.mode.outputs.dry }}
 
       # --ignore-scripts: the main package ships no binary, so skip the prepack
-      # rebuild (the publish runner has no Rust toolchain).
+      # rebuild (the publish runner has no Rust toolchain). --access public is
+      # required for a scoped package; provenance is automatic under OIDC.
       - name: Publish main package
-        run: npm publish --provenance --access public --ignore-scripts ${{ steps.mode.outputs.dry }}
+        run: npm publish --access public --ignore-scripts ${{ steps.mode.outputs.dry }}

@@ -47,7 +47,7 @@
     "build:ci": "napi build --release --platform --no-js",
     "napi:create-dirs": "napi create-npm-dirs --npm-dir npm",
     "napi:artifacts": "napi artifacts --output-dir ./artifacts --npm-dir ./npm",
-    "napi:prepublish": "napi pre-publish -t npm --npm-dir npm",
+    "napi:prepublish": "napi pre-publish -t npm --npm-dir npm --no-gh-release",
     "prepack": "npm run build",
     "prepublishOnly": "npm run build && npm test && npm run typecheck",
     "test": "vitest run",

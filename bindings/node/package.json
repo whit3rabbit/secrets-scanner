@@ -3,6 +3,11 @@
   "version": "0.2.1",
   "description": "Native Node.js bindings for secrets-scanner.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whit3rabbit/secrets-scanner.git",
+    "directory": "bindings/node"
+  },
   "type": "commonjs",
   "main": "./index.js",
   "types": "./public.d.ts",

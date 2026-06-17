@@ -42,11 +42,14 @@ Pre-conditions:
 | `bindings/node/package.json` | `version` | A stale node version makes npm **republish an existing version and fail**. |
 | `bindings/node/Cargo.toml` | `version` | Keep in lockstep (crate is `publish = false`, but keep consistent). |
 | `bindings/node/package-lock.json` | root `version` (two places) | npm here may not auto-sync it; verify by reading the file. |
+| `bindings/wasm/Cargo.toml` | `version` | Keep in lockstep. Not published or gated by CI today, but tracks the shared version. |
+| `bindings/wasm/Cargo.lock` | `rsecrets-scanner-wasm` package entry | Refresh with `cargo update -p rsecrets-scanner-wasm --precise vX.Y.Z` (separate crate; `cargo check` from root won't touch it). |
 | `CHANGELOG.md` | new `## vX.Y.Z (DATE)` section | Use an absolute date. |
 
-The node binding is a separate crate and a separate npm package; the root
-`make ci` / `cargo` commands do **not** cover it. It is easy to forget — the
-0.2.0 npm publish failed precisely because the node version was stale.
+The node and wasm bindings are separate crates (and the node one a separate npm
+package); the root `make ci` / `cargo` commands do **not** cover them. They are
+easy to forget — the 0.2.0 npm publish failed precisely because the node version
+was stale.
 
 ## Pre-release gate
 
@@ -132,6 +135,7 @@ See the "Gitleaks Rules" / "Custom Rules" sections in `AGENTS.md`.
 # 1. Bump all version locations + CHANGELOG (see tables above), refresh lockfiles:
 cargo check                                  # syncs root Cargo.lock
 ( cd bindings/node && cargo check )          # syncs node Cargo.lock
+( cd bindings/wasm && cargo update -p rsecrets-scanner-wasm --precise vX.Y.Z )  # syncs wasm Cargo.lock
 
 # 2. Pre-release gate (above), including the npm dry-run on a branch.
 

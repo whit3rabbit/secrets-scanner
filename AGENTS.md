@@ -576,9 +576,12 @@ Essentials (details in `docs/RELEASE.md`):
 - A `vX.Y.Z` tag fires **both** `release.yml` (crate, binaries + GitHub Release,
   Docker, Homebrew) **and** `publish.yml` (multi-platform npm). A release is done
   only when both are green.
-- Bump `vX.Y.Z` in **all** version locations: `Cargo.toml`, `Dockerfile`, both
-  `Cargo.lock` files, `bindings/node/package.json`,
-  `bindings/node/Cargo.toml`, and `CHANGELOG.md`.
+- Bump `vX.Y.Z` in **all** version locations (full table in `docs/RELEASE.md`):
+  `Cargo.toml`, `Dockerfile`, all three `Cargo.lock` files,
+  `bindings/node/package.json`, `bindings/node/package-lock.json` (two places),
+  `bindings/node/Cargo.toml`, `bindings/wasm/Cargo.toml`, and `CHANGELOG.md`.
+  The node and wasm bindings are separate crates `make ci`/root `cargo` don't
+  cover, so their lockfiles need a separate `cargo update -p <crate> --precise`.
   `release.yml` rejects a tag that mismatches `Cargo.toml`/`Dockerfile`; a stale
   node version makes the npm publish reject an already-published version.
 - Gate locally: `make ci` + `cargo publish --dry-run --locked` (clean commit) +

@@ -1,6 +1,6 @@
 {
   "name": "@whit3rabbit/rsecrets-scanner",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Native Node.js bindings for secrets-scanner.",
   "license": "MIT",
   "type": "commonjs",
@@ -17,31 +17,51 @@
     "index.js",
     "public.d.ts",
     "lib",
-    "*.node",
     "README.md"
   ],
   "engines": {
     "node": ">=18"
   },
   "os": [
-    "darwin"
+    "darwin",
+    "linux",
+    "win32"
   ],
   "cpu": [
+    "x64",
     "arm64"
   ],
   "publishConfig": {
     "access": "public"
   },
+  "optionalDependencies": {
+    "@whit3rabbit/rsecrets-scanner-darwin-arm64": "0.2.1",
+    "@whit3rabbit/rsecrets-scanner-darwin-x64": "0.2.1",
+    "@whit3rabbit/rsecrets-scanner-linux-x64-gnu": "0.2.1",
+    "@whit3rabbit/rsecrets-scanner-linux-arm64-gnu": "0.2.1",
+    "@whit3rabbit/rsecrets-scanner-win32-x64-msvc": "0.2.1"
+  },
   "scripts": {
     "build": "napi build --release",
     "build:debug": "napi build",
+    "build:ci": "napi build --release --platform --no-js",
+    "napi:create-dirs": "napi create-npm-dirs --npm-dir npm",
+    "napi:artifacts": "napi artifacts --output-dir ./artifacts --npm-dir ./npm",
+    "napi:prepublish": "napi pre-publish -t npm --npm-dir npm",
     "prepack": "npm run build",
     "prepublishOnly": "npm run build && npm test && npm run typecheck",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "napi": {
-    "binaryName": "secrets_scanner_core"
+    "binaryName": "secrets_scanner_core",
+    "targets": [
+      "aarch64-apple-darwin",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-pc-windows-msvc"
+    ]
   },
   "devDependencies": {
     "@napi-rs/cli": "3.7.2",

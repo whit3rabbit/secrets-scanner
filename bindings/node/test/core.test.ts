@@ -8,7 +8,8 @@ import { Scanner } from "../index.js";
 
 const require = createRequire(import.meta.url);
 const { mapPathScanResult } = require("../lib/mapping.js");
-const { nativeCandidates, nativeBindingNotFound } = require("../lib/loader.js");
+const { nativeCandidates, nativeBindingNotFound, platformPackageName, detectLibc } =
+  require("../lib/loader.js");
 
 const RULES = String.raw`
 title = "node binding tests"
@@ -621,6 +622,66 @@ describe("@whit3rabbit/rsecrets-scanner", () => {
       details: { candidates },
     });
     expect(error.cause).toBeInstanceOf(Error);
+  });
+
+  it("resolves the scoped per-platform package name for every published target", () => {
+    expect(platformPackageName("darwin", "arm64")).toBe(
+      "@whit3rabbit/rsecrets-scanner-darwin-arm64"
+    );
+    expect(platformPackageName("darwin", "x64")).toBe(
+      "@whit3rabbit/rsecrets-scanner-darwin-x64"
+    );
+    expect(platformPackageName("linux", "x64", "gnu")).toBe(
+      "@whit3rabbit/rsecrets-scanner-linux-x64-gnu"
+    );
+    expect(platformPackageName("linux", "arm64", "gnu")).toBe(
+      "@whit3rabbit/rsecrets-scanner-linux-arm64-gnu"
+    );
+    expect(platformPackageName("win32", "x64")).toBe(
+      "@whit3rabbit/rsecrets-scanner-win32-x64-msvc"
+    );
+  });
+
+  it("maps a musl host to a distinct (intentionally unpublished) package name", () => {
+    // We ship gnu builds only; a musl host must resolve to a -musl name so the
+    // optionalDependency is absent and the user gets NATIVE_BINDING_NOT_FOUND
+    // instead of loading an ABI-incompatible glibc binary.
+    expect(platformPackageName("linux", "x64", "musl")).toBe(
+      "@whit3rabbit/rsecrets-scanner-linux-x64-musl"
+    );
+    expect(platformPackageName("linux", "x64", "musl")).not.toBe(
+      platformPackageName("linux", "x64", "gnu")
+    );
+  });
+
+  it("returns null for platforms we do not publish", () => {
+    expect(platformPackageName("freebsd", "x64")).toBeNull();
+    expect(platformPackageName("android", "arm64")).toBeNull();
+  });
+
+  it("detects libc only on linux", () => {
+    expect(detectLibc("darwin")).toBeNull();
+    expect(detectLibc("win32")).toBeNull();
+    expect(detectLibc("linux")).toMatch(/^(gnu|musl)$/);
+  });
+
+  it("tries the abi-suffixed local artifact first on linux and windows", () => {
+    // napi build --platform emits secrets_scanner_core.linux-x64-gnu.node, so the
+    // loader must look for that exact name (the bare linux-x64 has no abi suffix).
+    expect(nativeCandidates("/pkg", "linux", "x64", "gnu")).toEqual([
+      join("/pkg", "secrets_scanner_core.linux-x64-gnu.node"),
+      join("/pkg", "secrets_scanner_core.linux-x64.node"),
+      join("/pkg", "secrets_scanner_core.linux.node"),
+      join("/pkg", "secrets_scanner_core.node"),
+    ]);
+    expect(nativeCandidates("/pkg", "win32", "x64")[0]).toBe(
+      join("/pkg", "secrets_scanner_core.win32-x64-msvc.node")
+    );
+  });
+
+  it("does not duplicate the darwin candidate (no abi suffix)", () => {
+    // darwin's abi-suffixed name == <platform>-<arch>, so it must dedupe to 3.
+    expect(nativeCandidates("/pkg", "darwin", "arm64")).toHaveLength(3);
   });
 });
 

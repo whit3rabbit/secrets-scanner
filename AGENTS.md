@@ -567,26 +567,23 @@ This is also run automatically after downloading rules with `make update-rules` 
 
 ## Release
 
-Release is CI-only. Do not publish from a local machine except for dry-run validation.
+**Before tagging any release, read [`docs/RELEASE.md`](docs/RELEASE.md)** — the
+full step-by-step guide (every version location, the two release workflows, the
+mandatory npm dry-run, secrets, and prior-failure gotchas). Releases are CI-only
+and irreversible (crates.io/npm can't republish a version).
 
-Pre-release:
-- Make the GitHub repo public before pushing the release tag if Homebrew install should work. A private repo can still publish crates.io and GitHub Release artifacts, but normal Homebrew installs cannot fetch private release asset URLs.
-- Update `Cargo.toml` `[package].version`, `Dockerfile` `LABEL version`, and `CHANGELOG.md` for the same `vX.Y.Z`.
-- Run `make ci`. For packaging changes, also run `cargo publish --dry-run --locked` from the clean release commit.
-- Commit and push the release prep to `main`.
-
-Publish:
-```bash
-git tag -a vX.Y.Z -m "Release vX.Y.Z"
-git push origin vX.Y.Z
-```
-
-The tag must match `Cargo.toml` and the `Dockerfile` version; `.github/workflows/release.yml` fails otherwise. The release workflow builds updater-enabled binaries, creates the GitHub Release, publishes the `secrets_scanner` crate with `CARGO_REGISTRY_TOKEN`, publishes the Docker image to Docker Hub, and updates `whit3rabbit/homebrew-tap/Casks/secrets-scanner.rb` with `HOMEBREW_TAP_TOKEN` when the repo is public.
-
-Post-release:
-- Watch the GitHub Actions `Release` run to completion.
-- Verify `gh release view vX.Y.Z`, `cargo search secrets_scanner --limit 3`, and `gh api 'repos/whit3rabbit/homebrew-tap/contents/Casks/secrets-scanner.rb?ref=main'`.
-- Run `git fetch origin main --tags` before trusting local release state.
+Essentials (details in `docs/RELEASE.md`):
+- A `vX.Y.Z` tag fires **both** `release.yml` (crate, binaries + GitHub Release,
+  Docker, Homebrew) **and** `publish.yml` (multi-platform npm). A release is done
+  only when both are green.
+- Bump `vX.Y.Z` in **all** version locations: `Cargo.toml`, `Dockerfile`, both
+  `Cargo.lock` files, `bindings/node/package.json` (incl. its
+  `optionalDependencies` pins), `bindings/node/Cargo.toml`, and `CHANGELOG.md`.
+  `release.yml` rejects a tag that mismatches `Cargo.toml`/`Dockerfile`; a stale
+  node version makes the npm publish reject an already-published version.
+- Gate locally: `make ci` + `cargo publish --dry-run --locked` (clean commit) +
+  the node gate in `bindings/node/` + the `publish.yml` `workflow_dispatch`
+  dry-run to validate all npm targets **before** tagging.
 
 
 <!-- syntext-agent:claude:start -->

@@ -1,25 +1,118 @@
 name: Publish Node Bindings to NPM
 
+# Multi-platform NAPI-RS publish: build the native addon for each target on a
+# native runner, then publish one per-platform package per target plus a thin
+# main package whose optionalDependencies select the right binary at install.
+#
+# Triggers:
+#   - tag push v* -> real publish (alongside release.yml).
+#   - workflow_dispatch -> defaults to a dry run that builds every target and
+#     validates packaging WITHOUT publishing (use this before cutting a tag).
+
 on:
   push:
     tags:
       - "v[0-9]*"
   workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Build all targets and validate packaging without publishing"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
   id-token: write # Required for NPM provenance publishing
 
+defaults:
+  run:
+    working-directory: bindings/node
+
 jobs:
-  publish:
-    name: Build & Publish to NPM
-    runs-on: ubuntu-latest
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            runner: macos-14
+          # x86_64 cross-compiled on the arm64 mac (Apple toolchain handles it,
+          # and the scarce macos-13 Intel runner queues for ages). Skip the
+          # self-test: an x86_64 .node can't load in the runner's arm64 node.
+          - target: x86_64-apple-darwin
+            runner: macos-14
+            skip-test: true
+          - target: x86_64-unknown-linux-gnu
+            runner: ubuntu-22.04
+          - target: aarch64-unknown-linux-gnu
+            runner: ubuntu-22.04-arm
+          - target: x86_64-pc-windows-msvc
+            runner: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      # `npm install`, not `npm ci`: the main package declares optionalDependencies
+      # on the per-platform packages, which do not exist on the registry until the
+      # first successful publish, so npm cannot record them in the lockfile and
+      # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
+      # so installs stay reproducible. Missing optional deps are non-fatal.
+      # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
+      # workspace (whose node-mcp member depends on the published darwin/arm64-only
+      # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
+      # --no-package-lock too: the committed bindings/node/package-lock.json was
+      # generated inside the bindings/ workspace and is inconsistent when read
+      # standalone (ENOVERSIONS). devDependencies are exact-pinned, so a fresh
+      # resolve is still deterministic.
+      - name: Install Node dependencies
+        run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
+
+      # Invoke napi via `npm run` (PATH includes node_modules/.bin), NOT `npx`:
+      # with --no-package-lock there is no node_modules/.package-lock.json for npx
+      # to map the `napi` bin -> @napi-rs/cli, so `npx napi` would try to fetch a
+      # bare `napi` package (ENOVERSIONS). `build:ci` = napi build --release
+      # --platform --no-js; --platform suffixes the artifact
+      # (secrets_scanner_core.<target>.node) so `napi artifacts` can route it,
+      # --no-js preserves the hand-written index.js loader, --locked -> cargo.
+      - name: Build ${{ matrix.target }}
+        run: npm run build:ci -- --target ${{ matrix.target }} -- --locked
+
+      # Each native-target runner can load its freshly built binary; this proves
+      # the artifact works before publishing. Skipped for cross-compiled targets
+      # (the host arch differs, so the binary can't load here).
+      - name: Test built artifact
+        if: ${{ !matrix.skip-test }}
+        run: npm test
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bindings-${{ matrix.target }}
+          path: bindings/node/secrets_scanner_core.*.node
+          if-no-files-found: error
+
+  publish:
+    name: Publish to NPM
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_CONFIG_PROVENANCE: "true"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -27,20 +120,55 @@ jobs:
           node-version: 20
           registry-url: "https://registry.npmjs.org/"
 
+      # `npm install`, not `npm ci`: the main package declares optionalDependencies
+      # on the per-platform packages, which do not exist on the registry until the
+      # first successful publish, so npm cannot record them in the lockfile and
+      # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
+      # so installs stay reproducible. Missing optional deps are non-fatal.
+      # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
+      # workspace (whose node-mcp member depends on the published darwin/arm64-only
+      # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
+      # --no-package-lock too: the committed bindings/node/package-lock.json was
+      # generated inside the bindings/ workspace and is inconsistent when read
+      # standalone (ENOVERSIONS). devDependencies are exact-pinned, so a fresh
+      # resolve is still deterministic.
       - name: Install Node dependencies
-        working-directory: bindings/node
-        run: npm ci
+        run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
 
-      - name: Build Native Binding
-        working-directory: bindings/node
-        run: npm run build
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: bindings/node/artifacts
+          pattern: bindings-*
+          merge-multiple: true
 
-      - name: Run Bindings Tests
-        working-directory: bindings/node
-        run: npm test
+      # Fail-safe: only a tag push (or an explicit dispatch with dry-run=false)
+      # publishes. Any other dispatch -- including one with no inputs, e.g. when
+      # the input schema is not yet on the default branch -- is a dry run, so a
+      # validation run can never publish by accident.
+      - name: Resolve dry-run flag
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.dry-run }}" = "false" ]; then
+            echo "dry=" >> "$GITHUB_OUTPUT"
+          else
+            echo "dry=--dry-run" >> "$GITHUB_OUTPUT"
+            echo "::notice::Dry run: building and packaging all targets, no publish."
+          fi
 
-      - name: Publish Package to NPM with Provenance
-        working-directory: bindings/node
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # napi via `npm run` (see the build job for why not `npx`).
+      - name: Create per-platform package dirs
+        run: npm run napi:create-dirs
+
+      - name: Move artifacts into platform packages
+        run: npm run napi:artifacts
+
+      # Publishes the per-platform optionalDependency packages and syncs the main
+      # package.json. No --gh-release (release.yml already creates the release).
+      - name: Publish platform packages
+        run: npm run napi:prepublish -- ${{ steps.mode.outputs.dry }}
+
+      # --ignore-scripts: the main package ships no binary, so skip the prepack
+      # rebuild (the publish runner has no Rust toolchain).
+      - name: Publish main package
+        run: npm publish --provenance --access public --ignore-scripts ${{ steps.mode.outputs.dry }}

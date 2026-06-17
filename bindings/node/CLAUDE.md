@@ -106,9 +106,24 @@ values into owned `Vec<u8>` for worker execution.
 
 `package.json` is publishable and includes an `exports` map, `engines.node`, and
 prepack/prepublish checks. `prepublishOnly` builds before testing because tests
-need the `.node` artifact. This package still ships the built host `.node`
-artifact only; per-platform optional package publishing is a separate release
-task.
+need the `.node` artifact (used for *local* `npm publish`).
+
+**Multi-platform publish (`.github/workflows/publish.yml`):** the main package
+ships **no** `.node`. Instead it declares `napi.targets` and
+`optionalDependencies` on per-platform packages
+(`@whit3rabbit/rsecrets-scanner-<platform>-<arch>[-abi]`). CI builds each target
+on a native runner (`napi build --release --platform --no-js --target <triple>`;
+`--no-js` preserves the hand-written `index.js`), then `napi create-npm-dirs` +
+`napi artifacts` + `napi pre-publish -t npm` publish the platform packages and
+the main package publishes with `--ignore-scripts` (no Rust on the publish
+runner). At runtime `lib/loader.js` (`platformPackageName` + `detectLibc`)
+requires the scoped platform package npm installed for the host. We ship **gnu**
+Linux only, so a musl host resolves to a `-musl` name that is intentionally
+absent → `NATIVE_BINDING_NOT_FOUND` rather than an ABI-incompatible load. The
+committed `package-lock.json` omits the (not-yet-published) optionalDependencies,
+so the workflow uses `npm install` (NOT `npm ci`, which fails the lock-sync check
+until those per-platform packages exist on the registry). Validate the whole
+matrix with the `workflow_dispatch` dry-run before tagging `vX.Y.Z`.
 
 `bindings/package.json` is a private npm workspace root for local development of
 the core binding and `@whit3rabbit/rsecrets-scanner-mcp`; do not publish it.

@@ -200,6 +200,17 @@ fn build_spec() -> Result<SkillSpec, String> {
 /// `model`, and markdown body. Returns `None` if the leading `---` fences are
 /// absent or no `description:` is present.
 fn parse_skill_md(md: &str) -> Option<(String, Option<String>, String)> {
+    // Tolerate CRLF line endings (e.g. a Windows `git` checkout of the embedded
+    // SKILL.md under autocrlf) so the `---\n` fence matching below isn't defeated
+    // by a stray `\r`. Only allocate when CR is actually present.
+    let normalized;
+    let md = if md.contains('\r') {
+        normalized = md.replace("\r\n", "\n");
+        normalized.as_str()
+    } else {
+        md
+    };
+
     let after_open = md.strip_prefix("---\n")?;
     // The first "\n---" after the opening fence is the closing fence; any body
     // "---" comes later, so this never mistakes content for the boundary.
@@ -253,6 +264,18 @@ mod tests {
         assert_eq!(model.as_deref(), Some("haiku"));
         assert!(body.starts_with("# secrets-scanner"));
         assert!(!body.contains("\n---\n# secrets-scanner")); // frontmatter stripped
+    }
+
+    #[test]
+    fn parses_skill_md_with_crlf_line_endings() {
+        // A Windows checkout (autocrlf) embeds the LF source as CRLF; the parser
+        // must still find the `---` fences and strip the frontmatter.
+        let crlf = "---\r\ndescription: a secrets-scanner skill\r\nmodel: haiku\r\n---\r\n# secrets-scanner\r\nbody\r\n";
+        let (description, model, body) = parse_skill_md(crlf).expect("CRLF SKILL.md parses");
+        assert_eq!(description, "a secrets-scanner skill");
+        assert_eq!(model.as_deref(), Some("haiku"));
+        assert!(body.starts_with("# secrets-scanner"));
+        assert!(!body.contains("---")); // no leftover fence
     }
 
     #[test]

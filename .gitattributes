@@ -1,0 +1,5 @@
+# Files compiled into the binary (skill markdown parsed for `---` frontmatter)
+# or executed on Unix (shell scripts, incl. the embedded skill helpers) must
+# stay LF, so a Windows checkout under core.autocrlf never injects CRLF.
+*.sh text eol=lf
+*.md text eol=lf

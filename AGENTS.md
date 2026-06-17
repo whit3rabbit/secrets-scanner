@@ -38,6 +38,11 @@ repos, or act as a proxy to intercept secrets (e.g. in LLM pipelines).
   "updater"))]` stub) is verified only by `cargo clippy --features updater
   --all-targets` + `cargo test --features updater`. Changing a feature-gated fn
   signature also requires updating its cfg-disabled stub to match.
+- `make ci` runs `generate_fixtures.py`, which writes **random** secrets to
+  `tests/local_rules_fixtures.json` every run — so the tree is always dirty after
+  `make ci` (harmless; tests pass with either set). `cargo publish --dry-run
+  --locked` refuses a dirty tree, so `git checkout -- tests/local_rules_fixtures.json`
+  before it (don't commit the churn).
 
 ---
 
@@ -584,6 +589,12 @@ Essentials (details in `docs/RELEASE.md`):
   cover, so their lockfiles need a separate `cargo update -p <crate> --precise`.
   `release.yml` rejects a tag that mismatches `Cargo.toml`/`Dockerfile`; a stale
   node version makes the npm publish reject an already-published version.
+- `bindings/node-mcp` (`@whit3rabbit/rsecrets-scanner-mcp`) is a **separately
+  published** npm package depending on the core binding via a caret range. On a
+  minor bump, `^0.1.0` excludes `0.2.x`, so npm links the *published* old core
+  instead of the workspace member — bump its dep and resync
+  `bindings/package-lock.json`. It has no CI publish workflow (manual
+  `prepublishOnly`), so it is **not** released by tagging `vX.Y.Z`.
 - Gate locally: `make ci` + `cargo publish --dry-run --locked` (clean commit) +
   the node gate in `bindings/node/` + the `publish.yml` `workflow_dispatch`
   dry-run to validate all npm targets **before** tagging.

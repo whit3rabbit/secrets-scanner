@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## v0.2.2 (2026-06-16)
+
+### Changed
+- Version bump to republish the GitHub Action to the Marketplace. No code or
+  ruleset changes versus v0.2.1.
+
 ## v0.2.1 (2026-06-16)
 
 ### Fixed

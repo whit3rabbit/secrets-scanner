@@ -1,6 +1,6 @@
 [package]
 name = "rsecrets-scanner-wasm"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 description = "Browser and edge WebAssembly bindings for secrets-scanner"
 license = "MIT"

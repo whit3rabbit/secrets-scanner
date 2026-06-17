@@ -1,5 +1,7 @@
-# Files compiled into the binary (skill markdown parsed for `---` frontmatter)
-# or executed on Unix (shell scripts, incl. the embedded skill helpers) must
-# stay LF, so a Windows checkout under core.autocrlf never injects CRLF.
+# Normalize all text files to LF in the working tree on every platform (Windows
+# included), so files compiled into the binary (skill markdown/scripts) or read
+# and string-matched by tests (e.g. action.yml) never carry CRLF under
+# core.autocrlf. Git keeps detected-binary files (and the rules below) untouched.
+* text=auto eol=lf
 *.sh text eol=lf
-*.md text eol=lf
+*.node binary

@@ -30,12 +30,17 @@ A high-performance Rust library and CLI for detecting leaked secrets in source c
 curl -fsSL https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.sh | bash
 ```
 
+#### macOS (Homebrew Cask)
+```bash
+brew install --cask whit3rabbit/tap/secrets-scanner
+```
+
 #### Windows (PowerShell)
 ```powershell
 irm https://raw.githubusercontent.com/whit3rabbit/secrets-scanner/main/install.ps1 | iex
 ```
 
-*(For other installation methods like Homebrew tap or Cargo, see [Installation Options](#installation-options) below).*
+*(For other installation methods like Homebrew Cask or Cargo, see [Installation Options](#installation-options) below).*
 
 ### 2. Run a Scan
 
@@ -297,17 +302,22 @@ $env:VERSION="0.1.0"; irm https://raw.githubusercontent.com/whit3rabbit/secrets-
 ```
 </details>
 
-### Homebrew Tap (macOS)
-To install using Homebrew directly:
+### Homebrew Cask (macOS)
+The tap ships a Cask that installs the prebuilt release binary and links it onto your `PATH`:
 ```bash
-# Add the tap
-brew tap whit3rabbit/tap
-
-# Install formula
-brew install secrets-scanner
-
-# Or install the Cask version (recommended)
+# One-liner (auto-taps whit3rabbit/tap)
 brew install --cask whit3rabbit/tap/secrets-scanner
+
+# Or tap first, then install
+brew tap whit3rabbit/tap
+brew install --cask secrets-scanner
+```
+
+Verify and upgrade:
+```bash
+secrets-scanner --version
+brew upgrade --cask secrets-scanner
+brew uninstall --cask secrets-scanner
 ```
 
 ### Cargo / cargo-binstall

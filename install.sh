@@ -110,8 +110,10 @@ download_binary() {
         Linux)
             if [ "$arch" = "x86_64" ]; then
                 target="x86_64-unknown-linux-musl"
+            elif [ "$arch" = "aarch64" ] || [ "$arch" = "arm64" ]; then
+                target="aarch64-unknown-linux-musl"
             else
-                log_error "Unsupported Linux architecture: $arch. Pre-built binaries are only available for x86_64 on Linux."
+                log_error "Unsupported Linux architecture: $arch. Pre-built binaries are available for x86_64 and aarch64 on Linux."
                 # If cargo is installed, we would have tried it, but since we are here, cargo either failed or is not installed.
                 exit 1
             fi

@@ -65,25 +65,26 @@ jobs:
         with:
           node-version: 20
 
-      # `npm install`, not `npm ci`: the main package declares optionalDependencies
-      # on the per-platform packages, which do not exist on the registry until the
-      # first successful publish, so npm cannot record them in the lockfile and
-      # `npm ci` would fail the sync check. Direct devDependencies are pinned exact,
-      # so installs stay reproducible. Missing optional deps are non-fatal.
       # --no-workspaces: install bindings/node standalone, NOT the parent bindings/
       # workspace (whose node-mcp member depends on the published darwin/arm64-only
       # rsecrets-scanner@0.1.0, which is EBADPLATFORM on linux/windows runners).
-      # --no-package-lock too: the committed bindings/node/package-lock.json was
-      # generated inside the bindings/ workspace and is inconsistent when read
-      # standalone (ENOVERSIONS). devDependencies are exact-pinned, so a fresh
-      # resolve is still deterministic.
+      # `npm ci`, not `npm install --no-package-lock`: the lock-free resolve started
+      # crashing npm outright ("Cannot read properties of null (reading 'edgesOut')")
+      # on every target. That is environmental, not a repo regression -- it
+      # reproduces on the last commit that published green. `npm ci` against the
+      # committed standalone lock resolves cleanly and is reproducible besides.
+      # The lock is now generated OUTSIDE the bindings/ workspace, so reading it
+      # standalone no longer hits the ENOVERSIONS skew that motivated the old flags
+      # -- keep regenerating it that way (see docs/RELEASE.md).
+      # Cost of `npm ci`: it hard-fails if bindings/node/package-lock.json drifts
+      # from package.json, so both must be bumped together on release.
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund --no-workspaces --no-package-lock
+        run: npm ci --no-audit --no-fund --no-workspaces
 
       # Invoke napi via `npm run` (PATH includes node_modules/.bin), NOT `npx`:
-      # with --no-package-lock there is no node_modules/.package-lock.json for npx
-      # to map the `napi` bin -> @napi-rs/cli, so `npx napi` would try to fetch a
-      # bare `napi` package (ENOVERSIONS). `build:ci` = napi build --release
+      # `npx napi` resolves the bare `napi` package name from the registry rather
+      # than the locally installed @napi-rs/cli that provides the bin, and fetches
+      # the wrong thing (ENOVERSIONS). `build:ci` = napi build --release
       # --platform --no-js; --platform suffixes the artifact
       # (secrets_scanner_core.<target>.node) so `napi artifacts` can route it,
       # --no-js preserves the hand-written index.js loader, --locked -> cargo.

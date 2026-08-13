@@ -41,7 +41,7 @@ Pre-conditions:
 | `Cargo.lock` | `secrets_scanner` package entry | Refresh with `cargo check` (do not hand-edit if avoidable). |
 | `bindings/node/package.json` | `version` | A stale node version makes npm **republish an existing version and fail**. |
 | `bindings/node/Cargo.toml` | `version` | Keep in lockstep (crate is `publish = false`, but keep consistent). |
-| `bindings/node/package-lock.json` | root `version` (two places) | npm here may not auto-sync it; verify by reading the file. |
+| `bindings/node/package-lock.json` | root `version` (two places) | npm here may not auto-sync it; verify by reading the file. `publish.yml` runs `npm ci` against this lock, which hard-fails on drift from `package.json`. Regenerate it **outside** the `bindings/` workspace (copy `package.json` + the lock to a temp dir, `npm install --package-lock-only`, copy back) — an npm run from inside `bindings/node` resolves up to the `bindings/` workspace root and writes `bindings/package-lock.json` instead, leaving this one stale. |
 | `bindings/wasm/Cargo.toml` | `version` | Keep in lockstep. Not published or gated by CI today, but tracks the shared version. |
 | `bindings/wasm/Cargo.lock` | `rsecrets-scanner-wasm` package entry | Refresh with `cargo update -p rsecrets-scanner-wasm --precise vX.Y.Z` (separate crate; `cargo check` from root won't touch it). |
 | `CHANGELOG.md` | new `## vX.Y.Z (DATE)` section | Use an absolute date. |

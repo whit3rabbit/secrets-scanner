@@ -272,7 +272,7 @@ pub(super) fn handle_list_rules(rules_path: Option<&str>) {
     for rule in &rules {
         println!(
             "{:<40} {:<8} {}",
-            &rule.id,
+            rule.id,
             rule.keywords.len(),
             if rule.description.is_empty() {
                 "(no description)"

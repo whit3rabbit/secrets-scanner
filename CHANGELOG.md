@@ -2,6 +2,35 @@
 
 ## Unreleased
 
+## v0.2.3 (2026-08-12)
+
+### Security
+- Updated the npm binding lockfiles (`bindings/package-lock.json`,
+  `bindings/node/package-lock.json`) to clear all open Dependabot alerts;
+  `npm audit` now reports 0 vulnerabilities in both. All are transitive
+  dependencies. Supersedes Dependabot PRs #8, #9, #11, #12, #13, #14, #15.
+
+  Via `@modelcontextprotocol/sdk`, a **runtime** dependency of
+  `@whit3rabbit/rsecrets-scanner-mcp`: `hono` 4.12.25 → 4.13.1 (CORS ReDoS,
+  `memo()` cross-user SSR disclosure, proxy `Connection` header leak, language
+  middleware DoS), `@hono/node-server` 1.19.14 → 1.19.17, `ip-address` 10.2.0 →
+  10.5.0 via `express-rate-limit` (SSRF / trust-boundary bypasses), and
+  `fast-uri` 3.1.2 → 3.1.5 via `ajv`.
+
+  Via dev/build tooling only (`@napi-rs/cli`, `vitest`): `js-yaml` 4.2.0 → 4.3.1
+  (quadratic CPU consumption via merge-key chains / `!!omap`), `postcss` 8.5.15 →
+  8.5.26 (path traversal via `sourceMappingURL` auto-loading), and `nanoid`
+  3.3.12 → 3.3.18 (non-terminating generator loops).
+
+  Note: `@whit3rabbit/rsecrets-scanner-mcp` is published manually and is not
+  released by this tag, and it ships no lockfile, so installers already resolve
+  the patched transitive versions from its `^` ranges. The lockfile pins here
+  govern this repository's own CI and development installs.
+
+### Fixed
+- `list-rules` no longer trips the `clippy::useless_borrows_in_formatting` lint
+  under newer clippy, which was failing the `-D warnings` CI gate.
+
 ## v0.2.2 (2026-06-16)
 
 ### Changed

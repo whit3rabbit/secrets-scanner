@@ -82,3 +82,8 @@ test_*
 
 # Repomix
 repomix-output.xml
+
+# Release artifact staging dir (release.yml copies built binaries here before
+# uploading). Untracked leftovers here make `cargo publish --locked` refuse the
+# tree as dirty.
+dist/
